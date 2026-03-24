@@ -1,0 +1,105 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Watchlist": {
+      "title": "Watchlist",
+      "description": "A user's list of watched stocks",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "stockSlugs": { 
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "stockSlugs"]
+    },
+    "StockSentiment": {
+      "title": "StockSentiment",
+      "description": "Aggregated community sentiment for a stock",
+      "type": "object",
+      "properties": {
+        "stockSlug": { "type": "string" },
+        "bullVotes": { "type": "integer" },
+        "bearVotes": { "type": "integer" },
+        "totalVotes": { "type": "integer" }
+      },
+      "required": ["stockSlug", "bullVotes", "bearVotes", "totalVotes"]
+    },
+    "UserVote": {
+      "title": "UserVote",
+      "description": "A single user's vote on a stock",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "stockSlug": { "type": "string" },
+        "vote": { "type": "string", "enum": ["bull", "bear"] },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "stockSlug", "vote"]
+    },
+    "Comment": {
+      "title": "Comment",
+      "description": "A user comment on a stock analysis",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userPhoto": { "type": "string" },
+        "stockSlug": { "type": "string" },
+        "content": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "userName", "stockSlug", "content", "createdAt"]
+    },
+    "NewsletterSubscription": {
+      "title": "NewsletterSubscription",
+      "description": "A user's newsletter subscription",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/watchlists/{userId}": {
+      "schema": "Watchlist",
+      "description": "User-specific watchlists"
+    },
+    "/stock_sentiment/{stockSlug}": {
+      "schema": "StockSentiment",
+      "description": "Aggregated sentiment per stock"
+    },
+    "/user_votes/{voteId}": {
+      "schema": "UserVote",
+      "description": "Individual user votes (voteId is userId_stockSlug)"
+    },
+    "/comments/{commentId}": {
+      "schema": "Comment",
+      "description": "User comments on analyses"
+    },
+    "/newsletter_subscriptions/{email}": {
+      "schema": "NewsletterSubscription",
+      "description": "Newsletter subscriptions"
+    }
+  }
+}
