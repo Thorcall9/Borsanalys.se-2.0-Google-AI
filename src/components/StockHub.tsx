@@ -42,6 +42,11 @@ interface LiveData {
   eps: number | null;
   currentPrice?: number | null;
   targetPrice?: number | null;
+  yearlyFinancials?: {
+    date: number;
+    revenue: number;
+    earnings: number;
+  }[] | null;
 }
 
 export default function StockHub() {
@@ -57,7 +62,7 @@ export default function StockHub() {
         setLoading(true);
         setError(null);
         try {
-          const response = await fetch(`/api/stocks/${stock.yahooTicker}`);
+          const response = await fetch(`${window.location.origin}/api/stocks/${encodeURIComponent(stock.yahooTicker)}`);
           
           let data;
           const text = await response.text();
@@ -123,6 +128,29 @@ export default function StockHub() {
 
   const isUp = liveData ? liveData.changePercent > 0 : stock.stats.change.startsWith('+');
 
+  // Process live financial data if available
+  const chartData = React.useMemo(() => {
+    if (liveData?.yearlyFinancials && liveData.yearlyFinancials.length > 0) {
+      // Scale factor based on financialUnit
+      let scale = 1;
+      const unit = stock.financialUnit || '';
+      if (unit.includes('T') || unit.includes('TDKK')) {
+        scale = 1e12;
+      } else if (unit.includes('Mdr') || unit.includes('Bkr') || unit.includes('Mdkr') || unit.includes('B')) {
+        scale = 1e9;
+      } else if (unit.includes('MEUR') || unit.includes('Mkr') || unit.includes('M')) {
+        scale = 1e6;
+      }
+
+      return liveData.yearlyFinancials.map(item => ({
+        year: item.date.toString(),
+        revenue: Number((item.revenue / scale).toFixed(2)),
+        profit: Number((item.earnings / scale).toFixed(2))
+      }));
+    }
+    return stock.financialData;
+  }, [liveData?.yearlyFinancials, stock.financialData, stock.financialUnit]);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
@@ -182,7 +210,7 @@ export default function StockHub() {
                 <div className="p-4 bg-white rounded-xl border border-border shadow-sm">
                   <div className="text-[10px] text-muted uppercase mb-1">P/E (LTM)</div>
                   <div className="text-xl font-serif font-bold text-foreground">
-                    {liveData ? (liveData.pe ? liveData.pe.toFixed(1) : 'N/A') : stock.stats.pe}
+                    {liveData ? (liveData.pe ? liveData.pe.toFixed(2) : 'N/A') : (stock.stats.pe ? parseFloat(String(stock.stats.pe).replace(',', '.')).toFixed(2) : 'N/A')}
                   </div>
                 </div>
                 <div className="p-4 bg-white rounded-xl border border-border shadow-sm">
@@ -244,14 +272,14 @@ export default function StockHub() {
             <section>
               <h2 className="text-[11px] font-mono tracking-[0.3em] text-muted uppercase mb-6">Finansiell Trend</h2>
               <div className="p-6 bg-white border border-border rounded-2xl shadow-sm">
-                {stock.financialData ? (
+                {chartData && chartData.length > 0 ? (
                   <div className="h-[300px] w-full">
                     <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-                      <AreaChart data={stock.financialData}>
+                      <AreaChart data={chartData}>
                         <defs>
                           <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#10b981" stopOpacity={0.1}/>
-                            <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
+                            <stop offset="5%" stopColor="#1E40AF" stopOpacity={0.1}/>
+                            <stop offset="95%" stopColor="#1E40AF" stopOpacity={0}/>
                           </linearGradient>
                           <linearGradient id="colorProfit" x1="0" y1="0" x2="0" y2="1">
                             <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.1}/>
@@ -283,7 +311,7 @@ export default function StockHub() {
                           type="monotone" 
                           dataKey="revenue" 
                           name="Omsättning"
-                          stroke="#10b981" 
+                          stroke="#1E40AF" 
                           strokeWidth={2}
                           fillOpacity={1} 
                           fill="url(#colorRevenue)" 

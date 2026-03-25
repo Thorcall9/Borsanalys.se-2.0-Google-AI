@@ -51,7 +51,7 @@ export default function DividendCalculator() {
 
           <div className="space-y-4">
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-muted">Initialt Kapital (SEK)</label>
+              <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Initialt Kapital (SEK)</label>
               <input 
                 type="number" 
                 value={initialInvestment} 
@@ -61,7 +61,7 @@ export default function DividendCalculator() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-muted">Månadssparande (SEK)</label>
+              <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Månadssparande (SEK)</label>
               <input 
                 type="number" 
                 value={monthlyContribution} 
@@ -72,7 +72,7 @@ export default function DividendCalculator() {
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-widest text-muted">Direktavk. (%)</label>
+                <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Direktavk. (%)</label>
                 <input 
                   type="number" 
                   value={dividendYield} 
@@ -81,7 +81,7 @@ export default function DividendCalculator() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-widest text-muted">Utdeln.tillväxt (%)</label>
+                <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Utdeln.tillväxt (%)</label>
                 <input 
                   type="number" 
                   value={dividendGrowth} 
@@ -92,7 +92,7 @@ export default function DividendCalculator() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-muted">Antal år</label>
+              <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Antal år</label>
               <input 
                 type="range" 
                 min="1" 
@@ -101,7 +101,7 @@ export default function DividendCalculator() {
                 onChange={(e) => setYears(Number(e.target.value))}
                 className="w-full accent-primary"
               />
-              <div className="flex justify-between text-[10px] font-mono text-muted">
+              <div className="flex justify-between text-[10px] font-mono text-muted-foreground">
                 <span>1 år</span>
                 <span className="text-primary font-bold">{years} år</span>
                 <span>50 år</span>
@@ -122,7 +122,7 @@ export default function DividendCalculator() {
 
         <div className="bg-primary/5 border border-primary/10 rounded-2xl p-6 flex gap-4">
           <Info className="text-primary shrink-0" size={20} />
-          <p className="text-xs text-muted leading-relaxed">
+          <p className="text-xs text-muted-foreground leading-relaxed">
             Denna kalkylator visar kraften i utdelningstillväxt och återinvestering. Genom att välja bolag som höjer sin utdelning kan din "yield on cost" bli mycket hög över tid.
           </p>
         </div>
@@ -131,7 +131,7 @@ export default function DividendCalculator() {
       <div className="lg:col-span-2 space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-section-alt border border-border rounded-2xl p-8 space-y-2">
-            <div className="text-[10px] font-mono text-muted uppercase tracking-widest flex items-center gap-2">
+            <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest flex items-center gap-2">
               <TrendingUp size={14} className="text-primary" /> Slutligt Portföljvärde
             </div>
             <div className="text-4xl font-serif font-bold text-primary">
@@ -139,7 +139,7 @@ export default function DividendCalculator() {
             </div>
           </div>
           <div className="bg-section-alt border border-border rounded-2xl p-8 space-y-2">
-            <div className="text-[10px] font-mono text-muted uppercase tracking-widest flex items-center gap-2">
+            <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest flex items-center gap-2">
               <DollarSign size={14} className="text-primary" /> Årlig Utdelning År {years}
             </div>
             <div className="text-4xl font-serif font-bold text-primary">
@@ -156,10 +156,10 @@ export default function DividendCalculator() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-muted/30">
-                  <th className="p-4 text-[10px] font-mono uppercase tracking-widest text-muted border-b border-border">År</th>
-                  <th className="p-4 text-[10px] font-mono uppercase tracking-widest text-muted border-b border-border text-right">Portföljvärde</th>
-                  <th className="p-4 text-[10px] font-mono uppercase tracking-widest text-muted border-b border-border text-right">Årlig Utdelning</th>
-                  <th className="p-4 text-[10px] font-mono uppercase tracking-widest text-muted border-b border-border text-right">Månadlig Utdelning</th>
+                  <th className="p-4 text-[10px] font-mono uppercase tracking-widest text-muted-foreground border-b border-border">År</th>
+                  <th className="p-4 text-[10px] font-mono uppercase tracking-widest text-muted-foreground border-b border-border text-right">Portföljvärde</th>
+                  <th className="p-4 text-[10px] font-mono uppercase tracking-widest text-muted-foreground border-b border-border text-right">Årlig Utdelning</th>
+                  <th className="p-4 text-[10px] font-mono uppercase tracking-widest text-muted-foreground border-b border-border text-right">Månadlig Utdelning</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
@@ -168,7 +168,7 @@ export default function DividendCalculator() {
                     <td className="p-4 font-mono text-sm">År {row.year}</td>
                     <td className="p-4 font-mono text-sm text-right font-bold">{row.balance.toLocaleString()} kr</td>
                     <td className="p-4 font-mono text-sm text-right text-success font-bold">{row.annualDividend.toLocaleString()} kr</td>
-                    <td className="p-4 font-mono text-sm text-right text-muted">{Math.round(row.annualDividend / 12).toLocaleString()} kr</td>
+                    <td className="p-4 font-mono text-sm text-right text-muted-foreground">{Math.round(row.annualDividend / 12).toLocaleString()} kr</td>
                   </tr>
                 ))}
               </tbody>

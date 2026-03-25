@@ -7,18 +7,18 @@ interface CardProps {
   accentColor?: string;
 }
 
-export default function Card({ title, children, className = "", accentColor = "#76B900" }: CardProps) {
+export default function Card({ title, children, className = "", accentColor = "#1e40af" }: CardProps) {
   return (
-    <div className={`bg-white border border-black/5 rounded-xl p-6 hover:border-black/10 transition-colors shadow-sm ${className}`}>
+    <div className={`bg-card border border-border rounded-[2.5rem] p-10 hover:border-primary/50 transition-all shadow-xl shadow-black/5 ${className}`}>
       {title && (
         <div 
-          className="text-[11px] font-mono tracking-widest uppercase mb-4"
+          className="text-[10px] font-black tracking-[0.2em] uppercase mb-6"
           style={{ color: accentColor }}
         >
           {title}
         </div>
       )}
-      <div className="text-sm text-gray-600 leading-relaxed">
+      <div className="text-base text-muted-foreground leading-relaxed font-medium">
         {children}
       </div>
     </div>

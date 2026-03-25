@@ -3,10 +3,12 @@ import { AlertCircle, Info, CheckCircle2, AlertTriangle } from 'lucide-react';
 
 interface AlertBoxProps {
   type: 'info' | 'risk' | 'signal' | 'warning';
-  children: React.ReactNode;
+  title?: string;
+  message?: string;
+  children?: React.ReactNode;
 }
 
-export default function AlertBox({ type, children }: AlertBoxProps) {
+export default function AlertBox({ type, title, message, children }: AlertBoxProps) {
   const styles = {
     info: {
       bg: 'bg-blue-50',
@@ -21,10 +23,10 @@ export default function AlertBox({ type, children }: AlertBoxProps) {
       icon: <AlertTriangle size={18} className="text-red-600" />
     },
     signal: {
-      bg: 'bg-emerald-50',
-      border: 'border-emerald-200',
-      text: 'text-emerald-800',
-      icon: <CheckCircle2 size={18} className="text-emerald-600" />
+      bg: 'bg-primary/10',
+      border: 'border-primary/20',
+      text: 'text-primary',
+      icon: <CheckCircle2 size={18} className="text-primary" />
     },
     warning: {
       bg: 'bg-amber-50',
@@ -42,6 +44,8 @@ export default function AlertBox({ type, children }: AlertBoxProps) {
         {style.icon}
       </div>
       <div className={`text-sm leading-relaxed ${style.text}`}>
+        {title && <div className="font-black uppercase tracking-widest text-[10px] mb-1">{title}</div>}
+        {message && <p>{message}</p>}
         {children}
       </div>
     </div>

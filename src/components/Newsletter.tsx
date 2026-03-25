@@ -1,170 +1,136 @@
-import React, { useState } from "react";
-import { Send, CheckCircle2, Loader2 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { db, handleFirestoreError, OperationType } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Mail, Send, CheckCircle2, Loader2 } from 'lucide-react';
 
-interface NewsletterProps {
-  variant?: "inline" | "card";
-}
-
-export default function Newsletter({ variant = "card" }: NewsletterProps) {
-  const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+export const Newsletter: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    if (!email || !email.includes('@')) {
+      setStatus('error');
+      setMessage('Vänligen ange en giltig e-postadress.');
+      return;
+    }
 
-    setIsLoading(true);
-    setError(null);
-
+    setStatus('loading');
     try {
-      const path = `newsletter_subscriptions/${email.toLowerCase()}`;
-      await setDoc(doc(db, "newsletter_subscriptions", email.toLowerCase()), {
-        email: email.toLowerCase(),
-        createdAt: new Date().toISOString(),
+      const response = await fetch('/api/newsletter/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
       });
-      
-      setIsSubmitted(true);
-      setEmail("");
-    } catch (err) {
-      console.error("Newsletter error:", err);
-      setError("Något gick fel. Försök igen senare.");
-      // We don't necessarily want to crash the whole app with handleFirestoreError here,
-      // but we can log it properly.
-      try {
-        handleFirestoreError(err, OperationType.WRITE, `newsletter_subscriptions/${email}`);
-      } catch (e) {
-        // Silent catch to prevent crash but ensure logging happened
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus('success');
+        setMessage(data.message || 'Tack för din anmälan!');
+        setEmail('');
+      } else {
+        setStatus('error');
+        setMessage(data.error || 'Något gick fel. Försök igen senare.');
       }
-    } finally {
-      setIsLoading(false);
+    } catch (error) {
+      console.error('Newsletter Signup Error:', error);
+      setStatus('error');
+      setMessage('Kunde inte ansluta till servern. Kontrollera din anslutning.');
     }
   };
 
-  if (variant === "inline") {
-    return (
-      <div className="space-y-4">
-        <AnimatePresence mode="wait">
-          {!isSubmitted ? (
-            <motion.form 
-              key="form"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onSubmit={handleSubmit} 
-              className="flex flex-col sm:flex-row gap-3"
-            >
-              <input 
-                type="email" 
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Din e-postadress" 
-                required
-                className="flex-grow px-4 py-3 bg-white border border-border rounded-xl focus:outline-none focus:border-primary/50 transition-all text-sm"
-              />
-              <button 
-                type="submit"
-                disabled={isLoading}
-                className="bg-primary text-white px-6 py-3 rounded-xl font-bold hover:bg-primary-light transition-colors flex items-center justify-center gap-2 text-sm disabled:opacity-50"
-              >
-                {isLoading ? (
-                  <Loader2 size={16} className="animate-spin" />
-                ) : (
-                  <>Prenumerera <Send size={16} /></>
-                )}
-              </button>
-            </motion.form>
-          ) : (
-            <motion.div 
-              key="success"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="flex items-center gap-3 text-success font-bold py-3"
-            >
-              <CheckCircle2 size={20} /> Tack! Du är nu anmäld.
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    );
-  }
-
   return (
-    <section className="bg-section-alt border border-border rounded-3xl p-8 md:p-12 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
+    <section className="py-32 bg-card border-y border-border overflow-hidden relative">
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] -z-10" />
       
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <div className="space-y-4">
-          <div className="text-[10px] font-mono uppercase tracking-widest text-primary font-bold">Nyhetsbrev</div>
-          <h2 className="text-3xl md:text-4xl font-serif font-bold tracking-tight">Få våra analyser direkt i din inkorg</h2>
-          <p className="text-muted leading-relaxed">
-            Varje vecka skickar vi ut en sammanfattning av de senaste analyserna, guiderna och marknadstrenderna. Helt gratis.
-          </p>
-        </div>
-
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-border/50">
-          <AnimatePresence mode="wait">
-            {!isSubmitted ? (
-              <motion.form 
-                key="form"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onSubmit={handleSubmit} 
-                className="space-y-4"
-              >
-                <div className="space-y-2">
-                  <label className="text-[10px] font-mono text-muted uppercase tracking-widest ml-1">E-postadress</label>
-                  <input 
-                    type="email" 
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="namn@exempel.se" 
-                    required
-                    className="w-full px-4 py-4 bg-section-alt border border-border rounded-xl focus:outline-none focus:border-primary/50 transition-all"
-                  />
-                </div>
-                <button 
+      <div className="container mx-auto px-6">
+        <div className="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-20">
+          <div className="flex-1 text-center lg:text-left">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 text-primary text-[10px] font-black uppercase tracking-[0.3em] mb-8">
+                <Mail className="w-3 h-3" />
+                <span>Veckobrev</span>
+              </div>
+              <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-tight mb-6">Håll dig steget före <br /> <span className="text-primary">marknaden</span></h2>
+              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium max-w-xl mx-auto lg:mx-0">
+                Få våra mest exklusiva analyser och marknadsuppdateringar direkt i din inkorg. Varje söndag, helt gratis.
+              </p>
+            </motion.div>
+          </div>
+          
+          <div className="flex-1 w-full max-w-xl">
+            <motion.form
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              viewport={{ once: true }}
+              className="relative group"
+              onSubmit={handleSubmit}
+            >
+              <div className="relative flex flex-col sm:flex-row items-center gap-4">
+                <input 
+                  type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Din e-postadress" 
+                  disabled={status === 'loading' || status === 'success'}
+                  className="w-full px-8 py-6 bg-background border border-border rounded-full focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all text-lg shadow-2xl shadow-black/5 font-medium disabled:opacity-50"
+                />
+                <motion.button
                   type="submit"
-                  disabled={isLoading}
-                  className="w-full bg-primary text-white py-4 rounded-xl font-bold hover:bg-primary-light transition-colors flex items-center justify-center gap-2 shadow-lg shadow-primary/20 disabled:opacity-50"
+                  disabled={status === 'loading' || status === 'success'}
+                  whileHover={status === 'idle' ? { scale: 1.05, y: -2 } : {}}
+                  whileTap={status === 'idle' ? { scale: 0.95 } : {}}
+                  className={`w-full sm:w-auto sm:absolute sm:right-3 px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition-all flex items-center justify-center gap-2 ${
+                    status === 'success' 
+                      ? 'bg-green-500 text-white shadow-green-500/30' 
+                      : 'bg-primary text-primary-foreground shadow-primary/30 hover:bg-primary/90'
+                  } disabled:opacity-100`}
                 >
-                  {isLoading ? (
-                    <Loader2 size={18} className="animate-spin" />
+                  {status === 'loading' ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : status === 'success' ? (
+                    <CheckCircle2 className="w-4 h-4" />
                   ) : (
-                    <>Börja prenumerera <Send size={18} /></>
+                    <>
+                      Prenumerera
+                      <Send className="w-4 h-4" />
+                    </>
                   )}
-                </button>
-                {error && (
-                  <p className="text-xs text-red-500 text-center">{error}</p>
+                </motion.button>
+              </div>
+              
+              <AnimatePresence mode="wait">
+                {message && (
+                  <motion.p
+                    key={status}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className={`mt-4 text-sm font-bold px-8 ${
+                      status === 'error' ? 'text-red-500' : 'text-green-500'
+                    }`}
+                  >
+                    {message}
+                  </motion.p>
                 )}
-                <p className="text-[10px] text-center text-muted">
-                  Genom att prenumerera godkänner du vår integritetspolicy. Du kan avbryta när som helst.
-                </p>
-              </motion.form>
-            ) : (
-              <motion.div 
-                key="success"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-center py-8 space-y-4"
-              >
-                <div className="w-16 h-16 bg-success/10 text-success rounded-full flex items-center justify-center mx-auto">
-                  <CheckCircle2 size={32} />
-                </div>
-                <div className="space-y-2">
-                  <h3 className="text-xl font-serif font-bold">Välkommen ombord!</h3>
-                  <p className="text-sm text-muted">Vi har skickat ett bekräftelsemejl till din adress.</p>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+              </AnimatePresence>
+
+              <p className="mt-6 text-[11px] font-bold text-muted-foreground/80 text-center lg:text-left px-8 uppercase tracking-widest">
+                Genom att prenumerera godkänner du vår integritetspolicy. Inget spam, bara värde.
+              </p>
+            </motion.form>
+          </div>
         </div>
       </div>
     </section>
   );
-}
+};

@@ -116,7 +116,7 @@ export default function Watchlist() {
                     <div className="text-right">
                       <div className="font-bold text-sm">{item.price} SEK</div>
                       <div className={`text-[10px] font-bold flex items-center justify-end gap-1 ${
-                        item.change && item.change >= 0 ? 'text-emerald-500' : 'text-red-500'
+                        item.change && item.change >= 0 ? 'text-primary' : 'text-red-500'
                       }`}>
                         {item.change && item.change >= 0 ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
                         {item.change}%

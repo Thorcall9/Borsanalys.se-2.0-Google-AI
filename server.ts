@@ -2,36 +2,89 @@ import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
 import { fileURLToPath } from "url";
-import YahooFinance from "yahoo-finance2";
+import yahooFinance from "yahoo-finance2";
+import { query } from "./src/lib/db.js";
+import { sendEmail } from "./src/lib/email.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const yahooFinance = new YahooFinance();
+// Configure yahoo-finance2
+// (Removing setGlobalConfig due to type issues in this version)
 
 async function startServer() {
   const app = express();
   const PORT = 3000;
+
+  app.use(express.json());
+
+  console.log(`[SERVER] Initializing server on port ${PORT}...`);
 
   // API routes FIRST
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
   });
 
+  // Newsletter Signup (Neon + Resend)
+  app.post("/api/newsletter/signup", async (req, res) => {
+    const { email } = req.body;
+
+    if (!email || !email.includes('@')) {
+      return res.status(400).json({ error: "Ogiltig e-postadress" });
+    }
+
+    try {
+      // 1. Save to Neon (PostgreSQL)
+      // Note: This assumes a 'subscribers' table exists.
+      // You can create it in the Neon console: 
+      // CREATE TABLE IF NOT EXISTS subscribers (id SERIAL PRIMARY KEY, email TEXT UNIQUE, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+      await query('INSERT INTO subscribers (email) VALUES ($1) ON CONFLICT (email) DO NOTHING', [email]);
+
+      // 2. Send Welcome Email (Resend)
+      await sendEmail({
+        to: email,
+        subject: 'Välkommen till Börsanalys.se!',
+        html: `
+          <h1>Välkommen!</h1>
+          <p>Tack för att du har anmält dig till vårt nyhetsbrev.</p>
+          <p>Vi kommer att skicka dig de senaste analyserna och marknadsuppdateringarna.</p>
+          <br/>
+          <p>Med vänliga hälsningar,</p>
+          <p>Teamet på Börsanalys.se</p>
+        `
+      });
+
+      res.json({ success: true, message: "Tack för din anmälan!" });
+    } catch (error: any) {
+      console.error('Newsletter Signup Error:', error);
+      res.status(500).json({ error: "Kunde inte slutföra anmälan. Kontrollera att DATABASE_URL och RESEND_API_KEY är konfigurerade." });
+    }
+  });
+
+  // Admin: List Subscribers (Neon)
+  app.get("/api/admin/subscribers", async (req, res) => {
+    try {
+      const result = await query('SELECT * FROM subscribers ORDER BY created_at DESC');
+      res.json(result.rows);
+    } catch (error: any) {
+      console.error('Admin Fetch Error:', error);
+      res.status(500).json({ error: "Kunde inte hämta prenumeranter. Kontrollera att tabellen 'subscribers' finns i Neon." });
+    }
+  });
+
   app.get("/api/stocks/:ticker", async (req, res) => {
     const { ticker } = req.params;
     console.log(`[API] Request for ticker: ${ticker}`);
     
-    // Mock response for testing if the route is hit
-    if (ticker === "TEST") {
-      return res.json({ price: 100, currency: "USD", name: "Test Stock" });
+    if (!ticker) {
+      return res.status(400).json({ error: "Ticker is required" });
     }
 
     try {
       // Fetch multiple modules for comprehensive data
       console.log(`[API] Fetching quoteSummary for: ${ticker}`);
       const summary = await yahooFinance.quoteSummary(ticker, {
-        modules: ["price", "summaryDetail", "defaultKeyStatistics", "financialData"]
+        modules: ["price", "summaryDetail", "defaultKeyStatistics", "financialData", "earnings"]
       }) as any;
       
       if (!summary) {
@@ -39,7 +92,7 @@ async function startServer() {
         return res.status(404).json({ error: "Stock not found" });
       }
 
-      const { price, summaryDetail, defaultKeyStatistics, financialData } = summary;
+      const { price, summaryDetail, defaultKeyStatistics, financialData, earnings } = summary;
       
       const priceVal = price?.regularMarketPrice || financialData?.currentPrice;
       
@@ -73,11 +126,19 @@ async function startServer() {
         final: dividendYield
       });
 
+      // Normalize changePercent: quoteSummary's price module returns it as a decimal (e.g. 0.01 for 1%)
+      // while quote() returns it as a percentage (e.g. 1.0 for 1%).
+      // We want percentage for consistency in the frontend.
+      let changePercent = price?.regularMarketChangePercent;
+      if (typeof changePercent === 'number') {
+        changePercent = changePercent * 100;
+      }
+
       res.json({
         price: price?.regularMarketPrice || financialData?.currentPrice,
         currency: price?.currency,
         change: price?.regularMarketChange,
-        changePercent: price?.regularMarketChangePercent,
+        changePercent: changePercent,
         pe: summaryDetail?.trailingPE || summaryDetail?.forwardPE || defaultKeyStatistics?.trailingPE,
         yield: dividendYield,
         marketCap: summaryDetail?.marketCap || price?.marketCap,
@@ -88,6 +149,7 @@ async function startServer() {
         eps: defaultKeyStatistics?.trailingEps,
         currentPrice: financialData?.currentPrice,
         targetPrice: financialData?.targetMeanPrice,
+        yearlyFinancials: earnings?.financialsChart?.yearly || null,
       });
     } catch (error: any) {
       console.error(`[API] Error for ${ticker}:`, error.message);

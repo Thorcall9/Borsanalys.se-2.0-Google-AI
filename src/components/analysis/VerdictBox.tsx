@@ -13,28 +13,32 @@ export default function VerdictBox({
   target, 
   description, 
   date, 
-  accentColor = "#76B900" 
+  accentColor = "#1e40af" 
 }: VerdictBoxProps) {
   return (
-    <div className="bg-white border border-black/5 rounded-2xl p-8 text-center relative overflow-hidden shadow-sm">
+    <div className="bg-card border border-border rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden shadow-2xl shadow-black/10">
       <div 
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-48 blur-[80px] pointer-events-none opacity-10"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 blur-[120px] pointer-events-none opacity-20"
         style={{ backgroundColor: accentColor }}
       />
-      <div className="text-[11px] font-mono tracking-[0.3em] text-gray-400 uppercase mb-4">
-        Investeringsbeslut
-      </div>
-      <div className="text-7xl font-serif font-bold tracking-widest" style={{ color: accentColor }}>
-        {verdict}
-      </div>
-      <div className="text-2xl font-serif font-bold mt-2" style={{ color: accentColor }}>
-        Målpris: {target}
-      </div>
-      <p className="mt-6 text-sm text-gray-500 leading-relaxed max-w-md mx-auto italic">
-        {description}
-      </p>
-      <div className="mt-8 text-[10px] font-mono text-gray-400 uppercase tracking-widest">
-        Analys datum: {date} · Ej finansiell rådgivning
+      <div className="relative z-10">
+        <div className="text-[10px] font-black tracking-[0.4em] text-muted-foreground/50 uppercase mb-8">
+          Investeringsbeslut
+        </div>
+        <div className="text-7xl md:text-9xl font-black tracking-tighter leading-none mb-4" style={{ color: accentColor }}>
+          {verdict}
+        </div>
+        <div className="text-2xl md:text-4xl font-black tracking-tighter mb-10" style={{ color: accentColor }}>
+          Målpris: {target}
+        </div>
+        <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto font-medium italic mb-12">
+          "{description}"
+        </p>
+        <div className="pt-10 border-t border-border/50 inline-block px-10">
+          <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
+            Analyserat: {date} · Ej finansiell rådgivning
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -6,16 +6,16 @@ interface SectionHeaderProps {
   accentColor?: string;
 }
 
-export default function SectionHeader({ number, title, accentColor = "#1a3c6e" }: SectionHeaderProps) {
+export default function SectionHeader({ number, title, accentColor = "#1e40af" }: SectionHeaderProps) {
   return (
-    <div className="flex items-end gap-4 mb-8 pb-4 border-b border-black/5">
+    <div className="flex items-end gap-6 mb-12 pb-6 border-b border-border">
       <span 
-        className="font-serif text-4xl font-bold leading-none opacity-30"
+        className="text-6xl font-black leading-none opacity-10 tracking-tighter"
         style={{ color: accentColor }}
       >
         {number}
       </span>
-      <h2 className="font-serif text-2xl font-bold tracking-wider uppercase text-[#1a1a1a]">
+      <h2 className="text-2xl font-black tracking-tighter uppercase text-foreground mb-1">
         {title}
       </h2>
     </div>

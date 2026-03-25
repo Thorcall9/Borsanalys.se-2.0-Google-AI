@@ -10,7 +10,7 @@ import {
 } from 'recharts';
 
 interface SpiderChartProps {
-  scores: {
+  scores?: {
     affarsmodell: number;
     strategiskMoat: number;
     finansiellKvalitet: number;
@@ -20,20 +20,21 @@ interface SpiderChartProps {
     esgMakro: number;
     aiObservationer: number;
   };
+  data?: { subject: string; A: number; fullMark: number }[];
   accentColor?: string;
 }
 
-export default function SpiderChart({ scores, accentColor = "#1a3c6e" }: SpiderChartProps) {
-  const data = [
-    { subject: 'Affärsmodell', A: scores.affarsmodell, fullMark: 5 },
-    { subject: 'Moat', A: scores.strategiskMoat, fullMark: 5 },
-    { subject: 'Finans', A: scores.finansiellKvalitet, fullMark: 5 },
-    { subject: 'Värdering', A: scores.vardering, fullMark: 5 },
-    { subject: 'Tillväxt', A: scores.tillvaxtutsikter, fullMark: 5 },
-    { subject: 'Riskprofil', A: scores.riskprofil, fullMark: 5 },
-    { subject: 'ESG/Makro', A: scores.esgMakro, fullMark: 5 },
-    { subject: 'AI-obs', A: scores.aiObservationer, fullMark: 5 },
-  ];
+export default function SpiderChart({ scores, data: directData, accentColor = "#1e40af" }: SpiderChartProps) {
+  const data = directData || (scores ? [
+    { subject: 'I. Företagsöversikt', A: scores.affarsmodell, fullMark: 5 },
+    { subject: 'II. Strategisk analys & Moat', A: scores.strategiskMoat, fullMark: 5 },
+    { subject: 'III. Finansiell analys', A: scores.finansiellKvalitet, fullMark: 5 },
+    { subject: 'IV. Värdering & Jämförelse', A: scores.vardering, fullMark: 5 },
+    { subject: 'V. Tillväxtmotorer & Triggers', A: scores.tillvaxtutsikter, fullMark: 5 },
+    { subject: 'VI. Riskprofil', A: scores.riskprofil, fullMark: 5 },
+    { subject: 'VII. ESG & Makro', A: scores.esgMakro, fullMark: 5 },
+    { subject: 'VIII. AI-observationer', A: scores.aiObservationer, fullMark: 5 },
+  ] : []);
 
   return (
     <div className="w-full h-[350px] md:h-[450px] bg-card border border-border rounded-3xl p-6 shadow-sm flex flex-col items-center justify-center">

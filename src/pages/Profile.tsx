@@ -66,10 +66,10 @@ export default function Profile() {
                   <UserIcon size={40} />
                 </div>
               )}
-              <div className="absolute bottom-0 right-0 w-6 h-6 bg-emerald-500 border-4 border-background rounded-full" title="Online" />
+              <div className="absolute bottom-0 right-0 w-6 h-6 bg-primary border-4 border-background rounded-full" title="Online" />
             </div>
             <h2 className="text-2xl font-serif font-bold tracking-tight">{user.displayName}</h2>
-            <p className="text-muted text-sm mb-6">{user.email}</p>
+            <p className="text-muted-foreground text-sm mb-6">{user.email}</p>
             
             <div className="space-y-2">
               <button className="w-full py-2 bg-primary/10 text-primary font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-primary/20 transition-colors">
@@ -85,19 +85,19 @@ export default function Profile() {
           </div>
 
           <div className="bg-card border border-border rounded-3xl p-6 space-y-4 shadow-sm">
-            <h3 className="font-serif font-bold text-sm uppercase tracking-widest text-muted">Kontoinformation</h3>
+            <h3 className="font-serif font-bold text-sm uppercase tracking-widest text-muted-foreground">Kontoinformation</h3>
             <div className="space-y-3">
               <div className="flex items-center gap-3 text-sm">
                 <Mail size={16} className="text-primary" />
-                <span className="text-muted">{user.email}</span>
+                <span className="text-muted-foreground">{user.email}</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Shield size={16} className="text-primary" />
-                <span className="text-muted">Medlem (Gratis)</span>
+                <span className="text-muted-foreground">Medlem (Gratis)</span>
               </div>
               <div className="flex items-center gap-3 text-sm">
                 <Calendar size={16} className="text-primary" />
-                <span className="text-muted">Medlem sedan {new Date(user.metadata.creationTime || "").toLocaleDateString('sv-SE')}</span>
+                <span className="text-muted-foreground">Medlem sedan {new Date(user.metadata.creationTime || "").toLocaleDateString('sv-SE')}</span>
               </div>
             </div>
           </div>
@@ -109,7 +109,7 @@ export default function Profile() {
             <section className="space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-3xl font-serif font-bold tracking-tight">GitHub-profil</h2>
-                <p className="text-sm text-muted">Din utvecklaraktivitet synkad</p>
+                <p className="text-sm text-muted-foreground">Din utvecklaraktivitet synkad</p>
               </div>
               <GithubProfile token={githubToken} />
             </section>
@@ -118,7 +118,7 @@ export default function Profile() {
           <section className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-3xl font-serif font-bold tracking-tight">Min Bevakningslista</h2>
-              <p className="text-sm text-muted">Håll koll på dina favoritaktier</p>
+              <p className="text-sm text-muted-foreground">Håll koll på dina favoritaktier</p>
             </div>
             <Watchlist />
           </section>
@@ -130,7 +130,7 @@ export default function Profile() {
               </div>
               <div>
                 <h3 className="text-xl font-serif font-bold">Uppgradera till Premium</h3>
-                <p className="text-muted text-sm">Få tillgång till exklusiva analyser och avancerade verktyg.</p>
+                <p className="text-muted-foreground text-sm">Få tillgång till exklusiva analyser och avancerade verktyg.</p>
               </div>
             </div>
             <button className="px-8 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary/90 transition-colors">
@@ -146,11 +146,11 @@ export default function Profile() {
                 </div>
                 <div>
                   <h3 className="text-xl font-serif font-bold">GitHub-koppling</h3>
-                  <p className="text-muted text-sm">Koppla ditt konto för att synka din utvecklarprofil.</p>
+                  <p className="text-muted-foreground text-sm">Koppla ditt konto för att synka din utvecklarprofil.</p>
                 </div>
               </div>
               {githubToken ? (
-                <div className="flex items-center gap-2 text-emerald-500 font-bold">
+                <div className="flex items-center gap-2 text-primary font-bold">
                   <CheckCircle2 size={20} />
                   Kopplad
                 </div>
@@ -165,7 +165,7 @@ export default function Profile() {
             </div>
             {githubToken && (
               <div className="p-4 bg-section-alt rounded-xl border border-border/50">
-                <p className="text-xs text-muted">
+                <p className="text-xs text-muted-foreground">
                   Ditt GitHub-konto är nu kopplat. Vi kan nu hämta data från din profil för att anpassa din upplevelse.
                 </p>
                 <button 

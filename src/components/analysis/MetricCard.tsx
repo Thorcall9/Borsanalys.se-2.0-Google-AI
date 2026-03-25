@@ -7,17 +7,17 @@ interface MetricCardProps {
   valueColor?: string;
 }
 
-export default function MetricCard({ label, value, trend, valueColor = "text-[#1a1a1a]" }: MetricCardProps) {
+export default function MetricCard({ label, value, trend, valueColor = "text-foreground" }: MetricCardProps) {
   return (
-    <div className="bg-white border border-black/5 rounded-xl p-5 hover:border-black/10 transition-colors shadow-sm">
-      <div className="text-[10px] font-mono text-gray-400 tracking-widest uppercase mb-2">
+    <div className="bg-card border border-border rounded-3xl p-8 hover:border-primary/50 transition-all shadow-xl shadow-black/5 group">
+      <div className="text-[10px] font-black text-muted-foreground/50 tracking-[0.2em] uppercase mb-4">
         {label}
       </div>
-      <div className={`text-3xl font-serif font-bold ${valueColor}`}>
+      <div className={`text-4xl font-black tracking-tighter group-hover:text-primary transition-colors ${valueColor}`}>
         {value}
       </div>
       {trend && (
-        <div className="text-[11px] font-mono text-gray-500 mt-1">
+        <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mt-4 pt-4 border-t border-border/50">
           {trend}
         </div>
       )}

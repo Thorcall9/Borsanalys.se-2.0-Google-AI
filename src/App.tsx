@@ -16,6 +16,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import { AuthProvider } from "./contexts/AuthContext";
 import { SearchProvider } from "./contexts/SearchContext";
 import ErrorBoundary from "./components/ErrorBoundary";
+import { AdminSubscribers } from "./components/AdminSubscribers";
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
                 <Route path="/verktyg" element={<Tools />} />
                 <Route path="/verktyg/rantakalkylator" element={<Tools />} />
                 <Route path="/om-oss" element={<About />} />
+                <Route path="/admin/subscribers" element={<AdminSubscribers />} />
               </Routes>
             </Layout>
           </SearchProvider>

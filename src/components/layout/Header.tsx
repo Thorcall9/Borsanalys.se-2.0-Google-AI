@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { TrendingUp, Menu, X, Search, ChevronRight, LogIn, LogOut, User as UserIcon } from "lucide-react";
+import { motion } from "framer-motion";
 import { useAuth } from "../../contexts/AuthContext";
 import { useSearch } from "../../contexts/SearchContext";
 import GlobalSearch from "../GlobalSearch";
@@ -35,25 +36,28 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
-            <TrendingUp size={20} className="text-white" />
+          <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 shadow-lg shadow-primary/20">
+            <TrendingUp size={20} className="text-primary-foreground" />
           </div>
-          <span className="font-serif text-xl font-bold tracking-tight">
+          <span className="text-xl font-black tracking-tighter text-foreground">
             Börsanalys<span className="text-primary">.se</span>
           </span>
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-10">
           {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`text-sm font-medium transition-colors hover:text-primary ${
-                location.pathname.startsWith(item.path) ? "text-primary" : "text-muted"
+              className={`text-[13px] font-bold uppercase tracking-widest transition-all hover:text-primary relative group/nav ${
+                location.pathname.startsWith(item.path) ? "text-primary" : "text-muted-foreground"
               }`}
             >
               {item.label}
+              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover/nav:w-full ${
+                location.pathname.startsWith(item.path) ? "w-full" : ""
+              }`} />
             </Link>
           ))}
           <div className="w-px h-4 bg-border mx-2" />
@@ -90,29 +94,38 @@ export default function Header() {
             </button>
           )}
           
-          <button 
+          <motion.button 
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={openSearch}
-            className="text-muted hover:text-primary transition-colors ml-2 relative group"
+            className="w-10 h-10 flex items-center justify-center bg-muted/50 hover:bg-accent text-muted-foreground hover:text-primary transition-colors ml-2 rounded-full border border-border/50 relative group"
             title="Sök (⌘K)"
           >
             <Search size={18} />
-            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-card border border-border px-1.5 py-0.5 rounded text-[10px] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-card border border-border px-1.5 py-0.5 rounded text-[10px] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-sm">
               Sök (⌘K)
             </span>
-          </button>
+          </motion.button>
         </nav>
 
         {/* Mobile Menu Button */}
-        <div className="flex items-center gap-4 md:hidden">
-          <button 
+        <div className="flex items-center gap-3 md:hidden">
+          <motion.button 
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             onClick={openSearch}
-            className="text-muted hover:text-primary transition-colors"
+            className="w-10 h-10 flex items-center justify-center bg-muted/50 text-muted-foreground hover:text-primary rounded-full border border-border/50"
           >
             <Search size={20} />
-          </button>
-          <button className="text-muted" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          </motion.button>
+          <motion.button 
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className="w-10 h-10 flex items-center justify-center bg-muted/50 text-muted-foreground hover:text-primary rounded-full border border-border/50" 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          </motion.button>
         </div>
       </div>
 

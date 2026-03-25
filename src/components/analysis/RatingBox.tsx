@@ -14,27 +14,27 @@ export default function RatingBox({
   maxRating = 5, 
   title = "Analytikerbetyg",
   description, 
-  accentColor = "#1a3c6e" 
+  accentColor = "#1e40af" 
 }: RatingBoxProps) {
   return (
-    <div className="bg-white border border-black/5 rounded-xl p-5 shadow-sm">
-      <div className="flex justify-between items-center mb-4">
-        <div className="text-[10px] font-mono tracking-widest text-gray-400 uppercase">{title}</div>
-        <div className="flex gap-1">
+    <div className="bg-card border border-border rounded-3xl p-8 shadow-xl shadow-black/5">
+      <div className="flex justify-between items-center mb-6">
+        <div className="text-[10px] font-black tracking-[0.2em] text-muted-foreground/50 uppercase">{title}</div>
+        <div className="flex gap-1.5">
           {[...Array(maxRating)].map((_, i) => (
             <Star 
               key={i} 
-              size={14} 
+              size={18} 
               fill={i < rating ? accentColor : "transparent"} 
-              className={i < rating ? "" : "text-gray-200"}
+              className={i < rating ? "text-primary" : "text-muted"}
               style={{ color: i < rating ? accentColor : undefined }}
             />
           ))}
         </div>
       </div>
       {description && (
-        <div className="text-sm italic text-gray-600">
-          <strong className="text-[#1a1a1a] not-italic">{rating}/{maxRating}</strong> — {description}
+        <div className="text-sm text-muted-foreground leading-relaxed font-medium">
+          <span className="text-foreground font-black mr-2">{rating}/{maxRating}</span> {description}
         </div>
       )}
     </div>

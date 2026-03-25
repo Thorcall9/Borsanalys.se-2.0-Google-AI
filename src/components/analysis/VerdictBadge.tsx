@@ -8,7 +8,7 @@ export default function VerdictBadge({ verdict }: VerdictBadgeProps) {
   const getColors = (v: string) => {
     switch (v.toUpperCase()) {
       case 'KÖP':
-        return 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20';
+        return 'bg-primary/10 text-primary border-primary/20';
       case 'AVVAKTA':
         return 'bg-amber-500/10 text-amber-500 border-amber-500/20';
       case 'SÄLJ':

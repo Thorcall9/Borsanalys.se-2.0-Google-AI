@@ -19,7 +19,7 @@ export const StockPriceBadge: React.FC<StockPriceBadgeProps> = ({ ticker }) => {
   useEffect(() => {
     const fetchPrice = async () => {
       try {
-        const response = await fetch(`/api/stocks/${ticker}`);
+        const response = await fetch(`${window.location.origin}/api/stocks/${ticker}`);
         
         let result;
         const text = await response.text();
@@ -63,7 +63,7 @@ export const StockPriceBadge: React.FC<StockPriceBadgeProps> = ({ ticker }) => {
       <div className="font-serif font-bold text-sm">
         {data.price.toLocaleString()} <span className="text-[10px] font-sans font-normal text-muted">{data.currency}</span>
       </div>
-      <div className={`flex items-center gap-0.5 text-[10px] font-mono font-bold ${isPositive ? 'text-emerald-600' : 'text-rose-600'}`}>
+      <div className={`flex items-center gap-0.5 text-[10px] font-mono font-bold ${isPositive ? 'text-primary' : 'text-rose-600'}`}>
         {isPositive ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
         {isPositive ? '+' : ''}{data.changePercent.toFixed(2)}%
       </div>

@@ -12,29 +12,29 @@ interface SwotGridProps {
 
 export default function SwotGrid({ data, title }: SwotGridProps) {
   const categories = [
-    { key: 'strengths', title: 'STYRKOR', color: 'text-emerald-600', items: data.strengths },
-    { key: 'weaknesses', title: 'SVAGHETER', color: 'text-red-600', items: data.weaknesses },
-    { key: 'opportunities', title: 'MÖJLIGHETER', color: 'text-blue-600', items: data.opportunities },
-    { key: 'threats', title: 'HOT', color: 'text-amber-600', items: data.threats },
+    { key: 'strengths', title: 'Styrkor', color: 'text-primary', items: data.strengths },
+    { key: 'weaknesses', title: 'Svagheter', color: 'text-red-500', items: data.weaknesses },
+    { key: 'opportunities', title: 'Möjligheter', color: 'text-blue-500', items: data.opportunities },
+    { key: 'threats', title: 'Hot', color: 'text-amber-500', items: data.threats },
   ];
 
   return (
-    <div className="bg-white border border-black/5 rounded-xl overflow-hidden shadow-sm">
+    <div className="bg-card border border-border rounded-[2.5rem] overflow-hidden shadow-xl shadow-black/5">
       {title && (
-        <div className="p-4 bg-black/5 border-b border-black/5 text-[11px] font-mono tracking-widest uppercase text-gray-400">
+        <div className="px-10 py-6 bg-muted/30 border-b border-border text-[10px] font-black tracking-[0.2em] uppercase text-muted-foreground/50">
           {title}
         </div>
       )}
       <div className="grid grid-cols-1 md:grid-cols-2">
         {categories.map((cat) => (
-          <div key={cat.key} className="p-5 border border-black/5">
-            <div className={`font-serif text-sm font-bold tracking-widest mb-3 ${cat.color}`}>
+          <div key={cat.key} className="p-10 border border-border/50">
+            <div className={`text-sm font-black tracking-widest uppercase mb-6 ${cat.color}`}>
               {cat.title}
             </div>
-            <ul className="space-y-2">
+            <ul className="space-y-4">
               {cat.items.map((item, i) => (
-                <li key={i} className="text-[12px] text-gray-600 flex gap-2">
-                  <span className="text-gray-400">—</span>
+                <li key={i} className="text-sm text-muted-foreground flex gap-3 font-medium leading-relaxed">
+                  <span className="text-muted-foreground/30">•</span>
                   {item}
                 </li>
               ))}

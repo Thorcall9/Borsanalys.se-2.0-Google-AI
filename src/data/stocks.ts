@@ -38,7 +38,7 @@ export const stocks: Record<string, StockData> = {
     stats: {
       price: "$148.50",
       change: "+2.4%",
-      pe: "48.2",
+      pe: "48.20",
       yield: "0.02%",
       marketCap: "$3.6T"
     },
@@ -63,7 +63,7 @@ export const stocks: Record<string, StockData> = {
     stats: {
       price: "245.20 kr",
       change: "+0.8%",
-      pe: "14.2",
+      pe: "14.20",
       yield: "1.8%",
       marketCap: "750 Bkr"
     },
@@ -89,7 +89,7 @@ export const stocks: Record<string, StockData> = {
     stats: {
       price: "$415.20",
       change: "-0.5%",
-      pe: "32.4",
+      pe: "32.40",
       yield: "0.75%",
       marketCap: "$3.1T"
     },
@@ -112,11 +112,11 @@ export const stocks: Record<string, StockData> = {
     logoColor: "bg-[#000000]",
     financialUnit: "MEUR",
     stats: {
-      price: "1 240 kr",
-      change: "+1.2%",
-      pe: "22.5",
-      yield: "3.2%",
-      marketCap: "265 Bkr"
+      price: "577 kr",
+      change: "-1.2%",
+      pe: "9.95",
+      yield: "5.3%",
+      marketCap: "115 Mdr EUR"
     },
     financialData: [
       { year: '2020', revenue: 561, profit: 285 },
@@ -139,7 +139,7 @@ export const stocks: Record<string, StockData> = {
     stats: {
       price: "$228.10",
       change: "+0.3%",
-      pe: "31.2",
+      pe: "31.20",
       yield: "0.45%",
       marketCap: "$3.5T"
     },
@@ -164,7 +164,7 @@ export const stocks: Record<string, StockData> = {
     stats: {
       price: "$260.40",
       change: "+3.8%",
-      pe: "85.4",
+      pe: "85.40",
       yield: "0%",
       marketCap: "$830B"
     },
@@ -189,7 +189,7 @@ export const stocks: Record<string, StockData> = {
     stats: {
       price: "285.40 kr",
       change: "-1.1%",
-      pe: "11.5",
+      pe: "11.50",
       yield: "6.2%",
       marketCap: "580 Bkr"
     },
@@ -214,7 +214,7 @@ export const stocks: Record<string, StockData> = {
     stats: {
       price: "$175.30",
       change: "+1.1%",
-      pe: "24.2",
+      pe: "24.20",
       yield: "0.45%",
       marketCap: "$2.2T"
     },
@@ -239,7 +239,7 @@ export const stocks: Record<string, StockData> = {
     stats: {
       price: "845.20 DKK",
       change: "+1.5%",
-      pe: "38.4",
+      pe: "38.40",
       yield: "1.2%",
       marketCap: "3.8 TDKK"
     },

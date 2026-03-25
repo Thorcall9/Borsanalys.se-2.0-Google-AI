@@ -50,12 +50,12 @@ export default function CompoundInterestCalculator() {
           <div className="space-y-8">
             <div className="space-y-2">
               <h3 className="text-2xl font-serif font-bold tracking-tight">Inställningar</h3>
-              <p className="text-sm text-muted">Justera parametrarna för att se din framtida förmögenhet.</p>
+              <p className="text-sm text-muted-foreground">Justera parametrarna för att se din framtida förmögenhet.</p>
             </div>
 
             <div className="space-y-6">
               <div className="space-y-3">
-                <label className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-muted font-bold">
+                <label className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-bold">
                   <span>Startkapital</span>
                   <span className="text-primary">{initialAmount.toLocaleString()} kr</span>
                 </label>
@@ -77,7 +77,7 @@ export default function CompoundInterestCalculator() {
               </div>
 
               <div className="space-y-3">
-                <label className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-muted font-bold">
+                <label className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-bold">
                   <span>Månadssparande</span>
                   <span className="text-primary">{monthlyContribution.toLocaleString()} kr</span>
                 </label>
@@ -100,7 +100,7 @@ export default function CompoundInterestCalculator() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-3">
-                  <label className="text-[10px] font-mono uppercase tracking-widest text-muted font-bold">År</label>
+                  <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-bold">År</label>
                   <input 
                     type="number" 
                     value={years} 
@@ -109,7 +109,7 @@ export default function CompoundInterestCalculator() {
                   />
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] font-mono uppercase tracking-widest text-muted font-bold">Avkastning (%)</label>
+                  <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-bold">Avkastning (%)</label>
                   <input 
                     type="number" 
                     value={interestRate} 
@@ -120,13 +120,13 @@ export default function CompoundInterestCalculator() {
               </div>
 
               <div className="space-y-3">
-                <label className="text-[10px] font-mono uppercase tracking-widest text-muted font-bold">Snabba val (Avkastning)</label>
+                <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-bold">Snabba val (Avkastning)</label>
                 <div className="flex flex-wrap gap-2">
                   {quickRates.map(rate => (
                     <button
                       key={rate}
                       onClick={() => setInterestRate(rate)}
-                      className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all ${interestRate === rate ? 'bg-primary text-white' : 'bg-white border border-border text-muted hover:border-primary/50'}`}
+                      className={`px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all ${interestRate === rate ? 'bg-primary text-white' : 'bg-white border border-border text-muted-foreground hover:border-primary/50'}`}
                     >
                       {rate}%
                     </button>
@@ -142,7 +142,7 @@ export default function CompoundInterestCalculator() {
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 bg-section-alt rounded-2xl border border-border/50 space-y-2">
-              <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-muted font-bold">
+              <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-bold">
                 <Wallet size={14} className="text-primary" /> Inbetalt kapital
               </div>
               <div className="text-2xl font-serif font-bold">
@@ -150,7 +150,7 @@ export default function CompoundInterestCalculator() {
               </div>
             </div>
             <div className="p-6 bg-section-alt rounded-2xl border border-border/50 space-y-2">
-              <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-muted font-bold">
+              <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-bold">
                 <TrendingUp size={14} className="text-success" /> Ränta-på-ränta
               </div>
               <div className="text-2xl font-serif font-bold text-success">
@@ -171,9 +171,9 @@ export default function CompoundInterestCalculator() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h4 className="text-sm font-bold flex items-center gap-2">
-                Tillväxtresa <Info size={14} className="text-muted" />
+                Tillväxtresa <Info size={14} className="text-muted-foreground" />
               </h4>
-              <div className="flex items-center gap-4 text-[10px] font-mono uppercase tracking-widest text-muted">
+              <div className="flex items-center gap-4 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
                 <div className="flex items-center gap-1.5">
                   <div className="w-2 h-2 rounded-full bg-primary" /> Inbetalt
                 </div>
@@ -250,7 +250,7 @@ export default function CompoundInterestCalculator() {
             </div>
             <div className="space-y-1">
               <h5 className="text-sm font-bold">Visste du?</h5>
-              <p className="text-xs text-muted leading-relaxed">
+              <p className="text-xs text-muted-foreground leading-relaxed">
                 Efter {years} år utgör räntan {Math.round((finalData.interest / finalData.total) * 100)}% av ditt totala kapital. Ju längre du sparar, desto mer kraftfull blir ränta-på-ränta effekten.
               </p>
             </div>

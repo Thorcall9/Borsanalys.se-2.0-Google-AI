@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   AnalysisLayout, 
   SectionHeader, 
@@ -13,10 +13,11 @@ import {
   SpiderChart
 } from './analysis';
 
-const ACCENT_COLOR = "#76b900";
+const ACCENT_COLOR = "#1e40af";
 
 const nvidiaData = {
   ticker: "NVDA",
+  yahooTicker: "NVDA",
   companyName: "NVIDIA Corporation",
   currentPrice: "~178 USD",
   marketCap: "~4 338 Mdr USD",
@@ -43,8 +44,8 @@ const sections = [
   { id: 'risk', title: 'VI. Riskprofil', number: 'VI' },
   { id: 'esg', title: 'VII. ESG & Makro', number: 'VII' },
   { id: 'ai', title: 'VIII. AI-observationer', number: 'VIII' },
-  { id: 'summary', title: 'IX. Sammanfattning', number: 'IX' },
-  { id: 'scenarios', title: 'X. Scenarier', number: 'X' }
+  { id: 'summary', title: 'IX. Sammanfattning & Investeringsbeslut', number: 'IX' },
+  { id: 'scenarios', title: 'X. Scenarier (Bull, Base & Bear Case)', number: 'X' }
 ];
 
 interface NvidiaDeepDiveProps {
@@ -58,6 +59,27 @@ export default function NvidiaDeepDive({
   isWatchlistLoading, 
   onToggleWatchlist 
 }: NvidiaDeepDiveProps) {
+  const [liveData, setLiveData] = useState<{
+    price: number;
+    currency: string;
+    change: number;
+    changePercent: number;
+    pe: number;
+    yield: number;
+    marketCap: number;
+  } | null>(null);
+
+  useEffect(() => {
+    fetch(`${window.location.origin}/api/stocks/${encodeURIComponent(nvidiaData.yahooTicker)}`)
+      .then(res => res.json())
+      .then(json => {
+        if (!json.error) {
+          setLiveData(json);
+        }
+      })
+      .catch(err => console.error("Failed to fetch live data for NVIDIA:", err));
+  }, []);
+
   const jsonOverview = {
     company: nvidiaData.companyName,
     ticker: nvidiaData.ticker,
@@ -95,16 +117,24 @@ export default function NvidiaDeepDive({
         <section id="overview" className="scroll-mt-24 mb-20">
           <div className="flex justify-between items-center mb-6">
             <SectionHeader number="I" title="FÖRETAGSÖVERSIKT" accentColor={ACCENT_COLOR} />
-            <div className="px-3 py-1 bg-emerald-50 border border-emerald-100 rounded text-[10px] font-bold text-emerald-600 uppercase tracking-wider">
+            <div className="px-3 py-1 bg-blue-50 border border-blue-100 rounded text-[10px] font-bold text-blue-600 uppercase tracking-wider">
               Betyg: {nvidiaData.scores.affarsmodell}/5
             </div>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-            <MetricCard label="BÖRSKURS (~)" value={nvidiaData.currentPrice} trend="20 Mars 2026" />
-            <MetricCard label="BÖRSVÄRDE" value={nvidiaData.marketCap} trend="Nuvarande" />
-            <MetricCard label="P/E (NUVARANDE)" value="36,2x" trend="Trailing" />
-            <MetricCard label="P/E 2026E" value="21,6x" trend="Forward" />
+            <MetricCard 
+              label="BÖRSKURS (LIVE)" 
+              value={liveData ? `${liveData.price.toLocaleString()} ${liveData.currency}` : nvidiaData.currentPrice} 
+              trend={liveData ? `${liveData.changePercent > 0 ? '+' : ''}${liveData.changePercent.toFixed(2)}%` : "20 Mars 2026"} 
+            />
+            <MetricCard 
+              label="BÖRSVÄRDE" 
+              value={liveData ? `${(liveData.marketCap / 1e12).toFixed(2)} T${liveData.currency}` : nvidiaData.marketCap} 
+              trend="Nuvarande" 
+            />
+            <MetricCard label="P/E (NUVARANDE)" value={liveData?.pe ? `${liveData.pe.toFixed(2)}x` : "36.00x"} trend="Trailing" />
+            <MetricCard label="P/E 2026E" value="22.00x" trend="Forward" />
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
@@ -165,8 +195,8 @@ export default function NvidiaDeepDive({
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
             <Card title="ENKELT FÖRKLARAT" accentColor={ACCENT_COLOR}>
-              <div className="p-5 bg-emerald-50 border border-emerald-100 rounded-xl">
-                <p className="text-sm text-emerald-800 leading-relaxed italic">
+              <div className="p-5 bg-primary/5 border border-primary/10 rounded-xl">
+                <p className="text-sm text-primary/80 leading-relaxed italic">
                   NVIDIA säljer de kraftfulla chip som krävs för att träna och köra AI. ChatGPT, Gemini, Claude och de flesta andra stora AI-modeller tränas på NVIDIA-hårdvara. Det gör NVIDIA till ryggraden i AI-revolutionen.
                 </p>
               </div>
@@ -198,7 +228,7 @@ export default function NvidiaDeepDive({
         <section id="strategy" className="scroll-mt-24 mb-20">
           <div className="flex justify-between items-center mb-6">
             <SectionHeader number="II" title="STRATEGISK ANALYS & MOAT" accentColor={ACCENT_COLOR} />
-            <div className="px-3 py-1 bg-emerald-50 border border-emerald-100 rounded text-[10px] font-bold text-emerald-600 uppercase tracking-wider">
+            <div className="px-3 py-1 bg-blue-50 border border-blue-100 rounded text-[10px] font-bold text-blue-600 uppercase tracking-wider">
               ⭐ 5/5
             </div>
           </div>
@@ -214,32 +244,32 @@ export default function NvidiaDeepDive({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
             <Card title="TEKNOLOGISK LEDNING" accentColor={ACCENT_COLOR}>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Blackwell Ultra-plattformen dominerar AI-inferens</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Vera Rubin-plattformen på väg (nästa generations)</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> NVLink-arkitektur för GPU-kluster</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> 30+ år av GPU-optimering – svår att kopiera snabbt</li>
+                <li className="flex gap-2"><span className="text-primary">•</span> Blackwell Ultra-plattformen dominerar AI-inferens</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Vera Rubin-plattformen på väg (nästa generations)</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> NVLink-arkitektur för GPU-kluster</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> 30+ år av GPU-optimering – svår att kopiera snabbt</li>
               </ul>
             </Card>
             <Card title="CUDA-EKOSYSTEMET" accentColor={ACCENT_COLOR}>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Över 5 miljoner CUDA-utvecklare globalt</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Tusentals bibliotek och ramverk byggda för CUDA</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Extrema byteskostnader för kunder</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> 20+ år av ekosystemsuppbyggnad</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Över 5 miljoner CUDA-utvecklare globalt</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Tusentals bibliotek och ramverk byggda för CUDA</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Extrema byteskostnader för kunder</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> 20+ år av ekosystemsuppbyggnad</li>
               </ul>
             </Card>
             <Card title="NÄTVERKSEFFEKTER" accentColor={ACCENT_COLOR}>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Fler användare → fler ramverk → fler användare</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Standardplattform för AI-forskning</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Strategiska partnerskap: AWS, Google, Azure, Meta</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Fler användare → fler ramverk → fler användare</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Standardplattform för AI-forskning</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Strategiska partnerskap: AWS, Google, Azure, Meta</li>
               </ul>
             </Card>
             <Card title="SKALFÖRDELAR" accentColor={ACCENT_COLOR}>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> R&D på $18,5 mdr FY2026 – mångdubbelt mer än konkurrenter</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Produktcykel ned till 1 år (Blackwell → Rubin)</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Volymer som sänker tillverkningskostnad per enhet</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> R&D på $18,5 mdr FY2026 – mångdubbelt mer än konkurrenter</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Produktcykel ned till 1 år (Blackwell → Rubin)</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Volymer som sänker tillverkningskostnad per enhet</li>
               </ul>
             </Card>
           </div>
@@ -285,7 +315,7 @@ export default function NvidiaDeepDive({
           <div className="mt-10">
             <RatingBox 
               rating={nvidiaData.scores.strategiskMoat} 
-              description="5/5 — NVIDIAs vallgrav är en av de djupaste i teknikvärlden, bestående av både överlägsen hårdvara och det oumbärliga CUDA-ekosystemet." 
+              description="5/5 — (Fokus: Konkurrensfördelar och marknadstrender). NVIDIAs vallgrav är en av de djupaste i teknikvärlden, bestående av både överlägsen hårdvara och det oumbärliga CUDA-ekosystemet." 
             />
           </div>
         </section>
@@ -294,7 +324,7 @@ export default function NvidiaDeepDive({
         <section id="financials" className="scroll-mt-24 mb-20">
           <div className="flex justify-between items-center mb-6">
             <SectionHeader number="III" title="FINANSIELL ANALYS" accentColor={ACCENT_COLOR} />
-            <div className="px-3 py-1 bg-emerald-50 border border-emerald-100 rounded text-[10px] font-bold text-emerald-600 uppercase tracking-wider">
+            <div className="px-3 py-1 bg-blue-50 border border-blue-100 rounded text-[10px] font-bold text-blue-600 uppercase tracking-wider">
               ⭐ 5/5
             </div>
           </div>
@@ -362,9 +392,9 @@ export default function NvidiaDeepDive({
                   <tr>
                     <td className="py-3 text-gray-600">Omsättning (Mdr USD)</td>
                     <td className="py-3">130,5</td>
-                    <td className="py-3 font-bold text-emerald-600">215,9</td>
-                    <td className="py-3 font-bold text-emerald-600">365,6</td>
-                    <td className="py-3 font-bold text-emerald-600">480,7</td>
+                    <td className="py-3 font-bold text-blue-600">215,9</td>
+                    <td className="py-3 font-bold text-blue-600">365,6</td>
+                    <td className="py-3 font-bold text-blue-600">480,7</td>
                   </tr>
                   <tr>
                     <td className="py-3 text-gray-600">EBIT (Mdr USD)</td>
@@ -384,8 +414,8 @@ export default function NvidiaDeepDive({
                     <td className="py-3 text-gray-600">Vinst per aktie (EPS)</td>
                     <td className="py-3">2,96</td>
                     <td className="py-3">4,92</td>
-                    <td className="py-3 font-bold text-emerald-600">8,28</td>
-                    <td className="py-3 font-bold text-emerald-600">11,11</td>
+                    <td className="py-3 font-bold text-blue-600">8,28</td>
+                    <td className="py-3 font-bold text-blue-600">11,11</td>
                   </tr>
                   <tr>
                     <td className="py-3 text-gray-600">Rörelsemarginal</td>
@@ -429,9 +459,9 @@ export default function NvidiaDeepDive({
               }} 
             />
             <div className="flex flex-col justify-center">
-              <div className="p-6 bg-emerald-50 border border-emerald-100 rounded-2xl">
-                <h4 className="text-sm font-bold text-emerald-900 mb-2">Vad betyder marginalerna?</h4>
-                <p className="text-xs text-emerald-800 leading-relaxed">
+              <div className="p-6 bg-blue-50 border border-blue-100 rounded-2xl">
+                <h4 className="text-sm font-bold text-blue-900 mb-2">Vad betyder marginalerna?</h4>
+                <p className="text-xs text-blue-800 leading-relaxed">
                   En rörelsemarginal på 60%+ innebär att av varje 100 kr NVIDIA tjänar i intäkter behåller bolaget 60 kr efter att ha betalat sina rörelsekostnader. Det är extremt högt – till järelse har ett vanligt tillverkningsbolag ofta 5–15%.
                 </p>
               </div>
@@ -464,7 +494,7 @@ export default function NvidiaDeepDive({
                   </div>
                   <div className="p-4 bg-black/5 rounded-xl">
                     <div className="text-[10px] text-gray-400 uppercase mb-1">Fritt Kassaflöde (FY26)</div>
-                    <div className="text-xl font-bold text-emerald-600">$96.6B</div>
+                    <div className="text-xl font-bold text-blue-600">$96.6B</div>
                   </div>
                 </div>
               </div>
@@ -486,7 +516,7 @@ export default function NvidiaDeepDive({
                   <tr>
                     <td className="py-3 text-gray-600">ROE (avkastning på eget kapital)</td>
                     <td className="py-3">119%</td>
-                    <td className="py-3 font-bold text-emerald-600">101%</td>
+                    <td className="py-3 font-bold text-blue-600">101%</td>
                     <td className="py-3 text-xs text-gray-500">Extremt högt – branschnorm ~15–25%</td>
                   </tr>
                   <tr>
@@ -509,9 +539,9 @@ export default function NvidiaDeepDive({
                   </tr>
                 </tbody>
               </table>
-              <div className="mt-6 p-6 bg-emerald-50 border border-emerald-100 rounded-2xl">
-                <h4 className="text-sm font-bold text-emerald-900 mb-2">Förenklat</h4>
-                <p className="text-xs text-emerald-800 leading-relaxed">
+              <div className="mt-6 p-6 bg-blue-50 border border-blue-100 rounded-2xl">
+                <h4 className="text-sm font-bold text-blue-900 mb-2">Förenklat</h4>
+                <p className="text-xs text-blue-800 leading-relaxed">
                   ROE på 101% betyder att för varje 100 kr aktieägarna har investerat genererar NVIDIA 101 kr i vinst per år. Det är närmast unikt och visar att bolaget inte behöver binda mycket kapital för att producera enorma vinster.
                 </p>
               </div>
@@ -528,7 +558,7 @@ export default function NvidiaDeepDive({
 
           <RatingBox 
             rating={nvidiaData.scores.finansiellKvalitet} 
-            description="5/5 — Finansiellt i en klass för sig med extrem kassaflödesgenerering och marginaler som saknar motstycke för ett bolag av denna storlek." 
+            description="5/5 — (Fokus: Vinsttillväxt, balansräkning och kassaflöde). Finansiellt i en klass för sig med extrem kassaflödesgenerering och marginaler som saknar motstycke för ett bolag av denna storlek." 
           />
         </section>
 
@@ -583,11 +613,11 @@ export default function NvidiaDeepDive({
                 <tbody className="divide-y divide-black/5">
                   <tr>
                     <td className="py-3 text-gray-600">P/E</td>
-                    <td className="py-3">48,5x</td>
-                    <td className="py-3">38,3x</td>
-                    <td className="py-3">36,2x</td>
-                    <td className="py-3 font-bold text-emerald-600">21,6x</td>
-                    <td className="py-3 font-bold text-emerald-600">16,1x</td>
+                    <td className="py-3">49.00x</td>
+                    <td className="py-3">38.00x</td>
+                    <td className="py-3">36.00x</td>
+                    <td className="py-3 font-bold text-blue-600">22.00x</td>
+                    <td className="py-3 font-bold text-blue-600">16.00x</td>
                   </tr>
                   <tr>
                     <td className="py-3 text-gray-600">EV/EBIT</td>
@@ -644,7 +674,7 @@ export default function NvidiaDeepDive({
 
           <RatingBox 
             rating={nvidiaData.scores.vardering} 
-            description="3/5 — Värderingen är ansträngd men givet tillväxten framstår P/E 21x på 2026 års estimat som rimligt för ett bolag med denna marknadsposition." 
+            description="3/5 — (Fokus: Multiplar som P/E, EV/EBIT och PEG). Värderingen är ansträngd men givet tillväxten framstår P/E 21x på 2026 års estimat som rimligt för ett bolag med denna marknadsposition." 
           />
         </section>
 
@@ -652,7 +682,7 @@ export default function NvidiaDeepDive({
         <section id="growth" className="scroll-mt-24 mb-20">
           <div className="flex justify-between items-center mb-6">
             <SectionHeader number="V" title="TILLVÄXTMOTORER & TRIGGERS" accentColor={ACCENT_COLOR} />
-            <div className="px-3 py-1 bg-emerald-50 border border-emerald-100 rounded text-[10px] font-bold text-emerald-600 uppercase tracking-wider">
+            <div className="px-3 py-1 bg-blue-50 border border-blue-100 rounded text-[10px] font-bold text-blue-600 uppercase tracking-wider">
               ⭐ 5/5
             </div>
           </div>
@@ -668,45 +698,45 @@ export default function NvidiaDeepDive({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
             <Card title="AGENTIC AI – NY TILLVÄXTVÅG" accentColor={ACCENT_COLOR}>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> AI-agenter som fattar beslut autonomt kräver massiv inferenskapacitet</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Jensen Huang: "Enterprise adoption of agents is skyrocketing"</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Inferens kräver mer GPU-kapacitet per användare än träning</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> AI-agenter som fattar beslut autonomt kräver massiv inferenskapacitet</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Jensen Huang: "Enterprise adoption of agents is skyrocketing"</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Inferens kräver mer GPU-kapacitet per användare än träning</li>
               </ul>
             </Card>
             <Card title="BLACKWELL ULTRA & VERA RUBIN" accentColor={ACCENT_COLOR}>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Blackwell Ultra: 50x bättre inferensprestanda vs Hopper</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Vera Rubin: nästa plattform, ytterligare 10x lägre kostnad/token</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Ettårigt produktcykelschema håller NVIDIA steget före</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Blackwell Ultra: 50x bättre inferensprestanda vs Hopper</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Vera Rubin: nästa plattform, ytterligare 10x lägre kostnad/token</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Ettårigt produktcykelschema håller NVIDIA steget före</li>
               </ul>
             </Card>
             <Card title="FYSISK AI & ROBOTIK" accentColor={ACCENT_COLOR}>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> NVIDIA Cosmos – plattform för fysisk AI och robotutveckling</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Isaac GR00T – open-source modell för humanoidrobotar</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Partners: Boston Dynamics, Caterpillar, LG, Franka Robotics</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> NVIDIA Cosmos – plattform för fysisk AI och robotutveckling</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Isaac GR00T – open-source modell för humanoidrobotar</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Partners: Boston Dynamics, Caterpillar, LG, Franka Robotics</li>
               </ul>
             </Card>
             <Card title="AUTONOMA FORDON & HÄLSOVÅRD" accentColor={ACCENT_COLOR}>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> DRIVE Thor-plattformen: BYD, XPENG, Lucid m.fl.</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Partnerskap med Mercedes-Benz (CLA-modellen)</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> BioNeMo: AI för läkemedelsupptäckt (Lilly-partnerskap)</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Sovereign AI: länder bygger egna nationella AI-fabriker</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> DRIVE Thor-plattformen: BYD, XPENG, Lucid m.fl.</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Partnerskap med Mercedes-Benz (CLA-modellen)</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> BioNeMo: AI för läkemedelsupptäckt (Lilly-partnerskap)</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Sovereign AI: länder bygger egna nationella AI-fabriker</li>
               </ul>
             </Card>
           </div>
 
-          <div className="mb-10 p-6 bg-emerald-50 border border-emerald-100 rounded-2xl">
-            <h4 className="text-sm font-bold text-emerald-900 mb-2">Q1 FY2027-guidning</h4>
-            <p className="text-xs text-emerald-800 leading-relaxed">
+          <div className="mb-10 p-6 bg-blue-50 border border-blue-100 rounded-2xl">
+            <h4 className="text-sm font-bold text-blue-900 mb-2">Q1 FY2027-guidning</h4>
+            <p className="text-xs text-blue-800 leading-relaxed">
               <strong>Q1 FY2027-guidning:</strong> NVIDIA guidar för 78 miljarder USD i intäkter för Q1 FY2027 – upp från 68,1 miljarder i Q4 FY2026. Det indikerar fortsatt stark tillväxt och tyder på att efterfrågan är robust. Notera att bolaget inte räknar med någon intäkt från Kina i sin prognos.
             </p>
           </div>
 
           <RatingBox 
             rating={nvidiaData.scores.tillvaxtutsikter} 
-            description="5/5 — AI-revolutionen är bara i sin början med Sovereign AI och Blackwell-arkitekturen som starka framtida tillväxtdrivare." 
+            description="5/5 — (Fokus: Expansion, innovation och katalysatorer). AI-revolutionen är bara i sin början med Sovereign AI och Blackwell-arkitekturen som starka framtida tillväxtdrivare." 
           />
         </section>
 
@@ -777,7 +807,7 @@ export default function NvidiaDeepDive({
 
           <RatingBox 
             rating={nvidiaData.scores.riskprofil} 
-            description="2/5 — (Inverterat betyg: 2 innebär hög risk). Geopolitiskt beroende av Taiwan och TSMC utgör en betydande 'single point of failure'." 
+            description="2/5 — (Fokus: Branschspecifika och generella risker. Inverterad skala). (Inverterat betyg: 2 innebär hög risk). Geopolitiskt beroende av Taiwan och TSMC utgör en betydande 'single point of failure'." 
           />
         </section>
 
@@ -801,18 +831,18 @@ export default function NvidiaDeepDive({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
             <Card title="MILJÖ (E)" accentColor={ACCENT_COLOR}>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Energieffektivitetsledare (Grace Hopper topp Green500)</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Indirekt hög energiförbrukning via kundernas datacenter</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Earth-2: öppna klimatmodeller för väder och klimat</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Planerar utöka USA-baserad tillverkning</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Energieffektivitetsledare (Grace Hopper topp Green500)</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Indirekt hög energiförbrukning via kundernas datacenter</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Earth-2: öppna klimatmodeller för väder och klimat</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Planerar utöka USA-baserad tillverkning</li>
               </ul>
             </Card>
             <Card title="SOCIALT & STYRNING (S/G)" accentColor={ACCENT_COLOR}>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Stark bolagsstyrning med erfaret styre</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Jensen Huang – transparens och tydlig vision</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Hög aktiebaserad kompensation (~6,4 mdr USD FY2026)</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Pågående rättsprocesser (aktieklass-mål från 2018)</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Stark bolagsstyrning med erfaret styre</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Jensen Huang – transparens och tydlig vision</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Hög aktiebaserad kompensation (~6,4 mdr USD FY2026)</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Pågående rättsprocesser (aktieklass-mål från 2018)</li>
               </ul>
             </Card>
           </div>
@@ -831,7 +861,7 @@ export default function NvidiaDeepDive({
 
           <RatingBox 
             rating={nvidiaData.scores.esgMakro} 
-            description="3/5 — Fokus på energieffektivitet i chip-design är centralt, men energifrågan för datacenter förblir en utmaning för hela sektorn." 
+            description="3/5 — (Fokus: Hållbarhet och makroekonomisk exponering). Fokus på energieffektivitet i chip-design är centralt, men energifrågan för datacenter förblir en utmaning för hela sektorn." 
           />
         </section>
 
@@ -839,7 +869,7 @@ export default function NvidiaDeepDive({
         <section id="ai" className="scroll-mt-24 mb-20">
           <div className="flex justify-between items-center mb-6">
             <SectionHeader number="VIII" title="AI-OBSERVATIONER 🔍" accentColor={ACCENT_COLOR} />
-            <div className="px-3 py-1 bg-emerald-50 border border-emerald-100 rounded text-[10px] font-bold text-emerald-600 uppercase tracking-wider">
+            <div className="px-3 py-1 bg-blue-50 border border-blue-100 rounded text-[10px] font-bold text-blue-600 uppercase tracking-wider">
               ⭐ 4/5
             </div>
           </div>
@@ -855,11 +885,11 @@ export default function NvidiaDeepDive({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
             <Card title="POSITIVA SIGNALER" accentColor={ACCENT_COLOR}>
               <ul className="space-y-2 text-sm text-gray-600">
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Q4 FY2026 slog estimat med god marginal</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Q1 FY2027-guidning på 78 mdr USD (vs estimat ~73 mdr)</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Återköpsprogram på 71 mdr USD indikerar ledningens tilltro</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Meta-partnerskap: "miljoner Blackwell och Rubin GPU:er"</li>
-                <li className="flex gap-2"><span className="text-emerald-500">•</span> Anthropic-investering – strategisk positionering</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Q4 FY2026 slog estimat med god marginal</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Q1 FY2027-guidning på 78 mdr USD (vs estimat ~73 mdr)</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Återköpsprogram på 71 mdr USD indikerar ledningens tilltro</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Meta-partnerskap: "miljoner Blackwell och Rubin GPU:er"</li>
+                <li className="flex gap-2"><span className="text-blue-500">•</span> Anthropic-investering – strategisk positionering</li>
               </ul>
             </Card>
             <Card title="VARNINGSSIGNALER" accentColor={ACCENT_COLOR}>
@@ -882,7 +912,7 @@ export default function NvidiaDeepDive({
 
           <RatingBox 
             rating={nvidiaData.scores.aiObservationer} 
-            description="4/5 — Dominant inom både träning och inferens. Blackwell och Spectrum-X stärker positionen ytterligare." 
+            description="4/5 — (Fokus: Sentimentanalys och dolda mönster i datan). Dominant inom både träning och inferens. Blackwell och Spectrum-X stärker positionen ytterligare." 
           />
         </section>
 
@@ -928,16 +958,16 @@ export default function NvidiaDeepDive({
             accentColor={ACCENT_COLOR}
           />
 
-          <div className="mt-8 p-6 bg-emerald-50 border border-emerald-100 rounded-2xl">
-            <p className="text-sm leading-relaxed text-emerald-900">
+          <div className="mt-8 p-6 bg-blue-50 border border-blue-100 rounded-2xl">
+            <p className="text-sm leading-relaxed text-blue-900">
               Vi rekommenderar att bevaka aktien vid kurskorrigeringar, speciellt om P/E på forward 12 månader faller under 20x eller om ny negativ regulatorisk nyhet driver ned kursen temporärt. För den som redan äger NVIDIA är caset intakt – men att köpa på nuvarande nivåer kräver övertygelse om att AI-investeringarna håller i sig.
             </p>
           </div>
         </section>
 
-        {/* SECTION X: SCENARIER */}
+        {/* SECTION X: SCENARIER (BULL, BASE & BEAR CASE) */}
         <section id="scenarios" className="scroll-mt-24 mb-32">
-          <SectionHeader number="X" title="SCENARIER: BULL, BASE & BEAR CASE 📈📉" accentColor={ACCENT_COLOR} />
+          <SectionHeader number="X" title="SCENARIER (BULL, BASE & BEAR CASE)" accentColor={ACCENT_COLOR} />
           
           <div className="mb-10">
             <ScenarioCards scenarios={[

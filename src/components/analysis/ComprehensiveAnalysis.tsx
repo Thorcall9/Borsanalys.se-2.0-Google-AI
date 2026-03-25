@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import AnalysisLayout from './AnalysisLayout';
 import SectionHeader from './SectionHeader';
 import MetricCard from './MetricCard';
@@ -25,7 +26,30 @@ export default function ComprehensiveAnalysis({
   isWatchlistLoading, 
   onToggleWatchlist 
 }: ComprehensiveAnalysisProps) {
-  const ACCENT_COLOR = "#3b82f6"; // Default blue, can be customized or derived
+  const ACCENT_COLOR = "#1e40af"; // Royal Blue
+
+  const [liveData, setLiveData] = useState<{
+    price: number;
+    currency: string;
+    change: number;
+    changePercent: number;
+    pe: number;
+    yield: number;
+    marketCap: number;
+  } | null>(null);
+
+  useEffect(() => {
+    if (data.yahooTicker) {
+      fetch(`${window.location.origin}/api/stocks/${encodeURIComponent(data.yahooTicker)}`)
+        .then(res => res.json())
+        .then(json => {
+          if (!json.error) {
+            setLiveData(json);
+          }
+        })
+        .catch(err => console.error("Failed to fetch live data:", err));
+    }
+  }, [data.yahooTicker]);
 
   const sections = [
     { id: 'overview', title: 'I. Företagsöversikt' },
@@ -36,14 +60,25 @@ export default function ComprehensiveAnalysis({
     { id: 'risk', title: 'VI. Riskprofil' },
     { id: 'esg', title: 'VII. ESG & Makro' },
     { id: 'ai', title: 'VIII. AI-observationer' },
-    { id: 'summary', title: 'IX. Sammanfattning' },
-    { id: 'scenarios', title: 'X. Scenarier' }
+    { id: 'summary', title: 'IX. Sammanfattning & Investeringsbeslut' },
+    { id: 'scenarios', title: 'X. Scenarier (Bull, Base & Bear Case)' }
   ];
+
+  const SCORE_LABELS: Record<string, string> = {
+    affarsmodell: "I. Företagsöversikt",
+    strategiskMoat: "II. Strategisk analys & Moat",
+    finansiellKvalitet: "III. Finansiell analys",
+    vardering: "IV. Värdering & Jämförelse",
+    tillvaxtutsikter: "V. Tillväxtmotorer & Triggers",
+    riskprofil: "VI. Riskprofil",
+    esgMakro: "VII. ESG & Makro",
+    aiObservationer: "VIII. AI-observationer"
+  };
 
   const ScoreBadge = ({ score }: { score?: number }) => {
     if (score === undefined) return null;
     return (
-      <div className="flex items-center gap-1 px-2 py-0.5 bg-blue-50 border border-blue-100 rounded text-[10px] font-bold text-blue-600 uppercase tracking-wider">
+      <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black text-primary uppercase tracking-widest">
         Betyg: {score}/5
       </div>
     );
@@ -77,15 +112,41 @@ export default function ComprehensiveAnalysis({
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <MetricCard label="BÖRSKURS (APPROX.)" value={data.price} trend="Senaste" />
-          <MetricCard label="BÖRSVÄRDE" value={data.marketCap || "N/A"} trend="Nuvarande" />
+          <MetricCard 
+            label="BÖRSKURS (LIVE)" 
+            value={liveData ? `${liveData.price.toLocaleString()} ${liveData.currency}` : data.price} 
+            trend={liveData ? `${liveData.changePercent > 0 ? '+' : ''}${liveData.changePercent.toFixed(2)}%` : "Senaste"} 
+          />
+          <MetricCard 
+            label="BÖRSVÄRDE" 
+            value={liveData ? `${(liveData.marketCap / 1e9).toFixed(1)} B${liveData.currency}` : (data.marketCap || "N/A")} 
+            trend="Nuvarande" 
+          />
           <MetricCard label="TICKER / BÖRS" value={data.ticker} trend={data.market} />
           <MetricCard label="ANSTÄLLDA" value={data.employees || "N/A"} trend="Globalt" />
         </div>
 
         {data.scores && (
-          <div className="mb-8">
-            <SpiderChart scores={data.scores} accentColor={ACCENT_COLOR} />
+          <div className="mb-12 bg-card border border-border rounded-[2.5rem] p-10">
+            <h3 className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.2em] mb-8">Analysens nyckelområden</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-8">
+              {Object.entries(data.scores).map(([key, score]) => (
+                <div key={key} className="space-y-3">
+                  <div className="flex justify-between items-end">
+                    <span className="text-[10px] font-black text-foreground uppercase tracking-widest">{SCORE_LABELS[key] || key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                    <span className="text-sm font-black text-primary">{score}/5</span>
+                  </div>
+                  <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${(score / 5) * 100}%` }}
+                      transition={{ duration: 1, ease: "easeOut" }}
+                      className="h-full bg-primary rounded-full"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
@@ -124,7 +185,7 @@ export default function ComprehensiveAnalysis({
         {data.scores && (
           <RatingBox 
             rating={data.scores.affarsmodell} 
-            description={`${data.scores.affarsmodell}/5 — Bedömning av affärsmodellens styrka och ledningens track record.`} 
+            description={`${data.scores.affarsmodell}/5 — (Fokus: Affärsmodell, ledning och ägarstruktur). Bedömning av affärsmodellens styrka och ledningens track record.`} 
           />
         )}
       </section>
@@ -163,7 +224,7 @@ export default function ComprehensiveAnalysis({
         {data.scores && (
           <RatingBox 
             rating={data.scores.strategiskMoat} 
-            description={`${data.scores.strategiskMoat}/5 — Vallgravens styrka och bolagets strategiska positionering.`} 
+            description={`${data.scores.strategiskMoat}/5 — (Fokus: Konkurrensfördelar och marknadstrender). Vallgravens styrka och bolagets strategiska positionering.`} 
           />
         )}
       </section>
@@ -186,20 +247,24 @@ export default function ComprehensiveAnalysis({
             <div className="space-y-4">
               <div className="flex justify-between items-end border-b border-black/5 pb-2">
                 <span className="text-xs text-gray-400 uppercase">P/E-tal</span>
-                <span className="text-lg font-serif font-bold text-[#1a1a1a]">{data.pe}</span>
+                <span className="text-lg font-serif font-bold text-[#1a1a1a]">
+                  {liveData?.pe ? liveData.pe.toFixed(2) : (data.pe ? parseFloat(String(data.pe).replace(',', '.')).toFixed(2) : '-')}
+                </span>
               </div>
               <div className="flex justify-between items-end border-b border-black/5 pb-2">
                 <span className="text-xs text-gray-400 uppercase">Direktavkastning</span>
                 <span className="text-lg font-serif font-bold text-[#1a1a1a]">
-                  {typeof data.yield === 'number' 
-                    ? `${(data.yield * 100).toFixed(2)}%` 
-                    : (data.yield?.includes('%') ? data.yield : `${(parseFloat(data.yield || '0') * 100).toFixed(2)}%`)}
+                  {liveData?.yield !== undefined 
+                    ? `${(liveData.yield * 100).toFixed(2)}%` 
+                    : (typeof data.yield === 'number' 
+                        ? `${(data.yield * 100).toFixed(2)}%` 
+                        : (data.yield?.includes('%') ? data.yield : `${(parseFloat(data.yield || '0') * 100).toFixed(2)}%`))}
                 </span>
               </div>
               {data.discount && (
                 <div className="flex justify-between items-end border-b border-black/5 pb-2">
                   <span className="text-xs text-gray-400 uppercase">Substansrabatt</span>
-                  <span className="text-lg font-serif font-bold text-emerald-600">{data.discount}</span>
+                  <span className="text-lg font-serif font-bold text-blue-600">{data.discount}</span>
                 </div>
               )}
             </div>
@@ -209,7 +274,7 @@ export default function ComprehensiveAnalysis({
         {data.scores && (
           <RatingBox 
             rating={data.scores.finansiellKvalitet} 
-            description={`${data.scores.finansiellKvalitet}/5 — Finansiell hälsa, lönsamhetstrender och kapitalallokering.`} 
+            description={`${data.scores.finansiellKvalitet}/5 — (Fokus: Vinsttillväxt, balansräkning och kassaflöde). Finansiell hälsa, lönsamhetstrender och kapitalallokering.`} 
           />
         )}
       </section>
@@ -230,7 +295,7 @@ export default function ComprehensiveAnalysis({
         {data.scores && (
           <RatingBox 
             rating={data.scores.vardering} 
-            description={`${data.scores.vardering}/5 — Huruvida aktien är köpvärd vid nuvarande kursnivåer.`} 
+            description={`${data.scores.vardering}/5 — (Fokus: Multiplar som P/E, EV/EBIT och PEG). Huruvida aktien är köpvärd vid nuvarande kursnivåer.`} 
           />
         )}
       </section>
@@ -251,7 +316,7 @@ export default function ComprehensiveAnalysis({
         {data.scores && (
           <RatingBox 
             rating={data.scores.tillvaxtutsikter} 
-            description={`${data.scores.tillvaxtutsikter}/5 — Potentialen för långsiktig värdetillväxt.`} 
+            description={`${data.scores.tillvaxtutsikter}/5 — (Fokus: Expansion, innovation och katalysatorer). Potentialen för långsiktig värdetillväxt.`} 
           />
         )}
       </section>
@@ -276,7 +341,7 @@ export default function ComprehensiveAnalysis({
         {data.scores && (
           <RatingBox 
             rating={data.scores.riskprofil} 
-            description={`${data.scores.riskprofil}/5 — (Inverterat betyg: 5 = låg risk, 1 = hög risk). Bedömning av bolagsspecifika och makroekonomiska risker.`} 
+            description={`${data.scores.riskprofil}/5 — (Fokus: Branschspecifika och generella risker. Inverterad skala). Bedömning av bolagsspecifika och makroekonomiska risker.`} 
           />
         )}
       </section>
@@ -297,7 +362,7 @@ export default function ComprehensiveAnalysis({
         {data.scores && (
           <RatingBox 
             rating={data.scores.esgMakro} 
-            description={`${data.scores.esgMakro}/5 — Bolagets motståndskraft mot makrofaktorer och dess ESG-betyg.`} 
+            description={`${data.scores.esgMakro}/5 — (Fokus: Hållbarhet och makroekonomisk exponering). Bolagets motståndskraft mot makrofaktorer och dess ESG-betyg.`} 
           />
         )}
       </section>
@@ -318,7 +383,7 @@ export default function ComprehensiveAnalysis({
         {data.scores && (
           <RatingBox 
             rating={data.scores.aiObservationer} 
-            description={`${data.scores.aiObservationer}/5 — AI-genererad insikt baserad på realtidsdata och historiska mönster.`} 
+            description={`${data.scores.aiObservationer}/5 — (Fokus: Sentimentanalys och dolda mönster i datan). AI-genererad insikt baserad på realtidsdata och historiska mönster.`} 
           />
         )}
       </section>
@@ -342,9 +407,9 @@ export default function ComprehensiveAnalysis({
         />
       </section>
 
-      {/* SECTION X: SCENARIER */}
+      {/* SECTION X: SCENARIER (BULL, BASE & BEAR CASE) */}
       <section id="scenarios" className="scroll-mt-24 mt-16 mb-24">
-        <SectionHeader number="X" title="SCENARIER" accentColor={ACCENT_COLOR} />
+        <SectionHeader number="X" title="SCENARIER (BULL, BASE & BEAR CASE)" accentColor={ACCENT_COLOR} />
         <ScenarioCards scenarios={data.scenarios.map(s => ({
           type: s.type,
           icon: s.type === 'bull' ? '🚀' : s.type === 'base' ? '📊' : '📉',

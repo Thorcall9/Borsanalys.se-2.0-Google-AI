@@ -85,6 +85,7 @@ export interface AnalysisData {
   marketCap?: string;
   discount?: string;
   summary: string;
+  date?: string; // Format: YYYY-MM-DD
   
   // Standardized structure from roadmap
   investmentCase?: string;
@@ -121,6 +122,7 @@ export interface AnalysisData {
 
   // AI Driven Data
   aiDrivenData?: AIDrivenAnalysis;
+  yahooTicker?: string;
   scores?: {
     affarsmodell: number;
     strategiskMoat: number;
@@ -142,11 +144,13 @@ export const analyses: Record<string, AnalysisData> = {
     sector: "Investmentbolag",
     recommendation: "KÖP",
     price: "245,20 kr",
-    pe: "14,2",
+    yahooTicker: "INVE-B.ST",
+    pe: "14.00",
     yield: "1,8%",
     marketCap: "750 Bkr",
     discount: "14,2%",
     summary: "Investor AB är ett av Nordens ledande investmentbolag med en välbalanserad portfölj av marknadsledande bolag inom både noterade och onoterade sektorer. Med en stark historik av substansvärdestillväxt och en låg förvaltningskostnad utgör Investor en hörnsten i många långsiktiga portföljer.",
+    date: "2026-03-01",
     investmentCase: "Investor erbjuder en unik exponering mot gräddan av svenskt näringsliv till en rabatt mot substansvärdet. Genom att äga Investor får man del av deras aktiva ägande i bolag som Atlas Copco, ABB och SEB, samt den onoterade portföljen Patricia Industries som historiskt levererat mycket stark avkastning.",
     marketOverview: "Investmentbolagssektorn i Sverige är välutvecklad och Investor är den obestridda ledaren. Marknaden präglas av fokus på substansvärde och rabatt/premie-värdering. Investor gynnas av sin storlek och sitt goda rykte som ger dem tillgång till attraktiva investeringsmöjligheter.",
     growth: "Tillväxten i Investor drivs främst av värdetillväxten i portföljbolagen. Patricia Industries (onoterat) är en viktig tillväxtmotor där kassaflöden återinvesteras i nya och befintliga plattformsbolag. Dessutom bidrar utdelningar från de noterade kärninnehaven till kapital för nya investeringar.",
@@ -207,78 +211,6 @@ export const analyses: Record<string, AnalysisData> = {
       aiObservationer: 4
     }
   },
-  "evolution": {
-    slug: "evolution",
-    title: "Evolution",
-    ticker: "EVO",
-    market: "Large Cap Stockholm",
-    sector: "Gaming",
-    recommendation: "KÖP",
-    price: "1 240 kr",
-    pe: "22,5",
-    yield: "3,2%",
-    marketCap: "265 Bkr",
-    summary: "Evolution är världsledande inom live casino-lösningar för speloperatörer. Bolaget har uppvisat en exceptionell tillväxt och lönsamhet under många år och fortsätter att expandera på nya marknader, särskilt i Nordamerika och Asien.",
-    investmentCase: "Evolution har en unik marknadsposition med en skalbar affärsmodell som genererar branschledande marginaler. Expansionen i USA och Latinamerika utgör betydande tillväxtdrivare framåt.",
-    marketOverview: "Live casino-marknaden växer snabbare än den totala iGaming-marknaden. Evolution är den obestridda ledaren med ett produktutbud som konkurrenterna har svårt att matcha.",
-    growth: "Tillväxten drivs av geografisk expansion, nya produktlanseringar (Game Shows) och en gradvis övergång från landbaserat till online-casino.",
-    financialAnalysis: "Exceptionell lönsamhet med EBITDA-marginaler över 70%. Bolaget har en nettokassa och genererar ett mycket starkt fritt kassaflöde.",
-    competitiveAdvantages: [
-      "Teknologiskt försprång och omfattande studioinfrastruktur",
-      "Starka nätverkseffekter genom ett brett operatörsnätverk",
-      "Innovativ produktutveckling (Game Shows)",
-      "Skalfördelar i produktion och drift"
-    ],
-    risks: [
-      "Regulatoriska förändringar på nyckelmarknader",
-      "Ökad konkurrens från mindre, nischade aktörer",
-      "Exponering mot oreglerade marknader (gråzoner)"
-    ],
-    valuation: "Värderingen är attraktiv givet bolagets tillväxt och lönsamhetsprofil. P/E-talet har kommit ner till nivåer som historiskt varit bra köptillfällen.",
-    conclusion: "Evolution är ett högkvalitativt tillväxtbolag med en dominerande marknadsposition. Vi ser nuvarande värdering som en bra möjlighet för den långsiktige ägaren.",
-    esg: "Evolution arbetar aktivt med ansvarsfullt spelande och efterlevnad av strikta regleringar. Socialt ansvarstagande är en integrerad del av affärsmodellen.",
-    aiObservations: "AI-analys av spelardata och marknadstrender bekräftar Evolutions ledande ställning. Sentimentet kring aktien har stabiliserats efter en period av osäkerhet.",
-    employees: "~20 000",
-    geography: "Global verksamhet med studios i Europa, Nordamerika och Asien. Kundbasen består av speloperatörer över hela världen.",
-    managementOverview: "Martin Carlesund — VD: Har varit central i bolagets globala expansion. Jens von Bahr — Ordförande och medgrundare: Stort fokus på produktinnovation.",
-    ownershipStructure: "Grundarna innehar fortfarande betydande poster, vilket skapar ett starkt incitament för långsiktigt värdeskapande.",
-    strengths: [
-      "Marknadsledande position inom live casino",
-      "Extremt hög lönsamhet (EBITDA-marginal > 70%)",
-      "Skalbar affärsmodell",
-      "Starkt kassaflöde"
-    ],
-    weaknesses: [
-      "Regulatoriska risker på vissa marknader",
-      "Beroende av nyckelpersoner",
-      "Exponering mot oreglerade marknader"
-    ],
-    opportunities: [
-      "Expansion i USA och Latinamerika",
-      "Nya produktlanseringar (Game Shows)",
-      "M&A-möjligheter inom RNG-segmentet"
-    ],
-    threats: [
-      "Ökad konkurrens från mindre aktörer",
-      "Stramare spelregleringar globalt",
-      "Valutaförändringar"
-    ],
-    scenarios: [
-      { label: "Bull Case", value: "1 800 kr", change: "+45%", type: "bull" },
-      { label: "Base Case", value: "1 450 kr", change: "+17%", type: "base" },
-      { label: "Bear Case", value: "950 kr", change: "-23%", type: "bear" },
-    ],
-    scores: {
-      affarsmodell: 5,
-      strategiskMoat: 5,
-      finansiellKvalitet: 5,
-      vardering: 3,
-      tillvaxtutsikter: 4,
-      riskprofil: 3,
-      esgMakro: 3,
-      aiObservationer: 4
-    }
-  },
   "sbb": {
     slug: "sbb",
     title: "SBB",
@@ -287,10 +219,12 @@ export const analyses: Record<string, AnalysisData> = {
     sector: "Fastigheter",
     recommendation: "SÄLJ",
     price: "3,45 kr",
+    yahooTicker: "SBB-B.ST",
     pe: "N/A",
     yield: "0%",
     marketCap: "5,2 Bkr",
     summary: "Samhällsbyggnadsbolaget i Norden (SBB) äger och förvaltar samhällsfastigheter i Norden. Bolaget har under den senaste tiden drabbats hårt av stigande räntor och en hög skuldsättning, vilket lett till stora nedskrivningar och inställda utdelningar.",
+    date: "2026-02-20",
     investmentCase: "Investeringscaset i SBB handlar idag om krishantering och överlevnad. Bolaget fokuserar på att sälja tillgångar för att stärka balansräkningen och minska skuldsättningen.",
     marketOverview: "Fastighetsmarknaden i Norden har varit under press pga stigande räntor. Samhällsfastigheter anses generellt stabila, men SBB:s höga belåning har gjort dem sårbara.",
     growth: "Tillväxt är inte i fokus för närvarande. Prioritet ligger på att avyttra fastigheter och förenkla bolagsstrukturen.",
@@ -357,10 +291,12 @@ export const analyses: Record<string, AnalysisData> = {
     sector: "Halvledare & AI-infrastruktur",
     recommendation: "BEVAKA",
     price: "~178 USD",
-    pe: "21,6x (2026e)",
+    yahooTicker: "NVDA",
+    pe: "22.00x (2026e)",
     yield: "0,02%",
     marketCap: "~4 338 Mdr USD",
     summary: "NVIDIA designar och levererar accelererad beräkning (GPU/AI-chip), systemprogramvara (CUDA) och nätverkslösningar (NVLink, InfiniBand) för datacenters, gaming och autonoma fordon. Bolaget rider på en sekulär supercykel inom AI-infrastruktur där Blackwell-plattformen och CUDA-ekosystemet skapar en oövervinnerlig vallgrav.",
+    date: "2026-03-20",
     strengths: [
       "CUDA-ekosystem, starkaste moat i tech",
       "73,6% bruttomarginal (Non-GAAP Q3)",
@@ -428,10 +364,12 @@ export const analyses: Record<string, AnalysisData> = {
     sector: "Konsumentelektronik",
     recommendation: "AVVAKTA",
     price: "$228,10",
-    pe: "31,2",
+    yahooTicker: "AAPL",
+    pe: "31.00",
     yield: "0,45%",
     marketCap: "$3.5T",
     summary: "Apple är världens ledande varumärke inom konsumentelektronik. Med ett ekosystem av hårdvara, mjukvara och tjänster har bolaget skapat en unik kundlojalitet. Fokus ligger nu på AI-integration (Apple Intelligence) och tillväxt inom tjänstesektorn.",
+    date: "2026-03-10",
     investmentCase: "Apples styrka ligger i deras enorma installerade bas av enheter och förmågan att monetärisera dessa genom tjänster som App Store, iCloud och Apple Music. Apple Intelligence förväntas driva en ny uppgraderingscykel för iPhone, vilket är bolagets viktigaste intäktskälla.",
     marketOverview: "Smartphonemarknaden är mogen, men premiumsegmentet där Apple dominerar fortsätter att visa styrka. Konkurrensen från kinesiska aktörer ökar, men Apples ekosystem fungerar som en kraftfull vallgrav.",
     growth: "Tillväxten drivs främst av tjänstesektorn som har högre marginaler än hårdvaran. Framtida tillväxt förväntas även från nya produktkategorier som Vision Pro och expansion inom hälsovårdstjänster.",
@@ -484,10 +422,12 @@ export const analyses: Record<string, AnalysisData> = {
     sector: "Mjukvara / Molntjänster",
     recommendation: "KÖP",
     price: "$415,20",
-    pe: "32,4",
+    yahooTicker: "MSFT",
+    pe: "32.00",
     yield: "0,75%",
     marketCap: "$3.1T",
     summary: "Microsoft är en global ledare inom mjukvara och molntjänster. Genom Azure och integrationen av OpenAI:s teknik i Office-paketet (Copilot) har bolaget tagit en tätposition i AI-racet.",
+    date: "2026-03-12",
     investmentCase: "Microsoft drar nytta av den pågående digitaliseringen och flytten till molnet. Azure fortsätter att ta marknadsandelar, och AI-integrationen i deras produktportfölj förväntas öka genomsnittlig intäkt per användare (ARPU) avsevärt.",
     marketOverview: "Marknaden för molntjänster (Cloud) växer stadigt, där Microsoft och Amazon (AWS) är de dominerande aktörerna. AI-boomen har skapat en ny våg av efterfrågan på beräkningskraft och intelligenta mjukvaruverktyg.",
     growth: "Azure är den främsta tillväxtmotorn med tillväxttal kring 30%. Copilot-integrationen i Microsoft 365 börjar nu bidra till tillväxten inom produktivitetsegmentet.",
@@ -539,10 +479,12 @@ export const analyses: Record<string, AnalysisData> = {
     sector: "Hälsovård / Läkemedel",
     recommendation: "KÖP",
     price: "845,20 DKK",
-    pe: "38,4",
+    yahooTicker: "NOVO-B.CO",
+    pe: "38.00",
     yield: "1,2%",
     marketCap: "3.8 TDKK",
     summary: "Novo Nordisk är världsledande inom diabetesvård och har revolutionerat marknaden för fetmabehandling med sina GLP-1-läkemedel (Ozempic och Wegovy). Bolaget upplever en enorm efterfrågan som för närvarande överstiger produktionskapaciteten.",
+    date: "2026-03-05",
     investmentCase: "Marknaden för fetmabehandling förväntas växa explosivt under det kommande decenniet. Novo Nordisk har ett försteg med sina beprövade produkter och en stark pipeline av nya läkemedel. Bolagets förmåga att skala upp produktionen är nyckeln till framtida tillväxt.",
     marketOverview: "Diabetes och fetma är globala hälsoutmaningar som kräver långsiktig behandling. Novo Nordisk kontrollerar en betydande del av GLP-1-marknaden, men konkurrensen från Eli Lilly ökar.",
     growth: "Tillväxten drivs av den globala utrullningen av Wegovy och ökad användning av Ozempic. Bolaget investerar kraftigt i nya produktionsanläggningar för att möta efterfrågan.",
@@ -595,10 +537,12 @@ export const analyses: Record<string, AnalysisData> = {
     sector: "Industri / Fordon",
     recommendation: "KÖP",
     price: "285,40 kr",
-    pe: "11,5",
+    yahooTicker: "VOLV-B.ST",
+    pe: "12.00",
     yield: "6,2%",
     marketCap: "580 Bkr",
     summary: "Volvo Group är en världsledande tillverkare av lastbilar, bussar och anläggningsmaskiner. Bolaget leder den gröna omställningen inom tunga transporter och har en mycket stark finansiell ställning.",
+    date: "2026-02-25",
     investmentCase: "Volvo är väl positionerat för att dra nytta av elektrifieringen av transportsektorn. Bolaget har lyckats bibehålla god lönsamhet även i en mer utmanande konjunktur och erbjuder en attraktiv direktavkastning.",
     marketOverview: "Marknaden för tunga lastbilar är cyklisk, men efterfrågan på hållbara transportlösningar skapar en strukturell tillväxtmöjlighet. Konkurrensen är hård, men Volvo har en stark marknadsposition i både Europa och Nordamerika.",
     growth: "Tillväxten drivs av ökad försäljning av elektriska fordon och tjänster (service, reservdelar, digitala lösningar) som har högre marginaler och är mindre cykliska.",
@@ -650,10 +594,12 @@ export const analyses: Record<string, AnalysisData> = {
     sector: "Internet / AI",
     recommendation: "KÖP",
     price: "$307",
-    pe: "~28x",
+    yahooTicker: "GOOGL",
+    pe: "~28.00x",
     yield: "0,45%",
     marketCap: "$3.9T",
     summary: "Alphabet är moderbolaget till Google och YouTube. Bolaget dominerar den digitala annonsmarknaden och är en ledande aktör inom AI-forskning och molntjänster genom Google Cloud. Med sju produkter som har över 2 miljarder användare var har bolaget en oöverträffad vallgrav.",
+    date: "2026-03-15",
     investmentCase: "Googles sökdominans fortsätter att generera enorma kassaflöden som finansierar investeringar i AI (Gemini) och molntjänster. Google Cloud (GCP) har nått en kritisk massa med stigande marginaler (20,7%) och en tillväxttakt på 32%. Waymo representerar en massiv framtida optionalitet inom autonom körning.",
     businessModel: "Alphabet verkar via tre primära segment: Google Services (Search, YouTube, Android, Ads), Google Cloud (GCP, Vertex AI, Workspace) och Other Bets (Waymo, Calico, Wing). Intäkterna kommer främst från digital annonsering, molntjänster och prenumerationer.",
     managementOverview: "Sundar Pichai (VD): Har lett Google sedan 2015 och Alphabet sedan 2019. Ruth Porat (CFO/President): Tidigare CFO, nu President och CIO, känd för sin finansiella disciplin.",
@@ -712,20 +658,25 @@ export const analyses: Record<string, AnalysisData> = {
   },
   "evolution-2025": {
     slug: "evolution-2025",
-    title: "Evolution AB – Aktieanalys 2025",
+    title: "Evolution AB (EVO): Köp nu eller vänta? En djupanalys av världens starkaste live casino-monopol",
     ticker: "EVO.ST",
-    market: "Large Cap Stockholm",
+    market: "Nasdaq Stockholm",
     sector: "iGaming / B2B Live Casino",
     recommendation: "KÖP",
     price: "577 kr",
+    yahooTicker: "EVO.ST",
     pe: "9,95x",
     yield: "5,3%",
     marketCap: "115 Mdr EUR",
-    summary: "Evolution handlas till historiskt låga multiplar trots strukturellt starkt kassaflöde och dominerande marknadsposition. Köprekommendationen bygger på riskjusterad analys: marknaden prisar i dagsläget in ett brittiskt worst-case-scenario med ~40–50% sannolikhet – vi bedömer det till ~20%. Säkerhetsmarginalen ligger i gapet mellan marknadens rädsla och den operationella verkligheten.",
-    investmentCase: "Evolution har en unik marknadsposition med en skalbar affärsmodell som genererar branschledande marginaler. Köprekommendationen bygger på en riskjusterad förväntad avkastning (EV) på +28%. Marknaden överreagerar på UKGC-risken, vilket skapar en attraktiv säkerhetsmarginal. Expansionen i USA och Latinamerika, kombinerat med Hasbro-partnerskapet, utgör kraftfulla tillväxtmotorer som överskuggar kortsiktig marginalpress.",
-    marketOverview: "Den globala marknaden för online casino (Live + RNG) är en av de snabbast växande spelsegmenten. Evolution har som uttalat mål att alltid växa snabbare än marknaden. Andelen reglerade marknader ökar (47% Q4 2025), vilket ger ökad stabilitet men kortsiktig intäktspåverkan genom ringfencing.",
-    growth: "Tillväxten drivs av USA-expansion (nu i alla 7 stater), Brasilien (reglerat 2025), och Hasbro-partnerskapet (MONOPOLY Filthy Rich m.fl.). Asien visade tecken på vändning i Q4 2025 med positiv QoQ-tillväxt.",
-    financialAnalysis: "Exceptionell lönsamhet med en EBITDA-marginal på 66,1% (2025). Marginalnedgången från 68,4% (2024) beror på löneinflation i studionätverket (+8,9%), revenuemix med fler aggregatorer, samt underprestation i RNG-segmentet. Bolaget har en nettokassa med 818 MEUR i likvida medel och noll räntebärande skulder.",
+    summary: "P/E under 10x, 66% EBITDA-marginal och 818 MEUR i kassan — men UKGC-granskning och stagnerande tillväxt skapar ovisshet. Vi går igenom allt du behöver veta inför investeringsbeslutet.",
+    date: "2026-03-21",
+    investmentCase: "Köprekommendationen bygger på en riskjusterad förväntad avkastning (EV) på +21%. Marknaden prisar i dagsläget in ett brittiskt worst-case-scenario med hög sannolikhet — vi bedömer sannolikheten som betydligt lägre. Säkerhetsmarginalen ligger i gapet mellan marknadens rädsla och den operationella verkligheten. P/E under 10x, 66% EBITDA-marginal och 818 MEUR i kassan skapar en attraktiv risk/reward.",
+    marketOverview: "Evolution är världens ledande B2B-leverantör av live casino-lösningar till speloperatörer. Grundat 2006 i en liten studio i Lettland har bolaget vuxit till en global aktör med 870+ operatörskunder, 22 475 anställda och studior på fyra kontinenter. Affärsmodellen är provisionsbaserad — Evolution tar en andel av de spelintäkter (GGR) som operatörernas spelare genererar, vilket skapar återkommande, skalbara intäkter utan direkt kundanskaffningskostnad. Moderbolaget är baserat i Stockholm och noterat på Nasdaq Stockholm under tickern EVO. 2025 var ett utmanande år: omsättningstillväxten kollapsade till +0,2%, EPS föll 11,8% och utdelningen ställdes in helt. Men bakom rubrikerna döljer sig ett bolag med 818 MEUR i likvida medel, noll räntebärande skulder och ett operativt kassaflöde på 1 255 MEUR per år. Kursen på ~577 kr ger ett P/E på under 10x — historiskt exceptionellt lågt för ett bolag med Evolutions kvalitetsprofil.",
+    growth: "Tillväxten drivs av USA-expansion (nu i alla 7 stater), Brasilien (studio öppnad i São Paulo), och Hasbro-partnerskapet (MONOPOLY Filthy Rich m.fl.). EPS-tillväxten väntas bli måttlig (2–4% per år 2026–2028e) i linje med konsensus, men med potential för acceleration bortom 2027e.",
+    financialAnalysis: "Exceptionell lönsamhet med en EBITDA-marginal på 66,1% (2025). Balansräkningen är i enastående skick med 818 MEUR i likvida medel och noll räntebärande skulder. Operativt kassaflöde på 1 255 MEUR per år ger enorm finansiell flexibilitet.",
+    marginTrends: "Marginalen föll från 68,4% till 66,1% under 2025. Detta beror på löneinflation i studionätverket, en förändrad revenuemix med fler aggregatorer i Asien/LatAm, samt underprestation i RNG-segmentet. Intäkt per anställd sjönk -5,3% under året.",
+    ukgcRiskDeepDive: "UKGC-granskningen är en binär risk. Vi bedömer sannolikheten för licensindragning till 5-10%, medan betydande böter (50-300 MEUR) har 30-35% sannolikhet. Marknaden prisar in ett värre scenario, vilket skapar köpläget.",
+    capitalAllocation: "Återköp på 500 MEUR genomfördes 2025 till snittpris 752 SEK. Utdelningen väntas återinföras 2026e (~30 kr/aktie, 5,3% direktavkastning), vilket är en viktig katalysator för institutionella ägare.",
     competitiveAdvantages: [
       "Nätverkseffekter (870+ operatörer)",
       "Switching costs (djup integration)",
@@ -733,13 +684,13 @@ export const analyses: Record<string, AnalysisData> = {
       "Regulatorisk licens-moat (svårreplikerad global portfölj)"
     ],
     risks: [
-      "UKGC-granskning (binär risk, licensindragning vs böter)",
+      "UKGC-granskning (binär risk)",
+      "Contagion-risk vid UK-sanktioner",
       "Asien-volatilitet och cyberbrottslighet",
-      "Löneinflation i personalintensiva studior",
-      "Regulatorisk smittorisk (contagion risk) vid UK-sanktioner"
+      "Löneinflation i personalintensiva studior"
     ],
-    valuation: "P/E-tal på ~10x är historiskt lågt för ett bolag med 66%+ EBITDA-marginal och ROE på 26%. Earnings Yield på 10,1% ger en betydande premie mot riskfria räntan. Värderingen ser ut som ett av de bästa ingångslägena på länge.",
-    conclusion: "Evolution AB är ett enastående kvalitetsbolag som straffas för kortsiktiga utmaningar. Med dominerande marknadsposition, starkt kassaflöde och attraktiva tillväxtutsikter i USA/LatAm är aktien billig vid P/E 10x. Vi ser en riskjusterad uppsida på 28% (EV).",
+    valuation: "P/E på ~10x för ett bolag som historiskt handlats till 20–30x, med ROE på 26% och stark kassagenerering, ger en bred säkerhetsmarginal. Earnings Yield på 10,1% innebär att bolaget ger mer vinstavkastning än en statsobligation med mångfalt bättre underliggande kvalitet.",
+    conclusion: "Evolution AB är ett enastående kvalitetsbolag som straffas för kortsiktiga utmaningar. UKGC-risken är binär och reell, men vi bedömer att säkerhetsmarginalen vid P/E 10x är tillräcklig för att motivera ett köp för den långsiktige investeraren.",
     esg: "Neutral ESG-profil med sociala utmaningar kring spelberoende. Stabil styrning (G) med 41,6% insiderägande och transparent rapportering.",
     aiObservations: "Sentiment-mönstret 'stolta, men inte nöjda' föregår ofta återhämtning. Asien Q4-dataavvikelse (positiv QoQ) är ej fullt prisad. Aktieåterköp på 500 MEUR vid 752 SEK signalerar stark ledningsövertygelse.",
     employees: "22 475",
@@ -748,40 +699,44 @@ export const analyses: Record<string, AnalysisData> = {
     ownershipStructure: "Insiderägande 41,6%. Största kund utgör ~12% av nettoomsättningen.",
     businessModel: "Provisionsbaserade intäkter (GGR) från 870+ operatörskunder. Extremt skalbar Live-modell (86% av intäkter) kombinerat med RNG (14%).",
     strengths: [
-      "Teknologisk överlägsenhet",
-      "Skalbar B2B-modell",
-      "66%+ EBITDA-marginal",
-      "Globalt studionätverk"
+      "Dominerande B2B-position",
+      "EBITDA-marginaler >66%",
+      "Nettokassa 818 MEUR",
+      "Produktinnovation (Hasbro)",
+      "Insiderägande 41,6%"
     ],
     weaknesses: [
+      "Omsättningstillväxt kollapsade till +0,2% 2025",
+      "Låg EPS-tillväxt 2-4% (2026-2028e)",
+      "Sjunkande intäkt per anställd",
       "Asien-volatilitet",
-      "Regulatorisk exponering",
-      "Marginalpress 2025",
-      "Sjunkande intäkt per anställd"
+      "Utdelning inställd 2025"
     ],
     opportunities: [
-      "USA-expansion",
-      "Brasilien/LatAm",
-      "AI i spelupplevelse",
-      "Hasbro-partnerskap"
+      "USA-expansion (alla 7 stater)",
+      "Brasilien studio i São Paulo",
+      "Hasbro-partnerskap (MONOPOLY m.fl.)",
+      "Reglerade marknader (47%)",
+      "Galaxy Gaming-förvärv"
     ],
     threats: [
-      "Cyberbrottslighet",
       "UKGC-granskning",
+      "Contagion-risk",
       "Ringfencing i Europa",
-      "Konkurrens från Playtech"
+      "PEG 3.4 för 2027e",
+      "Konkurrens från Playtech/Pragmatic"
     ],
     scenarios: [
-      { label: "Bull Case (25%)", value: "950 kr", change: "+65%", type: "bull" },
-      { label: "Base Case (55%)", value: "750 kr", change: "+30%", type: "base" },
-      { label: "Bear Case (20%)", value: "420 kr", change: "-27%", type: "bear" },
+      { label: "Bull Case (25%)", value: "880 kr", change: "+53%", type: "bull" },
+      { label: "Base Case (55%)", value: "720 kr", change: "+25%", type: "base" },
+      { label: "Bear Case (20%)", value: "400 kr", change: "-31%", type: "bear" },
     ],
     scores: {
       affarsmodell: 5,
       strategiskMoat: 5,
       finansiellKvalitet: 4,
       vardering: 4,
-      tillvaxtutsikter: 4,
+      tillvaxtutsikter: 3,
       riskprofil: 3,
       esgMakro: 3,
       aiObservationer: 4
@@ -799,43 +754,43 @@ export const analyses: Record<string, AnalysisData> = {
         strategiskMoat: 5,
         finansiellKvalitet: 4,
         vardering: 4,
-        tillvaxtutsikter: 4,
+        tillvaxtutsikter: 3,
         riskprofil: 3,
         esgMakro: 3,
         aiObservationer: 4
       },
-      totaltPoang: 32,
+      totaltPoang: 31,
       maxPoang: 40,
-      rating: 0.80,
+      rating: 0.775,
       overview: {
-        borskurs: "577.0 kr",
+        borskurs: "577 SEK",
         borsvarde: "~115 Mdr EUR",
-        bransch: "B2B Online Casino / iGaming",
+        bransch: "Live Casino / iGaming",
         geografi: "Europa, Asien, Nordamerika, Latinamerika",
-        affarside: "Världsledande B2B-leverantör av live casino-lösningar till speloperatörer",
-        affarsmodell: "Provisionsbaserade intäkter (GGR) från 870+ operatörskunder globalt",
+        affarside: "Världsledande B2B-leverantör av live casino-lösningar",
+        affarsmodell: "Provisionsbaserade intäkter (GGR) från 870+ operatörskunder",
         ledning: "Martin Carlesund (VD), Joakim Andersson (CFO)",
-        agarstruktur: "Insiderägande 41,6%. Störste kund: ~12% av nettoomsättning"
+        agarstruktur: "Insiderägande 41,6%. Största kund utgör ~12% av nettoomsättningen"
       },
       strategiskMoat: {
         swot: {
-          styrkor: ["Teknologisk överlägsenhet", "Skalbar B2B-modell", "66%+ EBITDA-marginal", "Globalt studionätverk"],
-          svagheter: ["Asien-volatilitet", "Regulatorisk exponering", "Marginalpress 2025"],
-          möjligheter: ["USA-expansion", "Brasilien/LatAm", "AI i spelupplevelse", "Hasbro-partnerskap"],
-          hot: ["Cyberbrottslighet", "UKGC-granskning", "Ringfencing i Europa", "Konkurrens från Playtech"]
+          styrkor: ["Dominerande B2B-position", "EBITDA-marginaler >66%", "Nettokassa 818 MEUR", "Produktinnovation (Hasbro)", "Insiderägande 41,6%"],
+          svagheter: ["Omsättningstillväxt kollapsade till +0,2% 2025", "Låg EPS-tillväxt 2-4%", "Sjunkande intäkt per anställd", "Asien-volatilitet"],
+          möjligheter: ["USA-expansion", "Brasilien studio", "Hasbro-partnerskap", "Reglerade marknader (47%)"],
+          hot: ["UKGC-granskning", "Contagion-risk", "Ringfencing i Europa", "PEG 3.4 för 2027e"]
         },
         moat: ["Nätverkseffekter (870+ operatörer)", "Switching costs", "IP & spelbibliotek", "Regulatorisk licens-moat"]
       },
       finansiellAnalys: {
         resultatrakning: {
-          omsattningstillvaxt: "+0,2% 2025 (justerat för valuta: ~4,9%)",
-          vinsttillvaxt: "EPS 5,24 EUR (2025) vs 5,94 EUR (2024), -11,8%",
-          rorelsemarginal: "59,4% (2025) vs 64,1% (2024)"
+          omsattningstillvaxt: "+0,2% 2025",
+          vinsttillvaxt: "EPS 5,24 EUR (2025), -11,8%",
+          rorelsemarginal: "59,4% (2025)"
         },
         nyckeltal: {
-          roe: "26,25% (2025)",
-          roce: "26,25% (2025)",
-          utdelning: "Inställd 2025. 2026e: 30,38 kr/aktie (~5,3% DA)"
+          roe: "26,3% (2025)",
+          roce: "26% (2025)",
+          utdelning: "Inställd 2025. 2026e: ~30 kr (~5,3% DA)"
         },
         vardering: {
           pe: "9,95x",
@@ -843,20 +798,20 @@ export const analyses: Record<string, AnalysisData> = {
           direktavkastning: "5,3% (2026e)"
         }
       },
-      tillvaxtdrivare: ["USA (alla 7 stater)", "Brasilien/LatAm", "Hasbro-partnerskap", "Reglerade marknader (47%)"],
+      tillvaxtdrivare: ["USA", "Brasilien", "Hasbro", "Reglerade marknader"],
       esgMakro: {
-        esgProfil: "Neutral ESG-profil, sociala utmaningar men stabil styrning.",
-        makropaverkan: "Konjunkturokänsligt spelande, EUR-rapportering ger diversifiering."
+        esgProfil: "Neutral ESG-profil med sociala utmaningar kring spelberoende.",
+        makropaverkan: "Konjunkturokänsligt spelande, EUR-rapportering."
       },
       sammanfattning: {
         beslut: "KÖP",
-        motivering: "Historiskt lågt P/E (~10x), dominerande marknadsposition, starkt kassaflöde och expansionsmöjligheter i USA/LatAm",
-        malpris: "750 SEK"
+        motivering: "P/E ~10x för ett kvalitetsbolag med dominerande marknadsposition, 66%+ EBITDA-marginal, nettokassa och strukturella tillväxtmöjligheter i USA och LatAm. UKGC-risken är binär och reell — hantera med positionsstorlek snarare än avvaktning.",
+        malpris: "720 SEK"
       },
       scenarier: {
-        bullCase: "Asien normaliseras, USA accelererar – aktie mot 950 kr (25%)",
-        baseCase: "Stabil tillväxt ~5-8%, marginal 66-68% – aktie mot 750 kr (55%)",
-        bearCase: "UKGC-sanktioner + fortsatt Asien-nedgång – aktie mot 420 kr (20%)"
+        bullCase: "Asien normaliseras, USA accelererar – aktie mot 880 kr (25%)",
+        baseCase: "Stabil tillväxt, marginal 66-67% – aktie mot 720 kr (55%)",
+        bearCase: "UKGC-sanktioner + fortsatt Asien-nedgång – aktie mot 400 kr (20%)"
       }
     }
   }

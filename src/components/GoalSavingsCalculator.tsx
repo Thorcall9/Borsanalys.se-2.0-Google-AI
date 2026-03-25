@@ -57,12 +57,12 @@ export default function GoalSavingsCalculator() {
           <div className="space-y-8">
             <div className="space-y-2">
               <h3 className="text-2xl font-serif font-bold tracking-tight">Målsparande</h3>
-              <p className="text-sm text-muted">Räkna ut vad som krävs för att nå din drömsiffra.</p>
+              <p className="text-sm text-muted-foreground">Räkna ut vad som krävs för att nå din drömsiffra.</p>
             </div>
 
             <div className="space-y-6">
               <div className="space-y-3">
-                <label className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-muted font-bold">
+                <label className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-bold">
                   <span>Ditt sparmål</span>
                   <span className="text-primary">{goal.toLocaleString()} kr</span>
                 </label>
@@ -84,7 +84,7 @@ export default function GoalSavingsCalculator() {
               </div>
 
               <div className="space-y-3">
-                <label className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-muted font-bold">
+                <label className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-bold">
                   <span>Startkapital</span>
                   <span className="text-primary">{initialAmount.toLocaleString()} kr</span>
                 </label>
@@ -98,7 +98,7 @@ export default function GoalSavingsCalculator() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-3">
-                  <label className="text-[10px] font-mono uppercase tracking-widest text-muted font-bold">Tid (år)</label>
+                  <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-bold">Tid (år)</label>
                   <input 
                     type="number" 
                     value={years} 
@@ -107,7 +107,7 @@ export default function GoalSavingsCalculator() {
                   />
                 </div>
                 <div className="space-y-3">
-                  <label className="text-[10px] font-mono uppercase tracking-widest text-muted font-bold">Avkastning (%)</label>
+                  <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-bold">Avkastning (%)</label>
                   <input 
                     type="number" 
                     value={interestRate} 
@@ -140,14 +140,14 @@ export default function GoalSavingsCalculator() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h4 className="text-sm font-bold flex items-center gap-2">
-                Vägen till målet <Info size={14} className="text-muted" />
+                Vägen till målet <Info size={14} className="text-muted-foreground" />
               </h4>
-              <div className="flex items-center gap-4 text-[10px] font-mono uppercase tracking-widest text-muted">
+              <div className="flex items-center gap-4 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
                 <div className="flex items-center gap-1.5">
                   <div className="w-2 h-2 rounded-full bg-primary" /> Prognos
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <div className="w-2 h-2 border-t border-dashed border-muted" /> Mål
+                  <div className="w-2 h-2 border-t border-dashed border-muted-foreground" /> Mål
                 </div>
               </div>
             </div>

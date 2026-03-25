@@ -13,8 +13,8 @@ export default function Tools() {
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-16">
       <div className="space-y-4">
         <div className="text-[11px] font-mono uppercase tracking-widest text-primary font-bold">Verktyg</div>
-        <h1 className="text-5xl md:text-7xl font-serif font-bold tracking-tight leading-none">Finansiella <br /> <span className="italic text-muted">Kalkylatorer</span></h1>
-        <p className="text-lg text-muted max-w-2xl leading-relaxed">
+        <h1 className="text-5xl md:text-7xl font-serif font-bold tracking-tight leading-none">Finansiella <br /> <span className="italic text-primary">Kalkylatorer</span></h1>
+        <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
           Använd våra interaktiva verktyg för att planera ditt sparande, beräkna framtida avkastning och sätta upp mål för din ekonomi.
         </p>
       </div>
@@ -29,7 +29,7 @@ export default function Tools() {
               <TrendingUp size={32} />
             </div>
             <h3 className="text-2xl font-serif font-bold">Ränta-på-ränta</h3>
-            <p className="text-sm text-muted leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               Beräkna hur ditt kapital växer över tid med hjälp av ränta-på-ränta effekten.
             </p>
           </div>
@@ -47,7 +47,7 @@ export default function Tools() {
               <Target size={32} />
             </div>
             <h3 className="text-2xl font-serif font-bold">Målsparande</h3>
-            <p className="text-sm text-muted leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               Hur mycket behöver du spara varje månad för att nå ditt mål?
             </p>
           </div>
@@ -65,7 +65,7 @@ export default function Tools() {
               <Calculator size={32} />
             </div>
             <h3 className="text-2xl font-serif font-bold">DCF-Värdering</h3>
-            <p className="text-sm text-muted leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               Beräkna ett bolags motiverade värde genom att diskontera framtida kassaflöden.
             </p>
           </div>
@@ -83,7 +83,7 @@ export default function Tools() {
               <DollarSign size={32} />
             </div>
             <h3 className="text-2xl font-serif font-bold">Utdelning</h3>
-            <p className="text-sm text-muted leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               Beräkna din framtida passiva inkomst från utdelningsaktier.
             </p>
           </div>

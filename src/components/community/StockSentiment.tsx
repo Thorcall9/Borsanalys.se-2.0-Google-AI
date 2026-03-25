@@ -131,7 +131,7 @@ export default function StockSentiment({ symbol }: StockSentimentProps) {
         {/* Progress Bar */}
         <div className="relative h-4 w-full bg-red-500/10 rounded-full overflow-hidden flex">
           <div 
-            className="h-full bg-emerald-500 transition-all duration-500 ease-out"
+            className="h-full bg-primary transition-all duration-500 ease-out"
             style={{ width: `${bullPercent}%` }}
           />
           <div className="absolute inset-0 flex items-center justify-between px-3 text-[10px] font-bold text-white pointer-events-none">
@@ -146,8 +146,8 @@ export default function StockSentiment({ symbol }: StockSentimentProps) {
             onClick={() => handleVote('bull')}
             className={`flex flex-col items-center justify-center p-4 rounded-xl border transition-all ${
               userVote === 'bull' 
-                ? 'bg-emerald-500/10 border-emerald-500 text-emerald-500' 
-                : 'bg-background border-border hover:border-emerald-500/50 text-muted hover:text-emerald-500'
+                ? 'bg-primary/10 border-primary text-primary' 
+                : 'bg-background border-border hover:border-primary/50 text-muted hover:text-primary'
             }`}
           >
             <TrendingUp size={24} className="mb-2" />
