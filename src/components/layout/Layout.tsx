@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import { LoginModal } from "../LoginModal";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -12,6 +13,7 @@ export default function Layout({ children }: LayoutProps) {
       <Header />
       <main className="flex-grow">{children}</main>
       <Footer />
+      <LoginModal />
     </div>
   );
 }

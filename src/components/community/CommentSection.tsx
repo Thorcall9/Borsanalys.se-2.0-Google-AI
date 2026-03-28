@@ -29,7 +29,7 @@ interface CommentSectionProps {
 }
 
 export default function CommentSection({ stockSlug }: CommentSectionProps) {
-  const { user, login } = useAuth();
+  const { user, openLoginModal } = useAuth();
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -63,7 +63,7 @@ export default function CommentSection({ stockSlug }: CommentSectionProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
-      login();
+      openLoginModal();
       return;
     }
 
@@ -158,10 +158,10 @@ export default function CommentSection({ stockSlug }: CommentSectionProps) {
           <div className="text-center py-4">
             <p className="text-muted text-sm mb-4">Logga in för att delta i diskussionen.</p>
             <button
-              onClick={login}
+              onClick={openLoginModal}
               className="px-6 py-2 bg-primary/10 text-primary font-bold rounded-xl hover:bg-primary/20 transition-all text-sm"
             >
-              Logga in med Google
+              Logga in
             </button>
           </div>
         )}

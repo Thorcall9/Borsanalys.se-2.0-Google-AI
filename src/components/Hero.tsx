@@ -1,8 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, TrendingUp, Shield, Zap } from 'lucide-react';
+import { ArrowRight, TrendingUp, Shield, Zap, Search } from 'lucide-react';
+import { useSearch } from '../contexts/SearchContext';
+import { useAuth } from '../contexts/AuthContext';
 
 export const Hero: React.FC = () => {
+  const { openSearch } = useSearch();
+  const { openLoginModal } = useAuth();
+
   return (
     <section className="relative pt-40 pb-32 overflow-hidden">
       {/* Background Grid & Accents */}
@@ -21,67 +26,60 @@ export const Hero: React.FC = () => {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-5xl mx-auto"
         >
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 text-primary border border-primary/20 text-[10px] font-black uppercase tracking-[0.3em] mb-10"
-          >
-            <Zap className="w-3 h-3 fill-primary" />
-            <span>AI-Driven Analys v2.0</span>
-          </motion.div>
-          
-          <h1 className="text-6xl md:text-[100px] font-black tracking-tighter leading-[0.85] mb-10 text-foreground">
-            Professionella aktieanalyser <br />
-            <span className="text-primary">drivna av data och AI</span>
+          <h1 className="text-6xl md:text-[100px] font-black tracking-tighter leading-[0.85] mb-4 text-foreground">
+            Börsanalys som gör dig <br />
+            <span className="text-primary">till en bättre investerare</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-16 leading-relaxed font-medium">
-            Vi kombinerar djupgående fundamental analys med avancerade algoritmer för att ge dig en klar och objektiv bild av marknaden.
+          <p className="text-2xl md:text-4xl font-bold tracking-tight text-muted-foreground mb-10">
+            Förstå bolaget. Fatta beslutet.
           </p>
+          
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-16 leading-relaxed font-medium">
+            Djupgående analyser av <span className="text-foreground italic">affärsmodell</span>, <span className="text-foreground italic">värdering</span> och <span className="text-foreground italic">risk</span>.
+          </p>
+
+          {/* Search Bar */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 0.8 }}
+            className="max-w-2xl mx-auto mb-16"
+          >
+            <button 
+              onClick={openSearch}
+              className="w-full flex items-center gap-4 px-8 py-6 bg-card border border-border rounded-3xl text-muted-foreground hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/5 transition-all text-left group shadow-xl shadow-black/5"
+            >
+              <Search size={24} className="text-primary group-hover:scale-110 transition-transform" />
+              <span className="flex-1 text-lg font-medium">Sök efter bolag, analyser eller guider...</span>
+              <div className="hidden sm:flex items-center gap-1 bg-muted px-3 py-1.5 rounded-xl text-[10px] font-bold border border-border">
+                <span className="opacity-50">⌘</span>
+                <span>K</span>
+              </div>
+            </button>
+          </motion.div>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               className="w-full sm:w-auto px-12 py-6 bg-primary text-primary-foreground rounded-full font-black text-lg shadow-2xl shadow-primary/30 hover:bg-primary/90 transition-all flex items-center justify-center gap-3 uppercase tracking-widest"
+              onClick={() => window.location.href = '/analys'}
             >
-              Kom igång nu
+              Utforska analyser
               <ArrowRight className="w-6 h-6" />
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               className="w-full sm:w-auto px-12 py-6 bg-card border border-border rounded-full font-black text-lg shadow-xl shadow-black/5 hover:bg-muted transition-all uppercase tracking-widest"
+              onClick={openLoginModal}
             >
-              Se demoanalys
+              Bli medlem gratis
             </motion.button>
           </div>
         </motion.div>
 
-        {/* Feature Highlights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 mt-40 max-w-6xl mx-auto">
-          {[
-            { icon: TrendingUp, title: "Data-driven precision", desc: "Varje analys baseras på tusentals datapunkter för maximal träffsäkerhet." },
-            { icon: Zap, title: "Realtidsinsikter", desc: "Våra algoritmer bevakar marknaden 24/7 och levererar insikter i realtid." },
-            { icon: Shield, title: "Total objektivitet", desc: "Vi tar inga positioner i bolagen vi analyserar. Bara ren, ofiltrerad data." }
-          ].map((feature, i) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.2, duration: 0.8 }}
-              viewport={{ once: true }}
-              className="flex flex-col items-center text-center group"
-            >
-              <div className="w-20 h-20 rounded-[2rem] bg-muted/50 border border-border flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-6 group-hover:border-primary/50 transition-all duration-500">
-                <feature.icon className="w-10 h-10 text-primary" />
-              </div>
-              <h3 className="text-2xl font-black tracking-tight mb-4">{feature.title}</h3>
-              <p className="text-muted-foreground text-base leading-relaxed font-medium">{feature.desc}</p>
-            </motion.div>
-          ))}
-        </div>
       </div>
     </section>
   );

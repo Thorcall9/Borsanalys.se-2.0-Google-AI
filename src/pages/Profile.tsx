@@ -1,44 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Navigate } from "react-router-dom";
-import { User as UserIcon, Settings, LogOut, Shield, Mail, Calendar, Github, CheckCircle2, ExternalLink } from "lucide-react";
+import { User as UserIcon, Settings, LogOut, Shield, Mail, Calendar } from "lucide-react";
 import Watchlist from "../components/community/Watchlist";
-import GithubProfile from "../components/community/GithubProfile";
 
 export default function Profile() {
   const { user, loading, logout } = useAuth();
-  const [githubToken, setGithubToken] = useState<string | null>(localStorage.getItem("github_token"));
-
-  useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      // Validate origin
-      if (!event.origin.endsWith('.run.app') && !event.origin.includes('localhost')) {
-        return;
-      }
-      
-      if (event.data?.type === 'GITHUB_AUTH_SUCCESS') {
-        const token = event.data.token;
-        setGithubToken(token);
-        localStorage.setItem("github_token", token);
-      }
-    };
-
-    window.addEventListener('message', handleMessage);
-    return () => window.removeEventListener('message', handleMessage);
-  }, []);
-
-  const handleConnectGithub = async () => {
-    try {
-      const response = await fetch('/api/auth/github/url');
-      if (!response.ok) throw new Error('Failed to get auth URL');
-      const { url } = await response.json();
-      
-      window.open(url, 'github_oauth', 'width=600,height=700');
-    } catch (error) {
-      console.error('GitHub connection error:', error);
-      alert('Kunde inte starta GitHub-koppling. Kontrollera att GITHUB_CLIENT_ID är konfigurerat.');
-    }
-  };
 
   if (loading) {
     return (
@@ -105,16 +72,6 @@ export default function Profile() {
 
         {/* Main Content */}
         <main className="flex-1 space-y-12">
-          {githubToken && (
-            <section className="space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-3xl font-serif font-bold tracking-tight">GitHub-profil</h2>
-                <p className="text-sm text-muted-foreground">Din utvecklaraktivitet synkad</p>
-              </div>
-              <GithubProfile token={githubToken} />
-            </section>
-          )}
-
           <section className="space-y-6">
             <div className="flex items-center justify-between">
               <h2 className="text-3xl font-serif font-bold tracking-tight">Min Bevakningslista</h2>
@@ -138,48 +95,6 @@ export default function Profile() {
             </button>
           </section>
 
-          <section className="bg-card border border-border rounded-3xl p-8 space-y-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-[#24292e] rounded-2xl flex items-center justify-center text-white">
-                  <Github size={24} />
-                </div>
-                <div>
-                  <h3 className="text-xl font-serif font-bold">GitHub-koppling</h3>
-                  <p className="text-muted-foreground text-sm">Koppla ditt konto för att synka din utvecklarprofil.</p>
-                </div>
-              </div>
-              {githubToken ? (
-                <div className="flex items-center gap-2 text-primary font-bold">
-                  <CheckCircle2 size={20} />
-                  Kopplad
-                </div>
-              ) : (
-                <button 
-                  onClick={handleConnectGithub}
-                  className="px-6 py-2 bg-[#24292e] text-white font-bold rounded-xl hover:bg-black transition-colors flex items-center gap-2"
-                >
-                  <Github size={18} /> Koppla GitHub
-                </button>
-              )}
-            </div>
-            {githubToken && (
-              <div className="p-4 bg-section-alt rounded-xl border border-border/50">
-                <p className="text-xs text-muted-foreground">
-                  Ditt GitHub-konto är nu kopplat. Vi kan nu hämta data från din profil för att anpassa din upplevelse.
-                </p>
-                <button 
-                  onClick={() => {
-                    setGithubToken(null);
-                    localStorage.removeItem("github_token");
-                  }}
-                  className="mt-3 text-xs text-red-500 hover:underline"
-                >
-                  Koppla ifrån
-                </button>
-              </div>
-            )}
-          </section>
         </main>
       </div>
     </div>

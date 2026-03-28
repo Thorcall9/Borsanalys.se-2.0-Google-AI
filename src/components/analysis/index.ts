@@ -13,7 +13,5 @@ export { default as ProgressBar } from './ProgressBar';
 export { default as ChartCard } from './ChartCard';
 export { default as AlertBox } from './AlertBox';
 export { default as ComprehensiveAnalysis } from './ComprehensiveAnalysis';
-export { default as SpiderChart } from './SpiderChart';
-export { default as RadarChart } from './SpiderChart';
 export { default as FinancialTable } from './FinancialTable';
 export type { TableRow } from './FinancialTable';

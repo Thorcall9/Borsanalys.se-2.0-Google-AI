@@ -19,7 +19,7 @@ export const StockPriceBadge: React.FC<StockPriceBadgeProps> = ({ ticker }) => {
   useEffect(() => {
     const fetchPrice = async () => {
       try {
-        const response = await fetch(`${window.location.origin}/api/stocks/${ticker}`);
+        const response = await fetch(`/api/stocks/${ticker}`);
         
         let result;
         const text = await response.text();
@@ -49,8 +49,8 @@ export const StockPriceBadge: React.FC<StockPriceBadgeProps> = ({ ticker }) => {
     };
 
     fetchPrice();
-    const interval = setInterval(fetchPrice, 60000); // Update every minute
-    return () => clearInterval(interval);
+    // const interval = setInterval(fetchPrice, 60000); // Update every minute
+    // return () => clearInterval(interval);
   }, [ticker]);
 
   if (loading) return <div className="h-4 w-16 bg-black/5 animate-pulse rounded" />;

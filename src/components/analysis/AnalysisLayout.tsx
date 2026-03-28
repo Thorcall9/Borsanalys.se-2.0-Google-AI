@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Menu, X, ArrowLeft, Star, StarOff, Loader2 } from 'lucide-react';
+import AdZone from '../AdZone';
 
 export interface AnalysisSection {
   id: string;
@@ -14,6 +15,11 @@ interface AnalysisLayoutProps {
   stockSlug?: string;
   ticker?: string;
   subtitle?: string;
+  livePrice?: string;
+  liveChange?: string;
+  analysisPrice?: number;
+  currentPrice?: number;
+  currency?: string;
   date?: string;
   dataSources?: string;
   sections: AnalysisSection[];
@@ -30,20 +36,36 @@ export default function AnalysisLayout({
   stockSlug,
   ticker,
   subtitle = "Finansiell Analys",
+  livePrice,
+  liveChange,
   date = new Date().toLocaleDateString(),
   dataSources = "Källa: Börsanalys.se",
   sections,
   children,
-  accentColor = "#1e40af",
+  accentColor = "#10B981",
   theme = 'dark',
   isInWatchlist,
   isWatchlistLoading,
-  onToggleWatchlist
+  onToggleWatchlist,
+  analysisPrice,
+  currentPrice,
+  currency = "SEK"
 }: AnalysisLayoutProps) {
   const [activeSection, setActiveSection] = useState(sections[0]?.id);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   
   const stockLink = stockSlug || companyName.toLowerCase().split(' ')[0];
+
+  const priceDiff = useMemo(() => {
+    if (!analysisPrice || !currentPrice) return null;
+    const diff = currentPrice - analysisPrice;
+    const percent = (diff / analysisPrice) * 100;
+    return {
+      diff,
+      percent,
+      isPositive: diff >= 0
+    };
+  }, [analysisPrice, currentPrice]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -90,9 +112,9 @@ export default function AnalysisLayout({
       {/* Mobile Toggle */}
       <button 
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-        className="fixed top-6 right-6 z-[100] lg:hidden w-12 h-12 bg-card border border-border rounded-2xl flex items-center justify-center shadow-2xl text-foreground"
+        className="fixed bottom-6 right-6 z-[100] lg:hidden w-14 h-14 bg-primary text-primary-foreground rounded-full flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-transform"
       >
-        {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+        {isSidebarOpen ? <X size={28} /> : <Menu size={28} />}
       </button>
 
       {/* Sidebar */}
@@ -110,6 +132,17 @@ export default function AnalysisLayout({
           </Link>
           <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">{ticker} · {subtitle}</div>
           
+          {livePrice && (
+            <div className="mt-4 flex items-center gap-3">
+              <div className="text-xl font-black tracking-tighter">{livePrice}</div>
+              {liveChange && (
+                <div className={`text-[10px] font-black uppercase tracking-widest ${liveChange.startsWith('+') || !liveChange.startsWith('-') ? 'text-emerald-500' : 'text-danger'}`}>
+                  {liveChange}
+                </div>
+              )}
+            </div>
+          )}
+
           {onToggleWatchlist && (
             <button 
               onClick={onToggleWatchlist}
@@ -153,6 +186,10 @@ export default function AnalysisLayout({
           ))}
         </nav>
 
+        <div className="px-8 mb-8">
+          <AdZone id="sidebar-bottom" type="sidebar" />
+        </div>
+
         <div className="p-8 border-t border-border bg-muted/10">
           <div className="flex flex-col gap-1 text-[10px] font-black text-muted-foreground uppercase tracking-widest">
             <span>Publicerad: {date}</span>
@@ -164,6 +201,34 @@ export default function AnalysisLayout({
       {/* Main Content */}
       <main className="flex-1 lg:ml-72 min-w-0 bg-background">
         <div className="max-w-5xl mx-auto px-6 lg:px-12 py-12 lg:py-24">
+          {priceDiff && (
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-12 bg-card border border-border rounded-[2rem] p-8 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl shadow-black/20"
+            >
+              <div className="flex flex-col gap-2 text-center md:text-left">
+                <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em]">Analysens Utveckling</div>
+                <div className="text-3xl font-black tracking-tighter">
+                  Sedan analys: <span className={priceDiff.isPositive ? 'text-emerald-500' : 'text-danger'}>
+                    {priceDiff.isPositive ? '+' : ''}{priceDiff.percent.toFixed(2)}%
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-12">
+                <div className="flex flex-col gap-1 text-center md:text-right">
+                  <div className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Pris vid analys ({date})</div>
+                  <div className="text-xl font-black tracking-tight opacity-60">{analysisPrice?.toFixed(2)} {currency}</div>
+                </div>
+                <div className="w-px h-12 bg-border hidden md:block" />
+                <div className="flex flex-col gap-1 text-center md:text-right">
+                  <div className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Aktuell Kurs</div>
+                  <div className="text-xl font-black tracking-tight">{currentPrice?.toFixed(2)} {currency}</div>
+                </div>
+              </div>
+            </motion.div>
+          )}
           {children}
         </div>
       </main>

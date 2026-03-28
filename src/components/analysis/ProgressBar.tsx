@@ -7,7 +7,7 @@ interface ProgressBarProps {
   accentColor?: string;
 }
 
-export default function ProgressBar({ label, val, progress, accentColor = "#1e40af" }: ProgressBarProps) {
+export default function ProgressBar({ label, val, progress, accentColor = "#10B981" }: ProgressBarProps) {
   return (
     <div className="space-y-1.5">
       <div className="flex justify-between text-xs">

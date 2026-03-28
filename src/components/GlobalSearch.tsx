@@ -41,12 +41,18 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
 
     const lowerQuery = query.toLowerCase();
     
-    const filteredAnalyses = Object.values(analyses).filter(
-      (a) => 
-        a.title.toLowerCase().includes(lowerQuery) || 
-        a.ticker.toLowerCase().includes(lowerQuery) ||
-        a.sector.toLowerCase().includes(lowerQuery)
-    );
+    const filteredAnalyses = Object.values(analyses)
+      .filter(
+        (a) => 
+          a.title.toLowerCase().includes(lowerQuery) || 
+          a.ticker.toLowerCase().includes(lowerQuery) ||
+          a.sector.toLowerCase().includes(lowerQuery)
+      )
+      .sort((a, b) => {
+        const dateA = a.date || "0000-00-00";
+        const dateB = b.date || "0000-00-00";
+        return dateB.localeCompare(dateA);
+      });
 
     const filteredGuides = Object.values(guides).filter(
       (g) => 
@@ -83,24 +89,25 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             initial={{ opacity: 0, scale: 0.98, y: -20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.98, y: -20 }}
-            className="fixed top-[15%] left-1/2 -translate-x-1/2 w-full max-w-3xl bg-card border border-border rounded-[2.5rem] shadow-2xl z-[70] overflow-hidden shadow-black/20"
+            className="fixed top-[10%] md:top-[15%] left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-3xl bg-card border border-border rounded-[2rem] md:rounded-[2.5rem] shadow-2xl z-[70] overflow-hidden shadow-black/20"
             onKeyDown={handleKeyDown}
           >
-            <div className="p-8 border-b border-border flex items-center gap-6 bg-muted/10">
-              <Search className="text-primary" size={28} />
+            <div className="p-4 md:p-8 border-b border-border flex items-center gap-3 md:gap-6 bg-muted/10">
+              <Search className="text-primary shrink-0" size={24} />
               <input
                 ref={inputRef}
                 type="text"
                 placeholder="Sök efter företag, ticker eller guider..."
-                className="flex-1 bg-transparent border-none outline-none text-2xl font-black tracking-tighter placeholder:text-muted-foreground/30 text-foreground"
+                className="flex-1 bg-transparent border-none outline-none text-lg md:text-2xl font-black tracking-tighter placeholder:text-muted-foreground/30 text-foreground min-w-0"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
               <button 
                 onClick={onClose}
-                className="w-10 h-10 flex items-center justify-center hover:bg-muted rounded-2xl transition-all text-muted-foreground hover:text-foreground"
+                className="w-10 h-10 flex items-center justify-center hover:bg-muted rounded-xl md:rounded-2xl transition-all text-muted-foreground hover:text-foreground shrink-0 border border-border md:border-none"
+                aria-label="Stäng sök"
               >
-                <X size={24} />
+                <X size={20} className="md:w-6 md:h-6" />
               </button>
             </div>
 

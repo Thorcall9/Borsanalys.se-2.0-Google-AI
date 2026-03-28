@@ -119,8 +119,8 @@ export default function Footer() {
           © 2026 Börsanalys.se — Precision i varje analys
         </div>
         <div className="flex gap-10">
-          <span className="text-[11px] font-bold text-muted-foreground/50 uppercase tracking-widest hover:text-primary cursor-pointer transition-colors">Integritetspolicy</span>
-          <span className="text-[11px] font-bold text-muted-foreground/50 uppercase tracking-widest hover:text-primary cursor-pointer transition-colors">Användarvillkor</span>
+          <Link to="/integritet" className="text-[11px] font-bold text-muted-foreground/50 uppercase tracking-widest hover:text-primary transition-colors">Integritetspolicy</Link>
+          <Link to="/villkor" className="text-[11px] font-bold text-muted-foreground/50 uppercase tracking-widest hover:text-primary transition-colors">Användarvillkor</Link>
         </div>
       </div>
     </footer>

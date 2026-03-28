@@ -14,7 +14,7 @@ export default function SwotGrid({ data, title }: SwotGridProps) {
   const categories = [
     { key: 'strengths', title: 'Styrkor', color: 'text-primary', items: data.strengths },
     { key: 'weaknesses', title: 'Svagheter', color: 'text-red-500', items: data.weaknesses },
-    { key: 'opportunities', title: 'Möjligheter', color: 'text-blue-500', items: data.opportunities },
+    { key: 'opportunities', title: 'Möjligheter', color: 'text-emerald-500', items: data.opportunities },
     { key: 'threats', title: 'Hot', color: 'text-amber-500', items: data.threats },
   ];
 

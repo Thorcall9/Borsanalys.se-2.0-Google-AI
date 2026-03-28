@@ -17,7 +17,7 @@ interface FinancialTableProps {
   accentColor?: string;
 }
 
-export default function FinancialTable({ data, columns, title, accentColor = "#1e40af" }: FinancialTableProps) {
+export default function FinancialTable({ data, columns, title, accentColor = "#10B981" }: FinancialTableProps) {
   return (
     <div className="bg-card border border-border rounded-3xl overflow-hidden shadow-sm">
       {title && (

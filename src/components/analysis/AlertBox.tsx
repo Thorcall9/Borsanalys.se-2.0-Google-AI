@@ -11,10 +11,10 @@ interface AlertBoxProps {
 export default function AlertBox({ type, title, message, children }: AlertBoxProps) {
   const styles = {
     info: {
-      bg: 'bg-blue-50',
-      border: 'border-blue-200',
-      text: 'text-blue-800',
-      icon: <Info size={18} className="text-blue-600" />
+      bg: 'bg-emerald-50',
+      border: 'border-emerald-200',
+      text: 'text-emerald-800',
+      icon: <Info size={18} className="text-emerald-600" />
     },
     risk: {
       bg: 'bg-red-50',

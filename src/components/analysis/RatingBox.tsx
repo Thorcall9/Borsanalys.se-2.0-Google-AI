@@ -14,7 +14,7 @@ export default function RatingBox({
   maxRating = 5, 
   title = "Analytikerbetyg",
   description, 
-  accentColor = "#1e40af" 
+  accentColor = "#10B981" 
 }: RatingBoxProps) {
   return (
     <div className="bg-card border border-border rounded-3xl p-8 shadow-xl shadow-black/5">

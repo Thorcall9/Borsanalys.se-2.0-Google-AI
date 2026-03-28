@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { 
   TrendingUp, 
@@ -10,8 +10,7 @@ import {
   ArrowUpRight,
   Globe,
   Briefcase,
-  AlertCircle,
-  Loader2
+  AlertCircle
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { 
@@ -24,77 +23,37 @@ import {
   ResponsiveContainer,
   Legend
 } from 'recharts';
+import { GoogleGenAI, Type } from "@google/genai";
 import { stocks } from '../data/stocks';
 import { analyses } from '../data/analyses';
-
-interface LiveData {
-  price: number;
-  currency: string;
-  change: number;
-  changePercent: number;
-  pe: number | null;
-  yield: number | null;
-  marketCap: number | null;
-  name: string;
-  fiftyTwoWeekHigh: number | null;
-  fiftyTwoWeekLow: number | null;
-  volume: number | null;
-  eps: number | null;
-  currentPrice?: number | null;
-  targetPrice?: number | null;
-  yearlyFinancials?: {
-    date: number;
-    revenue: number;
-    earnings: number;
-  }[] | null;
-}
+import { fetchWithCache, RapidAPIQuote } from '../services/stockService';
 
 export default function StockHub() {
   const { slug } = useParams<{ slug: string }>();
   const stock = slug ? stocks[slug] : null;
-  const [liveData, setLiveData] = useState<LiveData | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // const [liveData, setLiveData] = React.useState<RapidAPIQuote | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  useEffect(() => {
-    if (stock?.yahooTicker) {
-      const fetchLiveData = async () => {
-        setLoading(true);
-        setError(null);
-        try {
-          const response = await fetch(`${window.location.origin}/api/stocks/${encodeURIComponent(stock.yahooTicker)}`);
-          
-          let data;
-          const text = await response.text();
-          try {
-            data = JSON.parse(text);
-          } catch (e) {
-            console.error(`Invalid JSON from server for ${stock.yahooTicker}. Body:`, text.substring(0, 200));
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            throw new Error('Invalid JSON response from server');
-          }
-          
-          if (!response.ok) {
-            throw new Error(data.error || `HTTP error! status: ${response.status}`);
-          }
-          
-          setLiveData(data);
-        } catch (err: any) {
-          console.error('Error fetching live data:', err);
-          setError(err.message || 'Kunde inte hämta live-data');
-        } finally {
-          setLoading(false);
-        }
-      };
-
-      fetchLiveData();
+  /*
+  React.useEffect(() => {
+    if (stock?.ticker) {
+      setIsLoading(true);
+      fetchWithCache(stock.ticker).then(data => {
+        setLiveData(data);
+        setIsLoading(false);
+      });
     }
-  }, [stock?.yahooTicker]);
+  }, [stock?.ticker]);
+  */
 
   // Find analyses related to this stock
-  const relatedAnalyses = Object.values(analyses).filter(a => 
-    a.slug.includes(slug || '') || a.ticker === stock?.ticker
-  );
+  const relatedAnalyses = Object.values(analyses)
+    .filter(a => a.slug.includes(slug || '') || a.ticker === stock?.ticker)
+    .sort((a, b) => {
+      const dateA = a.date || "0000-00-00";
+      const dateB = b.date || "0000-00-00";
+      return dateB.localeCompare(dateA);
+    });
 
   if (!stock) {
     return (
@@ -118,38 +77,14 @@ export default function StockHub() {
     return val.toLocaleString();
   };
 
-  const displayPrice = liveData 
-    ? `${liveData.price.toLocaleString()} ${liveData.currency}`
-    : stock.stats.price;
+  const displayPrice = stock.stats.price;
+    
+  const displayChange = stock.stats.change;
+    
+  const isUp = stock.stats.change.startsWith('+');
 
-  const displayChange = liveData
-    ? `${liveData.changePercent > 0 ? '+' : ''}${liveData.changePercent.toFixed(2)}%`
-    : stock.stats.change;
-
-  const isUp = liveData ? liveData.changePercent > 0 : stock.stats.change.startsWith('+');
-
-  // Process live financial data if available
-  const chartData = React.useMemo(() => {
-    if (liveData?.yearlyFinancials && liveData.yearlyFinancials.length > 0) {
-      // Scale factor based on financialUnit
-      let scale = 1;
-      const unit = stock.financialUnit || '';
-      if (unit.includes('T') || unit.includes('TDKK')) {
-        scale = 1e12;
-      } else if (unit.includes('Mdr') || unit.includes('Bkr') || unit.includes('Mdkr') || unit.includes('B')) {
-        scale = 1e9;
-      } else if (unit.includes('MEUR') || unit.includes('Mkr') || unit.includes('M')) {
-        scale = 1e6;
-      }
-
-      return liveData.yearlyFinancials.map(item => ({
-        year: item.date.toString(),
-        revenue: Number((item.revenue / scale).toFixed(2)),
-        profit: Number((item.earnings / scale).toFixed(2))
-      }));
-    }
-    return stock.financialData;
-  }, [liveData?.yearlyFinancials, stock.financialData, stock.financialUnit]);
+  // Process financial data
+  const chartData = stock.financialData;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -169,16 +104,9 @@ export default function StockHub() {
           </div>
           <div className="text-right flex flex-col items-end">
             <div className="flex items-center gap-2">
-              {loading && <Loader2 size={14} className="animate-spin text-primary" />}
-              {!loading && liveData && (
-                <span className="flex items-center gap-1 px-1.5 py-0.5 bg-primary/10 text-primary text-[8px] font-mono font-bold rounded border border-primary/20 uppercase tracking-tighter">
-                  <span className="w-1 h-1 bg-primary rounded-full animate-pulse" />
-                  Live
-                </span>
-              )}
               <div className="text-2xl font-serif font-bold text-foreground">{displayPrice}</div>
             </div>
-            <div className={`text-xs font-mono ${isUp ? 'text-success' : 'text-danger'}`}>
+            <div className={`text-xs font-mono ${isUp ? 'text-emerald-500' : 'text-danger'}`}>
               {isUp ? '▲' : '▼'} {displayChange}
             </div>
           </div>
@@ -195,7 +123,6 @@ export default function StockHub() {
             <section>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-[11px] font-mono tracking-[0.3em] text-muted uppercase">Om Bolaget</h2>
-                {error && <span className="text-[10px] text-danger font-mono uppercase">{error}</span>}
               </div>
               <p className="text-lg text-muted leading-relaxed font-light">
                 {stock.description}
@@ -204,13 +131,13 @@ export default function StockHub() {
                 <div className="p-4 bg-white rounded-xl border border-border shadow-sm">
                   <div className="text-[10px] text-muted uppercase mb-1">Börsvärde</div>
                   <div className="text-xl font-serif font-bold text-foreground">
-                    {liveData ? formatMarketCap(liveData.marketCap) : stock.stats.marketCap}
+                    {stock.stats.marketCap}
                   </div>
                 </div>
                 <div className="p-4 bg-white rounded-xl border border-border shadow-sm">
                   <div className="text-[10px] text-muted uppercase mb-1">P/E (LTM)</div>
                   <div className="text-xl font-serif font-bold text-foreground">
-                    {liveData ? (liveData.pe ? liveData.pe.toFixed(2) : 'N/A') : (stock.stats.pe ? parseFloat(String(stock.stats.pe).replace(',', '.')).toFixed(2) : 'N/A')}
+                    {stock.stats.pe}
                   </div>
                 </div>
                 <div className="p-4 bg-white rounded-xl border border-border shadow-sm">
@@ -220,53 +147,13 @@ export default function StockHub() {
                 <div className="p-4 bg-white rounded-xl border border-border shadow-sm">
                   <div className="text-[10px] text-muted uppercase mb-1">Direktavk.</div>
                   <div className="text-xl font-serif font-bold text-foreground">
-                    {liveData && liveData.yield !== null ? `${(liveData.yield * 100).toFixed(2)}%` : stock.stats.yield}
+                    {stock.stats.yield}
                   </div>
                 </div>
               </div>
             </section>
 
-            {/* Detailed Metrics */}
-            {liveData && (
-              <section className="p-8 bg-section-alt border border-border rounded-3xl">
-                <div className="flex items-center justify-between mb-8">
-                  <h2 className="text-[11px] font-mono tracking-[0.3em] text-muted uppercase">Fler Nyckeltal (Live)</h2>
-                  <span className="text-[9px] font-mono text-muted uppercase">Källa: Yahoo Finance</span>
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-12">
-                  <div className="space-y-1">
-                    <div className="text-[10px] text-muted uppercase tracking-wider">52-veckors Högsta</div>
-                    <div className="text-lg font-serif font-bold text-foreground">{liveData.fiftyTwoWeekHigh?.toLocaleString()} {liveData.currency}</div>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="text-[10px] text-muted uppercase tracking-wider">52-veckors Lägsta</div>
-                    <div className="text-lg font-serif font-bold text-foreground">{liveData.fiftyTwoWeekLow?.toLocaleString()} {liveData.currency}</div>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="text-[10px] text-muted uppercase tracking-wider">Volym</div>
-                    <div className="text-lg font-serif font-bold text-foreground">{liveData.volume?.toLocaleString()}</div>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="text-[10px] text-muted uppercase tracking-wider">Vinst per aktie (EPS)</div>
-                    <div className="text-lg font-serif font-bold text-foreground">{liveData.eps?.toFixed(2)} {liveData.currency}</div>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="text-[10px] text-muted uppercase tracking-wider">Valuta</div>
-                    <div className="text-lg font-serif font-bold text-foreground">{liveData.currency}</div>
-                  </div>
-                  <div className="space-y-1">
-                    <div className="text-[10px] text-muted uppercase tracking-wider">Marknad</div>
-                    <div className="text-lg font-serif font-bold text-foreground">{stock.market}</div>
-                  </div>
-                  {liveData.targetPrice && (
-                    <div className="space-y-1">
-                      <div className="text-[10px] text-primary uppercase tracking-wider font-bold">Riktkurs (Snitt)</div>
-                      <div className="text-lg font-serif font-bold text-primary">{liveData.targetPrice.toFixed(2)} {liveData.currency}</div>
-                    </div>
-                  )}
-                </div>
-              </section>
-            )}
+            {/* Detailed Metrics Section Removed */}
 
             {/* Key Metrics Chart */}
             <section>
@@ -278,12 +165,12 @@ export default function StockHub() {
                       <AreaChart data={chartData}>
                         <defs>
                           <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#1E40AF" stopOpacity={0.1}/>
-                            <stop offset="95%" stopColor="#1E40AF" stopOpacity={0}/>
+                            <stop offset="5%" stopColor="#10B981" stopOpacity={0.1}/>
+                            <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
                           </linearGradient>
                           <linearGradient id="colorProfit" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.1}/>
-                            <stop offset="95%" stopColor="#3b82f6" stopOpacity={0}/>
+                            <stop offset="5%" stopColor="#059669" stopOpacity={0.1}/>
+                            <stop offset="95%" stopColor="#059669" stopOpacity={0}/>
                           </linearGradient>
                         </defs>
                         <CartesianGrid strokeDasharray="3 3" stroke="#eee" vertical={false} />
@@ -311,7 +198,7 @@ export default function StockHub() {
                           type="monotone" 
                           dataKey="revenue" 
                           name="Omsättning"
-                          stroke="#1E40AF" 
+                          stroke="#10B981" 
                           strokeWidth={2}
                           fillOpacity={1} 
                           fill="url(#colorRevenue)" 
@@ -321,7 +208,7 @@ export default function StockHub() {
                           type="monotone" 
                           dataKey="profit" 
                           name="Vinst"
-                          stroke="#3b82f6" 
+                          stroke="#059669" 
                           strokeWidth={2}
                           fillOpacity={1} 
                           fill="url(#colorProfit)" 
@@ -400,20 +287,15 @@ export default function StockHub() {
               )}
             </section>
 
-            {/* News Feed (Mocked for now) */}
+            {/* News Feed */}
             <section>
-              <h2 className="text-[11px] font-mono tracking-[0.3em] text-muted uppercase mb-6">Senaste Nytt</h2>
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-[11px] font-mono tracking-[0.3em] text-muted uppercase mb-6">Senaste Nytt</h2>
+              </div>
               <div className="space-y-6">
-                {[
-                  { title: `${stock.name} rapporterar starkare siffror än väntat`, date: '2 timmar sedan' },
-                  { title: `Analytiker ser fortsatt uppsida i ${stock.ticker}`, date: '1 dag sedan' },
-                  { title: `Insiderköp i ${stock.name} väcker intresse`, date: '3 dagar sedan' }
-                ].map((item, i) => (
-                  <div key={i} className="border-b border-border pb-4 last:border-0">
-                    <div className="text-[10px] font-mono text-muted uppercase mb-1">{item.date}</div>
-                    <h4 className="text-sm font-medium text-foreground hover:text-primary cursor-pointer transition-colors">{item.title}</h4>
-                  </div>
-                ))}
+                <div className="p-8 bg-section-alt border border-dashed border-border rounded-2xl text-center">
+                  <p className="text-muted text-sm">Inga relevanta nyheter hittades för tillfället.</p>
+                </div>
               </div>
             </section>
 

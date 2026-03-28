@@ -7,7 +7,7 @@ interface CardProps {
   accentColor?: string;
 }
 
-export default function Card({ title, children, className = "", accentColor = "#1e40af" }: CardProps) {
+export default function Card({ title, children, className = "", accentColor = "#10B981" }: CardProps) {
   return (
     <div className={`bg-card border border-border rounded-[2.5rem] p-10 hover:border-primary/50 transition-all shadow-xl shadow-black/5 ${className}`}>
       {title && (

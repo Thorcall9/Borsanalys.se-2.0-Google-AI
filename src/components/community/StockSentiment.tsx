@@ -15,7 +15,7 @@ interface SentimentData {
 }
 
 export default function StockSentiment({ symbol }: StockSentimentProps) {
-  const { user, login } = useAuth();
+  const { user, openLoginModal } = useAuth();
   const [sentiment, setSentiment] = useState<SentimentData>({ bullCount: 0, bearCount: 0, lastUpdated: null });
   const [userVote, setUserVote] = useState<'bull' | 'bear' | null>(null);
   const [loading, setLoading] = useState(true);
@@ -61,7 +61,7 @@ export default function StockSentiment({ symbol }: StockSentimentProps) {
 
   const handleVote = async (vote: 'bull' | 'bear') => {
     if (!user) {
-      login();
+      openLoginModal();
       return;
     }
 

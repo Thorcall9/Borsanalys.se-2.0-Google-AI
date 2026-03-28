@@ -170,7 +170,7 @@ export default function DCFCalculator() {
       {/* Results */}
       <div className="lg:col-span-2 space-y-8">
         {/* Fair Value Card */}
-        <div className="p-8 bg-gradient-to-br from-primary/10 to-blue-500/10 border border-white/10 rounded-3xl text-center relative overflow-hidden">
+        <div className="p-8 bg-gradient-to-br from-primary/10 to-emerald-500/10 border border-white/10 rounded-3xl text-center relative overflow-hidden">
           <div className="absolute top-0 right-0 p-8 opacity-10">
             <TrendingUp size={120} />
           </div>
@@ -196,8 +196,8 @@ export default function DCFCalculator() {
                   cursor={{ fill: 'rgba(255,255,255,0.05)' }}
                   contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #333', borderRadius: '8px' }}
                 />
-                <Bar dataKey="fcf" name="Fritt Kassaflöde" fill="#1e40af" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="pv" name="Nuvärde (PV)" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="fcf" name="Fritt Kassaflöde" fill="#10B981" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="pv" name="Nuvärde (PV)" fill="#059669" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

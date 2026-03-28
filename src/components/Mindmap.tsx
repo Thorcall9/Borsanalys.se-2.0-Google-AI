@@ -134,7 +134,7 @@ const Mindmap: React.FC = () => {
   const centerY = 360;
 
   return (
-    <div className="w-full bg-[#f8fafc] py-12 px-4 md:px-8 font-inter overflow-hidden">
+    <div className="w-full bg-emerald-50/30 py-12 px-4 md:px-8 font-inter overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* HEADER */}
         <div className="text-center mb-12">
@@ -143,7 +143,7 @@ const Mindmap: React.FC = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-3xl md:text-5xl font-black tracking-tighter text-slate-900"
           >
-            Vår <span className="text-[#1E40AF]">Analysmetodik</span>
+            Vår <span className="text-[#10B981]">Analysmetodik</span>
           </motion.h2>
           <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-medium">
             Vi kombinerar mänsklig expertis med AI för att leverera marknadens mest kompletta bolagsanalyser.
@@ -156,13 +156,13 @@ const Mindmap: React.FC = () => {
             /* MOBILE LAYOUT */
             <div className="w-full grid grid-cols-2 gap-4 mb-12">
               <div className="space-y-4">
-                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1E40AF] mb-2">Kvalitativ & Strategisk</h3>
+                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#10B981] mb-2">Kvalitativ & Strategisk</h3>
                 {CATEGORIES.filter(c => c.side === 'left').map(cat => (
                   <MobileNode key={cat.id} cat={cat} />
                 ))}
               </div>
               <div className="space-y-4">
-                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#1E40AF] mb-2 text-right">Kvantitativ & Risk</h3>
+                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#10B981] mb-2 text-right">Kvantitativ & Risk</h3>
                 {CATEGORIES.filter(c => c.side === 'right').map(cat => (
                   <MobileNode key={cat.id} cat={cat} />
                 ))}
@@ -177,7 +177,7 @@ const Mindmap: React.FC = () => {
                   <motion.path
                     key={`line-${cat.id}`}
                     d={`M ${centerX} ${centerY} L ${cat.x} ${cat.y}`}
-                    stroke="#1E40AF"
+                    stroke="#10B981"
                     strokeWidth={hoveredId === cat.id ? 3 : 1.5}
                     strokeOpacity={hoveredId === cat.id ? 0.8 : 0.2}
                     fill="none"
@@ -191,7 +191,7 @@ const Mindmap: React.FC = () => {
                 {/* FLOW LINES TO BOTTOM */}
                 <motion.path
                   d="M 220 600 C 220 700, 400 700, 400 720"
-                  stroke="#1E40AF"
+                  stroke="#10B981"
                   strokeWidth="1.5"
                   strokeOpacity="0.1"
                   fill="none"
@@ -201,7 +201,7 @@ const Mindmap: React.FC = () => {
                 />
                 <motion.path
                   d="M 780 600 C 780 700, 600 700, 600 720"
-                  stroke="#1E40AF"
+                  stroke="#10B981"
                   strokeWidth="1.5"
                   strokeOpacity="0.1"
                   fill="none"
@@ -220,9 +220,9 @@ const Mindmap: React.FC = () => {
                     cx={centerX}
                     cy={centerY}
                     r="70"
-                    fill="#1E40AF"
+                    fill="#10B981"
                     animate={{ 
-                      boxShadow: ["0 0 0px #1E40AF", "0 0 30px #1E40AF", "0 0 0px #1E40AF"] 
+                      boxShadow: ["0 0 0px #10B981", "0 0 30px #10B981", "0 0 0px #10B981"] 
                     }}
                     transition={{ repeat: Infinity, duration: 3 }}
                     className="drop-shadow-xl"
@@ -254,11 +254,11 @@ const Mindmap: React.FC = () => {
                       height="60"
                       rx="12"
                       fill="white"
-                      stroke="#1E40AF"
+                      stroke="#10B981"
                       strokeWidth={hoveredId === cat.id ? 2 : 1}
                       className="transition-all duration-300 shadow-sm"
                       animate={{
-                        boxShadow: hoveredId === cat.id ? "0 0 15px rgba(30, 64, 175, 0.3)" : "0 0 0px transparent"
+                        boxShadow: hoveredId === cat.id ? "0 0 15px rgba(16, 185, 129, 0.3)" : "0 0 0px transparent"
                       }}
                     />
                     <text
@@ -272,31 +272,30 @@ const Mindmap: React.FC = () => {
                       {cat.title}
                     </text>
 
-                    {/* TOOLTIP (SVG version) */}
-                    <AnimatePresence>
-                      {hoveredId === cat.id && (
-                        <motion.g
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 10 }}
-                        >
-                          <rect
-                            x={cat.x - 120}
-                            y={cat.y + 40}
-                            width="240"
-                            height="80"
-                            rx="8"
-                            fill="#0F172A"
-                            className="shadow-2xl"
-                          />
-                          <foreignObject x={cat.x - 110} y={cat.y + 50} width="220" height="60">
-                            <p className="text-[10px] text-slate-300 leading-relaxed font-medium">
-                              {cat.tooltip}
-                            </p>
-                          </foreignObject>
-                        </motion.g>
-                      )}
-                    </AnimatePresence>
+                      <AnimatePresence>
+                        {hoveredId === cat.id && (
+                          <motion.g
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                          >
+                            <rect
+                              x={cat.x - 120}
+                              y={cat.y + 40}
+                              width="240"
+                              height="80"
+                              rx="8"
+                              fill="#064e3b"
+                              className="shadow-2xl"
+                            />
+                            <foreignObject x={cat.x - 110} y={cat.y + 50} width="220" height="60">
+                              <p className="text-[10px] text-emerald-100 leading-relaxed font-medium">
+                                {cat.tooltip}
+                              </p>
+                            </foreignObject>
+                          </motion.g>
+                        )}
+                      </AnimatePresence>
                   </motion.g>
                 ))}
               </svg>
@@ -312,11 +311,11 @@ const Mindmap: React.FC = () => {
               viewport={{ once: true }}
               onMouseEnter={() => setHoveredBlock('summary')}
               onMouseLeave={() => setHoveredBlock(null)}
-              className="bg-white border-2 border-[#1E40AF] rounded-[2rem] p-8 shadow-xl relative group cursor-help"
+              className="bg-white border-2 border-[#10B981] rounded-[2rem] p-8 shadow-xl relative group cursor-help"
             >
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h4 className="text-[10px] font-black text-[#1E40AF] uppercase tracking-widest mb-2">Sektion IX</h4>
+                  <h4 className="text-[10px] font-black text-[#10B981] uppercase tracking-widest mb-2">Sektion IX</h4>
                   <h3 className="text-2xl font-black tracking-tighter text-slate-900">IX. Sammanfattning & Investeringsbeslut</h3>
                 </div>
                 <div 
@@ -337,7 +336,7 @@ const Mindmap: React.FC = () => {
                     initial={{ width: 0 }}
                     whileInView={{ width: `${(totalScore / 40) * 100}%` }}
                     transition={{ duration: 1.5, ease: "easeOut" }}
-                    className="h-full bg-[#1E40AF]"
+                    className="h-full bg-[#10B981]"
                   />
                 </div>
               </div>
@@ -348,7 +347,7 @@ const Mindmap: React.FC = () => {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className="absolute -top-24 left-0 right-0 bg-slate-900 text-white p-4 rounded-xl text-xs font-medium leading-relaxed shadow-2xl z-50"
+                    className="absolute -top-24 left-0 right-0 bg-emerald-950 text-white p-4 rounded-xl text-xs font-medium leading-relaxed shadow-2xl z-50"
                   >
                     Här sammanställs de 8 kategorierna till en totalpoäng (0–40). Analysen utmynnar i ett konkret investeringsutlåtande: Köp, Bevaka eller Avstå.
                   </motion.div>
@@ -394,7 +393,7 @@ const Mindmap: React.FC = () => {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    className="absolute -top-24 left-0 right-0 bg-slate-900 text-white p-4 rounded-xl text-xs font-medium leading-relaxed shadow-2xl z-50"
+                    className="absolute -top-24 left-0 right-0 bg-emerald-950 text-white p-4 rounded-xl text-xs font-medium leading-relaxed shadow-2xl z-50"
                   >
                     Vi räknar alltid på tre framtider. Genom att visualisera optimistiska och pessimistiska scenarier får du en realistisk bild av potential kontra risk.
                   </motion.div>
@@ -421,7 +420,7 @@ const MobileNode: React.FC<{ cat: Category }> = ({ cat }) => {
     >
       <div className="flex justify-between items-center">
         <span className="text-[10px] font-black text-slate-900 tracking-tight">{cat.title}</span>
-        <span className="text-[10px] font-black text-[#1E40AF]">{cat.score}/5</span>
+        <span className="text-[10px] font-black text-[#10B981]">{cat.score}/5</span>
       </div>
       <AnimatePresence>
         {isOpen && (

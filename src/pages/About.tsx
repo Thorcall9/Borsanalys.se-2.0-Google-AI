@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Users, Target, Shield, Zap, Mail, Twitter, Linkedin } from "lucide-react";
+import { Users, Target, Shield, Zap, Mail, Twitter, Linkedin, ArrowRight } from "lucide-react";
 
 export default function About() {
   const values = [
@@ -12,7 +13,7 @@ export default function About() {
     {
       icon: Shield,
       title: "Oberoende",
-      description: "Vi är helt oberoende och drivs av passion för investeringar, inte av provisioner eller dolda intressen."
+      description: "Vi är helt oberoende och drivs av passion för investeringar, inte av provisioner eller dolda intressen. Börsanalys.se kan ha ägarintressen i bolag som analyseras på sajten. Detta framgår alltid tydligt i respektive analys."
     },
     {
       icon: Zap,
@@ -135,6 +136,25 @@ export default function About() {
             </motion.a>
           </div>
         </div>
+      </div>
+
+      {/* Final CTA Section */}
+      <div className="text-center py-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="space-y-8"
+        >
+          <h3 className="text-3xl md:text-5xl font-black tracking-tighter">Redo att se vår metodik i praktiken?</h3>
+          <Link 
+            to="/analys" 
+            className="inline-flex items-center gap-3 text-2xl md:text-4xl font-black text-primary hover:gap-6 transition-all duration-500 group"
+          >
+            Se våra senaste analyser
+            <ArrowRight size={40} className="group-hover:scale-110 transition-transform" />
+          </Link>
+        </motion.div>
       </div>
     </div>
   );

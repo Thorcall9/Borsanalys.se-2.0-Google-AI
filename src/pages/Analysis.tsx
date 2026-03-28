@@ -23,6 +23,7 @@ import {
   BarChart3, 
   CheckCircle2 
 } from "lucide-react";
+import SEO from "../components/SEO";
 import { 
   MetricCard, 
   SwotGrid, 
@@ -34,14 +35,16 @@ import {
 import NvidiaDeepDive from "../components/NvidiaDeepDive";
 import NovoNordiskDeepDive from "../components/NovoNordiskDeepDive/NovoNordiskDeepDive";
 import EvolutionDeepDive from "../components/analysis/EvolutionDeepDive";
+import InvestorDeepDive from "../components/analysis/InvestorDeepDive";
 import { analyses } from "../data/analyses";
+import { fetchWithCache } from "../services/stockService";
 import { useAuth } from "../contexts/AuthContext";
 import { db, handleFirestoreError, OperationType } from "../firebase";
 import { collection, query, where, addDoc, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 
 export default function Analysis() {
   const { slug } = useParams();
-  const { user, login } = useAuth();
+  const { user, openLoginModal } = useAuth();
   const [isInWatchlist, setIsInWatchlist] = useState(false);
   const [watchlistDocId, setWatchlistDocId] = useState<string | null>(null);
   const [isWatchlistLoading, setIsWatchlistLoading] = useState(false);
@@ -60,26 +63,29 @@ export default function Analysis() {
 
     const fetchAllData = async () => {
       const allAnalyses = Object.values(analyses);
-      const tickers = allAnalyses.map(a => a.yahooTicker || a.ticker);
+      const tickers = [...new Set(allAnalyses.map(a => a.ticker).filter(Boolean))];
       
-      // Fetch one by one for now, or we could add a bulk endpoint
-      tickers.filter(Boolean).forEach(async (ticker) => {
+      // Fetch sequentially with a small delay to avoid hitting rate limits
+      for (const ticker of tickers) {
         try {
-          const response = await fetch(`${window.location.origin}/api/stocks/${encodeURIComponent(ticker)}`);
-          if (response.ok) {
-            const data = await response.json();
+          const data = await fetchWithCache(ticker);
+          if (data) {
             setRealTimeData(prev => ({
               ...prev,
-              [ticker]: data
+              [ticker]: {
+                price: data.regularMarketPrice,
+                change: data.regularMarketChangePercent,
+                pe: data.trailingPE,
+                yield: data.dividendYield
+              }
             }));
-          } else {
-            const errorData = await response.json();
-            console.warn(`Failed to fetch data for ${ticker}:`, errorData.error || response.statusText);
           }
+          // Small delay between requests
+          await new Promise(resolve => setTimeout(resolve, 300));
         } catch (err: any) {
           console.error(`Failed to fetch data for ${ticker}:`, err.message || err);
         }
-      });
+      }
     };
 
     fetchAllData();
@@ -112,7 +118,7 @@ export default function Analysis() {
 
   const toggleWatchlist = async () => {
     if (!user) {
-      login();
+      openLoginModal();
       return;
     }
 
@@ -158,6 +164,10 @@ export default function Analysis() {
   if (!slug) {
     return (
       <div className="bg-background min-h-screen pt-32 pb-24">
+        <SEO 
+          title="Analysarkiv - Aktieanalyser & Investment Cases" 
+          description="Utforska vårt arkiv av djupgående aktieanalyser. Vi granskar kvalitet, tillväxt och värdering för att hitta de bästa investeringsmöjligheterna."
+        />
         <div className="max-w-7xl mx-auto px-6 space-y-20">
           <div className="max-w-3xl">
             <motion.div
@@ -245,7 +255,7 @@ export default function Analysis() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {filteredAnalyses.length > 0 ? (
               filteredAnalyses.map((a, i) => {
-                const rt = realTimeData[a.yahooTicker || a.ticker];
+                const rt = realTimeData[a.ticker];
                 const rawPe = rt?.pe || a.pe;
                 const displayPe = rawPe ? parseFloat(String(rawPe).replace(',', '.')).toFixed(2) : '-';
                 const displayYield = rt?.yield !== undefined ? rt.yield : a.yield;
@@ -346,6 +356,11 @@ export default function Analysis() {
   // Special high-fidelity view for Evolution
   if (slug === 'evolution-2025') {
     return <EvolutionDeepDive onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} />;
+  }
+
+  // Special high-fidelity view for Investor AB
+  if (slug === 'investor-ab') {
+    return <InvestorDeepDive onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} />;
   }
 
   // Use the new comprehensive analysis template for all other stocks

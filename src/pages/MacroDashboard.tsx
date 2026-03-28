@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { 
   TrendingUp, Globe, Landmark, 
   Activity, ArrowUpRight, ArrowDownRight, 
-  Zap, Sparkles, Loader2, Lock
+  Zap, Sparkles, Loader2, Lock,
+  Newspaper
 } from "lucide-react";
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai";
 import { useAuth } from "../contexts/AuthContext";
 
 // Initialize Gemini
@@ -16,27 +17,51 @@ interface MarketEvent {
   title: string;
   impact: "positive" | "negative" | "neutral";
   description: string;
+  whyItMatters: string;
+  affectedCompanies: {
+    swedish: string;
+    us: string;
+    winners: string;
+  };
   aiInsight?: string;
 }
 
 const INITIAL_EVENTS: MarketEvent[] = [
   {
     id: "1",
-    title: "Geopolitisk oro i Mellanöstern",
+    title: "Pågående krig/konflikt i Mellanöstern (Iran-kriget och oljechocken)",
     impact: "negative",
-    description: "Eskalerande spänningar påverkar oljepriset och skapar osäkerhet på de globala marknaderna.",
+    description: "Detta är den mest akuta händelsen just nu. Konflikten har lett till kraftiga störningar i olje- och gasförsörjningen (Strait of Hormuz etc.), med Brent-oljan upp mot 100–110 USD/fat och stora uppgångar i gaspriser.",
+    whyItMatters: "Högre energipriser driver upp inflationsförväntningar, ökar produktions- och transportkostnader globalt, skapar osäkerhet kring tillväxt och recessionrisk. Börserna (både OMXS30 och S&P 500) har sett volatilitet och nedgångar de senaste veckorna p.g.a. detta – oljepriset tynger aktier bredare än bara energisektorn.",
+    affectedCompanies: {
+      swedish: "Cyklistiska export- och industribolag som drabbas av högre bränsle-/energikostnader och svagare global efterfrågan. Exempel: Atlas Copco (ner rejält nyligen), Boliden (mining, stor nedgång), Volvo och Scania (fordonstillverkning och logistik), samt transportrelaterade. Breda OMXS30-fall i industrisektorn.",
+      us: "Rese- och transportbolag (höga bränslekostnader): Carnival (cruises), JetBlue (flyg), UPS och FedEx (leveranser). Konsumentvaror som Procter & Gamble och Conagra (plast, kemikalier och förpackningar från olja). Indirekt tech/growth via lägre konsumtion.",
+      winners: "Olje- och energibolag – ExxonMobil, Chevron (upp ~30% i år), ConocoPhillips och Shell har sett rekordhöga kurser."
+    }
   },
   {
     id: "2",
-    title: "Räntebesked från FED",
+    title: "Centralbankernas penningpolitik (Fed, ECB och Riksbank håller/höjer inflationsutsikter)",
     impact: "neutral",
-    description: "Marknaden avvaktar signaler om framtida räntesänkningar under kommande kvartal.",
+    description: "Riksbanken (1,75%), Fed (3,75%) och ECB höll räntorna stilla i mars 2026. Inflationsprognoser justeras upp och marknaden prisar in färre sänkningar.",
+    whyItMatters: "”Higher for longer”-scenariot minskar riskaptiten och pressar värderingar på framtida vinster, särskilt för tillväxtbolag. Makrofaktorer väger tyngre än bolagsnyheter just nu.",
+    affectedCompanies: {
+      swedish: "Räntekänsliga industribolag som Volvo, Ericsson och Atlas Copco. Bred påverkan på exportsektorn via valutaförändringar.",
+      us: "Högt värderade tech-bolag som Nvidia, Tesla och Meta drabbas av diskonteringseffekten. Russell 2000 (småbolag) drabbas extra hårt.",
+      winners: "Banker och finansbolag kan gynnas av det högre ränteläget."
+    }
   },
   {
     id: "3",
-    title: "AI-boomen fortsätter",
-    impact: "positive",
-    description: "Starka rapporter från tech-jättar driver på investeringar i halvledare och mjukvara.",
+    title: "Stigande inflation driven av energipriser (med recessionrisk)",
+    impact: "negative",
+    description: "Energipriserna pushar upp CPI bredare, med indirekta effekter på löner och efterfrågan. Rädsla för stagflation eller svagare tillväxt under 2026 dominerar.",
+    whyItMatters: "Inflationen äter upp reala vinster och tvingar centralbanker att vara hawkiska. Detta dämpar både privat konsumtion och företagens investeringsvilja.",
+    affectedCompanies: {
+      swedish: "Energikänsliga tillverkare och konsumentbolag som H&M. Exportberoende bolag som Sandvik och SKF påverkas av råvarupriser.",
+      us: "Breda konsumentsektorer och cykliska bolag. Tech drabbas indirekt om den generella tillväxten i ekonomin bromsar in.",
+      winners: "Råvaru- och energirelaterade bolag (utöver ren olja även vissa mining-bolag)."
+    }
   }
 ];
 
@@ -73,14 +98,14 @@ const PHASES = [
     name: 'Reflation',
     description: 'Låg tillväxt och fallande inflation. Obligationer är ofta det bästa valet.',
     rotation: 315,
-    color: 'text-blue-500',
-    bg: 'bg-blue-500/10',
+    color: 'text-emerald-400',
+    bg: 'bg-emerald-400/10',
     isCurrent: false
   }
 ];
 
 export default function MacroDashboard() {
-  const { user, login } = useAuth();
+  const { user, openLoginModal } = useAuth();
   const [events, setEvents] = useState<MarketEvent[]>(INITIAL_EVENTS);
   const [loadingAI, setLoadingAI] = useState<string | null>(null);
   const currentPhase = PHASES.find(p => p.isCurrent) || PHASES[0];
@@ -262,7 +287,8 @@ export default function MacroDashboard() {
               </div>
 
               <div className="space-y-6">
-                {events.map((event) => (
+                {events.length > 0 ? (
+                  events.map((event) => (
                   <motion.div 
                     key={event.id}
                     initial={{ opacity: 0, x: -20 }}
@@ -279,7 +305,7 @@ export default function MacroDashboard() {
                         <h3 className="text-2xl font-black tracking-tighter">{event.title}</h3>
                       </div>
                       <button 
-                        onClick={() => user ? getAIInsight(event) : login()}
+                        onClick={() => user ? getAIInsight(event) : openLoginModal()}
                         disabled={loadingAI === event.id}
                         className="flex items-center gap-2 px-6 py-2 bg-primary/10 text-primary rounded-full text-xs font-black uppercase tracking-widest hover:bg-primary hover:text-white transition-all disabled:opacity-50"
                       >
@@ -291,7 +317,7 @@ export default function MacroDashboard() {
                         ) : (
                           <>
                             {user ? <Zap size={14} /> : <Lock size={14} />}
-                            {user ? "Få AI-insikt" : "Logga in för AI"}
+                            {user ? "Få AI-insikt" : "Logga in för djupare AI-insikter"}
                           </>
                         )}
                       </button>
@@ -300,6 +326,41 @@ export default function MacroDashboard() {
                     <p className="text-muted-foreground font-medium leading-relaxed mb-6">
                       {event.description}
                     </p>
+
+                    {user ? (
+                      <div className="space-y-6 mb-6">
+                        <div className="p-6 bg-muted/20 rounded-2xl border border-border/50">
+                          <h4 className="text-xs font-black uppercase tracking-widest text-foreground mb-3">Varför det påverkar börsen</h4>
+                          <p className="text-sm text-muted-foreground leading-relaxed">{event.whyItMatters}</p>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                          <div className="p-4 bg-red-500/5 rounded-xl border border-red-500/10">
+                            <div className="text-[10px] font-black uppercase tracking-widest text-red-500 mb-2">Svenska Aktier</div>
+                            <p className="text-[11px] font-bold leading-relaxed">{event.affectedCompanies.swedish}</p>
+                          </div>
+                          <div className="p-4 bg-orange-500/5 rounded-xl border border-orange-500/10">
+                            <div className="text-[10px] font-black uppercase tracking-widest text-orange-500 mb-2">USA Aktier</div>
+                            <p className="text-[11px] font-bold leading-relaxed">{event.affectedCompanies.us}</p>
+                          </div>
+                          <div className="p-4 bg-emerald-500/5 rounded-xl border border-emerald-500/10">
+                            <div className="text-[10px] font-black uppercase tracking-widest text-emerald-500 mb-2">Vinnare</div>
+                            <p className="text-[11px] font-bold leading-relaxed">{event.affectedCompanies.winners}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="mb-6 p-6 bg-primary/5 border border-dashed border-primary/20 rounded-2xl flex flex-col items-center justify-center text-center gap-3">
+                        <Lock size={20} className="text-primary/40" />
+                        <p className="text-xs font-bold text-muted-foreground">Logga in för att se marknadspåverkan och påverkade bolag</p>
+                        <button 
+                          onClick={openLoginModal}
+                          className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline"
+                        >
+                          Logga in nu
+                        </button>
+                      </div>
+                    )}
 
                     <AnimatePresence>
                       {event.aiInsight && (
@@ -320,7 +381,11 @@ export default function MacroDashboard() {
                       )}
                     </AnimatePresence>
                   </motion.div>
-                ))}
+                ))) : (
+                  <div className="p-12 text-center bg-card border border-border rounded-[2rem]">
+                    <p className="text-muted-foreground">Inga makrohändelser hittades för tillfället.</p>
+                  </div>
+                )}
               </div>
             </section>
 
@@ -393,7 +458,7 @@ export default function MacroDashboard() {
               <div className="aspect-square bg-white/5 rounded-full flex items-center justify-center border border-white/10 relative overflow-hidden cursor-pointer group/clock">
                 {/* Quadrants */}
                 <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 z-0">
-                  <div className={`border-r border-b border-white/10 hover:bg-blue-500/20 transition-colors ${activePhase.id === 'reflation' ? 'bg-blue-500/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[3])} />
+                  <div className={`border-r border-b border-white/10 hover:bg-emerald-400/20 transition-colors ${activePhase.id === 'reflation' ? 'bg-emerald-400/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[3])} />
                   <div className={`border-b border-white/10 hover:bg-emerald-500/20 transition-colors ${activePhase.id === 'recovery' ? 'bg-emerald-500/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[0])} />
                   <div className={`border-r border-white/10 hover:bg-red-500/20 transition-colors ${activePhase.id === 'stagflation' ? 'bg-red-500/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[2])} />
                   <div className={`hover:bg-orange-500/20 transition-colors ${activePhase.id === 'overheating' ? 'bg-orange-500/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[1])} />
@@ -463,7 +528,7 @@ export default function MacroDashboard() {
                   </button>
                 ) : (
                   <button 
-                    onClick={login}
+                    onClick={openLoginModal}
                     className="w-full py-4 bg-white/10 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-white/20 transition-all flex items-center justify-center gap-2"
                   >
                     <Lock size={14} />

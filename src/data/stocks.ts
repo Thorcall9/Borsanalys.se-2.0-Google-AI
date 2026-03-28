@@ -8,7 +8,6 @@ export interface StockData {
   slug: string;
   name: string;
   ticker: string;
-  yahooTicker: string;
   market: string;
   sector: string;
   description: string;
@@ -29,7 +28,6 @@ export const stocks: Record<string, StockData> = {
     slug: "nvidia",
     name: "NVIDIA Corporation",
     ticker: "NVDA",
-    yahooTicker: "NVDA",
     market: "NASDAQ",
     sector: "Halvledare",
     description: "NVIDIA är världsledande inom accelererad beräkning. Bolaget uppfann GPU:n och har transformerat gaming, datacenter och AI-marknaden. Deras Blackwell-arkitektur och CUDA-plattform utgör ryggraden i den globala AI-revolutionen.",
@@ -53,8 +51,7 @@ export const stocks: Record<string, StockData> = {
   "investor": {
     slug: "investor",
     name: "Investor AB",
-    ticker: "INVE B",
-    yahooTicker: "INVE-B.ST",
+    ticker: "INVE-B.ST",
     market: "Stockholm",
     sector: "Investmentbolag",
     description: "Investor grundades av familjen Wallenberg 1916 och är idag ett av Nordens ledande investmentbolag. Portföljen består av högkvalitativa noterade bolag som Atlas Copco, ABB och SEB, samt onoterade Patricia Industries.",
@@ -80,7 +77,6 @@ export const stocks: Record<string, StockData> = {
     slug: "microsoft",
     name: "Microsoft Corporation",
     ticker: "MSFT",
-    yahooTicker: "MSFT",
     market: "NASDAQ",
     sector: "Mjukvara",
     description: "Microsoft är ett globalt teknikbolag som erbjuder mjukvara, molntjänster (Azure) och hårdvara. Genom sitt partnerskap med OpenAI har de tagit en ledande position inom generativ AI för företag och konsumenter.",
@@ -104,8 +100,7 @@ export const stocks: Record<string, StockData> = {
   "evolution": {
     slug: "evolution",
     name: "Evolution AB",
-    ticker: "EVO",
-    yahooTicker: "EVO.ST",
+    ticker: "EVO.ST",
     market: "Stockholm",
     sector: "Gaming",
     description: "Evolution är världsledande inom B2B-lösningar för live casino. Bolaget levererar innovativa spelupplevelser till operatörer globalt och har en historik av extremt hög lönsamhet och skalbar tillväxt.",
@@ -130,7 +125,6 @@ export const stocks: Record<string, StockData> = {
     slug: "apple",
     name: "Apple Inc.",
     ticker: "AAPL",
-    yahooTicker: "AAPL",
     market: "NASDAQ",
     sector: "Konsumentelektronik",
     description: "Apple designar, tillverkar och marknadsför smartphones, datorer och wearables. Bolagets ekosystem av tjänster och hårdvara skapar en av världens starkaste kundlojaliteter och kassaflöden.",
@@ -155,7 +149,6 @@ export const stocks: Record<string, StockData> = {
     slug: "tesla",
     name: "Tesla, Inc.",
     ticker: "TSLA",
-    yahooTicker: "TSLA",
     market: "NASDAQ",
     sector: "Automotive",
     description: "Tesla accelererar världens övergång till hållbar energi genom elbilar, solpaneler och energilagringslösningar. Bolaget leder utvecklingen inom autonom körning och robotik.",
@@ -179,8 +172,7 @@ export const stocks: Record<string, StockData> = {
   "volvo": {
     slug: "volvo",
     name: "Volvo AB",
-    ticker: "VOLV B",
-    yahooTicker: "VOLV-B.ST",
+    ticker: "VOLV-B.ST",
     market: "Stockholm",
     sector: "Industri",
     description: "Volvo Group är en av världens ledande tillverkare av lastbilar, bussar, anläggningsmaskiner och marinmotorer. Bolaget leder den gröna omställningen inom tunga transporter genom elektrifiering.",
@@ -205,7 +197,6 @@ export const stocks: Record<string, StockData> = {
     slug: "alphabet",
     name: "Alphabet Inc.",
     ticker: "GOOGL",
-    yahooTicker: "GOOGL",
     market: "NASDAQ",
     sector: "Internet",
     description: "Alphabet är moderbolaget till Google, YouTube och Waymo. Genom sin dominans inom sök och digital annonsering finansierar de banbrytande forskning inom AI och framtidens teknik.",
@@ -229,8 +220,7 @@ export const stocks: Record<string, StockData> = {
   "novo-nordisk": {
     slug: "novo-nordisk",
     name: "Novo Nordisk A/S",
-    ticker: "NOVO B",
-    yahooTicker: "NOVO-B.CO",
+    ticker: "NOVO-B.CO",
     market: "Copenhagen",
     sector: "Hälsovård",
     description: "Novo Nordisk är ett globalt läkemedelsbolag som leder kampen mot diabetes och fetma. Genom sina banbrytande GLP-1-läkemedel som Ozempic och Wegovy har bolaget blivit Europas mest värdefulla företag.",

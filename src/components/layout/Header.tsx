@@ -4,13 +4,15 @@ import { TrendingUp, Menu, X, Search, ChevronRight, LogIn, LogOut, User as UserI
 import { motion } from "framer-motion";
 import { useAuth } from "../../contexts/AuthContext";
 import { useSearch } from "../../contexts/SearchContext";
+import { useTheme } from "../../contexts/ThemeContext";
 import GlobalSearch from "../GlobalSearch";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isSearchOpen, openSearch, closeSearch } = useSearch();
   const location = useLocation();
-  const { user, login, logout } = useAuth();
+  const { user, openLoginModal, logout } = useAuth();
+  const { themeColor, setThemeColor } = useTheme();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -32,8 +34,13 @@ export default function Header() {
     { label: "Om oss", path: "/om-oss" },
   ];
 
+  const themes = [
+    { id: "emerald", color: "#10B981", label: "Smaragd" },
+    { id: "forest", color: "#059669", label: "Skog" },
+  ] as const;
+
   return (
-    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <header className="sticky top-0 z-[110] bg-background/80 backdrop-blur-md border-b border-border">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
           <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 shadow-lg shadow-primary/20">
@@ -62,6 +69,23 @@ export default function Header() {
           ))}
           <div className="w-px h-4 bg-border mx-2" />
           
+          {/* Theme Switcher */}
+          <div className="flex items-center gap-2 bg-muted/30 p-1 rounded-full border border-border/50">
+            {themes.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setThemeColor(t.id)}
+                className={`w-6 h-6 rounded-full border-2 transition-all ${
+                  themeColor === t.id ? "border-primary scale-110" : "border-transparent opacity-50 hover:opacity-100"
+                }`}
+                style={{ backgroundColor: t.color }}
+                title={t.label}
+              />
+            ))}
+          </div>
+
+          <div className="w-px h-4 bg-border mx-2" />
+          
           {user ? (
             <div className="flex items-center gap-4">
               <Link to="/profil" className="flex items-center gap-2 group cursor-pointer">
@@ -86,7 +110,7 @@ export default function Header() {
             </div>
           ) : (
             <button 
-              onClick={login}
+              onClick={openLoginModal}
               className="flex items-center gap-2 text-sm font-bold text-primary hover:text-primary/80 transition-colors"
             >
               <LogIn size={18} />
@@ -110,6 +134,19 @@ export default function Header() {
 
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-3 md:hidden">
+          {/* Theme Switcher Mobile */}
+          <div className="flex items-center gap-2 bg-muted/30 p-1 rounded-full border border-border/50">
+            {themes.map((t) => (
+              <button
+                key={t.id}
+                onClick={() => setThemeColor(t.id)}
+                className={`w-5 h-5 rounded-full border-2 transition-all ${
+                  themeColor === t.id ? "border-primary scale-110" : "border-transparent opacity-50"
+                }`}
+                style={{ backgroundColor: t.color }}
+              />
+            ))}
+          </div>
           <motion.button 
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -164,11 +201,11 @@ export default function Header() {
               </div>
             ) : (
               <button 
-                onClick={() => { login(); setIsMenuOpen(false); }}
+                onClick={() => { openLoginModal(); setIsMenuOpen(false); }}
                 className="w-full py-3 bg-primary text-white font-bold rounded-xl flex items-center justify-center gap-2"
               >
                 <LogIn size={18} />
-                Logga in med Google
+                Logga in
               </button>
             )}
           </div>

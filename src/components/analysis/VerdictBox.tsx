@@ -13,7 +13,7 @@ export default function VerdictBox({
   target, 
   description, 
   date, 
-  accentColor = "#1e40af" 
+  accentColor = "#10B981" 
 }: VerdictBoxProps) {
   return (
     <div className="bg-card border border-border rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden shadow-2xl shadow-black/10">

@@ -89,7 +89,7 @@ export const terminology: TerminologyEntry[] = [
     example: {
       company: "Investor AB",
       value: "Varierande",
-      context: "Investor handlas historiskt med substanspremie. Marknaden betalar extra för Wallenbergsfärens långsiktiga förvaltning."
+      context: "Investor handlas historiskt med substansrabatt. Marknaden har historiskt värderat bolaget lägre än dess substansvärde, trots Wallenbergsfärens framgångsrika förvaltning."
     }
   },
 

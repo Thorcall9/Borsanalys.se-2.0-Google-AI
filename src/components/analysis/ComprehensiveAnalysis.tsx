@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import AnalysisLayout from './AnalysisLayout';
 import SectionHeader from './SectionHeader';
@@ -10,8 +10,9 @@ import ScenarioCards from './ScenarioCards';
 import VerdictBox from './VerdictBox';
 import ProgressBar from './ProgressBar';
 import ChartCard from './ChartCard';
-import SpiderChart from './SpiderChart';
+import SEO from '../SEO';
 import { AnalysisData } from '../../data/analyses';
+import { fetchWithCache, RapidAPIQuote } from '../../services/stockService';
 
 interface ComprehensiveAnalysisProps {
   data: AnalysisData;
@@ -26,30 +27,31 @@ export default function ComprehensiveAnalysis({
   isWatchlistLoading, 
   onToggleWatchlist 
 }: ComprehensiveAnalysisProps) {
-  const ACCENT_COLOR = "#1e40af"; // Royal Blue
+  const ACCENT_COLOR = "#10B981"; // Emerald Green
+  // const [liveData, setLiveData] = useState<RapidAPIQuote | null>(null);
 
-  const [liveData, setLiveData] = useState<{
-    price: number;
-    currency: string;
-    change: number;
-    changePercent: number;
-    pe: number;
-    yield: number;
-    marketCap: number;
-  } | null>(null);
-
+  /*
   useEffect(() => {
-    if (data.yahooTicker) {
-      fetch(`${window.location.origin}/api/stocks/${encodeURIComponent(data.yahooTicker)}`)
-        .then(res => res.json())
-        .then(json => {
-          if (!json.error) {
-            setLiveData(json);
-          }
-        })
-        .catch(err => console.error("Failed to fetch live data:", err));
+    if (data.ticker) {
+      fetchWithCache(data.ticker).then(setLiveData);
     }
-  }, [data.yahooTicker]);
+  }, [data.ticker]);
+  */
+
+  const analysisPrice = useMemo(() => {
+    if (!data.price) return null;
+    const cleanPrice = data.price.replace(/[^\d,.]/g, '').replace(',', '.');
+    const parsed = parseFloat(cleanPrice);
+    return isNaN(parsed) ? null : parsed;
+  }, [data.price]);
+
+  const priceStats = useMemo(() => {
+    if (!analysisPrice) return null;
+    // const currentPrice = liveData.regularMarketPrice;
+    // const diff = currentPrice - analysisPrice;
+    // const percent = (diff / analysisPrice) * 100;
+    return null;
+  }, [analysisPrice]);
 
   const sections = [
     { id: 'overview', title: 'I. Företagsöversikt' },
@@ -73,6 +75,14 @@ export default function ComprehensiveAnalysis({
     riskprofil: "VI. Riskprofil",
     esgMakro: "VII. ESG & Makro",
     aiObservationer: "VIII. AI-observationer"
+  };
+
+  const formatMarketCap = (val: number | null) => {
+    if (val === null) return 'N/A';
+    if (val >= 1e12) return `${(val / 1e12).toFixed(2)} T`;
+    if (val >= 1e9) return `${(val / 1e9).toFixed(1)} B`;
+    if (val >= 1e6) return `${(val / 1e6).toFixed(1)} M`;
+    return val.toLocaleString();
   };
 
   const ScoreBadge = ({ score }: { score?: number }) => {
@@ -103,28 +113,57 @@ export default function ComprehensiveAnalysis({
       isInWatchlist={isInWatchlist}
       isWatchlistLoading={isWatchlistLoading}
       onToggleWatchlist={onToggleWatchlist}
+      // livePrice={liveData ? `${liveData.regularMarketPrice.toFixed(2)} ${liveData.currency === 'SEK' ? 'kr' : liveData.currency}` : undefined}
+      // liveChange={liveData ? `${(liveData.regularMarketChange || 0) > 0 ? '+' : ''}${(liveData.regularMarketChangePercent || 0).toFixed(2)}%` : undefined}
+      analysisPrice={analysisPrice || undefined}
+      // currentPrice={liveData?.regularMarketPrice}
+      // currency={liveData?.currency === 'SEK' ? 'kr' : liveData?.currency}
+      date={data.date}
     >
+      <SEO 
+        title={`${data.title} (${data.ticker}) - Analys`} 
+        description={data.summary}
+        ogType="article"
+      />
+
+      {/* Main Title Header */}
+      <div className="mb-16 space-y-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="space-y-4">
+            <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em]">
+              {data.market}: {data.ticker} · {data.sector}
+            </div>
+            <h1 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95]">
+              {data.title}: Analys & Köpvärde <br />
+              <span className="text-primary">{data.summary.split('.')[0]}.</span>
+            </h1>
+          </div>
+        </div>
+      </div>
+
       {/* SECTION I: FÖRETAGSÖVERSIKT */}
       <section id="overview" className="scroll-mt-24">
-        <div className="flex justify-between items-center mb-4">
+        <div className="mb-6">
           <SectionHeader number="I" title="FÖRETAGSÖVERSIKT" accentColor={ACCENT_COLOR} />
-          <ScoreBadge score={data.scores?.affarsmodell} />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <ScoreBadge score={data.scores?.affarsmodell} />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 mt-6">
           <MetricCard 
-            label="BÖRSKURS (LIVE)" 
-            value={liveData ? `${liveData.price.toLocaleString()} ${liveData.currency}` : data.price} 
-            trend={liveData ? `${liveData.changePercent > 0 ? '+' : ''}${liveData.changePercent.toFixed(2)}%` : "Senaste"} 
+            label="BÖRSKURS" 
+            value={data.price} 
+            trend="Senaste" 
           />
           <MetricCard 
             label="BÖRSVÄRDE" 
-            value={liveData ? `${(liveData.marketCap / 1e9).toFixed(1)} B${liveData.currency}` : (data.marketCap || "N/A")} 
+            value={data.marketCap || "N/A"} 
             trend="Nuvarande" 
           />
           <MetricCard label="TICKER / BÖRS" value={data.ticker} trend={data.market} />
           <MetricCard label="ANSTÄLLDA" value={data.employees || "N/A"} trend="Globalt" />
         </div>
+
 
         {data.scores && (
           <div className="mb-12 bg-card border border-border rounded-[2.5rem] p-10">
@@ -192,17 +231,18 @@ export default function ComprehensiveAnalysis({
 
       {/* SECTION II: STRATEGISK ANALYS & MOAT */}
       <section id="strategy" className="scroll-mt-24 mt-16">
-        <div className="flex justify-between items-center mb-4">
+        <div className="mb-6">
           <SectionHeader number="II" title="STRATEGISK ANALYS & MOAT" accentColor={ACCENT_COLOR} />
-          <ScoreBadge score={data.scores?.strategiskMoat} />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <ScoreBadge score={data.scores?.strategiskMoat} />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 mt-6">
           <Card title="KONKURRENSFÖRDELAR" accentColor={ACCENT_COLOR}>
             <ul className="space-y-2">
               {(data.competitiveAdvantages || data.advantages || []).map((adv, i) => (
                 <li key={i} className="text-sm text-gray-600 flex gap-2">
-                  <span className="text-blue-500">•</span> {adv}
+                  <span className="text-primary">•</span> {adv}
                 </li>
               ))}
             </ul>
@@ -231,12 +271,13 @@ export default function ComprehensiveAnalysis({
 
       {/* SECTION III: FINANSIELL ANALYS */}
       <section id="financials" className="scroll-mt-24 mt-16">
-        <div className="flex justify-between items-center mb-4">
+        <div className="mb-6">
           <SectionHeader number="III" title="FINANSIELL ANALYS" accentColor={ACCENT_COLOR} />
-          <ScoreBadge score={data.scores?.finansiellKvalitet} />
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+        <ScoreBadge score={data.scores?.finansiellKvalitet} />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 mt-6">
           <Card title="FINANSIELL GENOMGÅNG" accentColor={ACCENT_COLOR}>
             <p className="text-sm text-gray-600 leading-relaxed">
               {data.financialAnalysis || "Analys av bolagets historiska och förväntade finansiella prestation."}
@@ -248,23 +289,21 @@ export default function ComprehensiveAnalysis({
               <div className="flex justify-between items-end border-b border-black/5 pb-2">
                 <span className="text-xs text-gray-400 uppercase">P/E-tal</span>
                 <span className="text-lg font-serif font-bold text-[#1a1a1a]">
-                  {liveData?.pe ? liveData.pe.toFixed(2) : (data.pe ? parseFloat(String(data.pe).replace(',', '.')).toFixed(2) : '-')}
+                  {data.pe ? parseFloat(String(data.pe).replace(',', '.')).toFixed(2) : '-'}
                 </span>
               </div>
               <div className="flex justify-between items-end border-b border-black/5 pb-2">
                 <span className="text-xs text-gray-400 uppercase">Direktavkastning</span>
                 <span className="text-lg font-serif font-bold text-[#1a1a1a]">
-                  {liveData?.yield !== undefined 
-                    ? `${(liveData.yield * 100).toFixed(2)}%` 
-                    : (typeof data.yield === 'number' 
+                  {typeof data.yield === 'number' 
                         ? `${(data.yield * 100).toFixed(2)}%` 
-                        : (data.yield?.includes('%') ? data.yield : `${(parseFloat(data.yield || '0') * 100).toFixed(2)}%`))}
+                        : (data.yield?.includes('%') ? data.yield : `${(parseFloat(data.yield || '0') * 100).toFixed(2)}%`)}
                 </span>
               </div>
               {data.discount && (
                 <div className="flex justify-between items-end border-b border-black/5 pb-2">
                   <span className="text-xs text-gray-400 uppercase">Substansrabatt</span>
-                  <span className="text-lg font-serif font-bold text-blue-600">{data.discount}</span>
+                  <span className="text-lg font-serif font-bold text-primary">{data.discount}</span>
                 </div>
               )}
             </div>
@@ -281,12 +320,13 @@ export default function ComprehensiveAnalysis({
 
       {/* SECTION IV: VÄRDERING & JÄMFÖRELSE */}
       <section id="valuation" className="scroll-mt-24 mt-16">
-        <div className="flex justify-between items-center mb-4">
+        <div className="mb-6">
           <SectionHeader number="IV" title="VÄRDERING & JÄMFÖRELSE" accentColor={ACCENT_COLOR} />
-          <ScoreBadge score={data.scores?.vardering} />
         </div>
         
-        <Card title="VÄRDERINGSANALYS" accentColor={ACCENT_COLOR} className="mb-8">
+        <ScoreBadge score={data.scores?.vardering} />
+        
+        <Card title="VÄRDERINGSANALYS" accentColor={ACCENT_COLOR} className="mb-8 mt-6">
           <p className="text-sm text-gray-600 leading-relaxed">
             {data.valuation || "Bedömning av bolagets nuvarande värdering i förhållande till historik och konkurrenter."}
           </p>
@@ -302,12 +342,13 @@ export default function ComprehensiveAnalysis({
 
       {/* SECTION V: TILLVÄXTMOTORER & TRIGGERS */}
       <section id="growth" className="scroll-mt-24 mt-16">
-        <div className="flex justify-between items-center mb-4">
+        <div className="mb-6">
           <SectionHeader number="V" title="TILLVÄXTMOTORER & TRIGGERS" accentColor={ACCENT_COLOR} />
-          <ScoreBadge score={data.scores?.tillvaxtutsikter} />
         </div>
         
-        <Card title="FRAMTIDSPOTENTIAL" accentColor={ACCENT_COLOR} className="mb-8">
+        <ScoreBadge score={data.scores?.tillvaxtutsikter} />
+        
+        <Card title="FRAMTIDSPOTENTIAL" accentColor={ACCENT_COLOR} className="mb-8 mt-6">
           <p className="text-sm text-gray-600 leading-relaxed">
             {data.growth || "De viktigaste drivkrafterna för bolagets framtida tillväxt och vinstökning."}
           </p>
@@ -323,12 +364,13 @@ export default function ComprehensiveAnalysis({
 
       {/* SECTION VI: RISKPROFIL */}
       <section id="risk" className="scroll-mt-24 mt-16">
-        <div className="flex justify-between items-center mb-4">
+        <div className="mb-6">
           <SectionHeader number="VI" title="RISKPROFIL" accentColor={ACCENT_COLOR} />
-          <ScoreBadge score={data.scores?.riskprofil} />
         </div>
         
-        <Card title="RISKANALYS" accentColor={ACCENT_COLOR} className="mb-8">
+        <ScoreBadge score={data.scores?.riskprofil} />
+        
+        <Card title="RISKANALYS" accentColor={ACCENT_COLOR} className="mb-8 mt-6">
           <ul className="space-y-3">
             {(data.risks || []).map((risk, i) => (
               <li key={i} className="text-sm text-gray-600 flex gap-2">
@@ -348,12 +390,13 @@ export default function ComprehensiveAnalysis({
 
       {/* SECTION VII: ESG & MAKRO */}
       <section id="esg" className="scroll-mt-24 mt-16">
-        <div className="flex justify-between items-center mb-4">
+        <div className="mb-6">
           <SectionHeader number="VII" title="ESG & MAKRO" accentColor={ACCENT_COLOR} />
-          <ScoreBadge score={data.scores?.esgMakro} />
         </div>
         
-        <Card title="ESG & MAKROANALYS" accentColor={ACCENT_COLOR} className="mb-8">
+        <ScoreBadge score={data.scores?.esgMakro} />
+        
+        <Card title="ESG & MAKROANALYS" accentColor={ACCENT_COLOR} className="mb-8 mt-6">
           <p className="text-sm text-gray-600 leading-relaxed">
             {data.esg || "Hållbarhetsarbete, bolagsstyrning och makroekonomisk påverkan."}
           </p>
@@ -369,12 +412,13 @@ export default function ComprehensiveAnalysis({
 
       {/* SECTION VIII: AI-OBSERVATIONER */}
       <section id="ai" className="scroll-mt-24 mt-16">
-        <div className="flex justify-between items-center mb-4">
+        <div className="mb-6">
           <SectionHeader number="VIII" title="AI-OBSERVATIONER" accentColor={ACCENT_COLOR} />
-          <ScoreBadge score={data.scores?.aiObservationer} />
         </div>
         
-        <Card accentColor={ACCENT_COLOR} className="mb-8">
+        <ScoreBadge score={data.scores?.aiObservationer} />
+        
+        <Card accentColor={ACCENT_COLOR} className="mb-8 mt-6">
           <p className="text-sm text-gray-600 italic">
             {data.aiObservations || "AI-driven analys av sentiment, insiderhandel och tekniska trender indikerar en stabil position för bolaget i nuvarande marknadsklimat."}
           </p>

@@ -122,7 +122,6 @@ export interface AnalysisData {
 
   // AI Driven Data
   aiDrivenData?: AIDrivenAnalysis;
-  yahooTicker?: string;
   scores?: {
     affarsmodell: number;
     strategiskMoat: number;
@@ -139,12 +138,11 @@ export const analyses: Record<string, AnalysisData> = {
   "investor-ab": {
     slug: "investor-ab",
     title: "Investor AB",
-    ticker: "INVE B",
+    ticker: "INVE-B.ST",
     market: "Large Cap Stockholm",
     sector: "Investmentbolag",
     recommendation: "KÖP",
     price: "245,20 kr",
-    yahooTicker: "INVE-B.ST",
     pe: "14.00",
     yield: "1,8%",
     marketCap: "750 Bkr",
@@ -152,7 +150,7 @@ export const analyses: Record<string, AnalysisData> = {
     summary: "Investor AB är ett av Nordens ledande investmentbolag med en välbalanserad portfölj av marknadsledande bolag inom både noterade och onoterade sektorer. Med en stark historik av substansvärdestillväxt och en låg förvaltningskostnad utgör Investor en hörnsten i många långsiktiga portföljer.",
     date: "2026-03-01",
     investmentCase: "Investor erbjuder en unik exponering mot gräddan av svenskt näringsliv till en rabatt mot substansvärdet. Genom att äga Investor får man del av deras aktiva ägande i bolag som Atlas Copco, ABB och SEB, samt den onoterade portföljen Patricia Industries som historiskt levererat mycket stark avkastning.",
-    marketOverview: "Investmentbolagssektorn i Sverige är välutvecklad och Investor är den obestridda ledaren. Marknaden präglas av fokus på substansvärde och rabatt/premie-värdering. Investor gynnas av sin storlek och sitt goda rykte som ger dem tillgång till attraktiva investeringsmöjligheter.",
+    marketOverview: "Investmentbolagssektorn i Sverige är välutvecklad och Investor är den obestridda ledaren. Marknaden präglas av fokus på substansvärde och substansrabatt. Investor gynnas av sin storlek och sitt goda rykte som ger dem tillgång till attraktiva investeringsmöjligheter.",
     growth: "Tillväxten i Investor drivs främst av värdetillväxten i portföljbolagen. Patricia Industries (onoterat) är en viktig tillväxtmotor där kassaflöden återinvesteras i nya och befintliga plattformsbolag. Dessutom bidrar utdelningar från de noterade kärninnehaven till kapital för nya investeringar.",
     financialAnalysis: "Investor har en mycket stark balansräkning med låg skuldsättning (leverage) väl inom deras målintervall. Förvaltningskostnaden är extremt låg (ca 0,09%), vilket är betydligt lägre än nästan alla aktiefonder. Detta skapar en långsiktig ränta-på-ränta effekt för aktieägarna.",
     competitiveAdvantages: [
@@ -202,24 +200,23 @@ export const analyses: Record<string, AnalysisData> = {
     ],
     scores: {
       affarsmodell: 5,
-      strategiskMoat: 5,
-      finansiellKvalitet: 5,
+      strategiskMoat: 4,
+      finansiellKvalitet: 4,
       vardering: 4,
-      tillvaxtutsikter: 3,
-      riskprofil: 5,
-      esgMakro: 4,
-      aiObservationer: 4
+      tillvaxtutsikter: 5,
+      riskprofil: 2,
+      esgMakro: 3,
+      aiObservationer: 5
     }
   },
   "sbb": {
     slug: "sbb",
     title: "SBB",
-    ticker: "SBB B",
+    ticker: "SBB-B.ST",
     market: "Large Cap Stockholm",
     sector: "Fastigheter",
     recommendation: "SÄLJ",
     price: "3,45 kr",
-    yahooTicker: "SBB-B.ST",
     pe: "N/A",
     yield: "0%",
     marketCap: "5,2 Bkr",
@@ -291,7 +288,6 @@ export const analyses: Record<string, AnalysisData> = {
     sector: "Halvledare & AI-infrastruktur",
     recommendation: "BEVAKA",
     price: "~178 USD",
-    yahooTicker: "NVDA",
     pe: "22.00x (2026e)",
     yield: "0,02%",
     marketCap: "~4 338 Mdr USD",
@@ -364,7 +360,6 @@ export const analyses: Record<string, AnalysisData> = {
     sector: "Konsumentelektronik",
     recommendation: "AVVAKTA",
     price: "$228,10",
-    yahooTicker: "AAPL",
     pe: "31.00",
     yield: "0,45%",
     marketCap: "$3.5T",
@@ -422,7 +417,6 @@ export const analyses: Record<string, AnalysisData> = {
     sector: "Mjukvara / Molntjänster",
     recommendation: "KÖP",
     price: "$415,20",
-    yahooTicker: "MSFT",
     pe: "32.00",
     yield: "0,75%",
     marketCap: "$3.1T",
@@ -474,12 +468,11 @@ export const analyses: Record<string, AnalysisData> = {
   "novo-nordisk": {
     slug: "novo-nordisk",
     title: "Novo Nordisk A/S",
-    ticker: "NOVO B",
+    ticker: "NOVO-B.CO",
     market: "Copenhagen",
     sector: "Hälsovård / Läkemedel",
     recommendation: "KÖP",
     price: "845,20 DKK",
-    yahooTicker: "NOVO-B.CO",
     pe: "38.00",
     yield: "1,2%",
     marketCap: "3.8 TDKK",
@@ -532,12 +525,11 @@ export const analyses: Record<string, AnalysisData> = {
   "volvo": {
     slug: "volvo",
     title: "Volvo AB",
-    ticker: "VOLV B",
+    ticker: "VOLV-B.ST",
     market: "Large Cap Stockholm",
     sector: "Industri / Fordon",
     recommendation: "KÖP",
     price: "285,40 kr",
-    yahooTicker: "VOLV-B.ST",
     pe: "12.00",
     yield: "6,2%",
     marketCap: "580 Bkr",
@@ -594,7 +586,6 @@ export const analyses: Record<string, AnalysisData> = {
     sector: "Internet / AI",
     recommendation: "KÖP",
     price: "$307",
-    yahooTicker: "GOOGL",
     pe: "~28.00x",
     yield: "0,45%",
     marketCap: "$3.9T",
@@ -658,13 +649,12 @@ export const analyses: Record<string, AnalysisData> = {
   },
   "evolution-2025": {
     slug: "evolution-2025",
-    title: "Evolution AB (EVO): Köp nu eller vänta? En djupanalys av världens starkaste live casino-monopol",
+    title: "Evolution AB",
     ticker: "EVO.ST",
     market: "Nasdaq Stockholm",
     sector: "iGaming / B2B Live Casino",
     recommendation: "KÖP",
     price: "577 kr",
-    yahooTicker: "EVO.ST",
     pe: "9,95x",
     yield: "5,3%",
     marketCap: "115 Mdr EUR",
@@ -744,8 +734,8 @@ export const analyses: Record<string, AnalysisData> = {
     aiDrivenData: {
       isAIDriven: true,
       slug: "evolution-2025",
-      name: "Evolution AB (publ)",
-      ticker: "EVO",
+      name: "Evolution AB",
+      ticker: "EVO.ST",
       isin: "SE0018538068",
       date: "21 mars 2026",
       author: "Carl Fredrik Thor",

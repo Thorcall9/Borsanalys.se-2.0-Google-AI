@@ -15,7 +15,7 @@ interface WatchlistItem {
 }
 
 export default function Watchlist() {
-  const { user, login } = useAuth();
+  const { user, openLoginModal } = useAuth();
   const [watchlist, setWatchlist] = useState<WatchlistItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -61,10 +61,10 @@ export default function Watchlist() {
           Logga in för att spara dina favoritaktier och få snabb tillgång till analyser.
         </p>
         <button 
-          onClick={login}
+          onClick={openLoginModal}
           className="px-6 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary/90 transition-colors"
         >
-          Logga in med Google
+          Logga in
         </button>
       </div>
     );

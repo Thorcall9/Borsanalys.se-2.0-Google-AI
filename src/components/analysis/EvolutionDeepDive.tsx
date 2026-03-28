@@ -13,9 +13,13 @@ import {
   Card,
   SwotGrid,
 } from "./index";
+import { fetchWithCache } from "../../services/stockService";
+import { analyses } from "../../data/analyses";
+import SEO from "../SEO";
+import AdZone from "../AdZone";
 import type { AnalysisSection, Scenario, TableRow } from "./index";
 
-const ACCENT = "#1e40af";
+const ACCENT = "#10B981";
 
 const sections: AnalysisSection[] = [
   { id: "overview",   number: "I",    title: "Översikt" },
@@ -44,26 +48,44 @@ export default function EvolutionDeepDive({
   isInWatchlist, 
   isWatchlistLoading 
 }: EvolutionDeepDiveProps) {
-  const [liveData, setLiveData] = useState<{
-    price: number;
-    currency: string;
-    change: number;
-    changePercent: number;
-    pe: number;
-    yield: number;
-    marketCap: number;
-  } | null>(null);
+  // const [liveData, setLiveData] = useState<any>(null);
 
+  const analysisData = analyses["evolution-2025"];
+  const analysisPrice = useMemo(() => {
+    if (!analysisData?.price) return 577;
+    const cleanPrice = analysisData.price.replace(/[^\d,.]/g, '').replace(',', '.');
+    const parsed = parseFloat(cleanPrice);
+    return isNaN(parsed) ? 577 : parsed;
+  }, [analysisData?.price]);
+
+  /*
   useEffect(() => {
-    fetch(`${window.location.origin}/api/stocks/EVO.ST`)
-      .then(res => res.json())
-      .then(json => {
-        if (!json.error) {
-          setLiveData(json);
+    const getLiveData = async () => {
+      try {
+        const data = await fetchWithCache("EVO.ST");
+        if (data) {
+          setLiveData(data);
         }
-      })
-      .catch(err => console.error("Failed to fetch live data:", err));
+      } catch (error) {
+        console.error("Failed to fetch live data for Evolution:", error);
+      }
+    };
+    getLiveData();
   }, []);
+
+  const priceStats = useMemo(() => {
+    if (!liveData) return null;
+    const currentPrice = liveData.regularMarketPrice;
+    const diff = currentPrice - analysisPrice;
+    const percent = (diff / analysisPrice) * 100;
+    return {
+      currentPrice,
+      diff,
+      percent,
+      isPositive: diff >= 0
+    };
+  }, [liveData, analysisPrice]);
+  */
 
   const financialData: TableRow[] = [
     { key: "Nettoomsättning (MEUR)", "2023": "1 804", "2024": "2 063", "2025": "2 067", "2026e": "2 231", "2027e": "2 360" },
@@ -247,24 +269,42 @@ export default function EvolutionDeepDive({
       isInWatchlist={isInWatchlist}
       isWatchlistLoading={isWatchlistLoading}
       onToggleWatchlist={onToggleWatchlist}
+      // livePrice={liveData ? `${liveData.regularMarketPrice.toFixed(2)} SEK` : undefined}
+      // liveChange={liveData ? `${liveData.regularMarketChange > 0 ? '+' : ''}${liveData.regularMarketChangePercent.toFixed(2)}%` : undefined}
+      analysisPrice={analysisPrice}
+      // currentPrice={liveData?.regularMarketPrice}
+      currency="SEK"
     >
+      <SEO 
+        title="Evolution AB: Köp nu eller vänta? En djupanalys av världens starkaste live casino-monopol" 
+        description="En omfattande analys av Evolution AB. Vi granskar affärsmodell, vallgravar, finansiell kvalitet och värdering för att ge ett välgrundat investeringsbeslut."
+        ogType="article"
+      />
+
+      {/* Main Title Header */}
+      <div className="mb-16 space-y-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+          <div className="space-y-4">
+            <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em]">
+              Nasdaq Stockholm: EVO · iGaming / B2B Live Casino
+            </div>
+            <h1 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95]">
+              Evolution AB: Köp nu eller vänta? <br />
+              <span className="text-primary">En djupanalys av världens starkaste live casino-monopol</span>
+            </h1>
+          </div>
+        </div>
+      </div>
+
       {/* I. Översikt */}
       <section id="overview" className="space-y-12">
         <SectionHeader number="I" title="Översikt" />
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <MetricCard 
-            label="BÖRSKURS (LIVE)" 
-            value={liveData ? `${liveData.price.toLocaleString()} ${liveData.currency}` : "577 SEK"} 
-            trend={liveData ? `${liveData.changePercent > 0 ? '+' : ''}${liveData.changePercent.toFixed(2)}%` : "Senaste"} 
-          />
-          <MetricCard 
-            label="BÖRSVÄRDE" 
-            value={liveData ? `${(liveData.marketCap / 1e9).toFixed(1)} Mdr EUR` : "115 Mdr EUR"} 
-            trend="Nuvarande" 
-          />
           <MetricCard label="TICKER / BÖRS" value="EVO" trend="Nasdaq Stockholm" />
           <MetricCard label="ANSTÄLLDA" value="22 475" trend="Globalt" />
+          <MetricCard label="HUVUDKONTOR" value="Stockholm" trend="Sverige" />
+          <MetricCard label="GRUNDAT" value="2006" trend="Riga, Lettland" />
         </div>
 
         <div className="mb-12 bg-card border border-border rounded-[2.5rem] p-10">
@@ -303,13 +343,7 @@ export default function EvolutionDeepDive({
       <section id="moat" className="pt-24 space-y-12">
         <SectionHeader number="II" title="Strategisk Moat" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          <MetricCard label="OPERATÖRER" value="870+" trend="Globalt" />
-          <MetricCard label="MARKNADSANDEL" value="DOMINERANDE" trend="B2B Live Casino" />
-          <MetricCard label="HASBRO AVTAL" value="EXKLUSIVT" trend="Från 2025" />
-        </div>
-
-        <div className="mb-12 bg-card border border-border rounded-[2.5rem] p-10">
+        <div className="bg-card border border-border rounded-[2.5rem] p-10">
           <div className="max-w-md">
             <ProgressBar 
               label="II. Strategisk Moat-betyg" 
@@ -318,6 +352,12 @@ export default function EvolutionDeepDive({
               accentColor={ACCENT} 
             />
           </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          <MetricCard label="OPERATÖRER" value="870+" trend="Globalt" />
+          <MetricCard label="MARKNADSANDEL" value="DOMINERANDE" trend="B2B Live Casino" />
+          <MetricCard label="HASBRO AVTAL" value="EXKLUSIVT" trend="Från 2025" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -372,13 +412,7 @@ export default function EvolutionDeepDive({
       <section id="financials" className="pt-24 space-y-12">
         <SectionHeader number="III" title="Finansiell Analys" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          <MetricCard label="NETTOKASSA" value="818 MEUR" trend="Enastående" />
-          <MetricCard label="ROE" value="26.3%" trend="FY2025" />
-          <MetricCard label="SOLIDITET" value="73.8%" trend="Stark" />
-        </div>
-
-        <div className="mb-12 bg-card border border-border rounded-[2.5rem] p-10">
+        <div className="bg-card border border-border rounded-[2.5rem] p-10">
           <div className="max-w-md">
             <ProgressBar 
               label="III. Finansiell kvalitetsbetyg" 
@@ -387,6 +421,12 @@ export default function EvolutionDeepDive({
               accentColor={ACCENT} 
             />
           </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          <MetricCard label="NETTOKASSA" value="818 MEUR" trend="Enastående" />
+          <MetricCard label="ROE" value="26.3%" trend="FY2025" />
+          <MetricCard label="SOLIDITET" value="73.8%" trend="Stark" />
         </div>
 
         <FinancialTable 
@@ -406,11 +446,13 @@ export default function EvolutionDeepDive({
         </div>
       </section>
 
+      <AdZone id="evo-financials-after" type="banner" />
+
       {/* IV. Värdering & PEG */}
       <section id="valuation" className="pt-24 space-y-12">
         <SectionHeader number="IV" title="Värdering & PEG" />
 
-        <div className="mb-12 bg-card border border-border rounded-[2.5rem] p-10">
+        <div className="bg-card border border-border rounded-[2.5rem] p-10">
           <div className="max-w-md">
             <ProgressBar 
               label="IV. Värderingsbetyg" 
@@ -481,13 +523,7 @@ export default function EvolutionDeepDive({
       <section id="growth" className="pt-24 space-y-12">
         <SectionHeader number="V" title="Tillväxtmotorer" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          <MetricCard label="USA MARKNAD" value="< 20%" trend="Potential" />
-          <MetricCard label="LATAM" value="~40 MEUR" trend="Per kvartal" />
-          <MetricCard label="REGLERAT" value="47%" trend="Q4/25" />
-        </div>
-
-        <div className="mb-12 bg-card border border-border rounded-[2.5rem] p-10">
+        <div className="bg-card border border-border rounded-[2.5rem] p-10">
           <div className="max-w-md">
             <ProgressBar 
               label="V. Tillväxtbetyg" 
@@ -499,6 +535,12 @@ export default function EvolutionDeepDive({
           <p className="mt-8 text-sm text-muted-foreground leading-relaxed max-w-2xl">
             Estimaten talar tydligt: omsättningstillväxt 8% → 6% → 4% och EPS-tillväxt 2–4% per år. USA och LatAm är reella möjligheter men ännu inte bevisade i siffrorna. Potential räknas inte som leverans.
           </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          <MetricCard label="USA MARKNAD" value="< 20%" trend="Potential" />
+          <MetricCard label="LATAM" value="~40 MEUR" trend="Per kvartal" />
+          <MetricCard label="REGLERAT" value="47%" trend="Q4/25" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -521,13 +563,7 @@ export default function EvolutionDeepDive({
       <section id="risk" className="pt-24 space-y-12">
         <SectionHeader number="VI" title="Riskprofil & UKGC" />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          <MetricCard label="RISKNIVÅ" value="Medel–Hög" trend="Binär risk" />
-          <MetricCard label="RISKBETYG" value="3/5" trend="Inverterad skala" />
-          <MetricCard label="FINANSIELL RISK" value="Låg" trend="Noll skulder" />
-        </div>
-
-        <div className="mb-12 bg-card border border-border rounded-[2.5rem] p-10">
+        <div className="bg-card border border-border rounded-[2.5rem] p-10">
           <div className="max-w-md">
             <ProgressBar 
               label="VI. Riskprofil-betyg (5 = Låg risk)" 
@@ -536,6 +572,12 @@ export default function EvolutionDeepDive({
               accentColor="#dc2626" 
             />
           </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          <MetricCard label="RISKNIVÅ" value="Medel–Hög" trend="Binär risk" />
+          <MetricCard label="RISKBETYG" value="3/5" trend="Inverterad skala" />
+          <MetricCard label="FINANSIELL RISK" value="Låg" trend="Noll skulder" />
         </div>
 
         <AlertBox 
@@ -707,13 +749,7 @@ export default function EvolutionDeepDive({
       <section id="esg" className="pt-24 space-y-12">
         <SectionHeader number="X" title="ESG & Makro" />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          <MetricCard label="ESG-BETYG" value="3/5" trend="Neutral" />
-          <MetricCard label="REGLERAT" value="47%" trend="Q4/25" />
-          <MetricCard label="INSIDERÄGANDE" value="41,6%" trend="Starkt" />
-        </div>
-
-        <div className="mb-12 bg-card border border-border rounded-[2.5rem] p-10">
+        <div className="bg-card border border-border rounded-[2.5rem] p-10">
           <div className="max-w-md">
             <ProgressBar 
               label="X. ESG & Makro-betyg" 
@@ -722,6 +758,12 @@ export default function EvolutionDeepDive({
               accentColor={ACCENT} 
             />
           </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          <MetricCard label="ESG-BETYG" value="3/5" trend="Neutral" />
+          <MetricCard label="REGLERAT" value="47%" trend="Q4/25" />
+          <MetricCard label="INSIDERÄGANDE" value="41,6%" trend="Starkt" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -744,13 +786,7 @@ export default function EvolutionDeepDive({
       <section id="ai" className="pt-24 space-y-12">
         <SectionHeader number="XI" title="AI-observationer" />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-          <MetricCard label="AI-BETYG" value="4/5" trend="Starkt" />
-          <MetricCard label="SENTIMENT" value="Positivt" trend="Q4/25" />
-          <MetricCard label="KATALYSATOR" value="UKGC" trend="Asymmetrisk" />
-        </div>
-
-        <div className="mb-12 bg-card border border-border rounded-[2.5rem] p-10">
+        <div className="bg-card border border-border rounded-[2.5rem] p-10">
           <div className="max-w-md">
             <ProgressBar 
               label="XI. AI-observationsbetyg" 
@@ -759,6 +795,12 @@ export default function EvolutionDeepDive({
               accentColor={ACCENT} 
             />
           </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+          <MetricCard label="AI-BETYG" value="4/5" trend="Starkt" />
+          <MetricCard label="SENTIMENT" value="Positivt" trend="Q4/25" />
+          <MetricCard label="KATALYSATOR" value="UKGC" trend="Asymmetrisk" />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -878,19 +920,19 @@ export default function EvolutionDeepDive({
           </div>
 
           <div className="p-8 bg-card border border-border rounded-[2.5rem] space-y-6 relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-blue-500/10 transition-colors" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full -mr-16 -mt-16 blur-3xl group-hover:bg-emerald-500/10 transition-colors" />
             <div className="flex justify-between items-start">
               <span className="text-4xl">⚖️</span>
               <div className="text-right">
-                <div className="text-[10px] font-black uppercase tracking-widest text-blue-600 mb-1">Base Case</div>
-                <div className="text-2xl font-black tracking-tighter text-blue-600">720 SEK</div>
-                <div className="text-[10px] font-bold text-blue-600/70">+25% Uppsida</div>
+                <div className="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-1">Base Case</div>
+                <div className="text-2xl font-black tracking-tighter text-emerald-600">720 SEK</div>
+                <div className="text-[10px] font-bold text-emerald-600/70">+25% Uppsida</div>
               </div>
             </div>
             <div className="space-y-4">
               <div className="flex justify-between items-center text-xs font-bold border-b border-border pb-2">
                 <span className="text-muted-foreground">Sannolikhet</span>
-                <span className="text-blue-600">55%</span>
+                <span className="text-emerald-600">55%</span>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 EPS-tillväxt på 2–4% per år (2026–2028e) i linje med konsensus. Marginalen håller 66–67%. UKGC ger en hanterbar böter (50–150 MEUR) utan licenspåverkan. USA växer stadigt men långsammare än hoppats. LatAm bidrar allt mer. P/E normaliseras mot 11–12x under 12–18 månader. Direktavkastning på 5,3–5,7% ger kursstöd och lockar tillbaka defensiva fonder.
