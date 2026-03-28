@@ -1,56 +1,56 @@
-import { useState, useEffect } from “react”;
+import { useState, useEffect } from "react";
 import {
 LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
 Tooltip, ResponsiveContainer, ReferenceLine, Cell, ComposedChart
-} from “recharts”;
+} from "recharts";
 
 const T = {
-ink:     “#0D1B2A”,
-sub:     “#5C6B7A”,
-muted:   “#9BAAB8”,
-border:  “#E4EAF0”,
-bg:      “#F7F9FC”,
-surface: “#FFFFFF”,
-accent:  “#0057FF”,
-accentL: “#EBF1FF”,
-red:     “#D9363E”,
-redL:    “#FEF0F0”,
-green:   “#0D7A4E”,
-greenL:  “#EDFAF3”,
-gold:    “#B07D2A”,
-goldL:   “#FDF6E7”,
-shadow:  “0 1px 3px rgba(13,27,42,0.06),0 4px 16px rgba(13,27,42,0.06)”,
-shadowMd:“0 4px 24px rgba(13,27,42,0.10)”,
-shadowLg:“0 8px 40px rgba(13,27,42,0.13)”,
+ink:     "#0D1B2A",
+sub:     "#5C6B7A",
+muted:   "#9BAAB8",
+border:  "#E4EAF0",
+bg:      "#F7F9FC",
+surface: "#FFFFFF",
+accent:  "#0057FF",
+accentL: "#EBF1FF",
+red:     "#D9363E",
+redL:    "#FEF0F0",
+green:   "#0D7A4E",
+greenL:  "#EDFAF3",
+gold:    "#B07D2A",
+goldL:   "#FDF6E7",
+shadow:  "0 1px 3px rgba(13,27,42,0.06),0 4px 16px rgba(13,27,42,0.06)",
+shadowMd:"0 4px 24px rgba(13,27,42,0.10)",
+shadowLg:"0 8px 40px rgba(13,27,42,0.13)",
 };
 
 const omsData = [
-{ar:“2021”,v:140.8,e:false},{ar:“2022”,v:177.0,e:false},{ar:“2023”,v:232.3,e:false},
-{ar:“2024”,v:290.4,e:false},{ar:“2025”,v:309.1,e:false},{ar:“2026e”,v:311.3,e:true},{ar:“2027e”,v:332.2,e:true},
+{ar:"2021",v:140.8,e:false},{ar:"2022",v:177.0,e:false},{ar:"2023",v:232.3,e:false},
+{ar:"2024",v:290.4,e:false},{ar:"2025",v:309.1,e:false},{ar:"2026e",v:311.3,e:true},{ar:"2027e",v:332.2,e:true},
 ];
 const epsData = [
-{ar:“2021”,v:10.40,e:false},{ar:“2022”,v:12.26,e:false},{ar:“2023”,v:18.67,e:false},
-{ar:“2024”,v:22.67,e:false},{ar:“2025”,v:23.05,e:false},{ar:“2026e”,v:22.6,e:true},{ar:“2027e”,v:23.8,e:true},
+{ar:"2021",v:10.40,e:false},{ar:"2022",v:12.26,e:false},{ar:"2023",v:18.67,e:false},
+{ar:"2024",v:22.67,e:false},{ar:"2025",v:23.05,e:false},{ar:"2026e",v:22.6,e:true},{ar:"2027e",v:23.8,e:true},
 ];
 const margData = [
-{ar:“2021”,brutto:83.2,ebit:41.7,netto:33.9},{ar:“2022”,brutto:83.9,ebit:42.3,netto:31.4},
-{ar:“2023”,brutto:84.6,ebit:44.2,netto:36.0},{ar:“2024”,brutto:84.7,ebit:44.2,netto:34.8},
-{ar:“2025”,brutto:81.0,ebit:41.3,netto:33.1},
+{ar:"2021",brutto:83.2,ebit:41.7,netto:33.9},{ar:"2022",brutto:83.9,ebit:42.3,netto:31.4},
+{ar:"2023",brutto:84.6,ebit:44.2,netto:36.0},{ar:"2024",brutto:84.7,ebit:44.2,netto:34.8},
+{ar:"2025",brutto:81.0,ebit:41.3,netto:33.1},
 ];
 const peData = [
-{ar:“2024”,v:27.52,e:false},{ar:“2025”,v:14.10,e:false},
-{ar:“Nu”,v:10.24,e:“nu”},{ar:“2026e”,v:10.47,e:true},{ar:“2027e”,v:9.9,e:true},
+{ar:"2024",v:27.52,e:false},{ar:"2025",v:14.10,e:false},
+{ar:"Nu",v:10.24,e:"nu"},{ar:"2026e",v:10.47,e:true},{ar:"2027e",v:9.9,e:true},
 ];
 
 const allScores = [
-{key:“Affärsmodell”,val:5,max:5},
-{key:“Strategisk Moat”,val:4,max:5},
-{key:“Finansiell”,val:4,max:5},
-{key:“Värdering”,val:4,max:5},
-{key:“Tillväxt”,val:3,max:5},
-{key:“Risk ⚠”,val:2,max:5,inv:true},
-{key:“ESG & Makro”,val:4,max:5},
-{key:“AI-obs.”,val:3,max:5},
+{key:"Affärsmodell",val:5,max:5},
+{key:"Strategisk Moat",val:4,max:5},
+{key:"Finansiell",val:4,max:5},
+{key:"Värdering",val:4,max:5},
+{key:"Tillväxt",val:3,max:5},
+{key:"Risk ⚠",val:2,max:5,inv:true},
+{key:"ESG & Makro",val:4,max:5},
+{key:"AI-obs.",val:3,max:5},
 ];
 
 function useHover() {
@@ -59,34 +59,34 @@ return [h,{onMouseEnter:()=>setH(true),onMouseLeave:()=>setH(false)}];
 }
 
 function Tag({children,color=T.accent,bg=T.accentL}){
-return <span style={{display:“inline-block”,padding:“3px 10px”,borderRadius:20,background:bg,color,fontSize:11,fontWeight:700,letterSpacing:0.3}}>{children}</span>;
+return <span style={{display:"inline-block",padding:"3px 10px",borderRadius:20,background:bg,color,fontSize:11,fontWeight:700,letterSpacing:0.3}}>{children}</span>;
 }
 
 function FadeIn({children,delay=0}){
 const [v,setV]=useState(false);
 useEffect(()=>{const t=setTimeout(()=>setV(true),delay+30);return()=>clearTimeout(t);},[delay]);
-return <div style={{opacity:v?1:0,transform:v?“none”:“translateY(8px)”,transition:“all 0.35s ease”}}>{children}</div>;
+return <div style={{opacity:v?1:0,transform:v?"none":"translateY(8px)",transition:"all 0.35s ease"}}>{children}</div>;
 }
 
-function Card({children,mb=0,p=“24px 26px”}){
+function Card({children,mb=0,p="24px 26px"}){
 return <div style={{background:T.surface,border:`1px solid ${T.border}`,borderRadius:16,padding:p,boxShadow:T.shadow,marginBottom:mb}}>{children}</div>;
 }
 
 function SectionLabel({number,title}){
 return(
-<div style={{display:“flex”,alignItems:“center”,gap:12,marginBottom:22}}>
-<div style={{width:30,height:30,borderRadius:8,background:T.accent,color:”#fff”,display:“flex”,alignItems:“center”,justifyContent:“center”,fontSize:11,fontWeight:900,flexShrink:0,fontFamily:“Georgia,serif”}}>{number}</div>
+<div style={{display:"flex",alignItems:"center",gap:12,marginBottom:22}}>
+<div style={{width:30,height:30,borderRadius:8,background:T.accent,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:900,flexShrink:0,fontFamily:"Georgia,serif"}}>{number}</div>
 <h2 style={{margin:0,fontSize:16,fontWeight:800,color:T.ink,letterSpacing:-0.3}}>{title}</h2>
 </div>
 );
 }
 
-const ChartTip=({active,payload,label,unit=””})=>{
+const ChartTip=({active,payload,label,unit=""})=>{
 if(!active||!payload?.length)return null;
 return(
-<div style={{background:T.surface,border:`1px solid ${T.border}`,borderRadius:10,padding:“10px 14px”,boxShadow:T.shadowMd,fontSize:13}}>
+<div style={{background:T.surface,border:`1px solid ${T.border}`,borderRadius:10,padding:"10px 14px",boxShadow:T.shadowMd,fontSize:13}}>
 <div style={{fontWeight:700,color:T.ink,marginBottom:6}}>{label}</div>
-{payload.map((p,i)=><div key={i} style={{color:T.sub}}>{p.name}: <strong style={{color:T.ink}}>{typeof p.value===“number”?p.value.toFixed(1):p.value}{unit}</strong></div>)}
+{payload.map((p,i)=><div key={i} style={{color:T.sub}}>{p.name}: <strong style={{color:T.ink}}>{typeof p.value==="number"?p.value.toFixed(1):p.value}{unit}</strong></div>)}
 </div>
 );
 };
@@ -94,8 +94,8 @@ return(
 function StatCard({label,value,sub,accent=false}){
 const [h,hP]=useHover();
 return(
-<div {…hP} style={{background:h?T.accentL:T.surface,border:`1.5px solid ${h?T.accent+"55":T.border}`,borderRadius:14,padding:“20px 22px”,transition:“all 0.2s cubic-bezier(.4,0,.2,1)”,transform:h?“translateY(-3px)”:“none”,boxShadow:h?T.shadowMd:T.shadow,cursor:“default”}}>
-<div style={{fontSize:11,color:T.muted,fontWeight:700,letterSpacing:0.5,textTransform:“uppercase”,marginBottom:8}}>{label}</div>
+<div {…hP} style={{background:h?T.accentL:T.surface,border:`1.5px solid ${h?T.accent+"55":T.border}`,borderRadius:14,padding:"20px 22px",transition:"all 0.2s cubic-bezier(.4,0,.2,1)",transform:h?"translateY(-3px)":"none",boxShadow:h?T.shadowMd:T.shadow,cursor:"default"}}>
+<div style={{fontSize:11,color:T.muted,fontWeight:700,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>{label}</div>
 <div style={{fontSize:23,fontWeight:900,color:accent?T.accent:T.ink,letterSpacing:-0.5,lineHeight:1}}>{value}</div>
 {sub&&<div style={{fontSize:12,color:T.sub,marginTop:6}}>{sub}</div>}
 </div>
@@ -105,8 +105,8 @@ return(
 function ScorePill({label,val,max,color}){
 const [h,hP]=useHover();
 return(
-<div {…hP} style={{display:“flex”,alignItems:“center”,gap:8,background:h?color+“18”:T.bg,border:`1.5px solid ${h?color+"55":T.border}`,borderRadius:24,padding:“6px 14px”,transition:“all 0.18s ease”,cursor:“default”}}>
-<span style={{fontSize:12,color:h?T.ink:T.sub,fontWeight:600,transition:“color 0.18s”}}>{label}</span>
+<div {…hP} style={{display:"flex",alignItems:"center",gap:8,background:h?color+"18":T.bg,border:`1.5px solid ${h?color+"55":T.border}`,borderRadius:24,padding:"6px 14px",transition:"all 0.18s ease",cursor:"default"}}>
+<span style={{fontSize:12,color:h?T.ink:T.sub,fontWeight:600,transition:"color 0.18s"}}>{label}</span>
 <span style={{fontSize:12,fontWeight:800,color}}>{val}/{max}</span>
 </div>
 );
@@ -115,7 +115,7 @@ return(
 function TabBtn({label,active,onClick}){
 const [h,hP]=useHover();
 return(
-<button onClick={onClick} {…hP} style={{background:“none”,border:“none”,cursor:“pointer”,padding:“14px 20px”,fontSize:13.5,fontWeight:600,color:active?T.ink:h?T.sub:T.muted,borderBottom:`2px solid ${active?T.accent:"transparent"}`,transition:“all 0.18s ease”,letterSpacing:0.1,whiteSpace:“nowrap”}}>
+<button onClick={onClick} {…hP} style={{background:"none",border:"none",cursor:"pointer",padding:"14px 20px",fontSize:13.5,fontWeight:600,color:active?T.ink:h?T.sub:T.muted,borderBottom:`2px solid ${active?T.accent:"transparent"}`,transition:"all 0.18s ease",letterSpacing:0.1,whiteSpace:"nowrap"}}>
 {label}
 </button>
 );
@@ -124,9 +124,9 @@ return(
 function KopBadge(){
 const [h,hP]=useHover();
 return(
-<div {…hP} style={{display:“inline-flex”,alignItems:“center”,gap:8,background:h?T.green:T.greenL,border:`1.5px solid ${h?T.green:T.green+"44"}`,borderRadius:24,padding:“7px 18px”,transition:“all 0.2s ease”,cursor:“default”}}>
-<div style={{width:7,height:7,borderRadius:“50%”,background:h?”#fff”:T.green,transition:“background 0.2s”}}/>
-<span style={{fontSize:14,fontWeight:800,color:h?”#fff”:T.green,letterSpacing:0.5}}>KÖP</span>
+<div {…hP} style={{display:"inline-flex",alignItems:"center",gap:8,background:h?T.green:T.greenL,border:`1.5px solid ${h?T.green:T.green+"44"}`,borderRadius:24,padding:"7px 18px",transition:"all 0.2s ease",cursor:"default"}}>
+<div style={{width:7,height:7,borderRadius:"50%",background:h?"#fff":T.green,transition:"background 0.2s"}}/>
+<span style={{fontSize:14,fontWeight:800,color:h?"#fff":T.green,letterSpacing:0.5}}>KÖP</span>
 </div>
 );
 }
@@ -134,7 +134,7 @@ return(
 function MoatCard({title,desc,stars}){
 const [h,hP]=useHover();
 return(
-<div {…hP} style={{background:h?T.accentL:T.bg,border:`1.5px solid ${h?T.accent+"44":T.border}`,borderRadius:10,padding:14,transition:“all 0.18s ease”,transform:h?“translateY(-2px)”:“none”,boxShadow:h?T.shadowMd:“none”,cursor:“default”}}>
+<div {…hP} style={{background:h?T.accentL:T.bg,border:`1.5px solid ${h?T.accent+"44":T.border}`,borderRadius:10,padding:14,transition:"all 0.18s ease",transform:h?"translateY(-2px)":"none",boxShadow:h?T.shadowMd:"none",cursor:"default"}}>
 <div style={{fontWeight:700,color:T.ink,fontSize:13,marginBottom:4}}>{title}</div>
 <div style={{color:T.gold,fontSize:12,marginBottom:6}}>{stars}</div>
 <div style={{color:T.sub,fontSize:12,lineHeight:1.6}}>{desc}</div>
@@ -145,7 +145,7 @@ return(
 function TriggerCard({icon,title,body}){
 const [h,hP]=useHover();
 return(
-<div {…hP} style={{background:h?T.accentL:T.bg,border:`1.5px solid ${h?T.accent+"44":T.border}`,borderRadius:12,padding:16,transition:“all 0.2s ease”,transform:h?“translateY(-2px)”:“none”,boxShadow:h?T.shadowMd:“none”,cursor:“default”}}>
+<div {…hP} style={{background:h?T.accentL:T.bg,border:`1.5px solid ${h?T.accent+"44":T.border}`,borderRadius:12,padding:16,transition:"all 0.2s ease",transform:h?"translateY(-2px)":"none",boxShadow:h?T.shadowMd:"none",cursor:"default"}}>
 <div style={{fontSize:20,marginBottom:8}}>{icon}</div>
 <div style={{fontWeight:700,color:T.ink,fontSize:13,marginBottom:6}}>{title}</div>
 <div style={{color:T.sub,fontSize:13,lineHeight:1.6}}>{body}</div>
@@ -156,36 +156,36 @@ return(
 function ScenarioCard({label,color,bg,prob,pris,triggers,note}){
 const [h,hP]=useHover();
 return(
-<div {…hP} style={{background:h?bg:T.surface,border:`1.5px solid ${h?color+"44":T.border}`,borderRadius:14,padding:20,transition:“all 0.22s ease”,transform:h?“translateY(-4px)”:“none”,boxShadow:h?T.shadowLg:T.shadow,cursor:“default”}}>
-<div style={{display:“flex”,justifyContent:“space-between”,alignItems:“center”,marginBottom:12}}>
+<div {…hP} style={{background:h?bg:T.surface,border:`1.5px solid ${h?color+"44":T.border}`,borderRadius:14,padding:20,transition:"all 0.22s ease",transform:h?"translateY(-4px)":"none",boxShadow:h?T.shadowLg:T.shadow,cursor:"default"}}>
+<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
 <span style={{fontWeight:800,color,fontSize:14}}>{label}</span>
-<Tag color={color} bg={color+“18”}>{prob}</Tag>
+<Tag color={color} bg={color+"18"}>{prob}</Tag>
 </div>
 <div style={{fontSize:26,fontWeight:900,color,marginBottom:4,letterSpacing:-1}}>{pris}</div>
 <div style={{fontSize:11,color:T.muted,marginBottom:14}}>Riktkurs · 12 månader</div>
-<ul style={{margin:“0 0 14px”,paddingLeft:16}}>
+<ul style={{margin:"0 0 14px",paddingLeft:16}}>
 {triggers.map((t,i)=><li key={i} style={{color:T.sub,fontSize:12,marginBottom:5,lineHeight:1.5}}>{t}</li>)}
 </ul>
-<div style={{background:color+“10”,borderRadius:8,padding:“10px 12px”,fontSize:12,color:T.sub,lineHeight:1.6}}>{note}</div>
+<div style={{background:color+"10",borderRadius:8,padding:"10px 12px",fontSize:12,color:T.sub,lineHeight:1.6}}>{note}</div>
 </div>
 );
 }
 
 export default function App(){
-const [tab,setTab]=useState(“oversikt”);
+const [tab,setTab]=useState("oversikt");
 const [mounted,setMounted]=useState(false);
 useEffect(()=>{const t=setTimeout(()=>setMounted(true),50);return()=>clearTimeout(t);},[]);
 
 const tabs=[
-{id:“oversikt”,label:“Översikt”},
-{id:“finansiell”,label:“Finansiell”},
-{id:“vardering”,label:“Värdering”},
-{id:“strategi”,label:“Strategi & Risk”},
-{id:“scenarier”,label:“Scenarier”},
+{id:"oversikt",label:"Översikt"},
+{id:"finansiell",label:"Finansiell"},
+{id:"vardering",label:"Värdering"},
+{id:"strategi",label:"Strategi & Risk"},
+{id:"scenarier",label:"Scenarier"},
 ];
 
 return(
-<div style={{fontFamily:”‘Georgia’,‘Times New Roman’,serif”,background:T.bg,minHeight:“100vh”,color:T.ink,opacity:mounted?1:0,transition:“opacity 0.45s ease”}}>
+<div style={{fontFamily:"‘Georgia’,‘Times New Roman’,serif",background:T.bg,minHeight:"100vh",color:T.ink,opacity:mounted?1:0,transition:"opacity 0.45s ease"}}>
 
   {/* HERO */}
   <div style={{background:T.surface,borderBottom:`1px solid ${T.border}`,padding:"36px 40px 0"}}>
