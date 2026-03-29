@@ -147,7 +147,7 @@ export default function Contact() {
                 whileTap={{ scale: 0.98 }}
                 className={`w-full py-6 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition-all flex items-center justify-center gap-4 ${
                   isSent 
-                    ? "bg-green-500 text-white shadow-green-500/20" 
+                    ? "bg-emerald-500 text-white shadow-emerald-500/20" 
                     : "bg-primary text-primary-foreground shadow-primary/20 hover:bg-primary/90"
                 }`}
               >
@@ -158,7 +158,7 @@ export default function Contact() {
                 <motion.p 
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-center text-sm font-bold text-green-600"
+                  className="text-center text-sm font-bold text-emerald-500"
                 >
                   Tack för ditt meddelande! Vi hör av oss så snart vi kan.
                 </motion.p>

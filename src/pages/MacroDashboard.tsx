@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   TrendingUp, Globe, Landmark, 
   Activity, ArrowUpRight, ArrowDownRight, 
   Zap, Sparkles, Loader2, Lock,
-  Newspaper
+  Newspaper, Gauge
 } from "lucide-react";
 import { GoogleGenAI, Type } from "@google/genai";
 import { useAuth } from "../contexts/AuthContext";
+
+// ... (rest of imports and interfaces)
 
 // Initialize Gemini
 const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
@@ -71,8 +73,8 @@ const PHASES = [
     name: 'Återhämtning',
     description: 'Tillväxten tar fart medan inflationen förblir låg. Aktier brukar prestera bäst här.',
     rotation: 45,
-    color: 'text-emerald-500',
-    bg: 'bg-emerald-500/10',
+    color: 'text-emerald-400',
+    bg: 'bg-emerald-400/10',
     isCurrent: true
   },
   {
@@ -98,8 +100,8 @@ const PHASES = [
     name: 'Reflation',
     description: 'Låg tillväxt och fallande inflation. Obligationer är ofta det bästa valet.',
     rotation: 315,
-    color: 'text-emerald-400',
-    bg: 'bg-emerald-400/10',
+    color: 'text-cyan-400',
+    bg: 'bg-cyan-400/10',
     isCurrent: false
   }
 ];
@@ -118,6 +120,32 @@ export default function MacroDashboard() {
     { date: "12 April", title: "Räntebesked ECB" },
     { date: "25 April", title: "BNP-prognos USA" }
   ]);
+  const [fearGreed, setFearGreed] = useState<{ value: number, classification: string } | null>(null);
+  const [loadingFearGreed, setLoadingFearGreed] = useState(true);
+
+  useEffect(() => {
+    const fetchFearGreed = async () => {
+      try {
+        const response = await fetch("/api/fear-greed");
+        if (response.ok) {
+          const data = await response.json();
+          // The RapidAPI response format for v1/fgi is: { fgi: { now: { value: 45, valueText: "Neutral" } } }
+          if (data.fgi && data.fgi.now) {
+            setFearGreed({
+              value: data.fgi.now.value,
+              classification: data.fgi.now.valueText
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Fear & Greed Fetch Error:", error);
+      } finally {
+        setLoadingFearGreed(false);
+      }
+    };
+
+    fetchFearGreed();
+  }, []);
 
   const generateMacroOutlook = async () => {
     setLoadingOutlook(true);
@@ -176,11 +204,16 @@ export default function MacroDashboard() {
   };
 
   return (
-    <div className="bg-background min-h-screen pb-32">
+    <div className="bg-background min-h-screen pb-32 relative overflow-hidden">
+      {/* Background Decorative Gradients */}
+      <div className="absolute top-[1200px] right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[180px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+      <div className="absolute top-[2500px] left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+      
       {/* Hero Section */}
       <header className="bg-foreground text-background pt-32 pb-32 px-6 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/10 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/30 rounded-full blur-[180px] -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[150px] translate-y-1/2 -translate-x-1/2" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-primary/5 rounded-full blur-[200px] pointer-events-none" />
         
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
@@ -203,6 +236,11 @@ export default function MacroDashboard() {
       <div className="max-w-7xl mx-auto px-6 mt-12 space-y-12">
         {/* Market Indicators Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <FearGreedCard 
+            value={fearGreed?.value} 
+            classification={fearGreed?.classification} 
+            loading={loadingFearGreed} 
+          />
           <DetailedIndicator 
             category="RÄNTOR"
             date="2025-03-20"
@@ -299,7 +337,7 @@ export default function MacroDashboard() {
                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">
                       <div className="flex items-center gap-4">
                         <div className={`w-3 h-3 rounded-full ${
-                          event.impact === "positive" ? "bg-emerald-500" : 
+                          event.impact === "positive" ? "bg-emerald-400" : 
                           event.impact === "negative" ? "bg-red-500" : "bg-amber-500"
                         }`} />
                         <h3 className="text-2xl font-black tracking-tighter">{event.title}</h3>
@@ -329,6 +367,12 @@ export default function MacroDashboard() {
 
                     {user ? (
                       <div className="space-y-6 mb-6">
+                        <div className="flex items-center gap-2 mb-4">
+                          <div className="px-3 py-1 bg-primary/10 text-primary rounded-full text-[10px] font-black uppercase tracking-widest flex items-center gap-2">
+                            <Sparkles size={12} />
+                            AI-INSIKT
+                          </div>
+                        </div>
                         <div className="p-6 bg-muted/20 rounded-2xl border border-border/50">
                           <h4 className="text-xs font-black uppercase tracking-widest text-foreground mb-3">Varför det påverkar börsen</h4>
                           <p className="text-sm text-muted-foreground leading-relaxed">{event.whyItMatters}</p>
@@ -343,20 +387,25 @@ export default function MacroDashboard() {
                             <div className="text-[10px] font-black uppercase tracking-widest text-orange-500 mb-2">USA Aktier</div>
                             <p className="text-[11px] font-bold leading-relaxed">{event.affectedCompanies.us}</p>
                           </div>
-                          <div className="p-4 bg-emerald-500/5 rounded-xl border border-emerald-500/10">
-                            <div className="text-[10px] font-black uppercase tracking-widest text-emerald-500 mb-2">Vinnare</div>
+                          <div className="p-4 bg-emerald-400/5 rounded-xl border border-emerald-400/10">
+                            <div className="text-[10px] font-black uppercase tracking-widest text-emerald-400 mb-2">Vinnare</div>
                             <p className="text-[11px] font-bold leading-relaxed">{event.affectedCompanies.winners}</p>
                           </div>
                         </div>
                       </div>
                     ) : (
-                      <div className="mb-6 p-6 bg-primary/5 border border-dashed border-primary/20 rounded-2xl flex flex-col items-center justify-center text-center gap-3">
-                        <Lock size={20} className="text-primary/40" />
-                        <p className="text-xs font-bold text-muted-foreground">Logga in för att se marknadspåverkan och påverkade bolag</p>
-                        <button 
-                          onClick={openLoginModal}
-                          className="text-[10px] font-black uppercase tracking-widest text-primary hover:underline"
-                        >
+                      <div 
+                        onClick={openLoginModal}
+                        className="mb-6 p-8 bg-primary/5 border border-dashed border-primary/20 rounded-2xl flex flex-col items-center justify-center text-center gap-4 group cursor-pointer hover:bg-primary/10 transition-all"
+                      >
+                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-2 group-hover:scale-110 transition-transform">
+                          <Sparkles size={24} />
+                        </div>
+                        <div className="space-y-1">
+                          <h4 className="text-sm font-black uppercase tracking-widest text-primary">Få AI-INSIKT</h4>
+                          <p className="text-xs font-bold text-muted-foreground">Logga in för att se marknadspåverkan och påverkade bolag</p>
+                        </div>
+                        <button className="px-8 py-3 bg-primary text-white rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all">
                           Logga in nu
                         </button>
                       </div>
@@ -442,8 +491,11 @@ export default function MacroDashboard() {
 
           {/* Sidebar */}
           <aside className="lg:col-span-4 space-y-8">
-            <div className="bg-foreground text-background rounded-[2.5rem] p-10 space-y-8 shadow-2xl shadow-black/20">
-              <div className="space-y-2">
+            <div className="bg-foreground text-background rounded-[2.5rem] p-10 space-y-8 shadow-2xl shadow-black/20 relative overflow-hidden group/clock-card">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover/clock-card:bg-primary/30 transition-colors" />
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2 group-hover/clock-card:bg-primary/20 transition-colors" />
+              
+              <div className="space-y-2 relative z-10">
                 <div className="flex justify-between items-start">
                   <h3 className="text-2xl font-black tracking-tighter">Makro-klockan</h3>
                   <div className="text-[8px] font-black uppercase tracking-widest opacity-60 text-right">
@@ -458,8 +510,8 @@ export default function MacroDashboard() {
               <div className="aspect-square bg-white/5 rounded-full flex items-center justify-center border border-white/10 relative overflow-hidden cursor-pointer group/clock">
                 {/* Quadrants */}
                 <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 z-0">
-                  <div className={`border-r border-b border-white/10 hover:bg-emerald-400/20 transition-colors ${activePhase.id === 'reflation' ? 'bg-emerald-400/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[3])} />
-                  <div className={`border-b border-white/10 hover:bg-emerald-500/20 transition-colors ${activePhase.id === 'recovery' ? 'bg-emerald-500/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[0])} />
+                  <div className={`border-r border-b border-white/10 hover:bg-cyan-400/20 transition-colors ${activePhase.id === 'reflation' ? 'bg-cyan-400/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[3])} />
+                  <div className={`border-b border-white/10 hover:bg-emerald-400/20 transition-colors ${activePhase.id === 'recovery' ? 'bg-emerald-400/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[0])} />
                   <div className={`border-r border-white/10 hover:bg-red-500/20 transition-colors ${activePhase.id === 'stagflation' ? 'bg-red-500/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[2])} />
                   <div className={`hover:bg-orange-500/20 transition-colors ${activePhase.id === 'overheating' ? 'bg-orange-500/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[1])} />
                 </div>
@@ -529,10 +581,13 @@ export default function MacroDashboard() {
                 ) : (
                   <button 
                     onClick={openLoginModal}
-                    className="w-full py-4 bg-white/10 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-white/20 transition-all flex items-center justify-center gap-2"
+                    className="w-full py-4 bg-white/10 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-white/20 transition-all flex flex-col items-center justify-center gap-1"
                   >
-                    <Lock size={14} />
-                    Logga in för AI Outlook
+                    <div className="flex items-center gap-2">
+                      <Sparkles size={14} className="text-primary" />
+                      <span>Få AI-INSIKT</span>
+                    </div>
+                    <span className="text-[8px] opacity-60">Logga in för AI Outlook</span>
                   </button>
                 )}
 
@@ -567,19 +622,106 @@ export default function MacroDashboard() {
   );
 }
 
+function FearGreedCard({ value, classification, loading }: { value?: number, classification?: string, loading: boolean }) {
+  const getStatusColor = (val: number) => {
+    if (val <= 25) return "bg-red-600";
+    if (val <= 45) return "bg-orange-500";
+    if (val <= 55) return "bg-amber-400";
+    if (val <= 75) return "bg-emerald-400";
+    return "bg-emerald-400";
+  };
+
+  const getTextColor = (val: number) => {
+    if (val <= 25) return "text-red-600";
+    if (val <= 45) return "text-orange-500";
+    if (val <= 55) return "text-amber-400";
+    if (val <= 75) return "text-emerald-400";
+    return "text-emerald-400";
+  };
+
+  return (
+    <motion.div 
+      whileHover={{ y: -5 }}
+      className="bg-card border border-border rounded-[2.5rem] p-8 shadow-xl shadow-black/5 flex flex-col group hover:border-primary/50 transition-all relative overflow-hidden"
+    >
+      <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors" />
+      
+      <div className="flex justify-between items-start mb-6 relative z-10">
+        <div className="space-y-1">
+          <div className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">SENTIMENT</div>
+          <div className="text-[9px] font-bold text-muted-foreground uppercase opacity-80">Marknadens Psykologi</div>
+        </div>
+        <div className="w-8 h-8 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+          <Gauge size={18} />
+        </div>
+      </div>
+
+      <div className="mb-6">
+        <h4 className="text-sm font-black tracking-tight mb-1">FEAR & GREED INDEX</h4>
+        {loading ? (
+          <div className="flex items-center gap-2 h-10">
+            <Loader2 size={24} className="animate-spin text-primary" />
+            <span className="text-sm font-bold text-muted-foreground">Hämtar data...</span>
+          </div>
+        ) : (
+          <>
+            <div className={`text-4xl font-black tracking-tighter ${getTextColor(value || 50)}`}>
+              {value || "--"}
+            </div>
+            <div className="text-[10px] font-bold text-muted-foreground mt-1 uppercase tracking-widest">
+              {classification || "Neutral"}
+            </div>
+          </>
+        )}
+      </div>
+
+      <div className="space-y-3 mb-6">
+        <div className="h-3 w-full bg-muted rounded-full overflow-hidden flex">
+          <motion.div 
+            initial={{ width: 0 }}
+            animate={{ width: `${value || 50}%` }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className={`h-full ${getStatusColor(value || 50)}`}
+          />
+        </div>
+        <div className="flex justify-between text-[8px] font-black uppercase tracking-widest opacity-50">
+          <span>Extreme Fear</span>
+          <span>Neutral</span>
+          <span>Extreme Greed</span>
+        </div>
+      </div>
+
+      <p className="text-xs font-medium text-muted-foreground leading-relaxed mb-6">
+        Mäter marknadens sentiment baserat på volatilitet, momentum och efterfrågan.
+      </p>
+
+      <div className="mt-auto pt-6 border-t border-border">
+        <div className="text-[9px] font-black text-foreground uppercase tracking-widest mb-2">Marknadspåverkan</div>
+        <p className="text-[11px] font-bold leading-relaxed text-primary/80 italic">
+          {value && value < 40 ? "Hög rädsla kan innebära köptillfällen för den långsiktige." : 
+           value && value > 60 ? "Hög girighet signalerar ofta att marknaden är överköpt." :
+           "Neutralt sentiment innebär att marknaden saknar tydlig riktning."}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
 function DetailedIndicator({ category, date, title, trend, change, value, subValue, description, impact }: any) {
   return (
     <motion.div 
       whileHover={{ y: -5 }}
-      className="bg-card border border-border rounded-[2.5rem] p-8 shadow-xl shadow-black/5 flex flex-col group hover:border-primary/50 transition-all"
+      className="bg-card border border-border rounded-[2.5rem] p-8 shadow-xl shadow-black/5 flex flex-col group hover:border-primary/50 transition-all relative overflow-hidden"
     >
-      <div className="flex justify-between items-start mb-6">
+      <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors" />
+      
+      <div className="flex justify-between items-start mb-6 relative z-10">
         <div className="space-y-1">
           <div className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">{category}</div>
           <div className="text-[9px] font-bold text-muted-foreground uppercase opacity-80">Uppdaterad {date}</div>
         </div>
         <div className={`flex items-center gap-1 text-xs font-black ${
-          trend === "up" ? "text-emerald-500" : "text-red-500"
+          trend === "up" ? "text-emerald-400" : "text-red-500"
         }`}>
           {trend === "up" ? <ArrowUpRight size={14} /> : <ArrowDownRight size={14} />}
           {change}

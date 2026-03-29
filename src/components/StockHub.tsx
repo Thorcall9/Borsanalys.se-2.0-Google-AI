@@ -60,7 +60,7 @@ export default function StockHub() {
       <div className="min-h-screen bg-background flex items-center justify-center p-6">
         <div className="text-center">
           <h1 className="text-4xl font-serif font-bold text-foreground mb-4">Bolaget hittades inte</h1>
-          <p className="text-muted mb-8 text-lg">Vi har ännu inte lagt till information om detta bolag.</p>
+          <p className="text-muted-foreground mb-8 text-lg">Vi har ännu inte lagt till information om detta bolag.</p>
           <Link to="/" className="inline-flex items-center gap-2 text-primary hover:underline font-bold">
             Gå tillbaka till startsidan <ChevronRight size={16} />
           </Link>
@@ -97,7 +97,7 @@ export default function StockHub() {
             </div>
             <div>
               <h1 className="text-xl font-serif font-bold text-foreground leading-none">{stock.name}</h1>
-              <div className="text-[10px] font-mono text-muted tracking-widest mt-1 uppercase">
+              <div className="text-[10px] font-mono text-muted-foreground tracking-widest mt-1 uppercase">
                 {stock.ticker} · {stock.market}
               </div>
             </div>
@@ -122,30 +122,30 @@ export default function StockHub() {
             {/* Overview */}
             <section>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-[11px] font-mono tracking-[0.3em] text-muted uppercase">Om Bolaget</h2>
+                <h2 className="text-[11px] font-mono tracking-[0.3em] text-muted-foreground uppercase">Om Bolaget</h2>
               </div>
-              <p className="text-lg text-muted leading-relaxed font-light">
+              <p className="text-lg text-muted-foreground leading-relaxed font-light">
                 {stock.description}
               </p>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
                 <div className="p-4 bg-white rounded-xl border border-border shadow-sm">
-                  <div className="text-[10px] text-muted uppercase mb-1">Börsvärde</div>
+                  <div className="text-[10px] text-muted-foreground uppercase mb-1">Börsvärde</div>
                   <div className="text-xl font-serif font-bold text-foreground">
                     {stock.stats.marketCap}
                   </div>
                 </div>
                 <div className="p-4 bg-white rounded-xl border border-border shadow-sm">
-                  <div className="text-[10px] text-muted uppercase mb-1">P/E (LTM)</div>
+                  <div className="text-[10px] text-muted-foreground uppercase mb-1">P/E (LTM)</div>
                   <div className="text-xl font-serif font-bold text-foreground">
                     {stock.stats.pe}
                   </div>
                 </div>
                 <div className="p-4 bg-white rounded-xl border border-border shadow-sm">
-                  <div className="text-[10px] text-muted uppercase mb-1">Sektor</div>
+                  <div className="text-[10px] text-muted-foreground uppercase mb-1">Sektor</div>
                   <div className="text-xl font-serif font-bold text-foreground">{stock.sector}</div>
                 </div>
                 <div className="p-4 bg-white rounded-xl border border-border shadow-sm">
-                  <div className="text-[10px] text-muted uppercase mb-1">Direktavk.</div>
+                  <div className="text-[10px] text-muted-foreground uppercase mb-1">Direktavk.</div>
                   <div className="text-xl font-serif font-bold text-foreground">
                     {stock.stats.yield}
                   </div>
@@ -157,7 +157,7 @@ export default function StockHub() {
 
             {/* Key Metrics Chart */}
             <section>
-              <h2 className="text-[11px] font-mono tracking-[0.3em] text-muted uppercase mb-6">Finansiell Trend</h2>
+              <h2 className="text-[11px] font-mono tracking-[0.3em] text-muted-foreground uppercase mb-6">Finansiell Trend</h2>
               <div className="p-6 bg-white border border-border rounded-2xl shadow-sm">
                 {chartData && chartData.length > 0 ? (
                   <div className="h-[300px] w-full">
@@ -218,7 +218,7 @@ export default function StockHub() {
                     </ResponsiveContainer>
                   </div>
                 ) : (
-                  <div className="aspect-[21/9] flex items-center justify-center text-muted italic text-sm">
+                  <div className="aspect-[21/9] flex items-center justify-center text-muted-foreground italic text-sm">
                     Finansiell data saknas för detta bolag.
                   </div>
                 )}
@@ -228,7 +228,7 @@ export default function StockHub() {
             {/* Recent Analyses */}
             <section>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-[11px] font-mono tracking-[0.3em] text-muted uppercase">Senaste Analyser</h2>
+                <h2 className="text-[11px] font-mono tracking-[0.3em] text-muted-foreground uppercase">Senaste Analyser</h2>
                 <Link to="/analys" className="text-[10px] font-mono text-primary hover:underline uppercase tracking-widest">Visa alla</Link>
               </div>
               <div className="space-y-4">
@@ -243,15 +243,15 @@ export default function StockHub() {
                         <div>
                           <div className="text-[10px] font-mono text-primary uppercase tracking-widest mb-2">Analys</div>
                           <h3 className="text-xl font-serif font-bold text-foreground group-hover:text-primary transition-colors">{analysis.title}</h3>
-                          <p className="text-sm text-muted mt-2 line-clamp-1">{analysis.summary}</p>
+                          <p className="text-sm text-muted-foreground mt-2 line-clamp-1">{analysis.summary}</p>
                         </div>
-                        <ArrowUpRight className="text-muted group-hover:text-primary transition-colors" />
+                        <ArrowUpRight className="text-muted-foreground group-hover:text-primary transition-colors" />
                       </div>
                     </Link>
                   ))
                 ) : (
                   <div className="p-8 bg-section-alt border border-dashed border-border rounded-2xl text-center">
-                    <p className="text-muted text-sm">Inga analyser publicerade än för detta bolag.</p>
+                    <p className="text-muted-foreground text-sm">Inga analyser publicerade än för detta bolag.</p>
                   </div>
                 )}
               </div>
@@ -267,7 +267,7 @@ export default function StockHub() {
                 <TrendingUp size={16} className="text-primary" />
                 Investment Case
               </h3>
-              <p className="text-xs text-muted leading-relaxed mb-6">
+              <p className="text-xs text-muted-foreground leading-relaxed mb-6">
                 {relatedAnalyses.length > 0 
                   ? relatedAnalyses[0].motivation?.substring(0, 150) + '...'
                   : `Vi bevakar ${stock.name} noga och kommer snart publicera en fullständig analys av bolagets framtidsutsikter.`}
@@ -281,7 +281,7 @@ export default function StockHub() {
                   <ChevronRight size={16} />
                 </Link>
               ) : (
-                <button className="w-full py-3 bg-muted/10 text-muted font-bold rounded-xl flex items-center justify-center gap-2 cursor-not-allowed">
+                <button className="w-full py-3 bg-muted/10 text-muted-foreground font-bold rounded-xl flex items-center justify-center gap-2 cursor-not-allowed">
                   Analys kommer snart
                 </button>
               )}
@@ -290,11 +290,11 @@ export default function StockHub() {
             {/* News Feed */}
             <section>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-[11px] font-mono tracking-[0.3em] text-muted uppercase mb-6">Senaste Nytt</h2>
+                <h2 className="text-[11px] font-mono tracking-[0.3em] text-muted-foreground uppercase mb-6">Senaste Nytt</h2>
               </div>
               <div className="space-y-6">
                 <div className="p-8 bg-section-alt border border-dashed border-border rounded-2xl text-center">
-                  <p className="text-muted text-sm">Inga relevanta nyheter hittades för tillfället.</p>
+                  <p className="text-muted-foreground text-sm">Inga relevanta nyheter hittades för tillfället.</p>
                 </div>
               </div>
             </section>
@@ -302,15 +302,15 @@ export default function StockHub() {
             {/* Company Details */}
             <section className="p-6 bg-white border border-border rounded-2xl space-y-4 shadow-sm">
               <div className="flex justify-between text-xs">
-                <span className="text-muted">Sektor</span>
+                <span className="text-muted-foreground">Sektor</span>
                 <span className="text-foreground font-medium">{stock.sector}</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-muted">Marknad</span>
+                <span className="text-muted-foreground">Marknad</span>
                 <span className="text-foreground font-medium">{stock.market}</span>
               </div>
               <div className="flex justify-between text-xs">
-                <span className="text-muted">Hemsida</span>
+                <span className="text-muted-foreground">Hemsida</span>
                 <a href="#" className="text-primary hover:underline flex items-center gap-1 font-medium">
                   Besök <Globe size={10} />
                 </a>

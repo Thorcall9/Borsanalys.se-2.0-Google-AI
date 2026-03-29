@@ -1,10 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-type ThemeColor = "emerald" | "forest";
+type ThemeColor = "emerald";
 
 interface ThemeContextType {
   themeColor: ThemeColor;
-  setThemeColor: (color: ThemeColor) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -19,14 +18,10 @@ export const useTheme = () => {
 
 const colors: Record<ThemeColor, string> = {
   emerald: "#10B981",
-  forest: "#059669",
 };
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [themeColor, setThemeColor] = useState<ThemeColor>(() => {
-    const saved = localStorage.getItem("theme-color") as ThemeColor;
-    return saved && colors[saved] ? saved : "emerald";
-  });
+  const [themeColor] = useState<ThemeColor>("emerald");
 
   useEffect(() => {
     const root = document.documentElement;
@@ -35,14 +30,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     // Update the CSS variable
     root.style.setProperty("--primary", colorValue);
     
-    // Also update related variables if needed, or let Tailwind handle it if they are derived
-    // In our index.css, --primary is used for --color-primary
-    
     localStorage.setItem("theme-color", themeColor);
   }, [themeColor]);
 
   return (
-    <ThemeContext.Provider value={{ themeColor, setThemeColor }}>
+    <ThemeContext.Provider value={{ themeColor }}>
       {children}
     </ThemeContext.Provider>
   );

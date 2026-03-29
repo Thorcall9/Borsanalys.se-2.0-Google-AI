@@ -31,10 +31,11 @@ ChartJS.register(
 
 interface ChartCardProps {
   title: string;
-  type: 'bar' | 'line';
-  data: any;
+  type?: 'bar' | 'line';
+  data?: any;
   options?: any;
   height?: number;
+  children?: React.ReactNode;
 }
 
 const defaultOptions = {
@@ -57,12 +58,14 @@ const defaultOptions = {
   }
 };
 
-export default function ChartCard({ title, type, data, options = defaultOptions, height = 260 }: ChartCardProps) {
+export default function ChartCard({ title, type, data, options = defaultOptions, height = 260, children }: ChartCardProps) {
   return (
     <div className="bg-white border border-black/5 rounded-xl p-6 shadow-sm">
       <div className="text-[10px] font-mono tracking-widest uppercase text-gray-400 mb-6">{title}</div>
       <div style={{ height: `${height}px` }}>
-        {type === 'bar' ? (
+        {children ? (
+          children
+        ) : type === 'bar' ? (
           <Bar options={options} data={data} />
         ) : (
           <Line options={options} data={data} />

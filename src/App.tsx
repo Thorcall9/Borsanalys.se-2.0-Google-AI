@@ -21,6 +21,7 @@ import { SearchProvider } from "./contexts/SearchContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { AdminSubscribers } from "./components/AdminSubscribers";
+import PreviewHeaderPage from "./pages/PreviewHeader";
 
 export default function App() {
   return (
@@ -49,6 +50,7 @@ export default function App() {
                     <Route path="/verktyg/rantakalkylator" element={<Tools />} />
                     <Route path="/om-oss" element={<About />} />
                     <Route path="/admin/subscribers" element={<AdminSubscribers />} />
+                    <Route path="/preview-header" element={<PreviewHeaderPage />} />
                   </Routes>
                 </Layout>
               </SearchProvider>

@@ -97,7 +97,7 @@ export default function ComprehensiveAnalysis({
   const jsonOverview = {
     company: data.title,
     ticker: data.ticker,
-    analysis_date: new Date().toISOString().split('T')[0],
+    analysis_date: data.date,
     scores: data.scores,
     recommendation: data.recommendation,
     target_price: data.scenarios?.find(s => s.type === 'base')?.value || "N/A"
@@ -133,9 +133,14 @@ export default function ComprehensiveAnalysis({
             <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em]">
               {data.market}: {data.ticker} · {data.sector}
             </div>
-            <h1 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95]">
-              {data.title}: Analys & Köpvärde <br />
-              <span className="text-primary">{data.summary.split('.')[0]}.</span>
+            <h1 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95] whitespace-pre-line">
+              {data.title.includes('Analys & Köpvärde') ? data.title : `${data.title}: Analys & Köpvärde`}
+              {!data.title.includes(data.summary.split('.')[0]) && (
+                <>
+                  <br />
+                  <span className="text-primary">{data.summary.split('.')[0]}.</span>
+                </>
+              )}
             </h1>
           </div>
         </div>
@@ -446,7 +451,7 @@ export default function ComprehensiveAnalysis({
           verdict={data.recommendation} 
           target={data.scenarios?.find(s => s.type === 'base')?.value || "N/A"} 
           description={data.motivation || data.summary} 
-          date={new Date().toISOString().split('T')[0]}
+          date={data.date}
           accentColor={ACCENT_COLOR}
         />
       </section>

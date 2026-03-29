@@ -86,6 +86,7 @@ export interface AnalysisData {
   discount?: string;
   summary: string;
   date?: string; // Format: YYYY-MM-DD
+  listTitle?: string;
   
   // Standardized structure from roadmap
   investmentCase?: string;
@@ -147,8 +148,9 @@ export const analyses: Record<string, AnalysisData> = {
     yield: "1,8%",
     marketCap: "750 Bkr",
     discount: "14,2%",
-    summary: "Investor AB är ett av Nordens ledande investmentbolag med en välbalanserad portfölj av marknadsledande bolag inom både noterade och onoterade sektorer. Med en stark historik av substansvärdestillväxt och en låg förvaltningskostnad utgör Investor en hörnsten i många långsiktiga portföljer.",
-    date: "2026-03-01",
+    summary: "Affärsidén är enkel men kraftfull: **bygga starka och hållbara företag för att skapa värde för aktieägare och samhälle**. Till skillnad från en vanlig aktiefond är Investor en aktiv ägare – man sitter i styrelser, utser VD och driver strategiska initiativ. Det gör att Investor kan påverka sina innehav på ett sätt som en passiv fondförvaltare aldrig kan.",
+    businessModel: "Affärsidén är enkel men kraftfull: bygga starka och hållbara företag för att skapa värde för aktieägare och samhälle. Till skillnad från en vanlig aktiefond är Investor en aktiv ägare – man sitter i styrelser, utser VD och driver strategiska initiativ. Det gör att Investor kan påverka sina innehav på ett sätt som en passiv fondförvaltare aldrig kan.",
+    date: "2026-03-26",
     investmentCase: "Investor erbjuder en unik exponering mot gräddan av svenskt näringsliv till en rabatt mot substansvärdet. Genom att äga Investor får man del av deras aktiva ägande i bolag som Atlas Copco, ABB och SEB, samt den onoterade portföljen Patricia Industries som historiskt levererat mycket stark avkastning.",
     marketOverview: "Investmentbolagssektorn i Sverige är välutvecklad och Investor är den obestridda ledaren. Marknaden präglas av fokus på substansvärde och substansrabatt. Investor gynnas av sin storlek och sitt goda rykte som ger dem tillgång till attraktiva investeringsmöjligheter.",
     growth: "Tillväxten i Investor drivs främst av värdetillväxten i portföljbolagen. Patricia Industries (onoterat) är en viktig tillväxtmotor där kassaflöden återinvesteras i nya och befintliga plattformsbolag. Dessutom bidrar utdelningar från de noterade kärninnehaven till kapital för nya investeringar.",
@@ -173,25 +175,29 @@ export const analyses: Record<string, AnalysisData> = {
     managementOverview: "Johan Forssell — VD: Har lett bolaget sedan 2015 med stort fokus på Patricia Industries. Jacob Wallenberg — Ordförande: Representerar den femte generationen av ägarfamiljen.",
     ownershipStructure: "Wallenbergstiftelserna (via FAM och Knut & Alice Wallenbergs Stiftelse) är största ägare med röstmajoritet, vilket garanterar långsiktighet.",
     strengths: [
-      "Stark historik av substansvärdestillväxt",
-      "Välskött portfölj med marknadsledande bolag",
-      "Låg förvaltningskostnad jämfört med fonder",
-      "Stabil utdelningspolicy"
+      "110 år av aktiv ägarkultur och bevisad track record",
+      "Extremt låga förvaltningskostnader (0,07% av NAV)",
+      "Diversifierad portfölj av världsledande bolag",
+      "AA- kreditbetyg (S&P) och Aa3 (Moody's)",
+      "Stark balansräkning: skuldsättningsgrad 2,1%"
     ],
     weaknesses: [
-      "Beroende av ett fåtal stora innehav",
-      "Begränsad exponering mot snabbväxande tech",
-      "Substansrabatten kan variera över tid"
+      "Patricia Industries tyngd av valutamotvind (USD/EUR vs SEK)",
+      "Atlas Antibodies under strukturell press",
+      "Koncentration till svenska/nordiska företag",
+      "Substansvärdet påverkas av börspsvängningar"
     ],
     opportunities: [
-      "Ökad konsolidering i industrisektorn",
-      "Expansion av Patricia Industries",
-      "Digitalisering av portföljbolagen"
+      "Patricia Industries – operationell hävstång när USD återhämtar sig",
+      "EQT-plattformen ger tillgång till global private equity-tillväxt",
+      "AI-integration hos portföljbolagen (Permobil, Mölnlycke m.fl.)",
+      "Förvärvsplatform för nya plattformsbolag"
     ],
     threats: [
-      "Global lågkonjunktur påverkar industrin",
-      "Räntehöjningar påverkar värderingar",
-      "Ökad konkurrens inom private equity"
+      "Ökad tullbelastning på globala portföljbolag",
+      "Fortsatt kronförstärkning dämpar Patricia Industries-vinster",
+      "Geopolitisk osäkerhet och svag global efterfrågan",
+      "Ökande konkurrens om private equity-deals"
     ],
     scenarios: [
       { label: "Bull Case", value: "320 kr", change: "+30%", type: "bull" },
@@ -524,7 +530,8 @@ export const analyses: Record<string, AnalysisData> = {
   },
   "volvo": {
     slug: "volvo",
-    title: "Volvo AB",
+    title: "AB Volvo: Analys & Köpvärde\nVolvo Group är en världsledande tillverkare av lastbilar, bussar och anläggningsmaskiner.",
+    listTitle: "AB Volvo",
     ticker: "VOLV-B.ST",
     market: "Large Cap Stockholm",
     sector: "Industri / Fordon",
@@ -622,8 +629,7 @@ export const analyses: Record<string, AnalysisData> = {
       "AI Overview Ads: bevisad monetarisering av generativ sökning",
       "GCP: målsättning $100Mdr ARR — 32% tillväxt i Q2 2025",
       "Waymo: ~450 000 betalda resor/vecka, potentiellt $100Mdr+ värde",
-      "YouTube Subscriptions: 270M+ prenumeranter, stark tillväxtmotor",
-      "Waymo: Ledande inom autonom körning, massiv framtida optionalitet"
+      "YouTube Subscriptions: 270M+ prenumeranter, stark tillväxtmotor"
     ],
     threats: [
       "Regulatorisk press och antitrust-utredningar (USA/EU)",
@@ -663,9 +669,9 @@ export const analyses: Record<string, AnalysisData> = {
     investmentCase: "Köprekommendationen bygger på en riskjusterad förväntad avkastning (EV) på +21%. Marknaden prisar i dagsläget in ett brittiskt worst-case-scenario med hög sannolikhet — vi bedömer sannolikheten som betydligt lägre. Säkerhetsmarginalen ligger i gapet mellan marknadens rädsla och den operationella verkligheten. P/E under 10x, 66% EBITDA-marginal och 818 MEUR i kassan skapar en attraktiv risk/reward.",
     marketOverview: "Evolution är världens ledande B2B-leverantör av live casino-lösningar till speloperatörer. Grundat 2006 i en liten studio i Lettland har bolaget vuxit till en global aktör med 870+ operatörskunder, 22 475 anställda och studior på fyra kontinenter. Affärsmodellen är provisionsbaserad — Evolution tar en andel av de spelintäkter (GGR) som operatörernas spelare genererar, vilket skapar återkommande, skalbara intäkter utan direkt kundanskaffningskostnad. Moderbolaget är baserat i Stockholm och noterat på Nasdaq Stockholm under tickern EVO. 2025 var ett utmanande år: omsättningstillväxten kollapsade till +0,2%, EPS föll 11,8% och utdelningen ställdes in helt. Men bakom rubrikerna döljer sig ett bolag med 818 MEUR i likvida medel, noll räntebärande skulder och ett operativt kassaflöde på 1 255 MEUR per år. Kursen på ~577 kr ger ett P/E på under 10x — historiskt exceptionellt lågt för ett bolag med Evolutions kvalitetsprofil.",
     growth: "Tillväxten drivs av USA-expansion (nu i alla 7 stater), Brasilien (studio öppnad i São Paulo), och Hasbro-partnerskapet (MONOPOLY Filthy Rich m.fl.). EPS-tillväxten väntas bli måttlig (2–4% per år 2026–2028e) i linje med konsensus, men med potential för acceleration bortom 2027e.",
-    financialAnalysis: "Exceptionell lönsamhet med en EBITDA-marginal på 66,1% (2025). Balansräkningen är i enastående skick med 818 MEUR i likvida medel och noll räntebärande skulder. Operativt kassaflöde på 1 255 MEUR per år ger enorm finansiell flexibilitet.",
+    financialAnalysis: "Exceptionell lönsamhet med en EBITDA-marginal på 66,1% (2025). Balansräkningen är i enastående skick. De 194 MEUR i långfristiga skulder utgörs nästan uteslutande av leasingskulder — räntebärande skuld är i praktiken noll. Med 818 MEUR i likvida medel och en obligationsportfölj på 104 MEUR har bolaget en nettokassaposition som ger enorm finansiell flexibilitet. Kapitaleffektivitet: ROE på 26% och ROCE på 26% är starka absoluta tal — men observera att de föll från 31,6% 2024. Faller ROE under 20% är det en tydlig signal om försämrad kapitaleffektivitet att bevaka.",
     marginTrends: "Marginalen föll från 68,4% till 66,1% under 2025. Detta beror på löneinflation i studionätverket, en förändrad revenuemix med fler aggregatorer i Asien/LatAm, samt underprestation i RNG-segmentet. Intäkt per anställd sjönk -5,3% under året.",
-    ukgcRiskDeepDive: "UKGC-granskningen är en binär risk. Vi bedömer sannolikheten för licensindragning till 5-10%, medan betydande böter (50-300 MEUR) har 30-35% sannolikhet. Marknaden prisar in ett värre scenario, vilket skapar köpläget.",
+    ukgcRiskDeepDive: "UKGC inledde en granskning av Evolutions maltesiska holdingbolag i december 2024 under sektion 116 av Gambling Act 2005. Utfallet är fortfarande okänt och Evolution samarbetar fullt ut. Risken är binär — antingen böter och åtgärdsplaner, eller licensindragning i värsta fall. Vår sannolikhetsbedömning: Fullständig licensindragning (5–10%), Betydande böter (30–35%), Liten sanktion eller ingen åtgärd (55–65%).",
     capitalAllocation: "Återköp på 500 MEUR genomfördes 2025 till snittpris 752 SEK. Utdelningen väntas återinföras 2026e (~30 kr/aktie, 5,3% direktavkastning), vilket är en viktig katalysator för institutionella ägare.",
     competitiveAdvantages: [
       "Nätverkseffekter (870+ operatörer)",
@@ -679,8 +685,8 @@ export const analyses: Record<string, AnalysisData> = {
       "Asien-volatilitet och cyberbrottslighet",
       "Löneinflation i personalintensiva studior"
     ],
-    valuation: "P/E på ~10x för ett bolag som historiskt handlats till 20–30x, med ROE på 26% och stark kassagenerering, ger en bred säkerhetsmarginal. Earnings Yield på 10,1% innebär att bolaget ger mer vinstavkastning än en statsobligation med mångfalt bättre underliggande kvalitet.",
-    conclusion: "Evolution AB är ett enastående kvalitetsbolag som straffas för kortsiktiga utmaningar. UKGC-risken är binär och reell, men vi bedömer att säkerhetsmarginalen vid P/E 10x är tillräcklig för att motivera ett köp för den långsiktige investeraren.",
+    valuation: "Evolution handlas till historiskt låga multiplar med ett P/E på ~10x (nuläge) och en Earnings Yield på 10,1%. Detta är exceptionellt för ett bolag med 66%+ EBITDA-marginal och nettokassa. Dock signalerar PEG-talet för 2027e (3,4) att aktien är dyr relativt den förväntade tillväxten om inte EPS-tillväxten accelererar bortom nuvarande konsensus på ~2%.",
+    conclusion: "Evolution AB är ett enastående kvalitetsbolag som straffas för kortsiktiga utmaningar. Säkerhetsmarginalen vid P/E 10x är tillräcklig för att motivera ett köp, men PEG-varningsflaggan för 2027e kräver bevakning av tillväxttakten. Direktavkastningen på 5,3% (2026e) fungerar som en viktig katalysator för att locka tillbaka institutionellt kapital.",
     esg: "Neutral ESG-profil med sociala utmaningar kring spelberoende. Stabil styrning (G) med 41,6% insiderägande och transparent rapportering.",
     aiObservations: "Sentiment-mönstret 'stolta, men inte nöjda' föregår ofta återhämtning. Asien Q4-dataavvikelse (positiv QoQ) är ej fullt prisad. Aktieåterköp på 500 MEUR vid 752 SEK signalerar stark ledningsövertygelse.",
     employees: "22 475",

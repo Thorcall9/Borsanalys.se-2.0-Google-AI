@@ -14,7 +14,7 @@ export default function AlertBox({ type, title, message, children }: AlertBoxPro
       bg: 'bg-emerald-50',
       border: 'border-emerald-200',
       text: 'text-emerald-800',
-      icon: <Info size={18} className="text-emerald-600" />
+      icon: <Info size={18} className="text-emerald-500" />
     },
     risk: {
       bg: 'bg-red-50',

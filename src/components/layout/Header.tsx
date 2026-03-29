@@ -4,7 +4,6 @@ import { TrendingUp, Menu, X, Search, ChevronRight, LogIn, LogOut, User as UserI
 import { motion } from "framer-motion";
 import { useAuth } from "../../contexts/AuthContext";
 import { useSearch } from "../../contexts/SearchContext";
-import { useTheme } from "../../contexts/ThemeContext";
 import GlobalSearch from "../GlobalSearch";
 
 export default function Header() {
@@ -12,7 +11,6 @@ export default function Header() {
   const { isSearchOpen, openSearch, closeSearch } = useSearch();
   const location = useLocation();
   const { user, openLoginModal, logout } = useAuth();
-  const { themeColor, setThemeColor } = useTheme();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -33,11 +31,6 @@ export default function Header() {
     { label: "Verktyg", path: "/verktyg" },
     { label: "Om oss", path: "/om-oss" },
   ];
-
-  const themes = [
-    { id: "emerald", color: "#10B981", label: "Smaragd" },
-    { id: "forest", color: "#059669", label: "Skog" },
-  ] as const;
 
   return (
     <header className="sticky top-0 z-[110] bg-background/80 backdrop-blur-md border-b border-border">
@@ -69,23 +62,6 @@ export default function Header() {
           ))}
           <div className="w-px h-4 bg-border mx-2" />
           
-          {/* Theme Switcher */}
-          <div className="flex items-center gap-2 bg-muted/30 p-1 rounded-full border border-border/50">
-            {themes.map((t) => (
-              <button
-                key={t.id}
-                onClick={() => setThemeColor(t.id)}
-                className={`w-6 h-6 rounded-full border-2 transition-all ${
-                  themeColor === t.id ? "border-primary scale-110" : "border-transparent opacity-50 hover:opacity-100"
-                }`}
-                style={{ backgroundColor: t.color }}
-                title={t.label}
-              />
-            ))}
-          </div>
-
-          <div className="w-px h-4 bg-border mx-2" />
-          
           {user ? (
             <div className="flex items-center gap-4">
               <Link to="/profil" className="flex items-center gap-2 group cursor-pointer">
@@ -96,13 +72,13 @@ export default function Header() {
                     <UserIcon size={16} />
                   </div>
                 )}
-                <span className="text-sm font-medium text-muted group-hover:text-primary transition-colors hidden lg:inline">
+                <span className="text-sm font-black text-foreground transition-colors hidden lg:inline">
                   {user.displayName?.split(' ')[0]}
                 </span>
               </Link>
               <button 
                 onClick={logout}
-                className="text-muted hover:text-red-500 transition-colors"
+                className="text-muted-foreground hover:text-red-500 transition-colors"
                 title="Logga ut"
               >
                 <LogOut size={18} />
@@ -134,19 +110,6 @@ export default function Header() {
 
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-3 md:hidden">
-          {/* Theme Switcher Mobile */}
-          <div className="flex items-center gap-2 bg-muted/30 p-1 rounded-full border border-border/50">
-            {themes.map((t) => (
-              <button
-                key={t.id}
-                onClick={() => setThemeColor(t.id)}
-                className={`w-5 h-5 rounded-full border-2 transition-all ${
-                  themeColor === t.id ? "border-primary scale-110" : "border-transparent opacity-50"
-                }`}
-                style={{ backgroundColor: t.color }}
-              />
-            ))}
-          </div>
           <motion.button 
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -180,7 +143,7 @@ export default function Header() {
               className="flex items-center justify-between text-lg font-serif font-bold py-2 border-b border-border/50"
             >
               {item.label}
-              <ChevronRight size={18} className="text-muted" />
+              <ChevronRight size={18} className="text-muted-foreground" />
             </Link>
           ))}
           
@@ -195,7 +158,7 @@ export default function Header() {
                       <UserIcon size={20} />
                     </div>
                   )}
-                  <span className="font-bold">{user.displayName}</span>
+                  <span className="font-black">{user.displayName}</span>
                 </div>
                 <button onClick={logout} className="text-red-500 font-bold text-sm">Logga ut</button>
               </div>

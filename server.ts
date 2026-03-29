@@ -81,9 +81,68 @@ async function startServer() {
   const stockCache = new Map<string, { data: any, timestamp: number }>();
   const CACHE_TTL = 2 * 60 * 60 * 1000; // 2 hours
 
+  // Fear & Greed Index Cache
+  let fearGreedCache: { data: any, timestamp: number } | null = null;
+  const FEAR_GREED_TTL = 60 * 60 * 1000; // 1 hour
+
+  // Fear & Greed Index Proxy
+  app.get("/api/fear-greed", async (req, res) => {
+    try {
+      // Check cache
+      if (fearGreedCache && (Date.now() - fearGreedCache.timestamp < FEAR_GREED_TTL)) {
+        console.log("[SERVER] Returning cached Fear & Greed data");
+        return res.json(fearGreedCache.data);
+      }
+
+      console.log("[SERVER] Fetching fresh Fear & Greed data from RapidAPI");
+      const apiKey = process.env.RAPIDAPI_KEY;
+      
+      if (!apiKey) {
+        console.error("[SERVER] RAPIDAPI_KEY is not configured");
+        return res.status(500).json({ error: "RAPIDAPI_KEY is not configured" });
+      }
+
+      const response = await fetch("https://fear-and-greed-index.p.rapidapi.com/v1/fgi", {
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": "fear-and-greed-index.p.rapidapi.com",
+          "x-rapidapi-key": apiKey
+        }
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`[SERVER] RapidAPI Error: ${response.status} ${errorText}`);
+        
+        // If we have stale cache, return it as fallback on error
+        if (fearGreedCache) {
+          console.log("[SERVER] Returning stale Fear & Greed data as fallback");
+          return res.json(fearGreedCache.data);
+        }
+        
+        return res.status(response.status).json({ error: "Failed to fetch Fear & Greed index" });
+      }
+
+      const data = await response.json();
+      
+      // Update cache
+      fearGreedCache = {
+        data,
+        timestamp: Date.now()
+      };
+
+      res.json(data);
+    } catch (error: any) {
+      console.error("[SERVER] Fear & Greed API Error:", error.message);
+      if (fearGreedCache) return res.json(fearGreedCache.data);
+      res.status(500).json({ error: "Internt serverfel vid hämtning av Fear & Greed index." });
+    }
+  });
+
   // RapidAPI Proxy for Stock Data (Database First)
   // Use a more permissive route to handle tickers with dots (e.g., EVO.ST)
-  app.get("/api/stocks/quote/:ticker", async (req, res) => {
+  // The regex [^/]+ ensures it captures everything including dots until the next slash
+  app.get("/api/stocks/quote/:ticker([^/]+)", async (req, res) => {
     const ticker = req.params.ticker;
     console.log(`[SERVER] API Request for ticker: ${ticker}`);
     if (!ticker) {

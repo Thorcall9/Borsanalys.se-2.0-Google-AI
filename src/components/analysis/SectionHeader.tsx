@@ -8,14 +8,14 @@ interface SectionHeaderProps {
 
 export default function SectionHeader({ number, title, accentColor = "#10B981" }: SectionHeaderProps) {
   return (
-    <div className="flex flex-col md:flex-row md:items-end gap-2 md:gap-6 mb-12 pb-6 border-b border-border">
-      <span 
-        className="text-5xl md:text-6xl font-black leading-none opacity-10 tracking-tighter"
-        style={{ color: accentColor }}
+    <div className="flex items-center gap-3 mb-6">
+      <div 
+        className="w-8 h-8 rounded-lg text-white flex items-center justify-center text-[10px] font-black flex-shrink-0 font-serif"
+        style={{ backgroundColor: accentColor }}
       >
         {number}
-      </span>
-      <h2 className="text-xl md:text-2xl font-black tracking-tighter uppercase text-foreground mb-1">
+      </div>
+      <h2 className="text-base md:text-lg font-black tracking-tight text-slate-900 uppercase">
         {title}
       </h2>
     </div>

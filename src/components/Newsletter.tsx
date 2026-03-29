@@ -91,7 +91,7 @@ export const Newsletter: React.FC = () => {
                   whileTap={status === 'idle' ? { scale: 0.95 } : {}}
                   className={`w-full sm:w-auto sm:absolute sm:right-3 px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition-all flex items-center justify-center gap-2 ${
                     status === 'success' 
-                      ? 'bg-green-500 text-white shadow-green-500/30' 
+                      ? 'bg-emerald-500 text-white shadow-emerald-500/30' 
                       : 'bg-primary text-primary-foreground shadow-primary/30 hover:bg-primary/90'
                   } disabled:opacity-100`}
                 >
@@ -116,7 +116,7 @@ export const Newsletter: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
                     className={`mt-4 text-sm font-bold px-8 ${
-                      status === 'error' ? 'text-red-500' : 'text-green-500'
+                      status === 'error' ? 'text-red-500' : 'text-emerald-500'
                     }`}
                   >
                     {message}

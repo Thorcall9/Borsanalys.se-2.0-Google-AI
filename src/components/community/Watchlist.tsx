@@ -57,7 +57,7 @@ export default function Watchlist() {
       <div className="bg-card border border-border rounded-2xl p-8 text-center shadow-sm">
         <Star size={40} className="mx-auto mb-4 text-primary/20" />
         <h3 className="font-serif text-xl font-bold mb-2">Din bevakningslista</h3>
-        <p className="text-muted text-sm mb-6 max-w-xs mx-auto">
+        <p className="text-muted-foreground text-sm mb-6 max-w-xs mx-auto">
           Logga in för att spara dina favoritaktier och få snabb tillgång till analyser.
         </p>
         <button 
@@ -105,8 +105,8 @@ export default function Watchlist() {
                       {item.symbol}
                     </div>
                     <div>
-                      <div className="font-bold text-sm">{item.name}</div>
-                      <div className="text-[10px] text-muted uppercase tracking-wider">{item.symbol}</div>
+                      <div className="font-black text-base text-foreground">{item.name}</div>
+                      <div className="text-[10px] text-foreground/70 uppercase tracking-wider">{item.symbol}</div>
                     </div>
                   </div>
                 </Link>
@@ -125,18 +125,18 @@ export default function Watchlist() {
                   )}
                   <button 
                     onClick={() => removeFromWatchlist(item.id)}
-                    className="p-2 text-muted hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
+                    className="p-2 text-muted-foreground hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
                   >
                     <Trash2 size={16} />
                   </button>
-                  <ChevronRight size={16} className="text-muted" />
+                  <ChevronRight size={16} className="text-muted-foreground" />
                 </div>
               </div>
             </div>
           ))
         ) : (
           <div className="p-12 text-center">
-            <p className="text-muted text-sm mb-4">Du har inga aktier i din bevakningslista än.</p>
+            <p className="text-muted-foreground text-sm mb-4">Du har inga aktier i din bevakningslista än.</p>
             <Link 
               to="/analys" 
               className="inline-flex items-center gap-2 text-xs font-bold text-primary hover:underline"

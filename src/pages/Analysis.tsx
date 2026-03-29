@@ -43,7 +43,8 @@ import { db, handleFirestoreError, OperationType } from "../firebase";
 import { collection, query, where, addDoc, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 
 export default function Analysis() {
-  const { slug } = useParams();
+  const { slug: rawSlug } = useParams();
+  const slug = rawSlug === 'evolution' ? 'evolution-2025' : rawSlug;
   const { user, openLoginModal } = useAuth();
   const [isInWatchlist, setIsInWatchlist] = useState(false);
   const [watchlistDocId, setWatchlistDocId] = useState<string | null>(null);
@@ -55,7 +56,7 @@ export default function Analysis() {
   const [selectedSector, setSelectedSector] = useState("Alla");
   const [selectedRecommendation, setSelectedRecommendation] = useState("Alla");
 
-  const analysis = slug ? analyses[slug] : undefined;
+  const analysis = slug ? analyses[slug as keyof typeof analyses] : undefined;
 
   // Fetch real-time data for archive
   useEffect(() => {
@@ -285,7 +286,7 @@ export default function Analysis() {
                                   </>
                                 )}
                               </div>
-                              <h3 className="text-3xl font-black tracking-tighter group-hover:text-primary transition-colors duration-300 leading-tight">{a.title}</h3>
+                              <h3 className="text-3xl font-black tracking-tighter group-hover:text-primary transition-colors duration-300 leading-tight">{a.listTitle || a.title}</h3>
                             </div>
                             <VerdictBadge verdict={a.recommendation} />
                           </div>
@@ -354,7 +355,7 @@ export default function Analysis() {
   }
 
   // Special high-fidelity view for Evolution
-  if (slug === 'evolution-2025') {
+  if (slug === 'evolution-2025' || slug === 'evolution') {
     return <EvolutionDeepDive onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} />;
   }
 

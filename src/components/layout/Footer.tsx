@@ -96,7 +96,7 @@ export default function Footer() {
               disabled={status === 'loading' || status === 'success'}
               className={`px-6 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all shadow-lg flex items-center justify-center gap-2 ${
                 status === 'success' 
-                  ? 'bg-green-500 text-white shadow-green-500/20' 
+                  ? 'bg-emerald-500 text-white shadow-emerald-500/20' 
                   : 'bg-primary hover:bg-primary/90 text-primary-foreground shadow-primary/20'
               }`}
             >
