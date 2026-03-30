@@ -139,6 +139,40 @@ async function startServer() {
     }
   });
 
+  // Fetch dynamic analysis from database (Prisma)
+  app.get("/api/analysis/:ticker([^/]+)", async (req, res) => {
+    let ticker = req.params.ticker.toUpperCase();
+    
+    // Handle specific ticker mapping for Investor as requested
+    if (ticker === 'INVE-B') {
+      ticker = 'INVE-B.ST';
+    }
+
+    console.log(`[SERVER] Fetching dynamic analysis for: ${ticker}`);
+
+    try {
+      const analysis = await prisma.analysis.findUnique({
+        where: { ticker: ticker }
+      });
+
+      if (!analysis) {
+        // Fallback to static data if not in DB
+        const staticAnalysis = Object.values(analyses).find(a => a.ticker.toUpperCase() === ticker);
+        if (staticAnalysis) {
+          console.log(`[SERVER] Dynamic analysis not found in DB, returning static fallback for ${ticker}`);
+          return res.json(staticAnalysis);
+        }
+        return res.status(404).json({ error: `Analys för ${ticker} hittades inte.` });
+      }
+
+      console.log(`[SERVER] Returning dynamic analysis from DB for ${ticker}`);
+      res.json(analysis);
+    } catch (error: any) {
+      console.error(`[SERVER] Error fetching analysis for ${ticker}:`, error.message);
+      res.status(500).json({ error: "Internt serverfel vid hämtning av analys." });
+    }
+  });
+
   // RapidAPI Proxy for Stock Data (Database First)
   // Use a more permissive route to handle tickers with dots (e.g., EVO.ST)
   // The regex [^/]+ ensures it captures everything including dots until the next slash
@@ -152,55 +186,14 @@ async function startServer() {
     console.log(`[SERVER] Received request for ticker: ${tickerUpper}`);
 
     try {
-      // 1. Check Database first
-      // Freshness check: 2 hours (as requested)
-      const TWO_HOURS = 2 * 60 * 60 * 1000;
-      const dbStock = await prisma.stock.findUnique({
-        where: { ticker: tickerUpper }
-      });
-
-      // If stock exists and was updated in the last 2 hours, return it
-      if (dbStock && dbStock.updatedAt && (Date.now() - new Date(dbStock.updatedAt).getTime() < TWO_HOURS)) {
-        console.log(`[SERVER] Returning fresh database data for ${tickerUpper}`);
-        return res.json({
-          body: [{
-            symbol: dbStock.ticker,
-            regularMarketPrice: dbStock.price,
-            regularMarketChange: 0,
-            regularMarketChangePercent: 0,
-            trailingPE: dbStock.pe,
-            marketCap: dbStock.marketCap,
-            epsTrailingTwelveMonths: dbStock.eps,
-            currency: tickerUpper.endsWith('.ST') ? 'SEK' : tickerUpper.endsWith('.CO') ? 'DKK' : 'USD'
-          }]
-        });
-      }
-
-      // 2. If not in DB or stale, check memory cache
+      // 1. Check memory cache
       const cached = stockCache.get(tickerUpper);
       if (cached && (Date.now() - cached.timestamp < CACHE_TTL)) {
         console.log(`[SERVER] Returning memory cached data for ${tickerUpper}`);
         return res.json(cached.data);
       }
 
-      // 3. If not in DB or stale, return error (Alpha Vantage removed)
-      if (dbStock) {
-        console.log(`[SERVER] Returning database data for ${tickerUpper} (Alpha Vantage disabled)`);
-        return res.json({
-          body: [{
-            symbol: dbStock.ticker,
-            regularMarketPrice: dbStock.price,
-            regularMarketChange: 0,
-            regularMarketChangePercent: 0,
-            trailingPE: dbStock.pe,
-            marketCap: dbStock.marketCap,
-            epsTrailingTwelveMonths: dbStock.eps,
-            currency: tickerUpper.endsWith('.ST') ? 'SEK' : tickerUpper.endsWith('.CO') ? 'DKK' : 'USD'
-          }]
-        });
-      }
-
-      // 4. Fallback to static analysis data if missing in database
+      // 2. Fallback to static analysis data
       const staticAnalysis = Object.values(analyses).find(a => a.ticker.toUpperCase() === tickerUpper);
       if (staticAnalysis) {
         console.log(`[SERVER] Returning static analysis data for ${tickerUpper}`);
@@ -222,7 +215,7 @@ async function startServer() {
         });
       }
 
-      return res.status(404).json({ error: `Data för ${tickerUpper} saknas i databasen.` });
+      return res.status(404).json({ error: `Data för ${tickerUpper} saknas.` });
     } catch (error: any) {
       console.error(`[SERVER] Internal Error for ${tickerUpper}:`, error.message);
       if (stockCache.has(tickerUpper)) return res.json(stockCache.get(tickerUpper)!.data);

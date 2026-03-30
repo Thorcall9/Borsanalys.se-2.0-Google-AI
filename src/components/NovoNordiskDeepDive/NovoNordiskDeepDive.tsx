@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { ArrowLeft, Star, Lock, AlertTriangle } from "lucide-react";
+import { Link, useParams } from "react-router-dom";
+import { ArrowLeft, Star, Lock, AlertTriangle, Loader2 } from "lucide-react";
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, ReferenceLine, Cell, ComposedChart
@@ -184,10 +184,43 @@ export default function NovoNordiskDeepDive({
   isInWatchlist, 
   isWatchlistLoading 
 }: NovoNordiskDeepDiveProps){
+  const { ticker } = useParams();
   const [mounted,setMounted]=useState(false);
-  useEffect(()=>{const t=setTimeout(()=>setMounted(true),50);return()=>clearTimeout(t);},[]);
+  const [analysisData, setAnalysisData] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (!mounted) return null;
+  useEffect(()=>{
+    const t=setTimeout(()=>setMounted(true),50);
+    return()=>clearTimeout(t);
+  },[]);
+
+  useEffect(() => {
+    const fetchAnalysis = async () => {
+      if (!ticker) return;
+      setIsLoading(true);
+      try {
+        const response = await fetch(`/api/analysis/${ticker}`);
+        if (response.ok) {
+          const data = await response.json();
+          setAnalysisData(data);
+        }
+      } catch (error) {
+        console.error("Error fetching analysis:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAnalysis();
+  }, [ticker]);
+
+  if (!mounted || isLoading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 text-[#00A86B] animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pt-16">
@@ -200,7 +233,7 @@ export default function NovoNordiskDeepDive({
             <div className="flex flex-col items-center shrink-0">
               <span className="text-[10px] font-bold tracking-[0.2em] uppercase opacity-80 mb-2">Vår bedömning</span>
               <div className="bg-white text-[#00A86B] w-20 h-20 rounded-full flex items-center justify-center shadow-xl">
-                <span className="text-2xl font-black tracking-tighter">KÖP</span>
+                <span className="text-2xl font-black tracking-tighter">{analysisData?.verdict || "KÖP"}</span>
               </div>
             </div>
             
@@ -210,11 +243,11 @@ export default function NovoNordiskDeepDive({
                   <ArrowLeft size={20} />
                 </Link>
                 <h1 className="text-3xl md:text-4xl font-black tracking-tight leading-tight">
-                  Novo Nordisk A/S
+                  {analysisData?.companyName || "Novo Nordisk A/S"}
                 </h1>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <span className="bg-white/20 px-2 py-0.5 rounded text-xs font-bold tracking-wide">NOVO-B • NVO</span>
+                <span className="bg-white/20 px-2 py-0.5 rounded text-xs font-bold tracking-wide">{analysisData?.ticker || "NOVO-B • NVO"}</span>
                 <span className="text-sm font-medium opacity-90">Läkemedel • Diabetes & Fetma • Köpenhamn</span>
                 
                 <button 
@@ -236,13 +269,13 @@ export default function NovoNordiskDeepDive({
           {/* Right: Total Score */}
           <div className="flex flex-col items-start md:items-end w-full md:w-64">
             <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-4xl font-black tracking-tighter">33/40</span>
+              <span className="text-4xl font-black tracking-tighter">{analysisData?.totalRating || "33"}/40</span>
               <span className="text-sm font-bold opacity-80 uppercase tracking-widest">Poäng</span>
             </div>
             <div className="w-full bg-black/10 h-2 rounded-full overflow-hidden mb-2">
-              <div className="bg-white h-full rounded-full" style={{ width: '82.5%' }} />
+              <div className="bg-white h-full rounded-full" style={{ width: `${((analysisData?.totalRating || 33) / 40) * 100}%` }} />
             </div>
-            <span className="text-sm font-bold tracking-tight">82,5 % – Stark kvalitetsaktie</span>
+            <span className="text-sm font-bold tracking-tight">{((analysisData?.totalRating || 33) / 40 * 100).toFixed(1).replace('.', ',')} % – {analysisData?.totalRating >= 30 ? "Stark kvalitetsaktie" : "Intressant case"}</span>
           </div>
         </div>
       </div>
@@ -353,7 +386,7 @@ export default function NovoNordiskDeepDive({
               <SectionLabel number="I" title="Företagsöversikt"/>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:28}}>
                 {[
-                  ["Bakgrund & Struktur","Novo Nordisk grundades 1923 i Danmark och är världens ledande läkemedelsbolag inom diabetes och fetma. Bolaget kontrolleras av Novo Nordisk Foundation via Novo Holdings – en stiftelsestruktur som omöjliggör fientliga uppköp och skapar ett genuint långsiktigt perspektiv."],
+                  ["Bakgrund & Struktur", analysisData?.analysisText || "Novo Nordisk grundades 1923 i Danmark och är världens ledande läkemedelsbolag inom diabetes och fetma. Bolaget kontrolleras av Novo Nordisk Foundation via Novo Holdings – en stiftelsestruktur som omöjliggör fientliga uppköp och skapar ett genuint långsiktigt perspektiv."],
                   ["Affärsmodell","Patentskyddade receptläkemedel med återkommande intäkter – patienter tar medicinen kontinuerligt, likt en prenumeration. Bruttomarginalen på ~81% reflekterar unik prissättningsmakt. GLP-1-klassen (Ozempic®, Wegovy®, Rybelsus®) genererar merparten av DKK 309 Mdr omsättning 2025."],
                   ["Ledning","Maziar Mike Doustdar tillträdde som VD 2025, med bakgrund som EVP International Operations. Styrelseordförande Lars Rebien Sørensen är en av Europas mest erfarna läkemedelsledare med 16 år som VD i bolaget."],
                   ["Ägarstruktur","Novo Holdings äger alla A-aktier (100 röster/aktie) och ~28% av B-aktierna = röstmajoritet. A-aktierna kan ej avyttras per stiftelsens stadgar. Free float av B-aktier är 94,1%. Stabilt ankare som eliminerar kortsiktig spekulationsrisk."],

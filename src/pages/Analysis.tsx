@@ -36,6 +36,7 @@ import NvidiaDeepDive from "../components/NvidiaDeepDive";
 import NovoNordiskDeepDive from "../components/NovoNordiskDeepDive/NovoNordiskDeepDive";
 import EvolutionDeepDive from "../components/analysis/EvolutionDeepDive";
 import InvestorDeepDive from "../components/analysis/InvestorDeepDive";
+import VolvoDeepDive from "../components/analysis/VolvoDeepDive";
 import { analyses } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 import { useAuth } from "../contexts/AuthContext";
@@ -362,6 +363,11 @@ export default function Analysis() {
   // Special high-fidelity view for Investor AB
   if (slug === 'investor-ab') {
     return <InvestorDeepDive onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} />;
+  }
+
+  // Special high-fidelity view for Volvo
+  if (slug === 'volvo') {
+    return <VolvoDeepDive onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} />;
   }
 
   // Use the new comprehensive analysis template for all other stocks

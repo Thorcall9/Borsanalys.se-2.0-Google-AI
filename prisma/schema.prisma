@@ -7,14 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Stock {
-  id        Int      @id @default(autoincrement())
-  ticker    String   @unique
-  price     Float?
-  pe        Float?
-  marketCap Float?
-  eps       Float?
-  updatedAt DateTime @updatedAt
+model Analysis {
+  id            String   @id @default(cuid())
+  ticker        String   @unique
+  companyName   String
+  totalRating   Int      
+  verdict       String   
+  
+  moat          Int
+  management    Int
+  valuation     Int
+  growth        Int
+  profitability Int
+  financials    Int
+  risk          Int
+  trend         Int
+
+  analysisText  String
+  createdAt     DateTime @default(now())
 }
 
 model Subscriber {
