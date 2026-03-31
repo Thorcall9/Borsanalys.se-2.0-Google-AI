@@ -38,3 +38,12 @@ model Subscriber {
 
   @@map("subscribers")
 }
+
+model MacroMarketData {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Float
+  source    String
+  trend     String?  // "up", "down", "flat"
+  updatedAt DateTime @updatedAt
+}

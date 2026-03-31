@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import { prisma } from "./src/lib/prisma.ts";
 import { sendEmail } from "./src/lib/email.ts";
 import { analyses } from "./src/data/analyses.ts";
+import { updateAllMacroData } from "./src/lib/macroUpdater.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -75,6 +76,24 @@ async function startServer() {
     } catch (error: any) {
       console.error('Admin Fetch Error:', error);
       res.status(500).json({ error: "Kunde inte hämta prenumeranter. Kontrollera att DATABASE_URL är konfigurerad." });
+    }
+  });
+
+  // Admin: Update Macro Data (Cron)
+  app.get("/api/admin/update-macro", async (req, res) => {
+    const authHeader = req.headers["x-cron-auth"];
+    if (authHeader !== process.env.CRON_SECRET) {
+      console.warn(`[ADMIN] Unauthorized macro update attempt from ${req.ip}`);
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    try {
+      console.log("[ADMIN] Starting manual macro update...");
+      const result = await updateAllMacroData();
+      res.json(result);
+    } catch (error: any) {
+      console.error("[ADMIN] Macro Update Error:", error.message);
+      res.status(500).json({ error: "Internt serverfel vid uppdatering av makrodata." });
     }
   });
 
