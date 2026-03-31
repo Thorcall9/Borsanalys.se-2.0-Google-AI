@@ -310,7 +310,7 @@ export default function VolvoDeepDive({
                 {( [
                   ["Bakgrund & Struktur","AB Volvo är en global ledare inom transport- och infrastrukturlösningar, noterad på Nasdaq Stockholm med tickern VOLV B. Bolaget designar, tillverkar och marknadsför lastbilar, bussar, anläggningsmaskiner samt marina och industriella motorer under varumärkena Volvo Trucks, Renault Trucks, Mack och Volvo CE."],
                   ["Affärsidé & Modell", <span>En central del av affärsmodellen är den <strong>breda serviceverksamheten</strong> — finansiering, försäkring, reservdelar och underhåll — som strukturellt balanserar de naturliga fluktuationerna i fordonsförsäljningen.</span>],
-                  ["Ledning","Christian Levin tog över som VD under 2025 och driver nu bolagets transformation mot mjukvarudefinierade fordon och modulära plattformar."],
+                  ["2025 Resultat & Utmaningar", "Helåret 2025 var utmanande med en nettoomsättning som sjönk 9% till 479,2 mdr SEK. Den justerade rörelsemarginalen föll till 10,7% och det operativa kassaflödet halverades till 21,8 mdr SEK. Trots detta visade serviceförsäljningen styrka med 5% tillväxt i Q4."],
                   ["Ägarstruktur","Industrivärden och Geely kvarstår som de största strategiska ägarna, vilket ger en stabil och långsiktig ägarbas för bolagets framtida utveckling."],
                 ] as [string, React.ReactNode][]).map(([t,b])=>(
                   <div key={t}>
@@ -324,7 +324,7 @@ export default function VolvoDeepDive({
             <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`}}>
               <div style={{fontSize:11,fontWeight:700,color:T.accent,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Analytikerns bedömning</div>
               <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                Helåret 2025 var utmanande med sjunkande omsättning och marginaler, men Volvo bibehåller en urstark finansiell ställning med en nettokassa på 66 mdr SEK. Den teknologiska transformationen accelererar under ny ledning, med fokus på modulära plattformar och mjukvarudefinierade fordon.
+                Bakom de utmanande siffrorna för 2025 döljer sig en stark underliggande affär. Serviceförsäljningen ökade 5% i konstant valuta under Q4 och anläggningsmaskiner förbättrade marginalen till 13,9%. Volvo avslutar året med en nettokassa om 63,0 mdr SEK och bibehåller sin marknadsledande position i Europa för tunga lastbilar.
               </p>
             </div>
           </FadeIn>

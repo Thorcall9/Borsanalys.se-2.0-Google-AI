@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  TrendingUp, Globe, Landmark, 
+  TrendingUp, TrendingDown, Globe, Landmark, 
   Activity, ArrowUpRight, ArrowDownRight, 
   Zap, Sparkles, Loader2, Lock,
   Newspaper, Gauge
@@ -10,6 +10,8 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { useAuth } from "../contexts/AuthContext";
 
 // ... (rest of imports and interfaces)
+
+import FearAndGreedGauge from "../components/FearAndGreedGauge";
 
 // Initialize Gemini
 const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
@@ -126,7 +128,7 @@ export default function MacroDashboard() {
   useEffect(() => {
     const fetchFearGreed = async () => {
       try {
-        const response = await fetch("/api/fear-greed");
+        const response = await fetch("/api/market-sentiment");
         if (response.ok) {
           const data = await response.json();
           // The RapidAPI response format for v1/fgi is: { fgi: { now: { value: 45, valueText: "Neutral" } } }
@@ -233,14 +235,69 @@ export default function MacroDashboard() {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6 mt-12 space-y-12">
-        {/* Market Indicators Grid */}
+      <div className="max-w-7xl mx-auto px-6 mt-12 space-y-16">
+        {/* Market Pulse Section */}
+        <section className="space-y-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <h2 className="text-4xl font-black tracking-tighter">Marknadens Puls & Makro</h2>
+              <p className="text-muted-foreground font-medium mt-2">Realtidsdata för att navigera marknadens humör och trender.</p>
+            </div>
+            <div className="text-[10px] font-black uppercase tracking-widest text-primary/60 bg-primary/5 px-4 py-2 rounded-full border border-primary/10">
+              Live Uppdatering: {new Date().toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' })}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Fear & Greed Gauge */}
+            <div className="md:col-span-1">
+              <FearAndGreedGauge />
+            </div>
+
+            {/* Empty Card: Räntor */}
+            <div className="bg-card border border-border rounded-[2.5rem] p-8 shadow-xl shadow-black/5 flex flex-col group hover:border-primary/50 transition-all relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors" />
+              <div className="flex justify-between items-start mb-6 relative z-10">
+                <div className="space-y-1">
+                  <div className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">RÄNTOR</div>
+                  <div className="text-[9px] font-bold text-muted-foreground uppercase opacity-80">Globala Räntemarknaden</div>
+                </div>
+                <div className="w-8 h-8 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+                  <TrendingUp size={18} />
+                </div>
+              </div>
+              <div className="flex-1 flex flex-col items-center justify-center text-center space-y-4 py-8">
+                <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center text-muted-foreground/30">
+                  <Activity size={32} />
+                </div>
+                <p className="text-sm font-bold text-muted-foreground italic">Kommer snart: Realtidsdata för 10-åringen och styrräntor.</p>
+              </div>
+            </div>
+
+            {/* Empty Card: VIX-index */}
+            <div className="bg-card border border-border rounded-[2.5rem] p-8 shadow-xl shadow-black/5 flex flex-col group hover:border-primary/50 transition-all relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors" />
+              <div className="flex justify-between items-start mb-6 relative z-10">
+                <div className="space-y-1">
+                  <div className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">VOLATILITET</div>
+                  <div className="text-[9px] font-bold text-muted-foreground uppercase opacity-80">VIX Index (S&P 500)</div>
+                </div>
+                <div className="w-8 h-8 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
+                  <Activity size={18} />
+                </div>
+              </div>
+              <div className="flex-1 flex flex-col items-center justify-center text-center space-y-4 py-8">
+                <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center text-muted-foreground/30">
+                  <TrendingDown size={32} />
+                </div>
+                <p className="text-sm font-bold text-muted-foreground italic">Kommer snart: Volatilitetsindex för att mäta marknadens oro.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Detailed Indicators Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <FearGreedCard 
-            value={fearGreed?.value} 
-            classification={fearGreed?.classification} 
-            loading={loadingFearGreed} 
-          />
           <DetailedIndicator 
             category="RÄNTOR"
             date="2025-03-20"
@@ -619,91 +676,6 @@ export default function MacroDashboard() {
         </div>
       </div>
     </div>
-  );
-}
-
-function FearGreedCard({ value, classification, loading }: { value?: number, classification?: string, loading: boolean }) {
-  const getStatusColor = (val: number) => {
-    if (val <= 25) return "bg-red-600";
-    if (val <= 45) return "bg-orange-500";
-    if (val <= 55) return "bg-amber-400";
-    if (val <= 75) return "bg-emerald-400";
-    return "bg-emerald-400";
-  };
-
-  const getTextColor = (val: number) => {
-    if (val <= 25) return "text-red-600";
-    if (val <= 45) return "text-orange-500";
-    if (val <= 55) return "text-amber-400";
-    if (val <= 75) return "text-emerald-400";
-    return "text-emerald-400";
-  };
-
-  return (
-    <motion.div 
-      whileHover={{ y: -5 }}
-      className="bg-card border border-border rounded-[2.5rem] p-8 shadow-xl shadow-black/5 flex flex-col group hover:border-primary/50 transition-all relative overflow-hidden"
-    >
-      <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors" />
-      
-      <div className="flex justify-between items-start mb-6 relative z-10">
-        <div className="space-y-1">
-          <div className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">SENTIMENT</div>
-          <div className="text-[9px] font-bold text-muted-foreground uppercase opacity-80">Marknadens Psykologi</div>
-        </div>
-        <div className="w-8 h-8 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
-          <Gauge size={18} />
-        </div>
-      </div>
-
-      <div className="mb-6">
-        <h4 className="text-sm font-black tracking-tight mb-1">FEAR & GREED INDEX</h4>
-        {loading ? (
-          <div className="flex items-center gap-2 h-10">
-            <Loader2 size={24} className="animate-spin text-primary" />
-            <span className="text-sm font-bold text-muted-foreground">Hämtar data...</span>
-          </div>
-        ) : (
-          <>
-            <div className={`text-4xl font-black tracking-tighter ${getTextColor(value || 50)}`}>
-              {value || "--"}
-            </div>
-            <div className="text-[10px] font-bold text-muted-foreground mt-1 uppercase tracking-widest">
-              {classification || "Neutral"}
-            </div>
-          </>
-        )}
-      </div>
-
-      <div className="space-y-3 mb-6">
-        <div className="h-3 w-full bg-muted rounded-full overflow-hidden flex">
-          <motion.div 
-            initial={{ width: 0 }}
-            animate={{ width: `${value || 50}%` }}
-            transition={{ duration: 1, ease: "easeOut" }}
-            className={`h-full ${getStatusColor(value || 50)}`}
-          />
-        </div>
-        <div className="flex justify-between text-[8px] font-black uppercase tracking-widest opacity-50">
-          <span>Extreme Fear</span>
-          <span>Neutral</span>
-          <span>Extreme Greed</span>
-        </div>
-      </div>
-
-      <p className="text-xs font-medium text-muted-foreground leading-relaxed mb-6">
-        Mäter marknadens sentiment baserat på volatilitet, momentum och efterfrågan.
-      </p>
-
-      <div className="mt-auto pt-6 border-t border-border">
-        <div className="text-[9px] font-black text-foreground uppercase tracking-widest mb-2">Marknadspåverkan</div>
-        <p className="text-[11px] font-bold leading-relaxed text-primary/80 italic">
-          {value && value < 40 ? "Hög rädsla kan innebära köptillfällen för den långsiktige." : 
-           value && value > 60 ? "Hög girighet signalerar ofta att marknaden är överköpt." :
-           "Neutralt sentiment innebär att marknaden saknar tydlig riktning."}
-        </p>
-      </div>
-    </motion.div>
   );
 }
 

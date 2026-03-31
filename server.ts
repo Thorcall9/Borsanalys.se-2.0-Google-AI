@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
@@ -82,16 +83,17 @@ async function startServer() {
   const CACHE_TTL = 2 * 60 * 60 * 1000; // 2 hours
 
   // Fear & Greed Index Cache
-  let fearGreedCache: { data: any, timestamp: number } | null = null;
-  const FEAR_GREED_TTL = 60 * 60 * 1000; // 1 hour
+  let cachedFgiData: any = null;
+  let lastFgiFetchTime: number = 0;
+  const FGI_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
 
-  // Fear & Greed Index Proxy
-  app.get("/api/fear-greed", async (req, res) => {
+  // Fear & Greed Index Proxy (Market Sentiment)
+  app.get("/api/market-sentiment", async (req, res) => {
     try {
       // Check cache
-      if (fearGreedCache && (Date.now() - fearGreedCache.timestamp < FEAR_GREED_TTL)) {
-        console.log("[SERVER] Returning cached Fear & Greed data");
-        return res.json(fearGreedCache.data);
+      if (cachedFgiData && (Date.now() - lastFgiFetchTime < FGI_CACHE_TTL)) {
+        console.log("Serving Fear & Greed from CACHE");
+        return res.json(cachedFgiData);
       }
 
       console.log("[SERVER] Fetching fresh Fear & Greed data from RapidAPI");
@@ -115,9 +117,9 @@ async function startServer() {
         console.error(`[SERVER] RapidAPI Error: ${response.status} ${errorText}`);
         
         // If we have stale cache, return it as fallback on error
-        if (fearGreedCache) {
+        if (cachedFgiData) {
           console.log("[SERVER] Returning stale Fear & Greed data as fallback");
-          return res.json(fearGreedCache.data);
+          return res.json(cachedFgiData);
         }
         
         return res.status(response.status).json({ error: "Failed to fetch Fear & Greed index" });
@@ -126,20 +128,23 @@ async function startServer() {
       const data = await response.json();
       
       // Update cache
-      fearGreedCache = {
-        data,
-        timestamp: Date.now()
-      };
+      cachedFgiData = data;
+      lastFgiFetchTime = Date.now();
 
       res.json(data);
     } catch (error: any) {
       console.error("[SERVER] Fear & Greed API Error:", error.message);
-      if (fearGreedCache) return res.json(fearGreedCache.data);
+      if (cachedFgiData) return res.json(cachedFgiData);
       res.status(500).json({ error: "Internt serverfel vid hämtning av Fear & Greed index." });
     }
   });
 
-  // Fetch dynamic analysis from database (Prisma)
+  // Alias for backward compatibility if needed, or just redirect
+  app.get("/api/fear-greed", (req, res) => {
+    res.redirect(301, "/api/market-sentiment");
+  });
+
+  // Fetch current dynamic analysis from database (Prisma)
   app.get("/api/analysis/:ticker([^/]+)", async (req, res) => {
     let ticker = req.params.ticker.toUpperCase();
     
@@ -148,11 +153,17 @@ async function startServer() {
       ticker = 'INVE-B.ST';
     }
 
-    console.log(`[SERVER] Fetching dynamic analysis for: ${ticker}`);
+    console.log(`[SERVER] Fetching current dynamic analysis for: ${ticker}`);
 
     try {
-      const analysis = await prisma.analysis.findUnique({
-        where: { ticker: ticker }
+      const analysis = await prisma.analysis.findFirst({
+        where: { 
+          ticker: ticker,
+          isCurrent: true
+        },
+        orderBy: {
+          version: 'desc'
+        }
       });
 
       if (!analysis) {
@@ -165,11 +176,41 @@ async function startServer() {
         return res.status(404).json({ error: `Analys för ${ticker} hittades inte.` });
       }
 
-      console.log(`[SERVER] Returning dynamic analysis from DB for ${ticker}`);
+      console.log(`[SERVER] Returning current dynamic analysis from DB for ${ticker} (v${analysis.version})`);
       res.json(analysis);
     } catch (error: any) {
       console.error(`[SERVER] Error fetching analysis for ${ticker}:`, error.message);
       res.status(500).json({ error: "Internt serverfel vid hämtning av analys." });
+    }
+  });
+
+  // Fetch analysis history for a ticker
+  app.get("/api/analysis/:ticker([^/]+)/history", async (req, res) => {
+    let ticker = req.params.ticker.toUpperCase();
+    
+    if (ticker === 'INVE-B') {
+      ticker = 'INVE-B.ST';
+    }
+
+    console.log(`[SERVER] Fetching analysis history for: ${ticker}`);
+
+    try {
+      const history = await prisma.analysis.findMany({
+        where: { ticker: ticker },
+        select: {
+          version: true,
+          createdAt: true,
+          isCurrent: true
+        },
+        orderBy: {
+          version: 'desc'
+        }
+      });
+
+      res.json(history);
+    } catch (error: any) {
+      console.error(`[SERVER] Error fetching history for ${ticker}:`, error.message);
+      res.status(500).json({ error: "Internt serverfel vid hämtning av historik." });
     }
   });
 
