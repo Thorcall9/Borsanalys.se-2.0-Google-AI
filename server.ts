@@ -7,6 +7,7 @@ import { prisma } from "./src/lib/prisma.ts";
 import { sendEmail } from "./src/lib/email.ts";
 import { analyses } from "./src/data/analyses.ts";
 import { updateAllMacroData } from "./src/lib/macroUpdater.ts";
+import marketSentimentHandler from "./api/market-sentiment.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -101,62 +102,8 @@ async function startServer() {
   const stockCache = new Map<string, { data: any, timestamp: number }>();
   const CACHE_TTL = 2 * 60 * 60 * 1000; // 2 hours
 
-  // Fear & Greed Index Cache
-  let cachedFgiData: any = null;
-  let lastFgiFetchTime: number = 0;
-  const FGI_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours
-
   // Fear & Greed Index Proxy (Market Sentiment)
-  app.get("/api/market-sentiment", async (req, res) => {
-    try {
-      // Check cache
-      if (cachedFgiData && (Date.now() - lastFgiFetchTime < FGI_CACHE_TTL)) {
-        console.log("Serving Fear & Greed from CACHE");
-        return res.json(cachedFgiData);
-      }
-
-      console.log("[SERVER] Fetching fresh Fear & Greed data from RapidAPI");
-      const apiKey = process.env.RAPIDAPI_KEY;
-      
-      if (!apiKey) {
-        console.error("[SERVER] RAPIDAPI_KEY is not configured");
-        return res.status(500).json({ error: "RAPIDAPI_KEY is not configured" });
-      }
-
-      const response = await fetch("https://fear-and-greed-index.p.rapidapi.com/v1/fgi", {
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": "fear-and-greed-index.p.rapidapi.com",
-          "x-rapidapi-key": apiKey
-        }
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error(`[SERVER] RapidAPI Error: ${response.status} ${errorText}`);
-        
-        // If we have stale cache, return it as fallback on error
-        if (cachedFgiData) {
-          console.log("[SERVER] Returning stale Fear & Greed data as fallback");
-          return res.json(cachedFgiData);
-        }
-        
-        return res.status(response.status).json({ error: "Failed to fetch Fear & Greed index" });
-      }
-
-      const data = await response.json();
-      
-      // Update cache
-      cachedFgiData = data;
-      lastFgiFetchTime = Date.now();
-
-      res.json(data);
-    } catch (error: any) {
-      console.error("[SERVER] Fear & Greed API Error:", error.message);
-      if (cachedFgiData) return res.json(cachedFgiData);
-      res.status(500).json({ error: "Internt serverfel vid hämtning av Fear & Greed index." });
-    }
-  });
+  app.get("/api/market-sentiment", marketSentimentHandler as any);
 
   // Alias for backward compatibility if needed, or just redirect
   app.get("/api/fear-greed", (req, res) => {
