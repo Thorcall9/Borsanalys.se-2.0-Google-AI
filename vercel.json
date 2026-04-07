@@ -1,8 +1,8 @@
 {
   "crons": [
     {
-      "path": "/api/cron/update",
-      "schedule": "0 3 * * *"
+      "path": "/api/admin/update-macro",
+      "schedule": "0 5 * * *" 
     }
   ]
 }

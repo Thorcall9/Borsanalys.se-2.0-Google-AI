@@ -1,10 +1,10 @@
-import { VercelRequest, VercelResponse } from '@vercel/node';
+import type { Request, Response } from 'express';
 
 let cachedFgiData: any = null;
 let lastFgiFetchTime: number = 0;
 const FGI_CACHE_TTL = 24 * 60 * 60 * 1000; // 24 timmar
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: Request, res: Response) {
   try {
     // 1. Kontrollera om vi har cache
     if (cachedFgiData && (Date.now() - lastFgiFetchTime < FGI_CACHE_TTL)) {

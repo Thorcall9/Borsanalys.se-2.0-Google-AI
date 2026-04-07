@@ -4,19 +4,24 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { TrendingUp, Wallet, PieChart, ArrowRight, Info } from "lucide-react";
 
 export default function CompoundInterestCalculator() {
-  const [initialAmount, setInitialAmount] = useState(10000);
-  const [monthlyContribution, setMonthlyContribution] = useState(1000);
-  const [years, setYears] = useState(10);
-  const [interestRate, setInterestRate] = useState(8);
+  const [initialAmount, setInitialAmount] = useState<number | string>(10000);
+  const [monthlyContribution, setMonthlyContribution] = useState<number | string>(1000);
+  const [years, setYears] = useState<number | string>(10);
+  const [interestRate, setInterestRate] = useState<number | string>(8);
   const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
     const results = [];
-    let balance = initialAmount;
-    let totalContribution = initialAmount;
-    const rate = interestRate / 100 / 12;
+    const init = Number(initialAmount) || 0;
+    const monthly = Number(monthlyContribution) || 0;
+    const yrs = Number(years) || 0;
+    const iRate = Number(interestRate) || 0;
 
-    for (let i = 0; i <= years; i++) {
+    let balance = init;
+    let totalContribution = init;
+    const rate = iRate / 100 / 12;
+
+    for (let i = 0; i <= yrs; i++) {
       results.push({
         year: i,
         total: Math.round(balance),
@@ -24,10 +29,10 @@ export default function CompoundInterestCalculator() {
         interest: Math.round(balance - totalContribution),
       });
 
-      if (i < years) {
+      if (i < yrs) {
         for (let m = 0; m < 12; m++) {
-          balance = (balance + monthlyContribution) * (1 + rate);
-          totalContribution += monthlyContribution;
+          balance = (balance + monthly) * (1 + rate);
+          totalContribution += monthly;
         }
       }
     }
@@ -57,21 +62,21 @@ export default function CompoundInterestCalculator() {
               <div className="space-y-3">
                 <label className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-bold">
                   <span>Startkapital</span>
-                  <span className="text-primary">{initialAmount.toLocaleString()} kr</span>
+                  <span className="text-primary">{(Number(initialAmount) || 0).toLocaleString()} kr</span>
                 </label>
                 <input 
                   type="range"
                   min="0"
                   max="1000000"
                   step="5000"
-                  value={initialAmount}
+                  value={Number(initialAmount) || 0}
                   onChange={(e) => setInitialAmount(Number(e.target.value))}
                   className="w-full h-1.5 bg-border rounded-lg appearance-none cursor-pointer accent-primary"
                 />
                 <input 
                   type="number" 
                   value={initialAmount} 
-                  onChange={(e) => setInitialAmount(Number(e.target.value))}
+                  onChange={(e) => setInitialAmount(e.target.value)}
                   className="w-full bg-white border border-border rounded-xl px-4 py-3 font-mono text-sm focus:border-primary outline-none transition-colors"
                 />
               </div>
@@ -79,21 +84,21 @@ export default function CompoundInterestCalculator() {
               <div className="space-y-3">
                 <label className="flex items-center justify-between text-[10px] font-mono uppercase tracking-widest text-muted-foreground font-bold">
                   <span>Månadssparande</span>
-                  <span className="text-primary">{monthlyContribution.toLocaleString()} kr</span>
+                  <span className="text-primary">{(Number(monthlyContribution) || 0).toLocaleString()} kr</span>
                 </label>
                 <input 
                   type="range"
                   min="0"
                   max="50000"
                   step="500"
-                  value={monthlyContribution}
+                  value={Number(monthlyContribution) || 0}
                   onChange={(e) => setMonthlyContribution(Number(e.target.value))}
                   className="w-full h-1.5 bg-border rounded-lg appearance-none cursor-pointer accent-primary"
                 />
                 <input 
                   type="number" 
                   value={monthlyContribution} 
-                  onChange={(e) => setMonthlyContribution(Number(e.target.value))}
+                  onChange={(e) => setMonthlyContribution(e.target.value)}
                   className="w-full bg-white border border-border rounded-xl px-4 py-3 font-mono text-sm focus:border-primary outline-none transition-colors"
                 />
               </div>
@@ -104,7 +109,7 @@ export default function CompoundInterestCalculator() {
                   <input 
                     type="number" 
                     value={years} 
-                    onChange={(e) => setYears(Number(e.target.value))}
+                    onChange={(e) => setYears(e.target.value)}
                     className="w-full bg-white border border-border rounded-xl px-4 py-3 font-mono text-sm focus:border-primary outline-none transition-colors"
                   />
                 </div>
@@ -113,7 +118,7 @@ export default function CompoundInterestCalculator() {
                   <input 
                     type="number" 
                     value={interestRate} 
-                    onChange={(e) => setInterestRate(Number(e.target.value))}
+                    onChange={(e) => setInterestRate(e.target.value)}
                     className="w-full bg-white border border-border rounded-xl px-4 py-3 font-mono text-sm focus:border-primary outline-none transition-colors"
                   />
                 </div>

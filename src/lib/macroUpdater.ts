@@ -73,40 +73,70 @@ async function fetchFX(): Promise<MacroDataPoint[]> {
 }
 
 /**
- * Fetch OMX30 from financeapis.dev.
- * Note: Assuming a generic structure as financeapis.dev is a placeholder/generic name.
+ * Fetch OMX30 from RapidAPI (Yahoo Finance).
  */
 async function fetchOMX(): Promise<MacroDataPoint | null> {
-  const apiKey = process.env.FINANCE_API_KEY;
-  if (!apiKey) throw new Error("FINANCE_API_KEY is missing");
+  const apiKey = process.env.RAPIDAPI_KEY;
+  if (!apiKey) throw new Error("RAPIDAPI_KEY is missing");
 
-  // Assuming financeapis.dev provides a quote endpoint
-  const url = `https://api.financeapis.dev/v1/quote?symbol=^OMX&apikey=${apiKey}`;
-  const response = await fetch(url);
+  const url = `https://yh-finance.p.rapidapi.com/market/v2/get-quotes?region=SE&symbols=%5EOMX`;
+  const response = await fetch(url, {
+    headers: {
+      "x-rapidapi-host": "yh-finance.p.rapidapi.com",
+      "x-rapidapi-key": apiKey
+    }
+  });
   const data = await response.json();
 
-  // Assuming standard quote response
-  const price = data.price || data.regularMarketPrice || data.quoteResponse?.result?.[0]?.regularMarketPrice;
-  if (price) {
-    return { key: "OMX30", value: parseFloat(price), source: "financeapi" };
+  const result = data.quoteResponse?.result?.[0];
+  if (result && result.regularMarketPrice) {
+    return { key: "OMX30", value: parseFloat(result.regularMarketPrice), source: "rapidapi-yahoo" };
   }
   return null;
 }
 
 /**
- * Fetch Swedish 10Y Yield from financeapis.dev.
+ * Fetch Swedish 10Y Yield from RapidAPI (Yahoo Finance).
+ * Note: SE10Y.ST or similar might be the symbol.
  */
 async function fetchSE10Y(): Promise<MacroDataPoint | null> {
-  const apiKey = process.env.FINANCE_API_KEY;
-  if (!apiKey) throw new Error("FINANCE_API_KEY is missing");
+  const apiKey = process.env.RAPIDAPI_KEY;
+  if (!apiKey) throw new Error("RAPIDAPI_KEY is missing");
 
-  const url = `https://api.financeapis.dev/v1/yield?symbol=SE10Y&apikey=${apiKey}`;
+  // SE10Y-SE.ST is a common symbol for Swedish 10Y in Yahoo Finance
+  const url = `https://yh-finance.p.rapidapi.com/market/v2/get-quotes?region=SE&symbols=SE10Y-SE.ST`;
+  const response = await fetch(url, {
+    headers: {
+      "x-rapidapi-host": "yh-finance.p.rapidapi.com",
+      "x-rapidapi-key": apiKey
+    }
+  });
+  const data = await response.json();
+
+  const result = data.quoteResponse?.result?.[0];
+  if (result && result.regularMarketPrice) {
+    return { key: "SE10Y", value: parseFloat(result.regularMarketPrice), source: "rapidapi-yahoo" };
+  }
+  return null;
+}
+
+/**
+ * Fetch US Inflation from Alpha Vantage.
+ */
+async function fetchInflation(): Promise<MacroDataPoint | null> {
+  const apiKey = process.env.ALPHAVANTAGE_API_KEY;
+  if (!apiKey) throw new Error("ALPHAVANTAGE_API_KEY is missing");
+
+  const url = `https://www.alphavantage.co/query?function=INFLATION&apikey=${apiKey}`;
   const response = await fetch(url);
   const data = await response.json();
 
-  const yieldValue = data.value || data.yield || data.quoteResponse?.result?.[0]?.regularMarketPrice;
-  if (yieldValue) {
-    return { key: "SE10Y", value: parseFloat(yieldValue), source: "financeapi" };
+  if (data.data && data.data.length > 0) {
+    const latest = data.data[0];
+    const value = parseFloat(latest.value);
+    if (!isNaN(value)) {
+      return { key: "Inflation", value, source: "alphavantage" };
+    }
   }
   return null;
 }
@@ -152,7 +182,8 @@ export async function updateAllMacroData() {
     () => safeFetch(fetchUS10Y, "US10Y"),
     () => safeFetch(fetchFX, "FX Rates"),
     () => safeFetch(fetchOMX, "OMX30"),
-    () => safeFetch(fetchSE10Y, "SE10Y")
+    () => safeFetch(fetchSE10Y, "SE10Y"),
+    () => safeFetch(fetchInflation, "Inflation")
   ];
 
   const results = await Promise.allSettled(fetchers.map(f => f()));

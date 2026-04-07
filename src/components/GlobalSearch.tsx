@@ -81,7 +81,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[60]"
+            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[150]"
           />
 
           {/* Search Content */}
@@ -89,7 +89,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             initial={{ opacity: 0, scale: 0.98, y: -20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.98, y: -20 }}
-            className="fixed top-[10%] md:top-[15%] left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-3xl bg-card border border-border rounded-[2rem] md:rounded-[2.5rem] shadow-2xl z-[70] overflow-hidden shadow-black/20"
+            className="fixed top-[10%] md:top-[15%] left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-3xl bg-card border border-border rounded-[2rem] md:rounded-[2.5rem] shadow-2xl z-[160] overflow-hidden shadow-black/20"
             onKeyDown={handleKeyDown}
           >
             <div className="p-4 md:p-8 border-b border-border flex items-center gap-3 md:gap-6 bg-muted/10">

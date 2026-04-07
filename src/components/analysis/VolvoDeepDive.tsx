@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Star, AlertTriangle, TrendingUp, Info, Target, Wallet, Truck, Zap, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Star, AlertTriangle, TrendingUp, Info, Target, Wallet, Truck, Zap, ShieldCheck, Cpu, BarChart3 } from "lucide-react";
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Cell, ComposedChart
@@ -70,8 +70,8 @@ function FadeIn({children,delay=0}){
   return <div style={{opacity:v?1:0,transform:v?"none":"translateY(8px)",transition:"all 0.35s ease"}}>{children}</div>;
 }
 
-function Card({children,mb=0,p="24px 26px"}){
-  return <div style={{background:T.surface,border:`1px solid ${T.border}`,borderRadius:16,padding:p,boxShadow:T.shadow,marginBottom:mb}}>{children}</div>;
+function Card({children,mb=0}: any){
+  return <div className="bg-white border border-slate-200 rounded-2xl shadow-sm mb-5 p-4 md:p-6" style={{marginBottom:mb}}>{children}</div>;
 }
 
 function SectionLabel({number,title}){
@@ -115,7 +115,7 @@ function MoatCard({title,desc,stars}){
   );
 }
 
-function ScenarioCard({label,color,bg,prob,pris,triggers,note}){
+function ScenarioCard({label,color,bg,prob,pris,upside,assumptions,requirements}){
   const [h,hP]=useHover();
   return(
     <div {...hP} style={{background:h?bg:T.surface,border:`1.5px solid ${h?color+"44":T.border}`,borderRadius:14,padding:20,transition:"all 0.22s ease",transform:h?"translateY(-4px)":"none",boxShadow:h?T.shadowLg:T.shadow,cursor:"default"}}>
@@ -124,11 +124,17 @@ function ScenarioCard({label,color,bg,prob,pris,triggers,note}){
         <Tag color={color} bg={color+"18"}>{prob}</Tag>
       </div>
       <div style={{fontSize:26,fontWeight:900,color,marginBottom:4,letterSpacing:-1}}>{pris}</div>
-      <div style={{fontSize:11,color:T.muted,marginBottom:14}}>Riktkurs · 12 månader</div>
-      <ul style={{margin:"0 0 14px",paddingLeft:16}}>
-        {triggers.map((t,i)=><li key={i} style={{color:T.sub,fontSize:12,marginBottom:5,lineHeight:1.5}}>{t}</li>)}
-      </ul>
-      <div style={{background:color+"10",borderRadius:8,padding:"10px 12px",fontSize:12,color:T.sub,lineHeight:1.6}}>{note}</div>
+      <div style={{fontSize:11,color:T.muted,marginBottom:14}}>{upside} · 12 månader</div>
+      
+      <div style={{marginBottom:14}}>
+        <div style={{fontSize:10,fontWeight:800,color:T.muted,textTransform:"uppercase",letterSpacing:0.5,marginBottom:6}}>Antaganden</div>
+        <div style={{fontSize:12,color:T.ink,lineHeight:1.5,fontWeight:500}}>{assumptions}</div>
+      </div>
+
+      <div style={{background:color+"10",borderRadius:8,padding:"10px 12px",fontSize:12,color:T.sub,lineHeight:1.6}}>
+        <div style={{fontSize:10,fontWeight:800,color,textTransform:"uppercase",letterSpacing:0.5,marginBottom:4}}>Kräver</div>
+        {requirements}
+      </div>
     </div>
   );
 }
@@ -150,7 +156,7 @@ export default function VolvoDeepDive({
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pt-16">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pt-16 overflow-x-hidden">
       {/* 1. HERO BAND */}
       <div className="w-full bg-[#10B981] text-white py-8 md:py-10 px-6 md:px-10">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
@@ -297,7 +303,7 @@ export default function VolvoDeepDive({
         {/* ── ÖVERSIKT ── */}
         <div id="oversikt">
           <FadeIn>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14,marginBottom:24}}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
               <StatCard label="Börskurs" value="324 kr" sub="VOLV-B" accent/>
               <StatCard label="Börsvärde" value="660 Mdr" sub="Large Cap"/>
               <StatCard label="P/E-tal" value="12,0" sub="Rimlig värdering"/>
@@ -306,7 +312,7 @@ export default function VolvoDeepDive({
 
             <Card mb={20}>
               <SectionLabel number="I" title="Företagsöversikt"/>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:28}}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
                 {( [
                   ["Bakgrund & Struktur","AB Volvo är en global ledare inom transport- och infrastrukturlösningar, noterad på Nasdaq Stockholm med tickern VOLV B. Bolaget designar, tillverkar och marknadsför lastbilar, bussar, anläggningsmaskiner samt marina och industriella motorer under varumärkena Volvo Trucks, Renault Trucks, Mack och Volvo CE."],
                   ["Affärsidé & Modell", <span>En central del av affärsmodellen är den <strong>breda serviceverksamheten</strong> — finansiering, försäkring, reservdelar och underhåll — som strukturellt balanserar de naturliga fluktuationerna i fordonsförsäljningen.</span>],
@@ -338,28 +344,15 @@ export default function VolvoDeepDive({
               
               <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`,marginBottom:24}}>
                 <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Volvos främsta konkurrensfördelar ligger i deras starka varumärken, globala servicenätverk och teknologiska ledarskap. Inom tunga transporter är tillförlitlighet och servicegrad avgörande, vilket skapar höga inträdesbarriärer.
+                  Volvos konkurrensfördel vilar på tre pelare. Varumärkesstyrkan — globalt erkänd för säkerhet, kvalitet och hållbarhet — möjliggör en prispremie, särskilt i premiumsegmentet. I Europa tog Volvo Lastvagnar marknadsandel 19,0% (17,9%) under FY2025 och bibehöll marknadsledarskapet. Renault Trucks förbättrade till 9,4% (9,1%). Serviceaffären skapar höga byteskostnader via ett globalt nät av återförsäljare och underhållsavtal — Q4 visade serviceförsäljning +5% i konstant valuta trots svag fordonsmarknad.
+                </p>
+                <p style={{margin:"12px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
+                  Den teknologiska bredden är sällsynt: Coretura-JV med Daimler Truck (etablerat Q2 2025) delar kostnaden för en standardiserad mjukvaruplattform, Waabi-partnerskapet tog ett avgörande kliv i Q4 när Waabi Driver integrerades med Volvo VNL Autonomous, och Volvo Penta lanserade i januari 2026 sin första naturgasmotor G17 — riktad mot den snabbväxande datacentersektorn.
                 </p>
               </div>
 
-              <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>SWOT-analys</div>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:24}}>
-                {[
-                  ["Styrkor",T.green,T.greenL,["Världsledande position inom tunga lastbilar","Rekordstark balansräkning med stor nettokassa","Ledande inom elektrifiering av tunga fordon","Globalt servicenätverk med höga marginaler"]],
-                  ["Svagheter",T.gold,T.goldL,["Cyklisk efterfrågan på lastbilar och maskiner","Hög exponering mot råmaterialpriser","Komplex global leveranskedja"]],
-                  ["Möjligheter",T.accent,T.accentL,["Grön omställning driver utbytescykel","Tillväxt inom tjänster och digitala lösningar","Expansion inom autonoma transporter"]],
-                  ["Hot",T.red,T.redL,["Global lågkonjunktur dämpar investeringsvilja","Ökad konkurrens från nya el-lastbilsaktörer","Geopolitiska spänningar påverkar handel"]],
-                ].map(([title,color,bg,items]: [string, string, string, string[]])=>(
-                  <div key={title} style={{background:bg,border:`1.5px solid ${color}22`,borderRadius:12,padding:16}}>
-                    <div style={{fontSize:13,fontWeight:700,color,marginBottom:10}}>{title}</div>
-                    <ul style={{margin:0,paddingLeft:16}}>
-                      {items.map((item: string,i: number)=><li key={i} style={{color:T.sub,fontSize:13,marginBottom:6,lineHeight:1.6}}>{item}</li>)}
-                    </ul>
-                  </div>
-                ))}
-              </div>
               <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>Moat-dimensioner</div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10}}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 {[
                   ["Varumärke","Starka globala varumärken som Volvo, Mack och Renault.","★★★★☆"],
                   ["Servicenätverk","Oöverträffad global närvaro för service och delar.","★★★★★"],
@@ -368,6 +361,29 @@ export default function VolvoDeepDive({
                   ["Switching Costs","Djup integration i kundernas logistikflöden.","★★★☆☆"],
                   ["Finansiell styrka","Möjliggör massiva FoU-investeringar över tid.","★★★★★"],
                 ].map(([m,d,s])=><MoatCard key={m} title={m} desc={d} stars={s}/>)}
+              </div>
+
+              <div style={{marginTop: 32, display: "flex", flexDirection: "column", gap: 24}}>
+                <div style={{padding: "16px 20px", background: T.bg, borderRadius: 12, borderLeft: `4px solid ${T.accent}`}}>
+                  <div style={{fontSize: 11, fontWeight: 800, color: T.muted, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 8}}>LASTBILAR (67% AV INDUSTRI)</div>
+                  <p style={{margin: 0, fontSize: 13.5, color: T.sub, lineHeight: 1.7}}>
+                    Marknadsandel Europa tunga 19,0% — marknadsledare år 2. Nordamerika tufft (-15% leveranser FY2025). Mack Pioneer levererad Q4. Justerad marginal 9,8% FY2025.
+                  </p>
+                </div>
+
+                <div style={{padding: "16px 20px", background: T.bg, borderRadius: 12, borderLeft: `4px solid ${T.gold}`}}>
+                  <div style={{fontSize: 11, fontWeight: 800, color: T.muted, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 8}}>ANLÄGGNINGSMASKINER (18%)</div>
+                  <p style={{margin: 0, fontSize: 13.5, color: T.sub, lineHeight: 1.7}}>
+                    SDLG avyttrat sep 2025. Swecon-förvärv slutfört jan 2026. Justerad marginal 13,9% Q4 (11,8% Q4 2024) — tydlig förbättring. Orderingång +18% ex-SDLG.
+                  </p>
+                </div>
+
+                <div style={{padding: "16px 20px", background: T.bg, borderRadius: 12, borderLeft: `4px solid ${T.accent}`}}>
+                  <div style={{fontSize: 11, fontWeight: 800, color: T.muted, textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 8}}>VOLVO PENTA (4%)</div>
+                  <p style={{margin: 0, fontSize: 13.5, color: T.sub, lineHeight: 1.7}}>
+                    Justerad marginal 17,4% FY2025 (17,2% FY2024) — bolagets starkaste. Leveranser +30% Q4. Stark efterfrågan generatoraggregat från datacenter och energisäkerhet.
+                  </p>
+                </div>
               </div>
             </Card>
           </FadeIn>
@@ -383,7 +399,7 @@ export default function VolvoDeepDive({
                 Volvo har under de senaste åren uppvisat en imponerande finansiell disciplin. Trots utmaningar i leveranskedjor har bolaget lyckats bibehålla tvåsiffriga rörelsemarginaler och generera starka kassaflöden.
               </p>
 
-              <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, marginBottom:24}}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <div style={{fontSize:13,fontWeight:700,color:T.ink,marginBottom:4}}>Nettoomsättning (Mdr SEK)</div>
                   <div style={{fontSize:11,color:T.muted,marginBottom:12,fontStyle:"italic"}}>Stark tillväxt driven av pris och volym</div>
@@ -444,7 +460,7 @@ export default function VolvoDeepDive({
                 </table>
               </div>
 
-              <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, marginTop:32}}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                 <div>
                   <div style={{fontSize:13,fontWeight:700,color:T.ink,marginBottom:4}}>Utdelning per aktie (kr)</div>
                   <div style={{fontSize:11,color:T.muted,marginBottom:12,fontStyle:"italic"}}>Historisk och estimat</div>
@@ -485,17 +501,15 @@ export default function VolvoDeepDive({
               <SectionLabel number="IV" title="Värdering & Jämförelse"/>
               
               <p style={{fontSize:14, color:T.sub, lineHeight:1.7, marginBottom:24}}>
-                Volvo värderas idag till ett P/E-tal kring 12, vilket är lågt för ett bolag med så hög lönsamhet och finansiell styrka. Marknaden verkar prisa in en betydande konjunkturavmattning.
+                Vid 324 kr handlas Volvo till P/E 19,1x på FY2025-vinsten — hög för ett cykliskt bolag i nedgångsfas, men marknaden prissätter en tydlig vinståterhämtning.
               </p>
 
-              <div style={{display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:12, marginBottom:24}}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-6">
                 {[
-                  ["P/E 2025e", "15,4x", "Baserat på estimat"],
-                  ["EV/EBIT", "10,2x", "Justerat för nettokassa"],
+                  ["Aktiekurs (Mar 2026)", "324 kr", "Marknadspris"],
+                  ["P/E FY2025", "19,1x", "Baserat på 16,94 kr"],
+                  ["P/E 2026E", "15,5x", "Baserat på 20,91 kr"],
                   ["Direktavkastning", "4,0%", "Föreslagen utdelning", true],
-                  ["P/S-tal", "1,38x", "Omsättning vs börsvärde"],
-                  ["Nettokassa/aktie", "~32 kr", "Finansiell styrka"],
-                  ["ROE", "20,0%", "Kapitaleffektivitet"],
                 ].map(([l,v,s,acc], i)=>(
                   <div key={i} style={{background:acc?T.accentL:T.bg, border:`1px solid ${acc?T.accent+"33":T.border}`, borderRadius:12, padding:14}}>
                     <div style={{fontSize:10, fontWeight:800, color:acc?T.accent:T.muted, textTransform:"uppercase", letterSpacing:0.5, marginBottom:4}}>{l}</div>
@@ -505,15 +519,52 @@ export default function VolvoDeepDive({
                 ))}
               </div>
 
-              <div style={{background:T.ink, borderRadius:16, padding:24, color:"#fff", boxShadow:T.shadowLg}}>
+              <div style={{overflowX:"auto", marginBottom:24}}>
+                <table style={{width:"100%", borderCollapse:"collapse", fontSize:13}}>
+                  <thead>
+                    <tr style={{borderBottom:`1px solid ${T.border}`}}>
+                      <th style={{textAlign:"left", padding:"12px 8px", color:T.muted, fontWeight:600}}>Nyckeltal</th>
+                      <th style={{textAlign:"right", padding:"12px 8px", color:T.muted, fontWeight:600}}>2024</th>
+                      <th style={{textAlign:"right", padding:"12px 8px", color:T.muted, fontWeight:600}}>2025</th>
+                      <th style={{textAlign:"right", padding:"12px 8px", color:T.muted, fontWeight:600}}>2026e</th>
+                      <th style={{textAlign:"right", padding:"12px 8px", color:T.muted, fontWeight:600}}>2027e</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      ["EPS (kr)", "24,78", "16,94", "20,91", "24,19"],
+                      ["P/E (vid 324 kr)", "13,1x", "19,1x", "15,5x", "13,4x"],
+                      ["EV/EBIT", "10,6x", "16,1x", "—", "—"],
+                      ["Utdelning (kr)", "18,50", "13,00", "16,17e", "18,30e"],
+                      ["Direktavkastning (%)", "5,7%", "4,0%", "5,0%e", "5,7%e"],
+                      ["ROE (%)", "27,1%", "18,5%", "—", "—"],
+                    ].map(([label, ...values], i) => (
+                      <tr key={i} style={{borderBottom:i===5?"none":`1px solid ${T.border}66`}}>
+                        <td style={{padding:"12px 8px", fontWeight:500, color:T.ink}}>{label}</td>
+                        {values.map((v, j) => (
+                          <td key={j} style={{padding:"12px 8px", textAlign:"right", color:j>=2?T.accent:T.sub, fontWeight:j>=2?600:400}}>{v}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div style={{background:T.bg, borderRadius:16, padding:24, border:`1px solid ${T.border}`, marginBottom:24}}>
+                <p style={{margin:0, fontSize:14, color:T.ink, lineHeight:1.7}}>
+                  Om analytikerkonsensus om EPS 20,91 kr för 2026 levereras landar P/E på 15,5x — rimligt relativt historiskt snitt. Nettokassan om 63,0 mdr SEK (ca 31 kr per aktie) utgör ett starkt golv på nedsidan. Eget kapital per aktie är 87,7 kr vilket ger P/B 3,7x — premiumvärdering motiverad av historiskt hög ROE men sträcker sig vid nuvarande vinstnivå.
+                </p>
+              </div>
+
+              <div style={{background:T.accentL, borderRadius:16, padding:24, border:`1px solid ${T.accent}33`}}>
                 <div style={{display:"flex", gap:16, alignItems:"flex-start"}}>
-                  <div style={{width:40, height:40, background:"rgba(255,255,255,0.1)", borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0}}>
-                    <Info size={20} color="#fff" style={{margin:"auto"}}/>
+                  <div style={{width:40, height:40, background:T.accent, borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0}}>
+                    <AlertTriangle size={20} color="#fff" style={{margin:"auto"}}/>
                   </div>
                   <div>
-                    <div style={{fontSize:11, fontWeight:800, color:"rgba(255,255,255,0.6)", textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Värderingsnotering</div>
-                    <p style={{margin:0, fontSize:13.5, color:"rgba(255,255,255,0.8)", lineHeight:1.7}}>
-                      <strong>Volvo handlas med en betydande rabatt mot globala konkurrenter som Paccar.</strong> Vi anser att denna rabatt är omotiverad givet Volvos ledande position inom elektrifiering och deras starkare balansräkning. En uppvärdering till P/E 14-15 vore rimlig i ett normalläge.
+                    <div style={{fontSize:11, fontWeight:800, color:T.accent, textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Analytikerkonsensus & Risker</div>
+                    <p style={{margin:0, fontSize:13.5, color:T.ink, lineHeight:1.7}}>
+                      Analytikerkonsensus (2026e EPS 20,91 kr) förutsätter en vinståterhämtning på +23% från FY2025. Det kräver att Nordamerika normaliseras och marginalen återgår mot 11-12%. Q1 2026 förväntas fortsatt tufft — tarifftryck på -1 mdr SEK och svagt Nordamerika. En besvikelse i Q1 kan skapa ett bättre ingångsläge.
                     </p>
                   </div>
                 </div>
@@ -528,40 +579,46 @@ export default function VolvoDeepDive({
             <Card mb={20}>
               <SectionLabel number="V" title="Tillväxtmotorer & Triggers"/>
               
-              <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:20}}>
+              <div style={{display:"grid", gridTemplateColumns:"1fr", gap:20, marginBottom: 32}}>
                 {[
                   {
-                    icon: <Zap size={20} color="#3B82F6"/>,
-                    bg: "#EFF6FF",
-                    title: "1. Elektrifiering – Grön omställning",
-                    body: "Volvo leder skiftet till el-lastbilar. En utbytescykel där flottor byts ut mot fossilfria alternativ skapar en strukturell tillväxt som sträcker sig över decennier."
+                    icon: <TrendingUp size={20} color={T.accent}/>,
+                    bg: T.accentL,
+                    title: "Cyklisk återhämtning — Nordamerika och Europa",
+                    body: "VD Lundstedt konstaterade i Q4-rapporten att stabilisering sker på flera marknader och i vissa fall små förbättringar. Europeisk orderingång ökade +11% under Q4. Den nordamerikanska marknaden förväntas vara svag H1 2026 men normaliseras gradvis när EPA 2027-klarhet ges och lageruppbyggnad hos återförsäljare pågår. Den brasilianska marknaden kyls av räntor, men Volvo bibehåller 23,2% marknadsandel."
                   },
                   {
-                    icon: <TrendingUp size={20} color="#10B981"/>,
+                    icon: <Target size={20} color="#10B981"/>,
                     bg: "#ECFDF5",
-                    title: "2. Tjänstetillväxt & Digitalisering",
-                    body: "Målet är att öka andelen tjänsteintäkter. Dessa är mindre cykliska och har högre marginaler, vilket stabiliserar resultatet över konjunkturcykler."
+                    title: "Swecon — Vertikal integration i Europa",
+                    body: "Swecon-förvärvet slutfördes den 31 januari 2026 och ger Volvo CE direkt kontroll över detaljhandelsledet i Sverige, Tyskland och Baltikum. Stärker kundrelationerna, accelererar serviceaffären och bör gradvis förbättra marginalerna i dessa nyckelmarknader. Finansierat delvis av SDLG-avyttringen om 8 mdr SEK (slutfört sep 2025)."
                   },
                   {
-                    icon: <Target size={20} color="#F59E0B"/>,
+                    icon: <Zap size={20} color="#F59E0B"/>,
                     bg: "#FFFBEB",
-                    title: "3. Nordamerika – Mack & Volvo",
-                    body: "Stark marknadsposition i USA där infrastrukturinvesteringar driver efterfrågan på tunga fordon och anläggningsmaskiner."
+                    title: "Volvo Penta — Datacenter och energisäkerhet",
+                    body: "Volvo Penta levererade justerad marginal 17,4% FY2025 och leveranser +30% Q4 — driven av stark efterfrågan på generatoraggregat från Nordamerika och datacenters. I januari 2026 lanserades naturgasmotor G17 — ett strategiskt drag mot den snabbväxande energiinfrastrukturmarknaden. CoPilot-systemet lanserat för smart fordonshantering."
                   },
                   {
-                    icon: <Wallet size={20} color="#6366F1"/>,
+                    icon: <Cpu size={20} color="#6366F1"/>,
                     bg: "#EEF2FF",
-                    title: "4. Kapitalallokering & Utdelning",
-                    body: "Den enorma kassan möjliggör både strategiska förvärv inom mjukvara/autonomi och fortsatta rekordutdelningar till aktieägarna."
+                    title: "Autonoma lastbilar — Waabi och Volvo VNL",
+                    body: "I oktober 2025 integrerades Waabi Driver framgångsrikt med Volvo VNL Autonomous — en milstolpe inom fysisk AI för autonoma lastbilstransporter. I november levererades första helt nya Mack Pioneer till en nordamerikansk kund. I januari 2026 levererade Volvo 125 nya VNL-lastbilar till Highlight Motor Group i Kanada — största ordern hittills för detta flaggskepp."
+                  },
+                  {
+                    icon: <BarChart3 size={20} color="#EC4899"/>,
+                    bg: "#FDF2F8",
+                    title: "Anläggningsmaskiner — Tydlig marginalförbättring",
+                    body: "Anläggningsmaskiner visade 13,9% justerad marginal Q4 (11,8% Q4 2024) — driven av positiv produktmix och förbättrad serviceaffär. Orderingång +18% ex-SDLG. Ny monteringsfabrik för bandgravmaskiner bekräftad i Eskilstuna. Nya elektriska L120-hjullastare levererade till europeiska och asiatiska marknader."
                   }
-                ].map((item, i) => (
-                  <div key={i} style={{background:T.bg, border:`1px solid ${T.border}`, borderRadius:16, padding:20, display:"flex", gap:16, alignItems:"flex-start"}}>
-                    <div style={{width:40, height:40, background:item.bg, borderRadius:12, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0}}>
+                ].map((item, i)=>(
+                  <div key={i} style={{display:"flex", gap:16, background:item.bg, borderRadius:16, padding:20, border:`1px solid ${item.bg === T.accentL ? T.accent + "22" : "rgba(0,0,0,0.05)"}`}}>
+                    <div style={{width:44, height:44, background:"#fff", borderRadius:12, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, boxShadow:"0 2px 8px rgba(0,0,0,0.05)"}}>
                       {item.icon}
                     </div>
                     <div>
-                      <div style={{fontSize:11, fontWeight:800, color:T.muted, textTransform:"uppercase", letterSpacing:0.5, marginBottom:6}}>{item.title}</div>
-                      <p style={{margin:0, fontSize:13, color:T.sub, lineHeight:1.6}}>{item.body}</p>
+                      <div style={{fontSize:15, fontWeight:800, color:T.ink, marginBottom:6}}>{item.title}</div>
+                      <p style={{margin:0, fontSize:13.5, color:T.sub, lineHeight:1.65}}>{item.body}</p>
                     </div>
                   </div>
                 ))}
@@ -570,40 +627,87 @@ export default function VolvoDeepDive({
           </FadeIn>
         </div>
 
-        {/* ── RISK ── */}
+        {/* ── RISKPROFIL ── */}
         <div id="risk">
           <FadeIn delay={500}>
             <Card mb={20}>
               <SectionLabel number="VI" title="Riskprofil"/>
               
-              <div style={{display:"inline-flex", alignItems:"center", gap:6, padding:"4px 12px", background:T.goldL, border:`1px solid ${T.gold}33`, borderRadius:20, marginBottom:20}}>
-                <span style={{fontSize:10, fontWeight:900, color:T.gold, textTransform:"uppercase", letterSpacing:0.5}}>Risknivå: MEDEL · 3/5</span>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
+                {/* STYRKOR */}
+                <div style={{background:"#F0FDF4", borderRadius:16, padding:20, border:"1px solid #DCFCE7"}}>
+                  <div style={{fontSize:11, fontWeight:800, color:"#166534", textTransform:"uppercase", letterSpacing:1, marginBottom:12, display:"flex", alignItems:"center", gap:8}}>
+                    <ShieldCheck size={14}/> STYRKOR
+                  </div>
+                  <ul style={{margin:0, paddingLeft:18, fontSize:13, color:"#166534", lineHeight:1.7}}>
+                    <li>Stark premiumposition — marknadsandel 19,0% i Europa (tunga lastbilar) FY2025</li>
+                    <li>Nettokassa 63,0 mdr SEK — exceptionell finansiell styrka</li>
+                    <li>Serviceaffären visar motståndskraft — tillväxt +5% Q4</li>
+                    <li>Volvo Penta: justerad marginal 17,4% — stabil kassaflödesgenerator</li>
+                    <li>Coretura-JV med Daimler Truck delar kostnaden för mjukvaruplattform</li>
+                    <li>Generös utdelning: 13 kr per aktie för FY2025 (4,0%)</li>
+                  </ul>
+                </div>
+
+                {/* SVAGHETER */}
+                <div style={{background:"#FEF2F2", borderRadius:16, padding:20, border:"1px solid #FEE2E2"}}>
+                  <div style={{fontSize:11, fontWeight:800, color:"#991B1B", textTransform:"uppercase", letterSpacing:1, marginBottom:12, display:"flex", alignItems:"center", gap:8}}>
+                    <AlertTriangle size={14}/> SVAGHETER
+                  </div>
+                  <ul style={{margin:0, paddingLeft:18, fontSize:13, color:"#991B1B", lineHeight:1.7}}>
+                    <li>Lastbilsmarginal under press — 9,8% FY2025 vs 12,7% FY2024</li>
+                    <li>Operativt kassaflöde industriverksamheten halverades FY2025</li>
+                    <li>Nettokassa minskade kraftigt pga utdelning på 37,6 mdr</li>
+                    <li>Nordamerika fortsatt svagt — leveranser -15% FY2025</li>
+                    <li>Valutamotvind systematisk — negativ påverkan -2,1 mdr SEK Q4</li>
+                  </ul>
+                </div>
+
+                {/* MÖJLIGHETER */}
+                <div style={{background:"#EFF6FF", borderRadius:16, padding:20, border:"1px solid #DBEAFE"}}>
+                  <div style={{fontSize:11, fontWeight:800, color:"#1E40AF", textTransform:"uppercase", letterSpacing:1, marginBottom:12, display:"flex", alignItems:"center", gap:8}}>
+                    <TrendingUp size={14}/> MÖJLIGHETER
+                  </div>
+                  <ul style={{margin:0, paddingLeft:18, fontSize:13, color:"#1E40AF", lineHeight:1.7}}>
+                    <li>Cyklisk uppgångsfas närmar sig — stabilisering på flera marknader</li>
+                    <li>Swecon-förvärvet stärker vertikal integration och serviceandel</li>
+                    <li>Anläggningsmaskiner vänder — marginal 13,9% Q4</li>
+                    <li>Volvo Penta: naturgasmotor G17 lanserades jan 2026</li>
+                    <li>Autonoma lastbilar — Waabi Driver integrerat med Volvo VNL</li>
+                    <li>Infrastrukturinvesteringar globalt driver anläggningsmaskiner</li>
+                  </ul>
+                </div>
+
+                {/* HOT */}
+                <div style={{background:"#FFFBEB", borderRadius:16, padding:20, border:"1px solid #FEF3C7"}}>
+                  <div style={{fontSize:11, fontWeight:800, color:"#92400E", textTransform:"uppercase", letterSpacing:1, marginBottom:12, display:"flex", alignItems:"center", gap:8}}>
+                    <Info size={14}/> HOT
+                  </div>
+                  <ul style={{margin:0, paddingLeft:18, fontSize:13, color:"#92400E", lineHeight:1.7}}>
+                    <li>Tariffer och handelspolitik — Q1 2026 förväntas -1 mdr SEK</li>
+                    <li>Nordamerikansk lastbilsmarknad — EPA 2027-regler skapar paus</li>
+                    <li>Lastbilskartellen — 6 mdr SEK i avsättningar, solidariskt ansvar</li>
+                    <li>Stärkande krona — SEK/USD gick från 11,00 till 9,17 under 2025</li>
+                    <li>Avgaskomponent-reservering — resterande del fortfarande osäker</li>
+                  </ul>
+                </div>
               </div>
 
-              <div style={{overflowX:"auto", marginBottom:24}}>
-                <table style={{width:"100%", borderCollapse:"collapse", fontSize:13}}>
-                  <thead>
-                    <tr style={{borderBottom:`2px solid ${T.border}`, background:T.bg}}>
-                      <th style={{padding:"12px", textAlign:"left", color:T.ink, fontWeight:800, textTransform:"uppercase", fontSize:10, letterSpacing:0.5}}>Risk</th>
-                      <th style={{padding:"12px", textAlign:"left", color:T.ink, fontWeight:800, textTransform:"uppercase", fontSize:10, letterSpacing:0.5}}>Bedömning</th>
-                      <th style={{padding:"12px", textAlign:"left", color:T.ink, fontWeight:800, textTransform:"uppercase", fontSize:10, letterSpacing:0.5}}>Hantering</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[
-                      ["Konjunkturkänslighet", "Hög. Efterfrågan på tunga fordon faller snabbt vid ekonomisk inbromsning.", "Ökad andel tjänsteintäkter stabiliserar."],
-                      ["Komponentbrist", "Risk för störningar i leveranskedjor för batterier och halvledare.", "Diversifierad leverantörsbas."],
-                      ["Prispress", "Hård konkurrens från både etablerade och nya aktörer.", "Fokus på premiumsegment och totalekonomi."],
-                      ["Teknologiskifte", "Risk att hamna efter i utvecklingen av vätgas eller autonomi.", "Massiva FoU-investeringar och partnerskap."],
-                    ].map(([r, b, h], i) => (
-                      <tr key={i} style={{borderBottom:`1px solid ${T.border}`}}>
-                        <td style={{padding:"12px", fontWeight:700, color:T.ink}}>{r}</td>
-                        <td style={{padding:"12px", color:T.sub, lineHeight:1.5}}>{b}</td>
-                        <td style={{padding:"12px", color:T.muted, fontStyle:"italic"}}>{h}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              {/* DEEP DIVES */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div style={{background:T.bg, borderRadius:16, padding:24, border:`1px solid ${T.border}`}}>
+                  <div style={{fontSize:11, fontWeight:800, color:T.muted, textTransform:"uppercase", letterSpacing:1, marginBottom:12}}>Lastbilskartellen — Den svårkvantifierbara risken</div>
+                  <p style={{margin:0, fontSize:13, color:T.sub, lineHeight:1.7}}>
+                    EU-kommissionens bötesbeslut (juli 2016) lade fast att Volvo deltog i en konkurrensöverträdelse 1997-2011. Volvo betalade böter på 670 miljoner euro. Därefter har ca 3 000 skadeståndskrav inkommit från kunder i mer än 20 länder, inklusive krav på lastbilar sålda av andra tillverkare (solidariskt ansvar). Avsättningar om 6 mdr SEK gjordes i Q2 2023, och vid årets slut 2025 uppgick totala eventualförpliktelser till 14,4 mdr SEK. Volvo konstaterar självt att "ett ogynnsamt utfall kan väsentligt påverka finansiellt resultat."
+                  </p>
+                </div>
+
+                <div style={{background:T.bg, borderRadius:16, padding:24, border:`1px solid ${T.border}`}}>
+                  <div style={{fontSize:11, fontWeight:800, color:T.muted, textTransform:"uppercase", letterSpacing:1, marginBottom:12}}>Tariffer och handelspolitik — Q1 2026 förväntas tufft</div>
+                  <p style={{margin:0, fontSize:13, color:T.sub, lineHeight:1.7}}>
+                    Volvo belyser i risknotesen att tariffer och handelshinder "kraftigt ökat osäkerheten" och kan "störa befintliga leverantörskedjor." Nettoeffekten från tariffer var -800 Mkr i Q4 2025 och förväntas bli -1 mdr SEK i Q1 2026. En stärkande SEK lade på ytterligare -2,1 mdr SEK på rörelseresultatet under Q4. SEK/USD gick från 11,00 vid årsskiftet 2024 till 9,17 vid årsskiftet 2025. Situationen "förändras snabbt och är komplex att analysera."
+                  </p>
+                </div>
               </div>
             </Card>
           </FadeIn>
@@ -614,7 +718,7 @@ export default function VolvoDeepDive({
           <FadeIn delay={600}>
             <Card mb={20}>
               <SectionLabel number="VII" title="ESG & Makro"/>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:14}}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {[
                   ["🌱","Miljö (E)","5/5","Ledande inom fossilfria transporter och cirkulära modeller.",T.green,T.greenL],
                   ["👥","Socialt (S)","4/5","Starkt fokus på säkerhet och arbetsmiljö globalt.",T.accent,T.accentL],
@@ -634,37 +738,151 @@ export default function VolvoDeepDive({
           </FadeIn>
         </div>
 
+        {/* ── SEGMENTANALYS ── */}
+        <div id="segmentanalys">
+          <FadeIn delay={700}>
+            <Card mb={20}>
+              <SectionLabel number="VIII" title="Segmentanalys"/>
+              
+              <div className="overflow-x-auto -mx-4 md:mx-0 mb-6">
+                <table className="w-full border-collapse text-xs md:text-sm min-w-[600px]">
+                  <thead>
+                    <tr className="border-b-2 border-slate-200 bg-slate-50">
+                      <th className="p-3 text-left font-bold text-slate-900">Segment</th>
+                      <th className="p-3 text-right font-bold text-slate-900">Omss. FY2025 (mdr)</th>
+                      <th className="p-3 text-right font-bold text-slate-900">Just. marginal FY2025</th>
+                      <th className="p-3 text-right font-bold text-slate-900">Just. marginal Q4 2025</th>
+                      <th className="p-3 text-left font-bold text-slate-900">Trend & Kommentar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      ["Lastbilar", "323,5", "9,8%", "9,5%", "Ned från 12,7%. Europa stark, Nordamerika svagt. Mack Pioneer levererad."],
+                      ["Anläggningsmaskiner", "81,6", "13,3%", "13,9%", "Q4 förbättring tydlig. Swecon slutfört jan 2026. SDLG borta."],
+                      ["Bussar", "25,1", "9,1%", "9,0%", "Stabilt. Elbuss +55% FY2025. Tariffer påverkar nordamerikanska bussar negativt."],
+                      ["Volvo Penta", "20,6", "17,4%", "11,9%", "Starkt FY (+5% resultat). Q4 lägre pga ogynnsam mix. Datacenter driver tillväxt."],
+                      ["Financial Services", "26,5", "14,8%*", "13,4%*", "Portfölj +2% i konstant valuta. Ökade kreditreserveringar syns."],
+                      ["Totalt", "479,2", "10,7%", "10,3%", "Stabilisering Q4. Q1 2026 fortsatt tufft pga tariffer och svagt Nordamerika."],
+                    ].map(([s, o, m, q, t], i) => (
+                      <tr key={i} className={`border-b border-slate-100 hover:bg-slate-50/50 transition-colors ${s === "Totalt" ? "bg-slate-50/80 font-bold" : ""}`}>
+                        <td className="p-3 text-slate-900">{s}</td>
+                        <td className="p-3 text-right text-slate-700">{o}</td>
+                        <td className="p-3 text-right text-slate-700">{m}</td>
+                        <td className="p-3 text-right text-slate-700">{q}</td>
+                        <td className="p-3 text-slate-500 leading-relaxed">{t}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="text-[10px] text-slate-400 italic mb-8">* Financial Services marginal beräknad på justerat rörelseresultat / nettoomsättning.</p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="bg-emerald-50/50 border border-emerald-100 rounded-xl p-5">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center text-white font-bold text-xs">RT</div>
+                    <h3 className="text-sm font-bold text-slate-900">Renault Trucks — Positiv överraskning</h3>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Renault Trucks var en positiv överraskning: orderingången ökade +15% och leveranserna +11% under Q4, med marknadsandel för tunga lastbilar i Europa förbättrad till 9,4% (9,1%).
+                  </p>
+                </div>
+                <div className="bg-blue-50/50 border border-blue-100 rounded-xl p-5">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white font-bold text-xs">DF</div>
+                    <h3 className="text-sm font-bold text-slate-900">Dongfeng — Kinesisk återhämtning</h3>
+                  </div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Dongfeng Commercial Vehicles (ej konsoliderat) levererade +20% till 32 848 lastbilar under Q4 och +21% helåret — en stark indikation på kinesisk efterfrågehämtning.
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-slate-900 rounded-2xl p-6 text-white relative overflow-hidden">
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="bg-emerald-500 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest">AI Observation</div>
+                    <div className="flex gap-1">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} size={12} fill={i < 3 ? "#10B981" : "none"} color={i < 3 ? "#10B981" : "rgba(255,255,255,0.2)"} />
+                      ))}
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-bold mb-3">3/5 — AI-indikationer & Marknadssentiment</h3>
+                  <p className="text-sm text-slate-300 leading-relaxed">
+                    AI-indikationer pekar på en marknad som redan prisar in återhämtning, vilket begränsar kortsiktig uppsida. Samtidigt visar serviceaffärens motståndskraft och orderingång i elektrifiering positiva underliggande signaler. Ingen tydlig negativ avvikelse, men heller inget "edge-case" fynd.
+                  </p>
+                </div>
+                <BarChart3 className="absolute -right-8 -bottom-8 text-white/5 w-48 h-48" />
+              </div>
+            </Card>
+          </FadeIn>
+        </div>
+
         {/* ── SAMMANFATTNING ── */}
         <div id="sammanfattning">
           <FadeIn delay={800}>
             <Card mb={20}>
               <SectionLabel number="IX" title="Sammanfattning & Investeringsbeslut"/>
-              <div style={{display:"grid",gridTemplateColumns:"1fr auto",gap:24,alignItems:"start"}}>
-                <div>
-                  {[
-                    ["Är Volvo ett kvalitetsbolag?","Ja. Trots ett svagare 2025 är Volvo en global ledare med starka varumärken och en solid balansräkning."],
-                    ["Är det rimligt värderat?","Ja. Värderingen reflekterar de nuvarande utmaningarna, men uppsidan är begränsad till vår riktkurs."],
-                    ["Kan man hålla det 5–10 år?","Ja. Den teknologiska transformationen skapar långsiktiga möjligheter trots kortsiktig motvind."],
-                  ].map(([q,a])=>(
-                    <div key={q} style={{marginBottom:16}}>
-                      <div style={{fontSize:13,fontWeight:700,color:T.ink,marginBottom:4}}>→ {q}</div>
-                      <div style={{fontSize:13,color:T.sub,lineHeight:1.7}}>{a}</div>
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 items-start">
+                <div className="space-y-6">
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    AB Volvo är ett kvalitetsbolag med stark premiumposition, robust balansräkning (63 mdr SEK nettokassa) och en tydlig strategi för den teknologiska omställningen. Serviceaffären ger strukturell stabilitet, Volvo Penta levererar rekordhöga marginaler och anläggningsmaskiner visar tydlig förbättring. Den generösa utdelningen om 13 kr (4,0% direktavkastning) är ett konkret bevis på finansiell styrka.
+                  </p>
+
+                  <p className="text-sm text-slate-700 leading-relaxed">
+                    Aktiekursen 324 kr speglar redan mycket av den cykliska återhämtningen — P/E 19,1x på FY2025-vinst och 15,5x på 2026e ger begränsat uppside i bascaset. Q1 2026 förväntas tufft med -1 mdr SEK i tarifftryck och svagt Nordamerika. En besvikelse i Q1-rapporten (24 april 2026) kan skapa ett bättre ingångsläge under 300 kr, där direktavkastningen på ordinarie utdelning (8,50 kr) överstiger 2,8%.
+                  </p>
+
+                  <div className="bg-slate-50 border border-slate-100 rounded-xl p-5">
+                    <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-3">Tre nyckeltal att följa</div>
+                    <ul className="space-y-2">
+                      {[
+                        "Lastbilsmarginal återvänder mot 11-12% under H2 2026.",
+                        "Operativt kassaflöde industri återhämtar sig mot 35-40 mdr SEK.",
+                        "Kartellkostnaderna hålls inom avsatta 6 mdr SEK."
+                      ].map((item, i) => (
+                        <li key={i} className="flex gap-3 text-sm text-slate-600">
+                          <span className="text-emerald-500 font-bold">({i+1})</span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-100 rounded-xl">
+                    <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-white shrink-0">
+                      <ShieldCheck size={24} />
                     </div>
-                  ))}
-                  <div style={{marginTop:24, padding:16, background:T.bg, borderRadius:12, border:`1px solid ${T.border}`}}>
-                    <p style={{margin:0, fontSize:13, color:T.ink, lineHeight:1.7}}>
-                      <strong style={{color:T.sub}}>Riktkurs 345 kronor (12 månaders sikt)</strong>. Vi väljer att bevaka aktien i väntan på tydligare tecken på att marknaden för tunga fordon stabiliseras och att den nya strategin börjar ge frukt.
-                    </p>
+                    <div>
+                      <div className="text-xs font-bold text-emerald-700 uppercase tracking-wider">Slutsats</div>
+                      <p className="text-sm text-slate-800 font-medium">
+                        <strong>BEVAKA</strong> — Riktkurs 345 kr (+6%). Volvo är ett långsiktigt stabilt innehav men kurs 324 kr ger begränsat utrymme. Befintliga ägare bör behålla och ta emot 13 kr i utdelning. För nya investerare: avvakta Q1-rapporten 24 april 2026.
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div style={{background:T.accentL,border:`1.5px solid ${T.accent}44`,borderRadius:16,padding:"22px 26px",textAlign:"center",flexShrink:0,minWidth:180}}>
-                  <div style={{fontSize:11,color:T.muted,fontWeight:700,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Rekommendation</div>
-                  <div style={{fontSize:36,fontWeight:900,color:T.accent,letterSpacing:-1}}>BEVAKA</div>
-                  <div style={{height:1,background:T.accent+"22",margin:"12px 0"}}/>
-                  <div style={{fontSize:22,fontWeight:800,color:T.ink}}>345 kr</div>
-                  <div style={{fontSize:11,color:T.sub,marginTop:4}}>Riktkurs · 12 månader</div>
-                  <div style={{marginTop:12,fontSize:12,color:T.sub}}>+6% uppsida + 4,0% utdelning</div>
-                  <div style={{marginTop:10,fontSize:13,color:T.gold,fontWeight:700}}>31/40 · 3.9 / 5.0</div>
+
+                <div className="bg-emerald-600 text-white rounded-2xl p-8 text-center shadow-lg md:sticky md:top-24 min-w-[240px]">
+                  <div className="text-xs font-bold uppercase tracking-widest opacity-80 mb-2">Rekommendation</div>
+                  <div className="text-4xl font-black mb-6 tracking-tighter">BEVAKA</div>
+                  <div className="h-px bg-white/20 mb-6" />
+                  <div className="text-3xl font-black mb-1">345 kr</div>
+                  <div className="text-xs opacity-80 mb-6 uppercase tracking-wider">Riktkurs (12m)</div>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex justify-between border-b border-white/10 pb-2">
+                      <span className="opacity-70">Uppsida</span>
+                      <span className="font-bold">+6%</span>
+                    </div>
+                    <div className="flex justify-between border-b border-white/10 pb-2">
+                      <span className="opacity-70">Utdelning</span>
+                      <span className="font-bold">4,0%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="opacity-70">Totalavk.</span>
+                      <span className="font-bold text-emerald-300">~10%</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Card>
@@ -676,21 +894,60 @@ export default function VolvoDeepDive({
           <FadeIn delay={900}>
             <Card mb={20}>
               <SectionLabel number="X" title="Scenarier (Bull/Base/Bear)"/>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:16,marginTop:20}}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-5 mb-8">
                 {[
-                  {label:"🐂 Bull Case",color:T.green,bg:T.greenL,prob:"20%",pris:"410 kr",
-                    triggers:["Snabbare elektrifiering än väntat","Starka marginaler i USA","Extrautdelningar överraskar"],
-                    note:"Värderingen stiger till P/E 15."},
-                  {label:"⚖️ Base Case",color:T.gold,bg:T.goldL,prob:"60%",pris:"345 kr",
-                    triggers:["Stabil efterfrågan","Tjänsteintäkter växer enligt plan","Bibehållna marginaler"],
-                    note:"Normal cyklisk utveckling."},
-                  {label:"🐻 Bear Case",color:T.red,bg:T.redL,prob:"20%",pris:"260 kr",
-                    triggers:["Djup global recession","Priskrig på el-lastbilar","Stora kreditförluster i finansarmen"],
-                    note:"Vinsten faller och multiplar pressas."},
+                  {
+                    label:"🐂 Bull Case",color:T.green,bg:T.greenL,prob:"25%",pris:"390 kr",upside:"+20%",
+                    assumptions:"Marginal återhämtar sig mot 12% Nordamerika normaliseras H2 2026 EPS 2026e 20,91 kr levereras",
+                    requirements:"Nordamerikansk lastbilsmarknad normaliseras efter EPA 2027-klarhet, Swecon-integration lyfter serviceandelen, valutamotvinden minskar och kartellkostnaderna hålls inom avsatt belopp. P/E expansion mot 18-19x på 2026e-vinst."
+                  },
+                  {
+                    label:"📊 Base Case",color:T.gold,bg:T.goldL,prob:"50%",pris:"345 kr",upside:"+6%",
+                    assumptions:"Marginal ~10,5-11% FY2026 EPS ~20 kr Utdelning 13 kr bibehålls",
+                    requirements:"Stabil europeisk marknad, gradvis normalisering i Nordamerika H2 2026, Swecon bidrar positivt, kassaflöde återhämtar sig mot 30-35 mdr och kartellkostnader hålls inom avsatt ram. Värdering 16-17x P/E på 2026e-vinst."
+                  },
+                  {
+                    label:"🐻 Bear Case",color:T.red,bg:T.redL,prob:"25%",pris:"230 kr",upside:"-29%",
+                    assumptions:"Marginal faller under 9% Kartellkostnader överstiger 6 mdr Nordamerika försvagas ytterligare",
+                    requirements:"Global recession pressar lastbilar och anläggningsmaskiner simultant, tariffer eskalerar, kartelldomslut med solidariskt ansvar överstiger avsättningar kraftigt och SEK fortsätter stärkas mot USD/EUR."
+                  },
                 ].map(s=><ScenarioCard key={s.label} {...s}/>)}
+              </div>
+
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-6">
+                <p className="text-sm text-slate-700 leading-relaxed mb-4">
+                  Det sannolikhetsviktade utfallet landar kring <strong>330 kr</strong> — nära nuvarande kurs. Tre fokusområden dominerar osäkerheten för 2026: (1) Nordamerikansk normalisering efter EPA 2027-klarhet. (2) Kartellkostnader — hålls avsättningarna? (3) Valutautvecklingen — en försvagad krona mot USD/EUR är den enklaste positiva katalysatorn för Volvo.
+                </p>
+                <p className="text-sm text-slate-700 leading-relaxed italic">
+                  Lundstedts budskap från Q4-rapporten är tydligt: stabilisering syns, framtiden är osäker, men Volvo är väl positionerat när marknaderna går in i nästa cykliska uppgång.
+                </p>
               </div>
             </Card>
           </FadeIn>
+        </div>
+
+        {/* ── FRISKRIVNING ── */}
+        <div className="mt-16 pt-8 border-t border-slate-200">
+          <div className="bg-slate-50 rounded-2xl p-6 md:p-8">
+            <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <Info size={16} className="text-slate-400" />
+              Friskrivning
+            </h3>
+            <div className="space-y-4 text-xs text-slate-500 leading-relaxed">
+              <p>
+                Informationen på denna webbplats är avsedd att utgöra allmän marknadsinformation och ska inte betraktas som finansiell rådgivning, investeringsrekommendation eller uppmaning att köpa eller sälja finansiella instrument.
+              </p>
+              <p>
+                Investeringar i aktier och andra finansiella instrument innebär alltid en risk. Det investerade kapitalet kan både öka och minska i värde, och det är inte säkert att du får tillbaka hela det investerade beloppet. Historisk avkastning är ingen garanti för framtida resultat.
+              </p>
+              <p>
+                All information tillhandahålls i informationssyfte och utan garantier avseende fullständighet, korrekthet eller aktualitet. Varje investerare ansvarar själv för sina investeringsbeslut och uppmanas att göra en egen analys samt, vid behov, rådgöra med en licensierad finansiell rådgivare.
+              </p>
+              <p>
+                Börsanalys.se och dess företrädare friskriver sig från allt ansvar för direkta eller indirekta förluster som kan uppstå till följd av användning av informationen på webbplatsen.
+              </p>
+            </div>
+          </div>
         </div>
 
       </div>

@@ -13,6 +13,60 @@ import { useAuth } from "../contexts/AuthContext";
 
 import FearAndGreedGauge from "../components/FearAndGreedGauge";
 
+interface MacroData {
+  value: number;
+  trend: "up" | "down" | "flat";
+  updatedAt: string;
+}
+
+const FALLBACK_DATA: Record<string, MacroData> = {
+  US10Y: { value: 4.34, trend: "up", updatedAt: new Date().toISOString() },
+  SE10Y: { value: 2.85, trend: "down", updatedAt: new Date().toISOString() },
+  USDSEK: { value: 9.56, trend: "down", updatedAt: new Date().toISOString() },
+  EURSEK: { value: 10.95, trend: "down", updatedAt: new Date().toISOString() },
+  OMX30: { value: 2905, trend: "up", updatedAt: new Date().toISOString() },
+  Inflation: { value: 0.5, trend: "flat", updatedAt: new Date().toISOString() }
+};
+
+const MACRO_METADATA: Record<string, { category: string, title: string, description: string, impact: string }> = {
+  US10Y: {
+    category: "RÄNTOR",
+    title: "US 10Y Treasury Yield",
+    description: "USA:s 10-åriga statsobligationsränta sätter tonen för den globala ekonomin och riskaptiten.",
+    impact: "Nuvarande högre nivåer (4.34%) pressar värderingar på tillväxtaktier och ökar avkastningskravet globalt."
+  },
+  SE10Y: {
+    category: "RÄNTOR",
+    title: "Svensk 10Y Statsobligation",
+    description: "Sveriges 10-åriga statsobligationsränta påverkar bolån och företagens lånekostnader direkt.",
+    impact: "Nivån runt 2.85% speglar en viss ränteoro, vilket dämpar fastighetssektorn men gynnar räntebärande placeringar."
+  },
+  USDSEK: {
+    category: "VALUTOR",
+    title: "USD/SEK (Valuta)",
+    description: "Viktigt för exportbolag som Volvo, Ericsson och NVIDIA-exponerade portföljer.",
+    impact: "En betydligt starkare krona (9.56) pressar exportbolagens vinster vid omräkning från dollar."
+  },
+  EURSEK: {
+    category: "VALUTOR",
+    title: "EUR/SEK (Valuta)",
+    description: "Euron påverkar handeln inom Europa och svenska exportbolags marginaler.",
+    impact: "Kronans styrka mot euron (10.95) är positiv för importörer men utmanande för export till Europa."
+  },
+  OMX30: {
+    category: "INDEX",
+    title: "OMXS30 (Index)",
+    description: "De 30 mest omsatta aktierna på Nasdaq Stockholm.",
+    impact: "Indexet handlas runt 2900-nivån. Volatilitet i räntor och valutor skapar osäkerhet i de tunga industribolagen."
+  },
+  Inflation: {
+    category: "INFLATION",
+    title: "Inflation (KPI)",
+    description: "Inflationstakten mäter hur snabbt priserna på varor och tjänster ökar.",
+    impact: "Låg inflation (0.5%) ger Riksbanken utrymme för lättnader, men fokus ligger nu på den globala ränteutvecklingen."
+  }
+};
+
 // Initialize Gemini
 const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
 
@@ -33,38 +87,26 @@ interface MarketEvent {
 const INITIAL_EVENTS: MarketEvent[] = [
   {
     id: "1",
-    title: "Pågående krig/konflikt i Mellanöstern (Iran-kriget och oljechocken)",
+    title: "Global likviditetskris och bankoro (Systemrisk)",
     impact: "negative",
-    description: "Detta är den mest akuta händelsen just nu. Konflikten har lett till kraftiga störningar i olje- och gasförsörjningen (Strait of Hormuz etc.), med Brent-oljan upp mot 100–110 USD/fat och stora uppgångar i gaspriser.",
-    whyItMatters: "Högre energipriser driver upp inflationsförväntningar, ökar produktions- och transportkostnader globalt, skapar osäkerhet kring tillväxt och recessionrisk. Börserna (både OMXS30 och S&P 500) har sett volatilitet och nedgångar de senaste veckorna p.g.a. detta – oljepriset tynger aktier bredare än bara energisektorn.",
+    description: "Efter flera räntehöjningar ser vi nu sprickor i det finansiella systemet. Marknaden fruktar en ny bankkris likt 2008, vilket drivit Fear & Greed Index till extrema nivåer (13).",
+    whyItMatters: "När förtroendet för banker vacklar fryser kreditmarknaden, vilket drabbar alla bolag oavsett sektor. Detta är den främsta anledningen till den extrema rädslan just nu.",
     affectedCompanies: {
-      swedish: "Cyklistiska export- och industribolag som drabbas av högre bränsle-/energikostnader och svagare global efterfrågan. Exempel: Atlas Copco (ner rejält nyligen), Boliden (mining, stor nedgång), Volvo och Scania (fordonstillverkning och logistik), samt transportrelaterade. Breda OMXS30-fall i industrisektorn.",
-      us: "Rese- och transportbolag (höga bränslekostnader): Carnival (cruises), JetBlue (flyg), UPS och FedEx (leveranser). Konsumentvaror som Procter & Gamble och Conagra (plast, kemikalier och förpackningar från olja). Indirekt tech/growth via lägre konsumtion.",
-      winners: "Olje- och energibolag – ExxonMobil, Chevron (upp ~30% i år), ConocoPhillips och Shell har sett rekordhöga kurser."
+      swedish: "Svenska storbanker (SEB, Swedbank, Handelsbanken) och fastighetsbolag som är beroende av obligationsmarknaden.",
+      us: "Regionala banker i USA och stora investmentbanker som Goldman Sachs och Morgan Stanley.",
+      winners: "Guld, statsobligationer (flykt till säkerhet) och defensiva bolag med starka kassaflöden."
     }
   },
   {
     id: "2",
-    title: "Centralbankernas penningpolitik (Fed, ECB och Riksbank håller/höjer inflationsutsikter)",
-    impact: "neutral",
-    description: "Riksbanken (1,75%), Fed (3,75%) och ECB höll räntorna stilla i mars 2026. Inflationsprognoser justeras upp och marknaden prisar in färre sänkningar.",
-    whyItMatters: "”Higher for longer”-scenariot minskar riskaptiten och pressar värderingar på framtida vinster, särskilt för tillväxtbolag. Makrofaktorer väger tyngre än bolagsnyheter just nu.",
-    affectedCompanies: {
-      swedish: "Räntekänsliga industribolag som Volvo, Ericsson och Atlas Copco. Bred påverkan på exportsektorn via valutaförändringar.",
-      us: "Högt värderade tech-bolag som Nvidia, Tesla och Meta drabbas av diskonteringseffekten. Russell 2000 (småbolag) drabbas extra hårt.",
-      winners: "Banker och finansbolag kan gynnas av det högre ränteläget."
-    }
-  },
-  {
-    id: "3",
-    title: "Stigande inflation driven av energipriser (med recessionrisk)",
+    title: "Eskalerande geopolitisk konflikt (Mellanöstern)",
     impact: "negative",
-    description: "Energipriserna pushar upp CPI bredare, med indirekta effekter på löner och efterfrågan. Rädsla för stagflation eller svagare tillväxt under 2026 dominerar.",
-    whyItMatters: "Inflationen äter upp reala vinster och tvingar centralbanker att vara hawkiska. Detta dämpar både privat konsumtion och företagens investeringsvilja.",
+    description: "Konflikten i Mellanöstern har nått en ny kritisk punkt med direkta hot mot globala handelsrutter. Oljepriset är extremt volatilt och osäkerheten är total.",
+    whyItMatters: "Geopolitisk osäkerhet är en klassisk drivkraft för 'Extreme Fear'. Det skapar osäkerhet kring energiförsörjning och global handel.",
     affectedCompanies: {
-      swedish: "Energikänsliga tillverkare och konsumentbolag som H&M. Exportberoende bolag som Sandvik och SKF påverkas av råvarupriser.",
-      us: "Breda konsumentsektorer och cykliska bolag. Tech drabbas indirekt om den generella tillväxten i ekonomin bromsar in.",
-      winners: "Råvaru- och energirelaterade bolag (utöver ren olja även vissa mining-bolag)."
+      swedish: "Exportbolag som Volvo och Sandvik drabbas av logistikstörningar. Flygbolag som SAS drabbas av högre bränslekostnader.",
+      us: "Försvarsbolag (Lockheed Martin) ser ökad efterfrågan, medan transportbolag (FedEx, UPS) ser ökade kostnader.",
+      winners: "Energibolag och försvarsindustri."
     }
   }
 ];
@@ -118,12 +160,35 @@ export default function MacroDashboard() {
   const [loadingOutlook, setLoadingOutlook] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string>(new Date().toLocaleDateString('sv-SE'));
   const [upcomingDates, setUpcomingDates] = useState<{date: string, title: string}[]>([
-    { date: "28 Mars", title: "KPI-siffror Sverige" },
     { date: "12 April", title: "Räntebesked ECB" },
-    { date: "25 April", title: "BNP-prognos USA" }
+    { date: "15 April", title: "KPI-siffror Sverige" },
+    { date: "25 April", title: "BNP-prognos USA" },
+    { date: "01 Maj", title: "Fed Räntebesked" }
   ]);
   const [fearGreed, setFearGreed] = useState<{ value: number, classification: string } | null>(null);
   const [loadingFearGreed, setLoadingFearGreed] = useState(true);
+  const [macroData, setMacroData] = useState<Record<string, MacroData>>(FALLBACK_DATA);
+  const [loadingMacro, setLoadingMacro] = useState(true);
+
+  useEffect(() => {
+    const fetchMacroData = async () => {
+      try {
+        const response = await fetch("/api/macro-data");
+        if (response.ok) {
+          const data = await response.json();
+          if (Object.keys(data).length > 0) {
+            setMacroData(data);
+          }
+        }
+      } catch (error) {
+        console.error("Macro Data Fetch Error:", error);
+      } finally {
+        setLoadingMacro(false);
+      }
+    };
+
+    fetchMacroData();
+  }, []);
 
   useEffect(() => {
     const fetchFearGreed = async () => {
@@ -155,7 +220,7 @@ export default function MacroDashboard() {
       const response = await genAI.models.generateContent({
         model: "gemini-3-flash-preview",
         config: { responseMimeType: "application/json" },
-        contents: `Baserat på dagens datum (${new Date().toLocaleDateString('sv-SE')}) och nuvarande makroindikatorer (Inflation: 3.4%, Styrränta: 3.75%, USD/SEK: 10.42, Olja: $82.4), ge en kort analys av var vi befinner oss i investeringsklockan och vad det innebär för aktiemarknaden. 
+        contents: `Baserat på dagens datum (${new Date().toLocaleDateString('sv-SE')}) och nuvarande makroindikatorer (Inflation: 0.5%, US 10Y: 4.34%, USD/SEK: 9.56, OMX30: 2905), ge en kort analys av var vi befinner oss i investeringsklockan och vad det innebär för aktiemarknaden. 
         Ge även de 3 nästa viktigaste makrohändelserna (t.ex. räntebesked, KPI-släpp) som infaller efter dagens datum.
         Svara i JSON-format med följande fält:
         - outlook: sträng (max 3 meningar på svenska)
@@ -236,7 +301,7 @@ export default function MacroDashboard() {
       </header>
 
       <div className="max-w-7xl mx-auto px-6 mt-12 space-y-16">
-        {/* Market Pulse Section */}
+        {/* Market Pulse & Macro Section */}
         <section className="space-y-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
@@ -248,123 +313,38 @@ export default function MacroDashboard() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Fear & Greed Gauge */}
-            <div className="md:col-span-1">
+            <div className="lg:col-span-1">
               <FearAndGreedGauge />
             </div>
 
-            {/* Empty Card: Räntor */}
-            <div className="bg-card border border-border rounded-[2.5rem] p-8 shadow-xl shadow-black/5 flex flex-col group hover:border-primary/50 transition-all relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors" />
-              <div className="flex justify-between items-start mb-6 relative z-10">
-                <div className="space-y-1">
-                  <div className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">RÄNTOR</div>
-                  <div className="text-[9px] font-bold text-muted-foreground uppercase opacity-80">Globala Räntemarknaden</div>
-                </div>
-                <div className="w-8 h-8 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
-                  <TrendingUp size={18} />
-                </div>
-              </div>
-              <div className="flex-1 flex flex-col items-center justify-center text-center space-y-4 py-8">
-                <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center text-muted-foreground/30">
-                  <Activity size={32} />
-                </div>
-                <p className="text-sm font-bold text-muted-foreground italic">Kommer snart: Realtidsdata för 10-åringen och styrräntor.</p>
-              </div>
-            </div>
-
-            {/* Empty Card: VIX-index */}
-            <div className="bg-card border border-border rounded-[2.5rem] p-8 shadow-xl shadow-black/5 flex flex-col group hover:border-primary/50 transition-all relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors" />
-              <div className="flex justify-between items-start mb-6 relative z-10">
-                <div className="space-y-1">
-                  <div className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">VOLATILITET</div>
-                  <div className="text-[9px] font-bold text-muted-foreground uppercase opacity-80">VIX Index (S&P 500)</div>
-                </div>
-                <div className="w-8 h-8 bg-primary/10 rounded-xl flex items-center justify-center text-primary">
-                  <Activity size={18} />
-                </div>
-              </div>
-              <div className="flex-1 flex flex-col items-center justify-center text-center space-y-4 py-8">
-                <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center text-muted-foreground/30">
-                  <TrendingDown size={32} />
-                </div>
-                <p className="text-sm font-bold text-muted-foreground italic">Kommer snart: Volatilitetsindex för att mäta marknadens oro.</p>
-              </div>
-            </div>
+            {/* Dynamic Macro Indicators */}
+            {Object.entries(macroData).map(([key, item]) => {
+              const meta = MACRO_METADATA[key] || {
+                category: "MAKRO",
+                title: key,
+                description: "Marknadsdata från databasen.",
+                impact: "Påverkar marknadens generella riskaptit."
+              };
+              
+              return (
+                <DetailedIndicator 
+                  key={key}
+                  category={meta.category}
+                  date={new Date(item.updatedAt).toLocaleDateString('sv-SE')}
+                  title={meta.title}
+                  trend={item.trend}
+                  change={item.trend === "up" ? "Upp" : item.trend === "down" ? "Ner" : "Oförändrad"}
+                  value={item.value + (key.includes("SEK") ? " kr" : key === "OMX30" ? "" : "%")}
+                  subValue={item.trend === "up" ? "Stigande trend" : item.trend === "down" ? "Fallande trend" : "Stabil trend"}
+                  description={meta.description}
+                  impact={meta.impact}
+                />
+              );
+            })}
           </div>
         </section>
-
-        {/* Detailed Indicators Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <DetailedIndicator 
-            category="RÄNTOR"
-            date="2025-03-20"
-            title="RIKSBANKEN (Styrränta)"
-            trend="down"
-            change="-0,25%"
-            value="3,25%"
-            subValue="-0,25% sedan senaste beslut"
-            description="Sveriges styrränta påverkar bolån och företagens lånekostnader direkt."
-            impact="Sänkt ränta gynnar tillväxtbolag och investmentbolag vars innehav värderas upp när avkastningskravet sjunker."
-          />
-          <DetailedIndicator 
-            category="RÄNTOR"
-            date="2025-03-19"
-            title="FED (USA) (Styrränta)"
-            trend="down"
-            change="-0,25%"
-            value="4,75%"
-            subValue="-0,25% sedan senaste beslut"
-            description="USA:s centralbanks styrränta sätter tonen för den globala ekonomin och riskaptiten."
-            impact="En lägre Fed-ränta stärker riskaptiten globalt och gynnar tillväxtaktier och tillväxtmarknader."
-          />
-          <DetailedIndicator 
-            category="INFLATION"
-            date="2025-03-14"
-            title="INFLATION (KPIF) (Sverige)"
-            trend="up"
-            change="+0,1%"
-            value="1,5%"
-            subValue="+0,1% sedan senaste beslut"
-            description="Inflationstakten i Sverige rensat för direkta ränteeffekter (KPIF)."
-            impact="Inflation nära Riksbankens 2%-mål ger utrymme för fortsatta räntesänkningar under 2025."
-          />
-          <DetailedIndicator 
-            category="VALUTOR"
-            date="2025-03-21"
-            title="USD/SEK (Valuta)"
-            trend="down"
-            change="-0,02"
-            value="10,45"
-            subValue="-0,02 sedan senaste beslut"
-            description="Viktigt för exportbolag som Volvo, Ericsson och NVIDIA-exponerade portföljer."
-            impact="En starkare krona (lägre USD/SEK) pressar exportbolagens vinster i SEK-omräkning."
-          />
-          <DetailedIndicator 
-            category="VALUTOR"
-            date="2025-03-21"
-            title="EUR/SEK (Valuta)"
-            trend="up"
-            change="+0,01"
-            value="11,32"
-            subValue="+0,01 sedan senaste beslut"
-            description="Euron påverkar handeln inom Europa och svenska exportbolags marginaler."
-            impact="En svagare krona mot euron gynnar exportbolag med europeiska intäkter."
-          />
-          <DetailedIndicator 
-            category="INDEX"
-            date="2025-03-21"
-            title="OMXS30 (Index)"
-            trend="down"
-            change="-1,2%"
-            value="2 387"
-            subValue="-1,2% sedan senaste beslut"
-            description="De 30 mest omsatta aktierna på Nasdaq Stockholm."
-            impact="Bred marknadsnedgång pressar substansvärden i investmentbolag och bredportföljer."
-          />
-        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Main Content Area */}
