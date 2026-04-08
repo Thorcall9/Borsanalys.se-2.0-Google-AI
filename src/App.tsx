@@ -22,12 +22,14 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { AdminSubscribers } from "./components/AdminSubscribers";
 import PreviewHeaderPage from "./pages/PreviewHeader";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App() {
   return (
     <HelmetProvider>
       <Router>
         <ScrollToTop />
+        <Analytics />
         <ErrorBoundary>
           <AuthProvider>
             <ThemeProvider>
