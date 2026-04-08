@@ -327,7 +327,7 @@ export default function EvolutionDeepDive({
         {/* ── ÖVERSIKT ── */}
         <div id="oversikt">
           <FadeIn>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14,marginBottom:24}}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-6">
               <StatCard label="Börskurs" value="577,00 kr" sub="EVO.ST" accent/>
               <StatCard label="P/E (2026e)" value="9,6x" sub="Baserat på 5,7 EUR EPS"/>
               <StatCard label="EBITDA-marg." value="66,1%" sub="FY2025 utfall"/>
@@ -336,7 +336,7 @@ export default function EvolutionDeepDive({
 
             <Card mb={20}>
               <SectionLabel number="I" title="Företagsöversikt"/>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:28}}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
                 {[
                   ["Bakgrund & Struktur","Evolution grundades 2006 och är idag världens ledande B2B-leverantör av live casino-lösningar. Bolaget driver studior globalt och levererar mjukvara och tjänster till över 870 operatörskunder."],
                   ["Affärsmodell","Provisionsbaserad modell där Evolution tar en andel av operatörernas spelintäkter (GGR). Detta skapar skalbara intäkter med extremt höga marginaler och begränsad kapitalbindning."],
@@ -365,7 +365,7 @@ export default function EvolutionDeepDive({
           <FadeIn delay={100}>
             <Card mb={20}>
               <SectionLabel number="II" title="Strategisk Analys & Moat"/>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:24}}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 mb-6">
                 {[
                   ["Styrkor",T.green,T.greenL,[
                     "Dominerande B2B-position — 870+ operatörer, extremt höga switching costs och nätverkseffekter",
@@ -424,7 +424,7 @@ export default function EvolutionDeepDive({
               </div>
 
               <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>Moat-dimensioner</div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10}}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
                 {[
                   ["Nätverkseffekt","870+ operatörer skapar ett oslagbart ekosystem.","★★★★★"],
                   ["Switching Costs","Operatörer riskerar att tappa spelare vid byte.","★★★★★"],
@@ -506,7 +506,7 @@ export default function EvolutionDeepDive({
             </Card>
 
             <Card mb={20}>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:28}}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
                 <div>
                   <div style={{fontSize:12, fontWeight:800, color:T.ink, textTransform:"uppercase", letterSpacing:0.5, marginBottom:12}}>Balansräkning & Likviditet</div>
                   <p style={{fontSize:14, color:T.sub, lineHeight:1.7}}>
@@ -536,7 +536,7 @@ export default function EvolutionDeepDive({
                 </p>
               </div>
 
-              <div style={{display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14, marginBottom: 24}}>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-6">
                 {[
                   { label: "USA MARKNAD", value: "< 20%", sub: "POTENTIAL" },
                   { label: "LATAM", value: "~40 MEUR", sub: "PER KVARTAL" },
@@ -550,7 +550,7 @@ export default function EvolutionDeepDive({
                 ))}
               </div>
 
-              <div style={{display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20}}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {[
                   {
                     title: "USA — DET STORA PRISET, ÄNNU EJ INPRISAT",
@@ -585,7 +585,7 @@ export default function EvolutionDeepDive({
             <Card mb={20}>
               <SectionLabel number="V" title="Värderingsanalys & PEG"/>
               
-              <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, marginBottom:24}}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <h3 style={{fontSize:14, fontWeight:800, color:T.ink, textTransform:"uppercase", letterSpacing:0.5, marginBottom:12}}>Värderingsmultiplar</h3>
                   <table style={{width:"100%", borderCollapse:"collapse", fontSize:13}}>
@@ -662,7 +662,7 @@ export default function EvolutionDeepDive({
           <FadeIn delay={500}>
             <Card mb={20}>
               <SectionLabel number="VI" title="Riskprofil"/>���
-              <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, marginBottom:24}}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                 <div style={{background:T.redL, border:`1.5px solid ${T.red}33`, borderRadius:12, padding:20, borderLeft:`4px solid ${T.red}`}}>
                   <div style={{fontSize:11, fontWeight:800, color:T.red, textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Risknivå: Medel–Hög</div>
                   <div style={{fontSize:28, fontWeight:900, color:T.ink, marginBottom:4}}>3/5</div>
@@ -710,7 +710,7 @@ export default function EvolutionDeepDive({
                 </div>
               </div>
 
-              <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, marginBottom:24}}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                 <div>
                   <h3 style={{fontSize:14, fontWeight:800, color:T.ink, textTransform:"uppercase", letterSpacing:0.5, marginBottom:12}}>Risk-Reward Matrix</h3>
                   <p style={{fontSize:13, color:T.sub, lineHeight:1.7}}>
@@ -868,7 +868,7 @@ export default function EvolutionDeepDive({
           <FadeIn delay={600}>
             <Card mb={20}>
               <SectionLabel number="X" title="ESG & Makro"/>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:14}}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
                 {[
                   ["🌱","Miljö (E)","3/5","Neutral profil. Fokus på energieffektiva studios globalt.",T.muted,T.bg],
                   ["👥","Socialt (S)","3/5","Spelansvar är centralt. Samarbete med reglerade operatörer.",T.gold,T.goldL],
@@ -1093,7 +1093,7 @@ export default function EvolutionDeepDive({
           <FadeIn delay={900}>
             <Card mb={20}>
               <SectionHeader number="XII" title="Scenarier (Bull/Base/Bear)" />
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:16,marginTop:20}}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
                 {[
                   {label:"🚀 Bull Case",color:T.green,bg:T.greenL,prob:"25%",pris:"880 kr",
                     triggers:["USA-tillväxt accelererar","Asien normaliseras helt","Marginaler återhämtar sig mot 68%"],
