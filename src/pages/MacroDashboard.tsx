@@ -91,21 +91,21 @@ const INITIAL_EVENTS: MarketEvent[] = [
     id: "1",
     title: "Global likviditetskris och bankoro (Systemrisk)",
     impact: "negative",
-    description: "Efter flera räntehöjningar ser vi nu sprickor i det finansiella systemet. Marknaden fruktar en ny bankkris likt 2008, vilket drivit Fear & Greed Index till extrema nivåer (13).",
-    whyItMatters: "När förtroendet för banker vacklar fryser kreditmarknaden, vilket drabbar alla bolag oavsett sektor. Detta är den främsta anledningen till den extrema rädslan just nu.",
-    swedishCompanies: "Svenska storbanker (SEB, Swedbank, Handelsbanken) och fastighetsbolag som är beroende av obligationsmarknaden.",
-    usCompanies: "Regionala banker i USA och stora investmentbanker som Goldman Sachs och Morgan Stanley.",
-    winners: "Guld, statsobligationer (flykt till säkerhet) och defensiva bolag med starka kassaflöden."
+    description: "Efter en oöverträffad cykel av räntehöjningar ser vi nu djupa sprickor i det finansiella systemets fundament. Marknaden drar direkta paralleller till finanskrisen 2008 då panik kring orealiserade förluster i obligationsportföljer eskalerar. Detta har drivit vårt Fear & Greed Index till extremlåga nivåer, vilket signalerar en extrem marknadsrädsla (Systemic Risk).",
+    whyItMatters: "När förtroendet mellan finansiella institutioner vacklar uppstår en omedelbar frysning av interbank- och kreditmarknaden. Utan tillgång till likviditet drabbas bolag oavsett sektor av akuta refinansieringsproblem. Det är denna systemiska risk för en bred kreditkontraktion som tvingar kapital att fly aktiemarknaden mot riskfria tillgångar. Utvecklingen kräver ofta snabba interventioner från centralbankerna för att undvika en lågkonjunktur.",
+    swedishCompanies: "De svenska storbankerna (SEB, Swedbank, Handelsbanken) står i skottlinjen för ränte- och makrooro, även om deras underliggande kapitalsituation historiskt sett är extremt stabil. Det mest kritiska läget återfinns dock hos högt belånade kommersiella fastighetsbolag (ex. SBB, Balder, Heimstaden) vars massiva obligationsförfall gör dem mycket sårbara ifall obligationsmarknaden fryser helt.",
+    usCompanies: "Elden brinner starkast hos regionala amerikanska banker som dras med enorma orealiserade förluster inom kommersiella fastighetslån (CRE). Den globala smittoeffekten drabbar snabbt de stora systemkritiska investmentbankerna som Goldman Sachs och JPMorgan, vilka pressas av minskad M&A-aktivitet och behov av ökade reserveringar när motpartsriskerna stiger radikalt.",
+    winners: "I lägen av systemkris utklassar 'Safe Havens' allt annat. Guld (XAU) agerar ultimat hedge, jämte statsobligationer där underliggande värdeutveckling stiger när investerare förväntar sig räddande styrräntesänkningar. På aktiemarknaden söker sig kapital uteslutande till defensiva pjäser (t.ex. Axfood, Essity, AAK) vars kassaflöden är säkrade oavsett en allmän finansiell kollaps."
   },
   {
     id: "2",
     title: "Eskalerande geopolitisk konflikt (Mellanöstern)",
     impact: "negative",
-    description: "Konflikten i Mellanöstern har nått en ny kritisk punkt med direkta hot mot globala handelsrutter. Oljepriset är extremt volatilt och osäkerheten är total.",
-    whyItMatters: "Geopolitisk osäkerhet är en klassisk drivkraft för 'Extreme Fear'. Det skapar osäkerhet kring energiförsörjning och global handel.",
-    swedishCompanies: "Exportbolag som Volvo och Sandvik drabbas av logistikstörningar. Flygbolag som SAS drabbas av högre bränslekostnader.",
-    usCompanies: "Försvarsbolag (Lockheed Martin) ser ökad efterfrågan, medan transportbolag (FedEx, UPS) ser ökade kostnader.",
-    winners: "Energibolag och försvarsindustri."
+    description: "Konflikten i Mellanöstern har nått en oerhört kritisk eskaleringspunkt där direkta hot mot globala logistiknoder och fartygsleder nu realt påverkar världshandeln. Oljemarknaden upplever brutal volatilitet då aktörer börjar prisa in en reell risk för bestående störningar kring Hormuzsundet och Röda havet.",
+    whyItMatters: "En eskalerande konflikt i världens hjärta för energiproduktion riskerar att skapa en inflationär chock (‘stagflation’) i absolut sämsta tänkbara läge för Riksbanken och FED. Minskad framkomlighet i Suez-kanalen tvingar global frakt runt Afrikas horn, vilket drastiskt fördyrar fraktavgifter och massivt förlänger ledtider. Detta slår mot global BNP-tillväxt och spär på underliggande inflation.",
+    swedishCompanies: "Den extremt exporttunga svenska verkstadsindustrin (Volvo, Sandvik, Atlas Copco, Alfa Laval) är djupt sårbar för plötsliga leveransstörningar och skenande fraktkostnader. Vidare drabbas all transport- och reseindustri (som SAS och rederier med ohedgade bränsleinköp) av stark marginalpress till följd av exploderande energipriser.",
+    usCompanies: "Globala transportjättar som Amazon, FedEx och UPS pressas svårt av oplanerade drifthöjningar för frakt och drivmedel, vilket omedelbart försämrar prognoserna framåt. I samma andetag agerar oroligheterna raketbränsle ifall amerikanska aktörer med omfattande försvarskontrakt kallas in.",
+    winners: "Energisektorn blir den tvivellösa direkta vinnaren — olje- och gasjättar (ExxonMobil, Chevron) samt diversifierade rederier cashar in på en premiumprissatt marknad på grund av utbudsoro. Samtidigt omvärderas Försvarsindustrin (Lockheed Martin, Saab, BAE Systems) strukturellt uppåt och trendar urstarkt då västvärlden omedelbart ökar sina framtida materielanslag."
   }
 ];
 
