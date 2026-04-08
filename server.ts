@@ -279,6 +279,12 @@ async function startServer() {
     });
   }
 
+  // SPA Fallback: Serve index.html for all other routes
+  app.get("*", (req, res) => {
+    const distPath = path.join(process.cwd(), "dist");
+    res.sendFile(path.join(distPath, "index.html"));
+  });
+
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on http://localhost:${PORT}`);
     console.log(`[SERVER] Ready to handle requests.`);
