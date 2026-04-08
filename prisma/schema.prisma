@@ -47,3 +47,15 @@ model MacroMarketData {
   trend     String?  // "up", "down", "flat"
   updatedAt DateTime @updatedAt
 }
+
+model MarketEvent {
+  id                String   @id @default(cuid())
+  title             String
+  impact            String   // "positive", "negative", "neutral"
+  description       String
+  whyItMatters      String
+  swedishCompanies  String
+  usCompanies       String
+  winners           String
+  createdAt         DateTime @default(now())
+}

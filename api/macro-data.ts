@@ -14,15 +14,23 @@ export default async function handler(req: Request, res: Response) {
     });
 
     // 2. Formatera om datan till ett objekt (Key-Value) för smidigare användning i frontend
-    const formattedData: Record<string, { value: number; trend: string; updatedAt: Date }> = {};
+    const formattedData: Record<string, { value: number; trend: string; updatedAt: Date; source: string; isStale: boolean }> = {};
+
+    const STALE_THRESHOLD_MS = 24 * 60 * 60 * 1000; // 24 timmar
+    const now = new Date();
 
     data.forEach(item => {
       // Vi sparar endast den senaste versionen av varje unik nyckel (t.ex. US10Y)
       if (!formattedData[item.key]) {
+        const updatedAt = item.updatedAt;
+        const isStale = (now.getTime() - updatedAt.getTime()) > STALE_THRESHOLD_MS;
+
         formattedData[item.key] = {
           value: item.value,
           trend: item.trend || 'flat',
-          updatedAt: item.updatedAt
+          updatedAt: updatedAt,
+          source: item.source || 'unknown',
+          isStale: isStale
         };
       }
     });

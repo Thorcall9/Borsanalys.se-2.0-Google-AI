@@ -17,6 +17,8 @@ interface MacroData {
   value: number;
   trend: "up" | "down" | "flat";
   updatedAt: string;
+  source?: string;
+  isStale?: boolean;
 }
 
 const FALLBACK_DATA: Record<string, MacroData> = {
@@ -28,42 +30,44 @@ const FALLBACK_DATA: Record<string, MacroData> = {
   Inflation: { value: 0.5, trend: "flat", updatedAt: new Date().toISOString() }
 };
 
-const MACRO_METADATA: Record<string, { category: string, title: string, description: string, impact: string }> = {
+const MACRO_METRICS = ["US10Y", "SE10Y", "USDSEK", "EURSEK", "OMX30", "Inflation"];
+
+const MACRO_METADATA: Record<string, { category: string, title: string, description: string, impact: (val: number) => string }> = {
   US10Y: {
     category: "RÄNTOR",
     title: "US 10Y Treasury Yield",
     description: "USA:s 10-åriga statsobligationsränta sätter tonen för den globala ekonomin och riskaptiten.",
-    impact: "Nuvarande högre nivåer (4.34%) pressar värderingar på tillväxtaktier och ökar avkastningskravet globalt."
+    impact: (val) => `Nuvarande nivå på ${val.toFixed(2)}% påverkar värderingar på tillväxtaktier och ökar avavkastningskravet globalt.`
   },
   SE10Y: {
     category: "RÄNTOR",
     title: "Svensk 10Y Statsobligation",
     description: "Sveriges 10-åriga statsobligationsränta påverkar bolån och företagens lånekostnader direkt.",
-    impact: "Nivån runt 2.85% speglar en viss ränteoro, vilket dämpar fastighetssektorn men gynnar räntebärande placeringar."
+    impact: (val) => `Nivån runt ${val.toFixed(2)}% speglar ränteförväntningar, vilket dämpar fastighetssektorn men gynnar räntebärande placeringar.`
   },
   USDSEK: {
     category: "VALUTOR",
-    title: "USD/SEK (Valuta)",
+    title: "USD/SEK",
     description: "Viktigt för exportbolag som Volvo, Ericsson och NVIDIA-exponerade portföljer.",
-    impact: "En betydligt starkare krona (9.56) pressar exportbolagens vinster vid omräkning från dollar."
+    impact: (val) => `En kurs på ${val.toFixed(2)} kr påverkar exportbolagens vinster vid omräkning från dollar.`
   },
   EURSEK: {
     category: "VALUTOR",
-    title: "EUR/SEK (Valuta)",
+    title: "EUR/SEK",
     description: "Euron påverkar handeln inom Europa och svenska exportbolags marginaler.",
-    impact: "Kronans styrka mot euron (10.95) är positiv för importörer men utmanande för export till Europa."
+    impact: (val) => `Kronans nivå mot euron (${val.toFixed(2)}) är avgörande för svenska exportbolags konkurrenskraft i Europa.`
   },
   OMX30: {
     category: "INDEX",
-    title: "OMXS30 (Index)",
+    title: "OMXS30",
     description: "De 30 mest omsatta aktierna på Nasdaq Stockholm.",
-    impact: "Indexet handlas runt 2900-nivån. Volatilitet i räntor och valutor skapar osäkerhet i de tunga industribolagen."
+    impact: (val) => `Indexet vid ${val.toLocaleString()} speglar det generella sentimentet för Sveriges största bolag.`
   },
   Inflation: {
     category: "INFLATION",
     title: "Inflation (KPI)",
     description: "Inflationstakten mäter hur snabbt priserna på varor och tjänster ökar.",
-    impact: "Låg inflation (0.5%) ger Riksbanken utrymme för lättnader, men fokus ligger nu på den globala ränteutvecklingen."
+    impact: (val) => `Nivån på ${val.toFixed(1)}% styr Riksbankens framtida räntebeslut och hushållens köpkraft.`
   }
 };
 
@@ -76,11 +80,9 @@ interface MarketEvent {
   impact: "positive" | "negative" | "neutral";
   description: string;
   whyItMatters: string;
-  affectedCompanies: {
-    swedish: string;
-    us: string;
-    winners: string;
-  };
+  swedishCompanies: string;
+  usCompanies: string;
+  winners: string;
   aiInsight?: string;
 }
 
@@ -91,11 +93,9 @@ const INITIAL_EVENTS: MarketEvent[] = [
     impact: "negative",
     description: "Efter flera räntehöjningar ser vi nu sprickor i det finansiella systemet. Marknaden fruktar en ny bankkris likt 2008, vilket drivit Fear & Greed Index till extrema nivåer (13).",
     whyItMatters: "När förtroendet för banker vacklar fryser kreditmarknaden, vilket drabbar alla bolag oavsett sektor. Detta är den främsta anledningen till den extrema rädslan just nu.",
-    affectedCompanies: {
-      swedish: "Svenska storbanker (SEB, Swedbank, Handelsbanken) och fastighetsbolag som är beroende av obligationsmarknaden.",
-      us: "Regionala banker i USA och stora investmentbanker som Goldman Sachs och Morgan Stanley.",
-      winners: "Guld, statsobligationer (flykt till säkerhet) och defensiva bolag med starka kassaflöden."
-    }
+    swedishCompanies: "Svenska storbanker (SEB, Swedbank, Handelsbanken) och fastighetsbolag som är beroende av obligationsmarknaden.",
+    usCompanies: "Regionala banker i USA och stora investmentbanker som Goldman Sachs och Morgan Stanley.",
+    winners: "Guld, statsobligationer (flykt till säkerhet) och defensiva bolag med starka kassaflöden."
   },
   {
     id: "2",
@@ -103,11 +103,9 @@ const INITIAL_EVENTS: MarketEvent[] = [
     impact: "negative",
     description: "Konflikten i Mellanöstern har nått en ny kritisk punkt med direkta hot mot globala handelsrutter. Oljepriset är extremt volatilt och osäkerheten är total.",
     whyItMatters: "Geopolitisk osäkerhet är en klassisk drivkraft för 'Extreme Fear'. Det skapar osäkerhet kring energiförsörjning och global handel.",
-    affectedCompanies: {
-      swedish: "Exportbolag som Volvo och Sandvik drabbas av logistikstörningar. Flygbolag som SAS drabbas av högre bränslekostnader.",
-      us: "Försvarsbolag (Lockheed Martin) ser ökad efterfrågan, medan transportbolag (FedEx, UPS) ser ökade kostnader.",
-      winners: "Energibolag och försvarsindustri."
-    }
+    swedishCompanies: "Exportbolag som Volvo och Sandvik drabbas av logistikstörningar. Flygbolag som SAS drabbas av högre bränslekostnader.",
+    usCompanies: "Försvarsbolag (Lockheed Martin) ser ökad efterfrågan, medan transportbolag (FedEx, UPS) ser ökade kostnader.",
+    winners: "Energibolag och försvarsindustri."
   }
 ];
 
@@ -187,8 +185,38 @@ export default function MacroDashboard() {
       }
     };
 
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("/api/market-events");
+        if (response.ok) {
+          const data = await response.json();
+          if (Array.isArray(data) && data.length > 0) {
+            setEvents(data);
+          }
+        }
+      } catch (error) {
+        console.error("Market Events Fetch Error:", error);
+      }
+    };
+
     fetchMacroData();
+    fetchEvents();
   }, []);
+
+  const refreshData = async () => {
+    setLoadingMacro(true);
+    try {
+      const response = await fetch("/api/macro-data");
+      if (response.ok) {
+        const data = await response.json();
+        setMacroData(data);
+      }
+    } catch (error) {
+      console.error("Manual Refresh Error:", error);
+    } finally {
+      setTimeout(() => setLoadingMacro(false), 500);
+    }
+  };
 
   useEffect(() => {
     const fetchFearGreed = async () => {
@@ -301,51 +329,6 @@ export default function MacroDashboard() {
       </header>
 
       <div className="max-w-7xl mx-auto px-6 mt-12 space-y-16">
-        {/* Market Pulse & Macro Section */}
-        <section className="space-y-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <h2 className="text-4xl font-black tracking-tighter">Marknadens Puls & Makro</h2>
-              <p className="text-muted-foreground font-medium mt-2">Realtidsdata för att navigera marknadens humör och trender.</p>
-            </div>
-            <div className="text-[10px] font-black uppercase tracking-widest text-primary/60 bg-primary/5 px-4 py-2 rounded-full border border-primary/10">
-              Live Uppdatering: {new Date().toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' })}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Fear & Greed Gauge */}
-            <div className="lg:col-span-1">
-              <FearAndGreedGauge />
-            </div>
-
-            {/* Dynamic Macro Indicators */}
-            {Object.entries(macroData).map(([key, item]) => {
-              const meta = MACRO_METADATA[key] || {
-                category: "MAKRO",
-                title: key,
-                description: "Marknadsdata från databasen.",
-                impact: "Påverkar marknadens generella riskaptit."
-              };
-              
-              return (
-                <DetailedIndicator 
-                  key={key}
-                  category={meta.category}
-                  date={new Date(item.updatedAt).toLocaleDateString('sv-SE')}
-                  title={meta.title}
-                  trend={item.trend}
-                  change={item.trend === "up" ? "Upp" : item.trend === "down" ? "Ner" : "Oförändrad"}
-                  value={item.value + (key.includes("SEK") ? " kr" : key === "OMX30" ? "" : "%")}
-                  subValue={item.trend === "up" ? "Stigande trend" : item.trend === "down" ? "Fallande trend" : "Stabil trend"}
-                  description={meta.description}
-                  impact={meta.impact}
-                />
-              );
-            })}
-          </div>
-        </section>
-
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Main Content Area */}
           <div className="lg:col-span-8 space-y-12">
@@ -418,15 +401,15 @@ export default function MacroDashboard() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           <div className="p-4 bg-red-500/5 rounded-xl border border-red-500/10">
                             <div className="text-[10px] font-black uppercase tracking-widest text-red-500 mb-2">Svenska Aktier</div>
-                            <p className="text-[11px] font-bold leading-relaxed">{event.affectedCompanies.swedish}</p>
+                            <p className="text-[11px] font-bold leading-relaxed">{event.swedishCompanies}</p>
                           </div>
                           <div className="p-4 bg-orange-500/5 rounded-xl border border-orange-500/10">
                             <div className="text-[10px] font-black uppercase tracking-widest text-orange-500 mb-2">USA Aktier</div>
-                            <p className="text-[11px] font-bold leading-relaxed">{event.affectedCompanies.us}</p>
+                            <p className="text-[11px] font-bold leading-relaxed">{event.usCompanies}</p>
                           </div>
                           <div className="p-4 bg-emerald-400/5 rounded-xl border border-emerald-400/10">
                             <div className="text-[10px] font-black uppercase tracking-widest text-emerald-400 mb-2">Vinnare</div>
-                            <p className="text-[11px] font-bold leading-relaxed">{event.affectedCompanies.winners}</p>
+                            <p className="text-[11px] font-bold leading-relaxed">{event.winners}</p>
                           </div>
                         </div>
                       </div>
@@ -471,6 +454,68 @@ export default function MacroDashboard() {
                   <div className="p-12 text-center bg-card border border-border rounded-[2rem]">
                     <p className="text-muted-foreground">Inga makrohändelser hittades för tillfället.</p>
                   </div>
+                )}
+              </div>
+            </section>
+
+            {/* Market Pulse & Macro Section (Moved down) */}
+            <section className="space-y-8">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                  <h2 className="text-4xl font-black tracking-tighter">Marknadens Puls & Makro</h2>
+                  <p className="text-muted-foreground font-medium mt-2">Realtidsdata för att navigera marknadens humör och trender.</p>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="text-[10px] font-black uppercase tracking-widest text-primary/60 bg-primary/5 px-4 py-2 rounded-full border border-primary/10">
+                    Senaste synk: {Object.values(macroData).length > 0 
+                      ? new Date(Math.max(...Object.values(macroData).map(v => new Date(v.updatedAt).getTime()))).toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' })
+                      : "..."
+                    }
+                  </div>
+                  <button 
+                    onClick={refreshData}
+                    disabled={loadingMacro}
+                    className="p-2 hover:bg-primary/10 rounded-full transition-colors text-primary disabled:opacity-50"
+                    title="Uppdatera dashboard"
+                  >
+                    <Activity size={18} className={loadingMacro ? "animate-spin" : ""} />
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {/* Fear & Greed Gauge */}
+                <div className="lg:col-span-1">
+                  <FearAndGreedGauge />
+                </div>
+
+                {/* Dynamic Macro Indicators */}
+                {loadingMacro ? (
+                  MACRO_METRICS.map((key) => <SkeletonIndicator key={key} />)
+                ) : (
+                  MACRO_METRICS.map((key) => {
+                    const item = macroData[key];
+                    const meta = MACRO_METADATA[key];
+                    
+                    if (!item || !meta) return null;
+                    
+                    return (
+                      <DetailedIndicator 
+                        key={key}
+                        category={meta.category}
+                        date={new Date(item.updatedAt).toLocaleDateString('sv-SE')}
+                        title={meta.title}
+                        trend={item.trend}
+                        change={item.trend === "up" ? "Upp" : item.trend === "down" ? "Ner" : "Oförändrad"}
+                        value={Number(item.value).toFixed(2) + (key.includes("SEK") ? " kr" : key === "OMX30" ? "" : "%")}
+                        subValue={item.trend === "up" ? "Stigande trend" : item.trend === "down" ? "Fallande trend" : "Stabil trend"}
+                        description={meta.description}
+                        impact={meta.impact(item.value)}
+                        source={item.source}
+                        isStale={item.isStale}
+                      />
+                    );
+                  })
                 )}
               </div>
             </section>
@@ -659,14 +704,20 @@ export default function MacroDashboard() {
   );
 }
 
-function DetailedIndicator({ category, date, title, trend, change, value, subValue, description, impact }: any) {
+function DetailedIndicator({ category, date, title, trend, change, value, subValue, description, impact, source, isStale }: any) {
   return (
     <motion.div 
       whileHover={{ y: -5 }}
-      className="bg-card border border-border rounded-[2.5rem] p-8 shadow-xl shadow-black/5 flex flex-col group hover:border-primary/50 transition-all relative overflow-hidden"
+      className={`bg-card border ${isStale ? 'border-amber-500/30' : 'border-border'} rounded-[2.5rem] p-8 shadow-xl shadow-black/5 flex flex-col group hover:border-primary/50 transition-all relative overflow-hidden`}
     >
       <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors" />
       
+      {isStale && (
+        <div className="absolute top-4 right-8 px-2 py-0.5 bg-amber-500/10 text-amber-500 text-[8px] font-black uppercase tracking-widest rounded-full border border-amber-500/20 z-20">
+          Fördröjd data
+        </div>
+      )}
+
       <div className="flex justify-between items-start mb-6 relative z-10">
         <div className="space-y-1">
           <div className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">{category}</div>
@@ -690,13 +741,44 @@ function DetailedIndicator({ category, date, title, trend, change, value, subVal
         {description}
       </p>
 
-      <div className="mt-auto pt-6 border-t border-border">
-        <div className="text-[9px] font-black text-foreground uppercase tracking-widest mb-2">Marknadspåverkan</div>
-        <p className="text-[11px] font-bold leading-relaxed text-primary/80 italic">
-          {impact}
-        </p>
+      <div className="mt-auto pt-6 border-t border-border flex flex-col gap-4">
+        <div>
+          <div className="text-[9px] font-black text-foreground uppercase tracking-widest mb-2">Marknadspåverkan</div>
+          <p className="text-[11px] font-bold leading-relaxed text-primary/80 italic">
+            {impact}
+          </p>
+        </div>
+        {source && (
+          <div className="text-[8px] font-black text-muted-foreground/40 uppercase tracking-widest">
+            Källa: {source}
+          </div>
+        )}
       </div>
     </motion.div>
+  );
+}
+
+function SkeletonIndicator() {
+  return (
+    <div className="bg-card border border-border rounded-[2.5rem] p-8 shadow-xl shadow-black/5 flex flex-col animate-pulse">
+      <div className="flex justify-between items-start mb-6">
+        <div className="space-y-2">
+          <div className="h-3 w-16 bg-muted rounded" />
+          <div className="h-2 w-24 bg-muted/60 rounded" />
+        </div>
+        <div className="h-4 w-12 bg-muted rounded" />
+      </div>
+      <div className="mb-6 space-y-3">
+        <div className="h-4 w-32 bg-muted rounded" />
+        <div className="h-10 w-24 bg-muted rounded" />
+        <div className="h-3 w-20 bg-muted/60 rounded" />
+      </div>
+      <div className="h-12 w-full bg-muted/30 rounded-xl mb-6" />
+      <div className="mt-auto pt-6 border-t border-border">
+        <div className="h-2 w-20 bg-muted mb-2" />
+        <div className="h-8 w-full bg-muted/40 rounded" />
+      </div>
+    </div>
   );
 }
 

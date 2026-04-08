@@ -9,13 +9,15 @@ import { analyses } from "./src/data/analyses.ts";
 import { updateAllMacroData } from "./src/lib/macroUpdater.ts";
 import marketSentimentHandler from "./api/market-sentiment.ts";
 import macroDataHandler from "./api/macro-data.ts";
+import marketEventsHandler from "./api/market-events.ts";
+import generateEventsHandler from "./api/admin/generate-events.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = Number(process.env.PORT) || 3000;
 
   app.use(express.json());
 
@@ -108,6 +110,12 @@ async function startServer() {
 
   // Macro Data Proxy
   app.get("/api/macro-data", macroDataHandler as any);
+
+  // Market Events
+  app.get("/api/market-events", marketEventsHandler as any);
+
+  // Admin: Generate AI Events
+  app.all("/api/admin/generate-events", generateEventsHandler as any);
 
   // Alias for backward compatibility if needed, or just redirect
   app.get("/api/fear-greed", (req, res) => {
