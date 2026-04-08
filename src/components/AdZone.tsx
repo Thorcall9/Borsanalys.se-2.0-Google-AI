@@ -7,8 +7,16 @@ interface AdZoneProps {
 }
 
 const AdZone: React.FC<AdZoneProps> = ({ id, type = "inline", className = "" }) => {
-  // In the future, you can integrate Google AdSense or other providers here.
-  // For now, we show a subtle placeholder that matches the site's aesthetic.
+  // SEO-annonser förberedda.
+  // Byt denna till 'true' i framtiden när Google AdSense är redo för produktion.
+  const SHOW_ADS_IN_PROD = false;
+  
+  // Visar platshållare enbart lokalt för dig, men förblir osynlig för användare i produktion.
+  const isVisible = process.env.NODE_ENV === 'development' || SHOW_ADS_IN_PROD;
+
+  if (!isVisible) {
+    return <div id={`ad-zone-${id}`} className="hidden" aria-hidden="true" />;
+  }
   
   const getStyles = () => {
     switch (type) {

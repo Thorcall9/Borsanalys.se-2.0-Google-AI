@@ -42,6 +42,7 @@ import { fetchWithCache } from "../services/stockService";
 import { useAuth } from "../contexts/AuthContext";
 import { db, handleFirestoreError, OperationType } from "../firebase";
 import { collection, query, where, addDoc, deleteDoc, doc, onSnapshot } from "firebase/firestore";
+import AdZone from "../components/AdZone";
 
 export default function Analysis() {
   const { slug: rawSlug } = useParams();
@@ -253,6 +254,8 @@ export default function Analysis() {
               </div>
             )}
           </motion.div>
+
+          <AdZone id="archive-top" type="banner" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {filteredAnalyses.length > 0 ? (

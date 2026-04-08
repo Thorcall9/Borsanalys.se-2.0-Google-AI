@@ -230,6 +230,10 @@ export default function AnalysisLayout({
             </motion.div>
           )}
           {children}
+
+          <div className="mt-20 border-t border-border/50 pt-16">
+            <AdZone id="analysis-bottom" type="banner" />
+          </div>
         </div>
       </main>
     </div>
