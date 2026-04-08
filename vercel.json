@@ -4,5 +4,8 @@
       "path": "/api/admin/update-macro",
       "schedule": "0 5 * * *" 
     }
+  ],
+  "rewrites": [
+    { "source": "/analyser/rss", "destination": "/api/rss" }
   ]
 }

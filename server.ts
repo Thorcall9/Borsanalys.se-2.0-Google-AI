@@ -11,6 +11,7 @@ import marketSentimentHandler from "./api/market-sentiment.ts";
 import macroDataHandler from "./api/macro-data.ts";
 import marketEventsHandler from "./api/market-events.ts";
 import generateEventsHandler from "./api/admin/generate-events.ts";
+import rssHandler from "./api/rss.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -259,44 +260,7 @@ async function startServer() {
   });
 
   // RSS Feed for Analyser items
-  app.get('/analyser/rss', (req, res) => {
-    const baseUrl = 'https://www.borsanalys.se';
-
-    const posts = [
-      {
-        title: 'Nvidia analys',
-        description: 'Fullständig analys av Nvidia 2026',
-        link: `${baseUrl}/analyser/nvidia`,
-        pubDate: new Date().toUTCString(),
-      },
-      {
-        title: 'Microsoft analys',
-        description: 'Djupdykning i Microsoft',
-        link: `${baseUrl}/analyser/microsoft`,
-        pubDate: new Date().toUTCString(),
-      },
-    ];
-
-    const rss = `<?xml version="1.0" encoding="UTF-8" ?>
-<rss version="2.0">
-  <channel>
-    <title>Börsanalys</title>
-    <link>${baseUrl}</link>
-    <description>Senaste analyser från Börsanalys</description>
-    ${posts.map(post => `
-    <item>
-      <title><![CDATA[${post.title}]]></title>
-      <link>${post.link}</link>
-      <description><![CDATA[${post.description}]]></description>
-      <pubDate>${post.pubDate}</pubDate>
-      <guid>${post.link}</guid>
-    </item>`).join('')}
-  </channel>
-</rss>`;
-
-    res.setHeader('Content-Type', 'application/rss+xml; charset=utf-8');
-    res.status(200).send(rss);
-  });
+  app.get('/analyser/rss', rssHandler as any);
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
