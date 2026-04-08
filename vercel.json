@@ -6,6 +6,7 @@
     }
   ],
   "rewrites": [
-    { "source": "/analyser/rss", "destination": "/api/rss" }
+    { "source": "/analyser/rss", "destination": "/api/rss" },
+    { "source": "/sitemap.xml", "destination": "/api/sitemap" }
   ]
 }

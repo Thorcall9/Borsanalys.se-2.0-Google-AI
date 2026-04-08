@@ -12,6 +12,7 @@ import macroDataHandler from "./api/macro-data.ts";
 import marketEventsHandler from "./api/market-events.ts";
 import generateEventsHandler from "./api/admin/generate-events.ts";
 import rssHandler from "./api/rss.ts";
+import sitemapHandler from "./api/sitemap.ts";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -261,6 +262,7 @@ async function startServer() {
 
   // RSS Feed for Analyser items
   app.get('/analyser/rss', rssHandler as any);
+  app.get('/sitemap.xml', sitemapHandler as any);
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
