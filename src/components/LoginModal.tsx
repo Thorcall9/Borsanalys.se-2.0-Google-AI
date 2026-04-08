@@ -86,15 +86,17 @@ export const LoginModal: React.FC = () => {
               </div>
 
               {/* Social Logins */}
-              <div className="grid grid-cols-2 gap-3">
+              <div className="flex flex-col gap-3">
                 <button
                   onClick={loginWithGoogle}
-                  className="flex items-center justify-center gap-2 px-4 py-3 bg-white text-black rounded-xl font-bold border border-border hover:bg-gray-50 transition-all group text-sm"
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-white text-black rounded-xl font-bold border border-border hover:bg-gray-50 transition-all group text-sm"
                 >
                   <img src="https://www.google.com/favicon.ico" alt="Google" className="w-4 h-4 group-hover:scale-110 transition-transform" />
-                  Google
+                  Fortsätt med Google
                 </button>
 
+                {/* 
+                Temporarily hidden until configured in Firebase Console 
                 <button
                   onClick={loginWithFacebook}
                   className="flex items-center justify-center gap-2 px-4 py-3 bg-[#1877F2] text-white rounded-xl font-bold hover:bg-[#166fe5] transition-all group text-sm"
@@ -115,15 +117,10 @@ export const LoginModal: React.FC = () => {
                   onClick={loginWithMicrosoft}
                   className="col-span-2 flex items-center justify-center gap-2 px-4 py-3 bg-white text-black rounded-xl font-bold border border-border hover:bg-gray-50 transition-all group text-sm"
                 >
-                  <svg className="w-4 h-4 group-hover:scale-110 transition-transform" viewBox="0 0 23 23">
-                    <path fill="#f3f3f3" d="M0 0h23v23H0z"/>
-                    <path fill="#f35325" d="M1 1h10v10H1z"/>
-                    <path fill="#81bc06" d="M12 1h10v10H12z"/>
-                    <path fill="#05a6f0" d="M1 12h10v10H1z"/>
-                    <path fill="#ffba08" d="M12 12h10v10H12z"/>
-                  </svg>
+                  ... (Microsoft SVG)
                   Fortsätt med Microsoft
                 </button>
+                */}
               </div>
 
               <div className="relative">
