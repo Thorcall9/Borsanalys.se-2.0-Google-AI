@@ -293,12 +293,7 @@ export default function NvidiaDeepDive({
                 <div className="flex items-center gap-2">
                   <div className="text-2xl font-black text-slate-900">215 USD</div>
                 </div>
-                <p className="text-[10px] leading-tight text-slate-500 mt-2 mb-4">12 månaders sikt</p>
-                <button 
-                  className="w-full bg-[#76B900] hover:bg-[#659e00] text-white text-[11px] font-black py-2 rounded-lg transition-colors flex items-center justify-center gap-2"
-                >
-                  Lås upp full analys
-                </button>
+                <p className="text-[10px] leading-tight text-slate-500 mt-2">12 månaders sikt</p>
               </div>
               <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity text-[#76B900]">
                 <Zap size={80} fill="currentColor" />

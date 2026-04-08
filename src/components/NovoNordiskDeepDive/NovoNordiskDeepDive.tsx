@@ -314,15 +314,9 @@ export default function NovoNordiskDeepDive({
               <div className="relative z-10">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Riktkurs</span>
                 <div className="flex items-center gap-2">
-                  <div className="text-2xl font-black text-slate-900 blur-[4px] select-none">395 kr</div>
-                  <Lock size={16} className="text-[#00A86B]" />
+                  <div className="text-2xl font-black text-slate-900">395 kr</div>
                 </div>
-                <p className="text-[10px] leading-tight text-slate-500 mt-2 mb-4">Logga in för att se vår riktkurs och motivering</p>
-                <button 
-                  className="w-full bg-[#00A86B] hover:bg-[#008f5b] text-white text-[11px] font-black py-2 rounded-lg transition-colors flex items-center justify-center gap-2"
-                >
-                  Lås upp riktkurs
-                </button>
+                <p className="text-[10px] leading-tight text-slate-500 mt-2">vårat base case för 2026</p>
               </div>
               <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity text-[#00A86B]">
                 <Star size={80} fill="currentColor" />
