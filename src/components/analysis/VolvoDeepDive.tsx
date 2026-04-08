@@ -298,13 +298,6 @@ export default function VolvoDeepDive({
         {/* ── ÖVERSIKT ── */}
         <div id="oversikt">
           <FadeIn>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-              <StatCard label="Börskurs" value="324 kr" sub="VOLV-B" accent/>
-              <StatCard label="Börsvärde" value="660 Mdr" sub="Large Cap"/>
-              <StatCard label="P/E-tal" value="12,0" sub="Rimlig värdering"/>
-              <StatCard label="Direktavkastning" value="4,0%" sub="Föreslagen utdelning"/>
-            </div>
-
             <Card mb={20}>
               <SectionLabel number="I" title="Företagsöversikt"/>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-7">

@@ -369,13 +369,6 @@ export default function NovoNordiskDeepDive({
         {/* ── ÖVERSIKT ── */}
         <div id="oversikt">
           <FadeIn>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14,marginBottom:24}}>
-              <StatCard label="Börskurs" value="~DKK 236" sub="Mars 2026 estimat" accent/>
-              <StatCard label="Börsvärde" value="~DKK 1 050 Mdr" sub="−62% från ATH"/>
-              <StatCard label="P/E 2026e" value="~10,4×" sub="Historiskt lågt"/>
-              <StatCard label="Direktavk." value="~4,8%" sub="2026 estimat"/>
-            </div>
-
             <Card mb={20}>
               <SectionLabel number="I" title="Företagsöversikt"/>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:28}}>

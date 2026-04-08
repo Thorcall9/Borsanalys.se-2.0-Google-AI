@@ -322,13 +322,6 @@ export default function EvolutionDeepDive({
         {/* ── ÖVERSIKT ── */}
         <div id="oversikt">
           <FadeIn>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 mb-6">
-              <StatCard label="Börskurs" value="577,00 kr" sub="EVO.ST" accent/>
-              <StatCard label="P/E (2026e)" value="9,6x" sub="Baserat på 5,7 EUR EPS"/>
-              <StatCard label="EBITDA-marg." value="66,1%" sub="FY2025 utfall"/>
-              <StatCard label="Nettokassa" value="818 MEUR" sub="Likvida medel"/>
-            </div>
-
             <Card mb={20}>
               <SectionLabel number="I" title="Företagsöversikt"/>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-7">

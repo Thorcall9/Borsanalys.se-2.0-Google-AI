@@ -312,13 +312,6 @@ export default function InvestorDeepDive({
         {/* ── ÖVERSIKT ── */}
         <div id="oversikt">
           <FadeIn>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14,marginBottom:24}}>
-              <StatCard label="Börskurs" value="330,40 kr" sub="INVE-B" accent/>
-              <StatCard label="Substansvärde" value="355 kr" sub="Justerat NAV"/>
-              <StatCard label="Rabatt" value="−7%" sub="Historiskt snitt ~10-15%"/>
-              <StatCard label="Utdelning" value="5,60 kr" sub="2026e estimat"/>
-            </div>
-
             <Card mb={20}>
               <SectionLabel number="I" title="Företagsöversikt"/>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:28}}>

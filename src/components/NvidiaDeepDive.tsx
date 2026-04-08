@@ -345,34 +345,12 @@ export default function NvidiaDeepDive({
         {/* ── ÖVERSIKT ── */}
         <div id="oversikt">
           <AnalysisFadeIn>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-              <StatCard label="Börskurs" value="~178 USD" sub="NASDAQ: NVDA" accent/>
-              <StatCard label="P/E (2026e)" value="22,0x" sub="Baserat på 8,28 USD EPS"/>
-              <StatCard label="Nettomarginal" value="55,6%" sub="FY2025 utfall"/>
-              <StatCard label="Kassa" value="62,6 Mdr" sub="Likvida medel (USD)"/>
-            </div>
-
             <section id="overview" className="scroll-mt-24 mb-20">
               <div className="mb-6">
                 <SectionHeader number="I" title="FÖRETAGSÖVERSIKT" accentColor={T.accent} />
               </div>
               
               <ScoreBadge score={nvidiaData.scores.affarsmodell} />
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-10 mt-6">
-                <MetricCard 
-                  label="BÖRSKURS" 
-                  value={nvidiaData.currentPrice} 
-                  trend="20 Mars 2026" 
-                />
-                <MetricCard 
-                  label="BÖRSVÄRDE" 
-                  value={nvidiaData.marketCap} 
-                  trend="Nuvarande" 
-                />
-                <MetricCard label="P/E (NUVARANDE)" value="36.00x" trend="Trailing" />
-                <MetricCard label="P/E 2026E" value="22 forward" trend="Forward" />
-              </div>
 
               {/* Bar charts for scores */}
               <div className="mb-12 bg-card border border-border rounded-[2.5rem] p-10">
