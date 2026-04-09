@@ -804,8 +804,8 @@ export const analyses: Record<string, AnalysisData> = {
         bearCase: "UKGC-sanktioner + fortsatt Asien-nedgång – aktie mot 400 kr (20%)"
       }
     }
-  }
-  , "swedbank-2025": {
+  },
+  "swedbank-2025": {
     slug: "swedbank-2025",
     title: "Swedbank AB",
     ticker: "SWED-A.ST",
