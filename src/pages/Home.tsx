@@ -71,6 +71,7 @@ export default function Home() {
           ticker="EVO.ST" 
           totalScore={3.9} 
           categories={evolutionCategories} 
+          linkTo="/analys/evolution-2025"
         />
       </section>
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface ScoreItemProps {
   label: string;
@@ -51,9 +52,10 @@ interface ScoreCardProps {
   ticker: string;
   totalScore: number;
   categories: { label: string; score: number }[];
+  linkTo?: string;
 }
 
-export const ScoreCard: React.FC<ScoreCardProps> = ({ companyName, ticker, totalScore, categories }) => {
+export const ScoreCard: React.FC<ScoreCardProps> = ({ companyName, ticker, totalScore, categories, linkTo }) => {
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -90,13 +92,25 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({ companyName, ticker, total
           </div>
           <span>AI-verifierad analys · Uppdaterad idag</span>
         </div>
-        <motion.button 
-          whileHover={{ scale: 1.02, y: -2 }}
-          whileTap={{ scale: 0.98 }}
-          className="w-full sm:w-auto text-[10px] font-black uppercase tracking-[0.2em] bg-primary text-primary-foreground px-10 py-5 rounded-2xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/20"
-        >
-          Se Fullständig Analys
-        </motion.button>
+        {linkTo ? (
+          <Link to={linkTo} className="w-full sm:w-auto">
+            <motion.div 
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full flex items-center justify-center sm:w-auto text-[10px] font-black uppercase tracking-[0.2em] bg-primary text-primary-foreground px-10 py-5 rounded-2xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 cursor-pointer"
+            >
+              Se Fullständig Analys
+            </motion.div>
+          </Link>
+        ) : (
+          <motion.button 
+            whileHover={{ scale: 1.02, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            className="w-full sm:w-auto text-[10px] font-black uppercase tracking-[0.2em] bg-primary text-primary-foreground px-10 py-5 rounded-2xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/20"
+          >
+            Se Fullständig Analys
+          </motion.button>
+        )}
       </div>
     </motion.div>
   );
