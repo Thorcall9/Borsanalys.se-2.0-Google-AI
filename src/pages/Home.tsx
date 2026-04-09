@@ -1,4 +1,5 @@
 import React from "react";
+import { useAuth } from "../contexts/AuthContext";
 import { motion } from "framer-motion";
 import { Hero } from "../components/Hero";
 import { ScoreCard } from "../components/ScoreCard";
@@ -10,6 +11,7 @@ import { Link } from "react-router-dom";
 import AdZone from "../components/AdZone";
 
 export default function Home() {
+  const { openLoginModal } = useAuth();
   const evolutionCategories = [
     { label: "Affärsmodell", score: 5.0 },
     { label: "Strategisk Moat", score: 5.0 },
@@ -118,7 +120,8 @@ export default function Home() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full sm:w-auto px-16 py-7 bg-primary text-primary-foreground rounded-full font-black text-xl shadow-2xl shadow-primary/30 hover:bg-primary/90 transition-all uppercase tracking-widest"
+                  onClick={openLoginModal}
+                  className="w-full sm:w-auto px-16 py-7 bg-primary text-primary-foreground rounded-full font-black text-xl shadow-2xl shadow-primary/30 hover:bg-primary/90 transition-all uppercase tracking-widest cursor-pointer"
                 >
                   Skapa gratis konto
                 </motion.button>
