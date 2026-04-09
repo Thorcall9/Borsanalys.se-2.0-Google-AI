@@ -539,7 +539,7 @@ export default function VolvoDeepDive({
 
               <div style={{background:T.bg, borderRadius:16, padding:24, border:`1px solid ${T.border}`, marginBottom:24}}>
                 <p style={{margin:0, fontSize:14, color:T.ink, lineHeight:1.7}}>
-                  Om analytikerkonsensus om EPS 20,91 kr för 2026 levereras landar P/E på 15,5x — rimligt relativt historiskt snitt. Nettokassan om 63,0 mdr SEK (ca 31 kr per aktie) utgör ett starkt golv på nedsidan. Eget kapital per aktie är 87,7 kr vilket ger P/B 3,7x — premiumvärdering motiverad av historiskt hög ROE men sträcker sig vid nuvarande vinstnivå.
+                  Om analytikerkonsensus om EPS 20,91 kr för 2026 levereras landar P/E på 15,5x — i linje med historiskt snitt. Nettokassan om 63,0 mdr SEK (ca 31 kr per aktie) utgör ett starkt golv på nedsidan. Eget kapital per aktie är 87,7 kr vilket ger P/B 3,7x — premiumvärdering motiverad av historiskt hög ROE men sträcker sig vid nuvarande vinstnivå.
                 </p>
               </div>
 

@@ -179,11 +179,11 @@ export const stocks: Record<string, StockData> = {
     logoColor: "bg-[#003057]",
     financialUnit: "Bkr",
     stats: {
-      price: "285.40 kr",
+      price: "324.00 kr",
       change: "-1.1%",
-      pe: "11.50",
+      pe: "19.00",
       yield: "6.2%",
-      marketCap: "580 Bkr"
+      marketCap: "660 Bkr"
     },
     financialData: [
       { year: '2020', revenue: 338.4, profit: 20.1 },
