@@ -9,8 +9,8 @@ interface AdUnitProps {
 }
 
 export default function AdUnit({
-  slot = '4630761792',
-  format = 'auto',
+  slot = '7332946752',
+  format = 'fluid',
   layoutKey,
   className = '',
   showLabel = true,
@@ -43,11 +43,11 @@ export default function AdUnit({
           <ins
             ref={adRef}
             className="adsbygoogle"
-            style={{ display: 'block', width: '100%', minHeight: '100px' }}
+            style={{ display: 'block', textAlign: 'center', width: '100%', minHeight: '100px' }}
+            data-ad-layout="in-article"
+            data-ad-format={format}
             data-ad-client="ca-pub-3092389795479215"
             data-ad-slot={slot}
-            data-ad-format={format}
-            data-full-width-responsive="true"
             {...(layoutKey ? { 'data-ad-layout-key': layoutKey } : {})}
           />
         </div>

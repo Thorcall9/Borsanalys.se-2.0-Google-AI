@@ -324,7 +324,7 @@ export default function VolvoDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="4630761792" />
+        <AdUnit slot="7332946752" />
 
         {/* ── STRATEGI & RISK ── */}
         <div id="strategi">
@@ -602,7 +602,7 @@ export default function VolvoDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="4630761792" />
+        <AdUnit slot="7332946752" />
 
         {/* ── TILLVÄXTMOTORER ── */}
         <div id="growth">
@@ -850,7 +850,7 @@ export default function VolvoDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="4630761792" />
+        <AdUnit slot="7332946752" />
 
         {/* ── SAMMANFATTNING ── */}
         <div id="sammanfattning">
