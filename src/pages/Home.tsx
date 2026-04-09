@@ -11,14 +11,14 @@ import AdZone from "../components/AdZone";
 
 export default function Home() {
   const evolutionCategories = [
-    { label: "I. Företagsöversikt", score: 4.8 },
-    { label: "II. Strategisk analys & Moat", score: 4.9 },
-    { label: "III. Finansiell analys", score: 4.7 },
-    { label: "IV. Värdering & Jämförelse", score: 4.2 },
-    { label: "V. Tillväxtmotorer & Triggers", score: 4.6 },
-    { label: "VI. Riskprofil", score: 3.8 },
-    { label: "VII. ESG & Makro", score: 4.0 },
-    { label: "VIII. AI-observationer", score: 4.5 },
+    { label: "Affärsmodell", score: 5.0 },
+    { label: "Strategisk Moat", score: 5.0 },
+    { label: "Finansiell ställning", score: 4.0 },
+    { label: "Värdering & PEG", score: 4.0 },
+    { label: "Tillväxtmotorer", score: 3.0 },
+    { label: "Riskprofil", score: 3.0 },
+    { label: "ESG & Makro", score: 3.0 },
+    { label: "Marginaler", score: 4.0 },
   ];
 
   return (
@@ -69,7 +69,7 @@ export default function Home() {
         <ScoreCard 
           companyName="Evolution" 
           ticker="EVO.ST" 
-          totalScore={4.6} 
+          totalScore={3.9} 
           categories={evolutionCategories} 
         />
       </section>

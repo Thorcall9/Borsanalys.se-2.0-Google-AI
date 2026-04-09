@@ -6,7 +6,6 @@ import {
   Zap, Sparkles, Loader2, Lock,
   Newspaper, Gauge
 } from "lucide-react";
-import { GoogleGenAI, Type } from "@google/genai";
 import { useAuth } from "../contexts/AuthContext";
 
 // ... (rest of imports and interfaces)
@@ -71,8 +70,7 @@ const MACRO_METADATA: Record<string, { category: string, title: string, descript
   }
 };
 
-// Initialize Gemini
-const genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+// Gemini calls have been moved to the backend to protect API keys.
 
 interface MarketEvent {
   id: string;
@@ -245,18 +243,15 @@ export default function MacroDashboard() {
   const generateMacroOutlook = async () => {
     setLoadingOutlook(true);
     try {
-      const response = await genAI.models.generateContent({
-        model: "gemini-3-flash-preview",
-        config: { responseMimeType: "application/json" },
-        contents: `Baserat på dagens datum (${new Date().toLocaleDateString('sv-SE')}) och nuvarande makroindikatorer (Inflation: 0.5%, US 10Y: 4.34%, USD/SEK: 9.56, OMX30: 2905), ge en kort analys av var vi befinner oss i investeringsklockan och vad det innebär för aktiemarknaden. 
-        Ge även de 3 nästa viktigaste makrohändelserna (t.ex. räntebesked, KPI-släpp) som infaller efter dagens datum.
-        Svara i JSON-format med följande fält:
-        - outlook: sträng (max 3 meningar på svenska)
-        - suggestedPhaseId: sträng (måste vara en av: 'recovery', 'overheating', 'stagflation', 'reflation')
-        - upcomingDates: array av objekt { date: "DD Månad", title: "Händelse" }`,
+      const response = await fetch("/api/ai/macro-outlook", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
       });
+      const data = await response.json();
       
-      const data = JSON.parse(response.text || "{}");
+      if (!response.ok) {
+        throw new Error(data.error || "Misslyckades att hämta analys");
+      }
       setMacroOutlook(data.outlook || "Kunde inte generera analys.");
       
       if (data.suggestedPhaseId) {
@@ -281,12 +276,14 @@ export default function MacroDashboard() {
   const getAIInsight = async (event: MarketEvent) => {
     setLoadingAI(event.id);
     try {
-      const response = await genAI.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: `Analysera följande händelse och dess potentiella påverkan på den svenska börsen (OMX): "${event.title} - ${event.description}". Ge ett kort, koncist svar på max 3 meningar om vad investerare bör hålla koll på.`,
+      const response = await fetch("/api/ai/event-insight", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: event.title, description: event.description })
       });
+      const data = await response.json();
       
-      const insight = response.text || "Kunde inte generera insikt för tillfället.";
+      const insight = data.insight || "Kunde inte generera insikt för tillfället.";
       
       setEvents(prev => prev.map(e => 
         e.id === event.id ? { ...e, aiInsight: insight } : e

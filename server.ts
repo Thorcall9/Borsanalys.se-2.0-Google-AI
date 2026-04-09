@@ -13,6 +13,8 @@ import marketEventsHandler from "./api/market-events.ts";
 import generateEventsHandler from "./api/admin/generate-events.ts";
 import rssHandler from "./api/rss.ts";
 import sitemapHandler from "./api/sitemap.ts";
+import rateLimit from "express-rate-limit";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,12 +33,26 @@ async function startServer() {
     next();
   });
 
+  const apiLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 200, // limit each IP to 200 requests per windowMs
+    message: { error: "För många anrop. Vänligen försök igen senare." }
+  });
+
+  const newsletterLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000, // 1 hour
+    max: 10, // limit each IP to 10 requests per hour
+    message: { error: "Du har gjort för många anmälningar. Vänligen försök igen senare." }
+  });
+
+  app.use("/api/", apiLimiter);
+
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
   });
 
   // Newsletter Signup (Prisma + Resend)
-  app.post("/api/newsletter/signup", async (req, res) => {
+  app.post("/api/newsletter/signup", newsletterLimiter, async (req, res) => {
     const { email } = req.body;
 
     if (!email || !email.includes('@')) {
@@ -88,7 +104,7 @@ async function startServer() {
   // Admin: Update Macro Data (Cron)
   app.get("/api/admin/update-macro", async (req, res) => {
     const authHeader = req.headers["x-cron-auth"];
-    if (authHeader !== process.env.CRON_SECRET) {
+    if (!process.env.CRON_SECRET || authHeader !== process.env.CRON_SECRET) {
       console.warn(`[ADMIN] Unauthorized macro update attempt from ${req.ip}`);
       return res.status(401).json({ error: "Unauthorized" });
     }
@@ -118,6 +134,45 @@ async function startServer() {
 
   // Admin: Generate AI Events
   app.all("/api/admin/generate-events", generateEventsHandler as any);
+
+  // AI Routes (Client safe calls)
+  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+  
+  app.post("/api/ai/macro-outlook", async (req, res) => {
+    try {
+      const model = genAI.getGenerativeModel({ 
+        model: "gemini-2.5-flash",
+        generationConfig: { responseMimeType: "application/json" }
+      });
+      const result = await model.generateContent(`Baserat på dagens datum (${new Date().toLocaleDateString('sv-SE')}) och nuvarande makroindikatorer (Inflation: 0.5%, US 10Y: 4.34%, USD/SEK: 9.56, OMX30: 2905), ge en kort analys av var vi befinner oss i investeringsklockan och vad det innebär för aktiemarknaden. 
+        Ge även de 3 nästa viktigaste makrohändelserna (t.ex. räntebesked, KPI-släpp) som infaller efter dagens datum.
+        Svara i JSON-format med följande fält:
+        - outlook: sträng (max 3 meningar på svenska)
+        - suggestedPhaseId: sträng (måste vara en av: 'recovery', 'overheating', 'stagflation', 'reflation')
+        - upcomingDates: array av objekt { date: "DD Månad", title: "Händelse" }`);
+      
+      const responseText = result.response.text();
+      const data = JSON.parse(responseText || "{}");
+      res.json(data);
+    } catch (err: any) {
+      console.error("AI Macro Outlook Error:", err);
+      res.status(500).json({ error: "Kunde inte generera analys" });
+    }
+  });
+
+  app.post("/api/ai/event-insight", async (req, res) => {
+    const { title, description } = req.body;
+    try {
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+      const result = await model.generateContent(
+        `Analysera följande händelse och dess potentiella påverkan på den svenska börsen (OMX): "${title} - ${description}". Ge ett kort, koncist svar på max 3 meningar om vad investerare bör hålla koll på.`
+      );
+      res.json({ insight: result.response.text() || "Kunde inte generera insikt." });
+    } catch (err: any) {
+      console.error("AI Insight Error:", err);
+      res.status(500).json({ error: "Kunde inte generera insikt" });
+    }
+  });
 
   // Alias for backward compatibility if needed, or just redirect
   app.get("/api/fear-greed", (req, res) => {
