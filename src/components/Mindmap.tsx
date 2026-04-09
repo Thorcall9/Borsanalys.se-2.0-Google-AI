@@ -1,439 +1,186 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { 
+  Building2, Shield, TrendingUp, Globe2, 
+  BarChart3, Scale, AlertTriangle, Cpu,
+  CheckCircle2, Target
+} from 'lucide-react';
 
-/**
- * TYPES
- */
 interface Category {
   id: number;
+  label: string;
   title: string;
-  side: 'left' | 'right';
   tooltip: string;
-  score: number;
-  x: number;
-  y: number;
+  icon: React.ElementType;
 }
 
-interface Scenario {
-  type: 'Bull' | 'Base' | 'Bear';
-  color: string;
-  price: string;
-  probability: string;
-}
-
-/**
- * DATA
- */
 const CATEGORIES: Category[] = [
-  // Left Side (Qualitative & Strategic)
-  {
-    id: 1,
-    title: 'I. Företagsöversikt',
-    side: 'left',
-    tooltip: 'Vi analyserar affärsmodellen på djupet, utvärderar ledningens historik och säkerställer att ägarstrukturen gynnar långsiktiga aktieägare.',
-    score: 5,
-    x: 220,
-    y: 120,
-  },
-  {
-    id: 2,
-    title: 'II. Strategisk analys & Moat',
-    side: 'left',
-    tooltip: 'Bedömning av bolagets vallgravar (Moats) och konkurrensfördelar. Hur skyddad är vinstmaskinen mot nya utmanare och marknadstrender?',
-    score: 4,
-    x: 140,
-    y: 280,
-  },
-  {
-    id: 3,
-    title: 'V. Tillväxtmotorer & Triggers',
-    side: 'left',
-    tooltip: 'Identifiering av konkreta katalysatorer. Vi letar efter expansion på nya marknader, innovation och faktorer som kan driva en omvärdering av aktien.',
-    score: 5,
-    x: 140,
-    y: 440,
-  },
-  {
-    id: 4,
-    title: 'VII. ESG & Makro',
-    side: 'left',
-    tooltip: 'Analys av hållbarhetsrisker och hur bolaget påverkas av det makroekonomiska läget, såsom räntor, inflation och geopolitik.',
-    score: 3,
-    x: 220,
-    y: 600,
-  },
-  // Right Side (Quantitative & Risk)
-  {
-    id: 5,
-    title: 'III. Finansiell analys',
-    side: 'right',
-    tooltip: 'En stenhård genomgång av siffrorna: Vinsttillväxt, kassaflöde och balansräkningens styrka. Vi ser bortom redovisningskosmetik.',
-    score: 4,
-    x: 780,
-    y: 120,
-  },
-  {
-    id: 6,
-    title: 'IV. Värdering & Jämförelse',
-    side: 'right',
-    tooltip: 'Är aktien billig eller dyr? Vi ställer multiplar som P/E, EV/EBIT och PEG i relation till historiska snitt och relevanta konkurrenter.',
-    score: 4,
-    x: 860,
-    y: 280,
-  },
-  {
-    id: 7,
-    title: 'VI. Riskprofil',
-    side: 'right',
-    tooltip: 'Vi vänder på steken och letar efter det som kan gå fel. Inkluderar branschspecifika hot och finansiella fallgropar.',
-    score: 2,
-    x: 860,
-    y: 440,
-  },
-  {
-    id: 8,
-    title: 'VIII. AI-observationer',
-    side: 'right',
-    tooltip: 'Vår AI skannar miljontals datapunkter, nyhetsflöden och dolda mönster för att identifiera avvikelser som den mänskliga analysen kan missa.',
-    score: 5,
-    x: 780,
-    y: 600,
-  },
+  { id: 1, label: 'I', title: 'Företagsöversikt', tooltip: 'Vi analyserar affärsmodellen på djupet, utvärderar ledningens historik och säkerställer att ägarstrukturen gynnar långsiktiga aktieägare.', icon: Building2 },
+  { id: 2, label: 'II', title: 'Strategisk analys & Moat', tooltip: 'Bedömning av bolagets vallgravar (Moats) och konkurrensfördelar. Hur skyddad är vinstmaskinen mot nya utmanare?', icon: Shield },
+  { id: 3, label: 'III', title: 'Finansiell analys', tooltip: 'En stenhård genomgång av siffrorna: Vinsttillväxt, kassaflöde och balansräkningens styrka. Vi ser bortom redovisningskosmetik.', icon: BarChart3 },
+  { id: 4, label: 'IV', title: 'Värdering & Jämförelse', tooltip: 'Är aktien billig eller dyr? Vi ställer multiplar som P/E, EV/EBIT och PEG i relation till historiska snitt och konkurrenter.', icon: Scale },
+  { id: 5, label: 'V', title: 'Tillväxtmotorer & Triggers', tooltip: 'Identifiering av konkreta katalysatorer. Vi letar efter expansion på nya marknader och innovation.', icon: TrendingUp },
+  { id: 6, label: 'VI', title: 'Riskprofil', tooltip: 'Vi vänder på steken och letar efter det som kan gå fel. Inkluderar branschspecifika hot och finansiella fallgropar.', icon: AlertTriangle },
+  { id: 7, label: 'VII', title: 'ESG & Makro', tooltip: 'Analys av hållbarhetsrisker och hur bolaget påverkas av det makroekonomiska läget (räntor, inflation).', icon: Globe2 },
+  { id: 8, label: 'VIII', title: 'AI-observationer', tooltip: 'Vår AI skannar miljontals datapunkter, nyhetsflöden och dolda mönster för att identifiera avvikelser som människan missar.', icon: Cpu },
 ];
 
-const SCENARIOS: Scenario[] = [
-  { type: 'Bull', color: '#16a34a', price: '420 SEK', probability: '25%' },
-  { type: 'Base', color: '#b5892a', price: '345 SEK', probability: '50%' },
-  { type: 'Bear', color: '#dc2626', price: '210 SEK', probability: '25%' },
+const SCENARIOS = [
+  { type: 'Bull Case', price: '420 SEK', prob: '25% Sannolikhet', color: '#10B981', bg: 'bg-[#10B981]/10', textCls: 'text-[#10B981]' },
+  { type: 'Base Case', price: '345 SEK', prob: '50% Sannolikhet', color: '#F59E0B', bg: 'bg-[#F59E0B]/10', textCls: 'text-[#F59E0B]' },
+  { type: 'Bear Case', price: '210 SEK', prob: '25% Sannolikhet', color: '#EF4444', bg: 'bg-[#EF4444]/10', textCls: 'text-[#EF4444]' },
 ];
 
-/**
- * COMPONENT
- */
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
+};
+
 const Mindmap: React.FC = () => {
-  const [isMobile, setIsMobile] = useState(false);
-  const [hoveredId, setHoveredId] = useState<number | null>(null);
-  const [hoveredBlock, setHoveredBlock] = useState<'summary' | 'scenarios' | null>(null);
-
-  // Handle responsiveness
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const totalScore = useMemo(() => CATEGORIES.reduce((sum, cat) => sum + cat.score, 0), []);
-  const decision = useMemo(() => {
-    if (totalScore >= 32) return { label: 'KÖP', color: '#16a34a' };
-    if (totalScore >= 24) return { label: 'BEVAKA', color: '#b5892a' };
-    return { label: 'AVSTÅ', color: '#dc2626' };
-  }, [totalScore]);
-
-  const centerX = 500;
-  const centerY = 360;
-
   return (
-    <div className="w-full bg-emerald-50/30 py-12 px-4 md:px-8 font-inter overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+    <div className="w-full bg-slate-50/50 py-24 px-4 md:px-8 font-inter overflow-hidden border-y border-slate-100">
+      <div className="max-w-6xl mx-auto">
+        
         {/* HEADER */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 px-3 py-1 bg-white border border-slate-200 rounded-full mb-6 shadow-sm"
+          >
+            <CheckCircle2 size={12} className="text-[#10B981]" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Methodology Engine v2.0</span>
+          </motion.div>
           <motion.h2 
             initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-3xl md:text-5xl font-black tracking-tighter text-slate-900"
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-5xl font-black tracking-tighter text-slate-900 mb-6"
           >
             Vår <span className="text-[#10B981]">Analysmetodik</span>
           </motion.h2>
-          <p className="text-slate-500 mt-4 max-w-2xl mx-auto font-medium">
-            Vi kombinerar mänsklig expertis med AI för att leverera marknadens mest kompletta bolagsanalyser.
-          </p>
-        </div>
-
-        {/* MINDMAP AREA */}
-        <div className="relative min-h-[500px] md:min-h-[800px] flex flex-col items-center">
-          {isMobile ? (
-            /* MOBILE LAYOUT */
-            <div className="w-full grid grid-cols-2 gap-4 mb-12">
-              <div className="space-y-4">
-                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#10B981] mb-2">Kvalitativ & Strategisk</h3>
-                {CATEGORIES.filter(c => c.side === 'left').map(cat => (
-                  <MobileNode key={cat.id} cat={cat} />
-                ))}
-              </div>
-              <div className="space-y-4">
-                <h3 className="text-[10px] font-black uppercase tracking-widest text-[#10B981] mb-2 text-right">Kvantitativ & Risk</h3>
-                {CATEGORIES.filter(c => c.side === 'right').map(cat => (
-                  <MobileNode key={cat.id} cat={cat} />
-                ))}
-              </div>
-            </div>
-          ) : (
-            /* DESKTOP LAYOUT (SVG) */
-            <div className="w-full relative h-[720px]">
-              <svg viewBox="0 0 1000 720" className="w-full h-full">
-                {/* DRAWING LINES */}
-                {CATEGORIES.map(cat => (
-                  <motion.path
-                    key={`line-${cat.id}`}
-                    d={`M ${centerX} ${centerY} L ${cat.x} ${cat.y}`}
-                    stroke="#10B981"
-                    strokeWidth={hoveredId === cat.id ? 3 : 1.5}
-                    strokeOpacity={hoveredId === cat.id ? 0.8 : 0.2}
-                    fill="none"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 1 }}
-                    transition={{ duration: 1.2, ease: "easeInOut" }}
-                    className="transition-all duration-300"
-                  />
-                ))}
-
-                {/* FLOW LINES TO BOTTOM */}
-                <motion.path
-                  d="M 220 600 C 220 700, 400 700, 400 720"
-                  stroke="#10B981"
-                  strokeWidth="1.5"
-                  strokeOpacity="0.1"
-                  fill="none"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ delay: 1, duration: 1 }}
-                />
-                <motion.path
-                  d="M 780 600 C 780 700, 600 700, 600 720"
-                  stroke="#10B981"
-                  strokeWidth="1.5"
-                  strokeOpacity="0.1"
-                  fill="none"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ delay: 1, duration: 1 }}
-                />
-
-                {/* CENTRAL NODE */}
-                <motion.g
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', damping: 12 }}
-                >
-                  <motion.circle
-                    cx={centerX}
-                    cy={centerY}
-                    r="70"
-                    fill="#10B981"
-                    animate={{ 
-                      boxShadow: ["0 0 0px #10B981", "0 0 30px #10B981", "0 0 0px #10B981"] 
-                    }}
-                    transition={{ repeat: Infinity, duration: 3 }}
-                    className="drop-shadow-xl"
-                  />
-                  <text
-                    x={centerX}
-                    y={centerY}
-                    textAnchor="middle"
-                    dominantBaseline="middle"
-                    fill="white"
-                    className="text-sm font-black tracking-widest uppercase pointer-events-none"
-                  >
-                    Börsanalys.se
-                  </text>
-                </motion.g>
-
-                {/* CATEGORY NODES */}
-                {CATEGORIES.map(cat => (
-                  <motion.g
-                    key={`node-${cat.id}`}
-                    onMouseEnter={() => setHoveredId(cat.id)}
-                    onMouseLeave={() => setHoveredId(null)}
-                    className="cursor-help"
-                  >
-                    <motion.rect
-                      x={cat.x - 100}
-                      y={cat.y - 30}
-                      width="200"
-                      height="60"
-                      rx="12"
-                      fill="white"
-                      stroke="#10B981"
-                      strokeWidth={hoveredId === cat.id ? 2 : 1}
-                      className="transition-all duration-300 shadow-sm"
-                      animate={{
-                        boxShadow: hoveredId === cat.id ? "0 0 15px rgba(16, 185, 129, 0.3)" : "0 0 0px transparent"
-                      }}
-                    />
-                    <text
-                      x={cat.x}
-                      y={cat.y}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                      fill="#0F172A"
-                      className="text-[11px] font-black tracking-tight pointer-events-none"
-                    >
-                      {cat.title}
-                    </text>
-
-                      <AnimatePresence>
-                        {hoveredId === cat.id && (
-                          <motion.g
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 10 }}
-                          >
-                            <rect
-                              x={cat.x - 120}
-                              y={cat.y + 40}
-                              width="240"
-                              height="80"
-                              rx="8"
-                              fill="#064e3b"
-                              className="shadow-2xl"
-                            />
-                            <foreignObject x={cat.x - 110} y={cat.y + 50} width="220" height="60">
-                              <p className="text-[10px] text-emerald-100 leading-relaxed font-medium">
-                                {cat.tooltip}
-                              </p>
-                            </foreignObject>
-                          </motion.g>
-                        )}
-                      </AnimatePresence>
-                  </motion.g>
-                ))}
-              </svg>
-            </div>
-          )}
-
-          {/* SUMMARY BLOCKS */}
-          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-            {/* BLOCK 1: SUMMARY & DECISION */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              onMouseEnter={() => setHoveredBlock('summary')}
-              onMouseLeave={() => setHoveredBlock(null)}
-              className="bg-white border-2 border-[#10B981] rounded-[2rem] p-8 shadow-xl relative group cursor-help"
-            >
-              <div className="flex justify-between items-start mb-6">
-                <div>
-                  <h4 className="text-[10px] font-black text-[#10B981] uppercase tracking-widest mb-2">Sektion IX</h4>
-                  <h3 className="text-2xl font-black tracking-tighter text-slate-900">IX. Sammanfattning & Investeringsbeslut</h3>
-                </div>
-                <div 
-                  className="px-6 py-2 rounded-full text-white font-black text-xs tracking-widest shadow-lg"
-                  style={{ backgroundColor: decision.color }}
-                >
-                  {decision.label}
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex justify-between items-end">
-                  <span className="text-sm font-bold text-slate-400">Totalpoäng</span>
-                  <span className="text-4xl font-black text-slate-900">{totalScore} <span className="text-sm text-slate-300">/ 40</span></span>
-                </div>
-                <div className="h-3 w-full bg-slate-100 rounded-full overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${(totalScore / 40) * 100}%` }}
-                    transition={{ duration: 1.5, ease: "easeOut" }}
-                    className="h-full bg-[#10B981]"
-                  />
-                </div>
-              </div>
-
-              <AnimatePresence>
-                {hoveredBlock === 'summary' && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className="absolute -top-24 left-0 right-0 bg-emerald-950 text-white p-4 rounded-xl text-xs font-medium leading-relaxed shadow-2xl z-50"
-                  >
-                    Här sammanställs de 8 kategorierna till en totalpoäng (0–40). Analysen utmynnar i ett konkret investeringsutlåtande: Köp, Bevaka eller Avstå.
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-
-            {/* BLOCK 2: SCENARIOS */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              onMouseEnter={() => setHoveredBlock('scenarios')}
-              onMouseLeave={() => setHoveredBlock(null)}
-              className="bg-white border-2 border-slate-100 rounded-[2rem] p-8 shadow-xl relative group cursor-help"
-            >
-              <div className="flex items-center gap-3 mb-6">
-                <div className="h-px flex-1 bg-slate-100" />
-                <h4 className="text-[10px] font-black text-[#B5892A] uppercase tracking-widest">Sektion X</h4>
-                <div className="h-px flex-1 bg-slate-100" />
-              </div>
-              <h3 className="text-2xl font-black tracking-tighter text-slate-900 text-center mb-8">X. Scenarier (Bull, Base & Bear Case)</h3>
-
-              <div className="grid grid-cols-3 gap-4">
-                {SCENARIOS.map(s => (
-                  <div key={s.type} className="text-center">
-                    <div 
-                      className="text-[10px] font-black uppercase tracking-widest mb-2"
-                      style={{ color: s.color }}
-                    >
-                      {s.type}
-                    </div>
-                    <div className="text-lg font-black text-slate-900 tracking-tight">{s.price}</div>
-                    <div className="text-[10px] font-bold text-slate-400 mt-1">{s.probability} Sannolikhet</div>
-                  </div>
-                ))}
-              </div>
-
-              <AnimatePresence>
-                {hoveredBlock === 'scenarios' && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className="absolute -top-24 left-0 right-0 bg-emerald-950 text-white p-4 rounded-xl text-xs font-medium leading-relaxed shadow-2xl z-50"
-                  >
-                    Vi räknar alltid på tre framtider. Genom att visualisera optimistiska och pessimistiska scenarier får du en realistisk bild av potential kontra risk.
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-/**
- * SUB-COMPONENTS
- */
-const MobileNode: React.FC<{ cat: Category }> = ({ cat }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div 
-      className="bg-white border border-slate-100 rounded-xl p-3 shadow-sm"
-      onClick={() => setIsOpen(!isOpen)}
-    >
-      <div className="flex justify-between items-center">
-        <span className="text-[10px] font-black text-slate-900 tracking-tight">{cat.title}</span>
-        <span className="text-[10px] font-black text-[#10B981]">{cat.score}/5</span>
-      </div>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.p
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="text-[9px] text-slate-500 mt-2 font-medium leading-relaxed overflow-hidden"
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-slate-500 max-w-2xl mx-auto font-medium leading-relaxed"
           >
-            {cat.tooltip}
+            Vi kombinerar mänsklig expertis med AI för att leverera marknadens mest kompletta bolagsanalyser. Så här bryter vi ner fundamentan i 10 rigorösa steg.
           </motion.p>
-        )}
-      </AnimatePresence>
+        </div>
+
+        {/* BENTO GRID */}
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+        >
+          {/* THE 8 CORE CATEGORIES */}
+          {CATEGORIES.map((cat) => (
+            <motion.div
+              key={cat.id}
+              variants={itemVariants}
+              className="bg-white border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-[#10B981]/10 hover:-translate-y-1 transition-all duration-300 p-6 rounded-3xl relative group cursor-default"
+            >
+              <div className="w-12 h-12 bg-slate-50 text-slate-400 group-hover:bg-[#10B981]/10 group-hover:text-[#10B981] group-hover:scale-110 rounded-2xl flex items-center justify-center mb-5 transition-all duration-500">
+                <cat.icon size={22} strokeWidth={2.5} />
+              </div>
+              <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5 group-hover:text-[#10B981] transition-colors">
+                Steg {cat.label}
+              </div>
+              <h3 className="text-sm font-black text-slate-900 mb-2 leading-tight">
+                {cat.title}
+              </h3>
+              <p className="text-xs text-slate-500 leading-relaxed group-hover:text-slate-600 transition-colors">
+                {cat.tooltip}
+              </p>
+            </motion.div>
+          ))}
+
+          {/* SECTION IX: VERDICT (WIDE HERO CARD) */}
+          <motion.div
+            variants={itemVariants}
+            className="col-span-1 md:col-span-2 lg:col-span-4 bg-white border border-slate-100 shadow-md hover:shadow-2xl hover:shadow-[#10B981]/15 hover:-translate-y-1 transition-all duration-500 p-8 md:p-12 rounded-[2.5rem] mt-4 relative overflow-hidden group cursor-default"
+          >
+            {/* Subtle background glow effect on hover */}
+            <div className="absolute -right-20 -top-20 w-64 h-64 bg-[#10B981]/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+            
+            <div className="flex flex-col md:flex-row items-center justify-between gap-10 relative z-10">
+              <div className="flex-1 space-y-4 text-center md:text-left">
+                <div className="inline-flex items-center gap-2 mb-2">
+                  <Target size={16} className="text-[#10B981]" />
+                  <h4 className="text-[11px] font-black text-[#10B981] uppercase tracking-[0.2em]">Sektion IX</h4>
+                </div>
+                <h3 className="text-3xl md:text-4xl font-black tracking-tighter text-slate-900">
+                  Sammanfattning & Investeringsbeslut
+                </h3>
+                <p className="text-sm text-slate-500 leading-relaxed max-w-xl">
+                  Här sammanställs de 8 kategorierna till en totalpoäng (0–40). Analysen utmynnar i ett konkret investeringsutlåtande: <span className="font-bold text-slate-700">Köp</span>, <span className="font-bold text-slate-700">Bevaka</span> eller <span className="font-bold text-slate-700">Avstå</span>.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 border border-slate-100 rounded-3xl p-8 flex flex-col items-center justify-center min-w-[240px] group-hover:border-[#10B981]/20 transition-colors duration-300">
+                <div className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Exempel Verdict</div>
+                <div className="px-6 py-2 rounded-full bg-[#10B981] text-white font-black text-xs tracking-widest shadow-lg shadow-[#10B981]/30 mb-4 group-hover:scale-105 transition-transform">
+                  KÖP
+                </div>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-black text-slate-900 tracking-tighter">32</span>
+                  <span className="text-sm font-bold text-slate-400">/ 40</span>
+                </div>
+                <div className="text-[10px] font-bold text-slate-400 mt-1 uppercase tracking-widest">Totalpoäng</div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* SECTION X: SCENARIOS (WIDE HERO CARD) */}
+          <motion.div
+            variants={itemVariants}
+            className="col-span-1 md:col-span-2 lg:col-span-4 bg-white border border-slate-100 shadow-md hover:shadow-2xl hover:shadow-slate-200 hover:-translate-y-1 transition-all duration-500 p-8 md:p-12 rounded-[2.5rem] mt-2 group cursor-default"
+          >
+            <div className="text-center mb-10">
+              <h4 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3">Sektion X</h4>
+              <h3 className="text-3xl font-black tracking-tighter text-slate-900">
+                Scenarier (Bull, Base & Bear Case)
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {SCENARIOS.map((s, i) => (
+                <div 
+                  key={i} 
+                  className="p-6 rounded-3xl border border-slate-100 bg-slate-50/50 hover:bg-white hover:shadow-lg transition-all duration-300 flex flex-col items-center text-center"
+                >
+                  <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest mb-4 ${s.bg} ${s.textCls}`}>
+                    {s.type}
+                  </div>
+                  <div className="text-3xl font-black text-slate-900 tracking-tighter mb-2 group-[.hover]:scale-105 transition-transform">
+                    {s.price}
+                  </div>
+                  <div className="text-xs font-bold text-slate-400">
+                    {s.prob}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+        </motion.div>
+      </div>
     </div>
   );
 };
