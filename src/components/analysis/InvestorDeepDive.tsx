@@ -314,7 +314,7 @@ export default function InvestorDeepDive({
           <FadeIn>
             <Card mb={20}>
               <SectionLabel number="I" title="Företagsöversikt"/>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:28}}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
                 {( [
                   ["Bakgrund & Struktur","Investor AB grundades 1916 av familjen Wallenberg och är idag ett av Nordens största investmentbolag, med ett justerat substansvärde på 1 087 miljarder kronor per den 31 december 2025. Bolaget kontrolleras av Wallenberg-stiftelserna via FAM AB."],
                   ["Affärsidé & Modell", <span>Affärsidén är enkel men kraftfull: <strong>bygga starka och hållbara företag för att skapa värde för aktieägare och samhälle</strong>. Till skillnad från en vanlig aktiefond är Investor en aktiv ägare – man sitter i styrelser, utser VD och driver strategiska initiativ. Det gör att Investor kan påverka sina innehav på ett sätt som en passiv fondförvaltare aldrig kan.</span>],
@@ -354,7 +354,7 @@ export default function InvestorDeepDive({
               </div>
 
               <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>SWOT-analys</div>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14,marginBottom:24}}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 {[
                   ["Styrkor",T.green,T.greenL,["110 år av aktiv ägarkultur och bevisad track record","Extremt låga förvaltningskostnader (0,07% av NAV)","Diversifierad portfölj av världsledande bolag","AA- kreditbetyg (S&P) och Aa3 (Moody's)","Stark balansräkning: skuldsättningsgrad 2,1%"]],
                   ["Svagheter",T.gold,T.goldL,["Patricia Industries tyngd av valutamotvind (USD/EUR vs SEK)","Atlas Antibodies under strukturell press","Koncentration till svenska/nordiska företag","Substansvärdet påverkas av börspsvängningar"]],
@@ -370,7 +370,7 @@ export default function InvestorDeepDive({
                 ))}
               </div>
               <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>Moat-dimensioner</div>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:10}}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                 {[
                   ["Nätverkseffekt","Wallenberg-sfärens unika ekosystem och styrelsenätverk.","★★★★★"],
                   ["Kapitalallokering","Bevisad förmåga att skapa värde över decennier.","★★★★★"],
@@ -394,7 +394,7 @@ export default function InvestorDeepDive({
                 Som investmentbolag är de mest relevanta nyckeltalen substansvärdetillväxt, totalavkastning och utdelningsutveckling – snarare än traditionella P/E-tal eller rörelsemarginaler. Investor redovisar dock även konsoliderade siffror för sina helägda dotterbolag i Patricia Industries.
               </p>
 
-              <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, marginBottom:24}}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <div style={{fontSize:13,fontWeight:700,color:T.ink,marginBottom:4}}>Justerat substansvärde per aktie (kr)</div>
                   <div style={{fontSize:11,color:T.muted,marginBottom:12,fontStyle:"italic"}}>Fylld = historisk · Guld kontur = estimat</div>
@@ -460,7 +460,7 @@ export default function InvestorDeepDive({
                 Kursiverade 2026E-siffror är estimat. EPS för investmentbolag är starkt påverkat av orealiserade värdeförändringar i portföljen.
               </p>
 
-              <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:24, marginTop:32}}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
                 <div>
                   <div style={{fontSize:13,fontWeight:700,color:T.ink,marginBottom:4}}>Utdelning per aktie (kr)</div>
                   <div style={{fontSize:11,color:T.muted,marginBottom:12,fontStyle:"italic"}}>Historisk och estimat</div>
@@ -511,7 +511,7 @@ export default function InvestorDeepDive({
                 Investmentbolag värderas primärt utifrån förhållandet mellan aktiekursen och det underliggande substansvärdet per aktie (NAV). En kurs lägre än NAV kallas "substansrabatt" och är historiskt sett en köpsignal.
               </p>
 
-              <div style={{display:"grid", gridTemplateColumns:"repeat(3, 1fr)", gap:12, marginBottom:24}}>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
                 {[
                   ["Just. NAV/aktie", "355 kr", "Per 31 dec 2025"],
                   ["Aktiekurs (B)", "330,40 kr", "~26 mars 2026"],
@@ -573,7 +573,7 @@ export default function InvestorDeepDive({
                 Investors tillväxt drivs av en kombination av organisk tillväxt i portföljbolagen, strategiska förvärv och multipelexpansion när marknaderna värderar upp bolagen.
               </p>
 
-              <div style={{display:"grid", gridTemplateColumns:"1fr 1fr", gap:20}}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 {[
                   {
                     icon: <TrendingUp size={20} color="#3B82F6"/>,
@@ -684,7 +684,7 @@ export default function InvestorDeepDive({
           <FadeIn delay={600}>
             <Card mb={20}>
               <SectionLabel number="VII" title="ESG & Makro"/>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:14}}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {[
                   ["🌱","Miljö (E)","5/5","Starka klimatmål för 2030. Fokus på Scope 3 hos portföljbolagen.",T.green,T.greenL],
                   ["👥","Socialt (S)","4/5","Fokus på mångfald och inkludering i styrelserekryteringar.",T.accent,T.accentL],
@@ -709,7 +709,7 @@ export default function InvestorDeepDive({
           <FadeIn delay={700}>
             <Card mb={20}>
               <SectionLabel number="VIII" title="AI-observationer"/>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:14}}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
                   ["📰 Sentimentanalys","Sentimentet kring Investor är stabilt positivt. Inga tecken på överhettning trots stark kursutveckling."],
                   ["📊 Insiderhandel","Tydligt positivt mönster under 2025: Investor ökade i Ericsson och Atlas Copco."],
@@ -731,7 +731,7 @@ export default function InvestorDeepDive({
           <FadeIn delay={800}>
             <Card mb={20}>
               <SectionLabel number="IX" title="Sammanfattning & Investeringsbeslut"/>
-              <div style={{display:"grid",gridTemplateColumns:"1fr auto",gap:24,alignItems:"start"}}>
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-start">
                 <div>
                   {[
                     ["Är Investor ett kvalitetsbolag?","Ja. 110 år av bevisad kapitalallokering, marknadsledande låga kostnader och en portfölj av världsledande bolag."],
@@ -771,7 +771,7 @@ export default function InvestorDeepDive({
           <FadeIn delay={900}>
             <Card mb={20}>
               <SectionLabel number="X" title="Scenarier (Bull/Base/Bear)"/>
-              <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:16,marginTop:20}}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
                 {[
                   {label:"🐂 Bull Case",color:T.green,bg:T.greenL,prob:"25%",pris:"450 kr",
                     triggers:["Patricia Industries lyfter kraftigt","Saab, ABB och Atlas fortsätter överprestera","Substansrabatten stängs helt"],

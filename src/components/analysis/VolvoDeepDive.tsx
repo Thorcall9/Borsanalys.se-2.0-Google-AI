@@ -230,8 +230,7 @@ export default function VolvoDeepDive({
 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">P/E-tal</span>
-              <div className="text-2xl font-black text-slate-900">12,0</div>
-              <span className="text-xs text-slate-500 font-bold mt-1 block">Rimlig</span>
+              <div className="text-2xl font-black text-slate-900">19,0</div>
             </div>
 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">

@@ -819,10 +819,10 @@ export default function EvolutionDeepDive({
           <Card title="Kapitalallokeringens psykologi vs. Matematik" accentColor={ACCENT}>
             <div className="space-y-4">
               <p className="text-sm leading-relaxed text-gray-600">
-                Att ett moget, kassaflödesstarkt bolag som Evolution helt ställer in utdelningen väcker legitimt oro. Marknaden tolkar ofta det som dolda problem — kommande böter, fryst kassa, eller försvagat kassaflöde.
+                Att ett kassaflödesstarkt bolag som Evolution pausar utdelningen väcker naturligt oro. Marknaden tolkar det ofta som en signal om underliggande problem.
               </p>
               <p className="text-sm leading-relaxed text-gray-600 font-bold">
-                Siffrorna dödar den myten: Operativt kassaflöde 1 255 MEUR minus kapex 135 MEUR ger ~1 120 MEUR fritt kassaflöde. Mer än nog för att betala utdelning (~572 MEUR) och återköp (~500 MEUR) samtidigt. Kassan är inte fryst. Det finns inga dolda likviditetsproblem.
+                Kassaflödet säger dock något annat. Med ett fritt kassaflöde på cirka 1 120 MEUR finns tydlig kapacitet att finansiera både utdelning och återköp. Beslutet framstår därför som strategiskt snarare än finansiellt.
               </p>
             </div>
           </Card>
@@ -830,7 +830,7 @@ export default function EvolutionDeepDive({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card title="AKTIEÅTERKÖP — LEDNINGENS FAVORITVERKTYG" accentColor={ACCENT}>
               <p className="text-sm leading-relaxed text-gray-600">
-                500 MEUR i återköp 2025 till snittpris ~752 SEK. Nuläge ~577 SEK — ledningen köpte dyrare än nuläget, ett tecken på övertygelse om undervärdering. Återköp är skattemässigt effektivare än utdelning och ökar EPS för kvarvarande ägare.
+                Samtidigt har bolaget genomfört återköp om 500 MEUR till betydligt högre kurser än dagens nivå. Det signalerar förtroende från ledningen – men är inte i sig ett bevis på undervärdering.
               </p>
             </Card>
             <Card title="STRATEGISKA FÖRVÄRV (M&A)" accentColor={ACCENT}>
