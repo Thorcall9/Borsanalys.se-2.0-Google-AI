@@ -9,5 +9,10 @@
     { "source": "/analyser/rss", "destination": "/api/rss" },
     { "source": "/sitemap.xml", "destination": "/api/sitemap" },
     { "source": "/(.*)", "destination": "/index.html" }
-  ]
+  ],
+  "functions": {
+    "api/newsletter/signup.ts": {
+      "maxDuration": 10
+    }
+  }
 }
