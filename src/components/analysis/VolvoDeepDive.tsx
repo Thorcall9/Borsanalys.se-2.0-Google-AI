@@ -5,6 +5,7 @@ import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Cell, ComposedChart
 } from "recharts";
+import AdUnit from "../AdUnit";
 
 const T = {
   ink:     "#0D1B2A",
@@ -218,7 +219,7 @@ export default function VolvoDeepDive({
             
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börskurs</span>
-              <div className="text-2xl font-black text-slate-900">324 kr</div>
+              <div className="text-2xl font-black text-slate-900">322,4 kr</div>
               <span className="text-xs text-slate-500 mt-1 block">Analyspris</span>
             </div>
 
@@ -235,8 +236,8 @@ export default function VolvoDeepDive({
 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Direktavkastning</span>
-              <div className="text-2xl font-black text-slate-900">4,0%</div>
-              <span className="text-xs text-slate-500 mt-1 block">Ordinarie utdelning</span>
+              <div className="text-2xl font-black text-slate-900">4,04%</div>
+              <span className="text-xs text-slate-500 mt-1 block">Total direktavkastning</span>
             </div>
 
             <div className="bg-white p-6 rounded-2xl border-2 border-[#10B981]/20 shadow-lg relative overflow-hidden group">
@@ -322,6 +323,8 @@ export default function VolvoDeepDive({
             </div>
           </FadeIn>
         </div>
+
+        <AdUnit slot="4630761792" />
 
         {/* ── STRATEGI & RISK ── */}
         <div id="strategi">
@@ -432,7 +435,7 @@ export default function VolvoDeepDive({
                       ["Nettoomsättning (Mdr)","552,8","568,2","479,2","~510"],
                       ["Rörelsemarginal (just.)","12,0%","12,2%","10,7%","~11,5%"],
                       ["Vinst per aktie (kr)","24,50","23,80","~21,00","~23,50"],
-                      ["Direktavkastning","6,3%","6,2%","4,0%","~4,5%"],
+                      ["Direktavkastning","6,3%","6,2%","4,04%","~4,5%"],
                       ["Nettokassa (Mdr)","83","~90","66","~75"],
                       ["ROE (%)","25,4%","24,8%","~20,0%","~22,0%"],
                     ].map(([label,...vals],ri)=>(
@@ -445,6 +448,45 @@ export default function VolvoDeepDive({
                     ))}
                   </tbody>
                 </table>
+              </div>
+
+              <div className="mt-8 pt-8 border-t border-slate-100">
+                <h3 style={{fontSize:14, fontWeight:800, color:T.ink, marginBottom:16, textTransform:"uppercase", letterSpacing:0.5}}>Utdelningsdetaljer 2026</h3>
+                <div style={{overflowX:"auto"}}>
+                  <table style={{width:"100%", borderCollapse:"collapse", fontSize:12}}>
+                    <thead>
+                      <tr style={{textAlign:"left", color:T.muted, borderBottom:`1px solid ${T.border}`}}>
+                        <th style={{padding:8}}>Typ</th>
+                        <th style={{padding:8}}>Belopp</th>
+                        <th style={{padding:8}}>Direktavk.</th>
+                        <th style={{padding:8}}>X-dag</th>
+                        <th style={{padding:8}}>Utbetalning</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style={{padding:8}}>Ordinarie</td>
+                        <td style={{padding:8}}>8,50 kr</td>
+                        <td style={{padding:8}}>2,64%</td>
+                        <td style={{padding:8}}>2026-04-09</td>
+                        <td style={{padding:8}}>2026-04-15</td>
+                      </tr>
+                      <tr>
+                        <td style={{padding:8}}>Extrautdelning</td>
+                        <td style={{padding:8}}>4,50 kr</td>
+                        <td style={{padding:8}}>1,40%</td>
+                        <td style={{padding:8}}>2026-04-09</td>
+                        <td style={{padding:8}}>2026-04-15</td>
+                      </tr>
+                      <tr style={{fontWeight:700, borderTop:`1px solid ${T.border}`}}>
+                        <td style={{padding:8}}>Totalt</td>
+                        <td style={{padding:8}}>13,00 kr</td>
+                        <td style={{padding:8}}>4,04%</td>
+                        <td style={{padding:8, color:T.muted}} colSpan={2}>Räknat på kurs 322,40 kr</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
@@ -488,15 +530,15 @@ export default function VolvoDeepDive({
               <SectionLabel number="IV" title="Värdering & Jämförelse"/>
               
               <p style={{fontSize:14, color:T.sub, lineHeight:1.7, marginBottom:24}}>
-                Vid 324 kr handlas Volvo till P/E 19,1x på FY2025-vinsten — hög för ett cykliskt bolag i nedgångsfas, men marknaden prissätter en tydlig vinståterhämtning.
+                Vid 322,40 kr handlas Volvo till P/E 19,1x på FY2025-vinsten — hög för ett cykliskt bolag i nedgångsfas, men marknaden prissätter en tydlig vinståterhämtning.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-6">
                 {[
-                  ["Aktiekurs (Mar 2026)", "324 kr", "Marknadspris"],
+                  ["Aktiekurs (Apr 2026)", "322,40 kr", "Marknadspris"],
                   ["P/E FY2025", "19,1x", "Baserat på 16,94 kr"],
                   ["P/E 2026E", "15,5x", "Baserat på 20,91 kr"],
-                  ["Direktavkastning", "4,0%", "Föreslagen utdelning", true],
+                  ["Direktavkastning", "4,04%", "Totalutdelning", true],
                 ].map(([l,v,s,acc], i)=>(
                   <div key={i} style={{background:acc?T.accentL:T.bg, border:`1px solid ${acc?T.accent+"33":T.border}`, borderRadius:12, padding:14}}>
                     <div style={{fontSize:10, fontWeight:800, color:acc?T.accent:T.muted, textTransform:"uppercase", letterSpacing:0.5, marginBottom:4}}>{l}</div>
@@ -520,10 +562,10 @@ export default function VolvoDeepDive({
                   <tbody>
                     {[
                       ["EPS (kr)", "24,78", "16,94", "20,91", "24,19"],
-                      ["P/E (vid 324 kr)", "13,1x", "19,1x", "15,5x", "13,4x"],
+                      ["P/E (vid 322,40 kr)", "13,1x", "19,1x", "15,5x", "13,4x"],
                       ["EV/EBIT", "10,6x", "16,1x", "—", "—"],
                       ["Utdelning (kr)", "18,50", "13,00", "16,17e", "18,30e"],
-                      ["Direktavkastning (%)", "5,7%", "4,0%", "5,0%e", "5,7%e"],
+                      ["Direktavkastning (%)", "5,7%", "4,04%", "5,0%e", "5,7%e"],
                       ["ROE (%)", "27,1%", "18,5%", "—", "—"],
                     ].map(([label, ...values], i) => (
                       <tr key={i} style={{borderBottom:i===5?"none":`1px solid ${T.border}66`}}>
@@ -539,7 +581,7 @@ export default function VolvoDeepDive({
 
               <div style={{background:T.bg, borderRadius:16, padding:24, border:`1px solid ${T.border}`, marginBottom:24}}>
                 <p style={{margin:0, fontSize:14, color:T.ink, lineHeight:1.7}}>
-                  Om analytikerkonsensus om EPS 20,91 kr för 2026 levereras landar P/E på 15,5x — i linje med historiskt snitt. Nettokassan om 63,0 mdr SEK (ca 31 kr per aktie) utgör ett starkt golv på nedsidan. Eget kapital per aktie är 87,7 kr vilket ger P/B 3,7x — premiumvärdering motiverad av historiskt hög ROE men sträcker sig vid nuvarande vinstnivå.
+                  Om analytikerkonsensus om EPS 20,91 kr för 2026 levereras landar P/E på 15,5x — i linje med historiskt snitt. Nettokassan om 63,0 mdr SEK (ca 31 kr per aktie) utgör ett starkt golv på nedsidan. Eget kapital per aktie är 87,7 kr vilket ger P/B 3,7x — premiumvärdering motiverad av historiskt hög ROE men sträcker sig vid 322,40 kr.
                 </p>
               </div>
 
@@ -559,6 +601,8 @@ export default function VolvoDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        <AdUnit slot="4630761792" />
 
         {/* ── TILLVÄXTMOTORER ── */}
         <div id="growth">
@@ -632,7 +676,7 @@ export default function VolvoDeepDive({
                     <li>Serviceaffären visar motståndskraft — tillväxt +5% Q4</li>
                     <li>Volvo Penta: justerad marginal 17,4% — stabil kassaflödesgenerator</li>
                     <li>Coretura-JV med Daimler Truck delar kostnaden för mjukvaruplattform</li>
-                    <li>Generös utdelning: 13 kr per aktie för FY2025 (4,0%)</li>
+                    <li>Generös utdelning: 13 kr per aktie för FY2025 (4,04%)</li>
                   </ul>
                 </div>
 
@@ -806,6 +850,8 @@ export default function VolvoDeepDive({
           </FadeIn>
         </div>
 
+        <AdUnit slot="4630761792" />
+
         {/* ── SAMMANFATTNING ── */}
         <div id="sammanfattning">
           <FadeIn delay={800}>
@@ -814,11 +860,11 @@ export default function VolvoDeepDive({
               <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 items-start">
                 <div className="space-y-6">
                   <p className="text-sm text-slate-700 leading-relaxed">
-                    AB Volvo är ett kvalitetsbolag med stark premiumposition, robust balansräkning (63 mdr SEK nettokassa) och en tydlig strategi för den teknologiska omställningen. Serviceaffären ger strukturell stabilitet, Volvo Penta levererar rekordhöga marginaler och anläggningsmaskiner visar tydlig förbättring. Den generösa utdelningen om 13 kr (4,0% direktavkastning) är ett konkret bevis på finansiell styrka.
+                    AB Volvo är ett kvalitetsbolag med stark premiumposition, robust balansräkning (63 mdr SEK nettokassa) och en tydlig strategi för den teknologiska omställningen. Serviceaffären ger strukturell stabilitet, Volvo Penta levererar rekordhöga marginaler och anläggningsmaskiner visar tydlig förbättring. Den generösa utdelningen om 13 kr (4,04% direktavkastning) är ett konkret bevis på finansiell styrka.
                   </p>
 
                   <p className="text-sm text-slate-700 leading-relaxed">
-                    Aktiekursen 324 kr speglar redan mycket av den cykliska återhämtningen — P/E 19,1x på FY2025-vinst och 15,5x på 2026e ger begränsat uppside i bascaset. Q1 2026 förväntas tufft med -1 mdr SEK i tarifftryck och svagt Nordamerika. En besvikelse i Q1-rapporten (24 april 2026) kan skapa ett bättre ingångsläge under 300 kr, där direktavkastningen på ordinarie utdelning (8,50 kr) överstiger 2,8%.
+                    Aktiekursen 322,40 kr speglar redan mycket av den cykliska återhämtningen — P/E 19,1x på FY2025-vinst och 15,5x på 2026e ger begränsat uppside i bascaset. Q1 2026 förväntas tufft med -1 mdr SEK i tarifftryck och svagt Nordamerika. En besvikelse i Q1-rapporten (24 april 2026) kan skapa ett bättre ingångsläge under 300 kr, där direktavkastningen på ordinarie utdelning (8,50 kr) överstiger 2,8%.
                   </p>
 
                   <div className="bg-slate-50 border border-slate-100 rounded-xl p-5">
@@ -844,7 +890,7 @@ export default function VolvoDeepDive({
                     <div>
                       <div className="text-xs font-bold text-emerald-700 uppercase tracking-wider">Slutsats</div>
                       <p className="text-sm text-slate-800 font-medium">
-                        <strong>BEVAKA</strong> — Riktkurs 345 kr (+6%). Volvo är ett långsiktigt stabilt innehav men kurs 324 kr ger begränsat utrymme. Befintliga ägare bör behålla och ta emot 13 kr i utdelning. För nya investerare: avvakta Q1-rapporten 24 april 2026.
+                        <strong>BEVAKA</strong> — Riktkurs 345 kr (+7%). Volvo är ett långsiktigt stabilt innehav men kurs 322,40 kr ger begränsat utrymme. Befintliga ägare bör behålla och ta emot 13 kr i utdelning. För nya investerare: avvakta Q1-rapporten 24 april 2026.
                       </p>
                     </div>
                   </div>
