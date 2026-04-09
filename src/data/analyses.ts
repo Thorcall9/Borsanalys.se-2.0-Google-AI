@@ -795,7 +795,7 @@ export const analyses: Record<string, AnalysisData> = {
       },
       sammanfattning: {
         beslut: "KÖP",
-        motivering: "P/E ~10x för ett kvalitetsbolag med dominerande marknadsposition, 66%+ EBITDA-marginal, nettokassa och strukturella tillväxtmöjligheter i USA och LatAm. UKGC-risken är binär och reell — hantera med positionsstorlek snarare än avvaktning.",
+        motivering: "P/E ~10x för ett kvalitetsbolag med dominerande marknadsposition, 66%+ EBITDA-marginal, nettokassa och strukturella tillväxtmöjligheter i USA and LatAm. UKGC-risken är binär och reell — hantera med positionsstorlek snarare än avvaktning.",
         malpris: "720 SEK"
       },
       scenarier: {
@@ -814,9 +814,9 @@ export const analyses: Record<string, AnalysisData> = {
     recommendation: "BEVAKA",
     price: "320 SEK",
     pe: "11.01",
-    yield: "7.43%",
+    yield: "9.3% (2025 inkl. special)",
     marketCap: "366 Mdkr",
-    summary: "Solid lönsamhet, låg K/I-kvot och god direktavkastning. Framåtblickande P/E 12x och fallande EPS-estimat motiverar försiktighet vid nuvarande kurs. Tydligare köpläge vid 290-300 kr.",
+    summary: "Solid lönsamhet, låg K/I-kvot och extraordinär direktavkastning (9,3%). Framåtblickande P/E 11-12x och fallande EPS-estimat balanseras av en extremt stark balansräkning. Konsensus ligger kring 315-332 kr.",
     date: "2026-04-08",
     investmentCase: "Swedbank har en stabil och beprövad affärsmodell, levererar på sina finansiella mål, har exceptionell kostnadskontroll med K/I-kvot 0,36, en robust balansräkning och stark utdelningsförmåga. Banken har navigerat genom räntecykeln väl och levererat på sitt '15/25'-mål. Förvärven av Stabelo och Entercard stärker den framtida intjäningsförmågan inom bolån och korttjänster, vilket balanserar räntekänsligheten.",
     marketOverview: "Swedbank är en av Sveriges och Nordens absolut största banker, med rötter i sparbanksrörelsen som sträcker sig mer än 200 år tillbaka i tiden. Banken har nära 7,3 miljoner privatkunder och 545 000 företagskunder spridda över fyra hemmamarknader: Sverige, Estland, Lettland och Litauen. Därtill finns internationella kontor i Oslo, Helsingfors, Shanghai och New York. Sverige svarar för ungefär 71 procent av intäkterna och Baltikum för ytterligare 25 procent.",
@@ -834,7 +834,7 @@ export const analyses: Record<string, AnalysisData> = {
       "Geopolitik: Exponeringen mot Baltikum innebär strukturell risk vid regional instabilitet",
       "Kreditkvalitet: Eventuell press på högt belånade svenska hushåll vid sämre konjunktur"
     ],
-    valuation: "P/E 11x på 2025-vinsten och 12,1x på 2026-estimat (EPS 26,94 kr) reflekterar marknadens förväntan om lägre vinstnivåer. ROE på 14,74% (2025) visar att banken marginellt når sitt 15%-mål i en fallande räntemiljö. Med en direktavkastning på 7,43% (2026e) och en CET1-kvot långt över kraven är nedsidan begränsad, men en betydande säkerhetsmarginal nås först vid kurs 290-300 kr.",
+    valuation: "P/E 11x på 2025-vinsten och 11-12x på 2026-estimat gör värderingen rimlig i linje med europeiska peers. Den mest slående siffran är direktavkastningen på 9,3% (29,80 kr per aktie inkl. specialutdelning). P/B-talet är i den lägre delen av det historiska intervallet (1,3-1,8x), vilket indikerar en försiktig men sund prissättning. Analytikerkonsensus för 12 månader ligger på 315–332 kr, vilket förklarar den övervägande neutrala hållningen vid nuvarande kursnivåer.",
     conclusion: "Swedbank är ett kvalitetsbolag med stark lönsamhet och generös utdelning. Vid nuvarande kurs 320 kr ser vi dock begränsad kortsiktig uppsida givet fallande EPS-estimat. En säkerhetsmarginal i värderingen nås vid 290-300 kr.",
     esg: "S&P AA- betyg med fokus på förbättrad governance. Sustainable Asset Registry översteg 165 mdkr 2025. Mest hållbara bankvarumärke i Sverige 2025. Rapportering enligt CSRD för andra året i rad.",
     aiObservations: "Sentimentbilden är neutral. Aktien har backat 12% från toppen i takt med räntesänkningsförväntningar. Insideraktivitet präglas främst av återköpsprogrammet. FI-granskningen är en varningssignal att bevaka för kortsiktig volatilitet.",
@@ -916,7 +916,7 @@ export const analyses: Record<string, AnalysisData> = {
         vardering: {
           pe: "11x (2025), 12,1x (2026e)",
           evEbit: "N/A",
-          direktavkastning: "7,43% (2026e)"
+          direktavkastning: "9,3% (2025 inkl. special)"
         }
       },
       tillvaxtdrivare: ["Entercard/Stabelo-synergier", "Kreditexpansion Baltikum (+12-16%)", "Bolånetillväxt vid lägre räntor", "AI-driven kostnadseffektivitet"],
