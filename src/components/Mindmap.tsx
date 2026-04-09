@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { 
   Building2, Shield, TrendingUp, Globe2, 
   BarChart3, Scale, AlertTriangle, Cpu,
@@ -31,7 +31,7 @@ const SCENARIOS = [
   { type: 'Bear Case', price: '210 SEK', prob: '25% Sannolikhet', color: '#EF4444', bg: 'bg-[#EF4444]/10', textCls: 'text-[#EF4444]', border: 'border-[#EF4444]/30' },
 ];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
@@ -41,7 +41,7 @@ const containerVariants = {
   }
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
 };
@@ -117,7 +117,7 @@ const Mindmap: React.FC = () => {
                 <h3 className="text-base font-black text-white mb-3 leading-tight group-hover:text-emerald-50 transition-colors">
                   {cat.title}
                 </h3>
-                <p className="text-xs text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors line-clamp-3">
+                <p className="text-xs text-slate-400 leading-relaxed group-hover:text-slate-300 transition-colors">
                   {cat.tooltip}
                 </p>
               </div>
