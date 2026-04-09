@@ -15,6 +15,9 @@ import rssHandler from "./api/rss.ts";
 import sitemapHandler from "./api/sitemap.ts";
 import rateLimit from "express-rate-limit";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import helmet from "helmet";
+import cors from "cors";
+import { z } from "zod";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,6 +29,37 @@ async function startServer() {
   app.use(express.json());
 
   console.log(`[SERVER] Initializing server on port ${PORT}...`);
+
+  // Security Middleware
+  app.use(helmet({
+    contentSecurityPolicy: false, // Disabled to allow Google AdSense scripts without complex Hashes/Nonces
+    crossOriginEmbedderPolicy: false // Disabled for cross-origin resources
+  }));
+
+  // CORS Policy: Restrict API usage to the site's domains and localhost instances
+  const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:5173',
+    /^https:\/\/.*\.vercel\.app$/, // Allow temporary Vercel preview environments
+    'https://borsanalys.se',
+    'https://www.borsanalys.se'
+  ];
+
+  app.use(cors({
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests if desired, or server-to-server)
+      if (!origin) return callback(null, true);
+      
+      const isAllowed = allowedOrigins.some(allowed => {
+        if (allowed instanceof RegExp) return allowed.test(origin);
+        return allowed === origin;
+      });
+      
+      if (isAllowed) return callback(null, true);
+      callback(new Error('Blocked by CORS policy'));
+    },
+    credentials: true,
+  }));
 
   // API routes FIRST
   app.use("/api", (req, res, next) => {
@@ -51,13 +85,16 @@ async function startServer() {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
   });
 
-  // Newsletter Signup (Prisma + Resend)
+  // Newsletter Signup (Prisma + Resend + Zod)
   app.post("/api/newsletter/signup", newsletterLimiter, async (req, res) => {
-    const { email } = req.body;
+    // 1. Strict input validation with Zod
+    const emailSchema = z.string().email({ message: "Ogiltig e-postadress. Vänligen kontrollera formatet." });
+    const parsedEmail = emailSchema.safeParse(req.body.email);
 
-    if (!email || !email.includes('@')) {
-      return res.status(400).json({ error: "Ogiltig e-postadress" });
+    if (!parsedEmail.success) {
+      return res.status(400).json({ error: parsedEmail.error.issues[0].message });
     }
+    const email = parsedEmail.data;
 
     try {
       // 1. Save to Neon (Prisma)
