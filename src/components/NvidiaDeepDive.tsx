@@ -19,6 +19,7 @@ import {
   AlertBox,
   VerdictBox
 } from "./analysis";
+import AdUnit from "./AdUnit";
 
 const T = {
   ink:     "#0D1B2A",
@@ -503,6 +504,8 @@ export default function NvidiaDeepDive({
           </AnalysisFadeIn>
         </div>
 
+        <AdUnit slot="7332946752" />
+
         {/* SECTION III: FINANSIELL ANALYS */}
         <section id="financials" className="scroll-mt-24 mb-20">
           <div className="mb-6">
@@ -743,6 +746,8 @@ export default function NvidiaDeepDive({
             description="5/5 — (Fokus: Vinsttillväxt, balansräkning och kassaflöde). Finansiellt i en klass för sig med extrem kassaflödesgenerering och marginaler som saknar motstycke för ett bolag av denna storlek." 
           />
         </section>
+
+        <AdUnit slot="7332946752" />
 
         {/* SECTION IV: VÄRDERING & JÄMFÖRELSE */}
         <section id="valuation" className="scroll-mt-24 mb-20">
@@ -1028,6 +1033,8 @@ export default function NvidiaDeepDive({
             ))}
           </div>
         </section>
+
+        <AdUnit slot="7332946752" />
 
         {/* SECTION IX: SAMMANFATTNING & INVESTERINGSBESLUT */}
         <section id="summary" className="scroll-mt-24 mb-20">

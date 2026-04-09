@@ -5,6 +5,7 @@ import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, ReferenceLine, Cell, ComposedChart
 } from "recharts";
+import AdUnit from "../AdUnit";
 
 const T = {
   ink:     "#0D1B2A",
@@ -430,6 +431,8 @@ export default function NovoNordiskDeepDive({
           </FadeIn>
         </div>
 
+        <AdUnit slot="7332946752" />
+
         {/* ── FINANSIELL ── */}
         <div id="finansiell">
           <FadeIn delay={200}>
@@ -603,6 +606,8 @@ export default function NovoNordiskDeepDive({
           </FadeIn>
         </div>
 
+        <AdUnit slot="7332946752" />
+
         {/* ── RISK ── */}
         <div id="risk">
           <FadeIn delay={500}>
@@ -710,6 +715,8 @@ export default function NovoNordiskDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        <AdUnit slot="7332946752" />
 
         {/* ── SCENARIER ── */}
         <div id="scenarier">

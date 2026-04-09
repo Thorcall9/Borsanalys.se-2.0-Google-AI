@@ -11,8 +11,9 @@ import VerdictBox from './VerdictBox';
 import ProgressBar from './ProgressBar';
 import ChartCard from './ChartCard';
 import SEO from '../SEO';
-import { AnalysisData } from '../../data/analyses';
 import { fetchWithCache, RapidAPIQuote } from '../../services/stockService';
+import { AnalysisData } from '../../data/analyses';
+import AdUnit from '../AdUnit';
 
 interface ComprehensiveAnalysisProps {
   data: AnalysisData;
@@ -234,6 +235,8 @@ export default function ComprehensiveAnalysis({
         )}
       </section>
 
+      <AdUnit slot="7332946752" />
+
       {/* SECTION II: STRATEGISK ANALYS & MOAT */}
       <section id="strategy" className="scroll-mt-24 mt-16">
         <div className="mb-6">
@@ -367,6 +370,8 @@ export default function ComprehensiveAnalysis({
         )}
       </section>
 
+      <AdUnit slot="7332946752" />
+
       {/* SECTION VI: RISKPROFIL */}
       <section id="risk" className="scroll-mt-24 mt-16">
         <div className="mb-6">
@@ -455,6 +460,8 @@ export default function ComprehensiveAnalysis({
           accentColor={ACCENT_COLOR}
         />
       </section>
+
+      <AdUnit slot="7332946752" />
 
       {/* SECTION X: SCENARIER (BULL, BASE & BEAR CASE) */}
       <section id="scenarios" className="scroll-mt-24 mt-16 mb-24">

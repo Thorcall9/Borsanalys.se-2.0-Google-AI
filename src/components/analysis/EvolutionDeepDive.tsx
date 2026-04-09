@@ -6,6 +6,7 @@ import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Cell, ComposedChart
 } from "recharts";
+import AdUnit from "../AdUnit";
 
 const T = {
   ink:     "#0D1B2A",
@@ -426,6 +427,8 @@ export default function EvolutionDeepDive({
           </FadeIn>
         </div>
 
+        <AdUnit slot="7332946752" />
+
         {/* ── FINANSIELL ── */}
         <div id="finansiell">
           <FadeIn delay={200}>
@@ -644,6 +647,8 @@ export default function EvolutionDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        <AdUnit slot="7332946752" />
 
         {/* ── RISK ── */}
         <div id="risk">
@@ -1075,6 +1080,8 @@ export default function EvolutionDeepDive({
             </Card>
           </div>
         </section>
+
+        <AdUnit slot="7332946752" />
 
         {/* XII. Scenarier (Bull/Base/Bear) */}
         <section id="scenarios" className="pt-24 pb-20">
