@@ -808,7 +808,7 @@ export const analyses: Record<string, AnalysisData> = {
   "swedbank-2025": {
     slug: "swedbank-2025",
     title: "Swedbank AB",
-    ticker: "SWED-A.ST",
+    ticker: "SWED A",
     market: "Large Cap Stockholm",
     sector: "Bank / Finans",
     recommendation: "BEVAKA",
@@ -816,41 +816,42 @@ export const analyses: Record<string, AnalysisData> = {
     pe: "11.01",
     yield: "7.43%",
     marketCap: "366 Mdkr",
-    summary: "Swedbank är en av Nordens största banker. Efter exceptionellt starka ränteår (22-24) syns nu en marginalnormalisering. Solid lönsamhet, marknadens lägsta K/I-kvot (0,36) och en extremt stark utdelningskapacitet gör det till en pålitlig utdelningskandidat.",
+    summary: "Solid lönsamhet, låg K/I-kvot och god direktavkastning. Framåtblickande P/E 12x och fallande EPS-estimat motiverar försiktighet vid nuvarande kurs. Tydligare köpläge vid 290-300 kr.",
     date: "2026-04-08",
-    investmentCase: "Det är viktigt att förstå kontexten för Swedbanks siffror: 2022–2023 var exceptionellt starka år för banker tack vare kraftigt stigande styrräntor. Nu när räntorna sjunker normaliseras marginalerna. Samtidigt garanterar bankens låga kostnadsbas (K/I 0,36) och det sparbanksförankrade distributionsnätverket extremt höga operativa kassaflöden även under normala marknadsförhållanden.",
-    marketOverview: "Sverige svarar för ungefär 71 procent av intäkterna och Baltikum för ytterligare 25 procent. Affärsmodellen bygger på tre intäktsben: räntenetto, provisionsnetto samt handelsintäkter. Swedbank Robur (fondförvaltning) tillför återkommande, mindre konjunkturkänsliga provisionsintäkter.",
-    growth: "Tillväxten är realistisk snarare än spektakulär. Förvärvet av Stabelo (bolån) fördubblade omedelbart marknadsandelen för nya bolån i egna kanaler. Baltikum förblir den geografiska tillväxtmotorn med genomsnittlig kredittillväxt på 12-16% det senaste året.",
-    financialAnalysis: "Helåret 2025 vittnade om Riksbankens räntesänkningar. Nettointäkterna sjönk 7% till 68 736 Mkr och räntenettot föll med 11%. Trots detta var rörelsemarginalen makalöst starka 31,86%. Årets vinst (EPS 29,14 kr) säkrade det strategiska lönsamhetsmålet 'Swedbank 15/25' för ROE.",
+    investmentCase: "Swedbank har en stabil och beprövad affärsmodell, levererar på sina finansiella mål, har exceptionell kostnadskontroll med K/I-kvot 0,36, en robust balansräkning och stark utdelningsförmåga. Banken har navigerat genom räntecykeln väl och levererat på sitt '15/25'-mål. Förvärven av Stabelo och Entercard stärker den framtida intjäningsförmågan inom bolån och korttjänster, vilket balanserar räntekänsligheten.",
+    marketOverview: "Swedbank är en av Sveriges och Nordens absolut största banker med 7,3 miljoner privatkunder. Sverige står för 71% av intäkterna och Baltikum för 25%. Banken är marknadsledare i Baltikum och har en unik position via sparbanksrörelsen i Sverige. Konkurrensen är mogen men stabil, där Swedbank utmärker sig genom sin digitala mognad och effektiva kostnadsstruktur.",
+    growth: "Tillväxten drivs primärt av volymökning i bolån (Stabelo) och expansion på de baltiska hemmamarknaderna där kreditvolymerna växte 12-16% under 2025. Entercard-integrationen bidrar med transaktionsbaserade intäkter. AI-driven effektivisering är en central del av 'Swedbank 15/27'-planen för att bibehålla marknadsledande kostnadseffektivitet.",
+    financialAnalysis: "Nettointäkterna 2025 sjönk 7% till 68 736 Mkr till följd av ett 11% lägre räntenetto när räntorna normaliserades. Trots detta förbättrades rörelsemarginalen till 31,86% och K/I-kvoten hölls på 0,36. EPS landade på 29,14 kr. Balansräkningen är mycket robust med en CET1-kvot på 17,8%, vilket gett utrymme för både ordinarie- och specialutdelningar.",
     competitiveAdvantages: [
-      "Stark lokal förankring och nätverk i Sverige via Sparbankerna",
-      "Effektivitetsledare: K/I-kvot på endast 0,36",
-      "Absolut marknadsdominans inom lönsamhetsmotorn Baltikum",
-      "Omfattande ekosystem av privatekonomi (bolån, Robur, Swish)"
+      "Sparbanksekosystemet: Unikt distributionsnät med 209 kontor och lokal förankring",
+      "Kostnadsledarskap: K/I-kvot på 0,36 är bland de lägsta i Europa",
+      "Marknadsdominans Baltikum: Ledande position och 'mest älskade varumärke'",
+      "Höga byteskostnader: Djup integration av privatkunders vardagsekonomi"
     ],
     risks: [
-      "Räntekänslighet—ytterligare räntesänkningar eroderar lönsamheten rakt ner på sista raden",
-      "Kvarlevande regulatorisk risk: Finansinspektionen (FI) drog igång nya granskningar",
-      "Marknadsdrivet hot från disruptiva fintech-banker inom bolånesektorn"
+      "Räntemarginaltryck: Varje räntesänkning pressar det dominerande räntenettot",
+      "Regulatorisk osäkerhet: Pågående FI-granskning av kundkännedomsprocesser",
+      "Geopolitik: Exponeringen mot Baltikum innebär strukturell risk vid regional instabilitet",
+      "Kreditkvalitet: Eventuell press på högt belånade svenska hushåll vid sämre konjunktur"
     ],
-    valuation: "Ett historiskt P/E på 11,0x och ett förväntat 2026-P/E på 12,1x signalerar att marknaden redan tagit höjd för lägre räntor. Utdelningsjägaren attraheras dock av estimerade 7,43% direktavkastning. Analytikerkonsensus ligger försiktigt på 315–332 kr.",
-    conclusion: "Swedbank kvalificerar sig utan tvivel som ett robust kvalitetsbolag. Som defensiv kassaflödesmaskin och utdelare är aktien ett starkt papper. Risk/Reward-förhållandet anser vi dock lutar åt neutralt. Ett mer övertygande köpläge ser vi vid kursfall mot 290–300 kr.",
-    esg: "S&P uppgraderade nyligen kreditbetyget med hänvisning till kraftigt förbättrad AML och styrning. Robur fortsätter vara en hållbarhetsjätte (CSRD-fokus).",
-    aiObservations: "Sentimentbilden för Swedbank de senaste månaderna är neutral/lätt negativ från toppnivåer (363 kr). Insideraktiviteten drivs främst av systematisk återköp istället för rena direkta styrelseköp.",
+    valuation: "P/E 11x på 2025-vinsten och 12x på 2026-estimat signalerar att marknaden korrekt prissatt en vinstnedgång. P/B 1,59x är rimligt men inte billigt. Den normaliserade direktavkastningen på 7,4% (2026e) är dock mycket attraktiv för utdelningsinvesterare.",
+    conclusion: "Swedbank är ett kvalitetsbolag med stark lönsamhet och generös utdelning. Vid nuvarande kurs 320 kr ser vi dock begränsad kortsiktig uppsida givet fallande EPS-estimat. En säkerhetsmarginal i värderingen nås vid 290-300 kr.",
+    esg: "S&P AA- betyg med fokus på förbättrad governance. Sustainable Asset Registry översteg 165 mdkr 2025. Mest hållbara bankvarumärke i Sverige 2025. Rapportering enligt CSRD för andra året i rad.",
+    aiObservations: "Sentimentbilden är neutral. Aktien har backat 12% från toppen i takt med räntesänkningsförväntningar. Insideraktivitet präglas främst av återköpsprogrammet. FI-granskningen är en varningssignal att bevaka för kortsiktig volatilitet.",
     employees: "18 638",
-    geography: "Sverige, Estland, Lettland, Litauen. Samt kontor globalt (Oslo, NY, Shanghai).",
-    managementOverview: "Jens Henriksson (VD): Tillträdde efter krisen 2019 och har framgångsrikt skrubbat rent varumärket. Jon Lidefelt (CFO).",
-    ownershipStructure: "Röststark bas hos Sparbanksstiftelserna (13,3%), resterande primärt Alecta, AMF och globala institutioner.",
+    geography: "Sverige (71%), Baltikum (25%), Övriga (4%)",
+    managementOverview: "VD Jens Henriksson (sedan 2019) och CFO Jon Lidefelt. Har levererat på '15/25'-målet och etablerat ett högt förtroende genom effektiv krishantering och finansiell disciplin.",
+    ownershipStructure: "Domineras av Sparbanksstiftelserna (13,3% av rösterna) samt institutionella jättar som Alecta och AMF, vilket ger en stabil och långsiktig ägarbas.",
     scenarios: [
-      { label: "Bull Case", value: "380+ kr", change: "+19%", type: "bull" },
-      { label: "Base Case", value: "345 kr", change: "+8%", type: "base" },
-      { label: "Bear Case", value: "260 kr", change: "-19%", type: "bear" }
+      { label: "Bull Case", value: "380-420 SEK", change: "+19-31%", type: "bull" },
+      { label: "Base Case", value: "300-360 SEK", change: "-6% till +12%", type: "base" },
+      { label: "Bear Case", value: "260-280 SEK", change: "-19% till -12%", type: "bear" }
     ],
-    businessModel: "Att förvärva likviditet via en enorm insättningsbas och låna ut med nettomarginal i stabila nordeuropeiska samhällen. Kompletteras av storskalig provisionshandel.",
-    strengths: ["Låg kostnadsbas", "Starkt momentum Baltikum", "Swedbank Robur", "Stark likviditet"],
-    weaknesses: ["Räntekänslig", "Historiskt bagage regulatoriskt"],
-    opportunities: ["Stabelo-förvärv dämpar fallande volymer", "Entercard-synergier för korttjänster"],
-    threats: ["Ytterligare FI granskningar", "Bostads-volatilitet", "Räntekrig mellan trötta storbanker"],
+    businessModel: "Fullservicebank med fokus på privatpersoner och företag. Intäkter genereras främst via räntenetto, provisionsnetto (fondförvaltning via Robur, kort, rådgivning) och handelsintäkter.",
+    strengths: ["Stark varumärkesposition i Baltikum", "Låg K/I-kvot 0,36", "ROE >15%", "Skalbar digitalinfrastruktur"],
+    weaknesses: ["Beroende av räntemarginal", "Tappad bolånemarknadsandel Sverige", "Historiska regulatoriska bekymmer"],
+    opportunities: ["Entercard/Stabelo-synergier", "Bolånetillväxt vid lägre räntor", "Baltisk kreditexpansion", "AI-effektivisering"],
+    threats: ["Räntemarginaltryck", "US DFS-utredning", "FI-granskning", "Fintech-konkurrens"],
     scores: {
       affarsmodell: 4,
       strategiskMoat: 4,
@@ -865,9 +866,9 @@ export const analyses: Record<string, AnalysisData> = {
       isAIDriven: true,
       slug: "swedbank-2025",
       name: "Swedbank AB",
-      ticker: "SWED-A.ST",
+      ticker: "SWED A",
       isin: "SE0000242455",
-      date: "08 april 2026",
+      date: "2026-04-08",
       author: "Carl Fredrik Thor",
       scores: {
         affarsmodell: 4,
@@ -883,34 +884,34 @@ export const analyses: Record<string, AnalysisData> = {
       maxPoang: 40,
       rating: 0.725,
       overview: {
-        borskurs: "320 SEK",
-        borsvarde: "ca 366 Mdkr",
-        bransch: "Banktjänster & Finans",
+        borskurs: "320.0 SEK",
+        borsvarde: "ca 366 mdkr",
+        bransch: "Bankverksamhet / Finansiella tjänster",
         geografi: "Sverige (71%), Baltikum (25%), Övriga (4%)",
-        affarside: "Kreditgivare, Sparande och Investeringar.",
-        affarsmodell: "Intäkter från Räntenetto, Provisionsnetto & Roburs fondverksamheter.",
-        ledning: "VD Jens Henriksson (sedan 2019), CFO Jon Lidefelt.",
-        agarstruktur: "Stabila och kapitalstarka Sparbanksstiftelserna agerar ankarägare (13.3%)."
+        affarside: "Erbjuda privatpersoner och företag finansiella tjänster i Norden och Baltikum",
+        affarsmodell: "Fullservicebank med intäkter från räntenetto, provisionsnetto och kapitalförvaltning via Swedbank Robur",
+        ledning: "VD Jens Henriksson sedan 2019, CFO Jon Lidefelt. Levererade Swedbank 15/25 i tid.",
+        agarstruktur: "Sparbanksstiftelserna ca 13% av rösterna, domineras av institutionella ägare"
       },
       strategiskMoat: {
         swot: {
-          styrkor: ["Sveriges lägsta K/I-kvot (0.36)", "Hela 25% intäkter från snabbväxande Baltikum", "Skalbara digitala plattformar", "Strukturell ROE >14%"],
-          svagheter: ["Svagare marknadsandel på bolån under vissa perioder", "Räntenettot starkt överhängande i mixen", "US DFS utredning"],
-          möjligheter: ["Entercard/Stabelo dämpar cyklikaliteten", "Volymtillväxt om ränteläget droppar drastiskt"],
-          hot: ["Fintech-nisch konkurrens", "FI och Regulatoriska böter"]
+          styrkor: ["Stark varumärkesposition i Baltikum", "Låg K/I-kvot 0,36", "ROE >15%", "Skalbar digitalinfrastruktur"],
+          svagheter: ["Beroende av räntemarginal", "Tappad bolånemarknadsandel Sverige", "Historiska regulatoriska bekymmer"],
+          möjligheter: ["Entercard/Stabelo-synergier", "Bolånetillväxt vid lägre räntor", "Baltisk kreditexpansion", "AI-effektivisering"],
+          hot: ["Räntemarginaltryck", "US DFS-utredning", "FI-granskning", "Fintech-konkurrens"]
         },
-        moat: ["Hög Switch Cost för helkunder", "Stort fysiskt nät via Sparbankerna", "Korsförsäljning av Lån och Pension"]
+        moat: ["Varumärke och kundlojalitet", "Sparbanksekosystem", "Höga byteskostnader", "Ledande digital plattform Baltikum"]
       },
       finansiellAnalys: {
         resultatrakning: {
-          omsattningstillvaxt: "-7% omsättningsfall (2025)",
-          vinsttillvaxt: "EPS 29,14 kr (-6%)",
-          rorelsemarginal: "31,86% RM (2025)"
+          omsattningstillvaxt: "Nettointäkter -7% 2025 vs 2024 (68 736 vs 74 104 Mkr). Räntenetto -11%.",
+          vinsttillvaxt: "EPS 29,14 kr 2025 vs 30,98 kr 2024 (-6%). Estimat 2026e: 26,94 kr.",
+          rorelsemarginal: "Rörelsemarginal 31,86% (2025) vs 27,70% (2024). K/I-kvot 0,36."
         },
         nyckeltal: {
-          roe: "14,7% ROE (2025)",
-          roce: "14,7% ROCE (2025)",
-          utdelning: "24,19 SEK ordinarie estimerat 2026 (DA: 7,4%)"
+          roe: "14,74% (2025), 16,70% (2024), 18,3% (2023)",
+          roce: "14,74% (2025)",
+          utdelning: "29,80 kr/aktie 2025 inkl. 9,35 kr specialutdelning. 2026e: 24,19 kr, DA 7,43%"
         },
         vardering: {
           pe: "12,1x (estimerad 2026)",
@@ -918,20 +919,20 @@ export const analyses: Record<string, AnalysisData> = {
           direktavkastning: "7,43%"
         }
       },
-      tillvaxtdrivare: ["Stabelo-förvärv för bolån", "Entercard för transaktioner", "Baltiska kreditmarknaden", "AI Effektiviseringar"],
+      tillvaxtdrivare: ["Entercard/Stabelo-synergier", "Bolånetillväxt vid lägre räntor", "Baltisk kreditexpansion", "AI-effektivisering"],
       esgMakro: {
-        esgProfil: "Efter compliance-smällen fokuseras allt på best-practice-ESG; hög CSRD rapportering.",
-        makropaverkan: "Riksbanksräntan och KPI styr oavkortat storbankens räntenetto."
+        esgProfil: "Efter compliance-smällen fokuseras allt på best-practice-ESG; hög CSRD rapportering. S&P AA- kreditbetyg.",
+        makropaverkan: "Riksbanksräntan och KPI styr oavkortat storbankens räntenetto. BN-tillväxt 2,5% 2026e estimeras för Sverige."
       },
       sammanfattning: {
-        beslut: "BEVAKA / KÖP",
-        motivering: "Ett enastående svenskt storbolag med hög generositet i utdelningarna. Värderas relativt fair, utan extrem rabatt. Solid kassako att bevaka på dippar.",
-        malpris: "320-360 SEK"
+        beslut: "Bevaka/Köp",
+        motivering: "Solid lönsamhet, låg K/I-kvot och god direktavkastning. Framåtblickande P/E 12x och fallande EPS-estimat motiverar försiktighet vid nuvarande kurs. Tydligare köpläge vid 290-300 kr.",
+        malpris: "320-360 SEK (12 månader)"
       },
       scenarier: {
-        bullCase: "Räntenedgång pareras blixtsnabbt av Swedbank – kurs mot 380 kr.",
-        baseCase: "Stabila volymer balanserar räntebortfallet – kurs mot 345 kr.",
-        bearCase: "Bankens bolånemarginaler krossas – kurs mot 260 kr."
+        bullCase: "ROE 15-16%, synergier levereras, EPS 31-33 kr 2027. Kurs 380-420 SEK.",
+        baseCase: "ROE 14-15%, stabil kostnadskvot, EPS 27-29 kr. Kurs 300-360 SEK.",
+        bearCase: "ROE under 13%, räntepressens fortsättning, FI-böter. EPS 23-25 kr. Kurs 260-280 SEK."
       }
     }
   }
