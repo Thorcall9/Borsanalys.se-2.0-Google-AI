@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Star, ShieldCheck } from "lucide-react";
 import {
@@ -63,36 +63,79 @@ const allScores = [
   {key:"AI-obs.",val:3,max:5},
 ];
 
+const roeCetData = [
+  { ar: '2022', roe: 12.8, cet1: 19.6 },
+  { ar: '2023', roe: 15.9, cet1: 18.8 },
+  { ar: '2024', roe: 14.6, cet1: 18.8 },
+  { ar: '2025', roe: 13.0, cet1: 17.6 }
+];
+
+const divData = [
+  { ar: '2021', ord: 5.00, extra: 0 },
+  { ar: '2022', ord: 5.50, extra: 2.50 },
+  { ar: '2023', ord: 6.50, extra: 6.50 },
+  { ar: '2024', ord: 7.50, extra: 7.50 },
+  { ar: '2025', ord: 8.00, extra: 9.50 }
+];
+
+function StatItem({ label, value, trend, isPositive }: any) {
+  return (
+    <div className="flex items-center justify-between py-2 border-b border-slate-50 last:border-0">
+      <span className="text-xs font-bold text-slate-500">{label}</span>
+      <div className="flex flex-col items-end">
+        <span className="text-sm font-black text-slate-900">{value}</span>
+        {trend && (
+          <span className={`text-[10px] font-bold ${isPositive ? 'text-emerald-500' : 'text-rose-500'}`}>
+            {trend}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function TableRow({ label, v24, v25, diff }: any) {
+  const isNeg = diff.startsWith('-');
+  return (
+    <tr className="border-b border-slate-50 last:border-0">
+      <td className="py-3 text-slate-500">{label}</td>
+      <td className="py-3 text-right text-slate-900">{v24}</td>
+      <td className="py-3 text-right text-slate-900">{v25}</td>
+      <td className={`py-3 text-right font-bold ${isNeg ? 'text-rose-600' : 'text-emerald-600'}`}>{diff}</td>
+    </tr>
+  );
+}
+
 function useHover(): [boolean, { onMouseEnter: () => void; onMouseLeave: () => void }] {
   const [h,setH]=useState(false);
   return [h,{onMouseEnter:()=>setH(true),onMouseLeave:()=>setH(false)}];
 }
 
-function FadeIn({children,delay=0}){
-  const [v,setV]=useState(false);
-  useEffect(()=>{const t=setTimeout(()=>setV(true),delay+30);return()=>clearTimeout(t);},[delay]);
-  return <div style={{opacity:v?1:0,transform:v?"none":"translateY(8px)",transition:"all 0.35s ease"}}>{children}</div>;
+function FadeIn({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) {
+  const [v, setV] = useState(false);
+  useEffect(() => { const t = setTimeout(() => setV(true), delay + 30); return () => clearTimeout(t); }, [delay]);
+  return <div style={{ opacity: v ? 1 : 0, transform: v ? "none" : "translateY(8px)", transition: "all 0.35s ease" }}>{children}</div>;
 }
 
-function Card({children,mb=0}: any){
-  return <div className="bg-white border border-slate-200 rounded-2xl shadow-sm mb-5 p-4 md:p-6" style={{marginBottom:mb}}>{children}</div>;
+function Card({ children, mb = 0 }: { children: React.ReactNode, mb?: number }) {
+  return <div className="bg-white border border-slate-200 rounded-2xl shadow-sm mb-5 p-4 md:p-6" style={{ marginBottom: mb }}>{children}</div>;
 }
 
-function SectionLabel({number,title}){
-  return(
-    <div style={{display:"flex",alignItems:"center",gap:12,marginBottom:22}}>
-      <div style={{width:30,height:30,borderRadius:8,background:T.accent,color:"#fff",display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,fontWeight:900,flexShrink:0,fontFamily:"Georgia,serif"}}>{number}</div>
-      <h2 style={{margin:0,fontSize:16,fontWeight:800,color:T.ink,letterSpacing:-0.3}}>{title}</h2>
+function SectionLabel({ number, title }: { number: string, title: React.ReactNode }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 22 }}>
+      <div style={{ width: 30, height: 30, borderRadius: 8, background: T.accent, color: "#fff", display: "flex", alignItems: "center", justifyContent:"center", fontSize: 11, fontWeight: 900, flexShrink: 0, fontFamily: "Georgia,serif" }}>{number}</div>
+      <h2 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: T.ink, letterSpacing: -0.3 }}>{title}</h2>
     </div>
   );
 }
 
-const ChartTip=({active,payload,label,unit=""}: any)=>{
-  if(!active||!payload?.length)return null;
-  return(
-    <div style={{background:T.surface,border:`1px solid ${T.border}`,borderRadius:10,padding:"10px 14px",boxShadow:T.shadowMd,fontSize:13}}>
-      <div style={{fontWeight:700,color:T.ink,marginBottom:6}}>{label}</div>
-      {payload.map((p,i)=><div key={i} style={{color:T.sub}}>{p.name}: <strong style={{color:T.ink}}>{typeof p.value==="number"?p.value.toFixed(2):p.value}{unit}</strong></div>)}
+const ChartTip = ({ active, payload, label, unit = "" }: any) => {
+  if (!active || !payload?.length) return null;
+  return (
+    <div style={{ background: T.surface, border: `1px solid ${T.border}`, borderRadius: 10, padding: "10px 14px", boxShadow: T.shadowMd, fontSize: 13 }}>
+      <div style={{ fontWeight: 700, color: T.ink, marginBottom: 6 }}>{label}</div>
+      {payload.map((p: any, i: number) => <div key={i} style={{ color: T.sub }}>{p.name}: <strong style={{ color: T.ink }}>{typeof p.value === "number" ? p.value.toFixed(2) : p.value}{unit}</strong></div>)}
     </div>
   );
 };
@@ -451,7 +494,14 @@ export default function HandelsbankenDeepDive({
                 <div className="w-12 h-12 rounded-full bg-[#004B87]/10 flex items-center justify-center text-[#004B87] font-bold text-lg">4/5</div>
                 <div>
                   <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Bedömning - Strategisk Moat</div>
-                  <div cla        {/* ── FINANSIELL ── */}
+                  <div className="text-sm font-bold text-slate-900 leading-relaxed">Solid affärsmodell med djupa vallgravar i kultur och kreditdisciplin.</div>
+                </div>
+              </div>
+            </Card>
+          </FadeIn>
+        </div>
+
+        {/* ── FINANSIELL ── */}
         <div id="finansiell">
           <FadeIn delay={200}>
             <Card mb={20}>
@@ -849,19 +899,6 @@ export default function HandelsbankenDeepDive({
                   <div style={{fontWeight:800, color:T.red, fontSize:14, marginBottom:12}}>Bear Case</div>
                   <div style={{fontSize:24, fontWeight:900, color:T.red, marginBottom:4, letterSpacing:-1}}>115-130 kr</div>
                   <p className="text-xs text-slate-600 leading-relaxed mt-4">Fortsatt räntepress, regulatoriska kostnader biter och europeiska bankmultiplar kommer ned. Nedsidan begränsas dock av balansräkningen.</p>
-                </div>
-              </div>
-            </Card>
-          </FadeIn>
-        </div>
-
-      </div>
-    </div>
-  );
-}
-        <div style={{fontWeight:800, color:T.red, fontSize:14, marginBottom:12}}>Bear Case</div>
-                  <div style={{fontSize:24, fontWeight:900, color:T.red, marginBottom:4, letterSpacing:-1}}>115-130 kr</div>
-                  <p className="text-xs text-slate-600 leading-relaxed mt-4">Räntetrycket fortsätter, regulatoriska kostnader biter och bankmultiplar kommer ned.</p>
                 </div>
               </div>
             </Card>

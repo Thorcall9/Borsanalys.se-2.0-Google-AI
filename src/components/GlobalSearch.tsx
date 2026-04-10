@@ -81,15 +81,16 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-background/80 backdrop-blur-sm z-[150]"
+            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[150]"
           />
 
           {/* Search Content */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.98, y: -20 }}
+            initial={{ opacity: 0, scale: 0.95, y: -40 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.98, y: -20 }}
-            className="fixed top-[10%] md:top-[15%] left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-3xl bg-card border border-border rounded-[2rem] md:rounded-[2.5rem] shadow-2xl z-[160] overflow-hidden shadow-black/20"
+            exit={{ opacity: 0, scale: 0.95, y: -40 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="fixed top-[15%] md:top-[20%] left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-2xl bg-card border border-border rounded-[2.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.5)] z-[160] overflow-hidden"
             onKeyDown={handleKeyDown}
           >
             <div className="p-4 md:p-8 border-b border-border flex items-center gap-3 md:gap-6 bg-muted/10">
