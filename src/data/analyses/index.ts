@@ -9,6 +9,7 @@ import { volvo } from "./volvo/volvo";
 import { alphabet } from "./alphabet/alphabet";
 import { evolution2025 } from "./evolution/evolution-2025";
 import { swedbank2025 } from "./swedbank/swedbank-2025";
+import { ericsson } from "./ericsson/ericsson";
 
 export const analyses: Record<string, AnalysisData> = {
   "investor-ab": investorAb,
@@ -21,6 +22,7 @@ export const analyses: Record<string, AnalysisData> = {
   "alphabet": alphabet,
   "evolution-2025": evolution2025,
   "swedbank-2025": swedbank2025,
+  "ericsson": ericsson,
 };
 
 export type { AnalysisData, AIDrivenAnalysis } from "../../types/analysis";
