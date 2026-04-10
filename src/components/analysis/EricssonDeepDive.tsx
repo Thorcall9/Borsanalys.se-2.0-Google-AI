@@ -780,21 +780,43 @@ export default function EricssonDeepDive({
           </FadeIn>
         </div>
 
-        {/* ── SCENARIER ── */}
         <div id="scenarier">
           <FadeIn delay={800}>
             <SectionLabel number="X" title="Scenarier"/>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
-                { label: "Bull Case", color: T.green, bg: T.greenL, pris: "135 kr", upside: "+48%", body: "5G standalone, kärnnät, privata nät och network APIs får snabbare kommersiellt genomslag samtidigt som juridiska risker klingar av." },
-                { label: "Base Case", color: T.accent, bg: T.accentL, pris: "110 kr", upside: "+20%", body: "RAN förblir flat, kärnnät och företagslösningar växer måttligt, kassaflödet förblir robust och Ericsson fortsätter återföra kapital." },
-                { label: "Bear Case", color: T.red, bg: T.redL, pris: "75 kr", upside: "-18%", body: "Patentförnyelser blir svagare, juridiska processer fördyras, Enterprise underlevererar och svag operatörscapex pressar Networks." },
+                { 
+                  label: "Bull Case", 
+                  color: T.green, 
+                  bg: T.greenL, 
+                  pris: "135 kr", 
+                  upside: "+48%", 
+                  body: "5G standalone-investeringar accelererar, Cloud Software and Services fortsätter växa snabbare än marknaden, network APIs får bättre genomslag och juridiska risker klingar av. Då kan Ericsson få både högre vinstkvalitet och multipelexpansion." 
+                },
+                { 
+                  label: "Base Case", 
+                  color: T.accent, 
+                  bg: T.accentL, 
+                  pris: "110 kr", 
+                  upside: "+20%", 
+                  body: "RAN-marknaden förblir flat, men Ericsson fortsätter leverera stabil marginal och kassaflöde. Nyare segment växer, men inte tillräckligt för att förändra helheten radikalt. Aktien ger avkastning via utdelning och återköp." 
+                },
+                { 
+                  label: "Bear Case", 
+                  color: T.red, 
+                  bg: T.redL, 
+                  pris: "75 kr", 
+                  upside: "-18%", 
+                  body: "DOJ-processer blir dyrare än väntat, patentförnyelser blir svagare, Enterprise-lönsamheten sviker och den globala operatörscapexen förblir dämpad. Ericsson behandlas då som ett ex-growth-bolag." 
+                },
               ].map((s, i) => (
-                <div key={i} style={{background:s.bg, border:`2.5px solid ${s.color}22`, borderRadius:20, padding:24}}>
-                  <div style={{fontWeight:800, color:s.color, fontSize:14, marginBottom:12}}>{s.label}</div>
-                  <div style={{fontSize:32, fontWeight:900, color:s.color, marginBottom:4}}>{s.pris}</div>
-                  <div style={{fontSize:12, color:T.muted, marginBottom:16}}>{s.upside} · 12 mån</div>
-                  <p style={{margin:0, fontSize:13, color:T.sub, lineHeight:1.6}}>{s.body}</p>
+                <div key={i} style={{background:s.bg, border:`2.5px solid ${s.color}22`, borderRadius:20, padding:24, display:"flex", flexDirection:"column"}}>
+                  <div style={{fontWeight:800, color:s.color, fontSize:12, textTransform:"uppercase", letterSpacing:1, marginBottom:12}}>{s.label}</div>
+                  <div style={{fontSize:32, fontWeight:900, color:s.color, marginBottom:4, display:"flex", alignItems:"baseline", gap:4}}>
+                    {s.pris}
+                  </div>
+                  <div style={{fontSize:12, fontWeight:700, color:T.muted, marginBottom:16}}>{s.upside} · 12 mån</div>
+                  <p style={{margin:0, fontSize:13.5, color:T.sub, lineHeight:1.65, fontWeight:500, flex:1}}>{s.body}</p>
                 </div>
               ))}
             </div>
