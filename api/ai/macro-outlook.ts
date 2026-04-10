@@ -1,23 +1,29 @@
 import type { Request, Response } from 'express';
-import { prisma } from '../../src/lib/prisma.ts';
+import { prisma } from '../../src/lib/prisma';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export default async function handler(req: Request, res: Response) {
+  // 1. Basic Method Check
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    if (!process.env.GEMINI_API_KEY) {
-      console.error("[ERROR] GEMINI_API_KEY is missing in serverless function!");
-      return res.status(500).json({ error: "Systemfel: API-nyckel saknas." });
+    // 2. Comprehensive Key Check
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+      console.error("[CRITICAL] GEMINI_API_KEY is missing in serverless environment");
+      return res.status(500).json({ 
+        error: "Miljövariabel saknas: GEMINI_API_KEY",
+        suggestion: "Kontrollera inställningarna i din Vercel Dashboard."
+      });
     }
 
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    // Using Gemini 2.5 Flash-Lite as established in this workspace for stability
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
+    const genAI = new GoogleGenerativeAI(apiKey);
+    // Using gemini-1.5-flash for maximum production stability on Vercel
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    // Hämta live makrodata som kontext
+    // 3. Database Context
     let macroContext = "US10Y: 4.34%, SE10Y: 2.85%, USD/SEK: 9.56, EUR/SEK: 10.95, OMX30: 2905, KPI: 0.5%";
     try {
       const macroRows = await prisma.macroMarketData.findMany({ 
@@ -30,70 +36,51 @@ export default async function handler(req: Request, res: Response) {
         macroContext = unique.map(d => `${d.key}: ${d.value} (${d.trend || 'flat'})`).join(", ");
       }
     } catch (dbErr: any) {
-      console.warn(`[WARNING] Database fetch failed (using fallback): ${dbErr.message}`);
+      console.warn(`[WARNING] Database fetch failed in serverless: ${dbErr.message}`);
+      // Fallback is already set
     }
 
     const today = new Date().toLocaleDateString('sv-SE');
-    const prompt = `Du är en erfaren makroekonomisk analytiker som skriver på svenska för investerare på Börsanalys.se.
-Aktuella makroindikatorer (${today}): ${macroContext}.
-
-Analysera var vi befinner oss i konjunkturcykeln och vad det innebär för aktiemarknaden.
-Vi använder en 6-fasmodell:
-- early_recovery (Tidig återhämtning)
-- expansion (Expansion)
-- overheating (Överhettning)
-- late_cycle (Sen cykel)
-- slowdown (Avmattning)
-- recession (Recession)
-
-Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
+    const prompt = `Du är en erfaren makroekonomisk analytiker för Börsanalys.se.
+Aktuella indikatorer (${today}): ${macroContext}.
+Analysera konjunkturcykeln (6 faser: early_recovery, expansion, overheating, late_cycle, slowdown, recession).
+Returnera EXAKT JSON:
 {
-  "outlook": "[3-4 meningar på svenska om makroläget och vad investerare bör tänka på just nu. Var professionell och initierad.]",
-  "suggestedPhaseId": "early_recovery|expansion|overheating|late_cycle|slowdown|recession",
-  "confidence": [HELTAL mellan 0-100],
-  "upcomingDates": [{"date": "DD Månad", "title": "Händelse"}]
+  "outlook": "3-4 meningar på svenska...",
+  "suggestedPhaseId": "expansion|late_cycle|etc",
+  "confidence": 0-100,
+  "upcomingDates": [{"date": "DD Mån", "title": "Händelse"}]
 }`;
 
     const result = await model.generateContent(prompt);
-    const response = await result.response;
-    let text = response.text().trim();
+    const text = result.response.text().trim();
     
-    // 1. Better JSON Extraction (handle markdown blocks or preamble)
+    // 4. Robust Parsing
     let jsonData = null;
     try {
       const cleanedText = text.replace(/```json\n?|```/g, "").trim();
       const jsonMatch = cleanedText.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        jsonData = JSON.parse(jsonMatch[0]);
-      } else {
-        jsonData = JSON.parse(cleanedText);
-      }
+      jsonData = JSON.parse(jsonMatch ? jsonMatch[0] : cleanedText);
     } catch (parseErr) {
-      console.error(`[ERROR] AI JSON Parse failed. Text: ${text.substring(0, 100)}`);
-      throw new Error("Kunde inte tolka AI-svaret som JSON.");
+      console.error("[ERROR] AI JSON Parse failed:", text.substring(0, 50));
+      throw new Error("Kunde inte tolka AI-svaret.");
     }
 
-    // 2. Data Validation & Formatting
     const validPhases = ['early_recovery', 'expansion', 'overheating', 'late_cycle', 'slowdown', 'recession'];
     const suggestedPhaseId = validPhases.includes(jsonData.suggestedPhaseId) ? jsonData.suggestedPhaseId : "late_cycle";
-    
-    let numericConfidence = 75;
-    if (jsonData.confidence !== undefined) {
-      numericConfidence = parseInt(String(jsonData.confidence), 10);
-      if (isNaN(numericConfidence)) numericConfidence = 75;
-    }
 
     return res.status(200).json({
-      outlook: jsonData.outlook || "Makroanalys genererades.",
+      outlook: jsonData.outlook || "Analys genererades.",
       suggestedPhaseId,
-      confidence: numericConfidence,
+      confidence: jsonData.confidence || 75,
       upcomingDates: Array.isArray(jsonData.upcomingDates) ? jsonData.upcomingDates : []
     });
 
   } catch (err: any) {
-    console.error("[MACRO OUTLOOK ERROR]", err.message);
+    console.error("[MACRO OUTLOOK FATAL]", err.message);
     return res.status(500).json({
-      error: `Serverfel: ${err.message}`
+      error: `Serverfel: ${err.message}`,
+      type: "SERVERLESS_CRASH"
     });
   }
 }
