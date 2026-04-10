@@ -388,18 +388,31 @@ export default function MacroDashboard() {
                     viewport={{ once: true }}
                     className="bg-card border border-border rounded-[2rem] p-8 hover:border-primary/30 transition-all group"
                   >
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-6">
-                      <div className="flex items-center gap-4">
-                        <div className={`w-3 h-3 rounded-full ${
-                          event.impact === "positive" ? "bg-emerald-400" : 
-                          event.impact === "negative" ? "bg-red-500" : "bg-amber-500"
-                        }`} />
-                        <h3 className="text-2xl font-black tracking-tighter">{event.title}</h3>
+                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-4">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-4">
+                          <div className={`w-3 h-3 rounded-full shrink-0 ${
+                            event.impact === "positive" ? "bg-emerald-400" : 
+                            event.impact === "negative" ? "bg-red-500" : "bg-amber-500"
+                          }`} />
+                          <h3 className="text-2xl font-black tracking-tighter">{event.title}</h3>
+                        </div>
+                        {!user && (
+                          <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 text-primary rounded-full text-[10px] font-black uppercase tracking-widest">
+                              <Lock size={12} />
+                              Logga in för djupare AI-insikter
+                            </div>
+                            <div className="px-3 py-1 bg-emerald-500/10 text-emerald-500 rounded-full text-[10px] font-black uppercase tracking-widest">
+                              GRATIS
+                            </div>
+                          </div>
+                        )}
                       </div>
                       <button 
                         onClick={() => user ? getAIInsight(event) : openLoginModal()}
                         disabled={loadingAI === event.id}
-                        className="flex items-center gap-2 px-6 py-2 bg-primary/10 text-primary rounded-full text-xs font-black uppercase tracking-widest hover:bg-primary hover:text-white transition-all disabled:opacity-50"
+                        className="flex items-center gap-2 px-6 py-2 bg-primary/10 text-primary rounded-full text-xs font-black uppercase tracking-widest hover:bg-primary hover:text-white transition-all disabled:opacity-50 shrink-0"
                       >
                         {loadingAI === event.id ? (
                           <>
@@ -409,13 +422,13 @@ export default function MacroDashboard() {
                         ) : (
                           <>
                             {user ? <Zap size={14} /> : <Lock size={14} />}
-                            {user ? "Få AI-insikt" : "Logga in för djupare AI-insikter"}
+                            {user ? "Få AI-insikt" : "Lås upp analys"}
                           </>
                         )}
                       </button>
                     </div>
                     
-                    <p className="text-muted-foreground font-medium leading-relaxed mb-6">
+                    <p className="text-muted-foreground font-medium leading-relaxed mb-8">
                       {event.description}
                     </p>
 
@@ -450,18 +463,36 @@ export default function MacroDashboard() {
                     ) : (
                       <div 
                         onClick={openLoginModal}
-                        className="mb-6 p-8 bg-primary/5 border border-dashed border-primary/20 rounded-2xl flex flex-col items-center justify-center text-center gap-4 group cursor-pointer hover:bg-primary/10 transition-all"
+                        className="mb-8 relative overflow-hidden group cursor-pointer"
                       >
-                        <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary mb-2 group-hover:scale-110 transition-transform">
-                          <Sparkles size={24} />
+                        <div className="p-10 bg-gradient-to-br from-primary/10 via-background/60 to-primary/5 border border-primary/20 rounded-[2.5rem] backdrop-blur-sm flex flex-col items-center justify-center text-center gap-8 transition-all hover:border-primary/40 hover:bg-primary/10">
+                          {/* Animated background glow */}
+                          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/20 rounded-full blur-[80px] group-hover:w-64 group-hover:h-64 transition-all duration-700 pointer-events-none" />
+                          
+                          <div className="w-20 h-20 bg-primary/20 rounded-[2rem] flex items-center justify-center text-primary group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 relative z-10">
+                            <Sparkles size={40} />
+                          </div>
+
+                          <div className="space-y-3 relative z-10">
+                            <h4 className="text-2xl font-black tracking-tight text-foreground uppercase">Få AI-INSIKT</h4>
+                            <p className="text-base font-medium text-muted-foreground max-w-lg leading-relaxed">
+                              Logga in eller skapa ett <span className="text-primary font-black uppercase tracking-wider">gratis konto</span> för att se marknadspåverkan och påverkade bolag.
+                            </p>
+                          </div>
+
+                          {/* Sneak peek badges */}
+                          <div className="flex flex-wrap justify-center gap-3 relative z-10">
+                            {["Marknadspåverkan", "Svenska Bolag", "USA Bolag", "Sektorer"].map(tag => (
+                              <div key={tag} className="px-4 py-2 bg-foreground/[0.03] border border-foreground/10 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] opacity-80 backdrop-blur-md">
+                                {tag}
+                              </div>
+                            ))}
+                          </div>
+
+                          <button className="relative z-10 px-12 py-5 bg-primary text-white rounded-[1.5rem] text-xs font-black uppercase tracking-[0.2em] shadow-[0_15px_40px_rgba(var(--primary),0.3)] group-hover:shadow-[0_20px_50px_rgba(var(--primary),0.5)] group-hover:-translate-y-1 active:scale-95 transition-all duration-300">
+                            Logga in nu
+                          </button>
                         </div>
-                        <div className="space-y-1">
-                          <h4 className="text-sm font-black uppercase tracking-widest text-primary">Få AI-INSIKT</h4>
-                          <p className="text-xs font-bold text-muted-foreground">Logga in för att se marknadspåverkan och påverkade bolag</p>
-                        </div>
-                        <button className="px-8 py-3 bg-primary text-white rounded-full text-[10px] font-black uppercase tracking-widest shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-all">
-                          Logga in nu
-                        </button>
                       </div>
                     )}
 
