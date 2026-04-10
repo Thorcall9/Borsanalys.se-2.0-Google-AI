@@ -23,6 +23,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { AdminSubscribers } from "./components/AdminSubscribers";
 import PreviewHeaderPage from "./pages/PreviewHeader";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 export default function App() {
   return (
@@ -30,6 +31,7 @@ export default function App() {
       <Router>
         <ScrollToTop />
         <Analytics />
+        <SpeedInsights />
         <ErrorBoundary>
           <AuthProvider>
             <ThemeProvider>
