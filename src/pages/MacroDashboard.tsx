@@ -4,7 +4,7 @@ import {
   TrendingUp, TrendingDown, Globe, Landmark, 
   Activity, ArrowUpRight, ArrowDownRight, 
   Zap, Sparkles, Loader2, Lock,
-  Newspaper, Gauge
+  Newspaper, Gauge, Target
 } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -109,39 +109,63 @@ const INITIAL_EVENTS: MarketEvent[] = [
 
 const PHASES = [
   {
-    id: 'recovery',
-    name: 'Återhämtning',
-    description: 'Tillväxten tar fart medan inflationen förblir låg. Aktier brukar prestera bäst här.',
-    rotation: 45,
+    id: 'early_recovery',
+    name: 'Tidig återhämtning',
+    description: 'Låga räntor, stimulanser börjar bita. Fokus på Småbolag & Cykliskt.',
+    timing: 'Vändning uppåt.',
+    rotation: 30,
     color: 'text-emerald-400',
     bg: 'bg-emerald-400/10',
-    isCurrent: true
+    isCurrent: false
+  },
+  {
+    id: 'expansion',
+    name: 'Expansion',
+    description: 'Stark tillväxt, bred vinstökning. "All-in" på risk.',
+    timing: 'Stark tjurmarknad.',
+    rotation: 90,
+    color: 'text-emerald-500',
+    bg: 'bg-emerald-500/10',
+    isCurrent: false
   },
   {
     id: 'overheating',
     name: 'Överhettning',
-    description: 'Tillväxten är stark men inflationen börjar stiga. Råvaror är ofta vinnare.',
-    rotation: 135,
+    description: 'Hög inflation, aggressiva höjningar. Fokus på Råvaror & Energi.',
+    timing: 'Volatiliteten ökar.',
+    rotation: 150,
     color: 'text-orange-500',
     bg: 'bg-orange-500/10',
     isCurrent: false
   },
   {
-    id: 'stagflation',
-    name: 'Stagflation',
-    description: 'Tillväxten mattas av samtidigt som inflationen är hög. Kontanter och defensiva val.',
-    rotation: 225,
-    color: 'text-red-500',
-    bg: 'bg-red-500/10',
+    id: 'late_cycle',
+    name: 'Sen cykel',
+    description: 'Inflation faller, räntor höga. Fokus på Kvalitet & Kassaflöde.',
+    timing: 'Selektiv uppgång.',
+    rotation: 210,
+    color: 'text-amber-500',
+    bg: 'bg-amber-500/10',
+    isCurrent: true
+  },
+  {
+    id: 'slowdown',
+    name: 'Avmattning',
+    description: 'Vinster revideras ned, tillväxt bromsar. Fokus på Defensivt & Utdelning.',
+    timing: 'Börsen skakar.',
+    rotation: 270,
+    color: 'text-red-400',
+    bg: 'bg-red-400/10',
     isCurrent: false
   },
   {
-    id: 'reflation',
-    name: 'Reflation',
-    description: 'Låg tillväxt och fallande inflation. Obligationer är ofta det bästa valet.',
-    rotation: 315,
-    color: 'text-cyan-400',
-    bg: 'bg-cyan-400/10',
+    id: 'recession',
+    name: 'Recession',
+    description: 'Negativ tillväxt, räntesänkningar börjar. Fokus på Likviditet (Cash).',
+    timing: 'Bottnar mitt i krisen.',
+    rotation: 330,
+    color: 'text-red-600',
+    bg: 'bg-red-600/10',
     isCurrent: false
   }
 ];
@@ -153,6 +177,7 @@ export default function MacroDashboard() {
   const currentPhase = PHASES.find(p => p.isCurrent) || PHASES[0];
   const [activePhase, setActivePhase] = useState(currentPhase);
   const [macroOutlook, setMacroOutlook] = useState<string | null>(null);
+  const [confidence, setConfidence] = useState<number | null>(null);
   const [loadingOutlook, setLoadingOutlook] = useState(false);
   const [outlookError, setOutlookError] = useState<string | null>(null);
 
@@ -270,6 +295,10 @@ export default function MacroDashboard() {
         if (newPhase) {
           setActivePhase(newPhase);
         }
+      }
+
+      if (data.confidence) {
+        setConfidence(data.confidence);
       }
 
       if (data.upcomingDates && Array.isArray(data.upcomingDates)) {
@@ -478,7 +507,12 @@ export default function MacroDashboard() {
                 <div className="flex items-center gap-4">
                   <div className="text-[10px] font-black uppercase tracking-widest text-primary/60 bg-primary/5 px-4 py-2 rounded-full border border-primary/10">
                     Senaste synk: {Object.values(macroData).length > 0 
-                      ? new Date(Math.max(...Object.values(macroData).map(v => new Date(v.updatedAt).getTime()))).toLocaleTimeString('sv-SE', { hour: '2-digit', minute: '2-digit' })
+                      ? new Date(Math.max(...Object.values(macroData).map(v => new Date(v.updatedAt).getTime()))).toLocaleString('sv-SE', { 
+                          day: '2-digit', 
+                          month: 'short',
+                          hour: '2-digit', 
+                          minute: '2-digit' 
+                        })
                       : "..."
                     }
                   </div>
@@ -599,25 +633,75 @@ export default function MacroDashboard() {
                 </p>
               </div>
 
-              <div className="aspect-square bg-white/5 rounded-full flex items-center justify-center border border-white/10 relative overflow-hidden cursor-pointer group/clock">
-                {/* Quadrants */}
-                <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 z-0">
-                  <div className={`border-r border-b border-white/10 hover:bg-cyan-400/20 transition-colors ${activePhase.id === 'reflation' ? 'bg-cyan-400/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[3])} />
-                  <div className={`border-b border-white/10 hover:bg-emerald-400/20 transition-colors ${activePhase.id === 'recovery' ? 'bg-emerald-400/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[0])} />
-                  <div className={`border-r border-white/10 hover:bg-red-500/20 transition-colors ${activePhase.id === 'stagflation' ? 'bg-red-500/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[2])} />
-                  <div className={`hover:bg-orange-500/20 transition-colors ${activePhase.id === 'overheating' ? 'bg-orange-500/30' : 'opacity-20'}`} onClick={() => setActivePhase(PHASES[1])} />
+              <div className="aspect-square bg-white/5 rounded-full flex items-center justify-center border border-white/10 relative overflow-hidden group/clock">
+                {/* Background Compass Directions (Pale) */}
+                <div className="absolute inset-0 pointer-events-none z-0 opacity-20">
+                  <div className="absolute top-6 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-[0.2em] flex flex-col items-center">
+                    <span className="text-emerald-400">Tillväxt ↑</span>
+                    <div className="w-px h-8 bg-gradient-to-b from-emerald-400/50 to-transparent mt-1" />
+                  </div>
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-[0.2em] flex flex-col items-center">
+                    <div className="w-px h-8 bg-gradient-to-t from-red-500/50 to-transparent mb-1" />
+                    <span className="text-red-500">Tillväxt ↓</span>
+                  </div>
+                  <div className="absolute left-6 top-1/2 -translate-y-1/2 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 -rotate-90">
+                    <span className="text-orange-500">Inflation ↑</span>
+                    <div className="w-8 h-px bg-gradient-to-r from-orange-500/50 to-transparent" />
+                  </div>
+                  <div className="absolute right-6 top-1/2 -translate-y-1/2 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 rotate-90">
+                    <span className="text-cyan-400">Inflation ↓</span>
+                    <div className="w-8 h-px bg-gradient-to-r from-cyan-400/50 to-transparent" />
+                  </div>
                 </div>
 
-                {/* Center Labels */}
-                <div className="absolute inset-0 pointer-events-none z-10">
-                  <div className="absolute top-4 left-1/2 -translate-x-1/2 text-[8px] font-black uppercase tracking-widest opacity-50">Tillväxt ↑</div>
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-[8px] font-black uppercase tracking-widest opacity-50">Tillväxt ↓</div>
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[8px] font-black uppercase tracking-widest opacity-50 -rotate-90">Inflation ↑</div>
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[8px] font-black uppercase tracking-widest opacity-50 rotate-90">Inflation ↓</div>
+                {/* 6 Clickable Segments */}
+                <div className="absolute inset-0 z-10">
+                  {PHASES.map((phase, idx) => {
+                    const rotation = idx * 60;
+                    return (
+                      <div 
+                        key={phase.id}
+                        onClick={() => setActivePhase(phase)}
+                        className={`absolute inset-0 origin-center cursor-pointer transition-all duration-300 hover:bg-white/5 ${activePhase.id === phase.id ? 'bg-white/10' : ''}`}
+                        style={{ 
+                          clipPath: `polygon(50% 50%, ${50 + 50 * Math.cos((rotation - 30 - 90) * Math.PI / 180)}% ${50 + 50 * Math.sin((rotation - 30 - 90) * Math.PI / 180)}%, ${50 + 50 * Math.cos((rotation + 30 - 90) * Math.PI / 180)}% ${50 + 50 * Math.sin((rotation + 30 - 90) * Math.PI / 180)}%)` 
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+
+                {/* Geographical Indicators (USA & SE) */}
+                <div className="absolute inset-0 pointer-events-none z-20">
+                  {/* USA Indicator - Phase 4 (approx 210 deg) */}
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full"
+                    style={{ rotate: 210 }}
+                  >
+                    <div className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center group/usa">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full border border-white/50 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
+                      <div className="bg-blue-500 text-white text-[6px] font-black px-1 rounded mt-1">USA</div>
+                    </div>
+                  </motion.div>
+
+                  {/* Sverige Indicator - Border 4/5 (approx 240 deg) */}
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full"
+                    style={{ rotate: 240 }}
+                  >
+                    <div className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                      <div className="w-2 h-2 bg-yellow-400 rounded-full border border-white/50 shadow-[0_0_10px_rgba(250,204,21,0.5)]" />
+                      <div className="bg-yellow-400 text-black text-[6px] font-black px-1 rounded mt-1">SWE</div>
+                    </div>
+                  </motion.div>
                 </div>
 
                 {/* Clock Hand */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
                   <motion.div 
                     initial={false}
                     animate={{ rotate: activePhase.rotation }}
@@ -629,7 +713,7 @@ export default function MacroDashboard() {
                 </div>
 
                 {/* Center Cap */}
-                <div className="w-4 h-4 bg-foreground rounded-full border-2 border-primary z-30 pointer-events-none" />
+                <div className="w-4 h-4 bg-foreground rounded-full border-2 border-primary z-40 pointer-events-none" />
               </div>
 
               <motion.div 
@@ -643,12 +727,27 @@ export default function MacroDashboard() {
                     Aktuell Marknadsfas
                   </div>
                 )}
-                <div className={`text-xs font-black uppercase tracking-widest mb-2 ${activePhase.color}`}>
-                  {activePhase.name}
+                <div className="flex justify-between items-center mb-2">
+                  <div className={`text-xs font-black uppercase tracking-widest ${activePhase.color}`}>
+                    {activePhase.name}
+                  </div>
+                  {activePhase.timing && (
+                    <div className="text-[8px] font-black uppercase tracking-widest text-white/40">
+                      {activePhase.timing}
+                    </div>
+                  )}
                 </div>
                 <p className="text-sm font-bold leading-relaxed">
                   {activePhase.description}
                 </p>
+                {(activePhase.id === 'late_cycle' || activePhase.id === 'slowdown') && (
+                  <div className="mt-4 pt-4 border-t border-white/5">
+                    <div className="text-[9px] font-black uppercase tracking-widest text-primary mb-1">Strategiskt Fokus</div>
+                    <p className="text-[10px] font-medium opacity-80 italic">
+                      {activePhase.id === 'late_cycle' ? 'Fokus på kvalitet & kassaflöde. Var beredd på att selektiviteten ökar.' : 'Defensiv positionering och utdelning prioriteras.'}
+                    </p>
+                  </div>
+                )}
               </motion.div>
 
               <div className="pt-4 border-t border-white/10">
@@ -702,6 +801,17 @@ export default function MacroDashboard() {
                       animate={{ opacity: 1, height: "auto" }}
                       className="mt-6 p-6 bg-white/5 rounded-2xl border border-white/10"
                     >
+                      <div className="flex justify-between items-center mb-4">
+                        <div className="text-[9px] font-black uppercase tracking-widest text-primary flex items-center gap-1">
+                          <Sparkles size={10} />
+                          AI Analys
+                        </div>
+                        {confidence && (
+                          <div className="text-[9px] font-black uppercase tracking-widest text-white/40">
+                            Konfidens: {confidence}%
+                          </div>
+                        )}
+                      </div>
                       <p className="text-xs font-medium leading-relaxed italic opacity-95">
                         "{macroOutlook}"
                       </p>
@@ -721,6 +831,100 @@ export default function MacroDashboard() {
             </div>
           </aside>
         </div>
+
+        {/* Strategisk Analys: Konjunkturklockan 2.0 */}
+        <section className="space-y-10 pt-16 border-t border-border">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div className="space-y-2">
+              <div className="text-[11px] font-black uppercase tracking-[0.4em] text-primary">Konjunkturklockan 2.0</div>
+              <h2 className="text-4xl font-black tracking-tighter">Strategiskt Ramverk</h2>
+              <p className="text-muted-foreground font-medium max-w-2xl">
+                Börsen och ekonomin rör sig sällan i takt. Vi fokuserar på investeringsnyttan och vändpunkterna i marknadens cykel.
+              </p>
+            </div>
+            <div className="bg-primary/5 px-6 py-3 rounded-2xl border border-primary/10">
+              <p className="text-[10px] font-black uppercase tracking-widest text-primary leading-tight">
+                Gyllene regeln:<br />
+                <span className="text-foreground">Förbered för nästa fas i tid.</span>
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Card 1: Tidsskillnaden */}
+            <motion.div 
+              whileHover={{ y: -8 }}
+              className="bg-card border border-border rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
+                <Globe size={120} />
+              </div>
+              <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                <Globe size={24} />
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-xl font-black tracking-tight uppercase">🌍 Tidsskillnaden</h3>
+                <p className="text-sm text-muted-foreground font-medium leading-relaxed">
+                  USA och Sverige befinner sig inte på samma ställe. USA visar mjuklandningstendenser driven av teknikledarskap (Fas 4), medan Sverige är räntekänsligare och nosar på en lokal avmattning (Fas 5).
+                </p>
+              </div>
+              <div className="pt-4 border-t border-border mt-auto">
+                <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-primary">
+                  <span>USA: Fas 4</span>
+                  <span>SWE: Fas 4/5</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Card 2: Early Bird */}
+            <motion.div 
+              whileHover={{ y: -8 }}
+              className="bg-card border border-border rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
+                <TrendingUp size={120} />
+              </div>
+              <div className="w-12 h-12 bg-emerald-400/10 rounded-2xl flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+                <TrendingUp size={24} />
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-xl font-black tracking-tight uppercase">🦅 Early Bird-effekt</h3>
+                <p className="text-sm text-muted-foreground font-medium leading-relaxed">
+                  Börsen är inte ekonomin. Marknaden ligger oftast 6–9 månader före makrodatan. Den toppar i Fas 3/4 när allt ser "okej" ut, och bottnar i Fas 6 när rubrikerna är som mörkast.
+                </p>
+              </div>
+              <div className="p-4 bg-emerald-400/5 rounded-2xl border border-emerald-400/10">
+                <p className="text-[10px] font-bold text-emerald-500 italic">
+                  "Köp när alla andra fruktar Fas 6."
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Card 3: Selektivitet */}
+            <motion.div 
+              whileHover={{ y: -8 }}
+              className="bg-card border border-border rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden group"
+            >
+              <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
+                <Target size={120} />
+              </div>
+              <div className="w-12 h-12 bg-orange-500/10 rounded-2xl flex items-center justify-center text-orange-500 group-hover:scale-110 transition-transform">
+                <Activity size={24} />
+              </div>
+              <div className="space-y-3">
+                <h3 className="text-xl font-black tracking-tight uppercase">🎯 Selektivitet</h3>
+                <p className="text-sm text-muted-foreground font-medium leading-relaxed">
+                  I en mogen fas drivs index av ett fåtal jättar (Magnificent 7). Marknadsbredden smalnar av, vilket kräver fokus på bolag med prissättningskraft och faktiska kassaflöden snarare än tillväxtdrömmar.
+                </p>
+              </div>
+              <div className="pt-4 border-t border-border mt-auto">
+                <div className="text-[10px] font-black uppercase tracking-widest text-orange-500">
+                  Varning: Smal marknadsbredd
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
       </div>
     </div>
   );
@@ -772,7 +976,7 @@ function DetailedIndicator({ category, date, title, trend, change, value, subVal
         </div>
         {source && (
           <div className="text-[8px] font-black text-muted-foreground/40 uppercase tracking-widest">
-            Källa: {source}
+            Källa: {source === 'gemini-ai' ? 'Gemini AI' : source || 'Officiell data'}
           </div>
         )}
       </div>

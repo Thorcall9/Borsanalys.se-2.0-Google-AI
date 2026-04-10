@@ -231,10 +231,21 @@ async function startServer() {
 Aktuella makroindikatorer (${today}): ${macroContext}.
 
 Analysera var vi befinner oss i konjunkturcykeln och vad det innebär för aktiemarknaden.
-Ange även 3-4 kommande viktiga makrohändelser (räntebesked, KPI-publiceringar m.m.) efter ${today}.
+Vi använder en 6-fasmodell:
+- early_recovery (Tidig återhämtning)
+- expansion (Expansion)
+- overheating (Överhettning)
+- late_cycle (Sen cykel)
+- slowdown (Avmattning)
+- recession (Recession)
 
 Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
-{"outlook":"[3-4 meningar om makroläget och vad investerare bör tänka på]","suggestedPhaseId":"[recovery|overheating|stagflation|reflation]","upcomingDates":[{"date":"DD Månad","title":"Händelse"},{"date":"DD Månad","title":"Händelse"},{"date":"DD Månad","title":"Händelse"}]}`;
+{
+  "outlook": "[3-4 meningar om makroläget och vad investerare bör tänka på]",
+  "suggestedPhaseId": "early_recovery|expansion|overheating|late_cycle|slowdown|recession",
+  "confidence": [0-100],
+  "upcomingDates": [{"date": "DD Månad", "title": "Händelse"}]
+}`;
 
       logger("[AI] Calling Gemini model...");
       const result = await model.generateContent(prompt);
@@ -259,14 +270,16 @@ Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
         logger(`[ERROR] AI JSON Parse Error. Raw text: ${text}`);
         return res.json({
           outlook: "Kunde inte tolka analysen helt, men konjunkturklockan indikerar att vi rör oss i cykeln baserat på nuvarande indikatorer.",
-          suggestedPhaseId: "recovery",
+          suggestedPhaseId: "late_cycle",
+          confidence: 50,
           upcomingDates: []
         });
       }
 
       res.json({
         outlook: data.outlook || "Makroanalys genererades – se indikatorer ovan.",
-        suggestedPhaseId: data.suggestedPhaseId || null,
+        suggestedPhaseId: data.suggestedPhaseId || "late_cycle",
+        confidence: data.confidence || 75,
         upcomingDates: Array.isArray(data.upcomingDates) ? data.upcomingDates : []
       });
 
