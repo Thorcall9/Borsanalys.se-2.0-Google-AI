@@ -35,23 +35,23 @@ const revenueData = [
   {ar:"2023", v:73426},
   {ar:"2024", v:74104},
   {ar:"2025", v:68736},
-  {ar:"2026e", v:65200, e:true},
+  {ar:"2026e", v:64500, e:true},
 ];
 
 const epsData = [
   {ar:"2022", v:19.49},
   {ar:"2023", v:30.34},
-  {ar:"2024", v:30.98},
-  {ar:"2025", v:29.14},
-  {ar:"2026e", v:26.94, e:true},
+  {ar:"2024", v:30.86},
+  {ar:"2025", v:28.98},
+  {ar:"2026e", v:26.50, e:true},
 ];
 
 const roeData = [
   {ar:"2022", v:13.3},
   {ar:"2023", v:18.3},
-  {ar:"2024", v:16.7},
-  {ar:"2025", v:14.7},
-  {ar:"2026e", v:13.5, e:true},
+  {ar:"2024", v:17.1},
+  {ar:"2025", v:15.2},
+  {ar:"2026e", v:13.8, e:true},
 ];
 
 const allScores = [
@@ -230,19 +230,19 @@ export default function SwedbankDeepDive({
             
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börskurs</span>
-              <div className="text-2xl font-black text-slate-900">320 kr</div>
+              <div className="text-2xl font-black text-slate-900">321,10 kr</div>
               <span className="text-xs text-slate-500 mt-1 block">Analyspris</span>
             </div>
 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börsvärde</span>
-              <div className="text-2xl font-black text-slate-900">~366 Mdr</div>
+              <div className="text-2xl font-black text-slate-900">~361 Mdr</div>
               <span className="text-xs text-slate-500 mt-1 block">Large Cap</span>
             </div>
 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">P/E-tal (2025)</span>
-              <div className="text-2xl font-black text-slate-900">11,0</div>
+              <div className="text-2xl font-black text-slate-900">11,1</div>
               <span className="text-xs text-slate-500 mt-1 block">Normaliserat</span>
             </div>
 
@@ -256,7 +256,7 @@ export default function SwedbankDeepDive({
               <div className="relative z-10">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Riktkurs</span>
                 <div className="flex items-center gap-2">
-                  <div className="text-2xl font-black text-slate-900">330 kr</div>
+                  <div className="text-2xl font-black text-slate-900">330-360 kr</div>
                 </div>
                 <p className="text-[10px] leading-tight text-slate-500 mt-2">12 månaders sikt</p>
               </div>
@@ -314,12 +314,12 @@ export default function SwedbankDeepDive({
               <SectionLabel number="I" title="Företagsöversikt"/>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
                 {( [
-                  ["Bakgrund & Struktur","Swedbank är en av Sveriges och Nordens absolut största banker, med rötter i sparbanksrörelsen som sträcker sig mer än 200 år tillbaka i tiden. Bolaget är noterat på Nasdaq Stockholm Large Cap och handlas kring 320 kronor per aktie, vilket ger ett börsvärde på ungefär 366 miljarder kronor."],
-                  ["Kunder & Marknader", <span>Banken har nära <strong>7,3 miljoner privatkunder</strong> och 545 000 företagskunder spridda över fyra hemmamarknader: Sverige, Estland, Lettland och Litauen. Därtill finns internationella kontor i Oslo, Helsingfors, Shanghai och New York.</span>],
-                  ["Affärsmodell", "Sverige svarar för ungefär 71 procent av intäkterna och Baltikum för ytterligare 25 procent. Affärsmodellen bygger på tre intäktsben: räntenettet, provisionsnettot (via bl.a. Robur) samt handelsintäkter."],
-                  ["Organisation", "Verksamheten är organiserad i fyra affärsområden: Swedish Banking, Baltic Banking, Corporates and Institutions samt det nya segmentet Premium and Private Banking som etablerades 2024."],
-                  ["Ledning & Sanering", "VD Jens Henriksson (sedan 2019) har genomfört ett metodiskt saneringsarbete efter tidigare skandaler. Leveransen på 'Swedbank 15/25'-planen (15% ROE) är ett bevis på exekveringsförmågan."],
-                  ["Ägarstruktur & Personal", "Domineras av sparbanksstiftelserna (13,3% röster) samt institutioner som Alecta och AMF. Totalt antal anställda uppgick till 18 638 vid utgången av 2025."],
+                  ["Bakgrund & Struktur","Swedbank är en nordisk universalbank med tyngdpunkt i Sverige och Baltikum. Banken erbjuder utlåning, sparande, betalningar, kort, kapitalförvaltning, försäkring och företagsfinansiering. Under 2025 kom 71 procent av intäkterna från Sverige och 25 procent från Baltikum."],
+                  ["Kunder & Marknader", <span>Banken har nära <strong>7,3 miljoner privatkunder</strong> och 545 000 företagskunder. Marknadsledare i Baltikum för sjunde året i rad med omkring 5,7 miljoner digitala interaktioner per dag.</span>],
+                  ["Affärsmodell", "Universalbank som är navet i kundens ekonomi. Intäkter från räntenetto, provisionsnetto (Robur), kapitalförvaltning, betalningar och företagsaffär. Modellen skapar höga byteskostnader."],
+                  ["Organisation", "Verksamheten är organiserad i fyra affärsområden: Swedish Banking, Baltic Banking, Corporates and Institutions samt Premium and Private Banking."],
+                  ["Ledning & Sanering", "VD Jens Henriksson (sedan 2019) har fört banken från sanering till att leverera på finansiella mål. 'Swedbank 15/27' siktar på minst 15 procents avkastning på eget kapital."],
+                  ["Ägarstruktur & Personal", "Sparbanksgruppen är största ägare (13,2%) följt av Folksam och Swedbank Robur. Totalt antal anställda uppgick till 18 638 vid utgången av 2025."],
                 ] as [string, React.ReactNode][]).map(([t,b])=>(
                   <div key={t}>
                     <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>{t}</div>
@@ -332,7 +332,7 @@ export default function SwedbankDeepDive({
             <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`}}>
               <div style={{fontSize:11,fontWeight:700,color:T.accent,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Analytikerns bedömning</div>
               <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                Swedbank har framgångsrikt navigerat genom räntecykeln och visat prov på extremt god kostnadskontroll. Genom att nå sina lönsamhetsmål för 2025 har ledningen återupprättat marknadens förtroende. Banken framstår idag som en av de bäst kapitaliserade och mest effektiva i Europa, även om räntecykeln nu går in i en mer utmanande fas.
+                Swedbank är ett kvalitetsbolag med en kassaflödesmaskin i grunden. Banken har stark marknadsposition, låg kostnadsbas, mycket stark kreditkvalitet och robust kapitalisering. Vid nuvarande nivå är aktien en bra bas i en portfölj för utdelningsinvestare, men ett tydligare köpläge uppstår vid kursfall mot 290–300 kr. Vi rekommenderar bevakning med köp på svaghet.
               </p>
             </div>
           </FadeIn>
@@ -348,13 +348,13 @@ export default function SwedbankDeepDive({
               
               <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`,marginBottom:24}}>
                 <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Bankmarknaden i Sverige och Baltikum är mogen men inte statisk. I Sverige konkurrerar Swedbank med de tre andra storbankerna (SEB, Handelsbanken, Nordea), där de stora skillnaderna ligger i kundnöjdhet, digital mognad och prissättning snarare än produkterbjudande. I Baltikum är Swedbank marknadsledare i alla tre länder och har en i det närmaste dominerande position – banken utsågs till det mest älskade varumärket i Baltikum för sjunde året i rad under 2025.
+                  Moaten bygger på fem huvudpelare: urstarkt varumärke, Sparbanksekosystemets unika distributionskraft, en av Europas lägsta kostnadskvoter (K/I 0,36), ledande digital distribution och strategiska strukturaffärer. Swedbank är djupt förankrad i svenska hushåll och är ohotad marknadsledare i Baltikum där kredittillväxten ligger klart högre än i Sverige.
                 </p>
                 <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Konkurrensfördelen, eller "moat" (ett begrepp lånat från medeltida vattengravar – en buffert mot konkurrenters angrepp), bygger på flera ben. Sparbanksekosystemet ger Swedbank ett unikt distributionsnät i Sverige med 209 kontor och en bred lokal förankring som konkurrenter inte kan replikera. Byteskostnaderna för privatkunder är höga när lön, bolån, sparkonton och Swish är knutna till samma bank. Roburs starka position inom fondsparande adderar en kapitallätt intäktsström. S&P Global uppgraderade Swedbanks kreditbetyg till AA- lång och A-1+ kort med stabil outlook under 2025, med specifik hänvisning till förbättrad styrning och riskhantering.
+                  Distributionen via sparbankerna ger lokal närvaro som konkurrenter har svårt att replikera, vilket syns tydligt i både bolån och SME-affären. K/I-talet på 0,36 är ett verkligt kvalitetsbevis i en sektor med ständig prispress. Digitalt besvaras nu 86% av kundsamtalen inom tre minuter, vilket stärker lojaliteten.
                 </p>
                 <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Två förvärv genomförda under 2025 stärker positionen ytterligare. <strong>Stabelo</strong> (bolåneinstitut) tillförde 17 miljarder kronor i bolånestock och fördubblade Swedbanks marknadsandel av nya bolån i egna kanaler. <strong>Entercard-förvärvet</strong> (Barclays andel) skapade Nordens och Baltikums största kortverksamhet och adderar transaktionsbaserade intäkter som kompletterar räntenettot.
+                  Förvärven av <strong>Stabelo</strong> och <strong>Entercard</strong> under 2025 är strategiskt viktiga. Stabelo stärker bolåneerbjudandet mot digitala kunder medan Entercard gör Swedbank till ägare av en mycket stor kort- och konsumentkreditaffär, vilket diversifierar intäkterna bort från ränteberoendet.
                 </p>
               </div>
 
@@ -431,16 +431,13 @@ export default function SwedbankDeepDive({
               {/* Kontext-ingress */}
               <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`,marginBottom:28}}>
                 <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Det är viktigt att förstå kontexten för Swedbanks siffror: 2022–2023 var exceptionellt starka år för banker tack vare kraftigt stigande styrräntor. Nu när räntorna sjunker normaliseras marginalerna, och det präglar hela 2024–2025.
+                  För banker är räntenetto, provisionsnetto, ROE och kreditkvalitet de viktigaste måtten. 2025 levererade Swedbank 68 736 Mkr i intäkter (-7% mot 2024), drivet av ett lägre räntenetto (44 000 Mkr) i ett sjunkande ränteklimat.
                 </p>
                 <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Nettointäkterna sjönk med 7% under 2025 till <strong>68 736 Mkr</strong> (2024: 74 104 Mkr). Den enskilt viktigaste faktorn är att <strong>räntenettot föll med 11%</strong>, från 49 267 till 44 000 Mkr. Bruttoränteintäkterna – hela ränteinflödet innan avdrag för inlåningskostnader – var 92 588 Mkr (ned från 118 613 Mkr 2024, –22%), vilket illustrerar räntesänkningarnas fulla genomslag.
+                  Bilden är en tydlig normalisering efter rekordåren 2022-2023. <strong>Kostnadssidan</strong> förblev dock urstark med sänkta kostnader (24 532 Mkr) trots investeringar. <strong>K/I-talet på 0,36</strong> är ett av bankens främsta kvalitetsbevis.
                 </p>
                 <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  <strong>Provisionsnettot</strong> (avgifter från kapitalförvaltning, kort och transaktioner) var stabilt och sjönk bara 2% till 16 320 Mkr. Övriga intäkter ökade med 17%, delvis tack vare att Entercard och Stabelo konsoliderades från december 2025. På kostnadssidan är historien mer positiv: totalkostnaderna sjönk med 3% till 24 532 Mkr. Rörelsemarginalen förbättrades trots intäktsfallet – från 27,70% (2024) till 31,86% (2025) – och <strong>K/I-kvoten</strong> (kostnader dividerat med intäkter; ju lägre desto effektivare) hölls på 0,36, ett av de lägsta talen bland europeiska storbanker.
-                </p>
-                <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Årets resultat landade på 32 762 Mkr (2024: 34 869 Mkr, –6%). <strong>EPS</strong> (vinst per aktie) var 29,14 kr versus 30,98 kr 2024. <strong>ROE</strong> (avkastning på eget kapital – hur effektivt bolaget förräntar aktieägarnas kapital) var 14,74% för 2025, mot 16,70% 2024 och rekordåret 2023 på 18,3%. Målet om 15% uppnåddes marginellt och reflekterar räntenormaliseringen.
+                  Lönsamheten hölls hög med ett ROE på <strong>15,2%</strong>. Kreditkvaliteten var exceptionell med 0,00% i kreditförlustnivå, vilket visar på en mycket välskött portfölj. Kapitaliseringen är robust med en CET1-kvot på 17,8%, en buffert på 3 procentenheter över kraven.
                 </p>
               </div>
 
@@ -613,7 +610,7 @@ export default function SwedbankDeepDive({
               <div style={{background:T.ink, borderRadius:16, padding:24, color:"#fff", boxShadow:T.shadowLg}}>
                 <div style={{fontSize:11, fontWeight:800, color:"rgba(255,255,255,0.6)", textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Analytikerns värderingskommentar</div>
                 <p style={{margin:0, fontSize:13.5, color:"rgba(255,255,255,0.8)", lineHeight:1.7}}>
-                  Vid 320 kr är aktien neutralt värderad. Den höga nominella direktavkastningen på 9,3% för 2025 innehåller en specialutdelning och är inte representativ för normalläget. Den normaliserade avkastningen på 7,4% för 2026e är fortfarande attraktiv, men ett tydligare köpläge uppstår vid kursfall mot <strong>290–300 kr</strong>.
+                  Vid 321 kr är Swedbank rimligt värderad. P/E 11x och P/B 1,6x speglar en kvalitetsbank som väger tungt i en portfölj. Den höga direktavkastningen på 9,3% inkluderar en extrautdelning och ska ses som en stabil kapitalåterföring. Vi ser en rimlig uppsida mot <strong>330-360 kr</strong>.
                 </p>
               </div>
             </Card>
@@ -727,7 +724,7 @@ export default function SwedbankDeepDive({
                   <div>
                     <div style={{fontSize:11, fontWeight:800, color:T.gold, textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Viktigaste riskfaktorn just nu</div>
                     <p style={{margin:0, fontSize:13.5, color:T.ink, lineHeight:1.7}}>
-                      Den nya US DFS-granskningen är den enskilt viktigaste kortsiktiga varningssignalen. Trots att DOJ avslutade sin utredning i januari 2026 indikerar DFS-granskningen att regulatorisk risk kvarstår. Utfallet kan påverka kapitalallokering och utdelningskapacitet.
+                      Department of Financial Services (NY) har inlett en ny granskning 2026 trots att DOJ avslutade sin utredning i januari. Regulatorisk risk och AML-bagaget är de enskilt största hoten mot multipeln kortsiktigt.
                     </p>
                   </div>
                 </div>
@@ -799,9 +796,9 @@ export default function SwedbankDeepDive({
               <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-start">
                 <div>
                   {[
-                    ["Är Swedbank ett kvalitetsbolag?","Ja. Låg kostnadskvot (K/I 0,36), dominerande Baltikum-position och lojal kundbas gör Swedbank till ett av Europas effektivaste banker."],
-                    ["Är det rimligt värderat?","Neutralt. P/E 11,0x och direktavkastning 9,3% (varav specialutdelning) ser attraktivt ut, men normaliserad DA 7,4% för 2026e och fallande EPS-estimat manar till försiktighet vid 320 kr."],
-                    ["Kan man hålla det 5–10 år?","Ja, men man bör förstå ränterisken. Swedbank är en kassaflödesmaskin på lång sikt, men kortsiktigt styrs kursen av räntecykeln och regulatoriska nyheter."],
+                    ["Är Swedbank ett kvalitetsbolag?","Ja. Stark marknadsposition, låg kostnadsbas, mycket stark kreditkvalitet och robust kapitalisering gör Swedbank till ett kvalitetsbolag för utdelningsinvestare."],
+                    ["Är det rimligt värderat?","Ja. På cirka 11x årsvinst och drygt 6 procent normaliserad direktavkastning är aktien attraktiv, men det finns ingen uppenbar felprissättning."],
+                    ["Kan man hålla det 5–10 år?","Ja, om man vill ha trygg och hög utdelningskapacitet samt exponering mot Norden/Baltikum med hög effektivitet."],
                   ].map(([q,a]) => (
                     <div key={q} style={{marginBottom:16}}>
                       <div style={{fontSize:13,fontWeight:700,color:T.ink,marginBottom:4}}>→ {q}</div>
@@ -810,10 +807,10 @@ export default function SwedbankDeepDive({
                   ))}
                   <div style={{marginTop:24, padding:16, background:T.bg, borderRadius:12, border:`1px solid ${T.border}`}}>
                     <p style={{margin:0, fontSize:13, color:T.ink, lineHeight:1.7}}>
-                      <strong style={{color:T.sub}}>Riktkurs 330 kronor (12 månaders sikt)</strong>, baserat på normaliserat P/E ~12x och direktavkastning 7,4%. Tydligare köpläge uppstår vid 290–300 kr, vilket ger en marginal i säkerhet mot regulatoriska bakslag.
+                      <strong style={{color:T.sub}}>Målpris 330-360 kronor (12 månaders sikt)</strong>. Caset är attraktivt men ett tydligare köpläge uppstår vid svaghet eller marknadsoro kring 290-300 kr.
                     </p>
                     <p style={{margin:"12px 0 0 0", fontSize:13, color:T.gold, fontWeight:700}}>
-                      Katalysator: Q2-rapport 2026, utfall av DFS/FI-granskningar samt Riksbankens räntebana.
+                      Beslut: Bevaka/Köp på svaghet.
                     </p>
                   </div>
                 </div>
@@ -821,9 +818,9 @@ export default function SwedbankDeepDive({
                   <div style={{fontSize:11,color:T.muted,fontWeight:700,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Rekommendation</div>
                   <div style={{fontSize:28,fontWeight:900,color:T.accent,letterSpacing:-1}}>BEVAKA</div>
                   <div style={{height:1,background:T.accent+"22",margin:"12px 0"}}/>
-                  <div style={{fontSize:22,fontWeight:800,color:T.ink}}>330 kr</div>
+                  <div style={{fontSize:22,fontWeight:800,color:T.ink}}>330-360 kr</div>
                   <div style={{fontSize:11,color:T.sub,marginTop:4}}>Riktkurs · 12 månader</div>
-                  <div style={{marginTop:12,fontSize:12,color:T.sub}}>+3% uppsida + 7,4% DA</div>
+                  <div style={{marginTop:12,fontSize:12,color:T.sub}}>Köp på svaghet</div>
                   <div style={{marginTop:10,fontSize:13,color:T.accent,fontWeight:700}}>29/40 · 72,5%</div>
                 </div>
               </div>
@@ -838,15 +835,15 @@ export default function SwedbankDeepDive({
               <SectionLabel number="X" title="Scenarier (Bull/Base/Bear)"/>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
                 {[
-                  {label:"🐂 Bull Case",color:T.green,bg:T.greenL,prob:"25%",pris:"380-420 kr",
-                    upside:"+25%", assumptions:"ROE 15-16%, synergier fullt ut", 
-                    requirements:"Långsammare räntesänkningar, extremt låga kreditförluster."},
-                  {label:"⚖️ Base Case",color:T.gold,bg:T.goldL,prob:"50%",pris:"330 kr",
-                    upside:"+3%", assumptions:"ROE 14-15%, stabil kostnadskvot", 
-                    requirements:"Normalisering av räntenettot, kontrollerade kostnader."},
-                  {label:"🐻 Bear Case",color:T.red,bg:T.redL,prob:"25%",pris:"260-280 kr",
-                    upside:"-15%", assumptions:"ROE under 13%, kraftig räntepress", 
-                    requirements:"Stora regulatoriska böter, fastighetsoro."},
+                  {label:"🐂 Bull Case",color:T.green,bg:T.greenL,prob:"25%",pris:"380-410 kr",
+                    upside:"+25%", assumptions:"Stabiliserat räntenetto, lyckad integration", 
+                    requirements:"ROE 15-16%, Baltikumtillväxt fortsätter."},
+                  {label:"⚖️ Base Case",color:T.gold,bg:T.goldL,prob:"50%",pris:"330-360 kr",
+                    upside:"+10%", assumptions:"Normaliserad vinst, god kostnadskontroll", 
+                    requirements:"ROE 14-15%, stabil kostnadskvot."},
+                  {label:"🐻 Bear Case",color:T.red,bg:T.redL,prob:"25%",pris:"260-290 kr",
+                    upside:"-15%", assumptions:"Hårdare räntenettopress, regulatoriska kostnader", 
+                    requirements:"ROE 12-13%, svagare makro."},
                 ].map(s=><ScenarioCard key={s.label} {...s}/>)}
               </div>
             </Card>
