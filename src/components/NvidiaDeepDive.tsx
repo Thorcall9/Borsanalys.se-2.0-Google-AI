@@ -509,7 +509,9 @@ export default function NvidiaDeepDive({
           </AnalysisFadeIn>
         </div>
 
+
         <AdUnit slot="7332946752" />
+
 
         {/* SECTION III: FINANSIELL ANALYS */}
         <section id="financials" className="scroll-mt-24 mb-20">
@@ -752,7 +754,6 @@ export default function NvidiaDeepDive({
           />
         </section>
 
-        <AdUnit slot="7332946752" />
 
         {/* SECTION IV: VÄRDERING & JÄMFÖRELSE */}
         <section id="valuation" className="scroll-mt-24 mb-20">
@@ -1039,7 +1040,6 @@ export default function NvidiaDeepDive({
           </div>
         </section>
 
-        <AdUnit slot="7332946752" />
 
         {/* SECTION IX: SAMMANFATTNING & INVESTERINGSBESLUT */}
         <section id="summary" className="scroll-mt-24 mb-20">

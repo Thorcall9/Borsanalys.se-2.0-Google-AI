@@ -653,7 +653,6 @@ export default function EvolutionDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" />
 
         {/* ── RISK ── */}
         <div id="risk">
@@ -1086,7 +1085,6 @@ export default function EvolutionDeepDive({
           </div>
         </section>
 
-        <AdUnit slot="7332946752" />
 
         {/* XII. Scenarier (Bull/Base/Bear) */}
         <section id="scenarios" className="pt-24 pb-20">

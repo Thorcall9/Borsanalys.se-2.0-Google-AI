@@ -629,7 +629,6 @@ export default function InvestorDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" />
 
         {/* ── RISK ── */}
         <div id="risk">
@@ -776,7 +775,6 @@ export default function InvestorDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" />
 
         {/* ── SCENARIER ── */}
         <div id="scenarier">

@@ -32,14 +32,14 @@ export default function AdUnit({
   }, []);
 
   return (
-    <div className={`w-full flex justify-center py-8 ${className}`}>
+    <div className={`w-full flex justify-center py-4 ${className}`}>
       <div className="w-full max-w-2xl flex flex-col items-center">
         {showLabel && (
-          <div className="mb-3 text-[9px] font-bold text-muted-foreground/40 uppercase tracking-[0.2em] w-full text-center border-b border-border/40 pb-2">
+          <div className="mb-2 text-[7px] font-bold text-slate-300/40 uppercase tracking-[0.3em] w-full text-center">
             Annons
           </div>
         )}
-        <div className="min-h-[100px] w-full bg-muted/5 rounded-xl border border-border/40 flex items-center justify-center relative overflow-hidden transition-all duration-700 hover:border-primary/20">
+        <div className="min-h-[100px] w-full flex items-center justify-center relative overflow-hidden transition-all duration-700">
           <ins
             ref={adRef}
             className="adsbygoogle"

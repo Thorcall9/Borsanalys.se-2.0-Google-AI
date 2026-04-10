@@ -476,7 +476,6 @@ export default function ComprehensiveAnalysis({
         )}
       </section>
 
-      <AdUnit slot="7332946752" />
 
       {/* SECTION VI: RISKPROFIL */}
       <section id="risk" className="scroll-mt-24 mt-24">
@@ -610,7 +609,6 @@ export default function ComprehensiveAnalysis({
         </div>
       </section>
 
-      <AdUnit slot="7332946752" />
 
       {/* SECTION X: SCENARIER & MÅLPRIS */}
       <section id="scenarios" className="scroll-mt-24 mt-24 mb-32">
