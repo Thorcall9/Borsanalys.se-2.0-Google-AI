@@ -211,8 +211,8 @@ async function startServer() {
         return res.status(500).json({ error: "Systemfel: API-nyckel saknas." });
       }
 
-      // Using Gemini 1.5 Flash for high reliability and speed
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      // Using Gemini 2.5 Flash-Lite as established in this workspace
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
 
       // Hämta live makrodata för kontext
       let macroContext = "US10Y: 4.34%, SE10Y: 2.85%, USD/SEK: 9.56, EUR/SEK: 10.95, OMX30: 2905, KPI: 0.5%";
@@ -251,7 +251,7 @@ Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
   "upcomingDates": [{"date": "DD Månad", "title": "Händelse"}]
 }`;
 
-      logger("[AI] Calling Gemini model (gemini-1.5-flash)...");
+      logger("[AI] Calling Gemini model (gemini-2.5-flash-lite)...");
       const result = await model.generateContent(prompt);
       const response = await result.response;
       let text = response.text().trim();
