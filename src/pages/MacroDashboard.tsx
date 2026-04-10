@@ -637,24 +637,25 @@ export default function MacroDashboard() {
                 </div>
               </div>
 
-              <div className="aspect-square bg-white/5 rounded-full flex items-center justify-center border border-white/10 relative group/clock">
-                {/* Phase Labels Outside the Ring */}
+              <div className="aspect-square bg-transparent rounded-full flex items-center justify-center relative group/clock w-full max-w-[280px] mx-auto">
+                {/* Outer Ring for Phase Labels */}
                 <div className="absolute inset-0 pointer-events-none z-0">
                   {PHASES.map((phase) => {
-                    const angle = phase.rotation; // 30, 90, 150, 210, 270, 330
-                    // Move them slightly further out than the ring
-                    const radius = 135; 
-                    const x = 50 + radius * Math.cos((angle - 90) * Math.PI / 180) / 2.5;
-                    const y = 50 + radius * Math.sin((angle - 90) * Math.PI / 180) / 2.5;
+                    const angle = phase.rotation; 
+                    // Position labels on the very edge of the 100% container
+                    const radius = 46; // % of container
+                    const x = 50 + radius * Math.cos((angle - 90) * Math.PI / 180);
+                    const y = 50 + radius * Math.sin((angle - 90) * Math.PI / 180);
                     
                     return (
                       <div 
                         key={`label-${phase.id}`}
-                        className={`absolute text-[8px] font-black uppercase tracking-widest transition-all duration-500 whitespace-nowrap ${activePhase.id === phase.id ? phase.color : 'text-white/30'}`}
+                        className={`absolute text-[9px] font-black uppercase tracking-widest transition-all duration-500 whitespace-nowrap ${activePhase.id === phase.id ? phase.color : 'text-white/30'}`}
                         style={{ 
                           left: `${x}%`, 
                           top: `${y}%`,
                           transform: 'translate(-50%, -50%)',
+                          textShadow: activePhase.id === phase.id ? '0 0 10px rgba(var(--primary), 0.5)' : 'none'
                         }}
                       >
                         {phase.name}
@@ -663,66 +664,68 @@ export default function MacroDashboard() {
                   })}
                 </div>
 
-                {/* 6 Clickable Segments */}
-                <div className="absolute inset-0 z-10">
-                  {PHASES.map((phase, idx) => {
-                    const rotation = idx * 60;
-                    return (
-                      <div 
-                        key={phase.id}
-                        onClick={() => setActivePhase(phase)}
-                        className={`absolute inset-0 origin-center cursor-pointer transition-all duration-300 hover:bg-white/5 ${activePhase.id === phase.id ? 'bg-white/10' : ''}`}
-                        style={{ 
-                          clipPath: `polygon(50% 50%, ${50 + 50 * Math.cos((rotation - 30 - 90) * Math.PI / 180)}% ${50 + 50 * Math.sin((rotation - 30 - 90) * Math.PI / 180)}%, ${50 + 50 * Math.cos((rotation + 30 - 90) * Math.PI / 180)}% ${50 + 50 * Math.sin((rotation + 30 - 90) * Math.PI / 180)}%)` 
-                        }}
-                      />
-                    );
-                  })}
+                {/* Inner Clock Face (Scaled down to avoid overlapping labels) */}
+                <div className="w-[70%] h-[70%] bg-white/5 rounded-full border border-white/10 relative overflow-hidden flex items-center justify-center">
+                  {/* 6 Clickable Segments (NOW INSIDE THE SMALLER CLOCK) */}
+                  <div className="absolute inset-0 z-10">
+                    {PHASES.map((phase, idx) => {
+                      const rotation = idx * 60;
+                      return (
+                        <div 
+                          key={phase.id}
+                          onClick={() => setActivePhase(phase)}
+                          className={`absolute inset-0 origin-center cursor-pointer transition-all duration-300 hover:bg-white/5`}
+                          style={{ 
+                            clipPath: `polygon(50% 50%, ${50 + 50 * Math.cos((rotation - 30 - 90) * Math.PI / 180)}% ${50 + 50 * Math.sin((rotation - 30 - 90) * Math.PI / 180)}%, ${50 + 50 * Math.cos((rotation + 30 - 90) * Math.PI / 180)}% ${50 + 50 * Math.sin((rotation + 30 - 90) * Math.PI / 180)}%)` 
+                          }}
+                        />
+                      );
+                    })}
+                  </div>
+
+                  {/* Geographical Indicators (USA & SE) */}
+                  <div className="absolute inset-0 pointer-events-none z-20">
+                    {/* USA Indicator */}
+                    <motion.div 
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full"
+                      style={{ rotate: 210 }}
+                    >
+                      <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center group/usa">
+                        <div className="w-1.5 h-1.5 bg-blue-500 rounded-full border border-white/30" />
+                      </div>
+                    </motion.div>
+
+                    {/* Sverige Indicator */}
+                    <motion.div 
+                      initial={{ opacity: 0, scale: 0 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full"
+                      style={{ rotate: 240 }}
+                    >
+                      <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full border border-white/30" />
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  {/* Clock Hand */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
+                    <motion.div 
+                      initial={false}
+                      animate={{ rotate: activePhase.rotation }}
+                      transition={{ type: "spring", stiffness: 60, damping: 15 }}
+                      className="w-1 h-16 bg-primary rounded-full origin-bottom -translate-y-1/2 relative"
+                    >
+                      {/* Glow for the tip */}
+                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-primary rounded-full shadow-[0_0_20px_rgba(var(--primary),0.8)]" />
+                    </motion.div>
+                  </div>
+
+                  {/* Center Cap */}
+                  <div className="w-3 h-3 bg-foreground rounded-full border-2 border-primary z-40 pointer-events-none" />
                 </div>
-
-                {/* Geographical Indicators (USA & SE) */}
-                <div className="absolute inset-0 pointer-events-none z-20">
-                  {/* USA Indicator - Phase 4 (approx 210 deg) */}
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full"
-                    style={{ rotate: 210 }}
-                  >
-                    <div className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center group/usa">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full border border-white/50 shadow-[0_0_10px_rgba(59,130,246,0.5)]" />
-                      <div className="bg-blue-500 text-white text-[6px] font-black px-1 rounded mt-1">USA</div>
-                    </div>
-                  </motion.div>
-
-                  {/* Sverige Indicator - Border 4/5 (approx 240 deg) */}
-                  <motion.div 
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full"
-                    style={{ rotate: 240 }}
-                  >
-                    <div className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                      <div className="w-2 h-2 bg-yellow-400 rounded-full border border-white/50 shadow-[0_0_10px_rgba(250,204,21,0.5)]" />
-                      <div className="bg-yellow-400 text-black text-[6px] font-black px-1 rounded mt-1">SWE</div>
-                    </div>
-                  </motion.div>
-                </div>
-
-                {/* Clock Hand */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
-                  <motion.div 
-                    initial={false}
-                    animate={{ rotate: activePhase.rotation }}
-                    transition={{ type: "spring", stiffness: 60, damping: 15 }}
-                    className="w-1.5 h-24 bg-primary rounded-full origin-bottom -translate-y-1/2 relative"
-                  >
-                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-primary rounded-full shadow-[0_0_15px_rgba(var(--primary),0.5)]" />
-                  </motion.div>
-                </div>
-
-                {/* Center Cap */}
-                <div className="w-4 h-4 bg-foreground rounded-full border-2 border-primary z-40 pointer-events-none" />
               </div>
 
               <motion.div 
