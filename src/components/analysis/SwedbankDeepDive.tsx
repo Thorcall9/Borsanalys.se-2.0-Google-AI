@@ -428,6 +428,22 @@ export default function SwedbankDeepDive({
             <Card mb={20}>
               <SectionLabel number="III" title="Finansiell Analys"/>
               
+              {/* Kontext-ingress */}
+              <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`,marginBottom:28}}>
+                <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
+                  Det är viktigt att förstå kontexten för Swedbanks siffror: 2022–2023 var exceptionellt starka år för banker tack vare kraftigt stigande styrräntor. Nu när räntorna sjunker normaliseras marginalerna, och det präglar hela 2024–2025.
+                </p>
+                <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
+                  Nettointäkterna sjönk med 7% under 2025 till <strong>68 736 Mkr</strong> (2024: 74 104 Mkr). Den enskilt viktigaste faktorn är att <strong>räntenettot föll med 11%</strong>, från 49 267 till 44 000 Mkr. Bruttoränteintäkterna – hela ränteinflödet innan avdrag för inlåningskostnader – var 92 588 Mkr (ned från 118 613 Mkr 2024, –22%), vilket illustrerar räntesänkningarnas fulla genomslag.
+                </p>
+                <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
+                  <strong>Provisionsnettot</strong> (avgifter från kapitalförvaltning, kort och transaktioner) var stabilt och sjönk bara 2% till 16 320 Mkr. Övriga intäkter ökade med 17%, delvis tack vare att Entercard och Stabelo konsoliderades från december 2025. På kostnadssidan är historien mer positiv: totalkostnaderna sjönk med 3% till 24 532 Mkr. Rörelsemarginalen förbättrades trots intäktsfallet – från 27,70% (2024) till 31,86% (2025) – och <strong>K/I-kvoten</strong> (kostnader dividerat med intäkter; ju lägre desto effektivare) hölls på 0,36, ett av de lägsta talen bland europeiska storbanker.
+                </p>
+                <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
+                  Årets resultat landade på 32 762 Mkr (2024: 34 869 Mkr, –6%). <strong>EPS</strong> (vinst per aktie) var 29,14 kr versus 30,98 kr 2024. <strong>ROE</strong> (avkastning på eget kapital – hur effektivt bolaget förräntar aktieägarnas kapital) var 14,74% för 2025, mot 16,70% 2024 och rekordåret 2023 på 18,3%. Målet om 15% uppnåddes marginellt och reflekterar räntenormaliseringen.
+                </p>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div>
                   <div style={{fontSize:13,fontWeight:700,color:T.ink,marginBottom:4}}>Avkastning på eget kapital (ROE %)</div>
@@ -472,6 +488,36 @@ export default function SwedbankDeepDive({
                 </div>
               </div>
 
+              {/* Kvartalsvisa utfall 2025 */}
+              <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>Kvartalsvis bild 2025</div>
+              <div style={{overflowX:"auto", marginBottom:28}}>
+                <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
+                  <thead>
+                    <tr style={{borderBottom:`2px solid ${T.border}`}}>
+                      {["Kvartal","Totala intäkter","ROE","EPS","Kommentar"].map(h=>(
+                        <th key={h} style={{padding:"8px 12px",textAlign:h==="Kvartal"?"left":"right",color:T.muted,fontWeight:700,fontSize:11,letterSpacing:0.3,textTransform:"uppercase"}}>{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      ["Q2 2025","16 962 Mkr","15,4%","6,99 kr","Räntenetto sekventiellt ned 5%"],
+                      ["Q3 2025","17 105 Mkr","16,0%","7,53 kr","Starkast kvartal – provisionsnetto upp 6% seq."],
+                      ["Q4 2025","17 340 Mkr","14,7%","7,22 kr","Förvärvseffekter + VAT-återbäring 963 Mkr"],
+                    ].map(([q,...vals],ri)=>(
+                      <tr key={q} style={{background:ri%2===0?T.bg:"transparent",borderBottom:`1px solid ${T.border}`}}>
+                        <td style={{padding:"9px 12px",color:T.ink,fontWeight:700}}>{q}</td>
+                        {vals.map((v,ci)=>(
+                          <td key={ci} style={{padding:"9px 12px",textAlign:"right",color:ci===1?T.accent:T.sub,fontWeight:ci===1?700:400}}>{v}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* Nyckeltalstabell */}
+              <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>Historiska nyckeltal</div>
               <div style={{overflowX:"auto"}}>
                 <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
                   <thead>
@@ -500,6 +546,39 @@ export default function SwedbankDeepDive({
                 </table>
               </div>
               <p style={{fontSize:11, color:T.muted, fontStyle:"italic", marginTop:8}}>* Inklusive specialutdelning om 9,35 kr.</p>
+
+              {/* Historisk femårsutveckling */}
+              <div style={{marginTop:28}}>
+                <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>Historisk femårsutveckling</div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {[
+                    ["2021","~20 Mdkr","Räntorna fortfarande låga. Pandemireservationer reverserades och lyfte resultatet.", T.sub],
+                    ["2022","Kraftig uppgång","Vinsten steg markant när styrräntorna började stiga – bankernas gyllene era inleddes.", T.sub],
+                    ["2023 🏆","ROE 18,3% · K/I 0,33","Rekordår. Alla viktiga mål uppnåddes och slogs med god marginal.", T.green],
+                    ["2024","Vinst 34,9 Mdkr · ROE 16,7%","Fortsatt starkt men räntenormalisering påbörjad. K/I-kvoten höll trots press.", T.sub],
+                    ["2025","Vinst 32,8 Mdkr · ROE 14,7%","Normalisering fortsätter. 15%-målet uppnått marginellt. Förvärven skapar nya intäktsströmmar.", T.accent],
+                    ["2026e","Vinst ~30,3 Mdkr · EPS 26,94 kr","Ytterligare normalisering väntas. Synergier från Stabelo/Entercard börjar leverera.", T.sub],
+                  ].map(([år,rubrik,text,color])=>(
+                    <div key={år} style={{background:color===T.green?T.greenL:color===T.accent?T.accentL:T.bg, border:`1px solid ${color}22`, borderRadius:12, padding:14}}>
+                      <div style={{fontSize:10,fontWeight:800,color,textTransform:"uppercase",letterSpacing:0.5,marginBottom:4}}>{år}</div>
+                      <div style={{fontSize:13,fontWeight:700,color:T.ink,marginBottom:4}}>{rubrik}</div>
+                      <div style={{fontSize:12,color:T.sub,lineHeight:1.6}}>{text}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Balansräkning & kassaflöde */}
+              <div style={{marginTop:24, background:T.bg, border:`1px solid ${T.border}`, borderRadius:14, padding:20}}>
+                <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:10}}>Balansräkning & kassaflöde</div>
+                <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.8}}>
+                  Totala tillgångar uppgick till <strong>3 063 Mdkr</strong> vid utgången av 2025. <strong>CET1-kvoten</strong> (bankens kapitalstyrka i förhållande till riskberäknade tillgångar, reglerat av FI) var 17,8% mot ett regulatoriskt krav på 15,2% – en buffert på 2,6 procentenheter. Kreditimpairmentskvoten var <strong>0,00%</strong> för helåret 2025, vilket signalerar exceptionell kreditkvalitet. Eget kapital uppgick till 225 826 Mkr.
+                </p>
+                <p style={{margin:"12px 0 0",fontSize:13.5,color:T.sub,lineHeight:1.8}}>
+                  Kassaflödet från löpande verksamhet var stabilt på 31 069 Mkr. Det negativa operativa kassaflödet på –8 710 Mkr förklaras av kraftigt ökad utlåning och förvärvsaktivitet under 2025 – inte av underliggande svaghet. Capex var blygsamma 490 Mkr och av- och nedskrivningar uppgick till 2 225 Mkr.
+                </p>
+              </div>
+
             </Card>
           </FadeIn>
         </div>
