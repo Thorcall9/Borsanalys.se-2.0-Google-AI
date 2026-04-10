@@ -251,7 +251,14 @@ export default function MacroDashboard() {
         method: "POST",
         headers: { "Content-Type": "application/json" }
       });
-      const data = await response.json();
+      const text = await response.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        console.error("Failed to parse AI response as JSON:", text);
+        throw new Error("Servern returnerade ett ogiltigt svar. Vänligen kontakta administratören.");
+      }
       
       if (!response.ok) {
         throw new Error(data.error || "Misslyckades att hämta analys");

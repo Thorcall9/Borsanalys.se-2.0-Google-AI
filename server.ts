@@ -1,8 +1,10 @@
 import "dotenv/config";
+import dotenv from "dotenv";
 import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
 import { fileURLToPath } from "url";
+import fs from "fs";
 import { prisma } from "./src/lib/prisma.ts";
 import { sendEmail } from "./src/lib/email.ts";
 import { analyses, AnalysisData } from "./src/data/analyses/index.ts";
@@ -19,8 +21,27 @@ import helmet from "helmet";
 import cors from "cors";
 import { z } from "zod";
 
+// Explicitly load .env.local for development
+dotenv.config({ path: ".env.local" });
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Debug logger
+const logFile = path.join(__dirname, "debug.log");
+const logger = (msg: string) => {
+
+  try {
+    const line = `[${new Date().toISOString()}] ${msg}\n`;
+    fs.appendFileSync(logFile, line);
+  } catch (err) {
+    // Ignore logging errors
+  }
+  console.log(msg);
+};
+
+logger(`[STARTUP] GEMINI_API_KEY presence: ${!!process.env.GEMINI_API_KEY}`);
+
 
 async function startServer() {
   const app = express();
@@ -63,9 +84,15 @@ async function startServer() {
 
   // API routes FIRST
   app.use("/api", (req, res, next) => {
-    console.log(`[API] ${req.method} ${req.url}`);
+    logger(`[REQUEST] ${req.method} ${req.url}`);
     next();
   });
+
+  app.get("/api/test-debug", (req, res) => {
+    logger("[API] Test debug route reached");
+    res.json({ ok: true, timestamp: new Date().toISOString() });
+  });
+
 
   const apiLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -176,8 +203,14 @@ async function startServer() {
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
   
   app.post("/api/ai/macro-outlook", async (req, res) => {
+    logger(`[API] Received POST request to /api/ai/macro-outlook`);
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+      if (!process.env.GEMINI_API_KEY) {
+        logger("[ERROR] GEMINI_API_KEY is missing!");
+        return res.status(500).json({ error: "Systemfel: API-nyckel saknas." });
+      }
+
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
       // Hämta live makrodata för kontext
       let macroContext = "US10Y: 4.34%, SE10Y: 2.85%, USD/SEK: 9.56, EUR/SEK: 10.95, OMX30: 2905, KPI: 0.5%";
@@ -188,7 +221,9 @@ async function startServer() {
         if (unique.length > 0) {
           macroContext = unique.map(d => `${d.key}: ${d.value} (${d.trend || 'flat'})`).join(", ");
         }
-      } catch (_) { /* Använd fallback-kontext */ }
+      } catch (dbErr: any) {
+        logger(`[WARNING] Database fetch failed (using fallback): ${dbErr.message}`);
+      }
 
       const today = new Date().toLocaleDateString('sv-SE');
       const prompt = `Du är en erfaren makroekonomisk analytiker som skriver på svenska för investerare.
@@ -200,21 +235,27 @@ Ange även 3-4 kommande viktiga makrohändelser (räntebesked, KPI-publiceringar
 Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
 {"outlook":"[3-4 meningar om makroläget och vad investerare bör tänka på]","suggestedPhaseId":"[recovery|overheating|stagflation|reflation]","upcomingDates":[{"date":"DD Månad","title":"Händelse"},{"date":"DD Månad","title":"Händelse"},{"date":"DD Månad","title":"Händelse"}]}`;
 
+      logger("[AI] Calling Gemini model...");
       const result = await model.generateContent(prompt);
       let text = result.response.text().trim();
+      logger(`[AI] Raw response received (len: ${text.length})`);
 
-      // Rensa markdown-kodblock
+      // Clean markdown code blocks and extract JSON
       text = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/i, '').trim();
-
-      // Extrahera JSON om det finns extra text
+      
       const jsonMatch = text.match(/\{[\s\S]*\}/);
       if (jsonMatch) text = jsonMatch[0];
+      else {
+        // Fallback if no JSON object is found in the text
+        logger(`[WARNING] No JSON found in AI response. Raw text snippet: ${text.substring(0, 50)}...`);
+      }
 
       let data;
       try {
         data = JSON.parse(text);
+        logger("[AI] JSON parsed successfully");
       } catch (parseErr) {
-        console.error("AI JSON Parse Error. Raw text:", text);
+        logger(`[ERROR] AI JSON Parse Error. Raw text: ${text}`);
         return res.json({
           outlook: "Kunde inte tolka analysen helt, men konjunkturklockan indikerar att vi rör oss i cykeln baserat på nuvarande indikatorer.",
           suggestedPhaseId: "recovery",
@@ -229,16 +270,26 @@ Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
       });
 
     } catch (err: any) {
-      console.error("AI Macro Outlook Error:", err.message);
+      logger(`[CRITICAL ERROR] /api/ai/macro-outlook: ${err.message}`);
+      // Log the full stack trace to the debug file
+      if (err.stack) logger(err.stack);
+      
       res.status(500).json({ error: `Kunde inte generera analys: ${err.message}` });
     }
+  });
+
+  // Global error handler for uncaught exceptions in routes
+  app.use((err: any, req: any, res: any, next: any) => {
+    logger(`[UNCAUGHT ERROR] ${err.message}`);
+    if (err.stack) logger(err.stack);
+    res.status(500).json({ error: "Ett internt serverfel uppstod." });
   });
 
 
   app.post("/api/ai/event-insight", async (req, res) => {
     const { title, description } = req.body;
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const result = await model.generateContent(
         `Analysera följande händelse och dess potentiella påverkan på den svenska börsen (OMX): "${title} - ${description}". Ge ett kort, koncist svar på max 3 meningar om vad investerare bör hålla koll på.`
       );
