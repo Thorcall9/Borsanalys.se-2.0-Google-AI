@@ -190,7 +190,7 @@ export default function HandelsbankenDeepDive({
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börskurs</span>
               <div className="text-2xl font-black text-slate-900">134,35 kr</div>
-              <span className="text-xs text-slate-500 mt-1 block">Analyspris (2025)</span>
+              <span className="text-xs text-slate-500 mt-1 block">Analyspris (2026)</span>
             </div>
 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
@@ -208,7 +208,7 @@ export default function HandelsbankenDeepDive({
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Direktavkastning</span>
               <div className="text-2xl font-black text-slate-900">13,0%</div>
-              <span className="text-xs text-[#004B87] font-bold mt-1 block">Varav 6% ordinarie</span>
+              <span className="text-xs text-[#004B87] font-bold mt-1 block">Varav 6% ordinarie (2026)</span>
             </div>
 
             <div className="bg-white p-6 rounded-2xl border-2 border-[#004B87]/20 shadow-lg relative overflow-hidden group">
