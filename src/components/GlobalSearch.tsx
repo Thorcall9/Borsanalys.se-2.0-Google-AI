@@ -4,6 +4,7 @@ import { Search, X, TrendingUp, BookOpen, ArrowRight, Calculator } from "lucide-
 import { Link, useNavigate } from "react-router-dom";
 import { analyses, AnalysisData } from "../data/analyses";
 import { guides, Guide } from "../data/guides";
+import { useSearch } from "../contexts/SearchContext";
 
 interface GlobalSearchProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ interface GlobalSearchProps {
 }
 
 export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
+  const { searchPosition } = useSearch();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<{
     analyses: AnalysisData[];
@@ -90,7 +92,9 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -40 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed top-[15%] md:top-[20%] left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-2xl bg-card border border-border rounded-[2.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.5)] z-[160] overflow-hidden"
+            className={`fixed left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-2xl bg-card border border-border rounded-[2.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.5)] z-[160] overflow-hidden ${
+              searchPosition === "top" ? "top-[5%] md:top-[8%]" : "top-[25%] md:top-[35%]"
+            }`}
             onKeyDown={handleKeyDown}
           >
             <div className="p-4 md:p-8 border-b border-border flex items-center gap-3 md:gap-6 bg-muted/10">
