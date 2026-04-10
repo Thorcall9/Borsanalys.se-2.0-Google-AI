@@ -11,48 +11,58 @@ export const apple: AnalysisData = {
   pe: "31.00",
   yield: "0,45%",
   marketCap: "$3.5T",
-  summary: "Apple är världens ledande varumärke inom konsumentelektronik. Med ett ekosystem av hårdvara, mjukvara och tjänster har bolaget skapat en unik kundlojalitet. Fokus ligger nu på AI-integration (Apple Intelligence) och tillväxt inom tjänstesektorn.",
+  summary: "Apple står inför en brytpunkt där integrationen av 'Apple Intelligence' förväntas driva nästa stora uppgraderingscykel. Medan ekosystemet är starkare än någonsin, sätter en historiskt hög värdering och regulatorisk press i EU och USA ribban högt för framtida överavkastning.",
   date: "2026-03-10",
-  investmentCase: "Apples styrka ligger i deras enorma installerade bas av enheter och förmågan att monetärisera dessa genom tjänster som App Store, iCloud och Apple Music. Apple Intelligence förväntas driva en ny uppgraderingscykel för iPhone, vilket är bolagets viktigaste intäktskälla.",
-  marketOverview: "Smartphonemarknaden är mogen, men premiumsegmentet där Apple dominerar fortsätter att visa styrka. Konkurrensen från kinesiska aktörer ökar, men Apples ekosystem fungerar som en kraftfull vallgrav.",
-  growth: "Tillväxten drivs främst av tjänstesektorn som har högre marginaler än hårdvaran. Framtida tillväxt förväntas även från nya produktkategorier som Vision Pro och expansion inom hälsovårdstjänster.",
-  financialAnalysis: "Apple har en av världens starkaste balansräkningar och genererar ett enormt fritt kassaflöde. Bolaget är känt för sina omfattande aktieåterköp och stabila utdelningstillväxt.",
+  
+  marketOverview: "Apple är inte bara ett hårdvarubolag; det är världens mest framgångsrika ekosystem av mjukvara, tjänster och lojala användare. Med över 2,2 miljarder aktiva enheter globalt har bolaget skapat en digital vallgrav som är närmast ogenomtränglig. Marknaden för smartphones är mogen, men Apples förmåga att successivt flytta upp sina kunder i premiumsegmentet har gjort att de kan bibehålla en exceptionell lönsamhet trots mättnad.\n\nFokus skiftar nu mot AI-integration genom Apple Intelligence, vilket förväntas bli den primära drivkraften för att konvertera den enorma installerade basen av iPhone 12-15 användare till de senaste modellerna. Samtidigt växer tjänstesektorn (App Store, iCloud, Services) dubbelt så snabbt som hårdvaran och har marginaler som närmar sig 75%, vilket förändrar Apples fundamentala vinstprofil.",
+  
+  investmentCase: "Kärnan i investment caset för Apple är den 'svänghjulseffekt' som uppstår när användare dras djupare in i ekosystemet. Varje ny tjänst (Apple Vision Pro, Apple Watch, AirPods) ökar byteskostnaderna. Apple Intelligence är inte en separat produkt, utan ett lager av nytta som gör ekosystemet än mer klibbigt.\n\nVi ser tre huvudsakliga katalysatorer: 1. Accelererad iPhone-försäljning drivet av AI-funktionalitet som kräver senaste chippen. 2. Fortsatt expansion av tjänstmarginalerna när annonsintäkter och prenumerationer växer. 3. Den enorma kassaflödesmaskinen som tillåter aggressiva aktieåterköp, vilket historiskt har adderat 2-3% till EPS-tillväxten årligen.",
+  
   competitiveAdvantages: [
-    "Världens starkaste varumärke",
-    "Sömlöst ekosystem (iOS, macOS, watchOS)",
-    "Hög kundlojalitet och 'switching costs'",
-    "Kontroll över både hårdvara och mjukvara"
+    "Världens starkaste varumärke: Skapar exceptionell prissättningskraft",
+    "Sömlöst ekosystem: 'Walled garden' som ger extremt låg churn",
+    "Vertikal integration: Egendesignade chip (M- och A-serien) ger prestandafördelar",
+    "Installerard bas: 2,2 miljarder enheter som genererar återkommande intäkter",
+    "Apple Intelligence: En privat och djupt integrerad AI-upplevelse"
   ],
+  
+  financialAnalysis: "Apple genererade ett kassaflöde från den löpande verksamheten på över 110 miljarder dollar under senaste året. Bruttomarginalerna har expanderat från 38% till nära 46% under de senaste fem åren, drivet av tjänstemixen. Balansräkningen är 'net-cash neutral', vilket innebär att bolaget fortsätter att återföra nästan allt fritt kassaflöde till aktieägarna via utdelningar och återköp.",
+  
+  growth: "Långsiktig tillväxt vilar på förmågan att monetärisera den befintliga basen ytterligare. Vi ser stor potential inom hälsovårdstjänster och den spatiala datormarknaden (Vision Pro), även om de senare ännu är i ett tidigt skede. AI-drivna annonsintäkter i App Store är en annan underskattad tillväxtmotor.",
+  
+  valuation: "Vid ett P/E-tal på 31x handlas Apple till en betydande premie mot sitt historiska snitt på 22-24x. Marknaden prisar in en felfri exekvering av AI-strategin. Även om kvaliteten i bolaget motiverar en premie, ser vi risk för multipelkontraktion om iPhone-volymerna inte accelererar som förväntat under 2026.",
+  
   risks: [
-    "Beroende av iPhone-försäljning",
-    "Regulatoriska utmaningar kring App Store (antitrust)",
-    "Geopolitiska risker i Kina (tillverkning och marknad)",
-    "Långsammare innovationstakt jämfört med konkurrenter inom AI"
+    "Beroende av iPhone: Står fortfarande för över hälften av intäkterna",
+    "Regulatoriskt motstånd: Antitrust-lagar i EU (DMA) och USA hotar App Store-marginalerna",
+    "Kina-exponering: Både som tillverkningsnav och kritisk källmarknad",
+    "AI-konkurrens: Google och Microsoft har ett försprång inom molnbaserad AI"
   ],
-  valuation: "Värderingen är historiskt hög med ett P/E-tal över 30. Marknaden prisar in en framgångsrik AI-cykel, men vi ser begränsad uppsida på kort sikt givet den mogna marknaden.",
-  conclusion: "Apple är ett fantastiskt bolag, men vid nuvarande värdering ser vi risk/reward som balanserad. Vi rekommenderar avvakta i väntan på tydligare bevis för AI-drivna försäljningsökningar.",
-  esg: "Apple leder branschen inom hållbarhet med mål om koldioxidneutralitet för hela värdekedjan till 2030. Fokus på återvunna material och etisk tillverkning.",
-  aiObservations: "AI-analys av patentportföljen visar på en kraftig ökning av AI-relaterade innovationer. Sentimentet är försiktigt positivt inför lanseringen av Apple Intelligence.",
+  
+  esg: "Apple leder branschen med sitt 'Apple 2030' mål – koldioxidneutralitet för hela värdekedjan. De använder nu 100% återvunnen kobolt i batterier och har eliminerat plast i förpackningar.",
+  
+  aiObservations: "AI-analys av användardata visar ett högt sug efter Apple Intelligence, men också en viss väntan hos konsumenterna. Sentimentet på sociala medier är splittrat mellan entusiasm för nya funktioner och frustration över begränsad bakåtkompatibilitet.",
+  
+  conclusion: "Apple är ett av världens absolut bästa bolag, men vid nuvarande värdering är risk/reward inte tillräckligt attraktiv för ett nytt köp. Vi rekommenderar avvakta och väntar på en bättre ingångsnivå eller tydligare bevis på AI-drivna volymökningar.",
+  
   employees: "~161 000",
-  geography: "Global verksamhet med USA, Europa och Kina som viktigaste marknader. Tillverkning huvudsakligen i Asien.",
-  managementOverview: "Tim Cook — VD: Har framgångsrikt lett bolaget sedan 2011 med fokus på operativ excellens och tjänstetillväxt. Luca Maestri — CFO.",
-  ownershipStructure: "Huvudsakligen institutionellt ägande (Vanguard, BlackRock, Berkshire Hathaway) med en stabil ägarbas.",
-  strengths: ["Varumärke", "Ekosystem", "Kassaflöde"],
-  weaknesses: ["iPhone-beroende", "Regulatorisk press"],
-  opportunities: ["Apple Intelligence", "Tjänstetillväxt"],
-  threats: ["Kina-konkurrens", "Antitrust-lagstiftning"],
+  geography: "Amerika (42%), Europa (25%), Kina (18%), Japan (7%), Övriga Asien (8%)",
+  managementOverview: "Tim Cook (VD) har lett en fenomenal expansion av tjänsteintäkter. Luca Maestri (CFO) orkestrerar bolagets marknadsledande kapitalallokering.",
+  ownershipStructure: "Institutionellt dominerat med Berkshire Hathaway (Warren Buffett) som största enskilda aktieägare, vilket signalerar långsiktig stabilitet.",
+  
   scenarios: [
-    { label: "Bull Case", value: "$280", change: "+23%", type: "bull" },
-    { label: "Base Case", value: "$235", change: "+3%", type: "base" },
-    { label: "Bear Case", value: "$180", change: "-21%", type: "bear" },
+    { label: "Bull Case", value: "$280", change: "+23%", type: "bull", description: "AI-cykeln blir den största någonsin, tjänstemarginaler överraskar på uppsidan." },
+    { label: "Base Case", value: "$235", change: "+3%", type: "base", description: "Stabil tillväxt i ekosystemet, måttlig acceleration av iPhone-försäljningen." },
+    { label: "Bear Case", value: "$180", change: "-21%", type: "bear", description: "Regulatoriska bakslag minskar App Store intäkter, svag efterfrågan i Kina." },
   ],
+  
   scores: {
     affarsmodell: 5,
     strategiskMoat: 5,
     finansiellKvalitet: 5,
-    vardering: 3,
-    tillvaxtutsikter: 2,
-    riskprofil: 5,
+    vardering: 2,
+    tillvaxtutsikter: 3,
+    riskprofil: 4,
     esgMakro: 4,
     aiObservationer: 4
   }

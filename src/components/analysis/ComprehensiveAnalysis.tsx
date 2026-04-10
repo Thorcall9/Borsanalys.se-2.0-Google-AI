@@ -1,5 +1,20 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { 
+  Globe, 
+  Users, 
+  BarChart3, 
+  TrendingUp, 
+  Target, 
+  ShieldCheck, 
+  Zap, 
+  Info,
+  MapPin,
+  Building2,
+  PieChart,
+  AlertCircle,
+  CheckCircle2
+} from 'lucide-react';
 import AnalysisLayout from './AnalysisLayout';
 import SectionHeader from './SectionHeader';
 import MetricCard from './MetricCard';
@@ -22,6 +37,54 @@ interface ComprehensiveAnalysisProps {
   onToggleWatchlist?: () => void;
 }
 
+// Visual Trigger: A component to render geographical or segment distribution as a bar
+const DistributionBar = ({ data, accentColor }: { data: string; accentColor: string }) => {
+  const segments = useMemo(() => {
+    // Regex to match "Country (XX%)" or "Country XX%" or similar patterns
+    const regex = /([^(\d%]+)\s*(?:\()?\s*(\d+)\s*%(?:\))?/g;
+    const matches = [];
+    let match;
+    while ((match = regex.exec(data)) !== null) {
+      matches.push({
+        label: match[1].trim().replace(/^,\s*/, '').replace(/[:]$/, ''),
+        value: parseInt(match[2], 10)
+      });
+    }
+    return matches;
+  }, [data]);
+
+  if (segments.length === 0) return <p className="text-sm text-muted-foreground">{data}</p>;
+
+  return (
+    <div className="space-y-4">
+      <div className="h-3 w-full bg-muted rounded-full overflow-hidden flex">
+        {segments.map((s, i) => (
+          <motion.div
+            key={i}
+            initial={{ width: 0 }}
+            whileInView={{ width: `${s.value}%` }}
+            transition={{ duration: 1, delay: i * 0.1 }}
+            className="h-full first:rounded-l-full last:rounded-r-full"
+            style={{ 
+              backgroundColor: i === 0 ? accentColor : `rgba(0,0,0,${0.4 - i * 0.1})`,
+              opacity: 1 - (i * 0.2)
+            }}
+          />
+        ))}
+      </div>
+      <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+        {segments.map((s, i) => (
+          <div key={i} className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: i === 0 ? accentColor : `rgba(0,0,0,${0.4 - i * 0.1})` }} />
+            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">{s.label}</span>
+            <span className="text-[10px] font-black text-foreground ml-auto">{s.value}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export default function ComprehensiveAnalysis({ 
   data, 
   isInWatchlist, 
@@ -29,15 +92,6 @@ export default function ComprehensiveAnalysis({
   onToggleWatchlist 
 }: ComprehensiveAnalysisProps) {
   const ACCENT_COLOR = "#10B981"; // Emerald Green
-  // const [liveData, setLiveData] = useState<RapidAPIQuote | null>(null);
-
-  /*
-  useEffect(() => {
-    if (data.ticker) {
-      fetchWithCache(data.ticker).then(setLiveData);
-    }
-  }, [data.ticker]);
-  */
 
   const analysisPrice = useMemo(() => {
     if (!data.price) return null;
@@ -46,25 +100,17 @@ export default function ComprehensiveAnalysis({
     return isNaN(parsed) ? null : parsed;
   }, [data.price]);
 
-  const priceStats = useMemo(() => {
-    if (!analysisPrice) return null;
-    // const currentPrice = liveData.regularMarketPrice;
-    // const diff = currentPrice - analysisPrice;
-    // const percent = (diff / analysisPrice) * 100;
-    return null;
-  }, [analysisPrice]);
-
   const sections = [
-    { id: 'overview', title: 'I. Företagsöversikt' },
-    { id: 'strategy', title: 'II. Strategisk analys & Moat' },
-    { id: 'financials', title: 'III. Finansiell analys' },
-    { id: 'valuation', title: 'IV. Värdering & Jämförelse' },
-    { id: 'growth', title: 'V. Tillväxtmotorer & Triggers' },
-    { id: 'risk', title: 'VI. Riskprofil' },
-    { id: 'esg', title: 'VII. ESG & Makro' },
-    { id: 'ai', title: 'VIII. AI-observationer' },
-    { id: 'summary', title: 'IX. Sammanfattning & Investeringsbeslut' },
-    { id: 'scenarios', title: 'X. Scenarier (Bull, Base & Bear Case)' }
+    { id: 'overview', title: 'I. Företagsöversikt', number: 'I' },
+    { id: 'strategy', title: 'II. Strategisk analys & Moat', number: 'II' },
+    { id: 'financials', title: 'III. Finansiell analys', number: 'III' },
+    { id: 'valuation', title: 'IV. Värdering & Jämförelse', number: 'IV' },
+    { id: 'growth', title: 'V. Tillväxtmotorer & Triggers', number: 'V' },
+    { id: 'risk', title: 'VI. Riskprofil', number: 'VI' },
+    { id: 'esg', title: 'VII. ESG & Makro', number: 'VII' },
+    { id: 'ai', title: 'VIII. AI-observationer', number: 'VIII' },
+    { id: 'summary', title: 'IX. Investeringsbeslut', number: 'IX' },
+    { id: 'scenarios', title: 'X. Scenarier', number: 'X' }
   ];
 
   const SCORE_LABELS: Record<string, string> = {
@@ -78,14 +124,6 @@ export default function ComprehensiveAnalysis({
     aiObservationer: "VIII. AI-observationer"
   };
 
-  const formatMarketCap = (val: number | null) => {
-    if (val === null) return 'N/A';
-    if (val >= 1e12) return `${(val / 1e12).toFixed(2)} T`;
-    if (val >= 1e9) return `${(val / 1e9).toFixed(1)} B`;
-    if (val >= 1e6) return `${(val / 1e6).toFixed(1)} M`;
-    return val.toLocaleString();
-  };
-
   const ScoreBadge = ({ score }: { score?: number }) => {
     if (score === undefined) return null;
     return (
@@ -93,15 +131,6 @@ export default function ComprehensiveAnalysis({
         Betyg: {score}/5
       </div>
     );
-  };
-
-  const jsonOverview = {
-    company: data.title,
-    ticker: data.ticker,
-    analysis_date: data.date,
-    scores: data.scores,
-    recommendation: data.recommendation,
-    target_price: data.scenarios?.find(s => s.type === 'base')?.value || "N/A"
   };
 
   return (
@@ -114,11 +143,7 @@ export default function ComprehensiveAnalysis({
       isInWatchlist={isInWatchlist}
       isWatchlistLoading={isWatchlistLoading}
       onToggleWatchlist={onToggleWatchlist}
-      // livePrice={liveData ? `${liveData.regularMarketPrice.toFixed(2)} ${liveData.currency === 'SEK' ? 'kr' : liveData.currency}` : undefined}
-      // liveChange={liveData ? `${(liveData.regularMarketChange || 0) > 0 ? '+' : ''}${(liveData.regularMarketChangePercent || 0).toFixed(2)}%` : undefined}
       analysisPrice={analysisPrice || undefined}
-      // currentPrice={liveData?.regularMarketPrice}
-      // currency={liveData?.currency === 'SEK' ? 'kr' : liveData?.currency}
       date={data.date}
     >
       <SEO 
@@ -128,65 +153,138 @@ export default function ComprehensiveAnalysis({
       />
 
       {/* Main Title Header */}
-      <div className="mb-16 space-y-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-4">
-            <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em]">
-              {data.market}: {data.ticker} · {data.sector}
-            </div>
-            <h1 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95] whitespace-pre-line">
-              {data.title.includes('Analys & Köpvärde') ? data.title : `${data.title}: Analys & Köpvärde`}
-              {!data.title.includes(data.summary.split('.')[0]) && (
-                <>
-                  <br />
-                  <span className="text-primary">{data.summary.split('.')[0]}.</span>
-                </>
-              )}
-            </h1>
+      <div className="mb-20 space-y-12">
+        <div className="space-y-4">
+          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.4em] flex items-center gap-2">
+            <Globe size={12} className="text-primary" />
+            {data.market} · {data.ticker} · {data.sector}
           </div>
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] text-foreground">
+            {data.title.includes('Analys') ? data.title : `${data.title}`}
+            <span className="text-primary block mt-2">Strategisk Deep Dive</span>
+          </h1>
+        </div>
+
+        {/* 1. Lead Narrative: Executive Summary */}
+        <div className="max-w-3xl">
+          <p className="text-xl md:text-2xl font-serif text-muted-foreground leading-relaxed italic border-l-4 border-primary pl-8 py-2">
+            &quot;{data.summary}&quot;
+          </p>
         </div>
       </div>
 
       {/* SECTION I: FÖRETAGSÖVERSIKT */}
       <section id="overview" className="scroll-mt-24">
-        <div className="mb-6">
+        <div className="mb-10 flex items-center justify-between">
           <SectionHeader number="I" title="FÖRETAGSÖVERSIKT" accentColor={ACCENT_COLOR} />
+          <ScoreBadge score={data.scores?.affarsmodell} />
         </div>
         
-        <ScoreBadge score={data.scores?.affarsmodell} />
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 mt-6">
-          <MetricCard 
-            label="BÖRSKURS" 
-            value={data.price} 
-            trend="Senaste" 
-          />
-          <MetricCard 
-            label="BÖRSVÄRDE" 
-            value={data.marketCap || "N/A"} 
-            trend="Nuvarande" 
-          />
-          <MetricCard label="TICKER / BÖRS" value={data.ticker} trend={data.market} />
-          <MetricCard label="ANSTÄLLDA" value={data.employees || "N/A"} trend="Globalt" />
+        {/* 2. Break the Bento-box: Asymmetrical Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-16">
+          {/* Main Narrative (70%) */}
+          <div className="lg:col-span-8 space-y-8">
+            <div className="prose prose-lg prose-invert max-w-none text-foreground">
+              <div className="leading-relaxed whitespace-pre-line text-lg font-medium opacity-90">
+                {data.marketOverview || data.businessModel || "Bolagsbeskrivning saknas."}
+              </div>
+            </div>
+
+            {data.managementOverview && (
+              <div className="bg-muted/30 rounded-[2rem] p-8 border border-border/50">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                    <Users size={20} />
+                  </div>
+                  <h3 className="text-sm font-black uppercase tracking-widest">Ledning & Styrning</h3>
+                </div>
+                <p className="text-muted-foreground leading-relaxed text-base italic">
+                  {data.managementOverview}
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Quick Facts Sidebar (30%) */}
+          <div className="lg:col-span-4 space-y-6">
+            <div className="bg-card border border-border rounded-[2.5rem] p-8 shadow-xl shadow-black/10">
+              <h3 className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.2em] mb-6 flex items-center gap-2">
+                <Info size={14} /> Snabbfakta
+              </h3>
+              <div className="space-y-6">
+                <div className="space-y-1">
+                  <div className="text-[10px] font-bold text-muted-foreground uppercase">Börskurs</div>
+                  <div className="text-2xl font-black text-foreground">{data.price}</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-[10px] font-bold text-muted-foreground uppercase">Börsvärde</div>
+                  <div className="text-xl font-black text-foreground">{data.marketCap || "N/A"}</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-[10px] font-bold text-muted-foreground uppercase">Anställda</div>
+                  <div className="text-xl font-black text-foreground">{data.employees || "N/A"}</div>
+                </div>
+                
+                {data.geography && (
+                  <div className="pt-6 border-t border-border mt-6">
+                    <div className="flex items-center gap-2 mb-4">
+                      <MapPin size={12} className="text-primary" />
+                      <div className="text-[10px] font-bold text-muted-foreground uppercase">Geografisk Fördelning</div>
+                    </div>
+                    {/* 3. Visual Trigger: Distribution Bar */}
+                    <DistributionBar data={data.geography} accentColor={ACCENT_COLOR} />
+                  </div>
+                )}
+
+                {data.ownershipStructure && (
+                  <div className="pt-6 border-t border-border mt-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Building2 size={12} className="text-primary" />
+                      <div className="text-[10px] font-bold text-muted-foreground uppercase">Huvudägare</div>
+                    </div>
+                    <p className="text-[11px] leading-relaxed text-muted-foreground font-medium">
+                      {data.ownershipStructure}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {data.scores && (
+              <div className="bg-primary/5 border border-primary/20 rounded-[2rem] p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="text-[10px] font-black text-primary uppercase tracking-widest">Affärsmodell Score</div>
+                  <div className="text-2xl font-black text-primary">{data.scores.affarsmodell}/5</div>
+                </div>
+                <RatingBox 
+                  rating={data.scores.affarsmodell} 
+                  description="Bedömning av affärsmodellens styrka och ledningens track record." 
+                />
+              </div>
+            )}
+          </div>
         </div>
 
-
+        {/* Global Scoring Grid - Moved to a full-width section */}
         {data.scores && (
-          <div className="mb-12 bg-card border border-border rounded-[2.5rem] p-10">
-            <h3 className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.2em] mb-8">Analysens nyckelområden</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-8">
+          <div className="mb-20 bg-card border border-border rounded-[3rem] p-10 shadow-2xl shadow-black/5 overflow-hidden relative">
+            <div className="absolute top-0 right-0 p-10 opacity-5 text-primary rotate-12">
+              <PieChart size={200} />
+            </div>
+            <h3 className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.2em] mb-10 relative z-10">Analysens nyckelområden</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10 relative z-10">
               {Object.entries(data.scores).map(([key, score]) => (
-                <div key={key} className="space-y-3">
+                <div key={key} className="space-y-3 group">
                   <div className="flex justify-between items-end">
-                    <span className="text-[10px] font-black text-foreground uppercase tracking-widest">{SCORE_LABELS[key] || key.replace(/([A-Z])/g, ' $1').trim()}</span>
+                    <span className="text-[10px] font-black text-foreground group-hover:text-primary transition-colors uppercase tracking-widest">{SCORE_LABELS[key] || key.replace(/([A-Z])/g, ' $1').trim()}</span>
                     <span className="text-sm font-black text-primary">{score}/5</span>
                   </div>
-                  <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
+                  <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
                     <motion.div 
                       initial={{ width: 0 }}
                       whileInView={{ width: `${(score / 5) * 100}%` }}
                       transition={{ duration: 1, ease: "easeOut" }}
-                      className="h-full bg-primary rounded-full"
+                      className="h-full bg-primary rounded-full group-hover:brightness-110 transition-all"
                     />
                   </div>
                 </div>
@@ -194,72 +292,39 @@ export default function ComprehensiveAnalysis({
             </div>
           </div>
         )}
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <Card title="AFFÄRSIDÉ & AFFÄRSMODELL" accentColor={ACCENT_COLOR}>
-            <p className="text-gray-600 leading-relaxed mb-4 text-sm">
-              {data.summary}
-            </p>
-            {data.businessModel && (
-              <p className="text-gray-600 leading-relaxed text-sm">
-                {data.businessModel}
-              </p>
-            )}
-          </Card>
-          <Card title="BAKGRUND & GEOGRAFI" accentColor={ACCENT_COLOR}>
-            <p className="text-gray-600 leading-relaxed text-sm">
-              {data.geography || data.marketOverview || "Information om geografisk spridning och marknadsbakgrund."}
-            </p>
-          </Card>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <Card title="LEDNING & STYRNING" accentColor={ACCENT_COLOR}>
-            <p className="text-gray-600 leading-relaxed text-sm">
-              {data.managementOverview || data.management || "Information om bolagets ledning och styrelse."}
-            </p>
-          </Card>
-          
-          <Card title="ÄGARSTRUKTUR" accentColor={ACCENT_COLOR}>
-            <p className="text-gray-600 leading-relaxed text-sm">
-              {data.ownershipStructure || "Information om insynsägande och institutionellt ägande."}
-            </p>
-          </Card>
-        </div>
-
-        {data.scores && (
-          <RatingBox 
-            rating={data.scores.affarsmodell} 
-            description={`${data.scores.affarsmodell}/5 — (Fokus: Affärsmodell, ledning och ägarstruktur). Bedömning av affärsmodellens styrka och ledningens track record.`} 
-          />
-        )}
       </section>
 
       <AdUnit slot="7332946752" />
 
       {/* SECTION II: STRATEGISK ANALYS & MOAT */}
-      <section id="strategy" className="scroll-mt-24 mt-16">
-        <div className="mb-6">
+      <section id="strategy" className="scroll-mt-24 mt-20">
+        <div className="mb-10 flex items-center justify-between">
           <SectionHeader number="II" title="STRATEGISK ANALYS & MOAT" accentColor={ACCENT_COLOR} />
+          <ScoreBadge score={data.scores?.strategiskMoat} />
         </div>
         
-        <ScoreBadge score={data.scores?.strategiskMoat} />
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 mt-6">
-          <Card title="KONKURRENSFÖRDELAR" accentColor={ACCENT_COLOR}>
-            <ul className="space-y-2">
-              {(data.competitiveAdvantages || data.advantages || []).map((adv, i) => (
-                <li key={i} className="text-sm text-gray-600 flex gap-2">
-                  <span className="text-primary">•</span> {adv}
-                </li>
-              ))}
-            </ul>
-          </Card>
-          <Card title="INVESTMENT CASE" accentColor={ACCENT_COLOR}>
-            <p className="text-sm text-gray-600 leading-relaxed">
-              {data.investmentCase || "Bolagets strategiska position och varför det är en intressant investering."}
-            </p>
-          </Card>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-12 mt-6">
+          <div className="lg:col-span-8 flex flex-col gap-6">
+            <Card title="INVESTMENT CASE" accentColor={ACCENT_COLOR} className="flex-1">
+              <p className="text-lg text-foreground leading-relaxed font-medium whitespace-pre-line">
+                {data.investmentCase || "Bolagets strategiska position och varför det är en intressant investering."}
+              </p>
+            </Card>
+          </div>
+          <div className="lg:col-span-4">
+            <Card title="KONKURRENSFÖRDELAR" accentColor={ACCENT_COLOR} className="h-full">
+              <ul className="space-y-4 pt-2">
+                {(data.competitiveAdvantages || data.advantages || []).map((adv, i) => (
+                  <li key={i} className="text-sm text-muted-foreground flex gap-3 font-medium">
+                    <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+                      <Zap size={10} />
+                    </div> 
+                    {adv}
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </div>
         </div>
 
         <SwotGrid data={{
@@ -270,102 +335,117 @@ export default function ComprehensiveAnalysis({
         }} />
 
         {data.scores && (
-          <RatingBox 
-            rating={data.scores.strategiskMoat} 
-            description={`${data.scores.strategiskMoat}/5 — (Fokus: Konkurrensfördelar och marknadstrender). Vallgravens styrka och bolagets strategiska positionering.`} 
-          />
+          <div className="mt-10">
+            <RatingBox 
+              rating={data.scores.strategiskMoat} 
+              description="Vallgravens styrka och bolagets strategiska positionering i förhållande till marknadstrender." 
+            />
+          </div>
         )}
       </section>
 
       {/* SECTION III: FINANSIELL ANALYS */}
-      <section id="financials" className="scroll-mt-24 mt-16">
-        <div className="mb-6">
+      <section id="financials" className="scroll-mt-24 mt-24">
+        <div className="mb-10 flex items-center justify-between">
           <SectionHeader number="III" title="FINANSIELL ANALYS" accentColor={ACCENT_COLOR} />
+          <ScoreBadge score={data.scores?.finansiellKvalitet} />
         </div>
         
-        <ScoreBadge score={data.scores?.finansiellKvalitet} />
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8 mt-6">
-          <Card title="FINANSIELL GENOMGÅNG" accentColor={ACCENT_COLOR}>
-            <p className="text-sm text-gray-600 leading-relaxed">
-              {data.financialAnalysis || "Analys av bolagets historiska och förväntade finansiella prestation."}
-            </p>
-          </Card>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-8 mt-6">
+          <div className="lg:col-span-12">
+            <Card title="FINANSIELL GENOMGÅNG" accentColor={ACCENT_COLOR} className="h-full">
+              <p className="text-lg text-foreground leading-relaxed font-medium whitespace-pre-line">
+                {data.financialAnalysis || "Analys av bolagets historiska och förväntade finansiella prestation."}
+              </p>
+            </Card>
+          </div>
+        </div>
 
-          <Card title="NYCKELTAL" accentColor={ACCENT_COLOR}>
-            <div className="space-y-4">
-              <div className="flex justify-between items-end border-b border-black/5 pb-2">
-                <span className="text-xs text-gray-400 uppercase">P/E-tal</span>
-                <span className="text-lg font-serif font-bold text-[#1a1a1a]">
-                  {data.pe ? parseFloat(String(data.pe).replace(',', '.')).toFixed(2) : '-'}
-                </span>
-              </div>
-              <div className="flex justify-between items-end border-b border-black/5 pb-2">
-                <span className="text-xs text-gray-400 uppercase">Direktavkastning</span>
-                <span className="text-lg font-serif font-bold text-[#1a1a1a]">
-                  {typeof data.yield === 'number' 
-                        ? `${(data.yield * 100).toFixed(2)}%` 
-                        : (data.yield?.includes('%') ? data.yield : `${(parseFloat(data.yield || '0') * 100).toFixed(2)}%`)}
-                </span>
-              </div>
-              {data.discount && (
-                <div className="flex justify-between items-end border-b border-black/5 pb-2">
-                  <span className="text-xs text-gray-400 uppercase">Substansrabatt</span>
-                  <span className="text-lg font-serif font-bold text-primary">{data.discount}</span>
-                </div>
-              )}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 mt-10">
+          <div className="bg-card border border-border rounded-[2rem] p-8 flex flex-col gap-2">
+            <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">P/E-tal</span>
+            <span className="text-3xl font-black text-foreground">{data.pe ? parseFloat(String(data.pe).replace(',', '.')).toFixed(2) : '-'}</span>
+          </div>
+          <div className="bg-card border border-border rounded-[2rem] p-8 flex flex-col gap-2 text-emerald-500 bg-emerald-500/5">
+            <span className="text-[10px] font-black uppercase tracking-widest opacity-70">Direktavkastning</span>
+            <span className="text-3xl font-black">
+              {typeof data.yield === 'number' 
+                    ? `${(data.yield * 100).toFixed(2)}%` 
+                    : (data.yield?.includes('%') ? data.yield : `${(parseFloat(data.yield || '0') * 100).toFixed(2)}%`)}
+            </span>
+          </div>
+          {data.discount && (
+            <div className="bg-card border border-border rounded-[2rem] p-8 flex flex-col gap-2 shadow-xl shadow-primary/5 border-primary/20">
+              <span className="text-[10px] font-black text-primary uppercase tracking-widest">Substansrabatt</span>
+              <span className="text-3xl font-black text-primary">{data.discount}</span>
             </div>
-          </Card>
+          )}
+          <div className="bg-card border border-border rounded-[2rem] p-8 flex flex-col gap-2">
+            <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">Börs / Lista</span>
+            <span className="text-sm font-black text-foreground uppercase truncate">{data.market}</span>
+          </div>
         </div>
 
         {data.scores && (
           <RatingBox 
             rating={data.scores.finansiellKvalitet} 
-            description={`${data.scores.finansiellKvalitet}/5 — (Fokus: Vinsttillväxt, balansräkning och kassaflöde). Finansiell hälsa, lönsamhetstrender och kapitalallokering.`} 
+            description="Finansiell hälsa, lönsamhetstrender och kapitalallokering samt utdelningskapacitet." 
           />
         )}
       </section>
 
       {/* SECTION IV: VÄRDERING & JÄMFÖRELSE */}
-      <section id="valuation" className="scroll-mt-24 mt-16">
-        <div className="mb-6">
+      <section id="valuation" className="scroll-mt-24 mt-24">
+        <div className="mb-10 flex items-center justify-between">
           <SectionHeader number="IV" title="VÄRDERING & JÄMFÖRELSE" accentColor={ACCENT_COLOR} />
+          <ScoreBadge score={data.scores?.vardering} />
         </div>
         
-        <ScoreBadge score={data.scores?.vardering} />
-        
-        <Card title="VÄRDERINGSANALYS" accentColor={ACCENT_COLOR} className="mb-8 mt-6">
-          <p className="text-sm text-gray-600 leading-relaxed">
-            {data.valuation || "Bedömning av bolagets nuvarande värdering i förhållande till historik och konkurrenter."}
-          </p>
-        </Card>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-8 mt-6">
+          <div className="lg:col-span-8">
+            <Card title="VÄRDERINGSANALYS" accentColor={ACCENT_COLOR}>
+              <p className="text-lg text-foreground leading-relaxed font-medium whitespace-pre-line">
+                {data.valuation || "Bedömning av bolagets nuvarande värdering i förhållande till historik och konkurrenter."}
+              </p>
+            </Card>
+          </div>
+          <div className="lg:col-span-4 bg-primary/10 rounded-[2rem] p-10 border border-primary/20 flex flex-col justify-center gap-4 text-center">
+             <div className="text-[10px] font-black text-primary uppercase tracking-widest">Vår bedömning</div>
+             <div className="text-4xl font-black text-foreground">{data.recommendation}</div>
+             <div className="w-12 h-1 bg-primary mx-auto rounded-full" />
+             <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">Målkurs (Base Case): {data.scenarios?.find(s => s.type === 'base')?.value || "N/A"}</p>
+          </div>
+        </div>
 
         {data.scores && (
           <RatingBox 
             rating={data.scores.vardering} 
-            description={`${data.scores.vardering}/5 — (Fokus: Multiplar som P/E, EV/EBIT och PEG). Huruvida aktien är köpvärd vid nuvarande kursnivåer.`} 
+            description="Huruvida aktien är köpvärd vid nuvarande kursnivåer baserat på multiplar och kassaflöde." 
           />
         )}
       </section>
 
       {/* SECTION V: TILLVÄXTMOTORER & TRIGGERS */}
-      <section id="growth" className="scroll-mt-24 mt-16">
-        <div className="mb-6">
+      <section id="growth" className="scroll-mt-24 mt-24">
+        <div className="mb-10 flex items-center justify-between">
           <SectionHeader number="V" title="TILLVÄXTMOTORER & TRIGGERS" accentColor={ACCENT_COLOR} />
+          <ScoreBadge score={data.scores?.tillvaxtutsikter} />
         </div>
         
-        <ScoreBadge score={data.scores?.tillvaxtutsikter} />
-        
-        <Card title="FRAMTIDSPOTENTIAL" accentColor={ACCENT_COLOR} className="mb-8 mt-6">
-          <p className="text-sm text-gray-600 leading-relaxed">
-            {data.growth || "De viktigaste drivkrafterna för bolagets framtida tillväxt och vinstökning."}
-          </p>
-        </Card>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-8 mt-6">
+          <div className="lg:col-span-12">
+            <Card title="FRAMTIDSPOTENTIAL" accentColor={ACCENT_COLOR}>
+              <div className="text-lg text-foreground leading-relaxed font-medium whitespace-pre-line">
+                {data.growth || "De viktigaste drivkrafterna för bolagets framtida tillväxt."}
+              </div>
+            </Card>
+          </div>
+        </div>
 
         {data.scores && (
           <RatingBox 
             rating={data.scores.tillvaxtutsikter} 
-            description={`${data.scores.tillvaxtutsikter}/5 — (Fokus: Expansion, innovation och katalysatorer). Potentialen för långsiktig värdetillväxt.`} 
+            description="Potentialen för långsiktig värdetillväxt genom expansion, innovation och katalysatorer." 
           />
         )}
       </section>
@@ -373,108 +453,155 @@ export default function ComprehensiveAnalysis({
       <AdUnit slot="7332946752" />
 
       {/* SECTION VI: RISKPROFIL */}
-      <section id="risk" className="scroll-mt-24 mt-16">
-        <div className="mb-6">
+      <section id="risk" className="scroll-mt-24 mt-24">
+        <div className="mb-10 flex items-center justify-between">
           <SectionHeader number="VI" title="RISKPROFIL" accentColor={ACCENT_COLOR} />
+          <ScoreBadge score={data.scores?.riskprofil} />
         </div>
         
-        <ScoreBadge score={data.scores?.riskprofil} />
-        
-        <Card title="RISKANALYS" accentColor={ACCENT_COLOR} className="mb-8 mt-6">
-          <ul className="space-y-3">
-            {(data.risks || []).map((risk, i) => (
-              <li key={i} className="text-sm text-gray-600 flex gap-2">
-                <span className="text-red-500">⚠️</span> {risk}
-              </li>
-            ))}
-          </ul>
-        </Card>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-8 mt-6">
+          <div className="lg:col-span-8">
+            <Card title="RISKANALYS" accentColor={ACCENT_COLOR} className="h-full">
+              <ul className="space-y-4 pt-2">
+                {(data.risks || []).map((risk, i) => (
+                  <li key={i} className="text-base text-foreground flex gap-4 font-medium opacity-90">
+                    <div className="w-6 h-6 rounded-lg bg-danger/10 flex items-center justify-center text-danger flex-shrink-0">
+                      <AlertCircle size={14} />
+                    </div> 
+                    {risk}
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </div>
+          <div className="lg:col-span-4 flex flex-col gap-6">
+            {data.ukgcRiskDeepDive && (
+              <div className="bg-danger/5 border border-danger/10 rounded-[2rem] p-8">
+                <h3 className="text-[10px] font-black text-danger uppercase tracking-widest mb-4 flex items-center gap-2"><AlertCircle size={12} /> Regulatorisk Risk</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground italic font-medium">
+                  {data.ukgcRiskDeepDive}
+                </p>
+              </div>
+            )}
+            <div className="flex-1 bg-muted/30 rounded-[2rem] p-8 border border-border/50 flex flex-col justify-center items-center text-center">
+              <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-2">Risknivå</div>
+              <div className="text-4xl font-black text-foreground">{data.scores?.riskprofil}/5</div>
+              <p className="text-[10px] font-black text-muted-foreground uppercase mt-2 tracking-widest">
+                {data.scores?.riskprofil && data.scores.riskprofil >= 4 ? "Låg Risk" : data.scores?.riskprofil && data.scores.riskprofil >= 3 ? "Medelhög Risk" : "Hög Risk"}
+              </p>
+            </div>
+          </div>
+        </div>
 
         {data.scores && (
           <RatingBox 
             rating={data.scores.riskprofil} 
-            description={`${data.scores.riskprofil}/5 — (Fokus: Branschspecifika och generella risker. Inverterad skala). Bedömning av bolagsspecifika och makroekonomiska risker.`} 
+            description="Bedömning av bolagsspecifika och makroekonomiska risker. Inverterad skala: 5 = Låg risk, 1 = Hög risk." 
           />
         )}
       </section>
 
       {/* SECTION VII: ESG & MAKRO */}
-      <section id="esg" className="scroll-mt-24 mt-16">
-        <div className="mb-6">
+      <section id="esg" className="scroll-mt-24 mt-24">
+        <div className="mb-10 flex items-center justify-between">
           <SectionHeader number="VII" title="ESG & MAKRO" accentColor={ACCENT_COLOR} />
+          <ScoreBadge score={data.scores?.esgMakro} />
         </div>
         
-        <ScoreBadge score={data.scores?.esgMakro} />
-        
         <Card title="ESG & MAKROANALYS" accentColor={ACCENT_COLOR} className="mb-8 mt-6">
-          <p className="text-sm text-gray-600 leading-relaxed">
-            {data.esg || "Hållbarhetsarbete, bolagsstyrning och makroekonomisk påverkan."}
+          <p className="text-lg text-foreground leading-relaxed font-medium whitespace-pre-line">
+            {data.esg || "Hållbarhetsarbete och makroekonomisk påverkan."}
           </p>
         </Card>
 
         {data.scores && (
           <RatingBox 
             rating={data.scores.esgMakro} 
-            description={`${data.scores.esgMakro}/5 — (Fokus: Hållbarhet och makroekonomisk exponering). Bolagets motståndskraft mot makrofaktorer och dess ESG-betyg.`} 
+            description="Bolagets motståndskraft mot makrofaktorer och dess arbete inom miljö och socialt ansvar." 
           />
         )}
       </section>
 
       {/* SECTION VIII: AI-OBSERVATIONER */}
-      <section id="ai" className="scroll-mt-24 mt-16">
-        <div className="mb-6">
+      <section id="ai" className="scroll-mt-24 mt-24">
+        <div className="mb-10 flex items-center justify-between">
           <SectionHeader number="VIII" title="AI-OBSERVATIONER" accentColor={ACCENT_COLOR} />
+          <ScoreBadge score={data.scores?.aiObservationer} />
         </div>
         
-        <ScoreBadge score={data.scores?.aiObservationer} />
-        
-        <Card accentColor={ACCENT_COLOR} className="mb-8 mt-6">
-          <p className="text-sm text-gray-600 italic">
-            {data.aiObservations || "AI-driven analys av sentiment, insiderhandel och tekniska trender indikerar en stabil position för bolaget i nuvarande marknadsklimat."}
-          </p>
+        <Card accentColor={ACCENT_COLOR} className="mb-8 mt-6 relative overflow-hidden group">
+          <div className="absolute -right-20 -bottom-20 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity">
+            <Zap size={300} />
+          </div>
+          <div className="relative z-10 flex gap-6">
+             <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
+               <Zap size={24} />
+             </div>
+             <p className="text-xl md:text-2xl text-foreground font-serif italic leading-relaxed">
+               &quot;{data.aiObservations || "AI-driven analys av sentiment och mönster indikerar en stabil position."}&quot;
+             </p>
+          </div>
         </Card>
 
         {data.scores && (
           <RatingBox 
             rating={data.scores.aiObservationer} 
-            description={`${data.scores.aiObservationer}/5 — (Fokus: Sentimentanalys och dolda mönster i datan). AI-genererad insikt baserad på realtidsdata och historiska mönster.`} 
+            description="AI-genererad insikt baserad på sentimentanalys och dolda mönster i data." 
           />
         )}
       </section>
 
       {/* SECTION IX: SAMMANFATTNING & INVESTERINGSBESLUT */}
-      <section id="summary" className="scroll-mt-24 mt-16">
-        <SectionHeader number="IX" title="SAMMANFATTNING & INVESTERINGSBESLUT" accentColor={ACCENT_COLOR} />
-        
-        <div className="mb-8">
-          <p className="text-gray-600 leading-relaxed mb-6 text-sm">
-            {data.conclusion}
-          </p>
+      <section id="summary" className="scroll-mt-24 mt-24">
+        <div className="mb-10">
+          <SectionHeader number="IX" title="INVESTERINGSBESLUT" accentColor={ACCENT_COLOR} />
         </div>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 mb-8 mt-6">
+          <div className="lg:col-span-7 space-y-8">
+            <h3 className="text-2xl font-black tracking-tight">Slutsats</h3>
+            <p className="text-lg text-foreground leading-relaxed font-medium whitespace-pre-line">
+              {data.conclusion}
+            </p>
+            
+            <div className="flex items-center gap-4 text-emerald-500 bg-emerald-500/5 p-6 rounded-3xl border border-emerald-500/20 w-fit">
+              <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center">
+                <CheckCircle2 size={24} />
+              </div>
+              <div className="font-black text-2xl uppercase tracking-tighter">Rekommendation: {data.recommendation}</div>
+            </div>
+          </div>
 
-        <VerdictBox 
-          verdict={data.recommendation} 
-          target={data.scenarios?.find(s => s.type === 'base')?.value || "N/A"} 
-          description={data.motivation || data.summary} 
-          date={data.date}
-          accentColor={ACCENT_COLOR}
-        />
+          <div className="lg:col-span-5">
+            <VerdictBox 
+              verdict={data.recommendation} 
+              target={data.scenarios?.find(s => s.type === 'base')?.value || "N/A"} 
+              description={data.motivation || data.summary} 
+              date={data.date || new Date().toISOString().split('T')[0]}
+              accentColor={ACCENT_COLOR}
+            />
+          </div>
+        </div>
       </section>
 
       <AdUnit slot="7332946752" />
 
-      {/* SECTION X: SCENARIER (BULL, BASE & BEAR CASE) */}
-      <section id="scenarios" className="scroll-mt-24 mt-16 mb-24">
-        <SectionHeader number="X" title="SCENARIER (BULL, BASE & BEAR CASE)" accentColor={ACCENT_COLOR} />
-        <ScenarioCards scenarios={data.scenarios.map(s => ({
-          type: s.type,
-          icon: s.type === 'bull' ? '🚀' : s.type === 'base' ? '📊' : '📉',
-          title: s.label.toUpperCase(),
-          probability: s.type === 'base' ? '50%' : '25%',
-          price: s.value,
-          change: s.change,
-          description: `Bedömning för ${s.label.toLowerCase()} baserat på marknadens utveckling.`
-        }))} />
+      {/* SECTION X: SCENARIER & MÅLPRIS */}
+      <section id="scenarios" className="scroll-mt-24 mt-24 mb-32">
+        <div className="mb-10">
+          <SectionHeader number="X" title="SCENARIER & MÅLPRIS" accentColor={ACCENT_COLOR} />
+        </div>
+        <div className="mt-8">
+          <ScenarioCards scenarios={data.scenarios.map(s => ({
+            type: s.type,
+            icon: s.type === 'bull' ? '🚀' : s.type === 'base' ? '📊' : '📉',
+            title: s.label.toUpperCase(),
+            probability: s.type === 'base' ? '50%' : '25%',
+            price: s.value,
+            change: s.change,
+            description: s.description || (s.type === 'bull' ? "Optimistiskt scenario där tillväxten accelererar och multiplar expanderar." : s.type === 'base' ? "Mest troliga utvecklingen baserat på nuvarande trender och estimat." : "Defensivt scenario vid sämre konjunktur eller specifika bakslag.")
+          }))} />
+        </div>
       </section>
     </AnalysisLayout>
   );
