@@ -177,25 +177,51 @@ async function startServer() {
   
   app.post("/api/ai/macro-outlook", async (req, res) => {
     try {
-      const model = genAI.getGenerativeModel({ 
-        model: "gemini-2.5-flash",
-        generationConfig: { responseMimeType: "application/json" }
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
+      // Hämta live makrodata för kontext
+      let macroContext = "US10Y: 4.34%, SE10Y: 2.85%, USD/SEK: 9.56, EUR/SEK: 10.95, OMX30: 2905, KPI: 0.5%";
+      try {
+        const macroRows = await prisma.macroMarketData.findMany({ orderBy: { updatedAt: 'desc' } });
+        const seen = new Set<string>();
+        const unique = macroRows.filter(d => { if (seen.has(d.key)) return false; seen.add(d.key); return true; });
+        if (unique.length > 0) {
+          macroContext = unique.map(d => `${d.key}: ${d.value} (${d.trend || 'flat'})`).join(", ");
+        }
+      } catch (_) { /* Använd fallback-kontext */ }
+
+      const today = new Date().toLocaleDateString('sv-SE');
+      const prompt = `Du är en erfaren makroekonomisk analytiker som skriver på svenska för investerare.
+Aktuella makroindikatorer (${today}): ${macroContext}.
+
+Analysera var vi befinner oss i konjunkturcykeln och vad det innebär för aktiemarknaden.
+Ange även 3-4 kommande viktiga makrohändelser (räntebesked, KPI-publiceringar m.m.) efter ${today}.
+
+Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
+{"outlook":"[3-4 meningar om makroläget och vad investerare bör tänka på]","suggestedPhaseId":"[recovery|overheating|stagflation|reflation]","upcomingDates":[{"date":"DD Månad","title":"Händelse"},{"date":"DD Månad","title":"Händelse"},{"date":"DD Månad","title":"Händelse"}]}`;
+
+      const result = await model.generateContent(prompt);
+      let text = result.response.text().trim();
+
+      // Rensa markdown-kodblock
+      text = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/i, '').trim();
+
+      // Extrahera JSON om det finns extra text
+      const jsonMatch = text.match(/\{[\s\S]*\}/);
+      if (jsonMatch) text = jsonMatch[0];
+
+      const data = JSON.parse(text);
+      res.json({
+        outlook: data.outlook || "Makroanalys genererades – se indikatorer ovan.",
+        suggestedPhaseId: data.suggestedPhaseId || null,
+        upcomingDates: Array.isArray(data.upcomingDates) ? data.upcomingDates : []
       });
-      const result = await model.generateContent(`Baserat på dagens datum (${new Date().toLocaleDateString('sv-SE')}) och nuvarande makroindikatorer (Inflation: 0.5%, US 10Y: 4.34%, USD/SEK: 9.56, OMX30: 2905), ge en kort analys av var vi befinner oss i investeringsklockan och vad det innebär för aktiemarknaden. 
-        Ge även de 3 nästa viktigaste makrohändelserna (t.ex. räntebesked, KPI-släpp) som infaller efter dagens datum.
-        Svara i JSON-format med följande fält:
-        - outlook: sträng (max 3 meningar på svenska)
-        - suggestedPhaseId: sträng (måste vara en av: 'recovery', 'overheating', 'stagflation', 'reflation')
-        - upcomingDates: array av objekt { date: "DD Månad", title: "Händelse" }`);
-      
-      const responseText = result.response.text();
-      const data = JSON.parse(responseText || "{}");
-      res.json(data);
     } catch (err: any) {
-      console.error("AI Macro Outlook Error:", err);
-      res.status(500).json({ error: "Kunde inte generera analys" });
+      console.error("AI Macro Outlook Error:", err.message);
+      res.status(500).json({ error: `Kunde inte generera analys: ${err.message}` });
     }
   });
+
 
   app.post("/api/ai/event-insight", async (req, res) => {
     const { title, description } = req.body;

@@ -154,6 +154,8 @@ export default function MacroDashboard() {
   const [activePhase, setActivePhase] = useState(currentPhase);
   const [macroOutlook, setMacroOutlook] = useState<string | null>(null);
   const [loadingOutlook, setLoadingOutlook] = useState(false);
+  const [outlookError, setOutlookError] = useState<string | null>(null);
+
   const [lastUpdated, setLastUpdated] = useState<string>(new Date().toLocaleDateString('sv-SE'));
   const [upcomingDates, setUpcomingDates] = useState<{date: string, title: string}[]>([
     { date: "12 April", title: "Räntebesked ECB" },
@@ -242,6 +244,8 @@ export default function MacroDashboard() {
 
   const generateMacroOutlook = async () => {
     setLoadingOutlook(true);
+    setOutlookError(null);
+    setMacroOutlook(null);
     try {
       const response = await fetch("/api/ai/macro-outlook", {
         method: "POST",
@@ -266,12 +270,14 @@ export default function MacroDashboard() {
       }
 
       setLastUpdated(new Date().toLocaleDateString('sv-SE'));
-    } catch (error) {
+    } catch (error: any) {
       console.error("Outlook Error:", error);
+      setOutlookError(error.message || "Något gick fel. Försök igen.");
     } finally {
       setLoadingOutlook(false);
     }
   };
+
 
   const getAIInsight = async (event: MarketEvent) => {
     setLoadingAI(event.id);
@@ -671,6 +677,18 @@ export default function MacroDashboard() {
                 )}
 
                 <AnimatePresence>
+                  {outlookError && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="mt-4 p-4 bg-red-500/10 rounded-2xl border border-red-500/20"
+                    >
+                      <p className="text-xs font-bold text-red-400 leading-relaxed">
+                        ⚠️ {outlookError}
+                      </p>
+                    </motion.div>
+                  )}
                   {macroOutlook && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
