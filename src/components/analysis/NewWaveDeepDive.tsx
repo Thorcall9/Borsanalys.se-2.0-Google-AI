@@ -448,6 +448,8 @@ export default function NewWaveDeepDive({
           </Card>
         </FadeIn>
 
+        <AdUnit slot="9182736451" />
+
         {/* IV. VÄRDERING & JÄMFÖRELSE */}
         <FadeIn delay={300}>
           <Card>
@@ -596,6 +598,8 @@ export default function NewWaveDeepDive({
             </div>
           </Card>
         </div>
+
+        <AdUnit slot="1293847561" />
 
         {/* VII & VIII: ESG & AI */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

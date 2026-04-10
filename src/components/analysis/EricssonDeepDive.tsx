@@ -717,9 +717,21 @@ export default function EricssonDeepDive({
               </Card>
               <Card>
                 <SectionLabel number="VIII" title="AI-observationer"/>
-                <p style={{fontSize:13.5, color:T.sub, lineHeight:1.8}}>
-                  Datamönstret visar nio kvartal i följd med förbättrad justerad EBSITA-marginal – ett starkt tecken på operationell disciplin. Men återköp i en flat huvudmarknad kan också signalera begränsade interna tillväxtmöjligheter.
+                <p style={{fontSize:13.5, color:T.sub, lineHeight:1.8, marginBottom:16}}>
+                  Det mest intressanta datapunktsmönstret i Ericsson är marginaltrenden. Bolaget nådde <strong>nio kvartal i följd</strong> med förbättrad justerad EBITA-marginal jämfört med motsvarande kvartal året före. Det är ett ovanligt starkt tecken på operationell förbättring.
                 </p>
+                <p style={{fontSize:13.5, color:T.sub, lineHeight:1.8, marginBottom:20}}>
+                  Samtidigt signalerar ökade återköp i en flat huvudmarknad att de interna återinvesteringsmöjligheterna kan vara begränsade. Datat visar tydlig disciplin, men inte något uppenbart missförstånd från marknaden.
+                </p>
+                <div style={{background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 12, padding: 16}}>
+                  <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4}}>
+                    <div style={{fontSize: 10, fontWeight: 900, color: T.gold, textTransform: "uppercase"}}>Betyg: AI-observationer</div>
+                    <div style={{fontSize: 14, fontWeight: 900, color: T.ink}}>3/5</div>
+                  </div>
+                  <p style={{margin: 0, color: T.ink, fontSize: 12, lineHeight: 1.5, fontStyle: "italic"}}>
+                    Datan visar tydlig operationell förbättring, men inte något skrikande köptillfälle.
+                  </p>
+                </div>
               </Card>
             </div>
           </FadeIn>

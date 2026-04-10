@@ -75,7 +75,9 @@ export const ericsson2025: AnalysisData = {
   
   esg: "Makromässigt har Ericsson både medvind och motvind. Medvinden ligger i geopolitik, säkerhetskrav och digitalisering där konnektivitet blir allt viktigare i AI-eran. På ESG-sidan finns ett tydligt styrningsarv som tynger bilden. Irak-affären och DOJ-processen gör att governance-betyget aldrig kan få högsta betyg i nuläget, trots förbättrad kultur och kontroll.",
   
-  aiObservations: "Datan visar tydlig operationell förbättring (9 kvartal i följd med förbättrad marginal), men inte något uppenbart missförstånd från marknaden som skriker felprissättning.",
+  aiObservations: "Det mest intressanta datapunktsmönstret i Ericsson är marginaltrenden. Bolaget nådde nio kvartal i följd med förbättrad justerad EBITA-marginal jämfört med året före. Det är ett ovanligt starkt tecken på operationell förbättring. Samtidigt signalerar ökade återköp i en flat huvudmarknad begränsade interna återinvesteringsmöjligheter. Min AI-läsning blir därför neutral till svagt positiv: datan visar tydlig operationell förbättring, men inte något uppenbart missförstånd från marknaden som skriker felprissättning.",
+  
+  employees: "Cirka 99 000 vid utgången av 2025. Omstruktureringsprogram kan påverka cirka 1 600 tjänster i Sverige under 2026.",
   
   scenarios: [
     { label: "Bull Case", value: "135 kr", change: "+48%", type: "bull", description: "5G standalone, kärnnät, privata nät och network APIs får snabbare kommersiellt genomslag." },
