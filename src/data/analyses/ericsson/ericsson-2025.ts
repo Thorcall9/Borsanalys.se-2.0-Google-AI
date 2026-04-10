@@ -62,17 +62,18 @@ export const ericsson2025: AnalysisData = {
   ],
   
   risks: [
-    "Juridiska risker: DOJ-utredning (Irak), SAMR-granskning (Kina), civilrättsliga processer",
-    "Marknadsmässiga: RAN-marknaden väntas vara flat 2026, svag operatörscapex",
-    "Patent & Licenser: Osäkerhet kring förnyelser efter utlöpta avtal (t.ex. i Kina)",
+    "RISKNIVÅ: Medel | RISK-SCORE: 3/5",
+    "Juridiska risker: Pågående DOJ-utredning (Irak) och SAMR-granskning (Kina)",
+    "Marknadsmässiga: RAN-marknaden väntas vara oförändrad 2026",
+    "Patent & Licenser: Utgående smartphone-avtal vid årsskiftet 2025/26",
     "Valuta & Kostnader: Valutakänslighet (USD) och omstruktureringskostnader"
   ],
   
-  valuation: "Ericsson ser rimligt värderat ut på normaliserade antaganden. Vid årsskiftets nivå (91,5 kr) handlas aktien till en attraktiv direktavkastning på föreslagen utdelning (3,00 kr) samt återköp om 15 mdr kr. Det finns stöd från balansräkning och kapitalåterföring, men inte tillräcklig felprissättning för högre betyg än 3/5. Målpris: 100–115 SEK.",
+  valuation: "Den svåraste delen i Ericsson-caset är värderingen. Om man bara tar EPS 8,51 SEK ser aktien låg värderad ut, men det är missvisande eftersom iconectiv-vinsten blåser upp resultatet. Justerad EBITA-marginal exklusive iconectiv var 14,9 procent, vilket bör vara utgångspunkten. Vid ett marknadsvärde om cirka 305 miljarder kronor ser Ericsson rimligt värderat ut på normaliserade antaganden. Direktavkastningen på föreslagen utdelning om 3,00 kronor (3,28%) och det föreslagna återköpsprogrammet om 15 miljarder kronor ger ett gott stöd till aktien.",
   
-  conclusion: "Ericsson är i dag ett mer disciplinerat, mer kassaflödesstarkt och mer finansiellt robust bolag än många investerare fortfarande tänker på. Men caset hålls tillbaka av tre saker: en i grunden trög RAN-marknad, osäker kvalitet i delar av Enterprise samt kvarvarande juridiska risker. Därför landar jag i Bevaka, inte Köp.",
+  conclusion: "Ericsson ser rimligt värderat ut på normaliserade antaganden. Det finns stöd från balansräkning och kapitalåterföring, men inte tillräcklig felprissättning för högre betyg än 3/5 i värderingsbetyg. Ericsson är i dag ett mer disciplinerat, mer kassaflödesstarkt och mer finansiellt robust bolag än många investerare fortfarande tänker på. Men caset hålls tillbaka av tre saker: en i grunden trög RAN-marknad, osäker kvalitet i delar av Enterprise samt kvarvarande juridiska risker. Därför landar jag i Bevaka, inte Köp.",
   
-  esg: "Makrotrenderna är i delar gynnsamma (geopolitik, digitalisering), men governance-arvet (Irak-affären, DOJ) hindrar högre betyg än 3/5.",
+  esg: "Makromässigt har Ericsson både medvind och motvind. Medvinden ligger i geopolitik, säkerhetskrav och digitalisering där konnektivitet blir allt viktigare i AI-eran. På ESG-sidan finns ett tydligt styrningsarv som tynger bilden. Irak-affären och DOJ-processen gör att governance-betyget aldrig kan få högsta betyg i nuläget, trots förbättrad kultur och kontroll.",
   
   aiObservations: "Datan visar tydlig operationell förbättring (9 kvartal i följd med förbättrad marginal), men inte något uppenbart missförstånd från marknaden som skriker felprissättning.",
   

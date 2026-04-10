@@ -224,21 +224,21 @@ export default function NewWaveDeepDive({
         <FadeIn>
           <Card>
             <SectionLabel number="I" title="Företagsöversikt" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-[1.6fr,1fr] gap-10">
               <div className="space-y-6">
-                <p className="text-slate-600 leading-relaxed">
+                <p className="text-slate-600 leading-relaxed text-sm">
                   New Wave Group är en svensk varumärkeskoncern som utvecklar, förvärvar och distribuerar produkter inom tre huvudsegment: <strong>Företag</strong>, <strong>Sport & Fritid</strong> samt <strong>Gåvor & Heminredning</strong>. Affärsidén är att skapa synergier genom samordning av design, inköp, marknadsföring, lager och distribution, samtidigt som produkterna säljs både via profilmarknaden och detaljhandeln för att ge riskspridning. Profilkanalen stod även 2025 för cirka två tredjedelar av omsättningen och detaljhandeln för ungefär en tredjedel.
                 </p>
-                <p className="text-slate-600 leading-relaxed">
+                <p className="text-slate-600 leading-relaxed text-sm">
                   Bolaget omsatte 10 019 MSEK under 2025, för första gången över 10 miljarder kronor. Sverige stod för 20% av omsättningen, Nordamerika för 24%, Benelux för 15%, Norden exklusive Sverige för 11%, resterande Europa för 25% och övriga länder för 6%. Det gör NWG till ett tydligt internationellt bolag, även om Sverige och USA fortsatt är de viktigaste enskilda marknaderna.
                 </p>
-                <p className="text-slate-600 leading-relaxed">
+                <p className="text-slate-600 leading-relaxed text-sm">
                   Varumärkesportföljen är bred och inkluderar bland annat Clique, Craft, Cutter & Buck, Jobman, ProJob, Kosta Boda, Orrefors, Sagaform, Tenson och Ahead. Det ger både riskspridning och korsförsäljningsmöjligheter. Samtidigt skapar det viss komplexitet i styrning och kapitalbindning.
                 </p>
-                <p className="text-slate-600 leading-relaxed">
+                <p className="text-slate-600 leading-relaxed text-sm">
                   Ledningen är en tydlig styrka. Torsten Jansson är grundare, VD och storägare, vilket ger ett starkt "skin in the game". Ägarbilden är koncentrerad: de tio största ägarna kontrollerade 61% av kapitalet och 89% av rösterna vid utgången av 2025. Det stärker långsiktigheten, även om det samtidigt begränsar minoritetsägares inflytande.
                 </p>
-                <p className="text-slate-600 leading-relaxed">
+                <p className="text-slate-600 leading-relaxed text-sm">
                   Bolaget hade ett medelantal anställda på 2 603 under 2025, upp från 2 451 året innan. Det speglar både tillväxt, investeringar och förvärv.
                 </p>
                 <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
@@ -258,27 +258,29 @@ export default function NewWaveDeepDive({
                   </div>
                 </div>
               </div>
-              <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col items-center justify-center">
-                <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6">Omsättning per marknad (2025)</h4>
-                <div className="space-y-4 w-full">
-                  {[
-                    { l: "Europa (exkl. Sve/Ben)", v: "25%", c: T.accent },
-                    { l: "Nordamerika", v: "24%", c: T.green },
-                    { l: "Sverige", v: "20%", c: T.gold },
-                    { l: "Benelux", v: "15%", c: T.red },
-                    { l: "Övriga Norden", v: "11%", c: T.muted },
-                    { l: "Övriga Världen", v: "6%", c: "#CBD5E1" }
-                  ].map((m, i) => (
-                    <div key={i} className="space-y-1">
-                      <div className="flex justify-between text-xs font-bold">
-                        <span>{m.l}</span>
-                        <span>{m.v}</span>
+              <div className="space-y-6">
+                <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200 h-fit">
+                  <h4 className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4 text-center">Omsättning per marknad (2025)</h4>
+                  <div className="space-y-4 w-full">
+                    {[
+                      { l: "Europa (exkl. Sve/Ben)", v: "25%", c: T.accent },
+                      { l: "Nordamerika", v: "24%", c: T.green },
+                      { l: "Sverige", v: "20%", c: T.gold },
+                      { l: "Benelux", v: "15%", c: T.red },
+                      { l: "Övriga Norden", v: "11%", c: T.muted },
+                      { l: "Övriga Världen", v: "6%", c: "#CBD5E1" }
+                    ].map((m, i) => (
+                      <div key={i} className="space-y-1">
+                        <div className="flex justify-between text-[10px] font-bold">
+                          <span>{m.l}</span>
+                          <span>{m.v}</span>
+                        </div>
+                        <div className="h-1 w-full bg-white rounded-full overflow-hidden">
+                          <div className="h-full rounded-full" style={{ width: m.v, backgroundColor: m.c }} />
+                        </div>
                       </div>
-                      <div className="h-1.5 w-full bg-white rounded-full overflow-hidden">
-                        <div className="h-full rounded-full" style={{ width: m.v, backgroundColor: m.c }} />
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -307,24 +309,40 @@ export default function NewWaveDeepDive({
                   </p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-6 bg-emerald-50 border border-emerald-100 rounded-2xl">
-                  <h4 className="text-xs font-black text-emerald-900 uppercase mb-4 uppercase tracking-widest">Styrkor</h4>
-                  <ul className="text-xs text-emerald-800 space-y-2">
-                    <li className="flex gap-2"><span>•</span> Stark varumärkesportfölj</li>
-                    <li className="flex gap-2"><span>•</span> Hög distributionskapacitet</li>
-                    <li className="flex gap-2"><span>•</span> Lokal närvaro i 20+ länder</li>
-                    <li className="flex gap-2"><span>•</span> Stabil bruttomarginal</li>
-                    <li className="flex gap-2"><span>•</span> Grundarledd kultur</li>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="p-5 bg-emerald-50 border border-emerald-100 rounded-2xl">
+                  <h4 className="text-[10px] font-black text-emerald-900 uppercase mb-3 tracking-widest">Styrkor</h4>
+                  <ul className="text-xs text-emerald-800 space-y-1.5 list-disc pl-4">
+                    <li>Stark varumärkesportfölj</li>
+                    <li>Hög distributionskapacitet</li>
+                    <li>Lokal närvaro i 20+ länder</li>
+                    <li>Stabil bruttomarginal</li>
+                    <li>Grundarledd kultur</li>
                   </ul>
                 </div>
-                <div className="p-6 bg-rose-50 border border-rose-100 rounded-2xl">
-                  <h4 className="text-xs font-black text-rose-900 uppercase mb-4 uppercase tracking-widest">Svagheter</h4>
-                  <ul className="text-xs text-rose-800 space-y-2">
-                    <li className="flex gap-2"><span>•</span> Höga lager (kapitalbindning)</li>
-                    <li className="flex gap-2"><span>•</span> Låg strukturell switching cost</li>
-                    <li className="flex gap-2"><span>•</span> Komplexitet efter förvärv</li>
-                    <li className="flex gap-2"><span>•</span> Valutakänslighet</li>
+                <div className="p-5 bg-rose-50 border border-rose-100 rounded-2xl">
+                  <h4 className="text-[10px] font-black text-rose-900 uppercase mb-3 tracking-widest">Svagheter</h4>
+                  <ul className="text-xs text-rose-800 space-y-1.5 list-disc pl-4">
+                    <li>Höga lager (kapitalbindning)</li>
+                    <li>Låg strukturell switching cost</li>
+                    <li>Komplexitet efter förvärv</li>
+                  </ul>
+                </div>
+                <div className="p-5 bg-indigo-50 border border-indigo-100 rounded-2xl">
+                  <h4 className="text-[10px] font-black text-indigo-900 uppercase mb-3 tracking-widest">Möjligheter</h4>
+                  <ul className="text-xs text-indigo-800 space-y-1.5 list-disc pl-4">
+                    <li>Cotton Classics-synergier</li>
+                    <li>Craft-expansion (skor/team)</li>
+                    <li>Nya lager i Irland och USA</li>
+                  </ul>
+                </div>
+                <div className="p-5 bg-slate-100 border border-slate-200 rounded-2xl">
+                  <h4 className="text-[10px] font-black text-slate-900 uppercase mb-3 tracking-widest">Hot</h4>
+                  <ul className="text-xs text-slate-800 space-y-1.5 list-disc pl-4">
+                    <li>Fortsatt svag retail</li>
+                    <li>Tullar & handelshinder</li>
+                    <li>Valutamotvind</li>
+                    <li>Integrationsrisker</li>
                   </ul>
                 </div>
               </div>

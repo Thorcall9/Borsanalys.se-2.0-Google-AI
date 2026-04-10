@@ -547,9 +547,16 @@ export default function EricssonDeepDive({
           <FadeIn delay={300}>
             <Card mb={20}>
               <SectionLabel number="IV" title="Värdering & Jämförelse"/>
-              <p style={{fontSize:14, color:T.sub, lineHeight:1.7, marginBottom:24}}>
-                Det mest missvisande med Ericsson just nu är att använda EPS 8,51 SEK okritiskt, eftersom det innehåller iconectiv-vinsten. Vid årsskiftets kursnivåer (91,5 kr) handlas aktien till en normaliserad nivå som ser rimlig ut, men inte extremt billig.
-              </p>
+              
+              <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`,marginBottom:24}}>
+                <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
+                  Den svåraste delen i Ericsson-caset är värderingen. Inte för att aktien ser dyr ut på rapporterad vinst, utan för att rapporterad vinst är för hög för att användas okritiskt. Om man bara tar <strong>EPS 8,51 SEK</strong> ser aktien lågt värderad ut, men det är missvisande eftersom iconectiv-vinsten blåser upp resultatet. Årsredovisningen anger att <strong>justerad EBITA-marginal exklusive iconectiv var 14,9 procent</strong>. Därför bör värderingen göras på en normaliserad basis.
+                </p>
+                <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
+                  Eftersom de officiella rapporterna inte innehåller ett realtidspris använder vi årsskiftets marknadsvärde om cirka <strong>305 miljarder kronor</strong> som utgångspunkt. Med cirka 3,333 miljarder aktier motsvarar det ungefär <strong>91,5 kronor per aktie</strong>.
+                </p>
+              </div>
+
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
                 {[
                   ["P/E (Normaliserat)", "11,1x", "Just. ficonectiv"],
@@ -566,10 +573,20 @@ export default function EricssonDeepDive({
                   </div>
                 ))}
               </div>
-              <div style={{background:T.ink, borderRadius:16, padding:24, color:"#fff", boxShadow:T.shadowLg}}>
-                <div style={{fontSize:11, fontWeight:800, color:"rgba(255,255,255,0.6)", textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Analytikerns värderingskommentar</div>
-                <p style={{margin:0, fontSize:13.5, color:"rgba(255,255,255,0.8)", lineHeight:1.7}}>
-                  Ericsson ser rimligt värderat ut på normaliserade antaganden. Det finns stöd från balansräkning och kapitalåterföring (utdelning+återköp), men inte tillräcklig felprissättning för högre betyg. Vi ser ett rimligt värde i intervallet <strong>100–115 SEK</strong>.
+
+              <p style={{fontSize:14, color:T.sub, lineHeight:1.8, marginBottom:24}}>
+                På den här nivån ser Ericsson rimligt värderat ut. Givet kombinationen av stark nettokassa, god kapitalåterföring och en vinstmix som fortfarande behöver bevisa sin kvalitet. Direktavkastningen på föreslagen utdelning om <strong>3,00 kronor</strong> är attraktiv nog för att ge stöd, och med det föreslagna återköpsprogrammet om 15 miljarder kronor blir den totala återföringen betydande. Styrelsens kapitalallokeringsmodell sätter teknikledarskap först, följt av utdelning och selektiva investeringar.
+              </p>
+
+              {/* RATING BOX */}
+              <div style={{marginTop: 32, background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 16, padding: 24, position: "relative", overflow: "hidden"}}>
+                <div style={{position: "absolute", top: 0, right: 0, width: 6, height: "100%", background: T.gold}}></div>
+                <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12}}>
+                  <div style={{fontSize: 12, fontWeight: 900, color: T.gold, letterSpacing: 1, textTransform: "uppercase"}}>BEDÖMNING – Värdering</div>
+                  <div style={{fontSize: 18, fontWeight: 900, color: T.ink}}>3/5</div>
+                </div>
+                <p style={{margin: 0, color: T.ink, fontSize: 13.5, lineHeight: 1.7, fontWeight: 500}}>
+                  Ericsson ser rimligt värderat ut på normaliserade antaganden. Det finns stöd från balansräkning och kapitalåterföring, men inte tillräcklig felprissättning för högre betyg.
                 </p>
               </div>
             </Card>
@@ -581,12 +598,19 @@ export default function EricssonDeepDive({
           <FadeIn delay={400}>
             <Card mb={20}>
               <SectionLabel number="V" title="Tillväxtmotorer & Triggers"/>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              
+              <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`,marginBottom:32}}>
+                <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
+                  Ericsson har flera tillväxtspår, men inget av dem är ännu så starkt att det ensamt förändrar caset. Det viktigaste är <strong>Cloud Software and Services</strong>. Q4-rapporten visade 12 procent organisk tillväxt i segmentet, vilket visar att Ericsson kan växa i delar av affären trots att RAN-marknaden är stillastående.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-8">
                 {[
-                  { icon: "🌐", bg: "#EFF6FF", title: "1. Cloud Software & Services", body: "12% organisk tillväxt i Q4. Visar att Ericsson kan växa i delar av affären trots att hårdvarumarknaden (RAN) är flat." },
-                  { icon: "📡", bg: "#ECFDF5", title: "2. 5G Standalone & API:er", body: "Network APIs via Vonage/Aduna skapar nya intäktsmodeller. 55 levererade 5G standalone-nät utgör grunden för framtidens programmerbara nät." },
-                  { icon: "🛡️", bg: "#FFFBEB", title: "3. Försvar & Samhällskritisk Infra", body: "Planerade ökade investeringar inom försvarsområdet 2026. Airbus är ett konkret exempel på hur privata nät börjar industrialiseras." },
-                  { icon: "🤖", bg: "#F5F3FF", title: "4. AI-drivna autonoma nät", body: "Effektivisering genom automation i näten. Det är inte bara trendigt, det är nödvändigt för operatörernas marginaler." }
+                  { icon: "🌐", bg: "#EFF6FF", title: "1. Cloud Software & Services", body: "12% organisk tillväxt i Q4. Helåret innehöll organisk tillväxt i både Networks och Cloud – en viktig signal om motståndskraft." },
+                  { icon: "📡", bg: "#ECFDF5", title: "2. 5G Standalone & API:er", body: "Centralt för programmerbara nät och network slicing. Samarbeten med Vodafone, Telstra och Google Cloud visar potentialen." },
+                  { icon: "💼", bg: "#F5F3FF", title: "3. Enterprise & Network APIs", body: "Privata 5G-nät industrialiseras (Airbus). Samtidigt pressar investeringar i network APIs lönsamheten kortsiktigt." },
+                  { icon: "🛡️", bg: "#FEF3F2", title: "4. Försvar & Säkerhet", body: "Ökade investeringar inom försvarsområdet under 2026. Verksamhetskritiska nät väntas växa strukturellt framåt." }
                 ].map((item, i) => (
                   <div key={i} style={{background:T.bg, border:`1px solid ${T.border}`, borderRadius:16, padding:20, display:"flex", gap:16, alignItems:"flex-start"}}>
                     <div style={{width:40, height:40, background:item.bg, borderRadius:12, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:20}}>
@@ -599,41 +623,71 @@ export default function EricssonDeepDive({
                   </div>
                 ))}
               </div>
+
+              <p style={{fontSize:14, color:T.sub, lineHeight:1.8, marginBottom:24}}>
+                Det viktigaste tillväxtmålet är att röra sig bort från enbart hårdvara mot en mjukvaru- och plattformsaffär. 5G standalone är bryggan här, då det möjliggör network slicing och nya intäktsmodeller. Samarbeten med molnjättar som Google Cloud visar att Ericsson tar position. Inom Enterprise ger Vonage/Aduna exponering mot network APIs, vilket styrelsen ser som en framtida vinstdrivare, även om det kräver investeringar här och nu.
+              </p>
+
+              {/* RATING BOX */}
+              <div style={{marginTop: 32, background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 16, padding: 24, position: "relative", overflow: "hidden"}}>
+                <div style={{position: "absolute", top: 0, right: 0, width: 6, height: "100%", background: T.gold}}></div>
+                <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12}}>
+                  <div style={{fontSize: 12, fontWeight: 900, color: T.gold, letterSpacing: 1, textTransform: "uppercase"}}>BEDÖMNING – Tillväxtutsikter</div>
+                  <div style={{fontSize: 18, fontWeight: 900, color: T.ink}}>3/5</div>
+                </div>
+                <p style={{margin: 0, color: T.ink, fontSize: 13.5, lineHeight: 1.7, fontWeight: 500}}>
+                  Ericsson har riktiga tillväxtoptioner, men de är ännu inte tillräckligt starka för att helt väga upp en svag och mogen RAN-marknad.
+                </p>
+              </div>
             </Card>
           </FadeIn>
         </div>
 
-        {/* ── RISK ── */}
         <div id="risk">
           <FadeIn delay={500}>
             <Card mb={20}>
               <SectionLabel number="VI" title="Riskprofil"/>
-              <div style={{display:"inline-flex", alignItems:"center", gap:6, padding:"4px 12px", background:T.goldL, border:`1px solid ${T.gold}33`, borderRadius:20, marginBottom:20}}>
-                <span style={{fontSize:10, fontWeight:900, color:T.gold, textTransform:"uppercase", letterSpacing:0.5}}>Risknivå: MEDEL | SCORE: 3/5</span>
+              
+              <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`,marginBottom:24}}>
+                <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
+                  Den största risken är juridisk. Ericsson fortsätter att samarbeta fullt ut med DOJ i utredningen kopplad till Irak, och några definitiva slutsatser väntas inte förrän utredningen är avslutad. Samtidigt pågår en undersökning från kinesiska SAMR kring patentlicensiering.
+                </p>
               </div>
-              <div style={{overflowX:"auto", marginBottom:24}}>
-                <table style={{width:"100%", borderCollapse:"collapse", fontSize:13}}>
-                  <thead>
-                    <tr style={{borderBottom:`2px solid ${T.border}`, background:T.bg}}>
-                      <th style={{padding:"12px", textAlign:"left", color:T.ink, fontWeight:800, textTransform:"uppercase", fontSize:10, letterSpacing:0.5}}>Riskområde</th>
-                      <th style={{padding:"12px", textAlign:"left", color:T.ink, fontWeight:800, textTransform:"uppercase", fontSize:10, letterSpacing:0.5}}>Bedömning</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {[
-                      ["Juridik (DOJ/Irak)", "Pågående utredning utan definitivt slutdatum. Kvarvarande riskpremie."],
-                      ["Kina (SAMR)", "Granskning kring patentlicensiering kan leda till sanktioner."],
-                      ["Marknad (RAN)", "Väntas vara oförändrad 2026. Låg strukturell tillväxt."],
-                      ["Patent", "Smartphone-licensavtal i Kina löpte ut vid årsskiftet. Skapar osäkerhet."],
-                      ["Valuta", "10% förändring i USD påverkar omsättning med ca 5%."]
-                    ].map(([r, b], i) => (
-                      <tr key={i} style={{borderBottom:`1px solid ${T.border}`}}>
-                        <td style={{padding:"12px", fontWeight:700, color:T.ink}}>{r}</td>
-                        <td style={{padding:"12px", color:T.sub, lineHeight:1.5}}>{b}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+
+              <div className="space-y-6">
+                <div style={{background:T.bg, border:`1px solid ${T.border}`, borderRadius:16, padding:20}}>
+                  <div style={{fontSize:11, fontWeight:800, color:T.muted, textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Juridik & Regelefterlevnad</div>
+                  <p style={{margin:0, fontSize:13.5, color:T.sub, lineHeight:1.75}}>
+                    Förutom DOJ och SAMR finns civilrättsliga processer i USA kopplade till terroristangrepp i Irak, Afghanistan och Syrien. Även om dessa inte nödvändigtvis får samma ekonomiska betydelse som DOJ-frågan, bidrar de till en kvarvarande juridisk riskpremie kring aktien.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div style={{background:T.bg, border:`1px solid ${T.border}`, borderRadius:16, padding:20}}>
+                    <div style={{fontSize:11, fontWeight:800, color:T.muted, textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Marknad & Affär</div>
+                    <p style={{margin:0, fontSize:13, color:T.sub, lineHeight:1.7}}>
+                      Ericsson förväntar sig att RAN-marknaden förblir oförändrad 2026. Det betyder att kärnaffären saknar medvind. Om nya områden som API:er inte växer snabbt nog får bolaget bära en svag underliggande marknad längre än hoppats.
+                    </p>
+                  </div>
+                  <div style={{background:T.bg, border:`1px solid ${T.border}`, borderRadius:16, padding:20}}>
+                    <div style={{fontSize:11, fontWeight:800, color:T.muted, textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Patent & Valuta</div>
+                    <p style={{margin:0, fontSize:13, color:T.sub, lineHeight:1.7}}>
+                      Ett större smartphone-licensavtal löpte ut vid utgången av 2025 (Kina). Dessutom påverkar en 10-procentig USD-förändring omsättningen med ca 5%. Omstruktureringskostnader väntas fortsatt vara förhöjda under 2026.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* RATING BOX */}
+              <div style={{marginTop: 32, background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 16, padding: 24, position: "relative", overflow: "hidden"}}>
+                <div style={{position: "absolute", top: 0, right: 0, width: 6, height: "100%", background: T.ink}}></div>
+                <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12}}>
+                  <div style={{fontSize: 12, fontWeight: 900, color: T.ink, letterSpacing: 1, textTransform: "uppercase"}}>RISKNIVÅ: Medel | RISK-SCORE</div>
+                  <div style={{fontSize: 18, fontWeight: 900, color: T.ink}}>3/5</div>
+                </div>
+                <p style={{margin: 0, color: T.ink, fontSize: 13.5, lineHeight: 1.7, fontWeight: 500}}>
+                  Det här är inte ett högriskbolag finansiellt, men juridik, patentfrågor och svag slutmarknad gör att man inte kan kalla det låg risk heller.
+                </p>
               </div>
             </Card>
           </FadeIn>
@@ -645,9 +699,21 @@ export default function EricssonDeepDive({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <Card>
                 <SectionLabel number="VII" title="ESG & Makro"/>
-                <p style={{fontSize:13.5, color:T.sub, lineHeight:1.8}}>
-                  Geopolitik och säkerhetskrav stärker indirekt Ericssons position mot vissa kinesiska leverantörer. Dock hindrar governance-arvet (Irak/DOJ) ett högre betyg än 3/5. Digitalisering och konnektivitet är dock urstarka makrodrivare.
+                <p style={{fontSize:13.5, color:T.sub, lineHeight:1.8, marginBottom:16}}>
+                  Makromässigt har Ericsson både medvind och motvind. Medvinden ligger i geopolitik, säkerhetskrav och digitalisering. Konnektivitet blir allt viktigare i AI-eran, och restriktioner mot vissa kinesiska leverantörer i väst stärker indirekt Ericssons position.
                 </p>
+                <p style={{fontSize:13.5, color:T.sub, lineHeight:1.8, marginBottom:20}}>
+                  På ESG-sidan finns ett tydligt styrningsarv (governance) som tynger bilden. Irak-affären och DOJ-processen gör att governance aldrig kan få toppbetyg i nuläget, även om ledningen förbättrat kultur och kontroll.
+                </p>
+                <div style={{background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 12, padding: 16}}>
+                  <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 4}}>
+                    <div style={{fontSize: 10, fontWeight: 900, color: T.gold, textTransform: "uppercase"}}>Betyg: ESG & Makro</div>
+                    <div style={{fontSize: 14, fontWeight: 900, color: T.ink}}>3/5</div>
+                  </div>
+                  <p style={{margin: 0, color: T.ink, fontSize: 12, lineHeight: 1.5, fontStyle: "italic"}}>
+                    Makrotrenderna är i delar gynnsamma, men governance-arvet hindrar högre betyg.
+                  </p>
+                </div>
               </Card>
               <Card>
                 <SectionLabel number="VIII" title="AI-observationer"/>
