@@ -498,12 +498,260 @@ export default function SwedbankDeepDive({
           </FadeIn>
         </div>
 
-        {/* ── SCENARIER ── */}
-        <div id="scenarier">
+        {/* ── VÄRDERING ── */}
+        <div id="vardering">
           <FadeIn delay={300}>
             <Card mb={20}>
-              <SectionLabel number="IV" title="Scenarier & Värdering"/>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <SectionLabel number="IV" title="Värdering & Jämförelse"/>
+              
+              <p style={{fontSize:14, color:T.sub, lineHeight:1.7, marginBottom:24}}>
+                Swedbank värderas till P/E 11,0x på 2025 års vinst och framåtblickande P/E om 12,1x för 2026, vilket speglar en förväntad vinstnormalisering när räntenettot krymper. P/B-talet på 1,59x är i nederkanten av historiska intervallet.
+              </p>
+
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+                {[
+                  ["P/E (2025)", "11,0x", "På 2025 EPS 29,14 kr"],
+                  ["P/E (2026e)", "12,1x", "EPS-estimat 26,94 kr"],
+                  ["P/B", "1,59x", "Lägre del av hist. intervall", true],
+                  ["Direktavkastning", "9,3%", "Inkl. specialutdelning 2025"],
+                  ["DA (2026e)", "7,43%", "Normaliserad, 24,19 kr/aktie"],
+                  ["CET1-kvot", "17,8%", "+2,6%-enh. buffert mot krav"],
+                ].map(([l,v,s,acc], i) => (
+                  <div key={i} style={{background:acc?T.accentL:T.bg, border:`1px solid ${acc?T.accent+"33":T.border}`, borderRadius:12, padding:14}}>
+                    <div style={{fontSize:10, fontWeight:800, color:acc?T.accent:T.muted, textTransform:"uppercase", letterSpacing:0.5, marginBottom:4}}>{l}</div>
+                    <div style={{fontSize:18, fontWeight:900, color:acc?T.accent:T.ink, letterSpacing:-0.5}}>{v}</div>
+                    <div style={{fontSize:10, color:T.muted, fontStyle:"italic", marginTop:2}}>{s}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div style={{background:T.ink, borderRadius:16, padding:24, color:"#fff", boxShadow:T.shadowLg}}>
+                <div style={{fontSize:11, fontWeight:800, color:"rgba(255,255,255,0.6)", textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Analytikerns värderingskommentar</div>
+                <p style={{margin:0, fontSize:13.5, color:"rgba(255,255,255,0.8)", lineHeight:1.7}}>
+                  Vid 320 kr är aktien neutralt värderad. Den höga nominella direktavkastningen på 9,3% för 2025 innehåller en specialutdelning och är inte representativ för normalläget. Den normaliserade avkastningen på 7,4% för 2026e är fortfarande attraktiv, men ett tydligare köpläge uppstår vid kursfall mot <strong>290–300 kr</strong>.
+                </p>
+              </div>
+            </Card>
+          </FadeIn>
+        </div>
+
+        {/* ── TILLVÄXT ── */}
+        <div id="tillvaxt">
+          <FadeIn delay={400}>
+            <Card mb={20}>
+              <SectionLabel number="V" title="Tillväxtmotorer & Triggers"/>
+              
+              <p style={{fontSize:14, color:T.sub, lineHeight:1.7, marginBottom:24}}>
+                Trots ett utmanande ränteläge 2025–2026 finns konkreta tillväxtkatalysatorer som kan lyfta Swedbanks intjäning och aktiekurs på 2–3 års sikt.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {[
+                  {
+                    icon: "🏠",
+                    bg: "#EFF6FF",
+                    title: "1. Stabelo & bolånesynergier",
+                    body: "Förvärvet av Stabelo tillförde 17 miljarder kronor i bolånestock och fördubblade Swedbanks marknadsandel av nya bolån i egna kanaler. Vid sjunkande räntor förväntas bolånevolymerna accelerera markant, vilket direkt lyfter räntenettot."
+                  },
+                  {
+                    icon: "💳",
+                    bg: "#ECFDF5",
+                    title: "2. Entercard – Nordens största kortverksamhet",
+                    body: "Förvärvet av Barclays andel i Entercard skapade Nordens och Baltikums största kortverksamhet. Transaktionsbaserade intäkter diversifierar bort från ränteberoendet och ger stabila avgiftsflöden."
+                  },
+                  {
+                    icon: "🌍",
+                    bg: "#FFFBEB",
+                    title: "3. Baltikum – kreditexpansion 12-16%",
+                    body: "Kreditportföljerna i Estland, Lettland och Litauen växte 12–16% under 2025. Swedbanks dominerande ställning i regionen ger kostnadsfördel och starka marginaler i en marknad med fortsatt hög tillväxtpotential."
+                  },
+                  {
+                    icon: "🤖",
+                    bg: "#F5F3FF",
+                    title: "4. AI-driven kostnadseffektivisering",
+                    body: "Ledningen guidar för kostnadsbas på 27,5 Mdkr för 2026. AI och processautomation förväntas hålla K/I-kvoten i schack trots löneökningar och ökade IT-investeringar."
+                  },
+                  {
+                    icon: "📉",
+                    bg: "#FEF2F2",
+                    title: "5. Räntecykelns vändning",
+                    body: "Riksbankens räntesänkningar trycker ned räntenettot på kort sikt, men skapar simultant katalysatorer för bolåne- och kreditvolymtillväxt. Vändpunkten för räntenettot estimeras till 2027."
+                  }
+                ].map((item, i) => (
+                  <div key={i} style={{background:T.bg, border:`1px solid ${T.border}`, borderRadius:16, padding:20, display:"flex", gap:16, alignItems:"flex-start"}}>
+                    <div style={{width:40, height:40, background:item.bg, borderRadius:12, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0, fontSize:20}}>
+                      {item.icon}
+                    </div>
+                    <div>
+                      <div style={{fontSize:11, fontWeight:800, color:T.muted, textTransform:"uppercase", letterSpacing:0.5, marginBottom:6}}>{item.title}</div>
+                      <p style={{margin:0, fontSize:13, color:T.sub, lineHeight:1.6}}>{item.body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </FadeIn>
+        </div>
+
+        {/* ── RISK ── */}
+        <div id="risk">
+          <FadeIn delay={500}>
+            <Card mb={20}>
+              <SectionLabel number="VI" title="Riskprofil"/>
+              
+              <div style={{display:"inline-flex", alignItems:"center", gap:6, padding:"4px 12px", background:T.goldL, border:`1px solid ${T.gold}33`, borderRadius:20, marginBottom:20}}>
+                <span style={{fontSize:10, fontWeight:900, color:T.gold, textTransform:"uppercase", letterSpacing:0.5}}>Risknivå: MEDEL · 4/5</span>
+              </div>
+
+              <p style={{fontSize:14, color:T.sub, lineHeight:1.7, marginBottom:24}}>
+                Swedbanks regulatoriska historia kräver att investerare bevakar myndighetskontakter noga. Trots sanerat varumärke och högt kreditbetyg (AA- hos S&P) finns kvarvarande risker som motiverar en bevakningsrekommendation vid nuvarande kurs.
+              </p>
+
+              <div style={{overflowX:"auto", marginBottom:24}}>
+                <table style={{width:"100%", borderCollapse:"collapse", fontSize:13}}>
+                  <thead>
+                    <tr style={{borderBottom:`2px solid ${T.border}`, background:T.bg}}>
+                      <th style={{padding:"12px", textAlign:"left", color:T.ink, fontWeight:800, textTransform:"uppercase", fontSize:10, letterSpacing:0.5}}>Risk</th>
+                      <th style={{padding:"12px", textAlign:"left", color:T.ink, fontWeight:800, textTransform:"uppercase", fontSize:10, letterSpacing:0.5}}>Bedömning</th>
+                      <th style={{padding:"12px", textAlign:"left", color:T.ink, fontWeight:800, textTransform:"uppercase", fontSize:10, letterSpacing:0.5}}>Hantering</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {[
+                      ["US DFS-granskning", "Department of Financial Services (NY) har inlett ny granskning 2026 trots att DOJ avslutade sin utredning i januari. Skapar osäkerhet kring böter och nytt varumärkestapp.", "Aktiv dialog med regulatorer, stärkt compliance-funktion."],
+                      ["FI kundkännedom", "Finansinspektionen inledde granskning av kundkännedomsprocesser i början av 2026. Risk för böter eller åtgärdsplaner.", "Ökade resurser på KYC och AML-processer."],
+                      ["Räntemarginaltryck", "Riksbankens sänkningar pressar räntenettot, som föll 11% 2025 och väntas sjunka ytterligare 2026.", "Volymtillväxt och avgiftsintäkter ska kompensera."],
+                      ["Fastighetsexponering", "Svenska bolåneportföljen är exponerad mot högt belånade hushåll. Vid ett prisfall >15% riskerar kreditkvaliteten försämras.", "Konservativ amorteringskultur och god kreditkvalitet (impairmentskvot 0,00%)."],
+                      ["Geopolitik Baltikum", "Säkerhetssituationen i regionen är förhöjd. En destabilisering skulle minska investeringsviljan och öka kreditriskerna.", "Baltisko bankerna är välkapitaliserade med god likviditet."],
+                    ].map(([r, b, h], i) => (
+                      <tr key={i} style={{borderBottom:`1px solid ${T.border}`}}>
+                        <td style={{padding:"12px", fontWeight:700, color:T.ink}}>{r}</td>
+                        <td style={{padding:"12px", color:T.sub, lineHeight:1.5}}>{b}</td>
+                        <td style={{padding:"12px", color:T.muted, fontStyle:"italic"}}>{h}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              <div style={{background:T.goldL, borderRadius:16, padding:24, border:`1px solid ${T.gold}22`}}>
+                <div style={{display:"flex", gap:16, alignItems:"flex-start"}}>
+                  <div style={{width:40, height:40, background:T.gold, borderRadius:10, display:"flex", alignItems:"center", justifyContent:"center", flexShrink:0}}>
+                    <AlertTriangle size={20} color="#fff" style={{margin:"auto"}}/>
+                  </div>
+                  <div>
+                    <div style={{fontSize:11, fontWeight:800, color:T.gold, textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Viktigaste riskfaktorn just nu</div>
+                    <p style={{margin:0, fontSize:13.5, color:T.ink, lineHeight:1.7}}>
+                      Den nya US DFS-granskningen är den enskilt viktigaste kortsiktiga varningssignalen. Trots att DOJ avslutade sin utredning i januari 2026 indikerar DFS-granskningen att regulatorisk risk kvarstår. Utfallet kan påverka kapitalallokering och utdelningskapacitet.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </FadeIn>
+        </div>
+
+        <AdUnit slot="6432013761" />
+
+        {/* ── ESG ── */}
+        <div id="esg">
+          <FadeIn delay={600}>
+            <Card mb={20}>
+              <SectionLabel number="VII" title="ESG & Makro"/>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                {[
+                  ["🌱","Miljö (E)","4/5","Hög CSRD-rapportering. Fokus på grön utlåning och klimatmål. Utsågs till Sveriges mest hållbara bankvarumärke 2025.",T.green,T.greenL],
+                  ["👥","Socialt (S)","4/5","Finansiell utbildning för över 110 000 barn 2025. Stark lokal förankring via sparbanksekosystemet.",T.accent,T.accentL],
+                  ["🏛️","Styrning (G)","4/5","S&P uppgraderade till AA- med stabil outlook. Transparent styrning och tydliga ESG-mål post-skandal.",T.green,T.greenL],
+                ].map(([icon,label,score,body,color,bg]) => (
+                  <div key={label} style={{background:bg,border:`1.5px solid ${color}22`,borderRadius:12,padding:16}}>
+                    <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
+                      <span style={{fontSize:20}}>{icon}</span>
+                      <Tag color={color} bg={color+"22"}>{score}</Tag>
+                    </div>
+                    <div style={{fontWeight:700,color:T.ink,fontSize:13,marginBottom:6}}>{label}</div>
+                    <div style={{color:T.sub,fontSize:13,lineHeight:1.6}}>{body}</div>
+                  </div>
+                ))}
+              </div>
+              <div style={{background:T.bg, border:`1px solid ${T.border}`, borderRadius:14, padding:20}}>
+                <div style={{fontSize:11, fontWeight:700, color:T.muted, letterSpacing:0.5, textTransform:"uppercase", marginBottom:10}}>Makropåverkan</div>
+                <p style={{margin:0, fontSize:13.5, color:T.sub, lineHeight:1.8}}>
+                  Riksbankens räntesänkningscykel är den dominerande makrovariabeln. CET1-kvoten på 17,8% – 2,6 procentenheter över kravet – ger en stor buffert mot regulatoriska kapitalkrav och möjliggör fortsatt utdelning och återköp. En svagare svensk konjunktur ökar kreditförlusterna men Swedbanks exceptionella kreditkvalitet (impairmentskvot 0,00%) dempar effekten.
+                </p>
+              </div>
+            </Card>
+          </FadeIn>
+        </div>
+
+        {/* ── AI ── */}
+        <div id="ai">
+          <FadeIn delay={700}>
+            <Card mb={20}>
+              <SectionLabel number="VIII" title="AI-observationer"/>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  ["📰 Sentimentanalys","Sentimentbilden är lätt negativ till neutral efter 12% kursnedgång från toppen. Marknaden prissätter en vinstnormalisering korrekt – inga tecken på överhettning, men heller inget momentum."],
+                  ["📊 Insiderhandel & ägardata","Sparbanksstiftelserna håller stabilt kring 13,3%. Inga alarmerande insidersälj registrerade. Institutionella ägare som Alecta och AMF kvarstår som förtroendesignal."],
+                  ["🔍 Kreditkvalitet","AI-screening av kreditportföljdata visar exceptionell kvalitet: impairmentskvot 0,00% och Stage 2-lån på låga nivåer. En positiv outlier bland europeiska banker."],
+                  ["⚠️ Regulatorisk flagga","US DFS-granskningen är den enskilt viktigaste kortsiktiga varningssignalen i vår AI-bevakning. FI-granskningen höjer det regulatoriska tryckindexet ytterligare."],
+                ].map(([title,body]) => (
+                  <div key={title} style={{background:T.bg,border:`1.5px solid ${T.border}`,borderRadius:12,padding:16}}>
+                    <div style={{fontWeight:700,color:T.ink,fontSize:13,marginBottom:8}}>{title}</div>
+                    <div style={{color:T.sub,fontSize:13,lineHeight:1.7}}>{body}</div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          </FadeIn>
+        </div>
+
+        {/* ── SAMMANFATTNING ── */}
+        <div id="sammanfattning">
+          <FadeIn delay={800}>
+            <Card mb={20}>
+              <SectionLabel number="IX" title="Sammanfattning & Investeringsbeslut"/>
+              <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-start">
+                <div>
+                  {[
+                    ["Är Swedbank ett kvalitetsbolag?","Ja. Låg kostnadskvot (K/I 0,36), dominerande Baltikum-position och lojal kundbas gör Swedbank till ett av Europas effektivaste banker."],
+                    ["Är det rimligt värderat?","Neutralt. P/E 11,0x och direktavkastning 9,3% (varav specialutdelning) ser attraktivt ut, men normaliserad DA 7,4% för 2026e och fallande EPS-estimat manar till försiktighet vid 320 kr."],
+                    ["Kan man hålla det 5–10 år?","Ja, men man bör förstå ränterisken. Swedbank är en kassaflödesmaskin på lång sikt, men kortsiktigt styrs kursen av räntecykeln och regulatoriska nyheter."],
+                  ].map(([q,a]) => (
+                    <div key={q} style={{marginBottom:16}}>
+                      <div style={{fontSize:13,fontWeight:700,color:T.ink,marginBottom:4}}>→ {q}</div>
+                      <div style={{fontSize:13,color:T.sub,lineHeight:1.7}}>{a}</div>
+                    </div>
+                  ))}
+                  <div style={{marginTop:24, padding:16, background:T.bg, borderRadius:12, border:`1px solid ${T.border}`}}>
+                    <p style={{margin:0, fontSize:13, color:T.ink, lineHeight:1.7}}>
+                      <strong style={{color:T.sub}}>Riktkurs 330 kronor (12 månaders sikt)</strong>, baserat på normaliserat P/E ~12x och direktavkastning 7,4%. Tydligare köpläge uppstår vid 290–300 kr, vilket ger en marginal i säkerhet mot regulatoriska bakslag.
+                    </p>
+                    <p style={{margin:"12px 0 0 0", fontSize:13, color:T.gold, fontWeight:700}}>
+                      Katalysator: Q2-rapport 2026, utfall av DFS/FI-granskningar samt Riksbankens räntebana.
+                    </p>
+                  </div>
+                </div>
+                <div style={{background:T.accentL,border:`1.5px solid ${T.accent}44`,borderRadius:16,padding:"22px 26px",textAlign:"center",flexShrink:0,minWidth:180}}>
+                  <div style={{fontSize:11,color:T.muted,fontWeight:700,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Rekommendation</div>
+                  <div style={{fontSize:28,fontWeight:900,color:T.accent,letterSpacing:-1}}>BEVAKA</div>
+                  <div style={{height:1,background:T.accent+"22",margin:"12px 0"}}/>
+                  <div style={{fontSize:22,fontWeight:800,color:T.ink}}>330 kr</div>
+                  <div style={{fontSize:11,color:T.sub,marginTop:4}}>Riktkurs · 12 månader</div>
+                  <div style={{marginTop:12,fontSize:12,color:T.sub}}>+3% uppsida + 7,4% DA</div>
+                  <div style={{marginTop:10,fontSize:13,color:T.accent,fontWeight:700}}>29/40 · 72,5%</div>
+                </div>
+              </div>
+            </Card>
+          </FadeIn>
+        </div>
+
+        {/* ── SCENARIER ── */}
+        <div id="scenarier">
+          <FadeIn delay={900}>
+            <Card mb={20}>
+              <SectionLabel number="X" title="Scenarier (Bull/Base/Bear)"/>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5">
                 {[
                   {label:"🐂 Bull Case",color:T.green,bg:T.greenL,prob:"25%",pris:"380-420 kr",
                     upside:"+25%", assumptions:"ROE 15-16%, synergier fullt ut", 
@@ -517,14 +765,18 @@ export default function SwedbankDeepDive({
                 ].map(s=><ScenarioCard key={s.label} {...s}/>)}
               </div>
             </Card>
+
+            <div style={{background:T.bg,border:`1px solid ${T.border}`,borderRadius:10,padding:"14px 18px",marginTop:8}}>
+              <p style={{margin:0,color:T.muted,fontSize:12,lineHeight:1.7}}>
+                <strong style={{color:T.sub}}>Disclaimer:</strong> Denna analys är framtagen av börsanalys.se för informationsändamål och utgör inte finansiell rådgivning. Historisk avkastning garanterar inte framtida avkastning. Investering i aktier innebär alltid risk.
+              </p>
+            </div>
           </FadeIn>
         </div>
 
-        <AdUnit slot="6432013761" />
-
         {/* ── NEXT ANALYSIS ── */}
         {nextAnalysis && (
-          <FadeIn delay={400}>
+          <FadeIn delay={1000}>
             <NextAnalysisButton analysis={nextAnalysis} />
           </FadeIn>
         )}
@@ -533,3 +785,4 @@ export default function SwedbankDeepDive({
     </div>
   );
 }
+
