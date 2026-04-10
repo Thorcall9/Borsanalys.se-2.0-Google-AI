@@ -89,8 +89,16 @@ function FadeIn({children,delay=0}){
   return <div style={{opacity:v?1:0,transform:v?"none":"translateY(8px)",transition:"all 0.35s ease"}}>{children}</div>;
 }
 
-function Card({children,mb=0, className=""}: any){
-  return <div className={`bg-white border border-slate-200 rounded-2xl shadow-sm mb-5 p-4 md:p-6 ${className}`} style={{marginBottom:mb}}>{children}</div>;
+function Card({children, mb=0, className=""}: any){
+  const hasBg = className.includes('bg-');
+  return (
+    <div 
+      className={`${hasBg ? '' : 'bg-white'} border border-slate-200 rounded-2xl shadow-sm mb-5 p-4 md:p-6 ${className}`} 
+      style={{marginBottom:mb}}
+    >
+      {children}
+    </div>
+  );
 }
 
 function SectionLabel({number,title}){
@@ -679,7 +687,7 @@ export default function NewWaveDeepDive({
               <Card>
                 <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 font-mono text-center">Score: 29 / 40</div>
                 <div className="space-y-6">
-                  {allScores.slice(0, 5).map(score => (
+                  {allScores.map(score => (
                     <div key={score.key}>
                       <div className="flex justify-between text-[10px] font-bold mb-2 uppercase tracking-wide">
                         <span>{score.key}</span>
