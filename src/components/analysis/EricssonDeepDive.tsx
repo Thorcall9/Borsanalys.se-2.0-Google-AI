@@ -733,17 +733,47 @@ export default function EricssonDeepDive({
               <div className="space-y-6">
                 <div>
                   <div style={{fontWeight:700, color:T.ink, fontSize:15, marginBottom:4}}>Är Ericsson ett kvalitetsbolag?</div>
-                  <p style={{margin:0, fontSize:13.5, color:T.sub, lineHeight:1.7}}>Ja, men med tydliga reservationer. Det är ett starkt teknik- och infrastrukturbolag med skala och patent, men det är inte ett rent compounder-case än.</p>
+                  <p style={{margin:0, fontSize:13.5, color:T.sub, lineHeight:1.7}}>
+                    Ja, men med tydliga reservationer. Ericsson är ett starkt teknik- och infrastrukturbolag med skala, installerad bas, patent, kundrelationer och finansiell styrka. Det är inte ett trasigt bolag. Tvärtom är bolaget betydligt bättre operationellt nu än för några år sedan. Men det är inte heller ett rent compounder-case där alla kvalitetsvariabler pekar rätt samtidigt.
+                  </p>
                 </div>
                 <div>
                   <div style={{fontWeight:700, color:T.ink, fontSize:15, marginBottom:4}}>Är det rimligt värderat?</div>
-                  <p style={{margin:0, fontSize:13.5, color:T.sub, lineHeight:1.7}}>Ja. Vid 91,5 kr och målpris 100-115 kr finns en rimlig balans mellan risk och potential.</p>
-                </div>
-                <div style={{background:T.accentL, padding:20, borderRadius:12, borderLeft: `4px solid ${T.accent}`}}>
-                  <div style={{fontWeight:800, color:T.accent, marginBottom:4}}>Slutsats: BEVAKA</div>
-                  <p style={{margin:0, fontSize:14, color:T.ink, lineHeight:1.7, fontWeight:500}}>
-                    Ericsson är mer disciplinerat och robust än för några år sedan. Men caset hålls tillbaka av en trög marknad och juridiska moln. Vi väntar på bevis för att Enterprise-benet kan lyfta vinstkvaliteten.
+                  <p style={{margin:0, fontSize:13.5, color:T.sub, lineHeight:1.7}}>
+                    Ja. Baserat på den information som finns i de uppladdade rapporterna ser Ericsson ungefär rimligt värderat ut, särskilt om man värderar bolaget på en normaliserad vinstbas snarare än det rapporterade 2025-resultatet.
                   </p>
+                </div>
+                <div>
+                  <div style={{fontWeight:700, color:T.ink, fontSize:15, marginBottom:4}}>Är det ett självklart 5–10-årsinnehav?</div>
+                  <p style={{margin:0, fontSize:13.5, color:T.sub, lineHeight:1.7}}>
+                    Inte självklart, men det kan bli. För att det ska bli ett starkare långsiktigt case behöver Ericsson visa att 5G core, programmerbara nät, verksamhetskritiska nät och Enterprise faktiskt kan lyfta den underliggande tillväxten och göra vinstmixen bättre.
+                  </p>
+                </div>
+                <div style={{background:T.accentL, padding:24, borderRadius:16, borderLeft: `6px solid ${T.accent}`, boxShadow:`0 4px 12px ${T.accent}15`}}>
+                  <div style={{display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:8}}>
+                    <div>
+                      <div style={{fontSize:12, fontWeight:800, color:T.accent, textTransform:"uppercase", letterSpacing:1}}>Slutsats</div>
+                      <div style={{fontSize:24, fontWeight:900, color:T.ink}}>BEVAKA</div>
+                    </div>
+                    <div style={{textAlign:"right"}}>
+                      <div style={{fontSize:12, fontWeight:800, color:T.muted, textTransform:"uppercase", letterSpacing:1}}>Målpris</div>
+                      <div style={{fontSize:20, fontWeight:900, color:T.ink}}>100–115 SEK</div>
+                    </div>
+                  </div>
+                  <p style={{margin:0, fontSize:15, color:T.ink, lineHeight:1.7, fontWeight:500}}>
+                    Ericsson är i dag ett mer disciplinerat, mer kassaflödesstarkt och mer finansiellt robust bolag än många investerare fortfarande tänker på. Men caset hålls tillbaka av tre saker: en i grunden trög RAN-marknad, osäker kvalitet i delar av Enterprise samt kvarvarande juridiska risker. Därför landar jag i Bevaka, inte Köp.
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 mt-8 pt-6 border-t border-slate-100">
+                  <div style={{background:"#F8FAFC", padding:16, borderRadius:12, textAlign:"center"}}>
+                    <div style={{fontSize:11, fontWeight:700, color:T.muted, textTransform:"uppercase", marginBottom:4}}>Total Poäng</div>
+                    <div style={{fontSize:22, fontWeight:900, color:T.ink}}>26/40</div>
+                  </div>
+                  <div style={{background:"#F8FAFC", padding:16, borderRadius:12, textAlign:"center"}}>
+                    <div style={{fontSize:11, fontWeight:700, color:T.muted, textTransform:"uppercase", marginBottom:4}}>Rating</div>
+                    <div style={{fontSize:22, fontWeight:900, color:T.ink}}>0,65</div>
+                  </div>
                 </div>
               </div>
             </Card>
