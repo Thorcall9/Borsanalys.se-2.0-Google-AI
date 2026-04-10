@@ -5,7 +5,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { prisma } from "./src/lib/prisma.ts";
 import { sendEmail } from "./src/lib/email.ts";
-import { analyses } from "./src/data/analyses.ts";
+import { analyses, AnalysisData } from "./src/data/analyses/index.ts";
 import { updateAllMacroData } from "./src/lib/macroUpdater.ts";
 import marketSentimentHandler from "./api/market-sentiment.ts";
 import macroDataHandler from "./api/macro-data.ts";
@@ -240,7 +240,7 @@ async function startServer() {
 
       if (!analysis) {
         // Fallback to static data if not in DB
-        const staticAnalysis = Object.values(analyses).find(a => a.ticker.toUpperCase() === ticker);
+        const staticAnalysis = Object.values(analyses).find(a => a.ticker.toUpperCase() === ticker) as AnalysisData | undefined;
         if (staticAnalysis) {
           console.log(`[SERVER] Dynamic analysis not found in DB, returning static fallback for ${ticker}`);
           return res.json(staticAnalysis);
@@ -307,7 +307,7 @@ async function startServer() {
       }
 
       // 2. Fallback to static analysis data
-      const staticAnalysis = Object.values(analyses).find(a => a.ticker.toUpperCase() === tickerUpper);
+      const staticAnalysis = Object.values(analyses).find(a => a.ticker.toUpperCase() === tickerUpper) as AnalysisData | undefined;
       if (staticAnalysis) {
         console.log(`[SERVER] Returning static analysis data for ${tickerUpper}`);
         const price = parseFloat(staticAnalysis.price.replace(/[^\d,.]/g, '').replace(',', '.')) || 0;

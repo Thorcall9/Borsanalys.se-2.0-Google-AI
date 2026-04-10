@@ -37,12 +37,20 @@ import NovoNordiskDeepDive from "../components/NovoNordiskDeepDive/NovoNordiskDe
 import EvolutionDeepDive from "../components/analysis/EvolutionDeepDive";
 import InvestorDeepDive from "../components/analysis/InvestorDeepDive";
 import VolvoDeepDive from "../components/analysis/VolvoDeepDive";
-import { analyses } from "../data/analyses";
+import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 import { useAuth } from "../contexts/AuthContext";
 import { db, handleFirestoreError, OperationType } from "../firebase";
 import { collection, query, where, addDoc, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import AdZone from "../components/AdZone";
+
+const DEEP_DIVE_COMPONENTS = {
+  Nvidia: NvidiaDeepDive,
+  NovoNordisk: NovoNordiskDeepDive,
+  Evolution: EvolutionDeepDive,
+  Investor: InvestorDeepDive,
+  Volvo: VolvoDeepDive
+};
 
 export default function Analysis() {
   const { slug: rawSlug } = useParams();
@@ -348,29 +356,10 @@ export default function Analysis() {
     return <Navigate to="/analys" replace />;
   }
 
-  // Special high-fidelity view for NVIDIA
-  if (slug === 'nvidia-fy2026') {
-    return <NvidiaDeepDive onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} />;
-  }
-
-  // Special high-fidelity view for Novo Nordisk
-  if (slug === 'novo-nordisk') {
-    return <NovoNordiskDeepDive onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} />;
-  }
-
-  // Special high-fidelity view for Evolution
-  if (slug === 'evolution-2025' || slug === 'evolution') {
-    return <EvolutionDeepDive onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} />;
-  }
-
-  // Special high-fidelity view for Investor AB
-  if (slug === 'investor-ab') {
-    return <InvestorDeepDive onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} />;
-  }
-
-  // Special high-fidelity view for Volvo
-  if (slug === 'volvo') {
-    return <VolvoDeepDive onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} />;
+  // Check for specialized high-fidelity views
+  if (analysis.deepDiveComponent && DEEP_DIVE_COMPONENTS[analysis.deepDiveComponent]) {
+    const Component = DEEP_DIVE_COMPONENTS[analysis.deepDiveComponent];
+    return <Component onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} />;
   }
 
   // Use the new comprehensive analysis template for all other stocks
