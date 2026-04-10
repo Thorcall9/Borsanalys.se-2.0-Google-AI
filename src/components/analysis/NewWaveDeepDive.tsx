@@ -227,12 +227,27 @@ export default function NewWaveDeepDive({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="space-y-6">
                 <p className="text-slate-600 leading-relaxed">
-                  New Wave Group är en svensk varumärkeskoncern som utvecklar, förvärvar och distribuerar produkter inom tre huvudsegment: <strong>Företag</strong>, <strong>Sport & Fritid</strong> samt <strong>Gåvor & Heminredning</strong>. Affärsidén är att skapa synergier genom samordning av design, inköp, marknadsföring, lager och distribution, samtidigt som produkterna säljs både via profilmarknaden och detaljhandeln.
+                  New Wave Group är en svensk varumärkeskoncern som utvecklar, förvärvar och distribuerar produkter inom tre huvudsegment: <strong>Företag</strong>, <strong>Sport & Fritid</strong> samt <strong>Gåvor & Heminredning</strong>. Affärsidén är att skapa synergier genom samordning av design, inköp, marknadsföring, lager och distribution, samtidigt som produkterna säljs både via profilmarknaden och detaljhandeln för att ge riskspridning. Profilkanalen stod även 2025 för cirka två tredjedelar av omsättningen och detaljhandeln för ungefär en tredjedel.
                 </p>
                 <p className="text-slate-600 leading-relaxed">
-                  Bolaget omsatte 10 019 MSEK under 2025, för första gången över 10 miljarder kronor. Nordamerika och Sverige är de viktigaste marknaderna, och varumärken som Craft, Cutter & Buck och Clique utgör grundbultarna.
+                  Bolaget omsatte 10 019 MSEK under 2025, för första gången över 10 miljarder kronor. Sverige stod för 20% av omsättningen, Nordamerika för 24%, Benelux för 15%, Norden exklusive Sverige för 11%, resterande Europa för 25% och övriga länder för 6%. Det gör NWG till ett tydligt internationellt bolag, även om Sverige och USA fortsatt är de viktigaste enskilda marknaderna.
                 </p>
-                <div className="grid grid-cols-2 gap-4 pt-4">
+                <p className="text-slate-600 leading-relaxed">
+                  Varumärkesportföljen är bred och inkluderar bland annat Clique, Craft, Cutter & Buck, Jobman, ProJob, Kosta Boda, Orrefors, Sagaform, Tenson och Ahead. Det ger både riskspridning och korsförsäljningsmöjligheter. Samtidigt skapar det viss komplexitet i styrning och kapitalbindning.
+                </p>
+                <p className="text-slate-600 leading-relaxed">
+                  Ledningen är en tydlig styrka. Torsten Jansson är grundare, VD och storägare, vilket ger ett starkt "skin in the game". Ägarbilden är koncentrerad: de tio största ägarna kontrollerade 61% av kapitalet och 89% av rösterna vid utgången av 2025. Det stärker långsiktigheten, även om det samtidigt begränsar minoritetsägares inflytande.
+                </p>
+                <p className="text-slate-600 leading-relaxed">
+                  Bolaget hade ett medelantal anställda på 2 603 under 2025, upp från 2 451 året innan. Det speglar både tillväxt, investeringar och förvärv.
+                </p>
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                  <div className="text-[10px] font-black text-slate-400 uppercase mb-2">Bedömning Affärsmodell: 4/5</div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Affärsmodellen är beprövad, lönsam och skalbar, men inte "perfekt". Den är mer kapitalintensiv än många andra kvalitetsbolag, eftersom lager, sourcing och distribution kräver kapital. Men den har visat att den fungerar över tid och i svag marknad.
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-4 pt-2">
                   <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                     <div className="text-[10px] font-black text-slate-400 uppercase mb-1">VD</div>
                     <div className="text-sm font-bold">Torsten Jansson</div>
@@ -277,37 +292,39 @@ export default function NewWaveDeepDive({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="space-y-6">
                 <p className="text-slate-600 leading-relaxed">
-                  Bolagets styrka ligger i kombinationen av varumärken, distributionsnärvaro, inköpsskala och lokal försäljningsorganisation. Moaten förstärktes ytterligare under 2025 genom förvärvet av <strong>Cotton Classics</strong>, som stärker NWG i Centraleuropa (Tyskland, Österrike, Tjeckien).
+                  New Wave verkar i en stor, fragmenterad marknad för profilkläder, teamwear och varumärkesdriven livsstilsförsäljning. Bolagets styrka ligger inte i en enskild "supermoat", utan i kombinationen av varumärken, distributionsnärvaro, inköpsskala och lokal försäljningsorganisation.
                 </p>
-                <div className="p-5 bg-blue-50 border border-blue-200 rounded-xl">
-                  <h4 className="font-bold text-blue-900 mb-2 flex items-center gap-2">
-                    <ShieldCheck size={18} /> Strategisk Plattform
-                  </h4>
-                  <ul className="text-sm text-blue-800 space-y-2 list-disc pl-4">
-                    <li>Marknadsledande inom profilprodukter i Europa</li>
-                    <li>Global sourcing-apparat med egna kontor i Asien</li>
-                    <li>Säljer via både profil och retail för riskspridning</li>
-                    <li>Stark bruttomarginal på ~50% trots svag marknad</li>
-                  </ul>
+                <p className="text-slate-600 leading-relaxed">
+                  Det viktigaste benet är profilverksamheten där NWG är en tydlig <strong>"one-stop-shop"</strong> som erbjuder allt från yrkeskläder till presentreklam i samma ekosystem. Skalfördelar byggs via egna inköpskontor i Kina, Bangladesh, Vietnam, Indien och Egypten, vilket ger ett konkret kostnadsövertag mot mindre aktörer.
+                </p>
+                <p className="text-slate-600 leading-relaxed text-sm">
+                  Moaten förstärktes 2025 genom förvärvet av <strong>Cotton Classics</strong> (580 MSEK). Förvärvet stärker NWG i Tyskland, Österrike och Tjeckien. Under sept–dec 2025 bidrog Cotton Classics med 429 MSEK i omsättning och 34 MSEK i rörelseresultat.
+                </p>
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                  <div className="text-[10px] font-black text-slate-400 uppercase mb-2">Bedömning Strategisk Moat: 3/5</div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    NWG har en stabil och verklig konkurrensfördel i bredd, skala och execution, men saknar nätverkseffekter eller extrem inlåsning. Fördelen ligger i att vara den mest effektiva distributören.
+                  </p>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-6 bg-emerald-50 border border-emerald-100 rounded-2xl">
                   <h4 className="text-xs font-black text-emerald-900 uppercase mb-4 uppercase tracking-widest">Styrkor</h4>
                   <ul className="text-xs text-emerald-800 space-y-2">
-                    <li className="flex gap-2"><span>•</span> Bred varumärkesportfölj</li>
-                    <li className="flex gap-2"><span>•</span> Skalfördelar i inköp</li>
-                    <li className="flex gap-2"><span>•</span> Grundarledd kultur</li>
+                    <li className="flex gap-2"><span>•</span> Stark varumärkesportfölj</li>
+                    <li className="flex gap-2"><span>•</span> Hög distributionskapacitet</li>
+                    <li className="flex gap-2"><span>•</span> Lokal närvaro i 20+ länder</li>
                     <li className="flex gap-2"><span>•</span> Stabil bruttomarginal</li>
+                    <li className="flex gap-2"><span>•</span> Grundarledd kultur</li>
                   </ul>
                 </div>
                 <div className="p-6 bg-rose-50 border border-rose-100 rounded-2xl">
                   <h4 className="text-xs font-black text-rose-900 uppercase mb-4 uppercase tracking-widest">Svagheter</h4>
                   <ul className="text-xs text-rose-800 space-y-2">
-                    <li className="flex gap-2"><span>•</span> Kapitalintensiv modell</li>
-                    <li className="flex gap-2"><span>•</span> Valutaexponering</li>
-                    <li className="flex gap-2"><span>•</span> Höga lagernivåer</li>
-                    <li className="flex gap-2"><span>•</span> Begränsade switching costs</li>
+                    <li className="flex gap-2"><span>•</span> Höga lager (kapitalbindning)</li>
+                    <li className="flex gap-2"><span>•</span> Låg strukturell switching cost</li>
+                    <li className="flex gap-2"><span>•</span> Komplexitet efter förvärv</li>
+                    <li className="flex gap-2"><span>•</span> Valutakänslighet</li>
                   </ul>
                 </div>
               </div>
@@ -357,21 +374,42 @@ export default function NewWaveDeepDive({
                 </div>
               </div>
               <div className="space-y-6">
-                <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
-                  <h4 className="font-bold text-slate-900 mb-4">Operations & Profitability</h4>
-                  <p className="text-sm text-slate-600 leading-relaxed mb-4">
-                    2025 var ett blandat år. Omsättningen nådde rekordnivåer (10 019 MSEK), men rörelseresultatet sjönk till 1 141 MSEK från 1 262 MSEK 2024. Justerat för en engångskostnad om 66 MSEK (PPP-lån) var EBIT-marginalen dock stabilare än på ytan.
-                  </p>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    Nettoskulden steg till 3 082 MSEK pga Cotton Classics-förvärvet och strategisk lageruppbyggnad. Soliditeten på 53,0% är dock fortsatt trygg över målet på 40%.
+                <div className="space-y-4">
+                  <div>
+                    <h4 className="text-sm font-black text-slate-900 uppercase tracking-wider mb-2">Resultat & Tillväxt</h4>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      2025 var ett blandat år. Omsättningen nådde rekordnivån <strong>10 019 MSEK</strong> (5,1% tillväxt). I lokala valutor var tillväxten 9,5%, varav 5,0% organiskt. Valutaeffekter slog negativt med -413 MSEK. Rörelseresultatet sjönk till 1 141 MSEK (11,4% marginal), belastat av en engångskostnad om 66 MSEK för PPP-lån. Bruttomarginalen på 49,0% (50,1% jämförbar) bevisar stark prissättningsdisciplin.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-sm font-black text-slate-900 uppercase tracking-wider mb-2">Balansräkning & Skuld</h4>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Nettoskulden steg till <strong>3 082 MSEK</strong> från 1 804 MSEK. En del av ökningen kommer från Cotton Classics och strategisk lageruppbyggnad. Soliditeten föll till 53,0% (mål {'>'}40%). NWG säkrade en kreditram på 3,8 miljarder SEK vid årsskiftet, vilket ger finansiell flexibilitet.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-sm font-black text-slate-900 uppercase tracking-wider mb-2">Kassaflöde & Investeringar</h4>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Operationellt kassaflöde på 653 MSEK (1 278 MSEK 2024) tyngdes av lagerinvesteringar. Med en Capex på ~644 MSEK var det fria kassaflödet nära noll, men drivet av strategisk expansion snarare än strukturella problem.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                  <div className="text-[10px] font-black text-slate-400 uppercase mb-2">Bedömning Finansiell Kvalitet: 4/5</div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    NWG är tydligt lönsamt med ROE och ROCE på 11,15%, trots ett investeringsintensivt år. Balansräkningen är solid och kassaflödet belastas av tillväxtfrämjande lager snarare än sviktande affärer.
                   </p>
                 </div>
+
                 <div className="grid grid-cols-2 gap-4">
                   {[
                     { l: "ROE", v: "11.15%" },
                     { l: "Utdelning", v: "3.00 kr" },
-                    { l: "Soliditet", v: "53.0%" },
-                    { l: "Kassaflöde (Op)", v: "653 Mkr" }
+                    { l: "ROIC", v: "8.0%" },
+                    { l: "Räntetäckning", v: "9.7x" }
                   ].map((m, i) => (
                     <div key={i} className="p-4 bg-white border border-slate-200 rounded-xl">
                       <div className="text-[10px] font-black text-slate-400 uppercase mb-1">{m.l}</div>
@@ -390,10 +428,21 @@ export default function NewWaveDeepDive({
             <SectionLabel number="IV" title="Värdering & Jämförelse" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div>
-                <p className="text-slate-600 leading-relaxed mb-6">
-                  På nuvarande kurs 99,60 SEK handlas aktien till en tydlig skillnad mellan trailing och framåtblickande värdering. Om 2027e EPS kring 9,41 SEK infrias är P/E 10,6x mycket attraktivt för ett bolag med NWG:s historik och marknadsposition.
+                <p className="text-slate-600 leading-relaxed mb-4">
+                  På nuvarande kurs 99,60 SEK handlas aktien till en tydlig skillnad mellan trailing och framåtblickande värdering. Det rapporterade 2025-resultatet framstår som ett mellanår, medan marknaden enligt våra estimat räknar med tydlig återhämtning 2027 (P/E 10,6x).
                 </p>
-                <div className="space-y-4">
+                <p className="text-slate-600 leading-relaxed mb-6 text-sm">
+                  Direktavkastningen på 3,37% (3,00 kr utdelning) indikerar en balanserad kapitalallokering då den föreslagna utdelningen motsvarar 51% av nettoresultatet, trots NWG:s nuvarande investeringsfas.
+                </p>
+
+                <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 mb-6">
+                  <div className="text-[10px] font-black text-slate-400 uppercase mb-2">Bedömning Värdering: 4/5</div>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Aktien är inte ett uppenbart vrakfynd på historisk vinst, men ser attraktiv ut på normaliserad intjäning. Det är en klassisk "normaliseringsvärdering", inte en "deep value"-värdering.
+                  </p>
+                </div>
+
+                <div className="space-y-3">
                   <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg border border-slate-200">
                     <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Trailing P/E (2025)</span>
                     <span className="text-lg font-black">16,85x</span>
@@ -433,32 +482,45 @@ export default function NewWaveDeepDive({
           <Card>
             <SectionLabel number="V" title="Tillväxtmotorer & Triggers" />
             <div className="space-y-6">
-              <div className="flex gap-4">
-                <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center shrink-0">
-                  <TrendingUp size={20} />
+              <p className="text-slate-600 leading-relaxed">
+                Den främsta tillväxtmotorn de kommande åren är <strong>Cotton Classics</strong>. Förvärvet stärker NWG i Centraleuropa (speciellt i de tyska regionerna) och breddar distributionsnätet materiellt. Att det bidrog med 429 MSEK i omsättning på bara fyra månader visar på dess betydelse för den framtida skalan.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                  <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center shrink-0">
+                    <Trophy size={20} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-slate-900 mb-1">Craft Shoe Expansion</h4>
+                    <p className="text-xs text-slate-500 leading-relaxed">Nytt skoerbjudande för inomhussporter (H2 2026/H1 2027) öppnar en större och mer relevant produktkategori för föreningar.</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-bold text-slate-900 mb-1">Cotton Classics Integration</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed">Stärker positionen i Centraleuropa (Tyskland/Österrike) och bidrar med ~1,3 Mdr i årlig omsättning vid fullt år.</p>
+                <div className="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                  <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center shrink-0">
+                    <Globe size={20} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-slate-900 mb-1">Lager-automation</h4>
+                    <p className="text-xs text-slate-500 leading-relaxed">Nya lager i Irland och USA 2026 stärker servicenivån. Fortsatt automation ger operationell hävstång vid ökad volym.</p>
+                  </div>
+                </div>
+                <div className="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
+                  <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center shrink-0">
+                    <TrendingUp size={20} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-slate-900 mb-1">Marknadsläge</h4>
+                    <p className="text-xs text-slate-500 leading-relaxed">När efterfrågan i retail förbättras slår omsättningsökningen snabbt igenom i EBIT pga fasta kostnader.</p>
+                  </div>
                 </div>
               </div>
-              <div className="flex gap-4">
-                <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center shrink-0">
-                  <Trophy size={20} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900 mb-1">Craft Shoe Expansion</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed">Nyah skoerbjudanden för inomhussporter väntas 2026/2027, vilket öppnar en helt ny produktkategori.</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center shrink-0">
-                  <Globe size={20} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900 mb-1">Logistikinvesteringar</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed">Nya stora lager i Irland och USA 2026 ökar leveransförmågan och servicenivån i tillväxtmarknader.</p>
-                </div>
+
+              <div className="p-4 bg-indigo-50 rounded-xl border border-indigo-200">
+                <div className="text-[10px] font-black text-indigo-400 border-indigo-200 uppercase mb-2">Bedömning Tillväxtutsikter: 4/5</div>
+                <p className="text-xs text-indigo-900 leading-relaxed">
+                  Det finns flera konkreta och trovärdiga tillväxtdrivare. Vi stannar på 4/5 då marknaden fortfarande är osäker och execution i USA-expansionen är kritisk för att nå 5/5.
+                </p>
               </div>
             </div>
           </Card>

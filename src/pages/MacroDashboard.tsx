@@ -176,13 +176,10 @@ export default function MacroDashboard() {
   const [loadingAI, setLoadingAI] = useState<string | null>(null);
   const currentPhase = PHASES.find(p => p.isCurrent) || PHASES[0];
   const [activePhase, setActivePhase] = useState(currentPhase);
-  const [macroOutlook, setMacroOutlook] = useState<string | null>(null);
-  const [confidence, setConfidence] = useState<number | null>(null);
-  const [loadingOutlook, setLoadingOutlook] = useState(false);
-  const [outlookError, setOutlookError] = useState<string | null>(null);
-
-  const [lastUpdated, setLastUpdated] = useState<string>(new Date().toLocaleDateString('sv-SE'));
-  const [upcomingDates, setUpcomingDates] = useState<{date: string, title: string}[]>([
+  const [macroData, setMacroData] = useState<Record<string, MacroData>>(FALLBACK_DATA);
+  const [loadingMacro, setLoadingMacro] = useState(true);
+  const [lastUpdated] = useState<string>(new Date().toLocaleDateString('sv-SE'));
+  const [upcomingDates] = useState<{date: string, title: string}[]>([
     { date: "12 April", title: "Räntebesked ECB" },
     { date: "15 April", title: "KPI-siffror Sverige" },
     { date: "25 April", title: "BNP-prognos USA" },
@@ -190,8 +187,6 @@ export default function MacroDashboard() {
   ]);
   const [fearGreed, setFearGreed] = useState<{ value: number, classification: string } | null>(null);
   const [loadingFearGreed, setLoadingFearGreed] = useState(true);
-  const [macroData, setMacroData] = useState<Record<string, MacroData>>(FALLBACK_DATA);
-  const [loadingMacro, setLoadingMacro] = useState(true);
 
   useEffect(() => {
     const fetchMacroData = async () => {
@@ -267,50 +262,6 @@ export default function MacroDashboard() {
     fetchFearGreed();
   }, []);
 
-  const generateMacroOutlook = async () => {
-    setLoadingOutlook(true);
-    setOutlookError(null);
-    setMacroOutlook(null);
-    try {
-      const response = await fetch("/api/ai/macro-outlook", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" }
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("[MacroDashboard] AI Outlook Error:", errorData);
-        if (!response.ok) {
-          throw new Error(`Serverfel (Status ${response.status}): ${errorData.error || "Misslyckades att hämta analys"}`);
-        }
-      }
-
-      const data = await response.json();
-      setMacroOutlook(data.outlook || "Kunde inte generera analys.");
-      
-      if (data.suggestedPhaseId) {
-        const newPhase = PHASES.find(p => p.id === data.suggestedPhaseId);
-        if (newPhase) {
-          setActivePhase(newPhase);
-        }
-      }
-
-      if (data.confidence) {
-        setConfidence(data.confidence);
-      }
-
-      if (data.upcomingDates && Array.isArray(data.upcomingDates)) {
-        setUpcomingDates(data.upcomingDates);
-      }
-
-      setLastUpdated(new Date().toLocaleDateString('sv-SE'));
-    } catch (error: any) {
-      console.error("Outlook Error:", error);
-      setOutlookError(error.message || "Något gick fel. Försök igen.");
-    } finally {
-      setLoadingOutlook(false);
-    }
-  };
 
 
   const getAIInsight = async (event: MarketEvent) => {
@@ -686,8 +637,7 @@ export default function MacroDashboard() {
                 <div className="absolute inset-0 pointer-events-none z-0">
                   {PHASES.map((phase) => {
                     const angle = phase.rotation; 
-                    // Position labels on the very edge of the 100% container
-                    const radius = 46; // % of container
+                    const radius = 46; 
                     const x = 50 + radius * Math.cos((angle - 90) * Math.PI / 180);
                     const y = 50 + radius * Math.sin((angle - 90) * Math.PI / 180);
                     
@@ -708,9 +658,8 @@ export default function MacroDashboard() {
                   })}
                 </div>
 
-                {/* Inner Clock Face (Scaled down to avoid overlapping labels) */}
+                {/* Inner Clock Face */}
                 <div className="w-[70%] h-[70%] bg-white/5 rounded-full border border-white/10 relative overflow-hidden flex items-center justify-center">
-                  {/* 6 Clickable Segments (NOW INSIDE THE SMALLER CLOCK) */}
                   <div className="absolute inset-0 z-10">
                     {PHASES.map((phase, idx) => {
                       const rotation = idx * 60;
@@ -727,47 +676,16 @@ export default function MacroDashboard() {
                     })}
                   </div>
 
-                  {/* Geographical Indicators (USA & SE) */}
+                  {/* Indicators */}
                   <div className="absolute inset-0 pointer-events-none z-20">
-                    {/* USA Indicator */}
-                    <motion.div 
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full"
-                      style={{ rotate: 210 }}
-                    >
-                      <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center group/usa">
-                        <motion.div 
-                          animate={{ 
-                            boxShadow: ["0 0 0px rgba(59,130,246,0)", "0 0 12px rgba(59,130,246,0.8)", "0 0 0px rgba(59,130,246,0)"]
-                          }}
-                          transition={{ repeat: Infinity, duration: 2 }}
-                          className="w-2 h-2 bg-blue-500 rounded-full border border-white/40 shadow-lg relative"
-                        >
-                          <div className="absolute inset-0 bg-blue-500 blur-[2px] rounded-full opacity-50" />
-                        </motion.div>
-                        <div className="mt-1 opacity-0 group-hover/usa:opacity-100 transition-opacity whitespace-nowrap bg-blue-500 text-[8px] font-black px-1.5 py-0.5 rounded text-white uppercase tracking-tighter">USA</div>
+                    <motion.div style={{ rotate: 210 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
+                      <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                        <div className="w-2 h-2 bg-blue-500 rounded-full" />
                       </div>
                     </motion.div>
-
-                    {/* Sverige Indicator */}
-                    <motion.div 
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full"
-                      style={{ rotate: 240 }}
-                    >
-                      <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center group/se">
-                        <motion.div 
-                          animate={{ 
-                            boxShadow: ["0 0 0px rgba(250,204,21,0)", "0 0 12px rgba(250,204,21,0.8)", "0 0 0px rgba(250,204,21,0)"]
-                          }}
-                          transition={{ repeat: Infinity, duration: 2, delay: 1 }}
-                          className="w-2 h-2 bg-yellow-400 rounded-full border border-white/40 shadow-lg relative"
-                        >
-                          <div className="absolute inset-0 bg-yellow-400 blur-[2px] rounded-full opacity-50" />
-                        </motion.div>
-                        <div className="mt-1 opacity-0 group-hover/se:opacity-100 transition-opacity whitespace-nowrap bg-yellow-400 text-[8px] font-black px-1.5 py-0.5 rounded text-black uppercase tracking-tighter">Sverige</div>
+                    <motion.div style={{ rotate: 240 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
+                      <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                        <div className="w-2 h-2 bg-yellow-400 rounded-full" />
                       </div>
                     </motion.div>
                   </div>
@@ -775,124 +693,25 @@ export default function MacroDashboard() {
                   {/* Clock Hand */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
                     <motion.div 
-                      initial={false}
                       animate={{ rotate: activePhase.rotation }}
-                      transition={{ type: "spring", stiffness: 60, damping: 15 }}
-                      className="w-1 h-16 bg-primary rounded-full origin-bottom -translate-y-1/2 relative"
-                    >
-                      {/* Glow for the tip */}
-                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-primary rounded-full shadow-[0_0_20px_rgba(var(--primary),0.8)]" />
-                    </motion.div>
+                      className="w-1 h-16 bg-primary rounded-full origin-bottom"
+                    />
                   </div>
-
-                  {/* Center Cap */}
                   <div className="w-3 h-3 bg-foreground rounded-full border-2 border-primary z-40 pointer-events-none" />
                 </div>
               </div>
 
               <motion.div 
                 key={activePhase.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={`p-6 rounded-2xl border border-white/10 ${activePhase.bg} relative overflow-hidden`}
+                className={`p-6 rounded-2xl border border-white/10 ${activePhase.bg}`}
               >
-                {activePhase.isCurrent && (
-                  <div className="absolute top-0 right-0 px-3 py-1 bg-primary text-white text-[8px] font-black uppercase tracking-widest rounded-bl-xl shadow-lg">
-                    Aktuell Marknadsfas
-                  </div>
-                )}
-                <div className="flex justify-between items-center mb-2">
-                  <div className={`text-xs font-black uppercase tracking-widest ${activePhase.color}`}>
-                    {activePhase.name}
-                  </div>
-                  {activePhase.timing && (
-                    <div className="text-[8px] font-black uppercase tracking-widest text-white/40">
-                      {activePhase.timing}
-                    </div>
-                  )}
+                <div className={`text-xs font-black uppercase tracking-widest ${activePhase.color} mb-2`}>
+                  {activePhase.name}
                 </div>
                 <p className="text-sm font-bold leading-relaxed">
                   {activePhase.description}
                 </p>
-                {(activePhase.id === 'late_cycle' || activePhase.id === 'slowdown') && (
-                  <div className="mt-4 pt-4 border-t border-white/5">
-                    <div className="text-[9px] font-black uppercase tracking-widest text-primary mb-1">Strategiskt Fokus</div>
-                    <p className="text-[10px] font-medium opacity-80 italic">
-                      {activePhase.id === 'late_cycle' ? 'Fokus på kvalitet & kassaflöde. Var beredd på att selektiviteten ökar.' : 'Defensiv positionering och utdelning prioriteras.'}
-                    </p>
-                  </div>
-                )}
               </motion.div>
-
-              <div className="pt-4 border-t border-white/10">
-                {user ? (
-                  <button 
-                    onClick={generateMacroOutlook}
-                    disabled={loadingOutlook}
-                    className="w-full py-4 bg-primary text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
-                  >
-                    {loadingOutlook ? (
-                      <>
-                        <Loader2 size={14} className="animate-spin" />
-                        Genererar Outlook...
-                      </>
-                    ) : (
-                      <>
-                        <Sparkles size={14} />
-                        AI Makro-Outlook
-                      </>
-                    )}
-                  </button>
-                ) : (
-                  <button 
-                    onClick={openLoginModal}
-                    className="w-full py-4 bg-white/10 text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-white/20 transition-all flex flex-col items-center justify-center gap-1"
-                  >
-                    <div className="flex items-center gap-2">
-                      <Sparkles size={14} className="text-primary" />
-                      <span>Få AI-INSIKT</span>
-                    </div>
-                    <span className="text-[8px] opacity-60">Logga in för AI Outlook</span>
-                  </button>
-                )}
-
-                <AnimatePresence>
-                  {outlookError && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      className="mt-4 p-4 bg-red-500/10 rounded-2xl border border-red-500/20"
-                    >
-                      <p className="text-xs font-bold text-red-400 leading-relaxed">
-                        ⚠️ {outlookError}
-                      </p>
-                    </motion.div>
-                  )}
-                  {macroOutlook && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      className="mt-6 p-6 bg-white/5 rounded-2xl border border-white/10"
-                    >
-                      <div className="flex justify-between items-center mb-4">
-                        <div className="text-[9px] font-black uppercase tracking-widest text-primary flex items-center gap-1">
-                          <Sparkles size={10} />
-                          AI Analys
-                        </div>
-                        {confidence && (
-                          <div className="text-[9px] font-black uppercase tracking-widest text-white/40">
-                            Konfidens: {confidence}%
-                          </div>
-                        )}
-                      </div>
-                      <p className="text-xs font-medium leading-relaxed italic opacity-95">
-                        "{macroOutlook}"
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
             </div>
 
             <div className="bg-card border border-border rounded-[2.5rem] p-10 space-y-6">
