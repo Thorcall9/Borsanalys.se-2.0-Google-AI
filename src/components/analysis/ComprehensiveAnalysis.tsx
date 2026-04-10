@@ -73,11 +73,11 @@ const DistributionBar = ({ data, accentColor }: { data: string; accentColor: str
           />
         ))}
       </div>
-      <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+      <div className="grid grid-cols-1 gap-y-2">
         {segments.map((s, i) => (
           <div key={i} className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full" style={{ backgroundColor: i === 0 ? accentColor : `rgba(0,0,0,${0.4 - i * 0.1})` }} />
-            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">{s.label}</span>
+            <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: i === 0 ? accentColor : `rgba(0,0,0,${0.4 - i * 0.1})` }} />
+            <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider truncate">{s.label}</span>
             <span className="text-[10px] font-black text-foreground ml-auto">{s.value}%</span>
           </div>
         ))}
@@ -198,22 +198,24 @@ export default function ComprehensiveAnalysis({
                 )}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-x-8 gap-y-10">
                 {Object.entries(data.scores).map(([key, score]) => (
                   <div key={key} className="space-y-3 group">
-                    <div className="flex justify-between items-end">
-                      <span className="text-[10px] font-black text-muted-foreground group-hover:text-primary transition-colors uppercase tracking-widest leading-none">
-                        {SCORE_LABELS[key] || key}
-                      </span>
-                      <span className="text-sm font-black text-foreground">{score}/5</span>
-                    </div>
-                    <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
-                      <motion.div 
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${(score / 5) * 100}%` }}
-                        transition={{ duration: 1, ease: "easeOut" }}
-                        className="h-full bg-primary rounded-full group-hover:brightness-110 transition-all shadow-[0_0_10px_rgba(16,185,129,0.3)]"
-                      />
+                    <div className="flex flex-col gap-2">
+                      <div className="flex justify-between items-end gap-2">
+                        <span className="text-[10px] font-black text-muted-foreground group-hover:text-primary transition-colors uppercase tracking-[0.1em] leading-tight">
+                          {SCORE_LABELS[key] || key}
+                        </span>
+                        <span className="text-sm font-black text-foreground shrink-0">{score}/5</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${(score / 5) * 100}%` }}
+                          transition={{ duration: 1, ease: "easeOut" }}
+                          className="h-full bg-primary rounded-full group-hover:brightness-110 transition-all shadow-[0_0_10px_rgba(16,185,129,0.3)]"
+                        />
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -301,16 +303,12 @@ export default function ComprehensiveAnalysis({
             </div>
 
             {data.scores && (
-              <div className="bg-primary/5 border border-primary/20 rounded-[2rem] p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="text-[10px] font-black text-primary uppercase tracking-widest">Affärsmodell Score</div>
-                  <div className="text-2xl font-black text-primary">{data.scores.affarsmodell}/5</div>
-                </div>
-                <RatingBox 
-                  rating={data.scores.affarsmodell} 
-                  description="Bedömning av affärsmodellens styrka och ledningens track record." 
-                />
-              </div>
+              <RatingBox 
+                rating={data.scores.affarsmodell} 
+                title="Affärsmodell Score"
+                description="Bedömning av affärsmodellens styrka och ledningens track record." 
+                accentColor={ACCENT_COLOR}
+              />
             )}
           </div>
         </div>
