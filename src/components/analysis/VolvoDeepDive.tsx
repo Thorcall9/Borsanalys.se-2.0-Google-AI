@@ -6,6 +6,7 @@ import {
   Tooltip, ResponsiveContainer, Cell, ComposedChart
 } from "recharts";
 import AdUnit from "../AdUnit";
+import MultiplexAd from "../MultiplexAd";
 
 const T = {
   ink:     "#0D1B2A",
@@ -982,7 +983,8 @@ export default function VolvoDeepDive({
             </div>
           </div>
         </div>
-
+        
+        <MultiplexAd />
       </div>
     </div>
   );

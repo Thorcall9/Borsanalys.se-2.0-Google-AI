@@ -6,6 +6,7 @@ import {
   Tooltip, ResponsiveContainer, ReferenceLine, Cell, ComposedChart
 } from "recharts";
 import AdUnit from "../AdUnit";
+import MultiplexAd from "../MultiplexAd";
 
 const T = {
   ink:     "#0D1B2A",
@@ -743,6 +744,7 @@ export default function NovoNordiskDeepDive({
                 <strong style={{color:T.sub}}>Disclaimer:</strong> Denna analys är framtagen av börsanalys.se för informationsändamål och utgör inte finansiell rådgivning. Historisk avkastning garanterar inte framtida avkastning. Investering i aktier innebär alltid risk. Konsultera alltid en licensierad finansiell rådgivare innan investeringsbeslut.
               </p>
             </div>
+            <MultiplexAd />
           </FadeIn>
         </div>
       </div>

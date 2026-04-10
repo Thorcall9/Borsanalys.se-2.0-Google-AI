@@ -13,7 +13,8 @@ import {
   Building2,
   PieChart,
   AlertCircle,
-  CheckCircle2
+  CheckCircle2,
+  Star 
 } from 'lucide-react';
 import AnalysisLayout from './AnalysisLayout';
 import SectionHeader from './SectionHeader';
@@ -171,6 +172,55 @@ export default function ComprehensiveAnalysis({
             &quot;{data.summary}&quot;
           </p>
         </div>
+
+        {/* 1b. Key Analysis Areas - Added at top for immediate overview */}
+        {data.scores && (
+          <div className="bg-card border border-border rounded-[2rem] p-8 md:p-12 shadow-2xl shadow-black/20 overflow-hidden relative">
+            <div className="absolute top-0 right-0 p-8 opacity-5 text-primary rotate-12">
+              <Star size={120} />
+            </div>
+            
+            <div className="relative z-10">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
+                <div>
+                  <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary mb-2">Börsanalys Kvalitetsbetyg</h2>
+                  <h3 className="text-2xl md:text-3xl font-black tracking-tighter">Analysens nyckelområden</h3>
+                </div>
+                {(data.aiDrivenData?.totaltPoang || Object.values(data.scores).reduce((a, b) => a + b, 0)) && (
+                  <div className="flex items-center gap-4 bg-primary/10 px-6 py-3 rounded-2xl border border-primary/20">
+                    <div className="text-4xl font-black text-primary">
+                      {data.aiDrivenData?.totaltPoang || Object.values(data.scores).reduce((a, b) => a + b, 0)}
+                    </div>
+                    <div className="text-[10px] font-black uppercase tracking-widest leading-tight opacity-70 italic">
+                      av {data.aiDrivenData?.maxPoang || 40} <br /> möjliga poäng
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-8">
+                {Object.entries(data.scores).map(([key, score]) => (
+                  <div key={key} className="space-y-3 group">
+                    <div className="flex justify-between items-end">
+                      <span className="text-[10px] font-black text-muted-foreground group-hover:text-primary transition-colors uppercase tracking-widest leading-none">
+                        {SCORE_LABELS[key] || key}
+                      </span>
+                      <span className="text-sm font-black text-foreground">{score}/5</span>
+                    </div>
+                    <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
+                      <motion.div 
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${(score / 5) * 100}%` }}
+                        transition={{ duration: 1, ease: "easeOut" }}
+                        className="h-full bg-primary rounded-full group-hover:brightness-110 transition-all shadow-[0_0_10px_rgba(16,185,129,0.3)]"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* SECTION I: FÖRETAGSÖVERSIKT */}
@@ -265,33 +315,6 @@ export default function ComprehensiveAnalysis({
           </div>
         </div>
 
-        {/* Global Scoring Grid - Moved to a full-width section */}
-        {data.scores && (
-          <div className="mb-20 bg-card border border-border rounded-[3rem] p-10 shadow-2xl shadow-black/5 overflow-hidden relative">
-            <div className="absolute top-0 right-0 p-10 opacity-5 text-primary rotate-12">
-              <PieChart size={200} />
-            </div>
-            <h3 className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.2em] mb-10 relative z-10">Analysens nyckelområden</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-12 gap-y-10 relative z-10">
-              {Object.entries(data.scores).map(([key, score]) => (
-                <div key={key} className="space-y-3 group">
-                  <div className="flex justify-between items-end">
-                    <span className="text-[10px] font-black text-foreground group-hover:text-primary transition-colors uppercase tracking-widest">{SCORE_LABELS[key] || key.replace(/([A-Z])/g, ' $1').trim()}</span>
-                    <span className="text-sm font-black text-primary">{score}/5</span>
-                  </div>
-                  <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      whileInView={{ width: `${(score / 5) * 100}%` }}
-                      transition={{ duration: 1, ease: "easeOut" }}
-                      className="h-full bg-primary rounded-full group-hover:brightness-110 transition-all"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
       </section>
 
       <AdUnit slot="7332946752" />

@@ -7,6 +7,7 @@ import {
   Tooltip, ResponsiveContainer, Cell, ComposedChart
 } from "recharts";
 import AdUnit from "../AdUnit";
+import MultiplexAd from "../MultiplexAd";
 
 const T = {
   ink:     "#0D1B2A",
@@ -1108,6 +1109,7 @@ export default function EvolutionDeepDive({
                 <strong style={{color:T.sub}}>Disclaimer:</strong> Denna analys är framtagen av börsanalys.se för informationsändamål och utgör inte finansiell rådgivning. Historisk avkastning garanterar inte framtida avkastning. Investering i aktier innebär alltid risk.
               </p>
             </div>
+            <MultiplexAd />
           </FadeIn>
         </section>
       </div>

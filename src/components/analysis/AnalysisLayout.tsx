@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Menu, X, ArrowLeft, Star, StarOff, Loader2 } from 'lucide-react';
 import AdZone from '../AdZone';
+import MultiplexAd from '../MultiplexAd';
 
 export interface AnalysisSection {
   id: string;
@@ -233,6 +234,7 @@ export default function AnalysisLayout({
 
           <div className="mt-20 border-t border-border/50 pt-16">
             <AdZone id="analysis-bottom" type="banner" />
+            <MultiplexAd />
           </div>
         </div>
       </main>
