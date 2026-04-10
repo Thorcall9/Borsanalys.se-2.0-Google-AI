@@ -104,32 +104,33 @@ export const handelsbanken2025: AnalysisData = {
     strategiskMoat: {
       swot: {
         styrkor: [
-          "Exceptionellt stark kreditkvalitet",
-          "Högst sammanvägd kreditrating bland privatägda banker enligt banken",
-          "Stark kundnöjdhet på hemmamarknaderna",
-          "Låg kostnadsnivå relativt intäktsbasen"
+          "Exceptionell kreditkvalitet (-0,01% förlustnivå 2025)",
+          "Mycket stark balansräkning och högsta kreditrating",
+          "Högst kundnöjdhet (SKI) bland jämförbara konkurrenter",
+          "Stark rating och utsedd till Europas säkraste affärsbank",
+          "Låg riskaptit och decentraliserad kultur"
         ],
         svagheter: [
           "Hög exponering mot räntenetto",
-          "Mogen svensk marknad begränsar strukturell tillväxt",
-          "Fortsatt press från lägre marknadsräntor"
+          "Låg strukturell tillväxt i Sverige",
+          "Begränsad operativ hävstång vid räntenedgång"
         ],
         möjligheter: [
           "Tillväxt i Storbritannien och Nederländerna",
           "Växande sparaffär och kapitalförvaltning",
-          "Ökad intern effektivitet och AI-stöd i processer"
+          "Effektivisering och AI-stöd i interna processer"
         ],
         hot: [
-          "Fortsatt räntenedgång och pressade marginaler",
-          "Ökade regulatoriska kostnader",
-          "Fastighetsoro och svagare makro i Norden"
+          "Fortsatt räntepress på marginalerna",
+          "Ökade regulatoriska avgifter",
+          "Fastighetsoro och makrosvaghet i Norden"
         ]
       },
       moat: [
-        "Decentraliserad kreditkultur",
-        "Starkt varumärke och hög kundnöjdhet",
-        "Låg riskaptit och mycket stark balansräkning",
-        "Långsiktig ägar- och incitamentsstruktur via Oktogonen"
+        "Unik decentraliserad bankkultur",
+        "Marknadsledande kreditdisciplin",
+        "Högsta förtroende och kreditrating",
+        "Lokal förankring utan centrala säljmål"
       ]
     },
     finansiellAnalys: {

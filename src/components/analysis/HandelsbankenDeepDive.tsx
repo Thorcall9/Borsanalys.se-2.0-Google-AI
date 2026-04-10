@@ -374,51 +374,84 @@ export default function HandelsbankenDeepDive({
           <FadeIn delay={100}>
             <Card mb={20}>
               <SectionLabel number="II" title="Strategisk Analys & Moat"/>
-              <div style={{background:T.accentL,border:"1.5px solid rgba(0,75,135,0.2)",borderRadius:14,padding:"18px 22px",borderLeft:"4px solid #004B87",marginBottom:24}}>
-                <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Den viktigaste moaten är inte teknik utan kultur. Handelsbanken har byggt en decentraliserad modell där besluten fattas nära kunden. Kontoren har mandat, kontorschefen har ansvar, och banken jobbar utan centrala säljmål och volymbonusar. Det gör att banken kan optimera för långsiktig kundkvalitet istället för kortsiktig volym.
-                </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-10">
+                <div className="space-y-6">
+                  <div>
+                    <h3 style={{fontSize:15,fontWeight:800,color:T.ink,marginBottom:12}}>Marknad och position</h3>
+                    <p style={{margin:0,fontSize:14,color:T.sub,lineHeight:1.8}}>
+                      Bankmarknaden i Norden är mogen, hårt reglerad och konkurrensutsatt. Handelsbanken har byggt sin position genom hög kreditdisciplin, stark kundnöjdhet och låg riskaptit. 
+                    </p>
+                    <p style={{marginTop:12,margin:0,fontSize:14,color:T.sub,lineHeight:1.8}}>
+                      Banken lyfter fram att ingen annan privatägd bank i världen har högre sammanvägd kreditrating från <strong>Fitch, Moody’s och S&P</strong>, och att man rankats som <strong>Europas säkraste affärsbank</strong> av Global Finance. Detta ger billigare finansiering och högre förtroende.
+                    </p>
+                  </div>
+                </div>
+                <div className="space-y-6">
+                  <div>
+                    <h3 style={{fontSize:15,fontWeight:800,color:T.ink,marginBottom:12}}>Konkurrensfördelar</h3>
+                    <p style={{margin:0,fontSize:14,color:T.sub,lineHeight:1.8}}>
+                      <strong>Kultur som Moat:</strong> Den viktigaste moaten är inte teknik utan kultur. Handelsbankens decentraliserade modell med lokalt mandat och ansvar (utan centrala säljmål) gör att de kan optimera för långsiktig kundkvalitet framför kortsiktig volym.
+                    </p>
+                    <p style={{marginTop:12,margin:0,fontSize:14,color:T.sub,lineHeight:1.8}}>
+                      <strong>Kreditkultur i världsklass:</strong> Under 2025 var kreditförlustnivån <strong>-0,01%</strong> (nettoåterföringar), vilket markerade det åttonde kvartalet i rad med nettoåterföringar – en exceptionellt stark prestation i sektorn.
+                    </p>
+                  </div>
+                </div>
               </div>
 
               <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>Moat-dimensioner</div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-                <MoatCard key="kultur" title="Decentraliserad kultur" desc="Kreditbeslut fattas lokalt där kunskapen finns." stars="★★★★★"/>
-                <MoatCard key="kredit" title="Kreditkvalitet" desc="Exceptionellt låga förluster över alla cykler." stars="★★★★★"/>
-                <MoatCard key="kund" title="Kundnöjdhet" desc="Rankas konsekvent högst bland jämförbara banker." stars="★★★★★"/>
-                <MoatCard key="kapital" title="Kapitalstyrka" desc="Högsta kreditrating bland privatägda banker." stars="★★★★★"/>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
+                <MoatCard key="kultur" title="Decentraliserad kultur" desc="Beslut nära kunden utan säljmål." stars="★★★★★"/>
+                <MoatCard key="kredit" title="Kreditkvalitet" desc="Exceptionellt stark (-0,01% förluster)." stars="★★★★★"/>
+                <MoatCard key="kund" title="Kundnöjdhet" desc="Nöjdast kunder enligt SKI 2025." stars="★★★★★"/>
+                <MoatCard key="kapital" title="Kreditrating" desc="Världsledande bland privatägda banker." stars="★★★★★"/>
               </div>
 
-              <div style={{marginTop: 32}}>
+              <div>
                 <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>SWOT-analys</div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div style={{background:"#F0FDF4", borderRadius:12, padding:16, border:"1px solid #DCFCE7"}}>
                     <div style={{fontWeight:700, color:"#166534", fontSize:13, marginBottom:8}}>Styrkor</div>
                     <ul style={{margin:0, paddingLeft:16, fontSize:12.5, color:"#166534", lineHeight:1.7}}>
-                      <li>Exceptionell kreditkvalitet (-0,01% förlustnivå 2025)</li>
-                      <li>Mycket stark balansräkning och högsta kreditrating</li>
+                      <li>Exceptionell kreditkvalitet (-0,01% förlustnivå)</li>
+                      <li>Mycket stark balansräkning och världsledande rating</li>
+                      <li>Högst kundnöjdhet (SKI) och Årets affärsbank</li>
+                      <li>Decentraliserad kultur och låg riskaptit</li>
                     </ul>
                   </div>
                   <div style={{background:"#FEF2F2", borderRadius:12, padding:16, border:"1px solid #FEE2E2"}}>
                     <div style={{fontWeight:700, color:"#991B1B", fontSize:13, marginBottom:8}}>Svagheter</div>
                     <ul style={{margin:0, paddingLeft:16, fontSize:12.5, color:"#991B1B", lineHeight:1.7}}>
                       <li>Hög exponering mot räntenetto</li>
-                      <li>Mogen svensk marknad</li>
+                      <li>Låg strukturell tillväxt i Sverige</li>
+                      <li>Begränsad operativ hävstång vid räntenedgång</li>
                     </ul>
                   </div>
                   <div style={{background:"#EFF6FF", borderRadius:12, padding:16, border:"1px solid #DBEAFE"}}>
                     <div style={{fontWeight:700, color:"#1D4ED8", fontSize:13, marginBottom:8}}>Möjligheter</div>
                     <ul style={{margin:0, paddingLeft:16, fontSize:12.5, color:"#1D4ED8", lineHeight:1.7}}>
-                      <li>Tillväxt i UK & Nederländerna</li>
-                      <li>Växande sparaffär</li>
+                      <li>Tillväxt i Storbritannien och Nederländerna</li>
+                      <li>Växande sparaffär och kapitalförvaltning</li>
+                      <li>Effektivisering och AI-stöd i interna processer</li>
                     </ul>
                   </div>
                   <div style={{background:"#FFFBEB", borderRadius:12, padding:16, border:"1px solid #FDE68A"}}>
                     <div style={{fontWeight:700, color:"#92400E", fontSize:13, marginBottom:8}}>Hot</div>
                     <ul style={{margin:0, paddingLeft:16, fontSize:12.5, color:"#92400E", lineHeight:1.7}}>
-                      <li>Fortsatt räntenedgång</li>
-                      <li>Fastighetsoro</li>
+                      <li>Fortsatt räntepress på marginalerna</li>
+                      <li>Ökade regulatoriska avgifter</li>
+                      <li>Fastighetsoro och makrosvaghet i Norden</li>
                     </ul>
                   </div>
+                </div>
+              </div>
+              
+              <div className="mt-8 flex items-center gap-4 bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                <div className="w-12 h-12 rounded-full bg-[#004B87]/10 flex items-center justify-center text-[#004B87] font-bold text-lg">4/5</div>
+                <div>
+                  <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Bedömning - Strategisk Moat</div>
+                  <div className="text-sm font-bold text-slate-900 leading-relaxed">Stark kultur- och kreditmoat, en av de starkaste i europeisk banksektor.</div>
                 </div>
               </div>
             </Card>
