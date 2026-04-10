@@ -80,6 +80,7 @@ export default function Header() {
                 onClick={logout}
                 className="text-muted-foreground hover:text-red-500 transition-colors"
                 title="Logga ut"
+                aria-label="Logga ut"
               >
                 <LogOut size={18} />
               </button>
@@ -100,6 +101,7 @@ export default function Header() {
             onClick={openSearch}
             className="w-10 h-10 flex items-center justify-center bg-muted/50 hover:bg-accent text-muted-foreground hover:text-primary transition-colors ml-2 rounded-full border border-border/50 relative group"
             title="Sök (⌘K)"
+            aria-label="Sök efter bolag och analyser"
           >
             <Search size={18} />
             <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-card border border-border px-1.5 py-0.5 rounded text-[10px] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-sm">
@@ -115,6 +117,7 @@ export default function Header() {
             whileTap={{ scale: 0.9 }}
             onClick={openSearch}
             className="w-10 h-10 flex items-center justify-center bg-muted/50 text-muted-foreground hover:text-primary rounded-full border border-border/50"
+            aria-label="Öppna sök"
           >
             <Search size={20} />
           </motion.button>
@@ -123,6 +126,7 @@ export default function Header() {
             whileTap={{ scale: 0.9 }}
             className="w-10 h-10 flex items-center justify-center bg-muted/50 text-muted-foreground hover:text-primary rounded-full border border-border/50" 
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Stäng meny" : "Öppna meny"}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </motion.button>
