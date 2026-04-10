@@ -348,7 +348,13 @@ export default function SwedbankDeepDive({
               
               <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`,marginBottom:24}}>
                 <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Swedbanks vallgrav vilar på deras unika sparbanksekosystem och marknadsledande position i Baltikum. Med 209 kontor och en djup lokal förankring skapar de en distributionskraft som är svår för utmanare att replikera. I Baltikum är banken det mest älskade varumärket, vilket ger en stabil och lönsam plattform för framtida expansion inom krediter och transaktioner.
+                  Bankmarknaden i Sverige och Baltikum är mogen men inte statisk. I Sverige konkurrerar Swedbank med de tre andra storbankerna (SEB, Handelsbanken, Nordea), där de stora skillnaderna ligger i kundnöjdhet, digital mognad och prissättning snarare än produkterbjudande. I Baltikum är Swedbank marknadsledare i alla tre länder och har en i det närmaste dominerande position – banken utsågs till det mest älskade varumärket i Baltikum för sjunde året i rad under 2025.
+                </p>
+                <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
+                  Konkurrensfördelen, eller "moat" (ett begrepp lånat från medeltida vattengravar – en buffert mot konkurrenters angrepp), bygger på flera ben. Sparbanksekosystemet ger Swedbank ett unikt distributionsnät i Sverige med 209 kontor och en bred lokal förankring som konkurrenter inte kan replikera. Byteskostnaderna för privatkunder är höga när lön, bolån, sparkonton och Swish är knutna till samma bank. Roburs starka position inom fondsparande adderar en kapitallätt intäktsström. S&P Global uppgraderade Swedbanks kreditbetyg till AA- lång och A-1+ kort med stabil outlook under 2025, med specifik hänvisning till förbättrad styrning och riskhantering.
+                </p>
+                <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
+                  Två förvärv genomförda under 2025 stärker positionen ytterligare. <strong>Stabelo</strong> (bolåneinstitut) tillförde 17 miljarder kronor i bolånestock och fördubblade Swedbanks marknadsandel av nya bolån i egna kanaler. <strong>Entercard-förvärvet</strong> (Barclays andel) skapade Nordens och Baltikums största kortverksamhet och adderar transaktionsbaserade intäkter som kompletterar räntenettot.
                 </p>
               </div>
 
