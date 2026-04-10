@@ -394,6 +394,8 @@ export default function ComprehensiveAnalysis({
         )}
       </section>
 
+      <AdUnit slot="6432013761" className="my-16" />
+
       {/* SECTION IV: VÄRDERING & JÄMFÖRELSE */}
       <section id="valuation" className="scroll-mt-24 mt-24">
         <div className="mb-10 flex items-center justify-between">

@@ -3,9 +3,9 @@ export interface AIDrivenAnalysis {
   slug: string;
   name: string;
   ticker: string;
-  isin: string;
-  date: string;
-  author: string;
+  isin?: string;
+  date?: string;
+  author?: string;
   scores: {
     affarsmodell: number;
     strategiskMoat: number;
@@ -16,20 +16,20 @@ export interface AIDrivenAnalysis {
     esgMakro: number;
     aiObservationer: number;
   };
-  totaltPoang: number;
-  maxPoang: number;
-  rating: number;
+  totaltPoang?: number;
+  maxPoang?: number;
+  rating?: number;
   overview: {
     borskurs: string | number;
     borsvarde: string;
     bransch: string;
     geografi: string;
-    affarside: string;
+    affarside?: string;
     affarsmodell: string;
     ledning: string;
-    agarstruktur: string;
+    agarstruktur?: string;
   };
-  strategiskMoat: {
+  strategiskMoat?: {
     swot: {
       styrkor: string[];
       svagheter: string[];
@@ -38,7 +38,7 @@ export interface AIDrivenAnalysis {
     };
     moat: string[];
   };
-  finansiellAnalys: {
+  finansiellAnalys?: {
     resultatrakning: {
       omsattningstillvaxt: string;
       vinsttillvaxt: string;
@@ -55,17 +55,17 @@ export interface AIDrivenAnalysis {
       direktavkastning: string;
     };
   };
-  tillvaxtdrivare: string[];
-  esgMakro: {
+  tillvaxtdrivare?: string[];
+  esgMakro?: {
     esgProfil: string;
     makropaverkan: string;
   };
-  sammanfattning: {
+  sammanfattning?: {
     beslut: string;
     motivering: string;
     malpris: string;
   };
-  scenarier: {
+  scenarier?: {
     bullCase: string;
     baseCase: string;
     bearCase: string;
@@ -118,7 +118,7 @@ export interface AnalysisData {
   weaknesses?: string[];
   opportunities?: string[];
   threats?: string[];
-  scenarios: { label: string; value: string; change: string; type: "bull" | "base" | "bear" }[];
+  scenarios: { label: string; value: string; change: string; type: "bull" | "base" | "bear"; description?: string }[];
   businessModel?: string;
   management?: string;
   advantages?: string[];

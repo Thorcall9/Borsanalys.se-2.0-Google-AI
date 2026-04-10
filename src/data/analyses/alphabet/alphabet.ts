@@ -119,8 +119,10 @@ export const alphabet: AnalysisData = {
       borsvarde: "$3.9T",
       bransch: "Internet / AI",
       geografi: "Global",
+      affarside: "Organisera världens information och göra den tillgänglig och användbar",
       affarsmodell: "Digital annonsering, molntjänster och prenumerationer",
-      ledning: "Sundar Pichai (VD), Ruth Porat (CFO/President)"
+      ledning: "Sundar Pichai (VD), Ruth Porat (CFO/President)",
+      agarstruktur: "Dual-class struktur med grundarkontroll"
     }
   }
 };
