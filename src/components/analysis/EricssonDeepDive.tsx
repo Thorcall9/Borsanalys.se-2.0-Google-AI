@@ -272,7 +272,45 @@ export default function EricssonDeepDive({
                 {[
                   ["Verksamhet","Telefonaktiebolaget LM Ericsson är ett av världens viktigaste bolag inom mobilnätsinfrastruktur. Bolaget säljer radioaccessnät, kärnnät, mjukvara, drift- och optimeringstjänster samt företagslösningar."],
                   ["Marknadsposition", <span>Ericsson hade 2025 en nettoomsättning på <strong>236,7 miljarder kronor</strong> och över 89 000 anställda. Cirka 50 procent av all mobiltrafik utanför Kina går över nät levererade av Ericsson.</span>],
-                  ["Geografisk Mix", "Nord- och Sydamerika 35%, Europa/Mellanöstern/Afrika 30%, Sydostasien/Oceanien/Indien 12%, Nordostasien 7%, Other (bl.a. Patent/Enterprise) 16%."],
+                  ["Geografisk Mix", (
+                    <div className="mt-2">
+                      <div className="flex h-4 w-full rounded-full overflow-hidden mb-3 bg-slate-100 shadow-inner">
+                        {[
+                          { l: "Amerika", v: 35, c: "#002561" },
+                          { l: "EMEA", v: 30, c: "#003a8c" },
+                          { l: "Övrigt", v: 16, c: "#10B981" },
+                          { l: "SE Asia", v: 12, c: "#4361ee" },
+                          { l: "NE Asia", v: 7, c: "#7209b7" },
+                        ].map((d, i) => (
+                          <div 
+                            key={i} 
+                            style={{ width: `${d.v}%`, background: d.c }} 
+                            title={`${d.l}: ${d.v}%`}
+                            className="hover:opacity-90 transition-opacity cursor-help"
+                          />
+                        ))}
+                      </div>
+                      <div className="flex flex-wrap gap-x-4 gap-y-2">
+                        {[
+                          { l: "Amerika", v: "35%", c: "#002561" },
+                          { l: "EMEA", v: "30%", c: "#003a8c" },
+                          { l: "Övrigt (Patent/Ent.)", v: "16%", c: "#10B981", bold: true },
+                          { l: "SE Asia/India", v: "12%", c: "#4361ee" },
+                          { l: "NE Asia", v: "7%", c: "#7209b7" },
+                        ].map((d, i) => (
+                          <div key={i} className="flex items-center gap-1.5">
+                            <div className="w-2 h-2 rounded-full" style={{ background: d.c }} />
+                            <span className={`text-[11px] ${d.bold ? 'font-black text-slate-900 border-b border-[#10B981]/30' : 'text-slate-500'}`}>
+                              {d.l} <strong>{d.v}</strong>
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="mt-4 p-3 rounded-xl bg-[#10B981]/5 border border-[#10B981]/10 text-[12px] text-slate-600 leading-relaxed italic">
+                        <strong>Obs:</strong> Kategorin "Övrigt" är strategiskt avgörande då den rymmer patent- och licensintäkter samt Enterprise. Detta är Ericssons mest högkvalitativa kassaflöde och en viktig motvikt till den cykliska Networks-affären.
+                      </div>
+                    </div>
+                  )],
                   ["Affärsmodell", "Fyra lager: Installerade basen, Uppgraderingar/Service/Mjukvara, Företagsaffären (Vonage/Network APIs), samt Patent- och licensintäkter (~13 mdr kr återkommande)."],
                   ["Ledning & Disciplin", "Börje Ekholm har förbättrat marginaler och kostnadsdisciplin. 2025 blev nionde kvartalet i följd med förbättrad justerad EBITA-marginal sekventiellt."],
                   ["Ägarstruktur", "Stark kontrollägarbild med Investor AB (24,82% av rösterna) och Industrivärden (15,04%). Ger en stabil industriell förankring."],
