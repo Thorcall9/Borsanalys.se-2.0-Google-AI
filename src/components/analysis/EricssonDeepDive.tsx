@@ -342,69 +342,67 @@ export default function EricssonDeepDive({
               
               <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`,marginBottom:24}}>
                 <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Ericssons strategiska position är starkare än vad den genomsnittliga börsbilden ibland antyder. Moaten bygger på teknikledarskap, en massiv installerad bas och en av världens största patentportföljer inom telekom (&gt;60 000 patent).
+                  Ericssons strategiska position är starkare än vad den genomsnittliga börsbilden ibland antyder. I årsredovisningen anger bolaget en global RAN-markdnadsandel på cirka <strong>37 procent utanför Kina</strong>, 206 aktiva 5G-nät i 85 länder och 55 levererade 5G standalone-nät. Det gör Ericsson till en av mycket få verkligt globala systemleverantörer inom mobilnätsutrustning.
                 </p>
                 <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Med en global RAN-markndadsandel på cirka 37 procent utanför Kina och 206 aktiva 5G-nät i 85 länder är de en av få verkliga systemleverantörer. Switching costs är höga: när en operatör byggt sin arkitektur med Ericsson är det dyrt och riskfyllt att byta.
+                  Den viktigaste konkurrensfördelen är kombinationen av teknik, installerad bas och patent. Ericsson har mer än <strong>60 000 beviljade patent</strong> och en mycket stor närvaro i operatörernas befintliga nät. När en operatör redan byggt stora delar av sin radio- och kärnnätsarkitektur med Ericsson blir det dyrt, riskfyllt och tidskrävande att byta leverantör (<strong>switching costs</strong>). Samtidigt är patentintäkterna inte helt friktionsfria; ett större smartphone-licensavtal i Kina löpte ut den 31 december 2025, vilket belyser den löpande osäkerheten i detta kvalitativa kassaflödesben.
+                </p>
+                <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
+                  Marknaden är dock inte perfekt. Ericsson konkurrerar personligen med Nokia och Huawei. Huawei är exkluderat eller begränsat i vissa västmarknader men fortsatt starkt globalt sett. Det gör att Ericsson har en verklig moat, men inte en monopolmoat.
                 </p>
               </div>
 
-              <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>Moat-dimensioner</div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-                {[
-                  ["Teknikledarskap","Skala och ledande position i mobilnätsutrustning.","★★★★★"],
-                  ["Patentportfölj","Över 60 000 patent ger återkommande licensintäkter.","★★★★★"],
-                  ["Switching Costs","Hög tröskel att byta system för operatörer.","★★★★☆"],
-                  ["Global Service","Enorm leverans- och servicekapacitet i 175 länder.","★★★★☆"],
-                ].map(([m,d,s])=>(
-                  <div key={m} style={{background:T.bg,border:`1px solid ${T.border}`,borderRadius:10,padding:14}}>
-                    <div style={{fontWeight:700,color:T.ink,fontSize:13,marginBottom:4}}>{m}</div>
-                    <div style={{color:T.gold,fontSize:12,marginBottom:6}}>{s}</div>
-                    <div style={{color:T.sub,fontSize:12,lineHeight:1.6}}>{d}</div>
-                  </div>
-                ))}
+              <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>SWOT-analys</div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div style={{background:"#F0FDF4", borderRadius:12, padding:18, border:"1px solid #DCFCE7"}}>
+                  <div style={{fontWeight:700, color:"#166534", fontSize:13, marginBottom:10, display:"flex", alignItems:"center", gap:2}}>💪 Styrkor</div>
+                  <ul style={{margin:0, paddingLeft:16, fontSize:12.5, color:"#166534", lineHeight:1.8}}>
+                    <li>Stark position i RAN (37% utanför Kina)</li>
+                    <li>Massiv installerad bas och switching costs</li>
+                    <li>Världsledande patentportfölj (&gt;60 000 patent)</li>
+                    <li>Stark nettokassa (61,2 miljarder kronor)</li>
+                    <li>Tydligt förbättrade marginaler under 2025</li>
+                  </ul>
+                </div>
+                <div style={{background:"#FEF2F2", borderRadius:12, padding:18, border:"1px solid #FEE2E2"}}>
+                  <div style={{fontWeight:700, color:"#991B1B", fontSize:13, marginBottom:10, display:"flex", alignItems:"center", gap:2}}>⚠️ Svagheter</div>
+                  <ul style={{margin:0, paddingLeft:16, fontSize:12.5, color:"#991B1B", lineHeight:1.8}}>
+                    <li>Låg strukturell tillväxt i huvudmarknaden</li>
+                    <li>Enterprise ännu inte fullt bevisat som stabil vinstmaskin</li>
+                    <li>Rapporterad 2025-vinst delvis iconectiv-driven</li>
+                    <li>Beroende av operatörernas investeringscykler</li>
+                  </ul>
+                </div>
+                <div style={{background:"#EFF6FF", borderRadius:12, padding:18, border:"1px solid #DBEAFE"}}>
+                  <div style={{fontWeight:700, color:"#1D4ED8", fontSize:13, marginBottom:10, display:"flex", alignItems:"center", gap:2}}>🚀 Möjligheter</div>
+                  <ul style={{margin:0, paddingLeft:16, fontSize:12.5, color:"#1D4ED8", lineHeight:1.8}}>
+                    <li>5G Standalone, kärnnät och network APIs</li>
+                    <li>Privata nät och försvar/samhällskritisk infra</li>
+                    <li>AI-drivna autonoma nät (effektivisering)</li>
+                    <li>Expansion inom Enterprise-lösningar</li>
+                  </ul>
+                </div>
+                <div style={{background:"#FFFBEB", borderRadius:12, padding:18, border:"1px solid #FDE68A"}}>
+                  <div style={{fontWeight:700, color:"#92400E", fontSize:13, marginBottom:10, display:"flex", alignItems:"center", gap:2}}>🔴 Hot</div>
+                  <ul style={{margin:0, paddingLeft:16, fontSize:12.5, color:"#92400E", lineHeight:1.8}}>
+                    <li>Hård konkurrens från Nokia och Huawei</li>
+                    <li>Regulatorisk osäkerhet kring patentlicensiering</li>
+                    <li>DOJ/SAMR-processer och juridiska kostnader</li>
+                    <li>Svag operatörscapex och valutamotvind</li>
+                  </ul>
+                </div>
               </div>
 
-              <div style={{marginTop: 32}}>
-                <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>SWOT-analys</div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div style={{background:"#F0FDF4", borderRadius:12, padding:16, border:"1px solid #DCFCE7"}}>
-                    <div style={{fontWeight:700, color:"#166534", fontSize:13, marginBottom:8}}>💪 Styrkor</div>
-                    <ul style={{margin:0, paddingLeft:16, fontSize:12.5, color:"#166534", lineHeight:1.7}}>
-                      <li>Stark global marknadsposition i RAN utanför Kina</li>
-                      <li>Stor patentportfölj och licensintäkter (~13 mdr/år)</li>
-                      <li>Installerad bas och höga switching costs</li>
-                      <li>Robust nettokassa och förbättrade marginaler</li>
-                    </ul>
-                  </div>
-                  <div style={{background:"#FEF2F2", borderRadius:12, padding:16, border:"1px solid #FEE2E2"}}>
-                    <div style={{fontWeight:700, color:"#991B1B", fontSize:13, marginBottom:8}}>⚠️ Svagheter</div>
-                    <ul style={{margin:0, paddingLeft:16, fontSize:12.5, color:"#991B1B", lineHeight:1.7}}>
-                      <li>RAN-marknaden väntas vara oförändrad 2026</li>
-                      <li>Enterprise ännu inte bevisat som stabilt vinstben</li>
-                      <li>2025-lönsamhet förstärks av iconectiv-vinst</li>
-                      <li>Beroende av operatörernas capex-cykler</li>
-                    </ul>
-                  </div>
-                  <div style={{background:"#EFF6FF", borderRadius:12, padding:16, border:"1px solid #DBEAFE"}}>
-                    <div style={{fontWeight:700, color:"#1D4ED8", fontSize:13, marginBottom:8}}>🚀 Möjligheter</div>
-                    <ul style={{margin:0, paddingLeft:16, fontSize:12.5, color:"#1D4ED8", lineHeight:1.7}}>
-                      <li>5G standalone och programmerbara nät</li>
-                      <li>Network APIs via Vonage/Aduna</li>
-                      <li>Privata nät, försvar och samhällskritisk infra</li>
-                      <li>AI-drivna autonoma nät och 6G-positionering</li>
-                    </ul>
-                  </div>
-                  <div style={{background:"#FFFBEB", borderRadius:12, padding:16, border:"1px solid #FDE68A"}}>
-                    <div style={{fontWeight:700, color:"#92400E", fontSize:13, marginBottom:8}}>🔴 Hot</div>
-                    <ul style={{margin:0, paddingLeft:16, fontSize:12.5, color:"#92400E", lineHeight:1.7}}>
-                      <li>Hård konkurrens från Nokia och Huawei</li>
-                      <li>Patenttvister och regulatorisk granskning</li>
-                      <li>Valutamotvind och osäker makro</li>
-                      <li>Fortsatt svag investeringstakt i Indien</li>
-                    </ul>
-                  </div>
+              {/* RATING BOX */}
+              <div style={{marginTop: 32, background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 16, padding: 24, position: "relative", overflow: "hidden"}}>
+                <div style={{position: "absolute", top: 0, right: 0, width: 6, height: "100%", background: T.accent}}></div>
+                <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12}}>
+                  <div style={{fontSize: 12, fontWeight: 900, color: T.accent, letterSpacing: 1, textTransform: "uppercase"}}>BEDÖMNING – Strategisk Moat</div>
+                  <div style={{fontSize: 18, fontWeight: 900, color: T.ink}}>4/5</div>
                 </div>
+                <p style={{margin: 0, color: T.ink, fontSize: 13.5, lineHeight: 1.7, fontWeight: 500}}>
+                  Ericsson har en starkare moat än en normal industrileverantör. Patent, installerad bas, skala och teknikledarskap gör positionen svår att rubba. Men prispress, stora konkurrenter och regulatorisk osäkerhet hindrar högsta betyg.
+                </p>
               </div>
             </Card>
           </FadeIn>
