@@ -261,7 +261,7 @@ export default function MacroDashboard() {
       }
       
       if (!response.ok) {
-        throw new Error(data.error || "Misslyckades att hämta analys");
+        throw new Error(`Serverfel (Status ${response.status}): ${data.error || "Misslyckades att hämta analys"}`);
       }
       setMacroOutlook(data.outlook || "Kunde inte generera analys.");
       
