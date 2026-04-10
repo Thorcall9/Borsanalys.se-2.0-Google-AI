@@ -690,7 +690,7 @@ export default function NewWaveDeepDive({
                 <span className="text-[10px] font-black uppercase tracking-widest text-rose-500">Bear Case</span>
               </div>
               <div className="text-4xl font-black mb-2 tracking-tighter">75–85 kr</div>
-              <p className="text-xs text-slate-500 leading-relaxed">Långvarig svag retail, valuta fortsätter slå mot rapporterade siffror, integration av Cotton Classics blir tyngre än väntat.</p>
+              <p className="text-xs text-slate-500 leading-relaxed">Retail förblir svag, valuta fortsätter slå mot rapporterade siffror, integrationen av Cotton Classics blir tyngre än väntat och lager-/ERP-satsningarna tar längre tid att ge effekt. Då kan vinståterhämtningen skjutas fram och värderingen komprimeras.</p>
             </div>
             <div className="p-8 bg-white border-4 border-primary rounded-3xl shadow-2xl relative overflow-hidden">
               <div className="flex items-center gap-3 mb-6">
@@ -698,7 +698,7 @@ export default function NewWaveDeepDive({
                 <span className="text-[10px] font-black uppercase tracking-widest text-primary">Base Case</span>
               </div>
               <div className="text-4xl font-black mb-2 tracking-tighter">130–145 kr</div>
-              <p className="text-xs text-slate-500 leading-relaxed">Normalisering av marginaler och successiv vinståterhämtning 2026-2027. Multiplar återgår till historiska snitt kring 14-15x.</p>
+              <p className="text-xs text-slate-500 leading-relaxed">Omsättningen växer vidare i hygglig takt, Cotton Classics levererar enligt plan, och marginalerna förbättras successivt under 2026–2027. Ett 2027e EPS på 9,41 SEK visar sig vara ungefär rätt, och marknaden sätter en multipel kring 14–15x.</p>
               <div className="absolute -right-4 -bottom-4 opacity-5 text-primary">
                 <Target size={120} />
               </div>
@@ -709,7 +709,7 @@ export default function NewWaveDeepDive({
                 <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500">Bull Case</span>
               </div>
               <div className="text-4xl font-black mb-2 tracking-tighter">160–180 kr</div>
-              <p className="text-xs text-slate-500 leading-relaxed">Cotton Classics integreras snabbare, Craft expansion i USA överraskar, marknaden förbättras från H2 2026. EBIT närmar sig 15%.</p>
+              <p className="text-xs text-slate-500 leading-relaxed">Cotton Classics integreras snabbare, Crafts expansion inom teamwear och skor får bra genomslag, ERP-kostnaderna klingar av och marknaden förbättras från H2 2026. EBIT närmar sig 15%-marginal snabbare än väntat.</p>
             </div>
           </div>
         </FadeIn>

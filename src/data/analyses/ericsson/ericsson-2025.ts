@@ -20,9 +20,9 @@ export const ericsson2025: AnalysisData = {
   
   marketOverview: "Geografiskt är affären bred, men inte jämnt fördelad. Försäljningen 2025 kom till 35 procent från Nord- och Sydamerika, 30 procent från Europa, Mellanöstern och Afrika, 12 procent från Sydostasien, Oceanien och Indien, 7 procent från Nordostasien samt 16 procent från “Other”. Den sista posten är viktig, eftersom Ericsson uttryckligen anger att “Other” främst består av patent- och licensintäkter samt försäljning inom Enterprise. Det är en viktig justering mot enklare Ericsson-beskrivningar där man lätt placerar all kvalitet i Networks.",
   
-  businessModel: "Affärsmodellen bygger i praktiken på fyra lager. Först kommer den stora installerade basen i operatörernas nät. Därefter kommer uppgraderingar, service, mjukvara och kärnnätsfunktioner. Det tredje lagret är företagsaffären, där Vonage, network APIs, privata nät och trådlösa WAN-lösningar ska bredda Ericsson bortom klassisk operatörscapex. Det fjärde lagret är patent- och licensintäkterna, som vid slutet av 2025 motsvarade omkring 13 miljarder kronor i återkommande årliga intäkter. Det är ett kvalitativt starkt kassaflödesben, men inte riskfritt.",
+  businessModel: "Ericssons strategiska position bygger på tre hörnstenar: en global RAN-markndadsandel på cirka 37 procent utanför Kina, över 60 000 beviljade patent och en massiv installerad bas som skapar höga switching costs. Affären bygger på fyra lager: den installerade basen, löpande uppgraderingar/service/mjukvara, företagsaffären (Vonage/Network APIs) samt patent- och licensintäkter (~13 mdr kr återkommande). 2025 fanns 206 aktiva 5G-nät i 85 länder och 55 levererade 5G standalone-nät.",
   
-  managementOverview: "Ledningsmässigt är det tydligt att Ericsson under Börje Ekholm blivit mer disciplinerat. 2025 blev det nionde kvartalet i följd med förbättrad justerad EBITA-marginal jämfört med samma period året före. Samtidigt ska man inte överdriva turnaround-berättelsen: 2025 års rapporterade lönsamhet hjälps också av iconectiv-försäljningen. Ägarbilden är däremot ett klart plus. Investor AB kontrollerade 24,82 procent av rösterna och Industrivärden 15,04 procent vid utgången av 2025, vilket ger bolaget en ovanligt stark industriell förankring.",
+  managementOverview: "Under Börje Ekholm har Ericsson uppvisat nio kvartal i följd med förbättrad justerad EBITA-marginal sekventiellt (fram till slutet av 2025). Disciplinen har ökat, men utmaningen ligger i att bevisa att Enterprise-benet kan ge stabil vinst och hantera de regulatoriska riskerna kring patent. Ett smartphone-licensavtal i Kina löpte ut vid årsskiftet 2025/2026, vilket belyser den löpande osäkerheten i patentbenet.",
   
   growth: "Ericsson har flera tillväxtspår, men inget av dem är ännu så starkt att det ensam förändrar caset. Det viktigaste är Cloud Software and Services. Q4-rapporten visade 12 procent organisk tillväxt i segmentet under kvartalet, och helåret innehöll organisk tillväxt inom både Networks och Cloud Software and Services. Det här är viktigt, eftersom det visar att Ericsson faktiskt kan växa i delar av affären trots att RAN-marknaden är stillastående. Nästa motor är 5G standalone och programmerbara nät. Årsredovisningen lyfter detta som centralt för att skapa differentierad konnektivitet, network slicing och nya intäktsmodeller. Det tredje spåret är Enterprise (Vonage/Aduna, privata 5G-nät). Det fjärde spåret är verksamhetskritiska nät, offentlig säkerhet och försvar.",
   
@@ -33,6 +33,32 @@ export const ericsson2025: AnalysisData = {
     "Patent och immateriella tillgångar (>60 000 patent)",
     "Höga kundbytarkostnader (switching costs)",
     "Global service- och leveransförmåga"
+  ],
+  
+  strengths: [
+    "Stark position i RAN (37% outside China)",
+    "Världsledande patentportfölj (>60k patent)",
+    "Hög installerad bas och switching costs",
+    "Stark nettokassa (61,2 mdr kr)",
+    "Tydligt förbättrade marginaler"
+  ],
+  weaknesses: [
+    "Låg strukturell tillväxt i RAN",
+    "Enterprise ännu ej fullt bevisat",
+    "2025-vinst delvis engångsdriven",
+    "Beroende av operatörscycles"
+  ],
+  opportunities: [
+    "5G Standalone & programmerbara nät",
+    "Network APIs via Vonage/Aduna",
+    "Privata nät och försvar/samhällskritisk infra",
+    "AI-drivna autonoma nät"
+  ],
+  threats: [
+    "Hård konkurrens (Nokia/Huawei)",
+    "Regulatorisk osäkerhet kring patent",
+    "DOJ/SAMR-utredningar",
+    "Svag operatörscapex och valuta"
   ],
   
   risks: [
