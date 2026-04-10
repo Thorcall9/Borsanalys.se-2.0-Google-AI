@@ -147,15 +147,37 @@ export const handelsbanken2025: AnalysisData = {
         direktavkastning: "13,0% (2025)"
       }
     },
+    valuation: {
+      text: "När man värderar bank ska fokus ligga mer på P/E, P/B, ROE och utdelningskapacitet än på EV/EBIT eller PEG.\n\nOm vi använder årsskifteskursen 134,35 kr och EPS 11,98 kr blir P/E cirka 11,2x. Om vi använder föreslagen total utdelning 17,50 kr blir direktavkastningen cirka 13,0%, men det är missvisande som normalnivå eftersom 9,50 kr är extrautdelning. På ordinarie utdelning 8,00 kr blir direktavkastningen cirka 6,0%.\n\nUtifrån kapitalet är banken inte dyr, men heller inte uppenbart billig. Den höga kvaliteten motiverar en premie mot svagare europeiska banker, men samtidigt är EPS-trenden just nu fallande. Därför är det svårt att argumentera för att aktien är kraftigt felprissatt.\n\nEtt rimligt sätt att tänka är:\n- Låg kreditrisk och hög kvalitet talar för premie\n- Sjunkande räntenetto och lägre EPS talar mot aggressiv multipel-expansion\n\nDet ger en värderingsbild som är rimlig till lätt attraktiv, men inte solklar.",
+      score: "3/5"
+    },
+    growthTriggers: {
+      text: "1. Storbritannien och Nederländerna\n\nDet mest intressanta tillväxtspåret ligger utanför Sverige. Banken lyfter själv fram att marknadsandelarna i Storbritannien och Nederländerna är relativt små och att den långsiktiga tillväxtpotentialen därför är god.\n\nI Storbritannien fortsatte utlåningen att växa under 2025, både inom hushåll och företag. I Nederländerna fortsatte banken också växa från en låg bas. Det här är viktigt eftersom det ger Handelsbanken tillväxtmöjligheter utan att behöva kompromissa med kreditkvalitet i Sverige.\n\n2. Sparaffären\n\nSparaffären är en av de tydligaste ljuspunkterna i rapporterna. I Sverige uppgick totalt förvaltat kapital till 1 129 mdkr vid utgången av 2025, varav fondvolymen uppgick till 1 077 mdkr. Nettoflödet i bankens fonder i Sverige var 73,0 mdkr, jämfört med 35,9 mdkr året innan.\n\nDet här är viktigt av två skäl. Dels ökar provisionsintäkterna. Dels minskar beroendet av räntenettot över tid.\n\n3. Effektivisering\n\nUnder 2025 minskade kostnaderna 7%, vilket visar att banken återfått delar av den kostnadsdisciplin som länge varit central i kultur och strategi.\n\n4. AI och teknik\n\nHandelsbanken beskriver att AI främst ska användas för interna processer och affärsstöd, inte för att ersätta det personliga kundmötet. Det är typiskt Handelsbanken: teknik som förstärker modellen, inte förändrar identiteten.",
+      score: "3/5"
+    },
+    riskProfile: {
+      text: "Ränterisk\n\nDen största risken i caset är tydlig: räntenettot. När marknadsräntorna sjunker pressas marginalerna, vilket slog igenom tydligt under 2025. Det är den främsta orsaken till att intäkterna och EPS föll.\n\nRegulatorisk risk\n\nStatliga avgifter uppgick till 2,8 mdkr under 2025. Därtill tillkom kostnad för räntefri inlåning hos Riksbanken. Det här är en verklig belastning som inte går att påverka operativt på kort sikt.\n\nFastighetsrisk\n\nSom svensk bank har Handelsbanken naturligtvis meningsfull exponering mot fastigheter och bolån. Det betyder att ett svagt nordiskt makro eller problem i kommersiella fastigheter alltid är något att bevaka, även om bankens historiska kreditdisciplin gör att risken framstår som bättre hanterad än hos många konkurrenter.\n\nValuta och utländska marknader\n\nBankens internationella verksamhet innebär också viss resultatsvängning från valutaeffekter, vilket syntes i totalresultatet under 2025 när den svenska kronan stärktes.",
+      score: "5/5",
+      level: "Låg"
+    },
+    esgMakro: {
+      text: "Handelsbanken har en relativt stark ESG profile för att vara storbank. Under Q3 uppgick gröna lån till 140 mdkr, och i årsslutet visade banken fortsatt hög andel artikel 8- och artikel 9-klassade fonder enligt SFDR. I bokslutskommunikén anges att 21% av det förvaltade kapital som träffas av förordningen låg i artikel 9 och 79% i artikel 8.\n\nMakromässigt är banken dubbelverkande:\n- lägre räntor pressar räntenettot,\n- men lägre räntor kan samtidigt stabilisera hushåll, fastighetsmarknad och kreditkvalitet.\n\nDet gör Handelsbanken defensiv snarare än offensiv i makromiljön.",
+      score: "4/5"
+    },
+    aiObservations: {
+      text: "Det mest intressanta “AI-liknande” mönstret i datan är inte att banken har någon dold positiv trigger, utan att siffrorna är ovanligt konsekventa.\n\nTre observationer sticker ut:\n1. Kreditkvaliteten är fortsatt extremt stark trots svagare räntemiljö.\n2. Sparaffären accelererar samtidigt som räntenettot försvagas, vilket gör intäktsmixen något bättre.\n3. Extrautdelningen är stor, vilket signalerar stark kapitalposition men också gör att direktavkastningen ser mer spektakulär ut än vad den ordinarie intjäningsnivån motiverar.\n\nDet finns inga tydliga röda flaggor i rapporterna. Snarare är bilden att Handelsbanken fortsätter vara exakt det den brukar vara: tråkig, stark och disciplinerad.",
+      score: "3/5"
+    },
     sammanfattning: {
+      text: "Är Handelsbanken ett kvalitetsbolag?\n\nJa. Det är ett av de tydligaste kvalitetsbolagen i nordisk banksektor. Kombinationen av kultur, kapitalstyrka, kreditkvalitet och kundnöjdhet är ovanlig.\n\nÄr aktien rimligt värderad?\n\nJa, ungefär. Inte dyr för kvaliteten, men heller inte uppenbart billig. Det som håller tillbaka värderingscaset är att EPS pressats av lägre räntor och att marknaden redan känner till bankens styrkor.\n\nÄr det ett bra 5–10 års innehav?\n\nJa, för den som söker stabilitet, utdelning och låg kreditrisk snarare än explosiv tillväxt. Handelsbanken är ett innehav man kan sova gott med, men kanske inte ett innehav som dubblas snabbt.\n\nSlutsats: Bevaka / Svagt Köp\n\nDet här är inte den billigaste banken, men det är en av de säkraste. Om du prioriterar kvalitet, motståndskraft och ordinarie utdelningsförmåga är Handelsbanken mycket intressant. Om du däremot söker tydlig vinstacceleration på kort sikt finns det bättre case.",
       beslut: "Bevaka / Svagt Köp",
       motivering: "Ett extremt stabilt kvalitetsbolag med stark kapitalisering och låg kreditrisk, men värderingen är inte tillräckligt låg för ett tydligt köp givet press på räntenettot",
       malpris: "145–155 kr"
     },
     scenarier: {
-      bullCase: "Räntenettot stabiliseras, sparaffären fortsätter växa och marknaden åter sätter en kvalitets-premie på aktien. Kurs 160–175 kr.",
-      baseCase: "Normaliserad lönsamhet kring dagens nivåer, fortsatt stark ordinarie utdelning och modest tillväxt i UK/Nederländerna. Kurs 145–155 kr.",
-      bearCase: "Fortsatt räntetryck, svagare kreditmiljö och lägre multipel på banker generellt. Kurs 115–130 kr."
+      bullCase: "Räntenettot bottnar under 2026, sparaffären fortsätter växa starkt och banken fortsätter vinna affärer i Storbritannien och Nederländerna. Marknaden åter sätter en tydligare kvalitets-premie på aktien. Då är 160–175 kr rimligt.",
+      baseCase: "Handelsbanken fortsätter leverera stark kreditkvalitet, god ordinarie utdelning och modest tillväxt i kapitalförvaltning, men utan någon stark vinstacceleration. Då är 145–155 kr rimligt.",
+      bearCase: "Räntetrycket fortsätter, regulatoriska kostnader biter och europeiska bankmultiplar kommer ned. Då kan aktien falla tillbaka mot 115–130 kr, även om nedsidan sannolikt begränsas av kvaliteten i balansräkningen."
     }
   }
 };

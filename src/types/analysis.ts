@@ -57,13 +57,33 @@ export interface AIDrivenAnalysis {
   };
   tillvaxtdrivare?: string[];
   esgMakro?: {
-    esgProfil: string;
-    makropaverkan: string;
+    esgProfil?: string;
+    makropaverkan?: string;
+    text?: string;
+    score?: string;
   };
   sammanfattning?: {
+    text?: string;
     beslut: string;
     motivering: string;
     malpris: string;
+  };
+  valuation?: {
+    text: string;
+    score: string;
+  };
+  growthTriggers?: {
+    text: string;
+    score: string;
+  };
+  riskProfile?: {
+    text: string;
+    score: string;
+    level: string;
+  };
+  aiObservations?: {
+    text: string;
+    score: string;
   };
   scenarier?: {
     bullCase: string;

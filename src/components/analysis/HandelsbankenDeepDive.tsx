@@ -361,7 +361,7 @@ export default function HandelsbankenDeepDive({
               <SectionLabel number="III" title="Finansiell Analys"/>
               <div style={{background:T.accentL,border:"1.5px solid rgba(0,75,135,0.2)",borderRadius:14,padding:"18px 22px",borderLeft:"4px solid #004B87",marginBottom:28}}>
                 <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  För banker måste analysen anpassas. Mått som EV/EBIT och traditionellt fritt kassaflöde är missvisande. Istället fokuserar vi på intjäning, ROE, K/I-tal, kreditförluster och kapitalisering.
+                  För banker måste analysen anpassas. Mått som EV/EBIT och traditionellt fritt kassaflöde är missvisande. Istället fokuserar vi på intjäning, ROE, K/I-tal, kreditförluster och kapitalisering. 2025 präglades av press på räntenettot till följd av sjunkande marknadsräntor. Intäkterna minskade med 9% till 56,8 mdkr och EPS sjönk med 14% till 11,98 kr. Trots detta bibehölls en stark lönsamhet med ROE på 13,0% och en mycket låg K/I-kvot på 41,5%.
                 </p>
               </div>
 
@@ -411,23 +411,277 @@ export default function HandelsbankenDeepDive({
           </FadeIn>
         </div>
 
-        {/* ── SCENARIER ── */}
-        <div id="scenarier">
+        {/* ── VÄRDERING ── */}
+        <div id="vardering">
+          <FadeIn delay={250}>
+            <Card mb={20}>
+              <SectionLabel number="IV" title="Värdering & Jämförelse"/>
+              <div className="space-y-6">
+                <p style={{margin:0,fontSize:14,color:T.sub,lineHeight:1.8}}>
+                  När man värderar bank ska fokus ligga mer på P/E, P/B, ROE och utdelningskapacitet än på EV/EBIT eller PEG.
+                </p>
+                <div style={{background:T.bg, borderRadius:14, padding:20, border:`1px solid ${T.border}`}}>
+                  <p style={{margin:0,fontSize:14,color:T.ink,lineHeight:1.8}}>
+                    Om vi använder årsskifteskursen 134,35 kr och EPS 11,98 kr blir <strong>P/E cirka 11,2x</strong>. Om vi använder föreslagen total utdelning 17,50 kr blir direktavkastningen cirka 13,0%, men det är missvisande som normalnivå eftersom 9,50 kr är extrautdelning. På ordinarie utdelning 8,00 kr blir <strong>direktavkastningen cirka 6,0%</strong>.
+                  </p>
+                </div>
+                <p style={{margin:0,fontSize:14,color:T.sub,lineHeight:1.8}}>
+                  Utifrån kapitalet är banken inte dyr, men heller inte uppenbart billig. Den höga kvaliteten motiverar en premie mot svagare europeiska banker, men samtidigt är EPS-trenden just nu fallande. Därför är det svårt att argumentera för att aktien är kraftigt felprissatt.
+                </p>
+                <div style={{background:T.accentL, borderRadius:12, padding:16, borderLeft:`4px solid ${T.accent}`}}>
+                  <div style={{fontSize:11,fontWeight:700,color:T.accent,textTransform:"uppercase",marginBottom:8}}>Ett rimligt sätt att tänka</div>
+                  <ul style={{margin:0, paddingLeft:18, fontSize:13.5, color:T.ink, lineHeight:1.7}}>
+                    <li>Låg kreditrisk och hög kvalitet talar för premie</li>
+                    <li>Sjunkande räntenetto och lägre EPS talar mot aggressiv multipel-expansion</li>
+                  </ul>
+                </div>
+                <p style={{margin:0,fontSize:14,color:T.sub,lineHeight:1.8}}>
+                  Det ger en värderingsbild som är rimlig till lätt attraktiv, men inte solklar.
+                </p>
+                <div className="flex items-center gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                  <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-lg">3/5</div>
+                  <div>
+                    <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Bedömning</div>
+                    <div className="text-sm font-bold text-slate-900">Aktien är inte dyr för kvaliteten, men inte ett självklart köp.</div>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </FadeIn>
+        </div>
+
+        {/* ── TILLVÄXT ── */}
+        <div id="tillvaxt">
           <FadeIn delay={300}>
             <Card mb={20}>
-              <SectionLabel number="X" title="Scenarier"/>
+              <SectionLabel number="V" title="Tillväxtmotorer & Triggers"/>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                  <div>
+                    <h3 style={{fontSize:15,fontWeight:800,color:T.ink,marginBottom:8}}>1. Storbritannien och Nederländerna</h3>
+                    <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.7}}>
+                      Det mest intressanta tillväxtspåret ligger utanför Sverige. Banken lyfter själv fram att marknadsandelarna i Storbritannien och Nederländerna är relativt små och att den långsiktiga tillväxtpotentialen därför är god. I Storbritannien fortsatte utlåningen att växa under 2025, både inom hushåll och företag.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 style={{fontSize:15,fontWeight:800,color:T.ink,marginBottom:8}}>2. Sparaffären</h3>
+                    <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.7}}>
+                      I Sverige uppgick totalt förvaltat kapital till 1 129 mdkr vid utgången av 2025, varav fondvolymen uppgick till 1 077 mdkr. Nettoflödet i bankens fonder i Sverige var 73,0 mdkr, jämfört med 35,9 mdkr året innan. Detta ökar provisionsintäkterna och minskar beroendet av räntenettot.
+                    </p>
+                  </div>
+                </div>
+                <div className="space-y-6">
+                  <div>
+                    <h3 style={{fontSize:15,fontWeight:800,color:T.ink,marginBottom:8}}>3. Effektivisering</h3>
+                    <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.7}}>
+                      Under 2025 minskade kostnaderna 7%, vilket visar att banken återfått delar av den kostnadsdisciplin som länge varit central i kultur och strategi.
+                    </p>
+                  </div>
+                  <div>
+                    <h3 style={{fontSize:15,fontWeight:800,color:T.ink,marginBottom:8}}>4. AI och teknik</h3>
+                    <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.7}}>
+                      AI ska främst användas för interna processer och affärsstöd, inte för att ersätta det personliga kundmötet. Teknik som förstärker modellen, inte förändrar identiteten.
+                    </p>
+                  </div>
+                  <div className="bg-[#004B87]/5 p-5 rounded-2xl border border-[#004B87]/10">
+                    <div className="flex items-center gap-3 mb-2">
+                      <Star size={16} className="text-[#004B87]" fill="currentColor" />
+                      <span className="text-xs font-bold text-[#004B87] uppercase tracking-wider">Tillväxtbetyg: 3/5</span>
+                    </div>
+                    <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                      Inte ett snabbväxande case, men habila och kontrollerade drivkrafter i sparande och nya marknader.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </FadeIn>
+        </div>
+
+        <AdUnit slot="9323485761" />
+
+        {/* ── RISKPROFIL ── */}
+        <div id="risk">
+          <FadeIn delay={350}>
+            <Card mb={20}>
+              <SectionLabel number="VI" title="Riskprofil"/>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+                <div style={{background:T.bg, borderRadius:16, padding:20, border:`1px solid ${T.border}`}}>
+                  <div className="space-y-5">
+                    <div>
+                      <div className="text-[10px] font-bold text-[#004B87] uppercase tracking-widest mb-1">Ränterisk</div>
+                      <p className="text-sm text-slate-700 leading-relaxed">Den största risken är räntenettot. När marknadsräntorna sjunker pressas marginalerna, vilket slog igenom tydligt under 2025.</p>
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-bold text-[#004B87] uppercase tracking-widest mb-1">Regulatorisk risk</div>
+                      <p className="text-sm text-slate-700 leading-relaxed">Statliga avgifter på 2,8 mdkr och räntefri inlåning hos Riksbanken är belastningar som inte går att påverka operativt.</p>
+                    </div>
+                  </div>
+                </div>
+                <div style={{background:T.bg, borderRadius:16, padding:20, border:`1px solid ${T.border}`}}>
+                  <div className="space-y-5">
+                    <div>
+                      <div className="text-[10px] font-bold text-[#004B87] uppercase tracking-widest mb-1">Fastighetsrisk</div>
+                      <p className="text-sm text-slate-700 leading-relaxed">Exponering mot fastigheter och bolån innebär att svagt nordiskt makro alltid är en riskfaktor att bevaka.</p>
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-bold text-[#004B87] uppercase tracking-widest mb-1">Valuta</div>
+                      <p className="text-sm text-slate-700 leading-relaxed">Internationell verksamhet innebär resultatsvängning från valutaeffekter, särskilt vid en starkare krona.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-8 flex items-center justify-between p-6 bg-slate-900 rounded-2xl text-white">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
+                    <ShieldCheck size={24} className="text-white" />
+                  </div>
+                  <div>
+                    <div className="text-xs font-bold opacity-60 uppercase tracking-widest">Risknivå</div>
+                    <div className="text-xl font-black">Låg Risk</div>
+                  </div>
+                </div>
+                <div className="text-3xl font-black opacity-40">5/5</div>
+              </div>
+            </Card>
+          </FadeIn>
+        </div>
+
+        {/* ── ESG & MAKRO ── */}
+        <div id="esg">
+          <FadeIn delay={400}>
+            <Card mb={20}>
+              <SectionLabel number="VII" title="ESG & Makro"/>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="space-y-6">
+                  <p className="text-base text-slate-600 leading-relaxed">
+                    Handelsbanken har en relativt stark ESG-profil för att vara storbank. Under Q3 uppgick gröna lån till 140 mdkr, och i årsslutet visade banken fortsatt hög andel artikel 8- och artikel 9-klassade fonder enligt SFDR.
+                  </p>
+                  <div className="flex gap-4">
+                    <div className="flex-1 bg-emerald-50 border border-emerald-100 p-4 rounded-xl text-center">
+                      <div className="text-2xl font-black text-emerald-600">21%</div>
+                      <div className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Artikel 9</div>
+                    </div>
+                    <div className="flex-1 bg-emerald-50 border border-emerald-100 p-4 rounded-xl text-center">
+                      <div className="text-2xl font-black text-emerald-600">79%</div>
+                      <div className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Artikel 8</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-slate-50 p-8 rounded-[2rem] border border-slate-200">
+                  <h4 className="text-sm font-bold text-slate-900 mb-4 uppercase tracking-widest">Makropåverkan</h4>
+                  <ul className="space-y-4">
+                    <li className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#004B87] mt-2 shrink-0" />
+                      <p className="text-sm text-slate-600">Lägre räntor pressar räntenettot men stabiliserar hushållen.</p>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#004B87] mt-2 shrink-0" />
+                      <p className="text-sm text-slate-600">God kreditkvalitet även i svagare makromiljö.</p>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#004B87] mt-2 shrink-0" />
+                      <p className="text-sm text-slate-600">Defensiv snarare än offensiv positionering.</p>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </Card>
+          </FadeIn>
+        </div>
+
+        {/* ── AI OBSERVATIONER ── */}
+        <div id="ai">
+          <FadeIn delay={450}>
+            <Card mb={20}>
+              <SectionLabel number="VIII" title="AI-observationer 🔍"/>
+              <div style={{background:T.ink, borderRadius:24, padding:32, color:"white", position:"relative", overflow:"hidden"}}>
+                <div style={{position:"absolute", top:0, right:0, width:300, height:300, background:"rgba(0,75,135,0.2)", borderRadius:"50%", filter:"blur(100px)", transform:"translate(100px, -100px)"}} />
+                <div className="relative z-10">
+                  <p className="text-lg text-white/80 leading-relaxed mb-8 italic">
+                    "Det mest intressanta AI-liknande mönstret i datan är inte en dold positiv trigger, utan att siffrorna är ovanligt konsekventa. Banken fortsätter vara exakt det den brukar vara: tråkig, stark och disciplinerad."
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="bg-white/5 border border-white/10 p-5 rounded-2xl">
+                      <div className="text-[#004B87] font-black mb-2 text-xl">01</div>
+                      <p className="text-sm text-white/70">Kreditkvaliteten är fortsatt extremt stark trots svagare räntemiljö.</p>
+                    </div>
+                    <div className="bg-white/5 border border-white/10 p-5 rounded-2xl">
+                      <div className="text-[#004B87] font-black mb-2 text-xl">02</div>
+                      <p className="text-sm text-white/70">Sparaffären accelererar samtidigt som räntenettot försvagas.</p>
+                    </div>
+                    <div className="bg-white/5 border border-white/10 p-5 rounded-2xl">
+                      <div className="text-[#004B87] font-black mb-2 text-xl">03</div>
+                      <p className="text-sm text-white/70">Extrautdelningen signalerar styrka men döljer normaliserad intjäning.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </FadeIn>
+        </div>
+
+        {/* ── SAMMANFATTNING ── */}
+        <div id="sammanfattning">
+          <FadeIn delay={500}>
+            <div style={{background:T.accent, borderRadius:32, padding:40, color:"white", boxShadow:T.shadowLg}}>
+              <div className="flex flex-col md:flex-row gap-12">
+                <div className="flex-1 space-y-8">
+                  <SectionLabel number="IX" title={<span style={{color:"white"}}>Sammanfattning & Beslut</span>}/>
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-lg font-black tracking-tight mb-2">Är Handelsbanken ett kvalitetsbolag?</h4>
+                      <p className="text-white/70 leading-relaxed">Ja. Det är ett av de tydligaste kvalitetsbolagen i nordisk banksektor. Kombinationen av kultur och kundnöjdhet är ovanlig.</p>
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-black tracking-tight mb-2">Är aktien rimligt värderad?</h4>
+                      <p className="text-white/70 leading-relaxed">Ja, ungefär. Inte dyr för kvaliteten, men heller inte uppenbart billig givet fallande EPS-trend.</p>
+                    </div>
+                    <div>
+                      <h4 className="text-lg font-black tracking-tight mb-2">Investeringsbeslut?</h4>
+                      <div className="bg-white/10 rounded-2xl p-6 border border-white/20">
+                        <div className="text-2xl font-black mb-1">Bevaka / Svagt Köp</div>
+                        <p className="text-sm text-white/60">Prioritera kvalitet och utdelningsförmåga framför vinstacceleration.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full md:w-80 shrink-0 bg-white/5 rounded-3xl p-8 border border-white/10 flex flex-col justify-between">
+                  <div>
+                    <div className="text-xs font-bold text-white/50 uppercase tracking-[0.2em] mb-4">Slutlig Rating</div>
+                    <div className="text-7xl font-black tracking-tighter mb-2">0.80</div>
+                    <div className="text-sm font-bold text-white/70 tracking-widest uppercase">Kvalitetsbetyg</div>
+                  </div>
+                  <div className="pt-8 mt-8 border-t border-white/10">
+                    <div className="text-xs font-bold text-white/50 uppercase tracking-[0.2em] mb-2">Målpris</div>
+                    <div className="text-3xl font-black">145–155 kr</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* ── SCENARIER ── */}
+        <div id="scenarier">
+          <FadeIn delay={550}>
+            <Card mb={20}>
+              <SectionLabel number="X" title="Scenarier: Bull, Base & Bear"/>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div key="bull" style={{background:T.greenL, border:"1.5px solid rgba(16,185,129,0.2)", borderRadius:16, padding:20}}>
                   <div style={{fontWeight:800, color:T.green, fontSize:14, marginBottom:12}}>Bull Case</div>
                   <div style={{fontSize:24, fontWeight:900, color:T.green, marginBottom:4, letterSpacing:-1}}>160-175 kr</div>
+                  <p className="text-xs text-slate-600 leading-relaxed mt-4">Räntenettot bottnar, sparaffären växer och banken vinner i UK/Nederländerna. Kvalitetspremie återställs.</p>
                 </div>
                 <div key="base" style={{background:T.accentL, border:"1.5px solid rgba(0,75,135,0.2)", borderRadius:16, padding:20}}>
                   <div style={{fontWeight:800, color:T.accent, fontSize:14, marginBottom:12}}>Base Case</div>
                   <div style={{fontSize:24, fontWeight:900, color:T.accent, marginBottom:4, letterSpacing:-1}}>145-155 kr</div>
+                  <p className="text-xs text-slate-600 leading-relaxed mt-4">God ordinarie utdelning och modest tillväxt i kapitalförvaltning. Ingen stark vinstacceleration.</p>
                 </div>
                 <div key="bear" style={{background:T.redL, border:"1.5px solid rgba(217,54,62,0.2)", borderRadius:16, padding:20}}>
                   <div style={{fontWeight:800, color:T.red, fontSize:14, marginBottom:12}}>Bear Case</div>
                   <div style={{fontSize:24, fontWeight:900, color:T.red, marginBottom:4, letterSpacing:-1}}>115-130 kr</div>
+                  <p className="text-xs text-slate-600 leading-relaxed mt-4">Räntetrycket fortsätter, regulatoriska kostnader biter och bankmultiplar kommer ned.</p>
                 </div>
               </div>
             </Card>

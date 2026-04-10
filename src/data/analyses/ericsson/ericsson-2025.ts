@@ -26,7 +26,7 @@ export const ericsson2025: AnalysisData = {
   
   growth: "Ericsson har flera tillväxtspår, men inget av dem är ännu så starkt att det ensam förändrar caset. Det viktigaste är Cloud Software and Services. Q4-rapporten visade 12 procent organisk tillväxt i segmentet under kvartalet, och helåret innehöll organisk tillväxt inom både Networks och Cloud Software and Services. Det här är viktigt, eftersom det visar att Ericsson faktiskt kan växa i delar av affären trots att RAN-marknaden är stillastående. Nästa motor är 5G standalone och programmerbara nät. Årsredovisningen lyfter detta som centralt för att skapa differentierad konnektivitet, network slicing och nya intäktsmodeller. Det tredje spåret är Enterprise (Vonage/Aduna, privata 5G-nät). Det fjärde spåret är verksamhetskritiska nät, offentlig säkerhet och försvar.",
   
-  financialAnalysis: "2025 var finansiellt ett tydligt förbättringsår, men det är viktigt att skilja på rapporterad styrka och underliggande kvalitet. Rapporterad försäljning minskade 5 procent till 236,7 miljarder kronor, men organisk tillväxt var plus 2 procent. Justerad bruttomarginal steg till 48,1 procent från 44,9 procent året före. Justerad EBITA steg till 42,9 miljarder kronor och justerad EBITA-marginal till 18,1 procent från 11,0 procent. Det ser enormt starkt ut, men innehåller en viktig engångseffekt från iconectiv-affären. Årsredovisningen anger att justerad EBITA-marginal exklusive vinsten från försäljningen av iconectiv uppgick till 14,9 procent. Fritt kassaflöde före M&A uppgick till 26,8 miljarder kronor. Nettokassan steg till 61,2 miljarder kronor.",
+  financialAnalysis: "2025 var finansiellt ett tydligt förbättringsår, men det är viktigt att skilja på rapporterad styrka och underliggande kvalitet. Rapporterad försäljning minskade 5 procent till 236,7 miljarder kronor, men organisk tillväxt var plus 2 procent. Justerad bruttomarginal steg till 48,1 procent från 44,9 procent året före. Justerad EBITA steg till 42,9 miljarder kronor och justerad EBITA-marginal till 18,1 procent från 11,0 procent. EPS efter utspädning steg till 8,51 kronor från 0,01 kronor. Det ser enormt starkt ut, men innehåller en viktig engångseffekt från iconectiv-affären.\n\nDet är därför den viktigaste normaliseringen i hela analysen är följande: årsredovisningen anger att justerad EBITA-marginal exklusive vinsten från försäljningen av iconectiv uppgick till 14,9 procent. Det är fortfarande bra, och nära bolagets långsiktiga mål på 15–18 procent, men det är en annan nivå än 18,1 procent. Det gör stor skillnad när man ska värdera kvaliteten i vinsten.\n\nKassaflödet var också starkt. Fritt kassaflöde före M&A uppgick till 26,8 miljarder kronor, motsvarande 11,3 procent av omsättningen. Det var lägre än 40,0 miljarder 2024, men bolaget beskriver 2025 som fortsatt robust och inom målet för free cash flow margin på 9–12 procent. Nettokassan steg till 61,2 miljarder kronor, vilket ger Ericsson betydande finansiell flexibilitet.\n\nSegmentsiffrorna visar samtidigt varför analysen måste vara lite skeptisk till kvaliteten i mixen. För helåret 2025 omsatte Networks 151,0 miljarder kronor, Cloud Software and Services 62,7 miljarder, Enterprise 21,1 miljarder och Other 1,8 miljarder. Enterprise-resultatet förbättrades tydligt, men Q4-rapporten anger också att avyttrade och avkonsoliderade verksamheter bidrog med 8,8 miljarder kronor i justerad EBITA under 2025. Det innebär att Enterprise fortfarande inte kan behandlas som ett fullt normaliserat vinstben.\n\nBalansräkningen är däremot ett tydligt plus. Nettokassa på 61,2 miljarder gör att Ericsson kan fortsätta investera i FoU, hantera svagare marknadslägen och samtidigt återföra kapital till aktieägarna. Det är en stor skillnad mot mer skuldsatta industribolag.",
   
   competitiveAdvantages: [
     "Teknikledarskap och skala i mobilnätsutrustning",
@@ -122,18 +122,18 @@ export const ericsson2025: AnalysisData = {
     },
     finansiellAnalys: {
       resultatrakning: {
-        omsattningstillvaxt: "Rapporterad omsättning minskade 5% till 236,7 miljarder SEK 2025, men organisk tillväxt var +2%.",
-        vinsttillvaxt: "EPS steg till 8,51 SEK från 0,01 SEK, men förbättringen förstärks av realisationsvinsten från iconectiv.",
-        rorelsemarginal: "Justerad EBITA-marginal steg till 18,1%, men exklusive iconectiv låg den på cirka 14,9%."
+        omsattningstillvaxt: "Omsättningen minskade 5% till 236,7 mdr SEK, men organisk tillväxt var +2%.",
+        vinsttillvaxt: "Justerad EBITA steg till 42,9 mdr SEK (48,1% bruttomarginal). EPS steg till 8,51 SEK.",
+        rorelsemarginal: "Rapporterad 18,1%. Normaliserad (exkl. iconectiv) 14,9%."
       },
       nyckeltal: {
-        roe: "Hög under 2025 men påverkad av engångseffekter; ROCE uppgick till 24,1% inklusive iconectiv.",
-        roce: "24,1% rapporterat 2025, med tydlig positiv påverkan från avyttringen av iconectiv.",
-        utdelning: "Styrelsen föreslår 3,00 SEK per aktie samt återköp om 15 miljarder SEK."
+        roe: "ROCE 24,1% (inkl. iconectiv).",
+        roce: "Nettokassa 61,2 mdr SEK.",
+        utdelning: "Föreslagen 3,00 SEK (Direktavkastning ~3,3%)."
       },
       vardering: {
         pe: "11.1x (normaliserat)",
-        evEbit: "N/A",
+        evEbit: "Nettokassa ökar flexibilitet",
         direktavkastning: "3.28%"
       }
     },

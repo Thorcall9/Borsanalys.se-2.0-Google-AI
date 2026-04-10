@@ -48,7 +48,12 @@ const epsData = [
   {ar:"2023", v:-8.21},
   {ar:"2024", v:0.01},
   {ar:"2025", v:8.51},
-  {ar:"2026e", v:7.20, e:true},
+];
+
+const dividendData = [
+  {ar:"2023", v:2.70},
+  {ar:"2024", v:2.85},
+  {ar:"2025", v:3.00, e:true},
 ];
 
 const allScores = [
@@ -373,85 +378,129 @@ export default function EricssonDeepDive({
             <Card mb={20}>
               <SectionLabel number="III" title="Finansiell Analys"/>
               
-              <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`,marginBottom:28}}>
-                <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  2025 var finansiellt ett tydligt förbättringsår. Justerad bruttomarginal steg till <strong>48,1 procent</strong> och justerad EBITA-marginal till <strong>18,1 procent</strong>. Men här krävs en viktig normalisering: exklusive iconectiv-vinsten var marginalen <strong>14,9 procent</strong>.
-                </p>
-                <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Nettokassan steg till <strong>61,2 miljarder kronor</strong>, vilket ger Ericsson betydande finansiell flexibilitet för FoU, utdelning (3,00 kr) och det föreslagna återköpsprogrammet på 15 miljarder kronor.
+              <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"20px 24px",borderLeft:`4px solid ${T.accent}`,marginBottom:32}}>
+                <p style={{margin:0,color:T.ink,fontSize:14.5,lineHeight:1.8,fontWeight:500}}>
+                  2025 var finansiellt ett tydligt förbättringsår, men det är viktigt att skilja på rapporterad styrka och underliggande kvalitet. Rapporterad försäljning minskade 5 procent till 236,7 miljarder kronor, men organisk tillväxt var plus 2 procent. Justerad bruttomarginal steg till 48,1 procent från 44,9 procent året före.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div>
-                  <div style={{fontSize:13,fontWeight:700,color:T.ink,marginBottom:4}}>EBITA Marginal (%)</div>
-                  <div style={{fontSize:11,color:T.muted,marginBottom:12,fontStyle:"italic"}}>Rep: 18,1% | Norm: 14,9%</div>
-                  <ResponsiveContainer width="100%" height={180}>
-                    <LineChart data={marginData} margin={{top:4,right:16,bottom:0,left:0}}>
-                      <CartesianGrid strokeDasharray="3 3" stroke={T.border} vertical={false}/>
-                      <XAxis dataKey="ar" tick={{fill:T.muted,fontSize:11}} axisLine={false} tickLine={false}/>
-                      <YAxis tick={{fill:T.muted,fontSize:10}} axisLine={false} tickLine={false} domain={[5,20]}/>
-                      <Tooltip content={<ChartTip unit="%"/>}/>
-                      <Line type="monotone" dataKey="v" name="EBITA %" stroke="#002561" strokeWidth={3} dot={{fill:T.accent, r:4}} />
-                    </LineChart>
-                  </ResponsiveContainer>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                <div className="space-y-6">
+                  <p style={{margin:0,color:T.sub,fontSize:14,lineHeight:1.8}}>
+                    Det är därför den viktigaste normaliseringen i hela analysen är följande: årsredovisningen anger att <strong>justerad EBITA-marginal exklusive vinsten från försäljningen av iconectiv uppgick till 14,9 procent</strong>. Det är fortfarande bra, och nära bolagets långsiktiga mål på 15–18 procent, men det är en annan nivå än 18,1 procent. Det gör stor skillnad när man ska värdera kvaliteten i vinsten.
+                  </p>
+                  <p style={{margin:0,color:T.sub,fontSize:14,lineHeight:1.8}}>
+                    Kassaflödet var också starkt. Fritt kassaflöde före M&A uppgick till 26,8 miljarder kronor, motsvarande 11,3 procent av omsättningen. Det var lägre än 40,0 miljarder 2024, men bolaget beskriver 2025 som fortsatt robust och inom målet för free cash flow margin på 9–12 procent. 
+                  </p>
                 </div>
-                <div>
-                  <div style={{fontSize:13,fontWeight:700,color:T.ink,marginBottom:4}}>Vinst per aktie (SEK)</div>
-                  <ResponsiveContainer width="100%" height={180}>
-                    <BarChart data={epsData} margin={{top:4,right:16,bottom:0,left:0}}>
-                      <CartesianGrid strokeDasharray="3 3" stroke={T.border} vertical={false}/>
-                      <XAxis dataKey="ar" tick={{fill:T.muted,fontSize:11}} axisLine={false} tickLine={false}/>
-                      <YAxis tick={{fill:T.muted,fontSize:10}} axisLine={false} tickLine={false}/>
-                      <Tooltip content={<ChartTip unit=" kr"/>}/>
-                      <Bar dataKey="v" name="EPS" fill="#002561" radius={[4,4,0,0]}>
-                        {epsData.map((d,i)=><Cell key={i} fill={d.e?T.accent+"88":T.accent}/>)}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-                <div>
-                  <div style={{fontSize:13,fontWeight:700,color:T.ink,marginBottom:4}}>Omsättning (Mdr SEK)</div>
-                  <ResponsiveContainer width="100%" height={180}>
-                    <BarChart data={revenueData} margin={{top:4,right:16,bottom:0,left:0}}>
-                      <CartesianGrid strokeDasharray="3 3" stroke={T.border} vertical={false}/>
-                      <XAxis dataKey="ar" tick={{fill:T.muted,fontSize:11}} axisLine={false} tickLine={false}/>
-                      <YAxis tick={{fill:T.muted,fontSize:10}} axisLine={false} tickLine={false} domain={[200, 300]}/>
-                      <Tooltip content={<ChartTip unit=" Mdr"/>}/>
-                      <Bar dataKey="v" name="Omsättning" fill={T.ink} radius={[4,4,0,0]}>
-                        {revenueData.map((d,i)=><Cell key={i} fill={d.e?"#5C6B7A":T.ink}/>)}
-                      </Bar>
-                    </BarChart>
-                  </ResponsiveContainer>
+                <div className="space-y-6">
+                  <p style={{margin:0,color:T.sub,fontSize:14,lineHeight:1.8}}>
+                    Segmentsiffrorna visar samtidigt varför analysen måste vara lite skeptisk till kvaliteten i mixen. Enterprise-resultatet förbättrades tydligt, men Q4-rapporten anger också att avyttrade och avkonsoliderade verksamheter bidrog med 8,8 miljarder kronor i justerad EBITA under 2025. Det innebär att Enterprise fortfarande inte kan behandlas som ett fullt normaliserat vinstben.
+                  </p>
+                  <p style={{margin:0,color:T.sub,fontSize:14,lineHeight:1.8}}>
+                    Balansräkningen är däremot ett tydligt plus. <strong>Nettokassa på 61,2 miljarder kronor</strong> gör att Ericsson kan fortsätta investera i FoU, hantera svagare marknadslägen och samtidigt återföra kapital till aktieägarna. Det är en stor skillnad mot mer skuldsatta industribolag.
+                  </p>
                 </div>
               </div>
 
-              <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>Key Metrics 2025</div>
-              <div style={{overflowX:"auto"}}>
+              {/* Key Metrics Table */}
+              <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:12}}>Nyckeltal 2024–2025</div>
+              <div style={{overflowX:"auto", marginBottom:40}}>
                 <table style={{width:"100%",borderCollapse:"collapse",fontSize:13}}>
                   <thead>
                     <tr style={{borderBottom:`2px solid ${T.border}`}}>
-                      {["Segment / Nyckeltal","2025 Utfall","Organisk tillväxt","Segment EBITA%","Kommentar"].map(h=>(
-                        <th key={h} style={{padding:"8px 12px",textAlign:"left",color:T.muted,fontWeight:700,fontSize:11,letterSpacing:0.3,textTransform:"uppercase"}}>{h}</th>
+                      {["Nyckeltal","2024","2025"].map(h=>(
+                        <th key={h} style={{padding:"12px",textAlign:h==="Nyckeltal"?"left":"right",color:T.muted,fontWeight:700,fontSize:11,letterSpacing:0.3,textTransform:"uppercase"}}>{h}</th>
                       ))}
                     </tr>
                   </thead>
                   <tbody>
                     {[
-                      ["Networks","151,0 Mdr","+2%","~18%","Stark kärnaffär"],
-                      ["Cloud Software & Services","62,7 Mdr","+6%","~9%","God tillväxt (Q4 +12%)"],
-                      ["Enterprise","21,1 Mdr","N/A","Låg","Pàverkas av investeringar"],
-                      ["Justerad EBITA (ex iconectiv)","35,3 Mdr","-","14,9%","Normaliserad nivå"],
-                    ].map(([q,...vals],ri)=>(
+                      ["Nettoomsättning, mdr SEK", "247,9", "236,7"],
+                      ["Organisk tillväxt", "-", "+2%"],
+                      ["Justerad bruttomarginal", "44,9%", "48,1%"],
+                      ["Justerad EBITA, mdr SEK", "27,2", "42,9"],
+                      ["Justerad EBITA-marginal", "11,0%", "18,1%"],
+                      ["Justerad EBITA-marginal exkl. iconectiv", "-", "14,9%"],
+                      ["EPS efter utspädning, SEK", "0,01", "8,51"],
+                      ["Fritt kassaflöde före M&A, mdr SEK", "40,0", "26,8"],
+                      ["Nettokassa, mdr SEK", "37,8", "61,2"],
+                      ["Utdelning per aktie, SEK", "2,85", "3,00*"],
+                    ].map(([q,v24,v25],ri)=>(
                       <tr key={ri} style={{background:ri%2===0?T.bg:"transparent",borderBottom:`1px solid ${T.border}`}}>
-                        <td style={{padding:"9px 12px",color:T.ink,fontWeight:700}}>{q}</td>
-                        {vals.map((v,ci)=>(
-                          <td key={ci} style={{padding:"9px 12px",color:ci===1?T.accent:T.sub,fontWeight:ci===1?700:400}}>{v}</td>
-                        ))}
+                        <td style={{padding:"12px",color:T.ink,fontWeight:700}}>{q}</td>
+                        <td style={{padding:"12px",textAlign:"right",color:T.sub}}>{v24}</td>
+                        <td style={{padding:"12px",textAlign:"right",color:T.accent,fontWeight:700}}>{v25}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
+                <div style={{fontSize:10, color:T.muted, marginTop:8}}>* Styrelsens förslag.</div>
+              </div>
+
+              {/* Charts Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div>
+                  <div style={{fontSize:12,fontWeight:700,color:T.ink,marginBottom:12}}>Omsättning (Mdr SEK)</div>
+                  <ResponsiveContainer width="100%" height={160}>
+                    <BarChart data={revenueData}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={T.border} />
+                      <XAxis dataKey="ar" tick={{fontSize:10}} axisLine={false} tickLine={false} />
+                      <YAxis tick={{fontSize:10}} axisLine={false} tickLine={false} domain={[200, 270]} />
+                      <Tooltip content={<ChartTip unit=" Mdr" />} />
+                      <Bar dataKey="v" fill={T.accent} radius={[4,4,0,0]}>
+                        {revenueData.map((d,i)=><Cell key={i} fill={d.e?T.accent+"88":T.accent}/>)}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+                <div>
+                  <div style={{fontSize:12,fontWeight:700,color:T.ink,marginBottom:12}}>Justerad EBITA-marginal (%)</div>
+                  <ResponsiveContainer width="100%" height={160}>
+                    <LineChart data={marginData}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={T.border} />
+                      <XAxis dataKey="ar" tick={{fontSize:10}} axisLine={false} tickLine={false} />
+                      <YAxis tick={{fontSize:10}} axisLine={false} tickLine={false} domain={[5, 20]} />
+                      <Tooltip content={<ChartTip unit="%" />} />
+                      <Line type="monotone" dataKey="v" stroke={T.accent} strokeWidth={3} dot={{fill:T.accent}} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+                <div>
+                  <div style={{fontSize:12,fontWeight:700,color:T.ink,marginBottom:12}}>Vinst per aktie (EPS)</div>
+                  <ResponsiveContainer width="100%" height={160}>
+                    <BarChart data={epsData}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={T.border} />
+                      <XAxis dataKey="ar" tick={{fontSize:10}} axisLine={false} tickLine={false} />
+                      <YAxis tick={{fontSize:10}} axisLine={false} tickLine={false} />
+                      <Tooltip content={<ChartTip unit=" kr" />} />
+                      <Bar dataKey="v" fill="#10B981" radius={[4,4,0,0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+                <div>
+                  <div style={{fontSize:12,fontWeight:700,color:T.ink,marginBottom:12}}>Utdelning per aktie (SEK)</div>
+                  <ResponsiveContainer width="100%" height={160}>
+                    <BarChart data={dividendData}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={T.border} />
+                      <XAxis dataKey="ar" tick={{fontSize:10}} axisLine={false} tickLine={false} />
+                      <YAxis tick={{fontSize:10}} axisLine={false} tickLine={false} domain={[0, 4]} />
+                      <Tooltip content={<ChartTip unit=" kr" />} />
+                      <Bar dataKey="v" fill="#B07D2A" radius={[4,4,0,0]}>
+                          {dividendData.map((d,i)=><Cell key={i} fill={d.e?"#B07D2A88":"#B07D2A"}/>)}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              <div style={{marginTop:40, background:T.bg, borderRadius:12, padding:20, border:`1px solid ${T.border}`}}>
+                  <div style={{display:"flex", alignItems:"center", gap:10, marginBottom:12}}>
+                    <div style={{background:T.accent, color:"#fff", padding:"4px 10px", borderRadius:6, fontSize:12, fontWeight:800}}>BEDÖMNING – Finansiell kvalitet: 4/5</div>
+                  </div>
+                  <p style={{margin:0, color:T.sub, fontSize:14, lineHeight:1.7}}>
+                    Ericsson har stark balansräkning, robust kassaflöde och tydligt bättre operationell kvalitet. Jag stannar dock vid 4/5 eftersom 2025 års rapporterade vinstnivå delvis är engångsdriven och huvudmarknaden fortfarande är svag.
+                  </p>
               </div>
             </Card>
           </FadeIn>
