@@ -30,13 +30,14 @@ const __dirname = path.dirname(__filename);
 // Debug logger
 const logFile = path.join(__dirname, "debug.log");
 const logger = (msg: string) => {
-
+  /* Commenting out to prevent restart loop with tsx --watch
   try {
     const line = `[${new Date().toISOString()}] ${msg}\n`;
     fs.appendFileSync(logFile, line);
   } catch (err) {
     // Ignore logging errors
   }
+  */
   console.log(msg);
 };
 
@@ -210,7 +211,7 @@ async function startServer() {
         return res.status(500).json({ error: "Systemfel: API-nyckel saknas." });
       }
 
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
 
       // Hämta live makrodata för kontext
       let macroContext = "US10Y: 4.34%, SE10Y: 2.85%, USD/SEK: 9.56, EUR/SEK: 10.95, OMX30: 2905, KPI: 0.5%";
@@ -289,7 +290,7 @@ Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
   app.post("/api/ai/event-insight", async (req, res) => {
     const { title, description } = req.body;
     try {
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
       const result = await model.generateContent(
         `Analysera följande händelse och dess potentiella påverkan på den svenska börsen (OMX): "${title} - ${description}". Ge ett kort, koncist svar på max 3 meningar om vad investerare bör hålla koll på.`
       );
