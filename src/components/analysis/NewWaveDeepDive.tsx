@@ -660,7 +660,7 @@ export default function NewWaveDeepDive({
                       </div>
                     </div>
                     <p className="text-lg font-medium text-white/90 leading-relaxed italic">
-                      "New Wave Group är just nu ett kvalitetsbolag i en tillfälligt pressad fas. När investeringarna i logistik, Cotton Classics och expansionen ger effekt, ser vinstbanan betydligt bättre ut än vad 2025 antyder."
+                      "Min slutsats är att NWG just nu är ett kvalitetsbolag i en tillfälligt pressad fas. Marknaden ser rätt i att 2025 var ett svagare år, men riskerar att dra för långtgående slutsatser om bolagets långsiktiga intjäningsförmåga. När förvärvet av Cotton Classics, logistikinvesteringarna och ERP-satsningen väl börjar ge effekt, ser vinstbanan bättre ut än de rapporterade 2025-siffrorna antyder."
                     </p>
                     <div className="flex flex-col md:flex-row gap-8 pt-8 border-t border-white/20">
                       <div>
