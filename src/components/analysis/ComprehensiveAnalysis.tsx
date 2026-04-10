@@ -36,6 +36,7 @@ interface ComprehensiveAnalysisProps {
   isInWatchlist?: boolean;
   isWatchlistLoading?: boolean;
   onToggleWatchlist?: () => void;
+  nextAnalysis?: AnalysisData;
 }
 
 // Visual Trigger: A component to render geographical or segment distribution as a bar
@@ -90,7 +91,8 @@ export default function ComprehensiveAnalysis({
   data, 
   isInWatchlist, 
   isWatchlistLoading, 
-  onToggleWatchlist 
+  onToggleWatchlist,
+  nextAnalysis
 }: ComprehensiveAnalysisProps) {
   const ACCENT_COLOR = "#10B981"; // Emerald Green
 
@@ -146,6 +148,7 @@ export default function ComprehensiveAnalysis({
       onToggleWatchlist={onToggleWatchlist}
       analysisPrice={analysisPrice || undefined}
       date={data.date}
+      nextAnalysis={nextAnalysis}
     >
       <SEO 
         title={`${data.title} (${data.ticker}) - Analys`} 

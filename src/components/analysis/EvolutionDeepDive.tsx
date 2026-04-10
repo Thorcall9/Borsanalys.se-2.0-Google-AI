@@ -8,6 +8,8 @@ import {
 } from "recharts";
 import AdUnit from "../AdUnit";
 import MultiplexAd from "../MultiplexAd";
+import NextAnalysisButton from "./NextAnalysisButton";
+import { AnalysisData } from "../../data/analyses";
 
 const T = {
   ink:     "#0D1B2A",
@@ -169,12 +171,14 @@ interface EvolutionDeepDiveProps {
   onToggleWatchlist?: () => void;
   isInWatchlist?: boolean;
   isWatchlistLoading?: boolean;
+  nextAnalysis?: AnalysisData;
 }
 
 export default function EvolutionDeepDive({ 
   onToggleWatchlist, 
   isInWatchlist, 
-  isWatchlistLoading 
+  isWatchlistLoading,
+  nextAnalysis
 }: EvolutionDeepDiveProps){
   const [mounted,setMounted]=useState(false);
   useEffect(()=>{const t=setTimeout(()=>setMounted(true),50);return()=>clearTimeout(t);},[]);
@@ -1109,6 +1113,11 @@ export default function EvolutionDeepDive({
                 <strong style={{color:T.sub}}>Disclaimer:</strong> Denna analys är framtagen av börsanalys.se för informationsändamål och utgör inte finansiell rådgivning. Historisk avkastning garanterar inte framtida avkastning. Investering i aktier innebär alltid risk.
               </p>
             </div>
+            {nextAnalysis && (
+              <div className="mt-10 mb-10 text-left">
+                <NextAnalysisButton analysis={nextAnalysis} />
+              </div>
+            )}
             <MultiplexAd />
           </FadeIn>
         </section>

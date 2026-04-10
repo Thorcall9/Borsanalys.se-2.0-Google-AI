@@ -7,6 +7,8 @@ import {
 } from "recharts";
 import AdUnit from "../AdUnit";
 import MultiplexAd from "../MultiplexAd";
+import NextAnalysisButton from "../analysis/NextAnalysisButton";
+import { AnalysisData } from "../../data/analyses";
 
 const T = {
   ink:     "#0D1B2A",
@@ -179,12 +181,14 @@ interface NovoNordiskDeepDiveProps {
   onToggleWatchlist?: () => void;
   isInWatchlist?: boolean;
   isWatchlistLoading?: boolean;
+  nextAnalysis?: AnalysisData;
 }
 
 export default function NovoNordiskDeepDive({ 
   onToggleWatchlist, 
   isInWatchlist, 
-  isWatchlistLoading 
+  isWatchlistLoading,
+  nextAnalysis
 }: NovoNordiskDeepDiveProps){
   const { ticker } = useParams();
   const [mounted,setMounted]=useState(false);
@@ -744,6 +748,11 @@ export default function NovoNordiskDeepDive({
                 <strong style={{color:T.sub}}>Disclaimer:</strong> Denna analys är framtagen av börsanalys.se för informationsändamål och utgör inte finansiell rådgivning. Historisk avkastning garanterar inte framtida avkastning. Investering i aktier innebär alltid risk. Konsultera alltid en licensierad finansiell rådgivare innan investeringsbeslut.
               </p>
             </div>
+            {nextAnalysis && (
+              <div className="mt-10 mb-10 text-left">
+                <NextAnalysisButton analysis={nextAnalysis} />
+              </div>
+            )}
             <MultiplexAd />
           </FadeIn>
         </div>

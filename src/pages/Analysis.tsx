@@ -356,12 +356,17 @@ export default function Analysis() {
     return <Navigate to="/analys" replace />;
   }
 
+  const currentIndex = allAnalyses.findIndex(a => a.slug === (slug === 'evolution' ? 'evolution-2025' : slug));
+  const nextAnalysis = currentIndex !== -1 && currentIndex < allAnalyses.length - 1 
+    ? allAnalyses[currentIndex + 1] 
+    : allAnalyses[0];
+
   // Check for specialized high-fidelity views
-  if (analysis.deepDiveComponent && DEEP_DIVE_COMPONENTS[analysis.deepDiveComponent]) {
-    const Component = DEEP_DIVE_COMPONENTS[analysis.deepDiveComponent];
-    return <Component onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} />;
+  if (analysis.deepDiveComponent && DEEP_DIVE_COMPONENTS[analysis.deepDiveComponent as keyof typeof DEEP_DIVE_COMPONENTS]) {
+    const Component = DEEP_DIVE_COMPONENTS[analysis.deepDiveComponent as keyof typeof DEEP_DIVE_COMPONENTS];
+    return <Component onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />;
   }
 
   // Use the new comprehensive analysis template for all other stocks
-  return <ComprehensiveAnalysis data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} />;
+  return <ComprehensiveAnalysis data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />;
 }

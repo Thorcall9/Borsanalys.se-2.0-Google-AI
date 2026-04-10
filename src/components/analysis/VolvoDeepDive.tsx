@@ -7,6 +7,8 @@ import {
 } from "recharts";
 import AdUnit from "../AdUnit";
 import MultiplexAd from "../MultiplexAd";
+import NextAnalysisButton from "./NextAnalysisButton";
+import { AnalysisData } from "../../data/analyses";
 
 const T = {
   ink:     "#0D1B2A",
@@ -145,12 +147,14 @@ interface VolvoDeepDiveProps {
   onToggleWatchlist?: () => void;
   isInWatchlist?: boolean;
   isWatchlistLoading?: boolean;
+  nextAnalysis?: AnalysisData;
 }
 
 export default function VolvoDeepDive({ 
   onToggleWatchlist, 
   isInWatchlist, 
-  isWatchlistLoading 
+  isWatchlistLoading,
+  nextAnalysis
 }: VolvoDeepDiveProps){
   const [mounted,setMounted]=useState(false);
   useEffect(()=>{const t=setTimeout(()=>setMounted(true),50);return()=>clearTimeout(t);},[]);
@@ -983,6 +987,12 @@ export default function VolvoDeepDive({
             </div>
           </div>
         </div>
+
+        {nextAnalysis && (
+          <div className="max-w-5xl mx-auto px-6 md:px-12 mt-16 mb-8 text-left">
+            <NextAnalysisButton analysis={nextAnalysis} />
+          </div>
+        )}
         
         <MultiplexAd />
       </div>

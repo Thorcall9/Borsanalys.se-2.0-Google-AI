@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { Menu, X, ArrowLeft, Star, StarOff, Loader2 } from 'lucide-react';
 import AdZone from '../AdZone';
 import MultiplexAd from '../MultiplexAd';
+import { AnalysisData } from '../../data/analyses';
+import NextAnalysisButton from './NextAnalysisButton';
 
 export interface AnalysisSection {
   id: string;
@@ -30,6 +32,7 @@ interface AnalysisLayoutProps {
   isInWatchlist?: boolean;
   isWatchlistLoading?: boolean;
   onToggleWatchlist?: () => void;
+  nextAnalysis?: AnalysisData;
 }
 
 export default function AnalysisLayout({
@@ -48,6 +51,7 @@ export default function AnalysisLayout({
   isInWatchlist,
   isWatchlistLoading,
   onToggleWatchlist,
+  nextAnalysis,
   analysisPrice,
   currentPrice,
   currency = "SEK"
@@ -231,6 +235,8 @@ export default function AnalysisLayout({
             </motion.div>
           )}
           {children}
+
+          {nextAnalysis && <NextAnalysisButton analysis={nextAnalysis} />}
 
           <div className="mt-20 border-t border-border/50 pt-16">
             <AdZone id="analysis-bottom" type="banner" />

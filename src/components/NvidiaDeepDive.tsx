@@ -21,6 +21,8 @@ import {
 } from "./analysis";
 import AdUnit from "./AdUnit";
 import MultiplexAd from "./MultiplexAd";
+import NextAnalysisButton from "./analysis/NextAnalysisButton";
+import { AnalysisData } from "../data/analyses";
 
 const T = {
   ink:     "#0D1B2A",
@@ -191,12 +193,14 @@ interface NvidiaDeepDiveProps {
   onToggleWatchlist?: () => void;
   isInWatchlist?: boolean;
   isWatchlistLoading?: boolean;
+  nextAnalysis?: AnalysisData;
 }
 
 export default function NvidiaDeepDive({ 
   onToggleWatchlist, 
   isInWatchlist, 
-  isWatchlistLoading 
+  isWatchlistLoading,
+  nextAnalysis
 }: NvidiaDeepDiveProps){
   const ACCENT_COLOR = T.accent;
   const [mounted,setMounted]=useState(false);
@@ -1174,6 +1178,11 @@ export default function NvidiaDeepDive({
               <span className="font-bold text-slate-500">DISCLAIMER:</span> Denna analys är framtagen av börsanalys.se för informationsändamål och utgör inte finansiell rådgivning. Historisk avkastning garanterar inte framtida avkastning. Investering i aktier innebär alltid risk.
             </p>
           </div>
+          {nextAnalysis && (
+            <div className="max-w-7xl mx-auto px-6 md:px-10 mt-20">
+              <NextAnalysisButton analysis={nextAnalysis} />
+            </div>
+          )}
           <MultiplexAd />
         </section>
       </div>
