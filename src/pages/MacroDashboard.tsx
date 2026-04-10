@@ -657,14 +657,24 @@ export default function MacroDashboard() {
                 <p className="text-sm font-medium opacity-90 leading-relaxed">
                   Var befinner vi oss i konjunkturcykeln? Klicka på faserna för att utforska.
                 </p>
-                <div className="mt-4 p-4 bg-white/5 rounded-2xl border border-white/10 group-hover:border-primary/30 transition-all">
-                  <p className="text-[11px] font-black uppercase tracking-widest text-primary flex items-center gap-2">
-                    <Globe size={12} />
-                    Vill du veta var USA och Sverige befinner sig i cykeln?
-                  </p>
-                  <p className="text-[10px] text-white/60 mt-1 font-medium italic">
-                    Titta efter prickarna i klockan nedan för att se den geografiska positionen.
-                  </p>
+
+                <div className="flex gap-4 pt-2">
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-full border border-white/10 group-hover:border-blue-500/30 transition-all">
+                    <motion.div 
+                      animate={{ scale: [1, 1.4, 1] }} 
+                      transition={{ repeat: Infinity, duration: 2 }}
+                      className="w-1.5 h-1.5 bg-blue-500 rounded-full" 
+                    />
+                    <span className="text-[9px] font-black uppercase tracking-wider text-white/70">USA</span>
+                  </div>
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-full border border-white/10 group-hover:border-yellow-400/30 transition-all">
+                    <motion.div 
+                      animate={{ scale: [1, 1.4, 1] }} 
+                      transition={{ repeat: Infinity, duration: 2, delay: 1 }}
+                      className="w-1.5 h-1.5 bg-yellow-400 rounded-full" 
+                    />
+                    <span className="text-[9px] font-black uppercase tracking-wider text-white/70">Sverige</span>
+                  </div>
                 </div>
               </div>
 
@@ -724,7 +734,16 @@ export default function MacroDashboard() {
                       style={{ rotate: 210 }}
                     >
                       <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center group/usa">
-                        <div className="w-1.5 h-1.5 bg-blue-500 rounded-full border border-white/30" />
+                        <motion.div 
+                          animate={{ 
+                            boxShadow: ["0 0 0px rgba(59,130,246,0)", "0 0 12px rgba(59,130,246,0.8)", "0 0 0px rgba(59,130,246,0)"]
+                          }}
+                          transition={{ repeat: Infinity, duration: 2 }}
+                          className="w-2 h-2 bg-blue-500 rounded-full border border-white/40 shadow-lg relative"
+                        >
+                          <div className="absolute inset-0 bg-blue-500 blur-[2px] rounded-full opacity-50" />
+                        </motion.div>
+                        <div className="mt-1 opacity-0 group-hover/usa:opacity-100 transition-opacity whitespace-nowrap bg-blue-500 text-[8px] font-black px-1.5 py-0.5 rounded text-white uppercase tracking-tighter">USA</div>
                       </div>
                     </motion.div>
 
@@ -735,8 +754,17 @@ export default function MacroDashboard() {
                       className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full"
                       style={{ rotate: 240 }}
                     >
-                      <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-full border border-white/30" />
+                      <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center group/se">
+                        <motion.div 
+                          animate={{ 
+                            boxShadow: ["0 0 0px rgba(250,204,21,0)", "0 0 12px rgba(250,204,21,0.8)", "0 0 0px rgba(250,204,21,0)"]
+                          }}
+                          transition={{ repeat: Infinity, duration: 2, delay: 1 }}
+                          className="w-2 h-2 bg-yellow-400 rounded-full border border-white/40 shadow-lg relative"
+                        >
+                          <div className="absolute inset-0 bg-yellow-400 blur-[2px] rounded-full opacity-50" />
+                        </motion.div>
+                        <div className="mt-1 opacity-0 group-hover/se:opacity-100 transition-opacity whitespace-nowrap bg-yellow-400 text-[8px] font-black px-1.5 py-0.5 rounded text-black uppercase tracking-tighter">Sverige</div>
                       </div>
                     </motion.div>
                   </div>
