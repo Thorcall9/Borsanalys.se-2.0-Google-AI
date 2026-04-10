@@ -211,12 +211,16 @@ async function startServer() {
         return res.status(500).json({ error: "Systemfel: API-nyckel saknas." });
       }
 
-      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
+      // Using Gemini 1.5 Flash for high reliability and speed
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
       // Hämta live makrodata för kontext
       let macroContext = "US10Y: 4.34%, SE10Y: 2.85%, USD/SEK: 9.56, EUR/SEK: 10.95, OMX30: 2905, KPI: 0.5%";
       try {
-        const macroRows = await prisma.macroMarketData.findMany({ orderBy: { updatedAt: 'desc' } });
+        const macroRows = await prisma.macroMarketData.findMany({ 
+          orderBy: { updatedAt: 'desc' },
+          take: 20 // Only need the most recent unique keys
+        });
         const seen = new Set<string>();
         const unique = macroRows.filter(d => { if (seen.has(d.key)) return false; seen.add(d.key); return true; });
         if (unique.length > 0) {
@@ -227,7 +231,7 @@ async function startServer() {
       }
 
       const today = new Date().toLocaleDateString('sv-SE');
-      const prompt = `Du är en erfaren makroekonomisk analytiker som skriver på svenska för investerare.
+      const prompt = `Du är en erfaren makroekonomisk analytiker som skriver på svenska för investerare på Börsanalys.se.
 Aktuella makroindikatorer (${today}): ${macroContext}.
 
 Analysera var vi befinner oss i konjunkturcykeln och vad det innebär för aktiemarknaden.
@@ -241,61 +245,56 @@ Vi använder en 6-fasmodell:
 
 Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
 {
-  "outlook": "[3-4 meningar om makroläget och vad investerare bör tänka på]",
+  "outlook": "[3-4 meningar på svenska om makroläget och vad investerare bör tänka på just nu. Var professionell och initierad.]",
   "suggestedPhaseId": "early_recovery|expansion|overheating|late_cycle|slowdown|recession",
-  "confidence": [0-100],
+  "confidence": [HELTAL mellan 0-100],
   "upcomingDates": [{"date": "DD Månad", "title": "Händelse"}]
 }`;
 
-      logger("[AI] Calling Gemini model...");
+      logger("[AI] Calling Gemini model (gemini-1.5-flash)...");
       const result = await model.generateContent(prompt);
-      let text = result.response.text().trim();
+      const response = await result.response;
+      let text = response.text().trim();
+      
       logger(`[AI] Raw response received (len: ${text.length})`);
 
-      // Clean markdown code blocks and extract JSON
-      text = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/i, '').trim();
-      
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
-      if (jsonMatch) text = jsonMatch[0];
-      else {
-        // Fallback if no JSON object is found in the text
-        logger(`[WARNING] No JSON found in AI response. Raw text snippet: ${text.substring(0, 50)}...`);
-      }
-
-      let data;
+      // 1. Better JSON Extraction (handle markdown blocks or preamble)
+      let jsonData = null;
       try {
-        data = JSON.parse(text);
-        logger("[AI] JSON parsed successfully");
+        // Strip markdown code blocks if present
+        const cleanedText = text.replace(/```json\n?|```/g, "").trim();
+        const jsonMatch = cleanedText.match(/\{[\s\S]*\}/);
+        
+        if (jsonMatch) {
+          jsonData = JSON.parse(jsonMatch[0]);
+        } else {
+          jsonData = JSON.parse(cleanedText);
+        }
       } catch (parseErr) {
-        logger(`[ERROR] AI JSON Parse Error. Cleaned text: ${text.substring(0, 100)}...`);
-        return res.json({
-          outlook: "Kunde inte tolka analysen helt pga. formatfel, men konjunkturklockan indikerar att vi rör oss i cykeln.",
-          suggestedPhaseId: "late_cycle",
-          confidence: 50,
-          upcomingDates: []
-        });
+        logger(`[ERROR] AI JSON Parse failed. Text snippet: ${text.substring(0, 100)}`);
+        throw new Error("Kunde inte tolka AI-svaret som JSON.");
       }
 
-      // 3. Robust Data Formatting: Ensure confidence is a number and arrays are valid
+      // 2. Data Validation & Formatting
+      const validPhases = ['early_recovery', 'expansion', 'overheating', 'late_cycle', 'slowdown', 'recession'];
+      const suggestedPhaseId = validPhases.includes(jsonData.suggestedPhaseId) ? jsonData.suggestedPhaseId : "late_cycle";
+      
       let numericConfidence = 75;
-      if (data.confidence !== undefined) {
-        numericConfidence = typeof data.confidence === 'number' ? data.confidence : parseInt(String(data.confidence), 10);
+      if (jsonData.confidence !== undefined) {
+        numericConfidence = parseInt(String(jsonData.confidence), 10);
         if (isNaN(numericConfidence)) numericConfidence = 75;
       }
 
       res.json({
-        outlook: data.outlook || "Makroanalys genererades – se indikatorer ovan.",
-        suggestedPhaseId: data.suggestedPhaseId || "late_cycle",
+        outlook: jsonData.outlook || "Makroanalys genererades.",
+        suggestedPhaseId,
         confidence: numericConfidence,
-        upcomingDates: Array.isArray(data.upcomingDates) ? data.upcomingDates : []
+        upcomingDates: Array.isArray(jsonData.upcomingDates) ? jsonData.upcomingDates : []
       });
 
     } catch (err: any) {
       logger(`[CRITICAL ERROR] /api/ai/macro-outlook: ${err.message}`);
-      // Log the full stack trace to the debug file
-      if (err.stack) logger(err.stack);
-      
-      res.status(500).json({ error: `Kunde inte generera analys: ${err.message}` });
+      res.status(500).json({ error: `Serverfel: ${err.message}` });
     }
   });
 

@@ -626,27 +626,41 @@ export default function MacroDashboard() {
                 <p className="text-sm font-medium opacity-90 leading-relaxed">
                   Var befinner vi oss i konjunkturcykeln? Klicka på faserna för att utforska.
                 </p>
+                <div className="mt-4 p-4 bg-white/5 rounded-2xl border border-white/10 group-hover:border-primary/30 transition-all">
+                  <p className="text-[11px] font-black uppercase tracking-widest text-primary flex items-center gap-2">
+                    <Globe size={12} />
+                    Vill du veta var USA och Sverige befinner sig i cykeln?
+                  </p>
+                  <p className="text-[10px] text-white/60 mt-1 font-medium italic">
+                    Titta efter prickarna i klockan nedan för att se den geografiska positionen.
+                  </p>
+                </div>
               </div>
 
-              <div className="aspect-square bg-white/5 rounded-full flex items-center justify-center border border-white/10 relative overflow-hidden group/clock">
-                {/* Background Compass Directions (Pale) */}
-                <div className="absolute inset-0 pointer-events-none z-0 opacity-20">
-                  <div className="absolute top-6 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-[0.2em] flex flex-col items-center">
-                    <span className="text-emerald-400">Tillväxt ↑</span>
-                    <div className="w-px h-8 bg-gradient-to-b from-emerald-400/50 to-transparent mt-1" />
-                  </div>
-                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[10px] font-black uppercase tracking-[0.2em] flex flex-col items-center">
-                    <div className="w-px h-8 bg-gradient-to-t from-red-500/50 to-transparent mb-1" />
-                    <span className="text-red-500">Tillväxt ↓</span>
-                  </div>
-                  <div className="absolute left-6 top-1/2 -translate-y-1/2 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 -rotate-90">
-                    <span className="text-orange-500">Inflation ↑</span>
-                    <div className="w-8 h-px bg-gradient-to-r from-orange-500/50 to-transparent" />
-                  </div>
-                  <div className="absolute right-6 top-1/2 -translate-y-1/2 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 rotate-90">
-                    <span className="text-cyan-400">Inflation ↓</span>
-                    <div className="w-8 h-px bg-gradient-to-r from-cyan-400/50 to-transparent" />
-                  </div>
+              <div className="aspect-square bg-white/5 rounded-full flex items-center justify-center border border-white/10 relative group/clock">
+                {/* Phase Labels Outside the Ring */}
+                <div className="absolute inset-0 pointer-events-none z-0">
+                  {PHASES.map((phase) => {
+                    const angle = phase.rotation; // 30, 90, 150, 210, 270, 330
+                    // Move them slightly further out than the ring
+                    const radius = 135; 
+                    const x = 50 + radius * Math.cos((angle - 90) * Math.PI / 180) / 2.5;
+                    const y = 50 + radius * Math.sin((angle - 90) * Math.PI / 180) / 2.5;
+                    
+                    return (
+                      <div 
+                        key={`label-${phase.id}`}
+                        className={`absolute text-[8px] font-black uppercase tracking-widest transition-all duration-500 whitespace-nowrap ${activePhase.id === phase.id ? phase.color : 'text-white/30'}`}
+                        style={{ 
+                          left: `${x}%`, 
+                          top: `${y}%`,
+                          transform: 'translate(-50%, -50%)',
+                        }}
+                      >
+                        {phase.name}
+                      </div>
+                    );
+                  })}
                 </div>
 
                 {/* 6 Clickable Segments */}
