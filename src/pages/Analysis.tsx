@@ -37,6 +37,7 @@ import NovoNordiskDeepDive from "../components/NovoNordiskDeepDive/NovoNordiskDe
 import EvolutionDeepDive from "../components/analysis/EvolutionDeepDive";
 import InvestorDeepDive from "../components/analysis/InvestorDeepDive";
 import VolvoDeepDive from "../components/analysis/VolvoDeepDive";
+import SwedbankDeepDive from "../components/analysis/SwedbankDeepDive";
 import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 import { useAuth } from "../contexts/AuthContext";
@@ -49,7 +50,8 @@ const DEEP_DIVE_COMPONENTS = {
   NovoNordisk: NovoNordiskDeepDive,
   Evolution: EvolutionDeepDive,
   Investor: InvestorDeepDive,
-  Volvo: VolvoDeepDive
+  Volvo: VolvoDeepDive,
+  Swedbank: SwedbankDeepDive
 };
 
 export default function Analysis() {

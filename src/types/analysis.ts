@@ -89,7 +89,7 @@ export interface AnalysisData {
   date?: string; // Format: YYYY-MM-DD
   
   // Custom View Logic
-  deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo";
+  deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank";
 
   // Standardized structure from roadmap
   investmentCase?: string;

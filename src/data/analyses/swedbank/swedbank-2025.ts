@@ -58,6 +58,7 @@ export const swedbank2025: AnalysisData = {
     { label: "Base Case", value: "300-360 kr", change: "+10%", type: "base", description: "ROE 14-15%, stabil kostnadskvot, EPS 27-29 kr. Normalisering av räntenettot." },
     { label: "Bear Case", value: "260-280 kr", change: "-15%", type: "bear", description: "ROE under 13%, kraftig räntepress, FI-böter och regulatoriska bakslag." },
   ],
+  deepDiveComponent: "Swedbank",
   
   scores: {
     affarsmodell: 4,
