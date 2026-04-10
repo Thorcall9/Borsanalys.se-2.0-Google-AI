@@ -210,12 +210,24 @@ Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
       const jsonMatch = text.match(/\{[\s\S]*\}/);
       if (jsonMatch) text = jsonMatch[0];
 
-      const data = JSON.parse(text);
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (parseErr) {
+        console.error("AI JSON Parse Error. Raw text:", text);
+        return res.json({
+          outlook: "Kunde inte tolka analysen helt, men konjunkturklockan indikerar att vi rör oss i cykeln baserat på nuvarande indikatorer.",
+          suggestedPhaseId: "recovery",
+          upcomingDates: []
+        });
+      }
+
       res.json({
         outlook: data.outlook || "Makroanalys genererades – se indikatorer ovan.",
         suggestedPhaseId: data.suggestedPhaseId || null,
         upcomingDates: Array.isArray(data.upcomingDates) ? data.upcomingDates : []
       });
+
     } catch (err: any) {
       console.error("AI Macro Outlook Error:", err.message);
       res.status(500).json({ error: `Kunde inte generera analys: ${err.message}` });
