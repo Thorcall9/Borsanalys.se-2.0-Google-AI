@@ -73,14 +73,14 @@ const valuationData = [
 ];
 
 const allScores = [
-  {key:"Affärsmodell",val:4,max:5},
-  {key:"Strategisk Moat",val:3,max:5},
-  {key:"Finansiell Kvalitet",val:4,max:5},
-  {key:"Värdering",val:4,max:5},
-  {key:"Tillväxtutsikter",val:4,max:5},
-  {key:"Riskprofil",val:3,max:5},
-  {key:"ESG & Makro",val:3,max:5},
-  {key:"AI-obs.",val:4,max:5},
+  { key: "Affärsmodell", val: 4, max: 5 },
+  { key: "Strategisk Moat", val: 3, max: 5 },
+  { key: "Finansiell Kvalitet", val: 4, max: 5 },
+  { key: "Värdering", val: 4, max: 5 },
+  { key: "Tillväxtutsikter", val: 4, max: 5 },
+  { key: "Riskprofil", val: 3, max: 5 },
+  { key: "ESG & Makro", val: 3, max: 5 },
+  { key: "AI-observationer", val: 4, max: 5 },
 ];
 
 function FadeIn({children,delay=0}){
@@ -527,32 +527,45 @@ export default function NewWaveDeepDive({
           <Card>
             <SectionLabel number="VI" title="Riskprofil" />
             <div className="space-y-6">
-              <div className="flex gap-4">
-                <div className="w-10 h-10 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center shrink-0">
-                  <Scale size={20} />
+              <p className="text-slate-600 leading-relaxed">
+                NWG är inget högriskbolag i klassisk mening, men risknivån har ökat i takt med expansionen. Den största risken är <strong>valuta</strong>: under 2025 påverkades omsättningen negativt med -413 MSEK och eget kapital med hela -709 MSEK.
+              </p>
+
+              <div className="space-y-4">
+                <div className="flex gap-4 p-4 bg-orange-50 rounded-xl border border-orange-200">
+                  <div className="w-10 h-10 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center shrink-0">
+                    <AlertTriangle size={20} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-slate-900 mb-1">Skuldsättning & Kapitalbindning</h4>
+                    <p className="text-xs text-slate-600 leading-relaxed">Nettoskuld över 3 Mdr lämnar mindre utrymme för fel än tidigare. Om rörelsekapitalet fortsätter svälla blir balansräkningen mer sårbar.</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-bold text-slate-900 mb-1">Valutarisk</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed">Kronans styrka mot USD är en motvind. Valutaeffekter påverkade omsättningen negativt med -413 MSEK under 2025.</p>
+                <div className="flex gap-4 p-4 bg-orange-50 rounded-xl border border-orange-200">
+                  <div className="w-10 h-10 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center shrink-0">
+                    <Scale size={20} />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-slate-900 mb-1">Integrationsrisk & Makro</h4>
+                    <p className="text-xs text-slate-600 leading-relaxed">Cotton Classics-integrationen kräver god execution. USA:s tullpolitik och svag retail är externa hot mot tillväxten.</p>
+                  </div>
                 </div>
               </div>
-              <div className="flex gap-4">
-                <div className="w-10 h-10 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center shrink-0">
-                  <AlertTriangle size={20} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900 mb-1">Skuldsättning & Lager</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed">Nettoskulden över 3 Mdr lämnar mindre felmarginal. Fortsatt svag marknad kan tynga kassaflödet via rörelsekapital.</p>
-                </div>
+
+              <div className="p-4 bg-orange-50 rounded-xl border border-orange-200">
+                <div className="text-[10px] font-black text-orange-600 uppercase mb-2">Risknivå: Medel | Risk-Score: 3/5</div>
+                <p className="text-xs text-orange-900 leading-relaxed">
+                  Risken är balanserad tack vare en soliditet på 53% och räntetäckning på 9,7x. NWG:s beprövade modell motverkar de ökade finansiella riskerna.
+                </p>
               </div>
-              <div className="flex gap-4">
-                <div className="w-10 h-10 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center shrink-0">
-                  <TrendingDown size={20} />
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900 mb-1">Retail-efterfrågan</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed">En osäker återhämtning i detaljhandeln och sportbutiker kan förlänga perioden med dämpad organisk tillväxt.</p>
-                </div>
+
+              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <h4 className="text-[10px] font-black text-slate-400 uppercase mb-2">Ytterligare Riskfaktorer</h4>
+                <ul className="text-xs text-slate-600 space-y-1 list-disc pl-4">
+                  <li>USA:s tull- och handelspolitik</li>
+                  <li>Kostnadsöverdrag i ERP/systemprojekt</li>
+                  <li>Fortsatt hög investeringstakt</li>
+                </ul>
               </div>
             </div>
           </Card>
@@ -562,15 +575,39 @@ export default function NewWaveDeepDive({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <Card>
             <SectionLabel number="VII" title="ESG & Makro" />
-            <p className="text-sm text-slate-600 leading-relaxed">
-              NWG arbetar med egen sourcingorganisation och personal på plats i inköpsländer för att kontrollera arbetsvillkor (Amfori BSCI) och transparens. Makrobilden präglas av cyklisk konsumtionsvilja och valutaexponering. Neutralt till svagt positivt ESG-case.
-            </p>
+            <div className="space-y-6">
+              <p className="text-sm text-slate-600 leading-relaxed">
+                NWG är exponerat mot cykliska makrofaktorer såsom konsumentefterfrågan, företagsbudgetar och valutor. Kombinationen av profil och retail dämpar dock svängningarna betydligt jämfört med ren konsumentförsäljning.
+              </p>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                På ESG-sidan är den egna sourcingorganisationen och lokala CSR-personalen en styrka, då det ger bättre insyn i leverantörsvillkor än via mellanhänder. Det är därför ett neutralt till svagt positivt ESG-case.
+              </p>
+              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <div className="text-[10px] font-black text-slate-400 uppercase mb-2">Bedömning ESG & Makro: 3/5</div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Inget bolag som får premiumvärdering på ESG, men heller ett bolag utan uppenbara hållbarhetsröda flaggor.
+                </p>
+              </div>
+            </div>
           </Card>
           <Card>
             <SectionLabel number="VIII" title="AI-observationer 🔍" />
-            <p className="text-sm text-slate-600 leading-relaxed font-medium">
-              Vår analys visar att bruttomarginalstabiliteten på 49,0% är det viktigaste måttet. Det tyder på att EBIT-fallet är temporärt och drivet av investeringar (PPP-post, ERP, logistik) snarare än försämrad konkurrenskraft. Marknaden underskattar normaliseringspotentialen.
-            </p>
+            <div className="space-y-6">
+              <div className="space-y-4">
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  <strong>Bruttomarginalen</strong> är den viktigaste signalen: stabiliteten på 49,0% under 2025 visar att kärnaffären är robustare än vad EBIT-fallet antyder. Vi ser 2025 som ett "övergångsår" där engångskostnader (PPP, ERP, logistik) maskerar den underliggande intjäningsförmågan.
+                </p>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Det finns en tydlig <strong>värderings-asymmetri</strong>: aktien ser rimlig ut på bakhålll, men mycket attraktiv på 2027e EPS om marginalerna ens halvvägs normaliseras. Största risken att bevaka är skuldutvecklingen och rörelsekapitalet.
+                </p>
+              </div>
+              <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                <div className="text-[10px] font-black text-slate-400 uppercase mb-2">Bedömning AI-observationer: 4/5</div>
+                <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                  Ingen röd flagg i datan, men en tydlig edge i att marknaden verkar överskatta hur permanent marginalfallet är.
+                </p>
+              </div>
+            </div>
           </Card>
         </div>
 
@@ -582,8 +619,22 @@ export default function NewWaveDeepDive({
                 <div className="relative z-10">
                   <SectionLabel number="IX" title={<span className="text-white">Investeringsbeslut</span>} />
                   <div className="space-y-6">
-                    <p className="text-xl md:text-2xl font-medium text-white/90 leading-relaxed">
-                      "New Wave Group är just nu ett kvalitetsbolag i en tillfälligt pressad fas. När investeringarna i logistik, ERP och expansion börjar ge effekt, ser vinstbanan betydligt bättre ut än vad 2025 års siffror antyder."
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                      <div className="p-4 bg-white/10 rounded-xl">
+                        <h5 className="text-[10px] font-bold text-white/60 uppercase mb-2">Är NWG ett kvalitetsbolag?</h5>
+                        <p className="text-sm text-white/90">Ja. Founder-led med stark kultur, tydlig position och stabil bruttomarginal.</p>
+                      </div>
+                      <div className="p-4 bg-white/10 rounded-xl">
+                        <h5 className="text-[10px] font-bold text-white/60 uppercase mb-2">Rimligt värderat?</h5>
+                        <p className="text-sm text-white/90">Ja, mycket attraktivt på framåtblickande basis (2026-2027).</p>
+                      </div>
+                      <div className="p-4 bg-white/10 rounded-xl">
+                        <h5 className="text-[10px] font-bold text-white/60 uppercase mb-2">Långsiktigt innehav?</h5>
+                        <p className="text-sm text-white/90">Ja, för den som tål medelcyklisk exponering över 5-10 år.</p>
+                      </div>
+                    </div>
+                    <p className="text-lg font-medium text-white/90 leading-relaxed italic">
+                      "New Wave Group är just nu ett kvalitetsbolag i en tillfälligt pressad fas. När investeringarna i logistik, Cotton Classics och expansionen ger effekt, ser vinstbanan betydligt bättre ut än vad 2025 antyder."
                     </p>
                     <div className="flex flex-col md:flex-row gap-8 pt-8 border-t border-white/20">
                       <div>
