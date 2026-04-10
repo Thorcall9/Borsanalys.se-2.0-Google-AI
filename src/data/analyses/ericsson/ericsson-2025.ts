@@ -1,9 +1,9 @@
 import { AnalysisData } from "../../../types/analysis";
 
 export const ericsson2025: AnalysisData = {
-  slug: "ericsson-2025",
+  slug: "ericsson",
   title: "Telefonaktiebolaget LM Ericsson",
-  listTitle: "Ericsson (2025)",
+  listTitle: "Ericsson",
   ticker: "ERIC B",
   market: "Large Cap Stockholm",
   sector: "Telekomutrustning",
@@ -58,7 +58,7 @@ export const ericsson2025: AnalysisData = {
 
   aiDrivenData: {
     isAIDriven: true,
-    slug: "ericsson-2025",
+    slug: "ericsson",
     name: "Telefonaktiebolaget LM Ericsson",
     ticker: "ERIC B",
     isin: "SE0000108656",

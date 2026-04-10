@@ -278,8 +278,11 @@ export default function MacroDashboard() {
       });
       
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(`Serverfel (Status ${response.status}): ${errorData.error || "Misslyckades att hämta analys"}`);
+        const errorData = await response.json();
+        console.error("[MacroDashboard] AI Outlook Error:", errorData);
+        if (!response.ok) {
+          throw new Error(`Serverfel (Status ${response.status}): ${errorData.error || "Misslyckades att hämta analys"}`);
+        }
       }
 
       const data = await response.json();

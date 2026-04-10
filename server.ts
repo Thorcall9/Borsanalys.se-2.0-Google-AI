@@ -293,8 +293,13 @@ Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
       });
 
     } catch (err: any) {
-      logger(`[CRITICAL ERROR] /api/ai/macro-outlook: ${err.message}`);
-      res.status(500).json({ error: `Serverfel: ${err.message}` });
+      const errorMsg = err.message || "Okänt serverfel";
+      const errorStack = err.stack || "";
+      logger(`[CRITICAL ERROR] /api/ai/macro-outlook: ${errorMsg}\nStack: ${errorStack}`);
+      res.status(500).json({ 
+        error: `Serverfel: ${errorMsg}`,
+        details: process.env.NODE_ENV !== "production" ? errorStack : undefined
+      });
     }
   });
 

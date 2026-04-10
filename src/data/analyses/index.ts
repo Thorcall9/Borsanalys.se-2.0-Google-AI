@@ -9,7 +9,6 @@ import { volvo } from "./volvo/volvo";
 import { alphabet } from "./alphabet/alphabet";
 import { evolution2025 } from "./evolution/evolution-2025";
 import { swedbank2025 } from "./swedbank/swedbank-2025";
-import { ericsson } from "./ericsson/ericsson";
 import { handelsbanken2025 } from "./handelsbanken/handelsbanken-2025";
 import { ericsson2025 } from "./ericsson/ericsson-2025";
 import { newWaveGroup2025 } from "./new-wave-group/new-wave-group";
@@ -25,9 +24,8 @@ export const analyses: Record<string, AnalysisData> = {
   "alphabet": alphabet,
   "evolution-2025": evolution2025,
   "swedbank-2025": swedbank2025,
-  "ericsson": ericsson,
+  "ericsson": ericsson2025,
   "handelsbanken-2025": handelsbanken2025,
-  "ericsson-2025": ericsson2025,
   "new-wave-group-2025": newWaveGroup2025,
 };
 
