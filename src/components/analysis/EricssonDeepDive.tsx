@@ -277,10 +277,10 @@ export default function EricssonDeepDive({
                       <div className="flex h-4 w-full rounded-full overflow-hidden mb-3 bg-slate-100 shadow-inner">
                         {[
                           { l: "Amerika", v: 35, c: "#002561" },
-                          { l: "EMEA", v: 30, c: "#003a8c" },
+                          { l: "EMEA", v: 30, c: "#3B82F6" },
                           { l: "Övrigt", v: 16, c: "#10B981" },
-                          { l: "SE Asia", v: 12, c: "#4361ee" },
-                          { l: "NE Asia", v: 7, c: "#7209b7" },
+                          { l: "SE Asia", v: 12, c: "#F59E0B" },
+                          { l: "NE Asia", v: 7, c: "#8B5CF6" },
                         ].map((d, i) => (
                           <div 
                             key={i} 
@@ -293,10 +293,10 @@ export default function EricssonDeepDive({
                       <div className="flex flex-wrap gap-x-4 gap-y-2">
                         {[
                           { l: "Amerika", v: "35%", c: "#002561" },
-                          { l: "EMEA", v: "30%", c: "#003a8c" },
+                          { l: "EMEA", v: "30%", c: "#3B82F6" },
                           { l: "Övrigt (Patent/Ent.)", v: "16%", c: "#10B981", bold: true },
-                          { l: "SE Asia/India", v: "12%", c: "#4361ee" },
-                          { l: "NE Asia", v: "7%", c: "#7209b7" },
+                          { l: "SE Asia/India", v: "12%", c: "#F59E0B" },
+                          { l: "NE Asia", v: "7%", c: "#8B5CF6" },
                         ].map((d, i) => (
                           <div key={i} className="flex items-center gap-1.5">
                             <div className="w-2 h-2 rounded-full" style={{ background: d.c }} />

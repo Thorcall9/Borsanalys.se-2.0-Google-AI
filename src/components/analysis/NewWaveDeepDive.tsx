@@ -486,14 +486,14 @@ export default function NewWaveDeepDive({
                 Den främsta tillväxtmotorn de kommande åren är <strong>Cotton Classics</strong>. Förvärvet stärker NWG i Centraleuropa (speciellt i de tyska regionerna) och breddar distributionsnätet materiellt. Att det bidrog med 429 MSEK i omsättning på bara fyra månader visar på dess betydelse för den framtida skalan.
               </p>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-4">
                 <div className="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
                   <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center shrink-0">
                     <Trophy size={20} />
                   </div>
                   <div>
                     <h4 className="font-bold text-slate-900 mb-1">Craft Shoe Expansion</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed">Nytt skoerbjudande för inomhussporter (H2 2026/H1 2027) öppnar en större och mer relevant produktkategori för föreningar.</p>
+                    <p className="text-sm text-slate-600 leading-relaxed">Nytt skoerbjudande för inomhussporter (H2 2026/H1 2027) öppnar en större och mer relevant produktkategori för föreningar.</p>
                   </div>
                 </div>
                 <div className="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
@@ -502,7 +502,7 @@ export default function NewWaveDeepDive({
                   </div>
                   <div>
                     <h4 className="font-bold text-slate-900 mb-1">Lager-automation</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed">Nya lager i Irland och USA 2026 stärker servicenivån. Fortsatt automation ger operationell hävstång vid ökad volym.</p>
+                    <p className="text-sm text-slate-600 leading-relaxed">Nya lager i Irland och USA 2026 stärker servicenivån. Fortsatt automation ger operationell hävstång vid ökad volym.</p>
                   </div>
                 </div>
                 <div className="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
@@ -511,13 +511,13 @@ export default function NewWaveDeepDive({
                   </div>
                   <div>
                     <h4 className="font-bold text-slate-900 mb-1">Marknadsläge</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed">När efterfrågan i retail förbättras slår omsättningsökningen snabbt igenom i EBIT pga fasta kostnader.</p>
+                    <p className="text-sm text-slate-600 leading-relaxed">När efterfrågan i retail förbättras slår omsättningsökningen snabbt igenom i EBIT pga företagets fasta kostnadsstruktur.</p>
                   </div>
                 </div>
               </div>
 
               <div className="p-4 bg-indigo-50 rounded-xl border border-indigo-200">
-                <div className="text-[10px] font-black text-indigo-400 border-indigo-200 uppercase mb-2">Bedömning Tillväxtutsikter: 4/5</div>
+                <div className="text-[10px] font-black text-indigo-600 uppercase mb-2">Bedömning Tillväxtutsikter: 4/5</div>
                 <p className="text-xs text-indigo-900 leading-relaxed">
                   Det finns flera konkreta och trovärdiga tillväxtdrivare. Vi stannar på 4/5 då marknaden fortfarande är osäker och execution i USA-expansionen är kritisk för att nå 5/5.
                 </p>
