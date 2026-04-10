@@ -28,6 +28,8 @@ export interface AIDrivenAnalysis {
     affarsmodell: string;
     ledning: string;
     agarstruktur?: string;
+    antalAktier?: string;
+    sources?: string;
   };
   strategiskMoat?: {
     swot: {

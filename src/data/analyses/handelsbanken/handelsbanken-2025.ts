@@ -92,12 +92,14 @@ export const handelsbanken2025: AnalysisData = {
     overview: {
       borskurs: 134.35,
       borsvarde: "269 mdkr",
+      antalAktier: "cirka 1 980 miljoner",
       bransch: "Bank & Finans",
       geografi: "Sverige, Storbritannien, Norge, Nederländerna samt viss verksamhet i Luxemburg och USA",
-      affarside: "Långsiktig, kundnära bank med låg risktolerans och stark lokal förankring",
-      affarsmodell: "Decentraliserad universalbank med intäkter främst från räntenetto, provisioner, sparande och kapitalförvaltning",
-      ledning: "Michael Green är VD sedan 1 januari 2024; intern veteran med djup erfarenhet från bankens kärnverksamhet",
-      agarstruktur: "Stabil ägarbild med Industrivärden som största ägare och Oktogonen som viktig långsiktig kultur- och ägarbärare"
+      affarside: "Svenska Handelsbanken är en av Nordens mest etablerade banker, grundad 1871. Affärsidén bygger på lokal närvaro, personliga kundrelationer, decentraliserat beslutsfattande och låg risktolerans. Till skillnad från många banker försöker Handelsbanken inte vinna på aggressiv volymtillväxt eller hög riskaptit. Banken vill i stället ha nöjdare kunder, lägre kostnader än konkurrenterna och högre lönsamhet över tid.",
+      affarsmodell: "Decentraliserad universalbank där intjäningen främst kommer från räntenetto (skillnaden mellan räntor på utlåning och inlåning) samt provisionsnetto från sparande, kapitalförvaltning och betalningar. År 2025 stod räntenettot för 42,5 mdkr av totala intäkter på 56,8 mdkr, medan provisionsnettot steg till 11,9 mdkr.",
+      ledning: "Michael Green är VD och koncernchef sedan 1 januari 2024. Han är en intern veteran som började i banken 1994 och tidigare haft ledande roller i bland annat USA, Västra Sverige och Capital Markets. Detta minskar exekveringsrisken genom djup kännedom om bankens kärnkultur.",
+      agarstruktur: "Stabil ägarbild per 31 dec 2025 med Industrivärden som största ägare (11,6% av kapitalet) och Oktogonen som näst störst (8,0%). Oktogonen fungerar både som incitamentsstruktur och långsiktig kulturförstärkare.",
+      sources: "Årsredovisning 2025, Q3 2025, bokslutskommuniké 2025"
     },
     strategiskMoat: {
       swot: {

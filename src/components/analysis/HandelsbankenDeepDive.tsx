@@ -259,30 +259,101 @@ export default function HandelsbankenDeepDive({
         </div>
       </div>
 
+      {/* 4. META INFO */}
+      <div className="max-w-7xl mx-auto px-6 md:px-10 mt-8 mb-4">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-medium text-slate-500 border-b border-slate-100 pb-4">
+          <div className="flex items-center gap-2">
+            <span className="text-slate-400">Författare:</span>
+            <span className="text-slate-900 font-bold">Carl Fredrik Thor</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-slate-400">Datum:</span>
+            <span className="text-slate-900 font-bold">10 april 2026</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-slate-400">Källor:</span>
+            <span className="text-slate-900 font-bold italic">Årsredovisning 2025, Q3 2025, bokslutskommuniké 2025</span>
+          </div>
+        </div>
+      </div>
       {/* CONTENT AREA */}
-      <div className="max-w-7xl mx-auto px-6 md:px-10 py-12 space-y-16">
+      <div className="max-w-7xl mx-auto px-6 md:px-10 py-8 space-y-16">
+
+        {/* ── METADATA ── */}
+        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Sektor</div>
+              <div className="text-sm font-bold text-slate-900">Bank & Finans</div>
+            </div>
+            <div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Marknad</div>
+              <div className="text-sm font-bold text-slate-900">Stockholm (Large Cap)</div>
+            </div>
+            <div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Ticker</div>
+              <div className="text-sm font-bold text-slate-900">SHB A</div>
+            </div>
+            <div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Valuta</div>
+              <div className="text-sm font-bold text-slate-900">SEK</div>
+            </div>
+          </div>
+        </div>
 
         {/* ── ÖVERSIKT ── */}
         <div id="oversikt">
           <FadeIn>
             <Card mb={20}>
               <SectionLabel number="I" title="Företagsöversikt"/>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
-                <div key="bakgrund">
-                  <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Bakgrund & Affärsidé</div>
-                  <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.8}}>Svenska Handelsbanken grundades 1871 och är ett av Sveriges äldsta börsnoterade bolag. Affärsidén bygger på lokal närvaro, personliga kundrelationer, decentraliserat beslutsfattande och låg risktolerans. Banken prioriterar kundnöjdhet och kostnadseffektivitet framför aggressiv volymtillväxt.</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div key="bakgrund" className="space-y-4">
+                  <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase"}}>Bakgrund & Affärsidé</div>
+                  <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.8}}>
+                    Svenska Handelsbanken är en av Nordens mest etablerade banker, grundad 1871. Banken verkar främst på fyra hemmamarknader: Sverige, Storbritannien, Norge och Nederländerna, samt har viss verksamhet i Luxemburg och USA. 
+                  </p>
+                  <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.8}}>
+                    Till skillnad från många konkurrenter försöker Handelsbanken inte vinna på aggressiv volymtillväxt eller hög riskaptit. Affärsidén bygger på lokal närvaro, personliga kundrelationer, decentraliserat beslutsfattande och låg risktolerans. Banken vill i stället ha nöjdare kunder, lägre kostnader än konkurrenterna och högre lönsamhet över tid – en enkel modell i teorin, men svår att kopiera i praktiken.
+                  </p>
+                  <div className="flex flex-wrap gap-4 pt-2">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">Börskurs (2025 utg.)</span>
+                      <span className="text-sm font-black text-slate-900">134,35 kr</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">Antal aktier</span>
+                      <span className="text-sm font-black text-slate-900">ca 1 980 milj.</span>
+                    </div>
+                  </div>
                 </div>
-                <div key="modell">
-                  <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Affärsmodell</div>
-                  <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.8}}>Universalbank som tjänar pengar på räntenetto, provisionsnetto (sparande/kapitalförvaltning) och övriga finansiella tjänster. Räntenettot stod för 42,5 mdkr av totala intäkter på 56,8 mdkr under 2025.</p>
+                
+                <div key="modell" className="space-y-4">
+                  <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase"}}>Affärsmodell</div>
+                  <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.8}}>
+                    Som universalbank kommer intjäningen främst från:
+                  </p>
+                  <ul style={{margin:0, paddingLeft:18, fontSize:13, color:T.sub, lineHeight:1.7}}>
+                    <li><strong>Räntenetto:</strong> Skillnaden mellan räntor på utlåning och inlåning (42,5 mdkr 2025).</li>
+                    <li><strong>Provisionsnetto:</strong> Avgifter från sparande, kapitalförvaltning och betalningar (11,9 mdkr 2025).</li>
+                    <li><strong>Övrigt:</strong> Markets-verksamhet och finansiella poster.</li>
+                  </ul>
+                  <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.8}}>
+                    Räntenettot utgör den största delen (75% av intäkterna), vilket ger hög lönsamhet men också känslighet för marknadsräntor. Samtidigt visar den växande sparaffären på en positiv diversifiering.
+                  </p>
                 </div>
-                <div key="ledning">
-                  <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Ledning</div>
-                  <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.8}}>Michael Green är VD sedan 1 januari 2024. Han är en intern veteran som började i banken 1994, vilket minskar exekveringsrisken genom djup kännedom om bankens unika kultur.</p>
+
+                <div key="ledning" className="space-y-4">
+                  <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase"}}>Ledning</div>
+                  <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.8}}>
+                    Michael Green är VD sedan 1 januari 2024. Han är en intern veteran som började i banken 1994 och har haft ledande roller i USA, Västra Sverige och Capital Markets. Detta minskar exekveringsrisken genom djup kännedom om bankens unika kultur.
+                  </p>
                 </div>
-                <div key="agarstruktur">
-                  <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Ägarstruktur</div>
-                  <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.8}}>Stabil ägarbild med Industrivärden (11,6%) och Oktogonen (8,0%) som huvudsakliga ägare.</p>
+
+                <div key="agarstruktur" className="space-y-4">
+                  <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase"}}>Ägarstruktur</div>
+                  <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.8}}>
+                    Stabil ägarbild med Industrivärden (11,6%) och Oktogonen (8,0%) som huvudsakliga ägare. Oktogonen är särskilt viktig då den fungerar både som incitamentsstruktur och kulturförstärkare över tid.
+                  </p>
                 </div>
               </div>
             </Card>
