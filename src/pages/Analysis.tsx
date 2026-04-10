@@ -39,6 +39,8 @@ import InvestorDeepDive from "../components/analysis/InvestorDeepDive";
 import VolvoDeepDive from "../components/analysis/VolvoDeepDive";
 import SwedbankDeepDive from "../components/analysis/SwedbankDeepDive";
 import NewWaveDeepDive from "../components/analysis/NewWaveDeepDive";
+import EricssonDeepDive from "../components/analysis/EricssonDeepDive";
+import HandelsbankenDeepDive from "../components/analysis/HandelsbankenDeepDive";
 import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 import { useAuth } from "../contexts/AuthContext";
@@ -53,7 +55,9 @@ const DEEP_DIVE_COMPONENTS = {
   Investor: InvestorDeepDive,
   Volvo: VolvoDeepDive,
   Swedbank: SwedbankDeepDive,
-  NewWave: NewWaveDeepDive
+  NewWave: NewWaveDeepDive,
+  Ericsson: EricssonDeepDive,
+  Handelsbanken: HandelsbankenDeepDive
 };
 
 export default function Analysis() {

@@ -12,11 +12,14 @@ import {
   Globe,
   ShoppingBag,
   Trophy,
-  Gift
+  Gift,
+  AlertTriangle,
+  Scale,
+  TrendingDown
 } from "lucide-react";
 import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
-  Tooltip, ResponsiveContainer, Cell
+  Tooltip, ResponsiveContainer, Cell, AreaChart, Area
 } from "recharts";
 import AdUnit from "../AdUnit";
 import NextAnalysisButton from "./NextAnalysisButton";
@@ -45,39 +48,40 @@ const revenueData = [
   {ar:"2021", v:6720},
   {ar:"2022", v:8819},
   {ar:"2023", v:9529},
-  {ar:"2024", v:9710},
+  {ar:"2024", v:9529}, // Corrected 2024 to 9529 as per user text (note: user text said 2024 was 9529, 2025 was 10019)
   {ar:"2025", v:10019},
-  {ar:"2026e", v:10850, e:true},
+  {ar:"2026e", v:10950, e:true},
+  {ar:"2027e", v:12100, e:true},
 ];
 
 const marginData = [
   {ar:"2021", v:14.9},
   {ar:"2022", v:17.1},
   {ar:"2023", v:13.2},
-  {ar:"2024", v:12.8},
+  {ar:"2024", v:13.2},
   {ar:"2025", v:11.4},
-  {ar:"2026e", v:12.5, e:true},
+  {ar:"2026e", v:12.8, e:true},
+  {ar:"2027e", v:14.2, e:true},
+];
+
+const valuationData = [
+  {ar:"2024", pe:14.64},
+  {ar:"2025", pe:19.42},
+  {ar:"Nu", pe:16.85},
+  {ar:"2026e", pe:13.35, e:true},
+  {ar:"2027e", pe:10.57, e:true},
 ];
 
 const allScores = [
-  {key:"Affärsmodell",val:5,max:5},
-  {key:"Strategisk Moat",val:4,max:5},
+  {key:"Affärsmodell",val:4,max:5},
+  {key:"Strategisk Moat",val:3,max:5},
   {key:"Finansiell Kvalitet",val:4,max:5},
   {key:"Värdering",val:4,max:5},
-  {key:"Tillväxtutsikter",val:5,max:5},
+  {key:"Tillväxtutsikter",val:4,max:5},
   {key:"Riskprofil",val:3,max:5},
   {key:"ESG & Makro",val:3,max:5},
   {key:"AI-obs.",val:4,max:5},
 ];
-
-function useHover(): [boolean, { onMouseEnter: () => void; onMouseLeave: () => void }] {
-  const [h,setH]=useState(false);
-  return [h,{onMouseEnter:()=>setH(true),onMouseLeave:()=>setH(false)}];
-}
-
-function Tag({children,color=T.accent,bg=T.accentL}){
-  return <span style={{display:"inline-block",padding:"3px 10px",borderRadius:20,background:bg,color,fontSize:11,fontWeight:700,letterSpacing:0.3}}>{children}</span>;
-}
 
 function FadeIn({children,delay=0}){
   const [v,setV]=useState(false);
@@ -85,8 +89,8 @@ function FadeIn({children,delay=0}){
   return <div style={{opacity:v?1:0,transform:v?"none":"translateY(8px)",transition:"all 0.35s ease"}}>{children}</div>;
 }
 
-function Card({children,mb=0}: any){
-  return <div className="bg-white border border-slate-200 rounded-2xl shadow-sm mb-5 p-4 md:p-6" style={{marginBottom:mb}}>{children}</div>;
+function Card({children,mb=0, className=""}: any){
+  return <div className={`bg-white border border-slate-200 rounded-2xl shadow-sm mb-5 p-4 md:p-6 ${className}`} style={{marginBottom:mb}}>{children}</div>;
 }
 
 function SectionLabel({number,title}){
@@ -103,7 +107,7 @@ const ChartTip=({active,payload,label,unit=""}: any)=>{
   return(
     <div style={{background:T.surface,border:`1px solid ${T.border}`,borderRadius:10,padding:"10px 14px",boxShadow:T.shadowMd,fontSize:13}}>
       <div style={{fontWeight:700,color:T.ink,marginBottom:6}}>{label}</div>
-      {payload.map((p,i)=><div key={i} style={{color:T.sub}}>{p.name}: <strong style={{color:T.ink}}>{typeof p.value==="number"?p.value.toFixed(1):p.value}{unit}</strong></div>)}
+      {payload.map((p,i)=><div key={i} style={{color:T.sub}}>{p.name}: <strong style={{color:T.ink}}>{typeof p.value==="number"?p.value.toFixed(2):p.value}{unit}</strong></div>)}
     </div>
   );
 };
@@ -146,11 +150,11 @@ export default function NewWaveDeepDive({
                   <ArrowLeft size={20} />
                 </Link>
                 <h1 className="text-3xl md:text-4xl font-black tracking-tight leading-tight">
-                  New Wave Group
+                  New Wave Group AB
                 </h1>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <span className="bg-white/20 px-2 py-0.5 rounded text-xs font-bold tracking-wide">NEWA B</span>
+                <span className="bg-white/20 px-2 py-0.5 rounded text-xs font-bold tracking-wide">NWG B</span>
                 <span className="text-sm font-medium opacity-90">Sällanköpsvaror • Stockholm</span>
                 
                 <button 
@@ -171,102 +175,250 @@ export default function NewWaveDeepDive({
 
           <div className="flex flex-col items-start md:items-end w-full md:w-64">
             <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-4xl font-black tracking-tighter">32/40</span>
+              <span className="text-4xl font-black tracking-tighter">29/40</span>
               <span className="text-sm font-bold opacity-80 uppercase tracking-widest">Poäng</span>
             </div>
             <div className="w-full bg-black/10 h-2 rounded-full overflow-hidden mb-2">
-              <div className="bg-white h-full rounded-full" style={{ width: '80%' }} />
+              <div className="bg-white h-full rounded-full" style={{ width: '72.5%' }} />
             </div>
-            <span className="text-sm font-bold tracking-tight">4.0 / 5.0 – Kvalitetsbetyg</span>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. KEY METRICS ROW */}
-      <div className="w-full bg-slate-50 border-b border-slate-200 py-10 px-6 md:px-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-            
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börskurs</span>
-              <div className="text-2xl font-black text-slate-900">116,40 kr</div>
-              <span className="text-xs text-slate-500 mt-1 block">Nasdaq Stockholm</span>
-            </div>
-
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börsvärde</span>
-              <div className="text-2xl font-black text-slate-900">~15,4 Mdr</div>
-              <span className="text-xs text-slate-500 mt-1 block">Large Cap</span>
-            </div>
-
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">P/E-tal (2025)</span>
-              <div className="text-2xl font-black text-slate-900">15,2</div>
-              <span className="text-xs text-slate-500 mt-1 block">EV/EBIT ~13x</span>
-            </div>
-
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Direktavkastning</span>
-              <div className="text-2xl font-black text-slate-900">2,6%</div>
-              <span className="text-xs text-green-600 font-bold mt-1 block">Hög utdelningskapacitet</span>
-            </div>
-
-            <div className="bg-white p-6 rounded-2xl border-2 border-[#1E40AF]/20 shadow-lg relative overflow-hidden group">
-              <div className="relative z-10">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Riktkurs</span>
-                <div className="flex items-center gap-2">
-                  <div className="text-2xl font-black text-slate-900">145 kr</div>
-                </div>
-                <p className="text-[10px] leading-tight text-slate-500 mt-2">Base Case 12m</p>
-              </div>
-              <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity text-[#1E40AF]">
-                <TrendingUp size={80} />
-              </div>
-            </div>
-
+            <span className="text-sm font-bold tracking-tight">3.6 / 5.0 – Rating 72.5%</span>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-12 space-y-16">
         
-        {/* I. INVESTMENT CASE */}
+        {/* 2. WARNING BOX */}
+        <div className="bg-amber-50 border border-amber-200 p-4 rounded-xl flex items-start gap-4 text-amber-900">
+          <AlertTriangle size={24} className="shrink-0 mt-1" />
+          <p className="text-sm font-medium leading-relaxed">
+            <strong>Intressekonflikt:</strong> Analysförfattaren har en position i det analyserade bolaget. Analysen är inte finansiell rådgivning.
+          </p>
+        </div>
+
+        {/* 3. KEY METRICS ROW */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card className="p-6">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börskurs</span>
+            <div className="text-2xl font-black text-slate-900">99,60 kr</div>
+            <span className="text-xs text-slate-500 mt-1 block">Nasdaq Stockholm</span>
+          </Card>
+          <Card className="p-6">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börsvärde</span>
+            <div className="text-2xl font-black text-slate-900">13,2 Mdr</div>
+            <span className="text-xs text-slate-500 mt-1 block">Large Cap</span>
+          </Card>
+          <Card className="p-6">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">P/E-tal (trailing)</span>
+            <div className="text-2xl font-black text-slate-900">16,85</div>
+            <span className="text-xs text-slate-500 mt-1 block">2026e: 13,3x | 2027e: 10,6x</span>
+          </Card>
+          <Card className="p-6 border-2 border-primary/20">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Riktkurs (Base)</span>
+            <div className="text-2xl font-black text-primary">130-145 kr</div>
+            <span className="text-xs text-green-600 font-bold mt-1 block">~38% Uppsida</span>
+          </Card>
+        </div>
+
+        {/* I. FÖRETAGSÖVERSIKT */}
         <FadeIn>
           <Card>
-            <SectionLabel number="I" title="Investment Case" />
+            <SectionLabel number="I" title="Företagsöversikt" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="space-y-6">
-                <p className="text-lg font-medium text-slate-700 leading-relaxed">
-                  New Wave Group är en unik kombination av en <strong className="text-slate-900">tillväxtmaskin</strong> och en stabil kassaflödesgenerator. Under Torsten Janssons ledning har bolaget transformerats till en global aktör med tre starka ben.
+                <p className="text-slate-600 leading-relaxed">
+                  New Wave Group är en svensk varumärkeskoncern som utvecklar, förvärvar och distribuerar produkter inom tre huvudsegment: <strong>Företag</strong>, <strong>Sport & Fritid</strong> samt <strong>Gåvor & Heminredning</strong>. Affärsidén är att skapa synergier genom samordning av design, inköp, marknadsföring, lager och distribution, samtidigt som produkterna säljs både via profilmarknaden och detaljhandeln.
                 </p>
-                <div className="grid grid-cols-1 gap-4">
-                  <div className="flex items-start gap-4 p-4 bg-blue-50 rounded-xl border border-blue-100">
-                    <Trophy className="text-blue-600 shrink-0 mt-1" size={24} />
-                    <div>
-                      <h4 className="font-bold text-blue-900">Teamwear USA</h4>
-                      <p className="text-sm text-blue-800">Den stora tillväxtmotorn. Genom Craft och Cutter & Buck vinner man mark i världens största sportmarknad.</p>
-                    </div>
+                <p className="text-slate-600 leading-relaxed">
+                  Bolaget omsatte 10 019 MSEK under 2025, för första gången över 10 miljarder kronor. Nordamerika och Sverige är de viktigaste marknaderna, och varumärken som Craft, Cutter & Buck och Clique utgör grundbultarna.
+                </p>
+                <div className="grid grid-cols-2 gap-4 pt-4">
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <div className="text-[10px] font-black text-slate-400 uppercase mb-1">VD</div>
+                    <div className="text-sm font-bold">Torsten Jansson</div>
                   </div>
-                  <div className="flex items-start gap-4 p-4 bg-emerald-50 rounded-xl border border-emerald-100">
-                    <ShieldCheck className="text-emerald-600 shrink-0 mt-1" size={24} />
-                    <div>
-                      <h4 className="font-bold text-emerald-900">Operationell Excellens</h4>
-                      <p className="text-sm text-emerald-800">Logistik och lagerstyrning är i världsklass, vilket möjliggör hög servicegrad och stabila marginaler.</p>
-                    </div>
+                  <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                    <div className="text-[10px] font-black text-slate-400 uppercase mb-1">Huvudägare</div>
+                    <div className="text-sm font-bold">Torsten Jansson (89% röst.)</div>
                   </div>
                 </div>
               </div>
-              <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200">
-                <h4 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-4 text-center">Nyckeltal Trend</h4>
+              <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col items-center justify-center">
+                <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6">Omsättning per marknad (2025)</h4>
+                <div className="space-y-4 w-full">
+                  {[
+                    { l: "Europa (exkl. Sve/Ben)", v: "25%", c: T.accent },
+                    { l: "Nordamerika", v: "24%", c: T.green },
+                    { l: "Sverige", v: "20%", c: T.gold },
+                    { l: "Benelux", v: "15%", c: T.red },
+                    { l: "Övriga Norden", v: "11%", c: T.muted },
+                    { l: "Övriga Världen", v: "6%", c: "#CBD5E1" }
+                  ].map((m, i) => (
+                    <div key={i} className="space-y-1">
+                      <div className="flex justify-between text-xs font-bold">
+                        <span>{m.l}</span>
+                        <span>{m.v}</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-white rounded-full overflow-hidden">
+                        <div className="h-full rounded-full" style={{ width: m.v, backgroundColor: m.c }} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Card>
+        </FadeIn>
+
+        {/* II. STRATEGISK ANALYS & MOAT */}
+        <FadeIn delay={100}>
+          <Card>
+            <SectionLabel number="II" title="Strategisk Analys & Moat" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              <div className="space-y-6">
+                <p className="text-slate-600 leading-relaxed">
+                  Bolagets styrka ligger i kombinationen av varumärken, distributionsnärvaro, inköpsskala och lokal försäljningsorganisation. Moaten förstärktes ytterligare under 2025 genom förvärvet av <strong>Cotton Classics</strong>, som stärker NWG i Centraleuropa (Tyskland, Österrike, Tjeckien).
+                </p>
+                <div className="p-5 bg-blue-50 border border-blue-200 rounded-xl">
+                  <h4 className="font-bold text-blue-900 mb-2 flex items-center gap-2">
+                    <ShieldCheck size={18} /> Strategisk Plattform
+                  </h4>
+                  <ul className="text-sm text-blue-800 space-y-2 list-disc pl-4">
+                    <li>Marknadsledande inom profilprodukter i Europa</li>
+                    <li>Global sourcing-apparat med egna kontor i Asien</li>
+                    <li>Säljer via både profil och retail för riskspridning</li>
+                    <li>Stark bruttomarginal på ~50% trots svag marknad</li>
+                  </ul>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="p-6 bg-emerald-50 border border-emerald-100 rounded-2xl">
+                  <h4 className="text-xs font-black text-emerald-900 uppercase mb-4 uppercase tracking-widest">Styrkor</h4>
+                  <ul className="text-xs text-emerald-800 space-y-2">
+                    <li className="flex gap-2"><span>•</span> Bred varumärkesportfölj</li>
+                    <li className="flex gap-2"><span>•</span> Skalfördelar i inköp</li>
+                    <li className="flex gap-2"><span>•</span> Grundarledd kultur</li>
+                    <li className="flex gap-2"><span>•</span> Stabil bruttomarginal</li>
+                  </ul>
+                </div>
+                <div className="p-6 bg-rose-50 border border-rose-100 rounded-2xl">
+                  <h4 className="text-xs font-black text-rose-900 uppercase mb-4 uppercase tracking-widest">Svagheter</h4>
+                  <ul className="text-xs text-rose-800 space-y-2">
+                    <li className="flex gap-2"><span>•</span> Kapitalintensiv modell</li>
+                    <li className="flex gap-2"><span>•</span> Valutaexponering</li>
+                    <li className="flex gap-2"><span>•</span> Höga lagernivåer</li>
+                    <li className="flex gap-2"><span>•</span> Begränsade switching costs</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </FadeIn>
+
+        {/* III. FINANSIELL ANALYS */}
+        <FadeIn delay={200}>
+          <Card>
+            <SectionLabel number="III" title="Finansiell Analys" />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              <div className="space-y-10">
+                <div>
+                  <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6">Omsättning Trend (MSEK)</h4>
+                  <ResponsiveContainer width="100%" height={250}>
+                    <BarChart data={revenueData}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
+                      <XAxis dataKey="ar" axisLine={false} tickLine={false} tick={{fontSize: 12, fontWeight: 700}} />
+                      <YAxis axisLine={false} tickLine={false} tick={{fontSize: 10}} />
+                      <Tooltip content={<ChartTip unit=" MSEK" />} />
+                      <Bar dataKey="v" name="Omsättning" fill={T.accent} radius={[4, 4, 0, 0]}>
+                        {revenueData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.e ? T.muted : T.accent} />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+                <div>
+                  <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6">Rörelsemarginal Trend (%)</h4>
+                  <ResponsiveContainer width="100%" height={250}>
+                    <AreaChart data={marginData}>
+                      <defs>
+                        <linearGradient id="colorMargin" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor={T.red} stopOpacity={0.3}/>
+                          <stop offset="95%" stopColor={T.red} stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
+                      <XAxis dataKey="ar" axisLine={false} tickLine={false} tick={{fontSize: 12, fontWeight: 700}} />
+                      <YAxis axisLine={false} tickLine={false} tick={{fontSize: 10}} domain={[8, 18]} />
+                      <Tooltip content={<ChartTip unit="%" />} />
+                      <Area type="monotone" dataKey="v" name="Marginal" stroke={T.red} strokeWidth={3} fillOpacity={1} fill="url(#colorMargin)" />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+              <div className="space-y-6">
+                <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
+                  <h4 className="font-bold text-slate-900 mb-4">Operations & Profitability</h4>
+                  <p className="text-sm text-slate-600 leading-relaxed mb-4">
+                    2025 var ett blandat år. Omsättningen nådde rekordnivåer (10 019 MSEK), men rörelseresultatet sjönk till 1 141 MSEK från 1 262 MSEK 2024. Justerat för en engångskostnad om 66 MSEK (PPP-lån) var EBIT-marginalen dock stabilare än på ytan.
+                  </p>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Nettoskulden steg till 3 082 MSEK pga Cotton Classics-förvärvet och strategisk lageruppbyggnad. Soliditeten på 53,0% är dock fortsatt trygg över målet på 40%.
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { l: "ROE", v: "11.15%" },
+                    { l: "Utdelning", v: "3.00 kr" },
+                    { l: "Soliditet", v: "53.0%" },
+                    { l: "Kassaflöde (Op)", v: "653 Mkr" }
+                  ].map((m, i) => (
+                    <div key={i} className="p-4 bg-white border border-slate-200 rounded-xl">
+                      <div className="text-[10px] font-black text-slate-400 uppercase mb-1">{m.l}</div>
+                      <div className="text-xl font-black">{m.v}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </Card>
+        </FadeIn>
+
+        {/* IV. VÄRDERING & JÄMFÖRELSE */}
+        <FadeIn delay={300}>
+          <Card>
+            <SectionLabel number="IV" title="Värdering & Jämförelse" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div>
+                <p className="text-slate-600 leading-relaxed mb-6">
+                  På nuvarande kurs 99,60 SEK handlas aktien till en tydlig skillnad mellan trailing och framåtblickande värdering. Om 2027e EPS kring 9,41 SEK infrias är P/E 10,6x mycket attraktivt för ett bolag med NWG:s historik och marknadsposition.
+                </p>
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center p-3 bg-slate-50 rounded-lg border border-slate-200">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-500">Trailing P/E (2025)</span>
+                    <span className="text-lg font-black">16,85x</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg border border-blue-200 text-blue-900">
+                    <span className="text-xs font-bold uppercase tracking-wider opacity-70">Forward P/E (2026e)</span>
+                    <span className="text-lg font-black">13,35x</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-emerald-50 rounded-lg border border-emerald-200 text-emerald-900">
+                    <span className="text-xs font-bold uppercase tracking-wider opacity-70">Forward P/E (2027e)</span>
+                    <span className="text-lg font-black">10,57x</span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col justify-center">
+                <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 text-center">P/E-Multipel Historik & Prognos</h4>
                 <ResponsiveContainer width="100%" height={250}>
-                  <BarChart data={revenueData}>
+                  <BarChart data={valuationData}>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                    <XAxis dataKey="ar" axisLine={false} tickLine={false} tick={{fontSize: 12, fontWeight: 600}} />
-                    <YAxis axisLine={false} tickLine={false} tick={{fontSize: 10}} />
-                    <Tooltip content={<ChartTip unit=" Mkr" />} />
-                    <Bar dataKey="v" name="Omsättning" fill="#1E40AF" radius={[4, 4, 0, 0]}>
-                      {revenueData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.e ? "#94A3B8" : "#1E40AF"} />
+                    <XAxis dataKey="ar" axisLine={false} tickLine={false} tick={{fontSize: 12, fontWeight: 700}} />
+                    <YAxis axisLine={false} tickLine={false} tick={{fontSize: 10}} domain={[0, 25]} />
+                    <Tooltip content={<ChartTip />} />
+                    <Bar dataKey="pe" name="P/E-tal" fill={T.accent} radius={[4, 4, 0, 0]}>
+                      {valuationData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.e ? T.green : entry.ar === "Nu" ? T.gold : T.accent} />
                       ))}
                     </Bar>
                   </BarChart>
@@ -276,181 +428,178 @@ export default function NewWaveDeepDive({
           </Card>
         </FadeIn>
 
-        {/* II. BUSINESS DIVISIONS */}
-        <FadeIn delay={100}>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card>
-              <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
-                <ShoppingBag size={24} />
-              </div>
-              <h3 className="text-xl font-black mb-4 tracking-tight">Företag</h3>
-              <p className="text-sm text-slate-600 leading-relaxed mb-6">
-                Marknadsledande inom profilprodukter i Europa. Här bygger man långsiktiga relationer genom hög service och ett brett sortiment av baskläder och presentreklam.
-              </p>
-              <div className="pt-4 border-t border-slate-100 flex justify-between items-center">
-                <span className="text-[10px] font-black uppercase text-slate-400">Andel av omsättning</span>
-                <span className="text-lg font-black text-blue-600">~45%</span>
-              </div>
-            </Card>
-
-            <Card>
-              <div className="w-12 h-12 bg-rose-100 text-rose-600 rounded-xl flex items-center justify-center mb-6">
-                <Zap size={24} />
-              </div>
-              <h3 className="text-xl font-black mb-4 tracking-tight">Sport & Fritid</h3>
-              <p className="text-sm text-slate-600 leading-relaxed mb-6">
-                Innehåller flaggskeppet Craft. Fokus på funktionella kläder för både elit och motionär. USA-expansionen drivs främst inom detta segment.
-              </p>
-              <div className="pt-4 border-t border-slate-100 flex justify-between items-center">
-                <span className="text-[10px] font-black uppercase text-slate-400">Andel av omsättning</span>
-                <span className="text-lg font-black text-rose-600">~42%</span>
-              </div>
-            </Card>
-
-            <Card>
-              <div className="w-12 h-12 bg-amber-100 text-amber-600 rounded-xl flex items-center justify-center mb-6">
-                <Gift size={24} />
-              </div>
-              <h3 className="text-xl font-black mb-4 tracking-tight">Gåvor & Hem</h3>
-              <p className="text-sm text-slate-600 leading-relaxed mb-6">
-                Varumärken som Orrefors, Kosta Boda och Sagaform. Fokus på design och premiumgåvor till företag och privatpersoner.
-              </p>
-              <div className="pt-4 border-t border-slate-100 flex justify-between items-center">
-                <span className="text-[10px] font-black uppercase text-slate-400">Andel av omsättning</span>
-                <span className="text-lg font-black text-amber-600">~13%</span>
-              </div>
-            </Card>
-          </div>
-        </FadeIn>
-
-        {/* III. FINANCIALS */}
-        <FadeIn delay={200}>
+        {/* V & VI: TILLVÄXT & RISK */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <Card>
-            <SectionLabel number="II" title="Finansiell Styrka" />
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-              <div>
-                <h4 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-6">Rörelsemarginal (%)</h4>
-                <ResponsiveContainer width="100%" height={250}>
-                  <LineChart data={marginData}>
-                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                    <XAxis dataKey="ar" axisLine={false} tickLine={false} tick={{fontSize: 12}} />
-                    <YAxis axisLine={false} tickLine={false} tick={{fontSize: 10}} domain={[10, 20]} />
-                    <Tooltip content={<ChartTip unit="%" />} />
-                    <Line 
-                      type="monotone" 
-                      dataKey="v" 
-                      stroke="#E11D48" 
-                      strokeWidth={4} 
-                      dot={{ r: 6, fill: "#E11D48", strokeWidth: 0 }} 
-                      activeDot={{ r: 8, strokeWidth: 0 }}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="space-y-6">
-                <div className="p-6 bg-slate-50 rounded-2xl border border-slate-200">
-                  <h4 className="font-bold text-slate-900 mb-2">Marginalutveckling</h4>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    Efter rekordåren 2021-2022 har marginalerna normaliserats, men New Wave opererar nu på en strukturellt högre nivå än historiskt snitt på ~7-8%. Målet är 15%, men även 12% vore mycket starkt för branschen.
-                  </p>
+            <SectionLabel number="V" title="Tillväxtmotorer & Triggers" />
+            <div className="space-y-6">
+              <div className="flex gap-4">
+                <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center shrink-0">
+                  <TrendingUp size={20} />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 bg-white border border-slate-200 rounded-xl">
-                    <div className="text-[10px] font-black text-slate-400 uppercase mb-1">Soliditet</div>
-                    <div className="text-xl font-black">53.0%</div>
-                  </div>
-                  <div className="p-4 bg-white border border-slate-200 rounded-xl">
-                    <div className="text-[10px] font-black text-slate-400 uppercase mb-1">Kassaflöde (2025)</div>
-                    <div className="text-xl font-black">653 Mkr</div>
-                  </div>
+                <div>
+                  <h4 className="font-bold text-slate-900 mb-1">Cotton Classics Integration</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed">Stärker positionen i Centraleuropa (Tyskland/Österrike) och bidrar med ~1,3 Mdr i årlig omsättning vid fullt år.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center shrink-0">
+                  <Trophy size={20} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-slate-900 mb-1">Craft Shoe Expansion</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed">Nyah skoerbjudanden för inomhussporter väntas 2026/2027, vilket öppnar en helt ny produktkategori.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center shrink-0">
+                  <Globe size={20} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-slate-900 mb-1">Logistikinvesteringar</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed">Nya stora lager i Irland och USA 2026 ökar leveransförmågan och servicenivån i tillväxtmarknader.</p>
                 </div>
               </div>
             </div>
           </Card>
-        </FadeIn>
-
-        {/* IV. STRATEGY & SCENARIOS */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-8">
-            <Card>
-              <SectionLabel number="III" title="Strategisk Analys" />
-              <div className="prose prose-slate max-w-none">
-                <p className="text-slate-600 leading-relaxed">
-                  New Wave Groups största tillgång är <strong className="text-slate-900">Torsten Jansson</strong>. Hans förmåga att se möjligheter där andra ser hinder, parat med en extremt kostnadseffektiv logistikapparat, utgör bolagets "moat". 
-                </p>
-                <p className="text-slate-600 leading-relaxed mt-4">
-                  USA-expansionen är nu i en kritisk men lovande fas. Genom att använda Cutter & Bucks befintliga återförsäljarnätverk för att sälja in Craft, lyckas man expandera med relativt låg kapitalbindning och risk jämfört med att bygga allt från grunden.
-                </p>
-              </div>
-              <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="p-4 bg-emerald-50 text-emerald-900 rounded-xl border border-emerald-100">
-                  <h5 className="font-bold mb-1 flex items-center gap-2">
-                    <TrendingUp size={16} /> Marknadsandelar
-                  </h5>
-                  <p className="text-xs">Vinner terräng i USA inom Teamwear.</p>
+          <Card>
+            <SectionLabel number="VI" title="Riskprofil" />
+            <div className="space-y-6">
+              <div className="flex gap-4">
+                <div className="w-10 h-10 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center shrink-0">
+                  <Scale size={20} />
                 </div>
-                <div className="p-4 bg-blue-50 text-blue-900 rounded-xl border border-blue-100">
-                  <h5 className="font-bold mb-1 flex items-center gap-2">
-                    <Globe size={16} /> Global Plattform
-                  </h5>
-                  <p className="text-xs">Skalbar modell som fungerar i 20+ länder.</p>
+                <div>
+                  <h4 className="font-bold text-slate-900 mb-1">Valutarisk</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed">Kronans styrka mot USD är en motvind. Valutaeffekter påverkade omsättningen negativt med -413 MSEK under 2025.</p>
                 </div>
               </div>
-            </Card>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all">
-                <div className="text-[10px] font-black text-rose-600 uppercase mb-2">Bear Case</div>
-                <div className="text-2xl font-black">90 kr</div>
-                <div className="text-xs text-slate-400 mt-1">-23% Nedsida</div>
+              <div className="flex gap-4">
+                <div className="w-10 h-10 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center shrink-0">
+                  <AlertTriangle size={20} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-slate-900 mb-1">Skuldsättning & Lager</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed">Nettoskulden över 3 Mdr lämnar mindre felmarginal. Fortsatt svag marknad kan tynga kassaflödet via rörelsekapital.</p>
+                </div>
               </div>
-              <div className="p-6 bg-white border-2 border-slate-900 rounded-2xl shadow-sm hover:shadow-md transition-all">
-                <div className="text-[10px] font-black text-slate-900 uppercase mb-2">Base Case</div>
-                <div className="text-2xl font-black">135 kr</div>
-                <div className="text-xs text-slate-400 mt-1">+16% Uppsida</div>
-              </div>
-              <div className="p-6 bg-white border border-slate-200 rounded-2xl shadow-sm hover:shadow-md transition-all">
-                <div className="text-[10px] font-black text-emerald-600 uppercase mb-2">Bull Case</div>
-                <div className="text-2xl font-black">165 kr</div>
-                <div className="text-xs text-slate-400 mt-1">+42% Uppsida</div>
+              <div className="flex gap-4">
+                <div className="w-10 h-10 bg-orange-100 text-orange-600 rounded-lg flex items-center justify-center shrink-0">
+                  <TrendingDown size={20} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-slate-900 mb-1">Retail-efterfrågan</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed">En osäker återhämtning i detaljhandeln och sportbutiker kan förlänga perioden med dämpad organisk tillväxt.</p>
+                </div>
               </div>
             </div>
-          </div>
+          </Card>
+        </div>
 
-          <div className="space-y-6">
-            <Card>
-              <h4 className="text-sm font-black uppercase tracking-widest text-slate-400 mb-6">Rating & Analyst Notes</h4>
-              <div className="space-y-6">
-                {allScores.slice(0, 5).map(score => (
-                  <div key={score.key}>
-                    <div className="flex justify-between text-xs font-bold mb-2">
-                      <span>{score.key}</span>
-                      <span className="text-blue-600">{score.val}/{score.max}</span>
-                    </div>
-                    <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-blue-600 rounded-full" 
-                        style={{ width: `${(score.val / score.max) * 100}%` }} 
-                      />
+        {/* VII & VIII: ESG & AI */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <Card>
+            <SectionLabel number="VII" title="ESG & Makro" />
+            <p className="text-sm text-slate-600 leading-relaxed">
+              NWG arbetar med egen sourcingorganisation och personal på plats i inköpsländer för att kontrollera arbetsvillkor (Amfori BSCI) och transparens. Makrobilden präglas av cyklisk konsumtionsvilja och valutaexponering. Neutralt till svagt positivt ESG-case.
+            </p>
+          </Card>
+          <Card>
+            <SectionLabel number="VIII" title="AI-observationer 🔍" />
+            <p className="text-sm text-slate-600 leading-relaxed font-medium">
+              Vår analys visar att bruttomarginalstabiliteten på 49,0% är det viktigaste måttet. Det tyder på att EBIT-fallet är temporärt och drivet av investeringar (PPP-post, ERP, logistik) snarare än försämrad konkurrenskraft. Marknaden underskattar normaliseringspotentialen.
+            </p>
+          </Card>
+        </div>
+
+        {/* IX: SAMMANFATTNING & BESLUT */}
+        <FadeIn delay={400}>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <Card className="bg-[#1E40AF] text-white p-8 md:p-12 relative overflow-hidden">
+                <div className="relative z-10">
+                  <SectionLabel number="IX" title={<span className="text-white">Investeringsbeslut</span>} />
+                  <div className="space-y-6">
+                    <p className="text-xl md:text-2xl font-medium text-white/90 leading-relaxed">
+                      "New Wave Group är just nu ett kvalitetsbolag i en tillfälligt pressad fas. När investeringarna i logistik, ERP och expansion börjar ge effekt, ser vinstbanan betydligt bättre ut än vad 2025 års siffror antyder."
+                    </p>
+                    <div className="flex flex-col md:flex-row gap-8 pt-8 border-t border-white/20">
+                      <div>
+                        <div className="text-[10px] font-black uppercase tracking-widest text-white/50 mb-1">Slutsats</div>
+                        <div className="text-3xl font-black">KÖP</div>
+                      </div>
+                      <div>
+                        <div className="text-[10px] font-black uppercase tracking-widest text-white/50 mb-1">Målpris</div>
+                        <div className="text-3xl font-black">130–145 kr</div>
+                      </div>
+                      <div>
+                        <div className="text-[10px] font-black uppercase tracking-widest text-white/50 mb-1">Potential</div>
+                        <div className="text-3xl font-black">+38%</div>
+                      </div>
                     </div>
                   </div>
-                ))}
-              </div>
-            </Card>
-
-            <div className="p-6 bg-[#1E40AF] text-white rounded-2xl shadow-xl">
-              <h4 className="font-bold mb-4 flex items-center gap-2">
-                <Target size={18} /> Slutsats
-              </h4>
-              <p className="text-sm leading-relaxed opacity-90">
-                New Wave Group är billigt. Vid P/E 15 och en historik av hög tillväxt får man USA-optionen nästan gratis. Vi ser ett utmärkt läge att kliva in i aktien på nuvarande nivåer.
-              </p>
-              <div className="mt-6 pt-6 border-t border-white/20 text-center font-black text-xl tracking-tighter">
-                KÖP – 145 kr
-              </div>
+                </div>
+                <div className="absolute top-0 right-0 p-12 opacity-10 pointer-events-none">
+                  <Target size={240} />
+                </div>
+              </Card>
+            </div>
+            <div>
+              <Card>
+                <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 font-mono text-center">Score: 29 / 40</div>
+                <div className="space-y-6">
+                  {allScores.slice(0, 5).map(score => (
+                    <div key={score.key}>
+                      <div className="flex justify-between text-[10px] font-bold mb-2 uppercase tracking-wide">
+                        <span>{score.key}</span>
+                        <span className="text-primary">{score.val}/{score.max}</span>
+                      </div>
+                      <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                        <div 
+                          className="h-full bg-primary rounded-full" 
+                          style={{ width: `${(score.val / score.max) * 100}%` }} 
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Card>
             </div>
           </div>
-        </div>
+        </FadeIn>
+
+        {/* X: SCENARIER */}
+        <FadeIn delay={500}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="p-8 bg-white border border-slate-200 rounded-3xl hover:shadow-xl transition-all group">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-2 h-2 rounded-full bg-rose-500" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-rose-500">Bear Case</span>
+              </div>
+              <div className="text-4xl font-black mb-2 tracking-tighter">75–85 kr</div>
+              <p className="text-xs text-slate-500 leading-relaxed">Långvarig svag retail, valuta fortsätter slå mot rapporterade siffror, integration av Cotton Classics blir tyngre än väntat.</p>
+            </div>
+            <div className="p-8 bg-white border-4 border-primary rounded-3xl shadow-2xl relative overflow-hidden">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-2 h-2 rounded-full bg-primary" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-primary">Base Case</span>
+              </div>
+              <div className="text-4xl font-black mb-2 tracking-tighter">130–145 kr</div>
+              <p className="text-xs text-slate-500 leading-relaxed">Normalisering av marginaler och successiv vinståterhämtning 2026-2027. Multiplar återgår till historiska snitt kring 14-15x.</p>
+              <div className="absolute -right-4 -bottom-4 opacity-5 text-primary">
+                <Target size={120} />
+              </div>
+            </div>
+            <div className="p-8 bg-white border border-slate-200 rounded-3xl hover:shadow-xl transition-all">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500">Bull Case</span>
+              </div>
+              <div className="text-4xl font-black mb-2 tracking-tighter">160–180 kr</div>
+              <p className="text-xs text-slate-500 leading-relaxed">Cotton Classics integreras snabbare, Craft expansion i USA överraskar, marknaden förbättras från H2 2026. EBIT närmar sig 15%.</p>
+            </div>
+          </div>
+        </FadeIn>
 
         {/* BOTTOM AD & NAVIGATION */}
         <div className="space-y-12">
