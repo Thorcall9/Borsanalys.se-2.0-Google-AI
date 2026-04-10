@@ -276,18 +276,13 @@ export default function MacroDashboard() {
         method: "POST",
         headers: { "Content-Type": "application/json" }
       });
-      const text = await response.text();
-      let data;
-      try {
-        data = JSON.parse(text);
-      } catch (e) {
-        console.error("Failed to parse AI response as JSON:", text);
-        throw new Error("Servern returnerade ett ogiltigt svar. Vänligen kontakta administratören.");
-      }
       
       if (!response.ok) {
-        throw new Error(`Serverfel (Status ${response.status}): ${data.error || "Misslyckades att hämta analys"}`);
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(`Serverfel (Status ${response.status}): ${errorData.error || "Misslyckades att hämta analys"}`);
       }
+
+      const data = await response.json();
       setMacroOutlook(data.outlook || "Kunde inte generera analys.");
       
       if (data.suggestedPhaseId) {

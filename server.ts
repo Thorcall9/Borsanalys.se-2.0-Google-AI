@@ -267,19 +267,26 @@ Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
         data = JSON.parse(text);
         logger("[AI] JSON parsed successfully");
       } catch (parseErr) {
-        logger(`[ERROR] AI JSON Parse Error. Raw text: ${text}`);
+        logger(`[ERROR] AI JSON Parse Error. Cleaned text: ${text.substring(0, 100)}...`);
         return res.json({
-          outlook: "Kunde inte tolka analysen helt, men konjunkturklockan indikerar att vi rör oss i cykeln baserat på nuvarande indikatorer.",
+          outlook: "Kunde inte tolka analysen helt pga. formatfel, men konjunkturklockan indikerar att vi rör oss i cykeln.",
           suggestedPhaseId: "late_cycle",
           confidence: 50,
           upcomingDates: []
         });
       }
 
+      // 3. Robust Data Formatting: Ensure confidence is a number and arrays are valid
+      let numericConfidence = 75;
+      if (data.confidence !== undefined) {
+        numericConfidence = typeof data.confidence === 'number' ? data.confidence : parseInt(String(data.confidence), 10);
+        if (isNaN(numericConfidence)) numericConfidence = 75;
+      }
+
       res.json({
         outlook: data.outlook || "Makroanalys genererades – se indikatorer ovan.",
         suggestedPhaseId: data.suggestedPhaseId || "late_cycle",
-        confidence: data.confidence || 75,
+        confidence: numericConfidence,
         upcomingDates: Array.isArray(data.upcomingDates) ? data.upcomingDates : []
       });
 
