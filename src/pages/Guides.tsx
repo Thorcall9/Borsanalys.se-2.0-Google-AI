@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Search, Calculator, TrendingUp, ChevronRight, ArrowRight, BookOpen, DollarSign, Zap } from "lucide-react";
+import { Search, Calculator, TrendingUp, ChevronRight, ArrowRight, BookOpen, DollarSign, Zap, Shield } from "lucide-react";
 import { guides } from "../data/guides";
 
 const IconMap: Record<string, any> = {
@@ -11,6 +11,7 @@ const IconMap: Record<string, any> = {
   DollarSign: DollarSign,
   Zap: Zap,
   BookOpen: BookOpen,
+  Shield: Shield,
 };
 
 export default function Guides() {

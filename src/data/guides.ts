@@ -1499,6 +1499,139 @@ export const guides: Record<string, Guide> = {
     readTime: "10 min",
     part: 7,
     icon: "Layers"
-  }
+  },
+  "isk-vs-kapitalforsakring": {
+    slug: "isk-vs-kapitalforsakring",
+    title: "ISK vs kapitalförsäkring 2026 – vad är bäst för sparare?",
+    excerpt: "Jämför ISK och kapitalförsäkring 2026. Lär dig skillnaden i skatt, ägande, förmånstagare, barnsparande, rösträtt och utländska aktier – och se vilken sparform som passar dig bäst.",
+    content: `
+      <div class="space-y-16">
+        <section class="not-prose space-y-6">
+          <h2 class="text-4xl md:text-5xl font-black tracking-tighter">Ska du välja ISK eller kapitalförsäkring?</h2>
+          <div class="space-y-4">
+            <p class="text-xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
+              Det är en av de vanligaste frågorna bland svenska småsparare, och det är också en fråga där många gör det onödigt komplicerat. Sanningen är att båda sparformerna fungerar bra för långsiktigt sparande i aktier och fonder.
+            </p>
+            <p class="text-xl text-foreground font-black max-w-3xl">
+              ISK är oftast standardvalet, medan Kapitalförsäkring är bäst när du har ett tydligt specialskäl.
+            </p>
+          </div>
+        </section>
 
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-20">
+          <div class="p-10 bg-muted/30 border border-border rounded-[2.5rem] space-y-6 hover:border-primary/30 transition-all">
+            <h3 class="text-2xl font-black tracking-tighter">Vad är ett ISK?</h3>
+            <p class="text-base text-muted-foreground leading-relaxed font-medium">
+              ISK står för investeringssparkonto. Du äger själv tillgångarna på ett ISK, vilket innebär att du har rösträtt för aktierna vid bolagsstämma. Det beskattas schablonmässigt och du slipper deklarera varje försäljning.
+            </p>
+          </div>
+          <div class="p-10 bg-muted/30 border border-border rounded-[2.5rem] space-y-6 hover:border-primary/30 transition-all">
+            <h3 class="text-2xl font-black tracking-tighter">Vad är en kapitalförsäkring?</h3>
+            <p class="text-base text-muted-foreground leading-relaxed font-medium">
+              En kapitalförsäkring (KF) är en försäkringslösning där försäkringsbolaget formellt äger tillgångarna. Du äger rätten till försäkringens värde. Du har normalt inte rösträtt, men kan sätta in en förmånstagare.
+            </p>
+          </div>
+        </div>
+
+        <section class="not-prose p-12 bg-primary/5 border border-primary/20 rounded-[3rem] space-y-8 relative overflow-hidden">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
+          <h3 class="text-3xl md:text-4xl font-black tracking-tighter">Skattefri grundnivå 2026: 300 000 kronor</h3>
+          <p class="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
+            Från och med 1 januari 2026 är den skattefria grundnivån för ISK, kapitalförsäkring och PEPP-produkt 300 000 kronor. Den gäller för ditt sammanlagda sparande i dessa sparformer, inte per konto.
+          </p>
+          <div class="p-6 bg-card border border-border rounded-2xl">
+            <p class="text-sm text-primary font-black uppercase tracking-widest mb-2">Viktigt att veta</p>
+            <p class="text-sm text-muted-foreground">Har du alltså både ISK och kapitalförsäkring räknas de ihop i den delen. Det gör båda sparformerna ännu mer attraktiva för småsparare.</p>
+          </div>
+        </section>
+
+        <div class="space-y-12 mt-20">
+          <h3 class="text-3xl md:text-4xl font-black tracking-tighter">När ska du välja vad?</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="p-10 bg-muted/30 border border-border rounded-[3rem] space-y-6">
+              <div class="text-primary font-black text-xs uppercase tracking-widest">Välj ISK om du:</div>
+              <ul class="space-y-3">
+                <li class="flex items-start gap-3 text-muted-foreground font-medium"><div class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div> Vill ha maximal enkelhet och äga aktierna själv.</li>
+                <li class="flex items-start gap-3 text-muted-foreground font-medium"><div class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div> Vill ha rösträtt på bolagsstämmor.</li>
+                <li class="flex items-start gap-3 text-muted-foreground font-medium"><div class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div> Sparar i fonder eller svenska aktier.</li>
+              </ul>
+            </div>
+            <div class="p-10 bg-muted/30 border border-border rounded-[3rem] space-y-6">
+              <div class="text-primary font-black text-xs uppercase tracking-widest">Välj KF om du:</div>
+              <ul class="space-y-3">
+                <li class="flex items-start gap-3 text-muted-foreground font-medium"><div class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div> Sparar till barn men vill behålla kontrollen.</li>
+                <li class="flex items-start gap-3 text-muted-foreground font-medium"><div class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div> Vill kunna sätta in en förmånstagare.</li>
+                <li class="flex items-start gap-3 text-muted-foreground font-medium"><div class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div> Äger utländska utdelningsaktier (utländsk källskatt).</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-10 md:p-12 bg-muted/30 border border-border rounded-[3rem] relative overflow-hidden mt-16">
+          <h3 class="text-3xl md:text-4xl font-black tracking-tighter mb-6">Barnsparande & Förmånstagare</h3>
+          <div class="space-y-6">
+            <p class="text-lg text-muted-foreground leading-relaxed">
+              Här blir kapitalförsäkring ofta extra relevant. Sparar du i barnets namn på ett ISK blir pengarna barnets när det fyller 18. Med en kapitalförsäkring i ditt namn kan du styra när och hur pengarna betalas ut.
+            </p>
+            <div class="p-6 bg-card border border-border rounded-2xl">
+              <h4 class="font-black mb-2">Förmånstagare</h4>
+              <p class="text-sm text-muted-foreground">På ett ISK kan du inte bygga in en förmånstagarlösning på samma sätt som i en kapitalförsäkring, där det är en central funktion.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-10 md:p-12 bg-muted/30 border border-border rounded-[3rem] relative overflow-hidden mt-16">
+          <h3 class="text-3xl md:text-4xl font-black tracking-tighter mb-6">Utländska utdelningsaktier</h3>
+          <div class="space-y-6">
+            <p class="text-lg text-muted-foreground leading-relaxed">
+              Om du äger utländska aktier som ger utdelning dras källskatt. I en kapitalförsäkring sköter försäkringsbolaget (som formell ägare) ofta processen med att söka tillbaka skatten, vilket förenklar för dig.
+            </p>
+            <p class="text-sm italic text-muted-foreground">
+              Kontrollera alltid vad just din bank erbjuder – vissa aktörer som Avanza Pension automatiserar detta i hög grad.
+            </p>
+          </div>
+        </div>
+
+        <div class="space-y-8 mt-16">
+          <h3 class="text-3xl md:text-4xl font-black tracking-tighter">Vanliga frågor</h3>
+          <div class="space-y-4">
+            <details class="group bg-card border border-border rounded-2xl p-6 open:bg-muted/50">
+              <summary class="font-bold cursor-pointer outline-none marker:text-primary">Är ISK bättre än kapitalförsäkring?</summary>
+              <p class="text-muted-foreground mt-4 text-sm">För de flesta småsparare är ISK ofta det bästa förstavalet eftersom det är enkelt och flexibelt. KF passar bättre vid specifika behov som barnsparande eller utländska aktier.</p>
+            </details>
+            <details class="group bg-card border border-border rounded-2xl p-6 open:bg-muted/50">
+              <summary class="font-bold cursor-pointer outline-none marker:text-primary">Är skatten samma på ISK och kapitalförsäkring?</summary>
+              <p class="text-muted-foreground mt-4 text-sm">Inte exakt, men båda är schablonbeskattade. ISK beskattas via schablonintäkt medan KF beskattas via avkastningsskatt.</p>
+            </details>
+            <details class="group bg-card border border-border rounded-2xl p-6 open:bg-muted/50">
+              <summary class="font-bold cursor-pointer outline-none marker:text-primary">Kan man ha både ISK och kapitalförsäkring?</summary>
+              <p class="text-muted-foreground mt-4 text-sm">Ja, det kan du. Många har ISK för det vanliga sparandet och en KF för t.ex. barnsparande.</p>
+            </details>
+          </div>
+        </div>
+
+        <section class="not-prose p-12 bg-primary/5 border border-primary/20 rounded-[3rem] space-y-6 relative overflow-hidden mt-16">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
+          <h3 class="text-3xl md:text-4xl font-black tracking-tighter">Slutsats</h3>
+          <p class="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
+            ISK är standardvalet för de allra flesta. Välj kapitalförsäkring om du har ett specifikt skäl som rör barnsparande, förmånstagare eller utländska utdelningar. Det viktigaste är att du börjar spara – båda formerna är milsvida bättre än ett vanligt sparkonto eller en traditionell depå.
+          </p>
+        </section>
+
+        <div class="mt-16 border-t border-border pt-12">
+          <h4 class="text-sm font-black uppercase tracking-widest text-muted-foreground mb-6">Läs vidare på Börsskolan</h4>
+          <div class="flex flex-wrap gap-4">
+            <a href="/guider/grunderna-i-aktieanalys" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Grunderna i aktieanalys</a>
+            <a href="/guider/vardering-av-aktier" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Värdering av aktier</a>
+            <a href="/guider/allt-om-fonder" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Allt om fonder</a>
+            <a href="/guider/bygga-en-portfolj" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Bygga en portfölj</a>
+          </div>
+        </div>
+      </div>
+    `,
+    category: "Sparande",
+    readTime: "10 min",
+    part: 8,
+    icon: "Shield"
+  }
 };
