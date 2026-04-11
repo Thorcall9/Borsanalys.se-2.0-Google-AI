@@ -157,9 +157,7 @@ export default function NewWaveDeepDive({
                 <Link to="/analys" className="text-white/70 hover:text-white transition-colors">
                   <ArrowLeft size={20} />
                 </Link>
-                <h1 className="text-3xl md:text-4xl font-black tracking-tight leading-tight">
-                  New Wave Group AB
-                </h1>
+                  New Wave Group AB — April 2026
               </div>
               <div className="flex flex-wrap items-center gap-3">
                 <span className="bg-white/20 px-2 py-0.5 rounded text-xs font-bold tracking-wide">NWG B</span>
