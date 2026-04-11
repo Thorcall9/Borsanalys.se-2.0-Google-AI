@@ -21,8 +21,8 @@ const FALLBACK_DATA: Record<string, MacroData> = {
   SE10Y: { value: 2.85, trend: "down", updatedAt: new Date().toISOString() },
   USDSEK: { value: 9.22, trend: "down", updatedAt: new Date().toISOString() },
   EURSEK: { value: 10.95, trend: "down", updatedAt: new Date().toISOString() },
-  OMX30: { value: 2905, trend: "up", updatedAt: new Date().toISOString() },
-  Inflation: { value: 2.95, trend: "flat", updatedAt: new Date().toISOString() }
+  OMX30: { value: 3109.90, trend: "up", updatedAt: new Date().toISOString() },
+  Inflation: { value: 1.6, trend: "down", updatedAt: new Date().toISOString() }
 };
 
 const MACRO_METRICS = ["US10Y", "SE10Y", "USDSEK", "EURSEK", "OMX30", "Inflation"];
@@ -60,9 +60,9 @@ const MACRO_METADATA: Record<string, { category: string, title: string, descript
   },
   Inflation: {
     category: "INFLATION",
-    title: "Inflation (KPI)",
-    description: "Inflationstakten mäter hur snabbt priserna på varor och tjänster ökar.",
-    impact: (val) => `Nivån på ${val.toFixed(1)}% styr Riksbankens framtida räntebeslut och hushållens köpkraft.`
+    title: "Inflation (KPIF)",
+    description: "KPIF (1,6%) styr Riksbankens räntebeslut medan KPI (0,6%) speglar effekten på hushållen.",
+    impact: (val) => `Nivån på ${val.toFixed(1)}% (KPIF) innebär att vi nu ligger under inflationsmålet, vilket öppnar för snabbare räntesänkningar.`
   }
 };
 
@@ -95,8 +95,8 @@ const INITIAL_EVENTS: MarketEvent[] = [
     id: "2",
     title: "Navigering mot en 'Mjuklandning' för Ekonomin",
     impact: "positive",
-    description: "Att inflationen globalt har sänkts till nästan 2.95% från sina toppnivåer stärker förhoppningarna om en 'mjuklandning', där inflationen tämjs utan att utlösa en djup recession. Detta indikerar att centralbankernas åtstramning har haft önskad effekt, vilket minskar risken för en kraftig ekonomisk nedgång och banar väg för en mer stabil miljö.",
-    whyItMatters: "En mjuklandning är det ideala scenariot för börsen då det innebär att räntetoppen är passerad utan att bolagsvinsterna kollapsar. Det skapar en stabil grund för riskaptit och gör att investerare vågar blicka framåt mot nästa expansionsfas.",
+    description: "Att inflationen (KPIF) nu fallit till 1,6% stärker förhoppningarna om en 'mjuklandning'. Detta indikerar att centralbankernas åtstramning har haft önskad effekt, vilket minskar risken för en kraftig ekonomisk nedgång och banar väg för en mer expansiv räntepolitik.",
+    whyItMatters: "En mjuklandning är det ideala scenariot för börsen då det innebär att räntetoppen är passerad utan att bolagsvinsterna kollapsar. Med inflationen under målet skiftar fokus från prisstabilitet till att stödja ekonomisk tillväxt.",
     swedishCompanies: "Hela börsen gynnas generellt, men särskilt investmentbolag som Investor och Kinnevik samt de stora industrivardagarna som drar nytta av en stabil global efterfrågan.",
     usCompanies: "Tekniksektorn och tillväxtbolag (t.ex. Microsoft, Apple, NVIDIA) är de stora vinnarna då lägre inflationsrisk minskar trycket på diskonteringsräntorna.",
     winners: "Tillväxtaktier, småbolag och cykliska sektorer som tidigare pressats av recessionsoro."
@@ -105,9 +105,9 @@ const INITIAL_EVENTS: MarketEvent[] = [
     id: "3",
     title: "Ihållande Höga Räntor och Kapitalets Pris",
     impact: "negative",
-    description: "Med en US10Y-ränta på 4.29% och inflation strax under 3% signalerar marknaden att kostnaden för kapital förblir betydande. Centralbanker, trots framgång med att sänka inflationen från toppnivåer, är fortsatt försiktiga och undviker för snabba räntesänkningar. Detta pressar marginaler för bolag med hög skuldsättning.",
-    whyItMatters: "Higher for longer innebär att den riskfria räntan sätter en hög ribba för alla andra investeringar. Det tvingar bolag att prioritera kassaflöde och effektivitet snarare än aggressiv expansion driven av billig skuld.",
-    swedishCompanies: "Fastighetsbolag (ex. Castellum, Balder) och högt belånade tillväxtbolag är mest känsliga. De svenska storbankerna gynnas däremot av ett högre räntenetto.",
+    description: "Trots att inflationen (KPIF) fallit till 1,6% signalerar US10Y-räntan på 4.29% att kostnaden för kapital förblir betydande globalt. Skillnaden mellan snabbt fallande svensk inflation och ihållande höga amerikanska räntor skapar en komplex miljö för kapitalallokering.",
+    whyItMatters: "Higher for longer i USA innebär att den riskfria räntan sätter en hög ribba globalt. För svenska bolag innebär detta en balansgång mellan lägre inhemska lånekostnader och ett högt internationellt avkastningskrav.",
+    swedishCompanies: "Fastighetsbolag (ex. Castellum, Balder) gynnas av den lägre svenska inflationen, men pressas av de globala räntenivåerna. De svenska storbankerna ser sitt räntenetto påverkas när styrräntan sänks.",
     usCompanies: "Regionala banker och småbolag i Russell 2000 drabbas hårdast då de ofta har rörliga lån eller behov av frekvent refinansiering.",
     winners: "Banker, bolag med stora nettokassor (t.ex. Evolution, Fortnox) och försäkringsbolag som kan placera sina reserver till högre avkastning."
   }
