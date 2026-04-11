@@ -7,6 +7,8 @@ import {
   Newspaper, Gauge, Target
 } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
+import AdZone from "../components/AdZone";
+
 
 interface MacroData {
   value: number;
@@ -480,7 +482,10 @@ export default function MacroDashboard() {
               </div>
             </section>
 
+            <AdZone id="macro-main-middle" type="banner" discrete={true} />
+
             {/* Market Pulse & Macro Section (Moved down) */}
+
             <section className="space-y-8">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
@@ -728,7 +733,10 @@ export default function MacroDashboard() {
                 ))}
               </div>
             </div>
+
+            <AdZone id="macro-sidebar" type="sidebar" discrete={true} />
           </aside>
+
         </div>
 
         {/* Strategisk Analys: Konjunkturklockan 2.0 */}

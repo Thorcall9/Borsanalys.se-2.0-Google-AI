@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Search, Calculator, TrendingUp, ChevronRight, ArrowRight, BookOpen, DollarSign, Zap, Shield } from "lucide-react";
 import { guides } from "../data/guides";
+import AdZone from "../components/AdZone";
+
 
 const IconMap: Record<string, any> = {
   Search: Search,
@@ -80,7 +82,10 @@ export default function Guides() {
         })}
       </div>
 
+      <AdZone id="guides-middle" type="banner" discrete={true} />
+
       {/* CTA Section */}
+
       <section className="bg-muted/30 border border-border rounded-[3rem] p-16 md:p-24 text-center space-y-8 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />

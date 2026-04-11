@@ -314,7 +314,7 @@ export default function SwedbankDeepDive({
               <SectionLabel number="I" title="Företagsöversikt"/>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
                 {( [
-                  ["Bakgrund & Struktur","Swedbank är en nordisk universalbank med tyngdpunkt i Sverige och Baltikum. Banken erbjuder utlåning, sparande, betalningar, kort, kapitalförvaltning, försäkring och företagsfinansiering. Under 2025 kom 71 procent av intäkterna från Sverige och 25 procent från Baltikum."],
+                  ["Bakgrund & Struktur","Swedbank är en nordisk universalbank med tyngdpunkt i Sverige och Baltikum. Banken erbjuder utlåning, sparande, betalningar, kort, kapitalförvaltning, försäkring och företagsfinansiering. Under 2025 kom 71 procent av intäkterna från Sverige, 25 procent från Baltikum sammantaget och 4 procent från övriga marknader."],
                   ["Kunder & Marknader", <span>Banken har nära <strong>7,3 miljoner privatkunder</strong> och 545 000 företagskunder. Marknadsledare i Baltikum för sjunde året i rad med omkring 5,7 miljoner digitala interaktioner per dag.</span>],
                   ["Affärsmodell", "Universalbank som är navet i kundens ekonomi. Intäkter från räntenetto, provisionsnetto (Robur), kapitalförvaltning, betalningar och företagsaffär. Modellen skapar höga byteskostnader."],
                   ["Organisation", "Verksamheten är organiserad i fyra affärsområden: Swedish Banking, Baltic Banking, Corporates and Institutions samt Premium and Private Banking."],
@@ -437,7 +437,7 @@ export default function SwedbankDeepDive({
                   Bilden är en tydlig normalisering efter rekordåren 2022-2023. <strong>Kostnadssidan</strong> förblev dock urstark med sänkta kostnader (24 532 Mkr) trots investeringar. <strong>K/I-talet på 0,36</strong> är ett av bankens främsta kvalitetsbevis.
                 </p>
                 <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Lönsamheten hölls hög med ett ROE på <strong>15,2%</strong>. Kreditförlustnivån var exceptionellt låg (0,00%), vilket visar på en mycket välskött portfölj. Kapitaliseringen är robust med en CET1-kvot på 17,8%. Det totala kärnprimärkapitalkravet inklusive Pelare 2-vägledning var 14,8%, vilket ger en buffert på 3,0 procentenheter.
+                  Lönsamheten hölls hög med ett ROE på <strong>15,2%</strong>. Kreditförlustnivån var mycket stark (0,00%), vilket visar på en mycket välskött portfölj. Kapitaliseringen är robust med en CET1-kvot på 17,8%. Det totala kärnprimärkapitalkravet inklusive Pelare 2-vägledning var 14,8%, vilket ger en buffert på 3,0 procentenheter.
                 </p>
               </div>
 
@@ -699,7 +699,7 @@ export default function SwedbankDeepDive({
                   </thead>
                   <tbody>
                     {[
-                      ["DFS-utredning", "Department of Financial Services (NY) utreder fortfarande Swedbank trots att DOJ avslutade sin utredning utan åtgärd i januari 2026. Skapar osäkerhet kring eventuella böter.", "Aktiv dialog med regulatorer, sänkt compliance-funktion."],
+                      ["DFS-utredning", "Department of Financial Services (NY) utreder fortfarande Swedbank trots att DOJ avslutade sin utredning utan åtgärd i januari 2026. Skapar osäkerhet kring eventuella böter.", "Aktiv dialog med regulatorer, stärkt compliance-funktion."],
                       ["Pensionsmyndighetens krav", "Krav om 2 790 Mkr kopplat till Optimus High Yield är en separat juridisk riskpost att bevaka, även om banken bestrider kravet.", "Banken har bestridit kravet och inte gjort någon reservering."],
                       ["Räntemarginaltryck", "Riksbankens sänkningar pressar räntenettot, som föll 11% 2025 och väntas sjunka ytterligare 2026.", "Volymtillväxt och avgiftsintäkter ska kompensera."],
                       ["Fastighetsexponering", "Den svenska bolåneportföljen är stor och känslig för ett svagare bostadsmarknadsscenario, även om kreditkvaliteten 2025 var mycket stark.", "Konservativ amorteringskultur och mycket stark kreditförlustnivå."],

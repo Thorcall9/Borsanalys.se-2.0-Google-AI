@@ -3,6 +3,8 @@ import { useParams, Link, Navigate, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, BookOpen, Share2, Bookmark, ChevronRight } from "lucide-react";
 import { guides } from "../data/guides";
+import AdZone from "../components/AdZone";
+
 
 export default function GuideDetail() {
   const { slug } = useParams();
@@ -97,7 +99,10 @@ export default function GuideDetail() {
         <div dangerouslySetInnerHTML={{ __html: guide.content }} />
       </article>
 
+      <AdZone id="guide-detail-end" type="inline" discrete={true} />
+
       {/* Navigation Between Guides */}
+
       <div className="pt-24 border-t border-border space-y-16">
         {/* Next Guide */}
         <Link 
