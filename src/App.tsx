@@ -26,6 +26,7 @@ const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const AdminSubscribers = lazy(() => import("./components/AdminSubscribers").then(module => ({ default: module.AdminSubscribers })));
 const PreviewHeaderPage = lazy(() => import("./pages/PreviewHeader"));
+const MindmapBlueprint = lazy(() => import("./components/Mindmap"));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -63,6 +64,7 @@ export default function App() {
                       <Route path="/om-oss" element={<About />} />
                       <Route path="/admin/subscribers" element={<AdminSubscribers />} />
                       <Route path="/preview-header" element={<PreviewHeaderPage />} />
+                      <Route path="/methodology-blueprint" element={<MindmapBlueprint />} />
                     </Routes>
                   </Suspense>
                 </Layout>

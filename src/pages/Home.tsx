@@ -81,10 +81,10 @@ export default function Home() {
       {/* Methodology Section */}
       <MethodologyEngine />
 
-      {/* Mindmap Section */}
-      <section className="py-32 container mx-auto px-6">
+      {/* Mindmap Section - Moved to hidden route /methodology-blueprint */}
+      {/* <section className="py-32 container mx-auto px-6">
         <Mindmap />
-      </section>
+      </section> */}
 
       {/* Ad middle banner */}
       <div className="container mx-auto px-6 mt-[-4rem] mb-16">

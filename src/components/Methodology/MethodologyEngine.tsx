@@ -42,8 +42,9 @@ export const MethodologyEngine: React.FC = () => {
   }, [scrollYProgress]);
 
   // Opacity maps for different views
-  const networkOpacity = useTransform(scrollYProgress, [0, 0.05, 0.7, 0.75], [0, 1, 1, 0]);
-  const introOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
+  // Intro stays solid longer, then fades out as networks builds up
+  const introOpacity = useTransform(scrollYProgress, [0, 0.1, 0.15], [1, 1, 0]);
+  const networkOpacity = useTransform(scrollYProgress, [0.1, 0.15, 0.75, 0.8], [0, 1, 1, 0]);
 
   return (
     <section 
@@ -53,25 +54,47 @@ export const MethodologyEngine: React.FC = () => {
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden flex flex-col items-center justify-center">
         
-        {/* Intro */}
+        {/* Intro Stage */}
         <motion.div 
           style={{ opacity: introOpacity }}
-          className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none"
+          className="absolute inset-0 flex flex-col items-center justify-between z-30 pointer-events-none py-24 px-6"
         >
-          <div className="text-[11px] font-mono font-black uppercase tracking-[0.4em] text-[#60A5FA] mb-4">
-            Börsanalys.se
+          {/* Top: Brand and Title */}
+          <div className="flex flex-col items-center">
+            <motion.div 
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.2 }}
+              className="text-[14px] md:text-[16px] font-mono font-bold uppercase tracking-[0.6em] text-[#60A5FA] mb-6 drop-shadow-[0_0_10px_rgba(96,165,250,0.3)]"
+            >
+              Börsanalys.se
+            </motion.div>
+            <motion.h2 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, delay: 0.4 }}
+              className="text-6xl md:text-8xl font-black tracking-tight text-white text-center leading-[0.9] drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
+            >
+              Methodology <br className="md:hidden" /> <span className="text-[#60A5FA]">Engine 2.0</span>
+            </motion.h2>
           </div>
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter mb-4 text-center">
-            Methodology Engine 2.0
-          </h2>
-          <p className="text-lg md:text-xl text-[#E5E7EB]/60 max-w-xl text-center">
-            Vi kombinerar mänsklig expertis med AI.
-          </p>
+
+          {/* Bottom: Subtitle */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.8 }}
+            className="max-w-4xl w-full bg-gradient-to-b from-transparent via-[#07111A]/80 to-[#07111A] pb-12 pt-12 text-center"
+          >
+            <p className="text-2xl md:text-5xl text-white font-medium leading-[1.1] tracking-tight">
+              Vi kombinerar mänsklig expertis med AI för att <br className="hidden md:block" /> leverera marknadens mest kompletta analys.
+            </p>
+          </motion.div>
         </motion.div>
 
         {/* The Central Engine and Network */}
         <motion.div 
-          className="absolute inset-0 flex items-center justify-center"
+          className="absolute inset-0 flex items-center justify-center flex-col"
           style={{ opacity: networkOpacity }}
         >
           <div className="relative w-full max-w-6xl h-full flex items-center justify-center">

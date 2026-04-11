@@ -7,64 +7,95 @@ interface VerdictViewProps {
 }
 
 export const VerdictView: React.FC<VerdictViewProps> = ({ activeStage, scrollYProgress }) => {
-  // activeStage 8 is Verdict. Progress 0.7 to 0.85.
-  const opacity = useTransform(scrollYProgress, [0.68, 0.72, 0.83, 0.87], [0, 1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0.68, 0.72], [0.95, 1]);
+  const opacity = useTransform(scrollYProgress, [0.75, 0.78, 0.83, 0.85], [0, 1, 1, 0]);
+  const scale = useTransform(scrollYProgress, [0.75, 0.78], [0.95, 1]);
 
   return (
     <motion.div
       style={{ opacity, scale, pointerEvents: activeStage === 8 ? 'auto' : 'none' }}
-      className="absolute inset-0 flex items-center justify-center z-40 bg-[#07111A]/80 backdrop-blur-sm"
+      className="absolute inset-0 flex flex-col items-center justify-center z-40 bg-[#07111A]/98 backdrop-blur-3xl"
     >
-      <div className="bg-[#111827] border border-[#1E293B] shadow-[0_0_80px_rgba(96,165,250,0.1)] rounded-[3rem] p-8 md:p-16 max-w-3xl w-full mx-6 relative overflow-hidden">
-        {/* Decorative inner glow */}
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#60A5FA]/5 blur-[100px] rounded-full translate-x-1/3 -translate-y-1/3" />
-        
-        <div className="relative z-10 flex flex-col items-center text-center">
-          <div className="w-14 h-14 rounded-2xl bg-[#60A5FA]/10 border border-[#60A5FA]/20 flex items-center justify-center mb-6">
-            <svg className="w-6 h-6 text-[#60A5FA]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
+      <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#60A5FA]/30 to-transparent" />
+      
+      <div className="text-center mb-16 z-10">
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <div className="h-[1px] w-12 bg-[#1E293B]" />
+          <div className="text-[10px] md:text-[12px] font-mono uppercase tracking-[0.5em] text-[#60A5FA]">
+            Analysis Complete // Calculating Final Verdict
           </div>
-
-          <div className="text-[10px] md:text-xs font-black uppercase tracking-[0.4em] text-[#60A5FA] mb-4">
-            Sektion IX
-          </div>
-          
-          <h3 className="text-3xl md:text-5xl font-black text-[#E5E7EB] tracking-tighter mb-4">
-            Sammanfattning & Verdict
-          </h3>
-          
-          <p className="text-sm md:text-base text-[#E5E7EB]/60 max-w-lg mx-auto mb-10 leading-relaxed">
-            Här sammanställs de 8 kategorierna till en helhet. Vår algoritm utmynnar i ett konkret och data-drivet investeringsutlåtande.
-          </p>
-
-          {/* The Score Box */}
-          <div className="w-full max-w-sm rounded-[2rem] bg-[#0B1220] border border-[#1E293B] p-8 flex flex-col items-center shadow-2xl relative group">
-            <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-[#60A5FA]/30 to-transparent group-hover:via-[#60A5FA]/60 transition-all duration-700" />
-            
-            <div className="text-[9px] font-black uppercase tracking-[0.3em] text-[#E5E7EB]/40 mb-3">Algoritmisk Utdata</div>
-            
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, type: "spring" }}
-              className="text-2xl md:text-3xl font-black text-[#60A5FA] mb-6 tracking-tight drop-shadow-[0_0_15px_rgba(96,165,250,0.5)]"
-            >
-              CONFIRMED: KÖP
-            </motion.div>
-
-            <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-6xl md:text-7xl font-black text-[#E5E7EB] tracking-tighter leading-none">32</span>
-              <span className="text-2xl font-black text-[#E5E7EB]/20">/ 40</span>
-            </div>
-
-            <div className="text-[9px] font-black uppercase tracking-[0.2em] text-[#C8A96B] mt-4 flex items-center gap-2 bg-[#C8A96B]/10 px-3 py-1.5 rounded-full border border-[#C8A96B]/20">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#C8A96B] animate-pulse" />
-              Totalpoäng (80%)
-            </div>
-          </div>
+          <div className="h-[1px] w-12 bg-[#1E293B]" />
         </div>
+        
+        <h3 className="text-5xl md:text-7xl font-black text-[#E5E7EB] tracking-tighter mb-4 uppercase">
+           Summary & <span className="text-[#60A5FA]">Verdict</span>
+        </h3>
+      </div>
+
+      <div className="w-full max-w-lg relative z-10 flex flex-col items-center">
+         
+         {/* The Main Score Instrument */}
+         <div className="relative w-64 h-64 md:w-80 md:h-80 flex items-center justify-center">
+            
+            {/* SVG Progress Arc */}
+            <svg className="absolute inset-0 w-full h-full -rotate-90 transform">
+              <circle
+                cx="50%"
+                cy="50%"
+                r="48%"
+                stroke="currentColor"
+                strokeWidth="2"
+                fill="transparent"
+                className="text-[#1E293B]"
+              />
+              <motion.circle
+                cx="50%"
+                cy="50%"
+                r="48%"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="transparent"
+                strokeDasharray="100, 100"
+                initial={{ strokeDashoffset: 100 }}
+                animate={{ strokeDashoffset: activeStage === 8 ? 20 : 100 }}
+                transition={{ duration: 1.5, delay: 0.5, ease: "circOut" }}
+                className="text-[#60A5FA]"
+                style={{ filter: "drop-shadow(0 0 8px #60A5FA)" }}
+              />
+            </svg>
+
+            <div className="flex flex-col items-center justify-center text-center">
+              <div className="text-[10px] font-mono text-[#E5E7EB]/30 mb-2 tracking-widest uppercase">Score Index</div>
+              <div className="flex items-baseline gap-2 mb-4">
+                <span className="text-7xl md:text-8xl font-black tracking-tighter text-white">32</span>
+                <span className="text-2xl font-mono text-[#E5E7EB]/20">/40</span>
+              </div>
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1, duration: 0.5 }}
+                className="px-4 py-2 bg-[#60A5FA]/10 border border-[#60A5FA]/30 rounded-full"
+              >
+                <span className="text-[10px] font-mono text-[#60A5FA] uppercase tracking-widest font-black">Confirmed: KÖP</span>
+              </motion.div>
+            </div>
+         </div>
+
+         {/* Technical Metadata under the score */}
+         <div className="mt-12 w-full grid grid-cols-2 gap-px bg-[#1E293B]/30 border border-[#1E293B]/50 rounded-xl overflow-hidden backdrop-blur-md">
+            <div className="p-4 flex flex-col items-center bg-[#0A101C]/60">
+               <span className="text-[8px] font-mono text-[#E5E7EB]/40 uppercase mb-1">Confidence Interval</span>
+               <span className="text-sm font-mono text-[#60A5FA]">86.4%</span>
+            </div>
+            <div className="p-4 flex flex-col items-center bg-[#0A101C]/60">
+               <span className="text-[8px] font-mono text-[#E5E7EB]/40 uppercase mb-1">Data Points Scan</span>
+               <span className="text-sm font-mono text-[#60A5FA]">14.2M</span>
+            </div>
+         </div>
+         
+         <div className="mt-8 flex items-center gap-3 text-[9px] font-mono text-[#C8A96B] uppercase tracking-[0.25em]">
+            <div className="w-2 h-2 rounded-full bg-[#C8A96B] animate-ping" />
+            Generating Scenario Models...
+         </div>
       </div>
     </motion.div>
   );
