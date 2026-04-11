@@ -12,8 +12,8 @@ export const VerdictView: React.FC<VerdictViewProps> = ({ activeStage, scrollYPr
 
   return (
     <motion.div
-      style={{ opacity, scale, pointerEvents: activeStage === 8 ? 'auto' : 'none' }}
-      className="absolute inset-0 flex flex-col items-center justify-center z-40 bg-[#07111A]/98 backdrop-blur-3xl"
+      style={{ opacity, scale, pointerEvents: activeStage === 8 ? 'auto' : 'none', zIndex: 100 }}
+      className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950"
     >
       <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-[#60A5FA]/30 to-transparent" />
       

@@ -7,8 +7,8 @@ interface EngineNetworkProps {
   scrollYProgress: MotionValue<number>;
 }
 
-const STEP_RANGE = 0.055; // (0.9 - 0.15) / 10 is approx 0.075, but let's take slightly less for better spacing
-const START_PROGRESS = 0.15;
+const STEP_RANGE = 0.08; 
+const START_PROGRESS = 0.05; // Start earlier to prevent skipping I and II
 
 const NetworkLine: React.FC<{ index: number; pos: { x: number; y: number }; scrollYProgress: MotionValue<number>; isSynthesizing: boolean; activeStage: number }> = ({ index, pos, scrollYProgress, isSynthesizing, activeStage }) => {
   const start = START_PROGRESS + index * STEP_RANGE;
@@ -88,17 +88,27 @@ const NetworkNode: React.FC<{ index: number; pos: { x: number; y: number }; step
       style={{
         opacity: isSynthesizing ? 0 : opacity,
         scale: isSynthesizing ? 0 : scale,
-        left: `calc(50% - 20px)`,
-        top: `calc(50% - 20px)`,
+        left: `calc(50% - 24px)`,
+        top: `calc(50% - 24px)`,
       }}
       transition={{ duration: shouldCollapse ? 0.6 : 0.4, ease: "circIn" }}
-      className="absolute z-20 flex flex-col items-center"
+      className="absolute z-50 flex flex-col items-center"
     >
-      <div className={`w-10 h-10 rounded-full border-2 bg-[#07111A] flex items-center justify-center shadow-[0_0_30px_rgba(0,0,0,0.5)] transition-colors duration-500`}
-           style={{ borderColor: baseColor, boxShadow: `0 0 30px ${baseColor}33` }}>
-        <span className="text-[11px] font-mono tracking-tighter font-black" style={{ color: baseColor }}>
+      {/* 100% SOLID IRONCLAD BUBBLE */}
+      <div className="relative w-12 h-12 rounded-full border-2 flex items-center justify-center shadow-[0_0_60px_#000] transition-colors duration-500"
+           style={{ 
+             borderColor: baseColor, 
+             backgroundColor: '#000000', // PURE BLACK
+             opacity: 1 
+           }}>
+        <span className="text-[16px] font-mono tracking-tighter font-black z-10" style={{ color: baseColor }}>
           {step.id}
         </span>
+        
+        {/* Glow - ONLY OUTSIDE */}
+        <div className="absolute -inset-4 rounded-full blur-2xl opacity-40 pointer-events-none" 
+             style={{ backgroundColor: baseColor }} />
+
         <motion.div
           animate={{ scale: 1.5, opacity: [0, 0.4, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
@@ -107,7 +117,8 @@ const NetworkNode: React.FC<{ index: number; pos: { x: number; y: number }; step
         />
       </div>
       
-      <div className="absolute top-12 whitespace-nowrap text-[10px] md:text-[12px] font-mono uppercase tracking-[0.3em] font-black text-white translate-y-1 drop-shadow-md">
+      <div className="absolute top-14 whitespace-nowrap text-[12px] md:text-[14px] font-mono uppercase tracking-[0.3em] font-black text-white translate-y-1"
+           style={{ textShadow: '2px 2px 4px #000, -2px -2px 4px #000, 0 0 10px #000' }}>
         {step.title}
       </div>
     </motion.div>

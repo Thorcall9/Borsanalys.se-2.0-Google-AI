@@ -20,8 +20,8 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ activeStage }) => {
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="absolute left-6 md:left-12 top-[25%] md:top-auto md:bottom-12 w-[90%] md:w-[480px] z-50 pointer-events-none"
         >
-          {/* HUD Panel Design */}
-          <div className="relative bg-[#07111A]/80 backdrop-blur-2xl border-l-[3px] border-[#60A5FA] border-y border-r border-white/5 p-8 md:p-10 overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-r-3xl">
+          {/* HUD Panel Design - 100% SOLID */}
+          <div className="relative bg-slate-950 border-l-[3px] border-[#60A5FA] border-y border-r border-white/5 p-8 md:p-10 overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,1)] rounded-r-3xl">
             
             {/* Top HUD Data strip */}
             <div className="flex justify-between items-center mb-8 border-b border-white/5 pb-4">

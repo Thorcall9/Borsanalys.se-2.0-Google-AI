@@ -24,35 +24,53 @@ export const MethodologyEngine: React.FC = () => {
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {
-      if (latest < 0.1) setActiveStage(-1); // Build up phase
-      else if (latest >= 0.1 && latest < 0.9) {
-        // Steps 0-9
-        const stepProgress = (latest - 0.1) / 0.8;
-        const step = Math.min(9, Math.floor(stepProgress * 10));
+      // Intro phase (extremely fast)
+      if (latest < 0.05) {
+        setActiveStage(-1);
+      } 
+      // Front-loaded Step I and II to ensure they are seen
+      else if (latest >= 0.05 && latest < 0.25) {
+        setActiveStage(0); // Step I (20% share)
+      } else if (latest >= 0.25 && latest < 0.45) {
+        setActiveStage(1); // Step II (20% share)
+      } 
+      // Steps III-VIII compressed into 0.45 - 0.75 (approx 0.05 each)
+      else if (latest >= 0.45 && latest < 0.75) {
+        const stepProgress = (latest - 0.45) / 0.3;
+        const step = 2 + Math.min(5, Math.floor(stepProgress * 6));
         setActiveStage(step);
+      }
+      // IX (Verdict) and X (Scenarios)
+      else if (latest >= 0.75 && latest < 0.88) {
+        setActiveStage(8);
       } else {
-        setActiveStage(9); // Scenarios (final)
+        setActiveStage(9);
       }
     });
     return () => unsubscribe();
   }, [scrollYProgress]);
 
-  // Opacity maps for different views
-  // Intro stays solid longer, then fades out as networks builds up
-  const introOpacity = useTransform(scrollYProgress, [0, 0.1, 0.15], [1, 1, 0]);
-  const networkOpacity = useTransform(scrollYProgress, [0.1, 0.15, 0.9, 0.95], [0, 1, 1, 0]);
+  // Opacity & Display maps for different views
+  // Intro MUST BE COMPLETELY REMOVED to avoid "ghost text" behind other layers
+  const introOpacity = useTransform(scrollYProgress, [0, 0.02, 0.05], [1, 1, 0]);
+  const introDisplay = useTransform(scrollYProgress, [0, 0.05, 0.06], ["flex", "flex", "none"]);
+  
+  const networkOpacity = useTransform(scrollYProgress, [0.03, 0.08, 0.9, 0.95], [0, 1, 1, 0]);
 
   return (
     <section 
       ref={containerRef} 
-      className="relative w-full bg-[#07111A] text-[#E5E7EB]" 
-      style={{ height: "650vh" }}
+      className="relative w-full bg-[#020617] text-[#E5E7EB]" 
+      style={{ height: "750vh" }}
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden flex flex-col items-center justify-center">
         
         {/* Intro Stage */}
         <motion.div 
-          style={{ opacity: introOpacity }}
+          style={{ 
+            opacity: introOpacity,
+            display: introDisplay
+          }}
           className="absolute inset-0 flex flex-col items-center justify-between z-30 pointer-events-none py-24 px-6"
         >
           {/* Top: Brand and Title */}

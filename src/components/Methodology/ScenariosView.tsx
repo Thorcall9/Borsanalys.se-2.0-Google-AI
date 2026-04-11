@@ -12,8 +12,8 @@ export const ScenariosView: React.FC<ScenariosViewProps> = ({ activeStage, scrol
 
   return (
     <motion.div
-      style={{ opacity, y, pointerEvents: activeStage === 9 ? 'auto' : 'none' }}
-      className="absolute inset-0 flex flex-col items-center justify-center z-50 bg-[#07111A]/95 backdrop-blur-3xl px-6"
+      style={{ opacity, y, pointerEvents: activeStage === 9 ? 'auto' : 'none', zIndex: 110 }}
+      className="absolute inset-0 flex flex-col items-center justify-center bg-slate-950 px-6"
     >
       <div className="text-center mb-16 z-10">
         <div className="flex items-center justify-center gap-4 mb-6">
