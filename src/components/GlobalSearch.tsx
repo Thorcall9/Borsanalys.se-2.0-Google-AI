@@ -93,7 +93,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
             exit={{ opacity: 0, scale: 0.95, y: -40 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
             className={`fixed left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-2xl bg-card border border-border rounded-[2.5rem] shadow-[0_30px_100px_-20px_rgba(0,0,0,0.5)] z-[160] overflow-hidden ${
-              searchPosition === "top" ? "top-[5%] md:top-[8%]" : "top-[25%] md:top-[35%]"
+              searchPosition === "top" ? "top-[5%] md:top-[8%]" : "top-[30%] md:top-[40%]"
             }`}
             onKeyDown={handleKeyDown}
           >

@@ -271,22 +271,22 @@ export default function Analysis() {
             )}
           </motion.div>
 
-          <AdZone id="archive-top" type="banner" />
+          <AdZone id="archive-top" type="banner" discrete />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {filteredAnalyses.length > 0 ? (
-              filteredAnalyses.map((a, i) => {
+              filteredAnalyses.reduce((acc: React.ReactNode[], a, i) => {
                 const rt = realTimeData[a.ticker];
                 const rawPe = rt?.pe || a.pe;
                 const displayPe = rawPe ? parseFloat(String(rawPe).replace(',', '.')).toFixed(2) : '-';
                 const displayYield = rt?.yield !== undefined ? rt.yield : a.yield;
 
-                return (
+                acc.push(
                   <motion.div
                     key={a.slug}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.1, duration: 0.6 }}
+                    transition={{ delay: (i % 6) * 0.1, duration: 0.6 }}
                     viewport={{ once: true }}
                   >
                     <Link 
@@ -295,7 +295,7 @@ export default function Analysis() {
                     >
                       <div className="relative z-10 flex flex-col h-full justify-between">
                         <div className="space-y-6">
-                          <div className="flex justify-between items-start">
+                           <div className="flex justify-between items-start">
                             <div className="space-y-2">
                               <div className="flex items-center gap-3">
                                 <div className="text-[10px] font-black text-muted-foreground/80 uppercase tracking-[0.2em]">{a.ticker} · {a.market}</div>
@@ -338,7 +338,18 @@ export default function Analysis() {
                     </Link>
                   </motion.div>
                 );
-              })
+
+                // Insert ad every 6 items
+                if ((i + 1) % 6 === 0 && i !== filteredAnalyses.length - 1) {
+                  acc.push(
+                    <div key={`ad-${i}`} className="col-span-full py-4">
+                      <AdZone id={`archive-middle-${i}`} type="banner" discrete />
+                    </div>
+                  );
+                }
+
+                return acc;
+              }, [])
             ) : (
               <div className="col-span-full py-32 text-center space-y-6 bg-muted/30 rounded-[3rem] border border-dashed border-border">
                 <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto text-muted-foreground/60">

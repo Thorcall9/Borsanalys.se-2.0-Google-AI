@@ -34,7 +34,7 @@ export default function Home() {
 
       {/* Ad top banner */}
       <div className="container mx-auto px-6 mt-12 mb-[-2rem]">
-        <AdZone id="home-top" type="banner" />
+        <AdZone id="home-top" type="banner" discrete />
       </div>
 
       {/* Featured Analysis / Score Card Section */}
@@ -84,7 +84,7 @@ export default function Home() {
 
       {/* Ad middle banner */}
       <div className="container mx-auto px-6 mt-[-4rem] mb-16">
-        <AdZone id="home-middle" type="banner" />
+        <AdZone id="home-middle" type="banner" discrete />
       </div>
 
       {/* Newsletter Section */}

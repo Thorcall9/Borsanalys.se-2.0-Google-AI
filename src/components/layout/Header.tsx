@@ -16,7 +16,7 @@ export default function Header() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
-        openSearch();
+        openSearch("top");
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -98,7 +98,7 @@ export default function Header() {
           <motion.button 
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            onClick={openSearch}
+            onClick={() => openSearch("top")}
             className="w-10 h-10 flex items-center justify-center bg-muted/50 hover:bg-accent text-muted-foreground hover:text-primary transition-colors ml-2 rounded-full border border-border/50 relative group"
             title="Sök (⌘K)"
             aria-label="Sök efter bolag och analyser"
@@ -115,7 +115,7 @@ export default function Header() {
           <motion.button 
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            onClick={openSearch}
+            onClick={() => openSearch("top")}
             className="w-10 h-10 flex items-center justify-center bg-muted/50 text-muted-foreground hover:text-primary rounded-full border border-border/50"
             aria-label="Öppna sök"
           >

@@ -47,7 +47,7 @@ export const Hero: React.FC = () => {
             className="max-w-2xl mx-auto mb-16"
           >
             <button 
-              onClick={openSearch}
+              onClick={() => openSearch("hero")}
               className="w-full flex items-center gap-4 px-8 py-6 bg-card border border-border rounded-3xl text-muted-foreground hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/5 transition-all text-left group shadow-xl shadow-black/5"
             >
               <Search size={24} className="text-primary group-hover:scale-110 transition-transform" />

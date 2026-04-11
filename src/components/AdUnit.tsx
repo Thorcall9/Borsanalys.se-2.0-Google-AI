@@ -6,6 +6,7 @@ interface AdUnitProps {
   layoutKey?: string;
   className?: string;
   showLabel?: boolean;
+  minimal?: boolean;
 }
 
 export default function AdUnit({
@@ -14,6 +15,7 @@ export default function AdUnit({
   layoutKey,
   className = '',
   showLabel = true,
+  minimal = false,
 }: AdUnitProps) {
   const adRef = useRef<HTMLModElement>(null);
   const initialized = useRef<boolean>(false);
@@ -35,15 +37,19 @@ export default function AdUnit({
     <div className={`w-full flex justify-center py-4 ${className}`}>
       <div className="w-full max-w-2xl flex flex-col items-center">
         {showLabel && (
-          <div className="mb-2 text-[7px] font-bold text-slate-300/40 uppercase tracking-[0.3em] w-full text-center">
+          <div className={`mb-2 text-[7px] font-bold uppercase tracking-[0.3em] w-full text-center transition-opacity duration-500 ${
+            minimal ? 'text-slate-300/20' : 'text-slate-300/40'
+          }`}>
             Annons
           </div>
         )}
-        <div className="min-h-[100px] w-full flex items-center justify-center relative overflow-hidden transition-all duration-700">
+        <div className={`w-full flex items-center justify-center relative overflow-hidden transition-all duration-700 ${
+          minimal ? 'min-h-[60px]' : 'min-h-[100px]'
+        }`}>
           <ins
             ref={adRef}
             className="adsbygoogle"
-            style={{ display: 'block', textAlign: 'center', width: '100%', minHeight: '100px' }}
+            style={{ display: 'block', textAlign: 'center', width: '100%', minHeight: minimal ? '60px' : '100px' }}
             data-ad-layout="in-article"
             data-ad-format={format}
             data-ad-client="ca-pub-3092389795479215"
