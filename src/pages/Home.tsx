@@ -5,9 +5,11 @@ import { Hero } from "../components/Hero";
 import { ScoreCard } from "../components/ScoreCard";
 import { Newsletter } from "../components/Newsletter";
 import SEO from "../components/SEO";
-import { MethodologySection } from "../components/Methodology/MethodologySection";
+import Mindmap from "../components/Mindmap";
+import { MethodologyEngine } from "../components/MethodologyEngine";
 import { TrendingUp, Shield, Zap, ArrowRight, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import AdZone from "../components/AdZone";
 
 export default function Home() {
   const { openLoginModal } = useAuth();
@@ -31,6 +33,10 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
 
+      {/* Ad top banner */}
+      <div className="container mx-auto px-6 mt-12 mb-[-2rem]">
+        <AdZone id="home-top" type="banner" discrete />
+      </div>
 
       {/* Featured Analysis / Score Card Section */}
       <section className="py-32 container mx-auto px-6">
@@ -73,8 +79,17 @@ export default function Home() {
       </section>
 
       {/* Methodology Section */}
-      <MethodologySection />
+      <MethodologyEngine />
 
+      {/* Mindmap Section */}
+      <section className="py-32 container mx-auto px-6">
+        <Mindmap />
+      </section>
+
+      {/* Ad middle banner */}
+      <div className="container mx-auto px-6 mt-[-4rem] mb-16">
+        <AdZone id="home-middle" type="banner" discrete />
+      </div>
 
       {/* Newsletter Section */}
       <Newsletter />
