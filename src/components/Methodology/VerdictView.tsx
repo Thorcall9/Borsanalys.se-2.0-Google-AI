@@ -7,8 +7,8 @@ interface VerdictViewProps {
 }
 
 export const VerdictView: React.FC<VerdictViewProps> = ({ activeStage, scrollYProgress }) => {
-  const opacity = useTransform(scrollYProgress, [0.75, 0.78, 0.83, 0.85], [0, 1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0.75, 0.78], [0.95, 1]);
+  const opacity = useTransform(scrollYProgress, [0.74, 0.78, 0.82, 0.84], [0, 1, 1, 0]);
+  const scale = useTransform(scrollYProgress, [0.74, 0.78], [0.95, 1]);
 
   return (
     <motion.div

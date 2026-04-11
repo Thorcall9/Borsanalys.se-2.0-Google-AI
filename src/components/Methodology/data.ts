@@ -85,5 +85,25 @@ export const METHODOLOGY_STEPS: MethodologyStep[] = [
       "Ser vi mönster kring insynsköp eller ökad blankning?",
       "Kvantitativ sentiment-analys av bolagets kommunikation."
     ]
+  },
+  {
+    id: "IX",
+    title: "Verdict",
+    summary: "Här sammanställs de 8 kategorierna till en totalpoäng. Vår algoritm utmynnar i ett konkret investeringsutlåtande.",
+    points: [
+      "Viktning av fundamental vs teknisk data",
+      "Beräkning av asymmetrisk risk/reward",
+      "Generering av slutlig rating"
+    ]
+  },
+  {
+    id: "X",
+    title: "Scenarios",
+    summary: "Sannolikhetsviktad förväntad avkastning visualiserad genom tre marknadsklimat.",
+    points: [
+      "Bull Case: Optimistiska tillväxtantaganden",
+      "Base Case: Mest troliga utveckling",
+      "Bear Case: Worst-case scenarion"
+    ]
   }
 ];

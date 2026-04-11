@@ -7,8 +7,8 @@ interface ScenariosViewProps {
 }
 
 export const ScenariosView: React.FC<ScenariosViewProps> = ({ activeStage, scrollYProgress }) => {
-  const opacity = useTransform(scrollYProgress, [0.85, 0.88], [0, 1]);
-  const y = useTransform(scrollYProgress, [0.85, 0.88], [40, 0]);
+  const opacity = useTransform(scrollYProgress, [0.82, 0.85], [0, 1]);
+  const y = useTransform(scrollYProgress, [0.82, 0.85], [40, 0]);
 
   return (
     <motion.div

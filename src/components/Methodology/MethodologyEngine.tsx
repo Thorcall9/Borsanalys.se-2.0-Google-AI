@@ -18,24 +18,20 @@ export const MethodologyEngine: React.FC = () => {
   // Calculate active step based on scroll
   // Progress map:
   // 0.0 - 0.1: Build up
-  // 0.1 - 0.7: Steps I-VIII (0.075 each)
-  // 0.7 - 0.85: Verdict
-  // 0.85 - 1.0: Scenarios
+  // 0.1 - 0.9: Steps I-X (0.08 each)
   
   const [activeStage, setActiveStage] = useState<number>(-1);
 
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", (latest) => {
       if (latest < 0.1) setActiveStage(-1); // Build up phase
-      else if (latest >= 0.1 && latest < 0.7) {
-        // Steps 0-7
-        const stepProgress = (latest - 0.1) / 0.6;
-        const step = Math.min(7, Math.floor(stepProgress * 8));
+      else if (latest >= 0.1 && latest < 0.9) {
+        // Steps 0-9
+        const stepProgress = (latest - 0.1) / 0.8;
+        const step = Math.min(9, Math.floor(stepProgress * 10));
         setActiveStage(step);
-      } else if (latest >= 0.7 && latest < 0.85) {
-        setActiveStage(8); // Verdict
       } else {
-        setActiveStage(9); // Scenarios
+        setActiveStage(9); // Scenarios (final)
       }
     });
     return () => unsubscribe();
@@ -44,13 +40,13 @@ export const MethodologyEngine: React.FC = () => {
   // Opacity maps for different views
   // Intro stays solid longer, then fades out as networks builds up
   const introOpacity = useTransform(scrollYProgress, [0, 0.1, 0.15], [1, 1, 0]);
-  const networkOpacity = useTransform(scrollYProgress, [0.1, 0.15, 0.75, 0.8], [0, 1, 1, 0]);
+  const networkOpacity = useTransform(scrollYProgress, [0.1, 0.15, 0.9, 0.95], [0, 1, 1, 0]);
 
   return (
     <section 
       ref={containerRef} 
       className="relative w-full bg-[#07111A] text-[#E5E7EB]" 
-      style={{ height: "600vh" }}
+      style={{ height: "650vh" }}
     >
       <div className="sticky top-0 w-full h-screen overflow-hidden flex flex-col items-center justify-center">
         
@@ -109,11 +105,15 @@ export const MethodologyEngine: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Verdict Phase */}
-        <VerdictView activeStage={activeStage} scrollYProgress={scrollYProgress} />
+        {/* Verdict Phase (Triggered at Stage 8) */}
+        {activeStage >= 8 && (
+          <VerdictView activeStage={activeStage} scrollYProgress={scrollYProgress} />
+        )}
 
-        {/* Scenarios Phase */}
-        <ScenariosView activeStage={activeStage} scrollYProgress={scrollYProgress} />
+        {/* Scenarios Phase (Triggered at Stage 9) */}
+        {activeStage === 9 && (
+          <ScenariosView activeStage={activeStage} scrollYProgress={scrollYProgress} />
+        )}
 
       </div>
     </section>
