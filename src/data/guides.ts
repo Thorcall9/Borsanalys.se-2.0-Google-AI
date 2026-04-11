@@ -221,65 +221,172 @@ export const guides: Record<string, Guide> = {
     icon: "BookOpen"
   },
   "vardering-av-aktier": {
-    slug: "vardering-av-aktier",
-    title: "Värdering av aktier",
-    excerpt: "Hur vet man om en aktie är billig eller dyr? Vi går igenom de vanligaste nyckeltalen.",
+    slug: "grunderna-i-aktieanalys-steg-for-steg",
+    title: "Grunderna i aktieanalys",
+    excerpt: "Lär dig hur du analyserar ett bolag från grunden – från affärsmodell och rapporter till nyckeltal och värdering.",
     content: `
       <div class="space-y-16">
-        <section class="not-prose space-y-6">
-          <h2 class="text-4xl md:text-5xl font-black tracking-tighter">Varför värdering spelar roll</h2>
-          <p class="text-xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
-            Du kan köpa världens bästa bolag och ändå förlora pengar – om du betalade för mycket. Värdering handlar om att hitta aktier där priset är lägre än det verkliga värdet. Det är den klassiska principen: <span class="text-primary font-black">köp en krona för femtio öre</span>.
-          </p>
+        <section class="not-prose space-y-8">
+          <h2 class="text-4xl md:text-6xl font-black tracking-tighter leading-[0.9]">
+            Grunderna i <span class="text-primary">aktieanalys</span> – steg för steg
+          </h2>
+          <div class="space-y-6">
+            <p class="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
+              Att köpa en aktie utan att förstå bolaget är inte investering. Det är gissning.
+            </p>
+            <p class="text-lg text-muted-foreground leading-relaxed font-medium max-w-3xl">
+              Ändå är det precis så många privatsparare gör. De ser en aktie som gått starkt, läser ett par inlägg på sociala medier, tittar snabbt på P/E-talet och trycker köp. Problemet är att aktiekursen i sig säger väldigt lite om bolagets verkliga kvalitet.
+            </p>
+            <div class="p-8 bg-primary/5 border border-primary/20 rounded-[2.5rem] space-y-4">
+              <p class="text-xl text-foreground leading-relaxed font-black max-w-3xl">
+                Målet är enkelt: <span class="text-primary uppercase italic">att köpa något som är värt mer än det pris marknaden erbjuder i dag.</span>
+              </p>
+            </div>
+          </div>
         </section>
 
-        <div class="not-prose grid grid-cols-1 md:grid-cols-2 gap-8 my-20">
-          <div class="p-10 bg-muted/30 border border-border rounded-[2.5rem] relative overflow-hidden group hover:border-primary/30 transition-all">
-            <div class="text-primary text-[10px] font-black uppercase tracking-widest mb-4">P/E-talet</div>
-            <h3 class="text-2xl font-black tracking-tighter mb-4">Det vanligaste nyckeltalet</h3>
-            <p class="text-base text-muted-foreground leading-relaxed font-medium">
-              P/E = Aktiekurs / Vinst per aktie. Ett P/E på 15 betyder att du betalar 15 kr per vinstkrona. Historiskt är P/E 15–20 normalt för mogna bolag. Banker handlas ofta till P/E 7–10, medan techbolag kan ha P/E 40+.
+        <!-- Vad är aktieanalys? -->
+        <section class="not-prose p-10 md:p-12 bg-muted/30 border border-border rounded-[3rem] relative overflow-hidden group hover:border-primary/30 transition-all duration-500">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors duration-700"></div>
+          <h3 class="text-3xl font-black tracking-tighter mb-6">Vad är aktieanalys?</h3>
+          <p class="text-lg text-muted-foreground leading-relaxed font-medium max-w-3xl mb-8">
+            Aktieanalys är processen där du försöker bedöma om ett bolag är värt att investera i. Det handlar om att förstå helheten – inte bara att gissa kursens nästa rörelse.
+          </p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="p-4 bg-card border border-border rounded-xl text-center space-y-1">
+              <div class="text-[10px] font-black uppercase text-primary tracking-widest">Affärsmodell</div>
+            </div>
+            <div class="p-4 bg-card border border-border rounded-xl text-center space-y-1">
+              <div class="text-[10px] font-black uppercase text-primary tracking-widest">Lönsamhet</div>
+            </div>
+            <div class="p-4 bg-card border border-border rounded-xl text-center space-y-1">
+              <div class="text-[10px] font-black uppercase text-primary tracking-widest">Balansräkning</div>
+            </div>
+            <div class="p-4 bg-card border border-border rounded-xl text-center space-y-1">
+              <div class="text-[10px] font-black uppercase text-primary tracking-widest">Värdering</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Så analyserar du en aktie -->
+        <div class="not-prose space-y-12">
+          <h3 class="text-3xl font-black tracking-tighter text-center mb-12 italic opacity-50 underline-offset-8 underline decoration-primary/30">Hela analysprocessen</h3>
+
+          <!-- Steg 1 -->
+          <div class="p-10 md:p-12 bg-muted/30 border border-border rounded-[3rem] space-y-6">
+            <div class="text-primary text-[10px] font-black uppercase tracking-[0.5em] opacity-50">Steg 1</div>
+            <h4 class="text-3xl font-black tracking-tighter">Förstå affärsmodellen</h4>
+            <p class="text-lg text-muted-foreground leading-relaxed font-medium">
+              Innan du tittar på siffror måste du förstå hur bolaget tjänar pengar. Vad säljer de? Vem är kunden? Är intäkterna återkommande? Förstår du inte affären – investera inte.
             </p>
           </div>
 
-          <div class="p-10 bg-muted/30 border border-border rounded-[2.5rem] relative overflow-hidden group hover:border-primary/30 transition-all">
-            <div class="text-primary text-[10px] font-black uppercase tracking-widest mb-4">P/B-talet</div>
-            <h3 class="text-2xl font-black tracking-tighter mb-4">Pris mot bokfört värde</h3>
-            <p class="text-base text-muted-foreground leading-relaxed font-medium">
-              P/B = Aktiekurs / Bokfört värde per aktie. P/B under 1 innebär att börsen värderar bolaget lägre än tillgångarna på pappret. Banker och fastighetsbolag analyseras ofta med P/B som huvudmått.
+          <!-- Steg 2 -->
+          <div class="p-10 md:p-12 bg-muted/30 border border-border rounded-[3rem] space-y-6">
+            <div class="text-primary text-[10px] font-black uppercase tracking-[0.5em] opacity-50">Steg 2</div>
+            <h4 class="text-3xl font-black tracking-tighter">Läs rapporterna</h4>
+            <p class="text-lg text-muted-foreground leading-relaxed font-medium">
+              Årsredovisningen är din viktigaste källa. Fokusera på resultaträkningen (tillväxt), balansräkningen (skulder) och kassaflödet (riktiga pengar). Kassaflödet avslöjar ofta saker som vinsten döljer.
             </p>
           </div>
 
-          <div class="p-10 bg-muted/30 border border-border rounded-[2.5rem] relative overflow-hidden group hover:border-primary/30 transition-all">
-            <div class="text-primary text-[10px] font-black uppercase tracking-widest mb-4">EV/EBITDA</div>
-            <h3 class="text-2xl font-black tracking-tighter mb-4">För djupare analys</h3>
-            <p class="text-base text-muted-foreground leading-relaxed font-medium">
-              Enterprise Value delat på rörelseresultat före avskrivningar. Mer robust än P/E eftersom det tar hänsyn till skuldsättning. Typiska nivåer: industri 8–12x, techbolag 15–25x.
-            </p>
+          <!-- Steg 3 -->
+          <div class="p-10 md:p-12 bg-muted/30 border border-border rounded-[3rem] space-y-6">
+            <div class="text-primary text-[10px] font-black uppercase tracking-[0.5em] opacity-50">Steg 3</div>
+            <h4 class="text-3xl font-black tracking-tighter">Analysera nyckeltalen</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="p-6 bg-card border border-border rounded-2xl space-y-3">
+                <div class="text-primary font-black text-xs uppercase tracking-widest">P/E & EV/EBIT</div>
+                <p class="text-sm text-muted-foreground leading-relaxed">P/E visar pris mot vinst. EV/EBIT tar även hänsyn till bolagets skulder (Enterprise Value), vilket ofta är mer rättvisande.</p>
+              </div>
+              <div class="p-6 bg-card border border-border rounded-2xl space-y-3">
+                <div class="text-primary font-black text-xs uppercase tracking-widest">ROE & Marginaler</div>
+                <p class="text-sm text-muted-foreground leading-relaxed">ROE mäter hur effektivt eget kapital används. Hög rörelsemarginal visar på prissättningskraft och kostnadskontroll.</p>
+              </div>
+            </div>
           </div>
 
-          <div class="p-10 bg-muted/30 border border-border rounded-[2.5rem] relative overflow-hidden group hover:border-primary/30 transition-all">
-            <div class="text-primary text-[10px] font-black uppercase tracking-widest mb-4">Direktavkastning</div>
-            <h3 class="text-2xl font-black tracking-tighter mb-4">Utdelningens kraft</h3>
-            <p class="text-base text-muted-foreground leading-relaxed font-medium">
-              Utdelning / Aktiekurs × 100. Stockholmsbörsen ger i snitt 3–4%. Kontrollera alltid att utdelningen är hållbar (pay-out ratio bör vara under 70–80%).
+          <!-- Steg 4-6 -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="p-8 bg-muted/30 border border-border rounded-[2.5rem] space-y-4">
+              <div class="text-primary text-[10px] font-black uppercase tracking-[0.5em] opacity-30">Steg 4</div>
+              <h5 class="text-xl font-black tracking-tighter">Konkurrenter</h5>
+              <p class="text-sm text-muted-foreground leading-relaxed">Jämför alltid med sektorn. Är bolaget bättre eller sämre än sina likar?</p>
+            </div>
+            <div class="p-8 bg-muted/30 border border-border rounded-[2.5rem] space-y-4">
+              <div class="text-primary text-[10px] font-black uppercase tracking-[0.5em] opacity-30">Steg 5</div>
+              <h5 class="text-xl font-black tracking-tighter">Ledningen</h5>
+              <p class="text-sm text-muted-foreground leading-relaxed">Äger VD aktier? Har de levererat på sina mål tidigare? Incitament är allt.</p>
+            </div>
+            <div class="p-8 bg-muted/30 border border-border rounded-[2.5rem] space-y-4">
+              <div class="text-primary text-[10px] font-black uppercase tracking-[0.5em] opacity-30">Steg 6</div>
+              <h5 class="text-xl font-black tracking-tighter">Risker</h5>
+              <p class="text-sm text-muted-foreground leading-relaxed">Vad kan gå fel? Konjunktur, konkurrens eller hög skuldsättning?</p>
+            </div>
+          </div>
+
+          <!-- Steg 7 -->
+          <div class="p-10 md:p-12 bg-primary/5 border border-primary/20 rounded-[3rem] relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
+            <div class="text-primary text-[10px] font-black uppercase tracking-[0.5em] mb-4">Steg 7</div>
+            <h4 class="text-4xl font-black tracking-tighter mb-6">Sätt en rimlig värdering</h4>
+            <p class="text-xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
+              Slutpunkten är att avgöra om aktien är prisvärd. Ett fantastiskt bolag kan vara en dålig investering till fel pris. Tänk i scenarier: Bull case (om allt går rätt), Base case (troligast) och Bear case (om det går sämre).
             </p>
           </div>
         </div>
 
-        <section class="not-prose p-12 bg-primary/5 border border-primary/20 rounded-[3rem] space-y-6 relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-          <h3 class="text-3xl md:text-4xl font-black tracking-tighter">DCF – diskonterat kassaflöde</h3>
-          <p class="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
-            Den teoretiskt mest korrekta metoden. Du beräknar nuvärdet av alla framtida kassaflöden. Kräver antaganden om tillväxttakt och diskonteringsränta, vilket gör den känslig för fel i inputen. Men processen tvingar dig att tänka igenom bolagets framtid på djupet – det är värdet i sig.
-          </p>
+        <!-- Vanliga misstag -->
+        <section class="not-prose space-y-8">
+          <h3 class="text-3xl font-black tracking-tighter text-red-400">Vanliga misstag att undvika</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-6 bg-red-500/5 border border-red-500/20 rounded-2xl flex gap-4">
+              <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 font-bold shrink-0">1</div>
+              <p class="text-sm text-muted-foreground leading-relaxed">Att börja med aktiekursen istället för att förstå affärsmodellen.</p>
+            </div>
+            <div class="p-6 bg-red-500/5 border border-red-500/20 rounded-2xl flex gap-4">
+              <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 font-bold shrink-0">2</div>
+              <p class="text-sm text-muted-foreground leading-relaxed">Att ignorera kassaflödet – vinst på pappret köper inga maskiner.</p>
+            </div>
+            <div class="p-6 bg-red-500/5 border border-red-500/20 rounded-2xl flex gap-4">
+              <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 font-bold shrink-0">3</div>
+              <p class="text-sm text-muted-foreground leading-relaxed">Att underskatta skuldens betydelse när räntekostnaderna stiger.</p>
+            </div>
+            <div class="p-6 bg-red-500/5 border border-red-500/20 rounded-2xl flex gap-4">
+              <div class="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 font-bold shrink-0">4</div>
+              <p class="text-sm text-muted-foreground leading-relaxed">Att köpa bolag du inte kan förklara enkelt för en vän.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="not-prose space-y-12 pt-20 border-t border-border/50">
+          <h3 class="text-3xl font-black tracking-tighter text-center">Vanliga frågor om aktieanalys</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-2">
+              <h5 class="text-lg font-black tracking-tight">Räcker det att titta på P/E-talet?</h5>
+              <p class="text-sm text-muted-foreground leading-relaxed">Nej. P/E säger lite utan sammanhang. Du måste förstå tillväxt, kvalitet och risk också.</p>
+            </div>
+            <div class="space-y-2">
+              <h5 class="text-lg font-black tracking-tight">Varför är kassaflöde viktigt?</h5>
+              <p class="text-sm text-muted-foreground leading-relaxed">Kassaflödet visar riktiga pengar in och ut. Det är svårare att manipulera än bokförd vinst.</p>
+            </div>
+            <div class="space-y-2">
+              <h5 class="text-lg font-black tracking-tight">Måste man läsa årsredovisningen?</h5>
+              <p class="text-sm text-muted-foreground leading-relaxed">Ja, åtminstone de viktigaste delarna. Det är den bästa källan för att förstå bolaget på djupet.</p>
+            </div>
+            <div class="space-y-2">
+              <h5 class="text-lg font-black tracking-tight">Hur vet man om en aktie är billig?</h5>
+              <p class="text-sm text-muted-foreground leading-relaxed">Den är billig om marknaden underskattar bolagets framtida vinstförmåga i relation till risken.</p>
+            </div>
+          </div>
         </section>
       </div>
     `,
-    category: "Värdering",
-    readTime: "8 min",
+    category: "Analys",
+    readTime: "12 min",
     part: 2,
-    icon: "Calculator"
+    icon: "Search"
   },
   "bygga-en-portfolj": {
     slug: "bygga-en-portfolj",
