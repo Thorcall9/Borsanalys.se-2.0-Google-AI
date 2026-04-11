@@ -1,7 +1,7 @@
 import { AnalysisData } from "../../../types/analysis";
 
 export const newWaveGroup2025: AnalysisData = {
-  slug: "new-wave-group-2025",
+  slug: "new-wave-group-april-2026",
   title: "New Wave Group AB",
   ticker: "NWG B",
   market: "Large Cap Stockholm",
@@ -65,7 +65,7 @@ export const newWaveGroup2025: AnalysisData = {
   },
   aiDrivenData: {
     isAIDriven: true,
-    slug: "new-wave-group-2025",
+    slug: "new-wave-group-april-2026",
     name: "New Wave Group AB",
     ticker: "NWG B",
     isin: "SE0000426546",

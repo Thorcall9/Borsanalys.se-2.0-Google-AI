@@ -26,7 +26,7 @@ export const analyses: Record<string, AnalysisData> = {
   "swedbank-2025": swedbank2025,
   "ericsson": ericsson2025,
   "handelsbanken-2025": handelsbanken2025,
-  "new-wave-group-2025": newWaveGroup2025,
+  "new-wave-group-april-2026": newWaveGroup2025,
 };
 
 export type { AnalysisData, AIDrivenAnalysis } from "../../types/analysis";
