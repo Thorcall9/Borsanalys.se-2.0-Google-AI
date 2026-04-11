@@ -5,7 +5,7 @@ import { Hero } from "../components/Hero";
 import { ScoreCard } from "../components/ScoreCard";
 import { Newsletter } from "../components/Newsletter";
 import SEO from "../components/SEO";
-import Mindmap from "../components/Mindmap";
+import { MethodologySection } from "../components/Methodology/MethodologySection";
 import { TrendingUp, Shield, Zap, ArrowRight, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import AdZone from "../components/AdZone";
@@ -77,10 +77,8 @@ export default function Home() {
         />
       </section>
 
-      {/* Mindmap Section */}
-      <section className="py-32 container mx-auto px-6">
-        <Mindmap />
-      </section>
+      {/* Methodology Section */}
+      <MethodologySection />
 
       {/* Ad middle banner */}
       <div className="container mx-auto px-6 mt-[-4rem] mb-16">
