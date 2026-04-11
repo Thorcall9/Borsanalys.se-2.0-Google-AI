@@ -76,36 +76,36 @@ export const MethodologySection: React.FC = () => {
   return (
     <section 
       ref={sectionRef} 
-      className="relative min-h-screen bg-[#050505] text-foreground overflow-hidden flex flex-col items-center justify-center py-20"
+      className="relative h-screen bg-[#050505] text-foreground overflow-hidden flex flex-col items-center justify-center py-6 md:py-10"
       id="methodology-engine"
     >
       {/* Background Ambience */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
+        <div className="absolute top-0 right-0 w-[600px] md:w-[800px] h-[600px] md:h-[800px] bg-primary/5 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-primary/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
       </div>
 
-      <div ref={containerRef} className="container mx-auto px-6 relative z-10 w-full h-full flex flex-col">
+      <div ref={containerRef} className="container mx-auto px-6 relative z-10 w-full h-full flex flex-col pt-4 md:pt-8">
         {/* Intro Phase - Constant Title/Header */}
         <div className={`methodology-intro text-center transition-all duration-1000 ${activeStepIndex >= 0 || isSynthesis || isScenario ? "opacity-20 scale-95 blur-sm" : "opacity-100"}`}>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="text-[11px] font-black uppercase tracking-[0.4em] text-primary mb-6"
+            className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] text-primary mb-3 md:mb-6"
           >
             Methodology Engine 2.0
           </motion.div>
-          <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-tight mb-8">
+          <h2 className="text-3xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-tight mb-4 md:mb-8">
             Vår <span className="text-primary italic">Analysmetodik</span>
           </h2>
-          <p className="max-w-2xl mx-auto text-xl text-muted-foreground leading-relaxed font-medium">
+          <p className="max-w-xl md:max-w-2xl mx-auto text-base md:text-xl text-muted-foreground leading-relaxed font-medium">
             Vi kombinerar mänsklig expertis med AI för att leverera marknadens mest kompletta bolagsanalyser. 
             Datan bearbetas tvärs över 8 rigorösa steg för att hitta den asymmetriska fördelen.
           </p>
         </div>
 
         {/* The Interactive Visual Area */}
-        <div className="flex-1 relative mt-12">
+        <div className="flex-1 relative mt-4 md:mt-8 min-h-0">
           <MethodologyScene 
             activeStepIndex={activeStepIndex} 
             isSynthesis={isSynthesis}

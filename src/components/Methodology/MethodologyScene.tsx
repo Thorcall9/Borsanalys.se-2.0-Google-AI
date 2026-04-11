@@ -35,7 +35,7 @@ export const MethodologyScene: React.FC<MethodologySceneProps> = ({
   ];
 
   return (
-    <div className="relative w-full h-[600px] md:h-[800px] overflow-hidden">
+    <div className="relative w-full h-[55vh] md:h-[65vh] overflow-hidden">
       {/* SVG Connections Container */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 100" preserveAspectRatio="none">
         {nodePositions.map((pos, index) => {
@@ -48,11 +48,11 @@ export const MethodologyScene: React.FC<MethodologySceneProps> = ({
               x1="50" y1="50"
               x2={pos.x} y2={pos.y}
               stroke="currentColor"
-              strokeWidth="0.2"
+              strokeWidth="0.15"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ 
                 pathLength: isScenario ? 0 : 1, 
-                opacity: isScenario ? 0 : (isActive ? 0.8 : (isFaded ? 0.05 : 0.2)),
+                opacity: isScenario ? 0 : (isActive ? 0.8 : (isFaded ? 0.05 : 0.15)),
                 color: isActive ? "var(--primary)" : "var(--border)"
               }}
               transition={{ duration: 1 }}
@@ -63,21 +63,24 @@ export const MethodologyScene: React.FC<MethodologySceneProps> = ({
       </svg>
 
       {/* Central Core */}
-      <MethodologyCore 
-        id="methodology-core" 
-        active={activeStepIndex >= 0 || isSynthesis} 
-      />
+      <div className="scale-75 md:scale-100">
+        <MethodologyCore 
+          id="methodology-core" 
+          active={activeStepIndex >= 0 || isSynthesis} 
+        />
+      </div>
 
       {/* Nodes */}
       {!isSynthesis && !isScenario && nodePositions.map((pos, index) => (
-        <MethodologyNode
-          key={methodologySteps[index].id}
-          id={methodologySteps[index].id}
-          number={methodologySteps[index].number}
-          title={methodologySteps[index].title}
-          active={activeStepIndex === index}
-          position={pos}
-        />
+        <div key={methodologySteps[index].id} className="scale-75 md:scale-100 origin-center">
+          <MethodologyNode
+            id={methodologySteps[index].id}
+            number={methodologySteps[index].number}
+            title={methodologySteps[index].title}
+            active={activeStepIndex === index}
+            position={pos}
+          />
+        </div>
       ))}
 
       {/* Background Pulse for Active Step */}
@@ -91,7 +94,7 @@ export const MethodologyScene: React.FC<MethodologySceneProps> = ({
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none"
           >
             <div 
-              className="absolute w-[600px] h-[600px] rounded-full bg-primary/5 blur-[120px] -translate-x-1/2 -translate-y-1/2 transition-all duration-1000"
+              className="absolute w-[400px] h-[400px] md:w-[600px] md:h-[600px] rounded-full bg-primary/5 blur-[100px] md:blur-[120px] -translate-x-1/2 -translate-y-1/2 transition-all duration-1000"
               style={{ 
                 left: `${nodePositions[activeStepIndex].x}%`, 
                 top: `${nodePositions[activeStepIndex].y}%` 
