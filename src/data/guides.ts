@@ -1045,194 +1045,460 @@ export const guides: Record<string, Guide> = {
     part: 6,
     icon: "Zap"
   },
-  "allt-om-fonder": {
-    slug: "allt-om-fonder",
-    title: "Bästa fonderna för nybörjare – En komplett guide",
-    excerpt: "Lär dig hur fonder fungerar, skillnaden mellan index och aktiv förvaltning, och hur du väljer rätt.",
+  "basta-fonderna-for-nyborjare": {
+    slug: "basta-fonderna-for-nyborjare",
+    title: "Bästa fonderna för nybörjare 2026 – komplett guide till fondsparande",
+    excerpt: "Lär dig allt om fonder: vad en fond är, skillnaden mellan indexfonder och aktiva fonder, vilka fondtyper som finns och hur du väljer rätt som nybörjare.",
     content: `
       <div class="space-y-16">
+        <!-- Intro -->
         <section class="not-prose space-y-6">
-          <h2 class="text-4xl md:text-5xl font-black tracking-tighter">Fonder — allt du behöver veta</h2>
+          <h2 class="text-4xl md:text-5xl font-black tracking-tighter">Bästa fonderna för nybörjare 2026</h2>
           <div class="space-y-4">
             <p class="text-xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
-              Att köpa en enskild aktie innebär att du satsar på ett specifikt bolag. Köper du en fond satsar du på hundratals eller tusentals bolag samtidigt — med ett enda köp.
+              Vill du börja spara i fonder men är osäker på vilka fonder du ska välja? Då är du långt ifrån ensam. För många nybörjare känns fondsparande först rörigt: globalfond, indexfond, aktiv fond, räntefond, avgifter, risk och månadssparande. Det låter lätt komplicerat.
             </p>
             <p class="text-xl text-foreground leading-relaxed font-black max-w-3xl">
-              För de flesta sparare är fonder det <span class="text-primary">enklaste, billigaste och mest effektiva</span> sättet att bygga långsiktigt välstånd.
+              I praktiken behöver det <span class="text-primary">inte vara svårt</span>.
             </p>
             <p class="text-lg text-muted-foreground leading-relaxed font-medium max-w-3xl">
-              Den här guiden förklarar hur fonder fungerar, vilka typer som finns och hur du väljer rätt för din situation.
+              För de flesta småsparare är fonder det enklaste sättet att bygga upp ett långsiktigt sparande. Du får bred riskspridning, låg arbetsinsats och ofta låga avgifter. Det gör att fonder passar särskilt bra för dig som vill komma igång utan att behöva analysera enskilda aktier.
             </p>
+            <div class="p-6 bg-muted/30 border border-border rounded-3xl mt-8">
+              <h4 class="text-sm font-black uppercase tracking-widest text-primary mb-4">I den här guiden går vi igenom:</h4>
+              <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-muted-foreground font-medium">
+                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-primary"></div>vad en fond är & hur fonder fungerar</li>
+                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-primary"></div>vilka typer av fonder som finns</li>
+                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-primary"></div>skillnaden mellan index och aktivt</li>
+                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-primary"></div>hur du väljer rätt fond</li>
+                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-primary"></div>hur du bygger en portfölj</li>
+                <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-primary"></div>vanliga misstag att undvika</li>
+              </ul>
+            </div>
           </div>
         </section>
 
         <div class="not-prose space-y-12">
-          <!-- VAD ÄR EN FOND -->
+          <!-- Vad är en fond -->
           <div class="p-10 md:p-12 bg-muted/30 border border-border rounded-[3rem] relative overflow-hidden group hover:border-primary/30 transition-all duration-500">
             <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors duration-700"></div>
-            <h3 class="text-3xl md:text-4xl font-black tracking-tighter mb-6">Vad är en fond och hur fungerar det?</h3>
+            <h3 class="text-3xl md:text-4xl font-black tracking-tighter mb-6">Vad är en fond?</h3>
             <div class="space-y-6">
               <p class="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium">
-                En fond är en samling av värdepapper — aktier, obligationer eller en blandning — som förvaltas gemensamt av ett fondbolag. När du köper en fondandel äger du en liten bit av hela portföljen.
+                En fond är en samling värdepapper som ägs gemensamt av många sparare. När du köper en fond köper du inte en enskild aktie, utan en liten del av en hel portfölj. Portföljen kan innehålla aktier, obligationer eller en blandning av båda.
               </p>
               <p class="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium">
-                Fördelen är omedelbar <span class="text-primary font-black">diversifiering</span>. Istället för att köpa 30 enskilda aktier och betala courtage för varje köp, investerar du i en fond och får exponering mot hundratals bolag på en gång.
+                Det är en stor skillnad mot att köpa en enskild aktie. Om du köper en aktie i ett enda bolag är du helt beroende av hur just det bolaget utvecklas. I en fond sprids risken över många innehav, vilket gör sparandet mindre sårbart.
               </p>
               
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="p-6 bg-card border border-border rounded-2xl space-y-4">
-                  <div class="text-primary font-black text-xs uppercase tracking-widest">Exempel 1 — Länsförsäkringar Global</div>
-                  <p class="text-sm text-muted-foreground leading-relaxed">
-                    När du köper en andel i Länsförsäkringar Global äger du indirekt en liten bit av Microsoft, Apple, NVIDIA, Amazon och ytterligare 1 500+ bolag i 23 länder. Ett enda köp ger dig exponering mot hela den globala ekonomin.
-                  </p>
-                </div>
-                <div class="p-6 bg-card border border-border rounded-2xl space-y-4">
-                  <div class="text-primary font-black text-xs uppercase tracking-widest">Exempel 2 — Spiltan Aktiefond Investmentbolag</div>
-                  <p class="text-sm text-muted-foreground leading-relaxed">
-                    Denna fond äger andelar i svenska investmentbolag — Investor, Industrivärden, Latour och Kinnevik. Köper du fonden får du automatiskt exponering mot hundratals underliggande bolag via investmentbolagens portföljer. Det är diversifiering i flera lager.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- INDEX VS AKTIV -->
-          <div class="p-10 md:p-12 bg-muted/30 border border-border rounded-[3rem] relative overflow-hidden group hover:border-primary/30 transition-all duration-500">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors duration-700"></div>
-            <h3 class="text-3xl md:text-4xl font-black tracking-tighter mb-6">Indexfonder vs aktivt förvaltade fonder</h3>
-            <div class="space-y-8">
-              <p class="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium">
-                Det är den viktigaste distinktionen att förstå när du väljer fond.
-              </p>
-              
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="space-y-4">
-                  <div class="text-foreground font-black text-sm uppercase tracking-widest">Indexfonder</div>
-                  <p class="text-sm text-muted-foreground leading-relaxed">
-                    Följer ett index mekaniskt (t.ex. MSCI World). Ingen förvaltare fattar beslut. Resultatet är låga avgifter — ofta 0,1-0,3% per år.
-                  </p>
-                </div>
-                <div class="space-y-4">
-                  <div class="text-foreground font-black text-sm uppercase tracking-widest">Aktivt förvaltade</div>
-                  <p class="text-sm text-muted-foreground leading-relaxed">
-                    Förvaltare väljer aktivt aktier för att slå index. Avgifterna är högre — ofta 1-2% per år — för att betala förvaltarnas arbete.
-                  </p>
-                </div>
-              </div>
-
-              <div class="p-8 bg-red-500/5 border border-red-500/20 rounded-[2rem] space-y-4">
-                <h4 class="text-xl font-black text-red-200">Det stora problemet med aktiv förvaltning</h4>
-                <p class="text-base text-muted-foreground leading-relaxed">
-                  Forskning visar konsekvent att 80-90% av aktivt förvaltade fonder underpresterar sitt jämförelseindex över en 10-årsperiod efter avgifter. Avgiften är ett matematiskt handikapp som förvaltaren måste övervinna varje år.
-                </p>
-              </div>
-
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="p-6 bg-card border border-border rounded-2xl space-y-4">
-                  <div class="text-primary font-black text-xs uppercase tracking-widest">Exempel 1 — Avgiftens dramatiska effekt</div>
-                  <p class="text-sm text-muted-foreground leading-relaxed">
-                    Investera 100 000 kr med 8% avkastning i 30 år:<br/>
-                    • Indexfond (0,2% avgift): <b>930 000 kr</b><br/>
-                    • Aktiv fond (1,5% avgift): <b>660 000 kr</b><br/>
-                    Skillnaden är 270 000 kr — enbart pga avgiften.
-                  </p>
-                </div>
-                <div class="p-6 bg-card border border-border rounded-2xl space-y-4">
-                  <div class="text-primary font-black text-xs uppercase tracking-widest">Exempel 2 — När aktiv förvaltning kan löna sig</div>
-                  <p class="text-sm text-muted-foreground leading-relaxed">
-                    På ineffektiva marknader — som småbolagsfonder eller tillväxtmarknader — har aktiva förvaltare bättre förutsättningar att hitta felprissatta aktier. På stora marknader som S&P 500 är det nästan omöjligt att konsekvent slå index.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- GLOBALFONDER -->
-          <div class="p-10 md:p-12 bg-muted/30 border border-border rounded-[3rem] relative overflow-hidden group hover:border-primary/30 transition-all duration-500">
-            <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors duration-700"></div>
-            <h3 class="text-3xl md:text-4xl font-black tracking-tighter mb-6">Globalfonder — basen i de flesta portföljer</h3>
-            <div class="space-y-8">
-              <p class="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium">
-                En globalfond investerar i bolag över hela världen och är för de flesta sparare det bästa grundinnehavet. Du får automatisk geografisk diversifiering.
-              </p>
-
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="p-6 bg-card border border-border rounded-2xl space-y-2">
-                  <div class="text-primary font-black text-xs uppercase tracking-widest">LF Global Indexnära</div>
-                  <p class="text-sm text-muted-foreground">Avgift: 0,20%. Följer MSCI World (1500+ bolag). USA utgör ca 70%. Utmärkt basinnehav.</p>
-                </div>
-                <div class="p-6 bg-card border border-border rounded-2xl space-y-2">
-                  <div class="text-primary font-black text-xs uppercase tracking-widest">Swedbank Robur Access Global</div>
-                  <p class="text-sm text-muted-foreground">Avgift: 0,30%. Bred global exponering med hållbarhetsfokus (ESG).</p>
-                </div>
-                <div class="p-6 bg-card border border-border rounded-2xl space-y-2">
-                  <div class="text-primary font-black text-xs uppercase tracking-widest">SPP Global Solutions</div>
-                  <p class="text-sm text-muted-foreground">Avgift: 0,34%. Aktivt förvaltad med stark hållbarhetsprofil. Har historiskt presterat väl.</p>
-                </div>
-              </div>
-
               <div class="p-6 bg-card border border-border rounded-2xl space-y-4">
-                <div class="text-primary font-black text-xs uppercase tracking-widest">Exempel — Hur globalfonder skiljer sig</div>
+                <div class="text-primary font-black text-xs uppercase tracking-widest">Exempel: så fungerar det i praktiken</div>
                 <p class="text-sm text-muted-foreground leading-relaxed">
-                  Under AI-boomen 2023-2024 presterade Länsförsäkringar Global exceptionellt bra pga NVIDIA och Microsoft. En globalfond med hållbarhetsfokus som exkluderar energibolag underpresterade under 2022 när oljepriser steg.
+                  Köper du en globalfond får du ofta exponering mot stora bolag som Microsoft, Apple, Nvidia, Amazon och många fler samtidigt. Köper du en svensk investmentbolagsfond får du indirekt exponering mot flera investmentbolag, som i sin tur äger många andra bolag. Det är därför fonder ofta beskrivs som ett av de mest effektiva sätten att bygga långsiktigt välstånd.
                 </p>
               </div>
             </div>
           </div>
 
-          <!-- SVERIGEFONDER -->
+          <!-- Hur fungerar en fond -->
           <div class="p-10 md:p-12 bg-muted/30 border border-border rounded-[3rem] relative overflow-hidden group hover:border-primary/30 transition-all duration-500">
             <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors duration-700"></div>
-            <h3 class="text-3xl md:text-4xl font-black tracking-tighter mb-6">Sverigefonder — exponering mot hemmaplan</h3>
-            <div class="space-y-8">
+            <h3 class="text-3xl md:text-4xl font-black tracking-tighter mb-6">Hur fungerar en fond?</h3>
+            <div class="space-y-6">
               <p class="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium">
-                En Sverigefond investerar enbart i svenska bolag. Det ger koncentrerad exponering mot en liten marknad men också mot några av världens bästa industribolag.
+                När du investerar pengar i en fond köper du fondandelar. Fondens värde förändras sedan beroende på hur de underliggande innehaven utvecklas. Om innehaven stiger i värde stiger fonden. Om marknaden faller kan fonden också gå ner.
               </p>
+              <p class="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium">
+                Det viktiga att förstå är att en fond <span class="font-bold text-foreground">inte ger någon garanterad avkastning</span>. Värdet svänger över tid. Men eftersom fonden äger många olika värdepapper blir utvecklingen ofta stabilare än om du bara äger enstaka aktier.
+              </p>
+            </div>
+          </div>
 
-              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="p-6 bg-card border border-border rounded-2xl space-y-2">
-                  <div class="text-primary font-black text-xs uppercase tracking-widest">Spiltan Investmentbolag</div>
-                  <p class="text-sm text-muted-foreground">Avgift: 0,20%. Investerar i svenska investmentbolag. Diversifiering i flera lager.</p>
+          <!-- Varför fonder -->
+          <div class="space-y-6">
+            <h3 class="text-3xl md:text-4xl font-black tracking-tighter">Varför är fonder bra för nybörjare?</h3>
+            <p class="text-lg text-muted-foreground font-medium">Fonder är särskilt bra för nya sparare av flera skäl.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="p-8 bg-muted/30 border border-border rounded-3xl space-y-4">
+                <div class="text-primary font-black text-4xl opacity-20">01</div>
+                <h4 class="text-xl font-black tracking-tighter">Riskspridning direkt</h4>
+                <p class="text-sm text-muted-foreground">I stället för att välja ett fåtal aktier får du en färdig portfölj.</p>
+              </div>
+              <div class="p-8 bg-muted/30 border border-border rounded-3xl space-y-4">
+                <div class="text-primary font-black text-4xl opacity-20">02</div>
+                <h4 class="text-xl font-black tracking-tighter">Det är enkelt</h4>
+                <p class="text-sm text-muted-foreground">Du behöver inte lägga timmar på att analysera bolag, rapporter och värderingar.</p>
+              </div>
+              <div class="p-8 bg-muted/30 border border-border rounded-3xl space-y-4">
+                <div class="text-primary font-black text-4xl opacity-20">03</div>
+                <h4 class="text-xl font-black tracking-tighter">Perfekt för månadsspar</h4>
+                <p class="text-sm text-muted-foreground">Fonder fungerar utmärkt för den som vill spara lite varje månad.</p>
+              </div>
+              <div class="p-8 bg-muted/30 border border-border rounded-3xl space-y-4">
+                <div class="text-primary font-black text-4xl opacity-20">04</div>
+                <h4 class="text-xl font-black tracking-tighter">Låga avgifter</h4>
+                <p class="text-sm text-muted-foreground">Särskilt indexfonder är ofta billiga, vilket gör stor skillnad på lång sikt.</p>
+              </div>
+              <div class="p-8 bg-muted/30 border border-border rounded-3xl space-y-4">
+                <div class="text-primary font-black text-4xl opacity-20">05</div>
+                <h4 class="text-xl font-black tracking-tighter">Mindre risk för misstag</h4>
+                <p class="text-sm text-muted-foreground">Många nybörjare gör fel när de försöker välja enskilda aktier direkt. Fonder ger en stabil start.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Olika typer av fonder -->
+          <div class="space-y-8 mt-16">
+            <h3 class="text-3xl md:text-4xl font-black tracking-tighter">Olika typer av fonder</h3>
+            <p class="text-lg text-muted-foreground font-medium">Här är de viktigaste fondtyperna att känna till.</p>
+            
+            <div class="grid grid-cols-1 gap-6">
+              <!-- Globalfonder -->
+              <div class="p-8 bg-card border border-border rounded-3xl grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="md:col-span-1 border-b md:border-b-0 md:border-r border-border pb-6 md:pb-0 md:pr-6">
+                  <h4 class="text-2xl font-black tracking-tighter mb-2">Globalfonder</h4>
+                  <p class="text-sm text-muted-foreground">Investerar i bolag från stora delar av världen, ofta med tyngdpunkt i USA.</p>
                 </div>
-                <div class="p-6 bg-card border border-border rounded-2xl space-y-2">
-                  <div class="text-primary font-black text-xs uppercase tracking-widest">Handelsbanken Sverige Index</div>
-                  <p class="text-sm text-muted-foreground">Avgift: 0,40%. Följer OMXS30 mekaniskt. Enkelt, billigt och transparent.</p>
-                </div>
-                <div class="p-6 bg-card border border-border rounded-2xl space-y-2">
-                  <div class="text-primary font-black text-xs uppercase tracking-widest">Swedbank Robur Sverigefond</div>
-                  <p class="text-sm text-muted-foreground">Avgift: 1,40%. Aktivt förvaltad. Den höga avgiften är ett handikapp mot index.</p>
+                <div class="md:col-span-2 grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span class="text-green-500 font-bold block mb-1">Fördelar</span>
+                    <ul class="text-muted-foreground space-y-1">
+                      <li>• Bred riskspridning</li>
+                      <li>• Enkel grund i portföljen</li>
+                      <li>• Passar de flesta</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <span class="text-red-400 font-bold block mb-1">Nackdelar</span>
+                    <ul class="text-muted-foreground space-y-1">
+                      <li>• Ofta tung vikt mot USA</li>
+                      <li>• Begränsad mot mindre marknader</li>
+                    </ul>
+                  </div>
+                  <div class="col-span-2 mt-2 pt-4 border-t border-border">
+                    <span class="font-bold text-foreground">Passar för:</span> <span class="text-muted-foreground">Nästan alla långsiktiga småsparare. En billig global indexfond räcker ofta långt.</span>
+                  </div>
                 </div>
               </div>
 
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="p-6 bg-card border border-border rounded-2xl space-y-4">
-                  <div class="text-primary font-black text-xs uppercase tracking-widest">Exempel 1 — Spiltans fördel</div>
+              <!-- Sverigefonder -->
+              <div class="p-8 bg-card border border-border rounded-3xl grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="md:col-span-1 border-b md:border-b-0 md:border-r border-border pb-6 md:pb-0 md:pr-6">
+                  <h4 class="text-2xl font-black tracking-tighter mb-2">Sverigefonder</h4>
+                  <p class="text-sm text-muted-foreground">Investerar i svenska bolag (storbolag, småbolag eller en blandning).</p>
+                </div>
+                <div class="md:col-span-2 grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span class="text-green-500 font-bold block mb-1">Fördelar</span>
+                    <ul class="text-muted-foreground space-y-1">
+                      <li>• Exponering mot hemmamarknaden</li>
+                      <li>• Lättare att förstå bolagen</li>
+                      <li>• Bra komplement</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <span class="text-red-400 font-bold block mb-1">Nackdelar</span>
+                    <ul class="text-muted-foreground space-y-1">
+                      <li>• Sverige är en liten marknad</li>
+                      <li>• Mindre riskspridning</li>
+                    </ul>
+                  </div>
+                  <div class="col-span-2 mt-2 pt-4 border-t border-border">
+                    <span class="font-bold text-foreground">Passar för:</span> <span class="text-muted-foreground">Dig som vill ha en del av portföljen lokalt, men sällan som enda fond.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Småbolagsfonder -->
+              <div class="p-8 bg-card border border-border rounded-3xl grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="md:col-span-1 border-b md:border-b-0 md:border-r border-border pb-6 md:pb-0 md:pr-6">
+                  <h4 class="text-2xl font-black tracking-tighter mb-2">Småbolagsfonder</h4>
+                  <p class="text-sm text-muted-foreground">Fokuserar på mindre bolag. Högre risk men mer tillväxtpotential.</p>
+                </div>
+                <div class="md:col-span-2 grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span class="text-green-500 font-bold block mb-1">Fördelar</span>
+                    <ul class="text-muted-foreground space-y-1">
+                      <li>• Högre avkastningspotential</li>
+                      <li>• Snabbväxande bolag</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <span class="text-red-400 font-bold block mb-1">Nackdelar</span>
+                    <ul class="text-muted-foreground space-y-1">
+                      <li>• Större svängningar</li>
+                      <li>• Ofta högre avgifter</li>
+                    </ul>
+                  </div>
+                  <div class="col-span-2 mt-2 pt-4 border-t border-border">
+                    <span class="font-bold text-foreground">Passar för:</span> <span class="text-muted-foreground">Sparare med lång tidshorisont och högre risktolerans.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Extra types condensed to Grid -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                <div class="p-6 bg-muted/30 border border-border rounded-3xl space-y-3">
+                  <h4 class="text-xl font-black tracking-tighter">Tillväxtmarknadsfonder</h4>
                   <p class="text-sm text-muted-foreground leading-relaxed">
-                    Spiltan Aktiefond Investmentbolag har avkastat ca 15% per år i snitt de senaste 10 åren. Det beror på att investmentbolag historiskt presterat bättre än börsen tack vare aktivt ägarskap.
+                    Länder som Indien, Kina och Brasilien.<br/>
+                    <b>Fördelar:</b> Extra tillväxtpotential.<br/>
+                    <b>Nackdelar:</b> Högre politisk risk & svängningar.<br/>
+                    <b>För vem:</b> Som ett mindre komplement.
                   </p>
                 </div>
-                <div class="p-6 bg-card border border-border rounded-2xl space-y-4">
-                  <div class="text-primary font-black text-xs uppercase tracking-widest">Exempel 2 — Koncentrationsrisken</div>
+                <div class="p-6 bg-muted/30 border border-border rounded-3xl space-y-3">
+                  <h4 class="text-xl font-black tracking-tighter">Räntefonder</h4>
                   <p class="text-sm text-muted-foreground leading-relaxed">
-                    Sverige är en liten exportberoende ekonomi. Under 2025 stärktes kronan kraftigt mot dollarn vilket pressade exportbolagens vinster och Stockholmsbörsen underpresterade globala index.
+                    Investerar i räntebärande papper.<br/>
+                    <b>Fördelar:</b> Stabilitet, lägre risk.<br/>
+                    <b>Nackdelar:</b> Lägre förväntad avkastning.<br/>
+                    <b>För vem:</b> Kort sparhorisont eller låg riskvilja.
+                  </p>
+                </div>
+                <div class="p-6 bg-muted/30 border border-border rounded-3xl space-y-3">
+                  <h4 class="text-xl font-black tracking-tighter">Blandfonder</h4>
+                  <p class="text-sm text-muted-foreground leading-relaxed">
+                    Kombinerar aktier och räntor.<br/>
+                    <b>Fördelar:</b> Enkel helhetslösning.<br/>
+                    <b>Nackdelar:</b> Mindre kontroll, ibland dyrare.<br/>
+                    <b>För vem:</b> Spararen som vill slippa bygga portfölj.
+                  </p>
+                </div>
+                <div class="p-6 bg-muted/30 border border-border rounded-3xl space-y-3">
+                  <h4 class="text-xl font-black tracking-tighter">Temafonder</h4>
+                  <p class="text-sm text-muted-foreground leading-relaxed">
+                    Specifikt tema som Teknik, AI, Hälso- och sjukvård.<br/>
+                    <b>Fördelar:</b> Tydlig inriktning.<br/>
+                    <b>Nackdelar:</b> Hög risk, smal exponering.<br/>
+                    <b>För vem:</b> Litet komplement i portföljen.
                   </p>
                 </div>
               </div>
+            </div>
+          </div>
+
+          <!-- Index vs Aktivt -->
+          <div class="p-10 md:p-12 bg-muted/30 border border-border rounded-[3rem] relative overflow-hidden group hover:border-primary/30 transition-all duration-500 mt-16">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors duration-700"></div>
+            <h3 class="text-3xl md:text-4xl font-black tracking-tighter mb-6">Indexfonder eller aktivt förvaltade fonder – vad är bäst?</h3>
+            <p class="text-lg text-muted-foreground mb-8">Det här är en av de viktigaste frågorna inom fondsparande.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="space-y-4">
+                <div class="text-foreground font-black text-lg uppercase tracking-widest">Indexfonder</div>
+                <p class="text-sm text-muted-foreground leading-relaxed">
+                  En indexfond följer ett index, till exempel MSCI World eller OMX Stockholm. Fonden försöker inte slå marknaden, utan spegla den så nära som möjligt. Eftersom förvaltningen är enkel blir avgiften låg.
+                </p>
+                <ul class="text-sm text-muted-foreground space-y-2 mt-4 font-medium">
+                  <li>✅ Låga avgifter</li>
+                  <li>✅ Bred exponering</li>
+                  <li>✅ Enkel och transparent strategi</li>
+                  <li>✅ Svårslaget alternativ för många sparare</li>
+                </ul>
+              </div>
+              <div class="space-y-4">
+                <div class="text-foreground font-black text-lg uppercase tracking-widest">Aktivt förvaltade fonder</div>
+                <p class="text-sm text-muted-foreground leading-relaxed">
+                  En aktivt förvaltad fond har en förvaltare som väljer vilka innehav fonden ska köpa och sälja. Målet är att slå sitt jämförelseindex. Problemet är att det är svårt att göra det konsekvent över lång tid, särskilt efter avgifter.
+                </p>
+                <ul class="text-sm text-muted-foreground space-y-2 mt-4 font-medium">
+                  <li>✅ Möjlighet till meravkastning</li>
+                  <li>✅ Bra i vissa nischer (småbolag/tillväxt)</li>
+                  <li>❌ Högre avgifter</li>
+                  <li>❌ Många underpresterar index på sikt</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mt-8 p-6 bg-red-500/5 border border-red-500/20 rounded-3xl">
+              <h4 class="text-xl font-black tracking-tighter text-red-200 mb-2">Varför avgiften spelar så stor roll</h4>
+              <p class="text-sm text-muted-foreground leading-relaxed">
+                Avgifter kan se små ut, men över lång tid gör de stor skillnad. Anta att du investerar 100 000 kronor och får 8 procent avkastning per år före avgifter i 30 år.
+                <br/><br/>
+                • En fond med låg avgift kan ge dig runt <b>930 000 kronor</b>.<br/>
+                • En fond med hög avgift kan ge dig runt <b>660 000 kronor</b>.<br/><br/>
+                Skillnaden kan alltså bli hundratusentals kronor över tid. Det är därför billiga indexfonder så ofta är det bästa förstavalet för nybörjare.
+              </p>
+            </div>
+          </div>
+
+          <!-- Välja fond -->
+          <div class="space-y-8 mt-16">
+            <h3 class="text-3xl md:text-4xl font-black tracking-tighter">Så väljer du rätt fond</h3>
+            <p class="text-lg text-muted-foreground">Det finns ingen enskild fond som är bäst för alla, men vissa egenskaper utmärker en bra nybörjarfond: bred, billig, enkel att förstå, långsiktig och lätt att månadsspara i. När du väljer, använd denna enkla checklista:</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="p-6 bg-card border border-border rounded-2xl">
+                <span class="text-primary font-black mb-2 block">1. Vad investerar fonden i?</span>
+                <p class="text-sm text-muted-foreground">Förstå om det är global, Sverige, småbolag eller räntor.</p>
+              </div>
+              <div class="p-6 bg-card border border-border rounded-2xl">
+                <span class="text-primary font-black mb-2 block">2. Hur hög är avgiften?</span>
+                <p class="text-sm text-muted-foreground">Låg avgift är ofta en stor fördel, särskilt i basen av portföljen.</p>
+              </div>
+              <div class="p-6 bg-card border border-border rounded-2xl">
+                <span class="text-primary font-black mb-2 block">3. Hur stor risk tar du?</span>
+                <p class="text-sm text-muted-foreground">Aktiefonder svänger mer än räntefonder.</p>
+              </div>
+              <div class="p-6 bg-card border border-border rounded-2xl">
+                <span class="text-primary font-black mb-2 block">4. Tidshorisont?</span>
+                <p class="text-sm text-muted-foreground">Ju längre tidshorisont, desto mer risk kan du normalt tåla.</p>
+              </div>
+              <div class="p-6 bg-card border border-border rounded-2xl md:col-span-2">
+                <span class="text-primary font-black mb-2 block">5. Förstår du vad du äger?</span>
+                <p class="text-sm text-muted-foreground">Om fonden känns krånglig eller svår att förklara är det ofta bättre att välja något enklare.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fondportföljer -->
+          <div class="space-y-12 mt-16">
+            <h3 class="text-3xl md:text-4xl font-black tracking-tighter">Bästa fondportföljen för nybörjare</h3>
+            <p class="text-lg text-muted-foreground font-medium">Här är några enkla portföljer som passar olika typer av sparare. För de flesta räcker 1–3 fonder. Det behöver inte vara svårare än så.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div class="p-8 bg-muted/30 border border-border rounded-3xl space-y-4 relative overflow-hidden group hover:border-primary/30 transition-all">
+                <h4 class="text-2xl font-black tracking-tighter">1. Den enklaste</h4>
+                <div class="text-5xl font-black text-primary">100%</div>
+                <div class="text-sm uppercase tracking-widest font-bold">Global indexfond</div>
+                <p class="text-sm text-muted-foreground">Passar dig som vill hålla det så enkelt som möjligt. Det här är en fullt rimlig lösning för många.</p>
+              </div>
+              
+              <div class="p-8 bg-muted/30 border border-border rounded-3xl space-y-4 relative overflow-hidden group hover:border-primary/30 transition-all">
+                <h4 class="text-2xl font-black tracking-tighter">2. Enkel med Sverige</h4>
+                <div class="flex gap-4">
+                  <div class="space-y-1"><div class="text-4xl font-black text-primary">80%</div><div class="text-[10px] uppercase tracking-widest font-bold">Global index</div></div>
+                  <div class="space-y-1"><div class="text-4xl font-black text-foreground">20%</div><div class="text-[10px] uppercase tracking-widest font-bold">Sverigefond</div></div>
+                </div>
+                <p class="text-sm text-muted-foreground">Passar dig som vill ha global riskspridning men också viss exponering mot svenska bolag.</p>
+              </div>
+
+              <div class="p-8 bg-muted/30 border border-border rounded-3xl space-y-4 relative overflow-hidden group hover:border-primary/30 transition-all">
+                <h4 class="text-2xl font-black tracking-tighter">3. Högre risk/tillväxt</h4>
+                <div class="flex gap-4 flex-wrap">
+                  <div class="space-y-1"><div class="text-2xl font-black text-primary">70%</div><div class="text-[9px] uppercase tracking-widest font-bold">Global index</div></div>
+                  <div class="space-y-1"><div class="text-2xl font-black text-foreground">20%</div><div class="text-[9px] uppercase tracking-widest font-bold">Sverigefond</div></div>
+                  <div class="space-y-1"><div class="text-2xl font-black text-muted-foreground">10%</div><div class="text-[9px] uppercase tracking-widest font-bold">Tillväxtmarknad</div></div>
+                </div>
+                <p class="text-sm text-muted-foreground">Passar dig som sparar långsiktigt och tål större svängningar.</p>
+              </div>
+
+              <div class="p-8 bg-muted/30 border border-border rounded-3xl space-y-4 relative overflow-hidden group hover:border-primary/30 transition-all">
+                <h4 class="text-2xl font-black tracking-tighter">4. Lägre risk</h4>
+                <div class="flex gap-4">
+                  <div class="space-y-1"><div class="text-4xl font-black text-primary">60%</div><div class="text-[10px] uppercase tracking-widest font-bold">Global index</div></div>
+                  <div class="space-y-1"><div class="text-4xl font-black text-foreground">40%</div><div class="text-[10px] uppercase tracking-widest font-bold">Räntefond</div></div>
+                </div>
+                <p class="text-sm text-muted-foreground">Passar dig som vill ha mindre svängningar eller har kortare sparhorisont.</p>
+              </div>
+            </div>
+            
+            <div class="mt-8 p-6 bg-primary/5 border border-primary/20 rounded-3xl">
+              <span class="font-bold text-lg">Hur vet man vilken som passar?</span>
+              <p class="text-sm text-muted-foreground mt-2 leading-relaxed">
+                Det avgörs framför allt av två saker: <b>din tidshorisont</b> och <b>din riskvilja</b>. Om du sparar i 10 år eller mer kan hög andel aktiefonder vara rimligt. Om du behöver pengarna inom några år, eller om du blir extremt stressad när börsen faller, kan räntefonder ge bättre balans.<br/><br/>
+                <i>Den bästa portföljen är inte den som ser bäst ut på papper – utan den du faktiskt klarar att hålla fast vid när börsen stormar.</i>
+              </p>
+            </div>
+          </div>
+
+          <!-- Misstag & Psykologi -->
+          <div class="p-10 md:p-12 bg-muted/30 border border-border rounded-[3rem] relative overflow-hidden mt-16">
+            <h3 class="text-3xl md:text-4xl font-black tracking-tighter mb-6">Det nybörjare missar: Börsen går ner ibland</h3>
+            <div class="space-y-6">
+              <p class="text-lg text-muted-foreground leading-relaxed">
+                Alla fonder har inte samma risk, men även bra fonder kan falla i värde. En vanlig missuppfattning är att något är fel när fonden plötsligt sjunker i värde. Men nedgångar är normala. Börsen rör sig inte i en rak linje uppåt. Det kommer perioder där marknaden faller snabbt och nyhetsflödet känns negativt.
+              </p>
+              <p class="text-lg text-muted-foreground leading-relaxed font-bold">
+                Det viktigaste är att inte blanda ihop tillfälliga nedgångar med att sparandet är dåligt. För den som sparar långsiktigt är svängningar en del av resan.
+              </p>
+              
+              <h4 class="text-xl font-black mt-8 mb-4">Vanliga misstag när man sparar i fonder:</h4>
+              <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <li class="bg-card p-4 rounded-xl border border-border"><span class="font-bold text-red-500 block">Jaga fonder som gått bäst</span> Det som gått bäst nyligen är inte automatiskt bäst framåt.</li>
+                <li class="bg-card p-4 rounded-xl border border-border"><span class="font-bold text-red-500 block">Sälja när börsen faller</span> Det här är ett av de vanligaste och dyraste misstagen.</li>
+                <li class="bg-card p-4 rounded-xl border border-border"><span class="font-bold text-red-500 block">Ha för många fonder</span> Det gör ofta portföljen rörigare utan att förbättra den särskilt mycket.</li>
+                <li class="bg-card p-4 rounded-xl border border-border"><span class="font-bold text-red-500 block">Betala för höga avgifter</span> En dyr fond måste verkligen förtjäna sin avgift.</li>
+                <li class="bg-card p-4 rounded-xl border border-border"><span class="font-bold text-red-500 block">Ta för hög risk</span> Många tror att de tål stora svängningar tills de väl kommer.</li>
+                <li class="bg-card p-4 rounded-xl border border-border"><span class="font-bold text-red-500 block">Vänta för länge</span> Det viktigaste är ofta inte att välja perfekt, utan att komma igång.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Så kommer du igång -->
+          <div class="space-y-8 mt-16 pb-12 border-b border-border">
+            <h3 class="text-3xl md:text-4xl font-black tracking-tighter">Så kommer du igång med fondsparande</h3>
+            <p class="text-lg text-muted-foreground font-medium">Att börja spara i fonder är enklare än många tror.</p>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div class="p-6 bg-primary/10 border border-primary/20 rounded-2xl"><div class="font-black text-xl mb-2 text-primary">Steg 1</div><p class="text-sm font-medium text-foreground">Öppna ett konto.</p><p class="text-xs text-muted-foreground mt-1">De flesta småsparare använder ett ISK hos ex. Avanza eller Nordnet.</p></div>
+              <div class="p-6 bg-primary/10 border border-primary/20 rounded-2xl"><div class="font-black text-xl mb-2 text-primary">Steg 2</div><p class="text-sm font-medium text-foreground">Välj en fondportfölj.</p><p class="text-xs text-muted-foreground mt-1">För många räcker det att börja med en global indexfond.</p></div>
+              <div class="p-6 bg-primary/10 border border-primary/20 rounded-2xl"><div class="font-black text-xl mb-2 text-primary">Steg 3</div><p class="text-sm font-medium text-foreground">Starta månadssparande.</p><p class="text-xs text-muted-foreground mt-1">Bestäm ett belopp som dras automatiskt varje månad. Beloppet avgör inte framgången, det gör vanan.</p></div>
+              <div class="p-6 bg-primary/10 border border-primary/20 rounded-2xl"><div class="font-black text-xl mb-2 text-primary">Steg 4</div><p class="text-sm font-medium text-foreground">Tänk långsiktigt.</p><p class="text-xs text-muted-foreground mt-1">Låt inte kortsiktiga svängningar styra besluten.</p></div>
+            </div>
+          </div>
+
+          <!-- FAQ -->
+          <div class="space-y-8 mt-12">
+            <h3 class="text-3xl md:text-4xl font-black tracking-tighter">Vanliga frågor om fonder</h3>
+            <div class="space-y-4">
+              <details class="group bg-card border border-border rounded-2xl p-6 open:bg-muted/50">
+                <summary class="font-bold cursor-pointer outline-none marker:text-primary">Hur mycket ska man spara i fonder varje månad?</summary>
+                <p class="text-muted-foreground mt-4 text-sm">Det viktigaste är inte exakt belopp, utan att du kommer igång och gör sparandet regelbundet. Att spara 500 kr, 1 000 kr eller 2 000 kr i månaden kan bli stora summor över tid tack vare ränta på ränta. Små belopp gör skillnad när de får växa länge.</p>
+              </details>
+              <details class="group bg-card border border-border rounded-2xl p-6 open:bg-muted/50">
+                <summary class="font-bold cursor-pointer outline-none marker:text-primary">Är det bättre att månadsspara eller investera allt direkt?</summary>
+                <p class="text-muted-foreground mt-4 text-sm">För många nybörjare är månadssparande den enklaste lösningen. Du bygger en vana, slipper försöka tajma marknaden, och det känns ofta tryggare. Har du redan en stor summa pengar kan det såklart direktinvesteras om horisonten är lång.</p>
+              </details>
+              <details class="group bg-card border border-border rounded-2xl p-6 open:bg-muted/50">
+                <summary class="font-bold cursor-pointer outline-none marker:text-primary">Ska man välja hållbara fonder?</summary>
+                <p class="text-muted-foreground mt-4 text-sm">Det beror på vad som är viktigt för dig. Vissa fonder väljer bort branscher eller bolag utifrån hållbarhetskriterier. Förstå att detta kan påverka fondens utveckling (tex om de helt utesluter energi eller försvar). Det viktiga är att du vet vad fonden faktiskt gör, inte bara att namnet låter bra.</p>
+              </details>
+              <details class="group bg-card border border-border rounded-2xl p-6 open:bg-muted/50">
+                <summary class="font-bold cursor-pointer outline-none marker:text-primary">Vilken fond är bäst för nybörjare?</summary>
+                <p class="text-muted-foreground mt-4 text-sm">För många är en billig global indexfond det bästa förstavalet eftersom den ger bred riskspridning till låg avgift.</p>
+              </details>
+              <details class="group bg-card border border-border rounded-2xl p-6 open:bg-muted/50">
+                <summary class="font-bold cursor-pointer outline-none marker:text-primary">Kan man förlora pengar i fonder?</summary>
+                <p class="text-muted-foreground mt-4 text-sm">Ja, särskilt på kort sikt. Det är inte riskfritt. Alla fonder kan gå ner, men breda fonder minskar risken betydligt jämfört med enskilda aktier.</p>
+              </details>
+            </div>
+          </div>
+
+          <!-- Slutsats -->
+          <section class="not-prose p-12 bg-primary/5 border border-primary/20 rounded-[3rem] space-y-6 relative overflow-hidden mt-16">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
+            <h3 class="text-3xl md:text-4xl font-black tracking-tighter">Slutsats</h3>
+            <p class="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
+              Fonder är ett av de mest användbara verktygen för den som vill bygga ett långsiktigt sparande utan att behöva bli expert på aktier. De ger bred riskspridning, kräver lite arbete och gör det lätt att spara regelbundet.
+            </p>
+            <p class="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
+              För de flesta nybörjare är den enklaste vägen också en av de bästa: börja med en billig global indexfond och månadsspara långsiktigt. Det viktigaste är inte att hitta den perfekta fonden. Det viktigaste är att börja.
+            </p>
+          </section>
+
+          <!-- Interna Länkar -->
+          <div class="mt-16 border-t border-border pt-12">
+            <h4 class="text-sm font-black uppercase tracking-widest text-muted-foreground mb-6">Läs vidare på Börsskolan</h4>
+            <div class="flex flex-wrap gap-4">
+              <a href="/guider/vad-ar-en-indexfond" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Vad är en indexfond?</a>
+              <a href="/guider/isk-vs-kapitalforsakring" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">ISK vs kapitalförsäkring</a>
+              <a href="/guider/vad-ar-ranta-pa-ranta" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Vad är ränta på ränta?</a>
+              <a href="/guider/hur-mycket-ska-man-manadsspara" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Hur mycket ska man månadsspara?</a>
+              <a href="/guider/aktier-eller-fonder" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Aktier eller fonder – vad passar bäst?</a>
+              <a href="/guider/vad-betyder-risk-i-investeringar" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Vad betyder risk i investeringar?</a>
+              <a href="/guider/basta-globalfonderna" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Bästa globalfonderna</a>
+              <a href="/guider/basta-indexfonderna-i-sverige" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Bästa indexfonderna i Sverige</a>
             </div>
           </div>
         </div>
-
-        <section class="not-prose p-12 bg-primary/5 border border-primary/20 rounded-[3rem] space-y-6 relative overflow-hidden">
-          <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-          <p class="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
-            Fonder är fundamentet i ett framgångsrikt sparande. Genom att välja billiga indexfonder som bas ger du dig själv de bästa förutsättningarna för att lyckas över tid.
-          </p>
-        </section>
       </div>
     `,
     category: "Fonder",
-    readTime: "7 min",
+    readTime: "10 min",
     part: 7,
     icon: "Layers"
   }
+
 };
