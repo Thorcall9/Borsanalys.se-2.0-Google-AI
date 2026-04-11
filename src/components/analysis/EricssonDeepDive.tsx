@@ -198,8 +198,8 @@ export default function EricssonDeepDive({
 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">P/E-tal (Norm.)</span>
-              <div className="text-2xl font-black text-slate-900">11,1</div>
-              <span className="text-xs text-slate-500 mt-1 block">Normaliserat</span>
+              <div className="text-2xl font-black text-slate-900">13,4</div>
+              <span className="text-xs text-slate-500 mt-1 block">Normaliserad EPS: 6,81 kr</span>
             </div>
 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
@@ -212,7 +212,7 @@ export default function EricssonDeepDive({
               <div className="relative z-10">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Riktkurs</span>
                 <div className="flex items-center gap-2">
-                  <div className="text-2xl font-black text-slate-900">100-115 kr</div>
+                  <div className="text-2xl font-black text-slate-900">95-105 kr</div>
                 </div>
                 <p className="text-[10px] leading-tight text-slate-500 mt-2">Medellång sikt</p>
               </div>
@@ -307,12 +307,12 @@ export default function EricssonDeepDive({
                         ))}
                       </div>
                       <div className="mt-4 p-3 rounded-xl bg-[#10B981]/5 border border-[#10B981]/10 text-[12px] text-slate-600 leading-relaxed italic">
-                        <strong>Obs:</strong> Kategorin "Övrigt" är strategiskt avgörande då den rymmer patent- och licensintäkter samt Enterprise. Detta är Ericssons mest högkvalitativa kassaflöde och en viktig motvikt till den cykliska Networks-affären.
+                        <strong>Obs:</strong> Kategorin "Övrigt" är strategiskt viktig eftersom den rymmer patent- och licensintäkter samt delar av Enterprise-försäljningen. Patentintäkterna är ett av Ericssons mest högkvalitativa kassaflöden och fungerar som en viktig motvikt till den mer cykliska Networks-affären.
                       </div>
                     </div>
                   )],
                   ["Affärsmodell", "Fyra lager: Installerade basen, Uppgraderingar/Service/Mjukvara, Företagsaffären (Vonage/Network APIs), samt Patent- och licensintäkter (~13 mdr kr återkommande)."],
-                  ["Ledning & Disciplin", "Börje Ekholm har förbättrat marginaler och kostnadsdisciplin. 2025 blev nionde kvartalet i följd med förbättrad justerad EBITA-marginal sekventiellt."],
+                  ["Ledning & Disciplin", "Börje Ekholm har förbättrat marginaler och kostnadsdisciplin. 2025 blev det nionde kvartalet i följd med förbättrad justerad EBITA-marginal jämfört med motsvarande kvartal föregående år."],
                   ["Ägarstruktur", "Stark kontrollägarbild med Investor AB (24,82% av rösterna) och Industrivärden (15,04%). Ger en stabil industriell förankring."],
                 ].map(([t,b])=>(
                   <div key={t as string}>
@@ -326,7 +326,7 @@ export default function EricssonDeepDive({
             <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`}}>
               <div style={{fontSize:11,fontWeight:700,color:T.accent,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Analytikerns bedömning</div>
               <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                Ericsson har en fungerande och bevisat relevant affärsmodell, men det är inte en ren SaaS-modell med hög visibilitet och självgående tillväxt. Affären är fortfarande tydligt cyklisk och beroende av operatörernas investeringsvilja. Vi väljer att bevaka aktien i väntan på bättre kassaflödesgenerering och tydligare besked kring de juridiska riskerna.
+                Ericsson har en fungerande och bevisat relevant affärsmodell, men det är inte en ren SaaS-modell med hög visibilitet och självgående tillväxt. Affären är fortfarande tydligt cyklisk och beroende av operatörernas investeringsvilja. Vi väljer att bevaka aktien i väntan på tydligare bevis för att den förbättrade lönsamheten är fullt uthållig, att Enterprise kan stå på egna ben och att de juridiska riskerna klarnar.
               </p>
             </div>
           </FadeIn>
@@ -348,7 +348,7 @@ export default function EricssonDeepDive({
                   Den viktigaste konkurrensfördelen är kombinationen av teknik, installerad bas och patent. Ericsson har mer än <strong>60 000 beviljade patent</strong> och en mycket stor närvaro i operatörernas befintliga nät. När en operatör redan byggt stora delar av sin radio- och kärnnätsarkitektur med Ericsson blir det dyrt, riskfyllt och tidskrävande att byta leverantör (<strong>switching costs</strong>). Samtidigt är patentintäkterna inte helt friktionsfria; ett större smartphone-licensavtal i Kina löpte ut den 31 december 2025, vilket belyser den löpande osäkerheten i detta kvalitativa kassaflödesben.
                 </p>
                 <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Marknaden är dock inte perfekt. Ericsson konkurrerar personligen med Nokia och Huawei. Huawei är exkluderat eller begränsat i vissa västmarknader men fortsatt starkt globalt sett. Det gör att Ericsson har en verklig moat, men inte en monopolmoat.
+                  Marknaden är dock inte perfekt. Ericsson konkurrerar främst med Nokia och Huawei. Huawei är exkluderat eller begränsat i vissa västmarknader men fortsatt starkt globalt sett. Det gör att Ericsson har en verklig moat, men inte en monopolmoat.
                 </p>
               </div>
 
@@ -550,19 +550,22 @@ export default function EricssonDeepDive({
               
               <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`,marginBottom:24}}>
                 <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Den svåraste delen i Ericsson-caset är värderingen. Inte för att aktien ser dyr ut på rapporterad vinst, utan för att rapporterad vinst är för hög för att användas okritiskt. Om man bara tar <strong>EPS 8,51 SEK</strong> ser aktien lågt värderad ut, men det är missvisande eftersom iconectiv-vinsten blåser upp resultatet. Årsredovisningen anger att <strong>justerad EBITA-marginal exklusive iconectiv var 14,9 procent</strong>. Därför bör värderingen göras på en normaliserad basis.
+                  Den svåraste delen i Ericsson-caset är värderingen. Inte för att aktien ser dyr ut på rapporterad vinst, utan för att rapporterad vinst är för hög för att användas okritiskt. Om man bara tar <strong>EPS 8,51 SEK</strong> ser aktien lågt värderad ut, men det är missvisande eftersom iconectiv-vinsten blåser upp resultatet. Årsredovisningen anger att <strong>justerad EBITA-marginal exklusive iconectiv var 14,9 procent</strong>.
                 </p>
                 <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Eftersom de officiella rapporterna inte innehåller ett realtidspris använder vi årsskiftets marknadsvärde om cirka <strong>305 miljarder kronor</strong> som utgångspunkt. Med cirka 3,333 miljarder aktier motsvarar det ungefär <strong>91,5 kronor per aktie</strong>.
+                  Vid aktiekursen 91,5 kronor, som var börskursen vid analystillfället, och en normaliserad EPS om 6,81 kronor per aktie efter justering för iconectiv-effekten om 1,70 kronor per aktie, handlas Ericsson till ett normaliserat P/E-tal om 13,4x.
+                </p>
+                <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
+                  Baserat på en normaliserad EPS om 6,81 kronor per aktie, där iconectiv-effekten exkluderats, och ett rimligt värderingsspann om 14,0–15,5x vinst, landar ett mer robust 12-månaders motiverat värde på 95–105 kronor per aktie.
                 </p>
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
                 {[
-                  ["P/E (Normaliserat)", "11,1x", "Just. ficonectiv"],
+                  ["P/E-tal (Norm.)", "13,4", "Exkl. iconectiv"],
                   ["Direktavkastning", "3,28%", "Föreslagen 3,00 kr"],
                   ["Nettokassa", "61,2 Mdr", "Betydande flexibilitet", true],
-                  ["Utdelningsandel", "~35%", "Av EPS ex engångs"],
+                  ["Utdelningsandel", "~44%", "Av normaliserad EPS"],
                   ["Återköp", "15 Mdr", "Föreslaget program"],
                   ["Börsvärde", "305 Mdr", "Large Cap"],
                 ].map(([l,v,s,acc], i) => (
@@ -769,11 +772,11 @@ export default function EricssonDeepDive({
                     </div>
                     <div style={{textAlign:"right"}}>
                       <div style={{fontSize:12, fontWeight:800, color:T.muted, textTransform:"uppercase", letterSpacing:1}}>Målpris</div>
-                      <div style={{fontSize:20, fontWeight:900, color:T.ink}}>100–115 SEK</div>
+                      <div style={{fontSize:20, fontWeight:900, color:T.ink}}>95–105 SEK</div>
                     </div>
                   </div>
                   <p style={{margin:0, fontSize:15, color:T.ink, lineHeight:1.7, fontWeight:500}}>
-                    Ericsson är i dag ett mer disciplinerat, mer kassaflödesstarkt och mer finansiellt robust bolag än många investerare fortfarande tänker på. Men caset hålls tillbaka av tre saker: en i grunden trög RAN-marknad, osäker kvalitet i delar av Enterprise samt kvarvarande juridiska risker. Därför landar jag i Bevaka, inte Köp.
+                    Ericsson är i dag ett mer disciplinerat och finansiellt robust bolag än för några år sedan, men den förbättrade kvaliteten är i stora drag redan reflekterad i aktien. Caset hålls fortsatt tillbaka av en trög RAN-marknad, osäker kvalitet i delar av Enterprise samt kvarvarande juridiska risker. Därför landar vi i Bevaka snarare än Köp.
                   </p>
                 </div>
                 
@@ -801,24 +804,24 @@ export default function EricssonDeepDive({
                   label: "Bull Case", 
                   color: T.green, 
                   bg: T.greenL, 
-                  pris: "135 kr", 
-                  upside: "+48%", 
+                  pris: "120–125 kr", 
+                  upside: "+31% till +37%", 
                   body: "5G standalone-investeringar accelererar, Cloud Software and Services fortsätter växa snabbare än marknaden, network APIs får bättre genomslag och juridiska risker klingar av. Då kan Ericsson få både högre vinstkvalitet och multipelexpansion." 
                 },
                 { 
                   label: "Base Case", 
                   color: T.accent, 
                   bg: T.accentL, 
-                  pris: "110 kr", 
-                  upside: "+20%", 
+                  pris: "100 kr", 
+                  upside: "+9%", 
                   body: "RAN-marknaden förblir flat, men Ericsson fortsätter leverera stabil marginal och kassaflöde. Nyare segment växer, men inte tillräckligt för att förändra helheten radikalt. Aktien ger avkastning via utdelning och återköp." 
                 },
                 { 
                   label: "Bear Case", 
                   color: T.red, 
                   bg: T.redL, 
-                  pris: "75 kr", 
-                  upside: "-18%", 
+                  pris: "75–80 kr", 
+                  upside: "-18% till -13%", 
                   body: "DOJ-processer blir dyrare än väntat, patentförnyelser blir svagare, Enterprise-lönsamheten sviker och den globala operatörscapexen förblir dämpad. Ericsson behandlas då som ett ex-growth-bolag." 
                 },
               ].map((s, i) => (

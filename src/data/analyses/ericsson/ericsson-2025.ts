@@ -9,7 +9,7 @@ export const ericsson2025: AnalysisData = {
   sector: "Telekomutrustning",
   recommendation: "BEVAKA",
   price: "91.5 kr",
-  pe: "11.1x",
+  pe: "13.4x",
   yield: "3.28%", // 3.00 / 91.5
   marketCap: "305 Bkr",
   summary: "Ericsson är finansiellt starkare och operationellt bättre än för några år sedan, men slutmarknaden är fortfarande trög, Enterprise är inte helt bevisat och juridiska risker kvarstår. Aktien ser rimligt värderad ut snarare än tydligt billig.",
@@ -69,9 +69,9 @@ export const ericsson2025: AnalysisData = {
     "Valuta & Kostnader: Valutakänslighet (USD) och omstruktureringskostnader"
   ],
   
-  valuation: "Den svåraste delen i Ericsson-caset är värderingen. Om man bara tar EPS 8,51 SEK ser aktien låg värderad ut, men det är missvisande eftersom iconectiv-vinsten blåser upp resultatet. Justerad EBITA-marginal exklusive iconectiv var 14,9 procent, vilket bör vara utgångspunkten. Vid ett marknadsvärde om cirka 305 miljarder kronor ser Ericsson rimligt värderat ut på normaliserade antaganden. Direktavkastningen på föreslagen utdelning om 3,00 kronor (3,28%) och det föreslagna återköpsprogrammet om 15 miljarder kronor ger ett gott stöd till aktien.",
+  valuation: "Den svåraste delen i Ericsson-caset är värderingen. Baserat på en normaliserad EPS om 6,81 kronor efter exkludering av iconectiv-vinsten, och vid analystillfällets kurs 91,5 kr, handlas aktien till ett normaliserat P/E-tal om 13,4x. Detta speglar ett bolag med stark balansräkning men med fortsatt osäkerhet i tillväxtmixen.",
   
-  conclusion: "Ericsson ser rimligt värderat ut på normaliserade antaganden. Det finns stöd från balansräkning och kapitalåterföring, men inte tillräcklig felprissättning för högre betyg än 3/5 i värderingsbetyg. Ericsson är i dag ett mer disciplinerat, mer kassaflödesstarkt och mer finansiellt robust bolag än många investerare fortfarande tänker på. Men caset hålls tillbaka av tre saker: en i grunden trög RAN-marknad, osäker kvalitet i delar av Enterprise samt kvarvarande juridiska risker. Därför landar jag i Bevaka, inte Köp.",
+  conclusion: "Ericsson är i dag ett mer disciplinerat och finansiellt robust bolag än för några år sedan, men den förbättrade kvaliteten är i stora drag redan reflekterad i aktien. Caset hålls fortsatt tillbaka av en trög RAN-marknad, osäker kvalitet i delar av Enterprise samt kvarvarande juridiska risker. Därför landar vi i Bevaka snarare än Köp. Målpris: 95–105 SEK.",
   
   esg: "Makromässigt har Ericsson både medvind och motvind. Medvinden ligger i geopolitik, säkerhetskrav och digitalisering där konnektivitet blir allt viktigare i AI-eran. På ESG-sidan finns ett tydligt styrningsarv som tynger bilden. Irak-affären och DOJ-processen gör att governance-betyget aldrig kan få högsta betyg i nuläget, trots förbättrad kultur och kontroll.",
   
@@ -80,9 +80,9 @@ export const ericsson2025: AnalysisData = {
   employees: "Cirka 99 000 vid utgången av 2025. Omstruktureringsprogram kan påverka cirka 1 600 tjänster i Sverige under 2026.",
   
   scenarios: [
-    { label: "Bull Case", value: "135 kr", change: "+48%", type: "bull", description: "5G standalone, kärnnät, privata nät och network APIs får snabbare kommersiellt genomslag." },
-    { label: "Base Case", value: "110 kr", change: "+20%", type: "base", description: "RAN förblir flat, måttlig tillväxt i Enterprise, kassaflödet förblir robust." },
-    { label: "Bear Case", value: "75 kr", change: "-18%", type: "bear", description: "Juridiska processer fördyras, svagare patentförnyelser, Enterprise underlevererar." },
+    { label: "Bull Case", value: "120–125 kr", change: "+31% till +37%", type: "bull", description: "5G standalone, kärnnät, privata nät och network APIs får snabbare kommersiellt genomslag." },
+    { label: "Base Case", value: "100 kr", change: "+9%", type: "base", description: "RAN förblir flat, måttlig tillväxt i Enterprise, kassaflödet förblir robust." },
+    { label: "Bear Case", value: "75–80 kr", change: "-18% till -13%", type: "bear", description: "Juridiska processer fördyras, svagare patentförnyelser, Enterprise underlevererar." },
   ],
 
   aiDrivenData: {
@@ -161,7 +161,7 @@ export const ericsson2025: AnalysisData = {
         utdelning: "Föreslagen 3,00 SEK (Direktavkastning ~3,3%)."
       },
       vardering: {
-        pe: "11.1x (normaliserat)",
+        pe: "13.4x (normaliserat)",
         evEbit: "Nettokassa ökar flexibilitet",
         direktavkastning: "3.28%"
       }
@@ -169,7 +169,7 @@ export const ericsson2025: AnalysisData = {
     sammanfattning: {
       beslut: "Bevaka",
       motivering: "Ericsson är finansiellt starkare och operationellt bättre än för några år sedan, men slutmarknaden är fortfarande trög, Enterprise är inte helt bevisat och juridiska risker kvarstår.",
-      malpris: "100–115 SEK"
+      malpris: "95–105 SEK"
     },
     scenarier: {
       bullCase: "5G standalone, kärnnät, privata nät och network APIs får snabbare kommersiellt genomslag samtidigt som juridiska risker klingar av.",
