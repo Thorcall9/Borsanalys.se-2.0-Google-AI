@@ -6,7 +6,7 @@ import { ScoreCard } from "../components/ScoreCard";
 import { Newsletter } from "../components/Newsletter";
 import SEO from "../components/SEO";
 import Mindmap from "../components/Mindmap";
-import { MethodologyEngine } from "../components/MethodologyEngine";
+import { MethodologyEngine } from "../components/Methodology";
 import { TrendingUp, Shield, Zap, ArrowRight, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import AdZone from "../components/AdZone";
