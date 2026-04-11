@@ -261,8 +261,8 @@ export default function NewWaveDeepDive({
                     <div className="text-sm font-bold">Torsten Jansson</div>
                   </div>
                   <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
-                    <div className="text-[10px] font-black text-slate-400 uppercase mb-1">Huvudägare</div>
-                    <div className="text-sm font-bold">Torsten Jansson (89% röst.)</div>
+                    <div className="text-[10px] font-black text-slate-400 uppercase mb-1">Ägarbild</div>
+                    <div className="text-sm font-bold">De 10 största ägarna kontrollerar 89% av rösterna</div>
                   </div>
                 </div>
               </div>
@@ -323,7 +323,7 @@ export default function NewWaveDeepDive({
                   <ul className="text-xs text-emerald-800 space-y-1.5 list-disc pl-4">
                     <li>Stark varumärkesportfölj</li>
                     <li>Hög distributionskapacitet</li>
-                    <li>Lokal närvaro i 20+ länder</li>
+                    <li>Lokal närvaro i 20 länder</li>
                     <li>Stabil bruttomarginal</li>
                     <li>Grundarledd kultur</li>
                   </ul>
@@ -404,7 +404,7 @@ export default function NewWaveDeepDive({
                   <div>
                     <h4 className="text-sm font-black text-slate-900 uppercase tracking-wider mb-2">Resultat & Tillväxt</h4>
                     <p className="text-sm text-slate-600 leading-relaxed">
-                      2025 var ett blandat år. Omsättningen nådde rekordnivån <strong>10 019 MSEK</strong> (5,1% tillväxt). I lokala valutor var tillväxten 9,5%, varav 5,0% organiskt. Valutaeffekter slog negativt med -413 MSEK. Rörelseresultatet sjönk till 1 141 MSEK (11,4% marginal), belastat av en engångskostnad om 66 MSEK för PPP-lån. Bruttomarginalen på 49,0% (50,1% jämförbar) bevisar stark prissättningsdisciplin.
+                      2025 var ett blandat år. Omsättningen nådde rekordnivån <strong>10 019 MSEK</strong> (5,1% tillväxt). I lokala valutor var tillväxten 9,5%, varav 5,0% organiskt. Valutaeffekter slog negativt med -413 MSEK. Rörelseresultatet sjönk till 1 141 MSEK, motsvarande en rörelsemarginal på 11,4%, belastat av en engångskostnad om 66 MSEK relaterad till PPP-frågan i USA. Den rapporterade bruttomarginalen på 49,0% visar samtidigt att kärnaffären fortsatt är robust trots förvärv, valutaeffekter och svag marknad.
                     </p>
                   </div>
                   
@@ -418,7 +418,7 @@ export default function NewWaveDeepDive({
                   <div>
                     <h4 className="text-sm font-black text-slate-900 uppercase tracking-wider mb-2">Kassaflöde & Investeringar</h4>
                     <p className="text-sm text-slate-600 leading-relaxed">
-                      Operationellt kassaflöde på 653 MSEK (1 278 MSEK 2024) tyngdes av lagerinvesteringar. Med en Capex på ~644 MSEK var det fria kassaflödet nära noll, men drivet av strategisk expansion snarare än strukturella problem.
+                      Kassaflödet från den löpande verksamheten uppgick till 653 MSEK (1 278 MSEK 2024) och tyngdes av lageruppbyggnad. Med en Capex på cirka 644 MSEK var det fria kassaflödet nära noll, men pressades av strategisk expansion snarare än strukturella problem i kärnaffären.
                     </p>
                   </div>
                 </div>
@@ -511,7 +511,7 @@ export default function NewWaveDeepDive({
             <SectionLabel number="V" title="Tillväxtmotorer & Triggers" />
             <div className="space-y-6">
               <p className="text-slate-600 leading-relaxed">
-                Den främsta tillväxtmotorn de kommande åren är <strong>Cotton Classics</strong>. Förvärvet stärker NWG i Centraleuropa (speciellt i de tyska regionerna) och breddar distributionsnätet materiellt. Att det bidrog med 429 MSEK i omsättning på bara fyra månader visar på dess betydelse för den framtida skalan.
+                Den främsta tillväxtmotorn de kommande åren är <strong>Cotton Classics</strong>. Förvärvet stärker NWG i Centraleuropa, särskilt i Tyskland, Österrike och Tjeckien, och breddar distributionsnätet materiellt. Att det bidrog med 429 MSEK i omsättning på bara fyra månader visar på dess betydelse för den framtida skalan.
               </p>
               
               <div className="space-y-4">
@@ -539,7 +539,7 @@ export default function NewWaveDeepDive({
                   </div>
                   <div>
                     <h4 className="font-bold text-slate-900 mb-1">Marknadsläge</h4>
-                    <p className="text-sm text-slate-600 leading-relaxed">När efterfrågan i retail förbättras slår omsättningsökningen snabbt igenom i EBIT pga företagets fasta kostnadsstruktur.</p>
+                    <p className="text-sm text-slate-600 leading-relaxed">När efterfrågan i retail förbättras kan omsättningsökningen slå relativt snabbt igenom i EBIT tack vare operationell hävstång i den befintliga distributionsplattformen.</p>
                   </div>
                 </div>
               </div>
@@ -566,7 +566,7 @@ export default function NewWaveDeepDive({
                   </div>
                   <div>
                     <h4 className="font-bold text-slate-900 mb-1">Skuldsättning & Kapitalbindning</h4>
-                    <p className="text-xs text-slate-600 leading-relaxed">Nettoskuld över 3 Mdr lämnar mindre utrymme för fel än tidigare. Om rörelsekapitalet fortsätter svälla blir balansräkningen mer sårbar.</p>
+                    <p className="text-xs text-slate-600 leading-relaxed">Nettoskuld över 3 miljarder kronor lämnar mindre utrymme för fel än tidigare. Det som bör bevakas är om rörelsekapitalet förblir högt samtidigt som marginalåterhämtningen uteblir, eftersom det då skulle sätta större press på balansräkningen.</p>
                   </div>
                 </div>
                 <div className="flex gap-4 p-4 bg-orange-50 rounded-xl border border-orange-200">
@@ -583,7 +583,7 @@ export default function NewWaveDeepDive({
               <div className="p-4 bg-orange-50 rounded-xl border border-orange-200">
                 <div className="text-[10px] font-black text-orange-600 uppercase mb-2">Risknivå: Medel | Risk-Score: 3/5</div>
                 <p className="text-xs text-orange-900 leading-relaxed">
-                  Risken är balanserad tack vare en soliditet på 53% och räntetäckning på 9,7x. NWG:s beprövade modell motverkar de ökade finansiella riskerna.
+                  Risken är fortsatt hanterbar tack vare en soliditet på 53% och en räntetäckningsgrad på 9,7x. Samtidigt är den finansiella flexibiliteten lägre än tidigare, vilket motiverar fortsatt bevakning.
                 </p>
               </div>
 
@@ -607,10 +607,10 @@ export default function NewWaveDeepDive({
             <SectionLabel number="VII" title="ESG & Makro" />
             <div className="space-y-6">
               <p className="text-sm text-slate-600 leading-relaxed">
-                NWG är exponerat mot cykliska makrofaktorer såsom konsumentefterfrågan, företagsbudgetar och valutor. Kombinationen av profil och retail dämpar dock svängningarna betydligt jämfört med ren konsumentförsäljning.
+                NWG är exponerat mot cykliska makrofaktorer såsom konsumentefterfrågan, företagsbudgetar, valutor och handelspolitik. Kombinationen av profil och retail dämpar dock svängningarna jämfört med ett renodlat konsumentbolag, eftersom profilaffären generellt är mer stabil än detaljhandeln.
               </p>
               <p className="text-sm text-slate-600 leading-relaxed">
-                På ESG-sidan är den egna sourcingorganisationen och lokala CSR-personalen en styrka, då det ger bättre insyn i leverantörsvillkor än via mellanhänder. Det är därför ett neutralt till svagt positivt ESG-case.
+                På ESG-sidan är den egna sourcingorganisationen och den lokala CSR-personalen en styrka, eftersom det ger bättre kontroll över leverantörsvillkor och kvalitet än om bolaget enbart arbetat via mellanhänder. Det gör NWG till ett neutralt till svagt positivt ESG-case, snarare än ett bolag med tydlig hållbarhetspremie.
               </p>
               <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                 <div className="text-[10px] font-black text-slate-400 uppercase mb-2">Bedömning ESG & Makro: 3/5</div>
@@ -625,16 +625,16 @@ export default function NewWaveDeepDive({
             <div className="space-y-6">
               <div className="space-y-4">
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  <strong>Bruttomarginalen</strong> är den viktigaste signalen: stabiliteten på 49,0% under 2025 visar att kärnaffären är robustare än vad EBIT-fallet antyder. Vi ser 2025 som ett "övergångsår" där engångskostnader (PPP, ERP, logistik) maskerar den underliggande intjäningsförmågan.
+                  <strong>Bruttomarginalen</strong> är den viktigaste signalen i caset. Stabiliteten på 49,0% under 2025 visar att kärnaffären är robustare än vad EBIT-fallet först antyder. Vi ser därför 2025 som ett övergångsår, där engångskostnader, ERP-satsningar och logistikinvesteringar tillfälligt maskerar den underliggande intjäningsförmågan.
                 </p>
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  Det finns en tydlig <strong>värderings-asymmetri</strong>: aktien ser rimlig ut på bakhålll, men mycket attraktiv på 2027e EPS om marginalerna ens halvvägs normaliseras. Största risken att bevaka är skuldutvecklingen och rörelsekapitalet.
+                  Det finns en tydlig <strong>värderingsasymmetri</strong>: aktien ser rimlig ut på historisk vinst, men betydligt mer attraktiv på 2027e EPS om marginalerna ens halvvägs normaliseras. Den viktigaste risken att bevaka framåt är skuldutvecklingen i kombination med rörelsekapitalet.
                 </p>
               </div>
               <div className="p-4 bg-slate-50 rounded-xl border border-slate-200">
                 <div className="text-[10px] font-black text-slate-400 uppercase mb-2">Bedömning AI-observationer: 4/5</div>
                 <p className="text-xs text-slate-600 leading-relaxed font-medium">
-                  Ingen röd flagg i datan, men en tydlig edge i att marknaden verkar överskatta hur permanent marginalfallet är.
+                  Ingen tydlig röd flagg i datan, men en möjlig analytisk fördel i att marknaden kan överskatta hur permanent marginalfallet faktiskt är.
                 </p>
               </div>
             </div>
@@ -656,15 +656,15 @@ export default function NewWaveDeepDive({
                       </div>
                       <div className="p-4 bg-white/10 rounded-xl">
                         <h5 className="text-[10px] font-bold text-white/60 uppercase mb-2">Rimligt värderat?</h5>
-                        <p className="text-sm text-white/90">Ja, mycket attraktivt på framåtblickande basis (2026-2027).</p>
+                        <p className="text-sm text-white/90">Ja. På rapporterad 2025-vinst är värderingen rimlig, men på 2026–2027 års estimat framstår aktien som klart mer attraktiv.</p>
                       </div>
                       <div className="p-4 bg-white/10 rounded-xl">
                         <h5 className="text-[10px] font-bold text-white/60 uppercase mb-2">Långsiktigt innehav?</h5>
-                        <p className="text-sm text-white/90">Ja, för den som tål medelcyklisk exponering över 5-10 år.</p>
+                        <p className="text-sm text-white/90">Ja, för den investerare som accepterar medelcyklisk exponering och kan ha ett perspektiv på 5–10 år.</p>
                       </div>
                     </div>
                     <p className="text-lg font-medium text-white/90 leading-relaxed italic">
-                      "Min slutsats är att NWG just nu är ett kvalitetsbolag i en tillfälligt pressad fas. Marknaden ser rätt i att 2025 var ett svagare år, men riskerar att dra för långtgående slutsatser om bolagets långsiktiga intjäningsförmåga. När förvärvet av Cotton Classics, logistikinvesteringarna och ERP-satsningen väl börjar ge effekt, ser vinstbanan bättre ut än de rapporterade 2025-siffrorna antyder."
+                      "Min slutsats är att NWG just nu är ett kvalitetsbolag i en tillfälligt pressad fas. Marknaden har rätt i att 2025 var ett svagare år, men riskerar att dra för långtgående slutsatser om bolagets långsiktiga intjäningsförmåga. När förvärvet av Cotton Classics, logistikinvesteringarna och ERP-satsningen börjar ge effekt, ser vinstbanan bättre ut än de rapporterade 2025-siffrorna antyder."
                     </p>
                     <div className="flex flex-col md:flex-row gap-8 pt-8 border-t border-white/20">
                       <div>
@@ -720,7 +720,7 @@ export default function NewWaveDeepDive({
                 <span className="text-[10px] font-black uppercase tracking-widest text-rose-500">Bear Case</span>
               </div>
               <div className="text-4xl font-black mb-2 tracking-tighter">75–85 kr</div>
-              <p className="text-xs text-slate-500 leading-relaxed">Retail förblir svag, valuta fortsätter slå mot rapporterade siffror, integrationen av Cotton Classics blir tyngre än väntat och lager-/ERP-satsningarna tar längre tid att ge effekt. Då kan vinståterhämtningen skjutas fram och värderingen komprimeras.</p>
+              <p className="text-xs text-slate-500 leading-relaxed">Retailmarknaden förblir svag, valuta fortsätter slå mot rapporterade siffror, integrationen av Cotton Classics blir tyngre än väntat och lager- samt ERP-satsningarna tar längre tid att ge effekt. Då kan vinståterhämtningen skjutas fram och värderingen pressas ytterligare.</p>
             </div>
             <div className="p-8 bg-white border-4 border-primary rounded-3xl shadow-2xl relative overflow-hidden">
               <div className="flex items-center gap-3 mb-6">
@@ -728,7 +728,7 @@ export default function NewWaveDeepDive({
                 <span className="text-[10px] font-black uppercase tracking-widest text-primary">Base Case</span>
               </div>
               <div className="text-4xl font-black mb-2 tracking-tighter">130–145 kr</div>
-              <p className="text-xs text-slate-500 leading-relaxed">Omsättningen växer vidare i hygglig takt, Cotton Classics levererar enligt plan, och marginalerna förbättras successivt under 2026–2027. Ett 2027e EPS på 9,41 SEK visar sig vara ungefär rätt, och marknaden sätter en multipel kring 14–15x.</p>
+              <p className="text-xs text-slate-500 leading-relaxed">Omsättningen växer vidare i god takt, Cotton Classics levererar enligt plan och marginalerna förbättras successivt under 2026–2027. Ett 2027e EPS på 9,41 SEK visar sig då vara rimligt, samtidigt som marknaden värderar bolaget till omkring 14–15x vinsten.</p>
               <div className="absolute -right-4 -bottom-4 opacity-5 text-primary">
                 <Target size={120} />
               </div>
@@ -739,7 +739,7 @@ export default function NewWaveDeepDive({
                 <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500">Bull Case</span>
               </div>
               <div className="text-4xl font-black mb-2 tracking-tighter">160–180 kr</div>
-              <p className="text-xs text-slate-500 leading-relaxed">Cotton Classics integreras snabbare, Crafts expansion inom teamwear och skor får bra genomslag, ERP-kostnaderna klingar av och marknaden förbättras från H2 2026. EBIT närmar sig 15%-marginal snabbare än väntat.</p>
+              <p className="text-xs text-slate-500 leading-relaxed">Cotton Classics integreras snabbare än väntat, Crafts expansion inom teamwear och skor får starkt genomslag, ERP-kostnaderna klingar av och marknaden förbättras från H2 2026. EBIT-marginalen närmar sig då 15% snabbare än marknaden räknar med.</p>
             </div>
           </div>
         </FadeIn>
