@@ -6,7 +6,6 @@ import { ScoreCard } from "../components/ScoreCard";
 import { Newsletter } from "../components/Newsletter";
 import SEO from "../components/SEO";
 import Mindmap from "../components/Mindmap";
-import { MethodologyEngine } from "../components/Methodology";
 import { TrendingUp, Shield, Zap, ArrowRight, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import AdZone from "../components/AdZone";
@@ -79,7 +78,7 @@ export default function Home() {
       </section>
 
       {/* Methodology Section */}
-      <MethodologyEngine />
+      <Mindmap />
 
       {/* Mindmap Section - Moved to hidden route /methodology-blueprint */}
       {/* <section className="py-32 container mx-auto px-6">
