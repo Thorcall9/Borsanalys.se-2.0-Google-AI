@@ -423,6 +423,7 @@ export default function MacroDashboard() {
                         className="mb-8 relative overflow-hidden group cursor-pointer"
                       >
                         <div className="p-10 bg-gradient-to-br from-primary/10 via-background/60 to-primary/5 border border-primary/20 rounded-[2.5rem] backdrop-blur-sm flex flex-col items-center justify-center text-center gap-8 transition-all hover:border-primary/40 hover:bg-primary/10">
+                          {/* Animated background glow */}
                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/20 rounded-full blur-[80px] group-hover:w-64 group-hover:h-64 transition-all duration-700 pointer-events-none" />
                           
                           <div className="w-20 h-20 bg-primary/20 rounded-[2rem] flex items-center justify-center text-primary group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 relative z-10">
@@ -436,6 +437,7 @@ export default function MacroDashboard() {
                             </p>
                           </div>
 
+                          {/* Sneak peek badges */}
                           <div className="flex flex-wrap justify-center gap-3 relative z-10">
                             {["Marknadspåverkan", "Svenska Bolag", "USA Bolag", "Sektorer"].map(tag => (
                               <div key={tag} className="px-4 py-2 bg-foreground/[0.03] border border-foreground/10 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] opacity-80 backdrop-blur-md">
@@ -478,7 +480,7 @@ export default function MacroDashboard() {
               </div>
             </section>
 
-            {/* Market Pulse & Macro Section */}
+            {/* Market Pulse & Macro Section (Moved down) */}
             <section className="space-y-8">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
@@ -509,10 +511,12 @@ export default function MacroDashboard() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {/* Fear & Greed Gauge */}
                 <div className="lg:col-span-1">
                   <FearAndGreedGauge />
                 </div>
 
+                {/* Dynamic Macro Indicators */}
                 {loadingMacro ? (
                   MACRO_METRICS.map((key) => <SkeletonIndicator key={key} />)
                 ) : (
@@ -632,6 +636,7 @@ export default function MacroDashboard() {
               </div>
 
               <div className="aspect-square bg-transparent rounded-full flex items-center justify-center relative group/clock w-full max-w-[280px] mx-auto">
+                {/* Outer Ring for Phase Labels */}
                 <div className="absolute inset-0 pointer-events-none z-0">
                   {PHASES.map((phase) => {
                     const angle = phase.rotation; 
@@ -656,6 +661,7 @@ export default function MacroDashboard() {
                   })}
                 </div>
 
+                {/* Inner Clock Face */}
                 <div className="w-[70%] h-[70%] bg-white/5 rounded-full border border-white/10 relative overflow-hidden flex items-center justify-center">
                   <div className="absolute inset-0 z-10">
                     {PHASES.map((phase) => {
@@ -665,7 +671,7 @@ export default function MacroDashboard() {
                         <div 
                           key={phase.id}
                           onClick={() => setActivePhase(phase)}
-                          className={`absolute inset-0 origin-center cursor-pointer transition-all duration-300 hover:bg-primary/15 hover:scale-[1.02] group/slice z-10`}
+                          className={`absolute inset-0 origin-center cursor-pointer`}
                           style={{ 
                             clipPath: `polygon(50% 50%, ${50 + 200 * Math.cos((startAngle - 90) * Math.PI / 180)}% ${50 + 200 * Math.sin((startAngle - 90) * Math.PI / 180)}%, ${50 + 200 * Math.cos((endAngle - 90) * Math.PI / 180)}% ${50 + 200 * Math.sin((endAngle - 90) * Math.PI / 180)}%)` 
                           }}
@@ -674,6 +680,7 @@ export default function MacroDashboard() {
                     })}
                   </div>
 
+                  {/* Indicators */}
                   <div className="absolute inset-0 pointer-events-none z-20">
                     <motion.div style={{ rotate: 210 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
                       <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center">
@@ -687,6 +694,7 @@ export default function MacroDashboard() {
                     </motion.div>
                   </div>
 
+                  {/* Clock Hand */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
                     <motion.div 
                       initial={false}
@@ -723,6 +731,7 @@ export default function MacroDashboard() {
           </aside>
         </div>
 
+        {/* Strategisk Analys: Konjunkturklockan 2.0 */}
         <section className="space-y-10 pt-16 border-t border-border">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-2">
@@ -741,6 +750,7 @@ export default function MacroDashboard() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Card 1: Tidsskillnaden */}
             <motion.div 
               whileHover={{ y: -8 }}
               className="bg-card border border-border rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden group"
@@ -765,6 +775,7 @@ export default function MacroDashboard() {
               </div>
             </motion.div>
 
+            {/* Card 2: Early Bird */}
             <motion.div 
               whileHover={{ y: -8 }}
               className="bg-card border border-border rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden group"
@@ -788,6 +799,7 @@ export default function MacroDashboard() {
               </div>
             </motion.div>
 
+            {/* Card 3: Selektivitet */}
             <motion.div 
               whileHover={{ y: -8 }}
               className="bg-card border border-border rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden group"
