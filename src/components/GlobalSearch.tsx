@@ -30,9 +30,6 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
       document.body.style.overflow = "unset";
       setQuery("");
     }
-    return () => {
-      document.body.style.overflow = "unset";
-    };
   }, [isOpen]);
 
   useEffect(() => {
