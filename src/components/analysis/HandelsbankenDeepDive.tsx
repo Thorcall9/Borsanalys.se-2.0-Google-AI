@@ -58,7 +58,7 @@ const allScores = [
   {key:"Finansiell Kvalitet",val:5,max:5},
   {key:"Värdering",val:3,max:5},
   {key:"Tillväxtutsikter",val:3,max:5},
-  {key:"Riskprofil",val:5,max:5},
+  {key:"Riskprofil",val:4,max:5},
   {key:"ESG & Makro",val:4,max:5},
   {key:"AI-obs.",val:3,max:5},
 ];
@@ -179,7 +179,7 @@ export default function HandelsbankenDeepDive({
             <div className="flex flex-col items-center shrink-0">
               <span className="text-[10px] font-bold tracking-[0.2em] uppercase opacity-80 mb-2">Vår bedömning</span>
               <div className="bg-white text-[#004B87] w-20 h-20 rounded-full flex items-center justify-center shadow-xl">
-                <span className="text-xl font-black tracking-tighter text-center leading-none">BEVAKA</span>
+                <span className="text-xl font-black tracking-tighter text-center leading-none uppercase">BEVAKA</span>
               </div>
             </div>
             
@@ -214,13 +214,13 @@ export default function HandelsbankenDeepDive({
 
           <div className="flex flex-col items-start md:items-end w-full md:w-64">
             <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-4xl font-black tracking-tighter">32/40</span>
+              <span className="text-4xl font-black tracking-tighter">31/40</span>
               <span className="text-sm font-bold opacity-80 uppercase tracking-widest">Poäng</span>
             </div>
             <div className="w-full bg-black/10 h-2 rounded-full overflow-hidden mb-2">
-              <div className="bg-white h-full rounded-full" style={{ width: '80%' }} />
+              <div className="bg-white h-full rounded-full" style={{ width: '78%' }} />
             </div>
-            <span className="text-sm font-bold tracking-tight">4.0 / 5.0 – Kvalitetsbetyg</span>
+            <span className="text-sm font-bold tracking-tight">3.9 / 5.0 – Kvalitetsbetyg</span>
           </div>
         </div>
       </div>
@@ -231,40 +231,33 @@ export default function HandelsbankenDeepDive({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börskurs</span>
-              <div className="text-2xl font-black text-slate-900">134,35 kr</div>
-              <span className="text-xs text-slate-500 mt-1 block">Analyspris (2026)</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Analyskurs</span>
+              <div className="text-2xl font-black text-slate-900">127,35 kr</div>
+              <span className="text-xs text-slate-500 mt-1 block">Uppdaterad Apr 2026</span>
             </div>
 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börsvärde</span>
-              <div className="text-2xl font-black text-slate-900">269 Mdr</div>
+              <div className="text-2xl font-black text-slate-900">252 Mdr</div>
               <span className="text-xs text-slate-500 mt-1 block">Large Cap</span>
             </div>
 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">P/E-tal (2025)</span>
-              <div className="text-2xl font-black text-slate-900">11,2</div>
-              <span className="text-xs text-slate-500 mt-1 block">Normaliserat</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">P/E-tal (rullande)</span>
+              <div className="text-2xl font-black text-slate-900">10,6x</div>
+              <span className="text-xs text-slate-500 mt-1 block">Baserat på 2025 EPS</span>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">P/B-tal</span>
+              <div className="text-2xl font-black text-slate-900">1,26x</div>
+              <span className="text-xs text-slate-500 mt-1 block">Pris / EK per aktie</span>
             </div>
 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Direktavkastning</span>
-              <div className="text-2xl font-black text-slate-900">13,0%</div>
-              <span className="text-xs text-[#004B87] font-bold mt-1 block">Varav 6% ordinarie (2026)</span>
-            </div>
-
-            <div className="bg-white p-6 rounded-2xl border-2 border-[#004B87]/20 shadow-lg relative overflow-hidden group">
-              <div className="relative z-10">
-                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Målpris</span>
-                <div className="flex items-center gap-2">
-                  <div className="text-2xl font-black text-slate-900">145-155 kr</div>
-                </div>
-                <p className="text-[10px] leading-tight text-slate-500 mt-2">12 månaders sikt</p>
-              </div>
-              <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity text-[#004B87]">
-                <Star size={80} fill="currentColor" />
-              </div>
+              <div className="text-2xl font-black text-slate-900">13,7%</div>
+              <span className="text-xs text-[#004B87] font-bold mt-1 block">Varav 6,3% ordinarie utdelning</span>
             </div>
 
           </div>
@@ -360,8 +353,8 @@ export default function HandelsbankenDeepDive({
                   </p>
                   <div className="flex flex-wrap gap-4 pt-2">
                     <div className="flex flex-col">
-                      <span className="text-[10px] font-bold text-slate-400 uppercase">Börskurs (2025 utg.)</span>
-                      <span className="text-sm font-black text-slate-900">134,35 kr</span>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase">Analyskurs</span>
+                      <span className="text-sm font-black text-slate-900">127,35 kr</span>
                     </div>
                     <div className="flex flex-col">
                       <span className="text-[10px] font-bold text-slate-400 uppercase">Antal aktier</span>
@@ -395,7 +388,7 @@ export default function HandelsbankenDeepDive({
                 <div key="agarstruktur" className="space-y-4">
                   <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase"}}>Ägarstruktur</div>
                   <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.8}}>
-                    Stabil ägarbild med Industrivärden (11,6%) och Oktogonen (8,0%) som huvudsakliga ägare. Oktogonen är särskilt viktig då den fungerar både som incitamentsstruktur och kulturförstärkare över tid.
+                    Stabil ägarbild där Industrivärden (11,6%) och Oktogonen (8,0%) är två av de viktigaste långsiktiga ägarna. Oktogonen är särskilt viktig eftersom den fungerar både som incitamentsstruktur och kulturförstärkare över tid.
                   </p>
                 </div>
               </div>
@@ -448,7 +441,7 @@ export default function HandelsbankenDeepDive({
                 <MoatCard key="kultur" title="Decentraliserad kultur" desc="Beslut nära kunden utan säljmål." stars="★★★★★"/>
                 <MoatCard key="kredit" title="Kreditkvalitet" desc="Exceptionellt stark (-0,01% förluster)." stars="★★★★★"/>
                 <MoatCard key="kund" title="Kundnöjdhet" desc="Nöjdast kunder enligt SKI 2025." stars="★★★★★"/>
-                <MoatCard key="kapital" title="Kreditrating" desc="Världsledande bland privatägda banker." stars="★★★★★"/>
+                <MoatCard key="kapital" title="Kreditrating" desc="Ingen annan privatägd bank har högre sammanvägd rating." stars="★★★★★"/>
               </div>
 
               <div>
@@ -457,9 +450,9 @@ export default function HandelsbankenDeepDive({
                   <div style={{background:"#F0FDF4", borderRadius:12, padding:16, border:"1px solid #DCFCE7"}}>
                     <div style={{fontWeight:700, color:"#166534", fontSize:13, marginBottom:8}}>Styrkor</div>
                     <ul style={{margin:0, paddingLeft:16, fontSize:12.5, color:"#166534", lineHeight:1.7}}>
-                      <li>Exceptionell kreditkvalitet (-0,01% förlustnivå)</li>
-                      <li>Mycket stark balansräkning och världsledande rating</li>
-                      <li>Högst kundnöjdhet (SKI) och Årets affärsbank</li>
+                      <li>Exceptionell kreditkvalitet (nettoåterföringar 2025)</li>
+                      <li>Mycket stark balansräkning och urstark kapitalisering</li>
+                      <li>Nöjdast kunder bland jämförbara konkurrenter enligt SKI</li>
                       <li>Decentraliserad kultur och låg riskaptit</li>
                     </ul>
                   </div>
@@ -611,14 +604,14 @@ export default function HandelsbankenDeepDive({
                 <div style={{background:T.bg, borderRadius:16, padding:20, border:`1px solid ${T.border}`}}>
                   <h4 style={{fontSize:14, fontWeight:800, color:T.ink, marginBottom:10}}>Kreditkvalitet - Bankens kronjuvel</h4>
                   <p style={{margin:0, fontSize:13, color:T.sub, lineHeight:1.7}}>
-                    Kreditförlustnivån var <strong>-0,01%</strong> under 2025. Det betyder nettoåterföringar snarare än verkliga förluster. I en bank är detta den mest kvalitativa indikatorn på portföljens hälsa och disciplin.
+                    Kreditförlustnivån var <strong>-0,01%</strong> under 2025. Det betyder nettoåterföringar snarare än nettokreditförluster. För en bank är detta en av de starkaste kvalitetsindikatorerna på portföljens hälsa, riskdisciplin och underwriting-kvalitet.
                   </p>
                 </div>
                 <div className="flex items-center gap-4 bg-[#004B87]/5 p-5 rounded-2xl border border-[#004B87]/10">
                   <div className="w-12 h-12 rounded-full bg-[#004B87]/10 flex items-center justify-center text-[#004B87] font-bold text-lg">5/5</div>
                   <div>
                     <div className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Bedömning - Finansiell Kvalitet</div>
-                    <div className="text-sm font-bold text-slate-900 leading-relaxed">Exceptionellt hög kvalitet, urstark kapitalisering och nollförluster.</div>
+                    <div className="text-sm font-bold text-slate-900 leading-relaxed">Exceptionellt hög kvalitet, urstark kapitalisering och nettoåterföringar i kreditförluster.</div>
                   </div>
                 </div>
               </div>
@@ -637,11 +630,16 @@ export default function HandelsbankenDeepDive({
                 </p>
                 <div style={{background:T.bg, borderRadius:14, padding:20, border:`1px solid ${T.border}`}}>
                   <p style={{margin:0,fontSize:14,color:T.ink,lineHeight:1.8}}>
-                    Om vi använder årsskifteskursen 134,35 kr och EPS 11,98 kr blir <strong>P/E cirka 11,2x</strong>. Om vi använder föreslagen total utdelning 17,50 kr blir direktavkastningen cirka 13,0%, men det är missvisande som normalnivå eftersom 9,50 kr är extrautdelning. På ordinarie utdelning 8,00 kr blir <strong>direktavkastningen cirka 6,0%</strong>.
+                    Om vi använder analyskursen 127,35 kr och EPS 11,98 kr blir <strong>P/E cirka 10,6x</strong>. Om vi använder föreslagen total utdelning 17,50 kr blir direktavkastningen cirka 13,7%, men det är missvisande som normalnivå eftersom 9,50 kr är extrautdelning. På ordinarie utdelning 8,00 kr blir <strong>direktavkastningen cirka 6,3%</strong>.
+                  </p>
+                </div>
+                <div style={{borderRadius:14, padding:20, border:`1px solid ${T.border}`}}>
+                  <p style={{margin:0,fontSize:14,color:T.sub,lineHeight:1.8}}>
+                    För banker är även P/B (pris i relation till eget kapital per aktie) ett centralt värderingsmått. Med ett eget kapital om 199,4 mdkr och cirka 1 980 miljoner utestående aktier uppgår eget kapital per aktie till omkring 100,7 kr. Det innebär att aktien handlas till cirka 1,26x eget kapital. För en bank av Handelsbankens kvalitet är det inte dyrt, men inte heller tillräckligt lågt för att tala om en tydlig felprissättning.
                   </p>
                 </div>
                 <p style={{margin:0,fontSize:14,color:T.sub,lineHeight:1.8}}>
-                  Utifrån kapitalet är banken inte dyr, men heller inte uppenbart billig. Den höga kvaliteten motiverar en premie mot svagare europeiska banker, men samtidigt är EPS-trenden just nu fallande. Därför är det svårt att argumentera för att aktien är kraftigt felprissatt.
+                  Utifrån både P/E och P/B är banken rimligt till lätt attraktivt värderad. Den höga kvaliteten motiverar en premie mot svagare europeiska banker, men samtidigt begränsar den fallande EPS-trenden hur stor premien bör vara. Därför är det svårt att argumentera för att aktien är tydligt felprissatt.
                 </p>
                 <div style={{background:T.accentL, borderRadius:12, padding:16, borderLeft:`4px solid ${T.accent}`}}>
                   <div style={{fontSize:11,fontWeight:700,color:T.accent,textTransform:"uppercase",marginBottom:8}}>Ett rimligt sätt att tänka</div>
@@ -753,11 +751,12 @@ export default function HandelsbankenDeepDive({
                   </div>
                   <div>
                     <div className="text-xs font-bold opacity-60 uppercase tracking-widest">Risknivå</div>
-                    <div className="text-xl font-black">Låg Risk</div>
+                    <div className="text-xl font-black">Låg till medel</div>
                   </div>
                 </div>
-                <div className="text-3xl font-black opacity-40">5/5</div>
+                <div className="text-3xl font-black opacity-40">4/5</div>
               </div>
+              <p className="mt-4 text-xs text-slate-500 italic">För en bank är Handelsbanken en ovanligt låg risk, men inte riskfri. Räntenettokänslighet, fastighetsexponering och regulatoriska kostnader gör att 4/5 är mer balanserat än 5/5.</p>
             </Card>
           </FadeIn>
         </div>
@@ -770,17 +769,17 @@ export default function HandelsbankenDeepDive({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div className="space-y-6">
                   <p className="text-base text-slate-600 leading-relaxed">
-                    Handelsbanken har en relativt stark ESG-profil för att vara storbank. Under Q3 uppgick gröna lån till 140 mdkr. Vid årsslutet visade banken fortsatt hög andel fonder i artikel 8 och 9 enligt SFDR (21% artikel 9, 79% artikel 8).
+                    Handelsbanken har en relativt stark ESG-profil för att vara storbank. Under Q3 uppgick gröna lån till 140 mdkr. Vid utgången av Q3 redovisades 20% av förvaltat kapital i artikel 9 och 77% i artikel 8. Vid årsslutet uppgick motsvarande andelar till 21% respektive 79%.
                   </p>
                   <div style={{background:"#F8FAFC", borderRadius:20, padding:24, border:"1px solid #E2E8F0"}}>
-                    <h5 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">ESG-Styrning</h5>
+                    <h5 className="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">ESG-profil</h5>
                     <div className="flex gap-4">
                       <div className="flex-1 text-center border-r border-slate-200 pr-4">
-                        <div className="text-2xl font-black text-[#004B87]">AAA</div>
-                        <div className="text-[9px] font-bold text-slate-500 uppercase">MSCI Rating</div>
+                        <div className="text-2xl font-black text-[#004B87]">Stark</div>
+                        <div className="text-[9px] font-bold text-slate-500 uppercase">Profil</div>
                       </div>
-                      <div className="flex-1 text-center">
-                        <div className="text-2xl font-black text-emerald-600">140</div>
+                      <div className="flex-1 text-center font-bold">
+                        <div className="text-2xl font-black text-emerald-600">140+</div>
                         <div className="text-[9px] font-bold text-slate-500 uppercase">Gröna lån (Mdkr)</div>
                       </div>
                     </div>
@@ -853,7 +852,7 @@ export default function HandelsbankenDeepDive({
                     </div>
                     <div className="bg-white/10 rounded-2xl p-6 border border-white/20">
                       <h4 className="text-sm font-bold uppercase tracking-widest mb-3 text-white/60">Slutsats</h4>
-                      <div className="text-2xl font-black mb-1 italic">Bevaka / Svagt Köp</div>
+                      <div className="text-2xl font-black mb-1 italic uppercase">Bevaka</div>
                       <p className="text-sm text-white/70 leading-relaxed">
                         Inget för den som söker snabb vinstacceleration, men ett innehav man kan sova gott med. Prioritera kvalitet, motståndskraft och ordinarie utdelningsförmåga.
                       </p>
@@ -863,15 +862,15 @@ export default function HandelsbankenDeepDive({
                 <div className="w-full md:w-80 shrink-0 bg-white/5 rounded-3xl p-8 border border-white/10 flex flex-col justify-between">
                   <div>
                     <div className="text-xs font-bold text-white/50 uppercase tracking-[0.2em] mb-4">Total Score</div>
-                    <div className="text-7xl font-black tracking-tighter mb-2">32<span className="text-4xl opacity-40">/40</span></div>
+                    <div className="text-7xl font-black tracking-tighter mb-2">31<span className="text-4xl opacity-40">/40</span></div>
                     <div className="flex items-baseline gap-2">
-                       <span className="text-sm font-bold text-white/70 tracking-widest uppercase">Rating: 0.80</span>
+                       <span className="text-sm font-bold text-white/70 tracking-widest uppercase">Rating: 0.78</span>
                     </div>
                   </div>
                   <div className="pt-8 mt-8 border-t border-white/10">
                     <div className="text-xs font-bold text-white/50 uppercase tracking-[0.2em] mb-2">Målpris (Base Case)</div>
                     <div className="text-4xl font-black">145–155 kr</div>
-                    <p className="text-[10px] text-white/40 mt-1 uppercase tracking-widest">Baserat på årsskifteskurs 134,35 kr</p>
+                    <p className="text-[10px] text-white/40 mt-1 uppercase tracking-widest">Baserat på analyskurs 127,35 kr</p>
                   </div>
                 </div>
               </div>

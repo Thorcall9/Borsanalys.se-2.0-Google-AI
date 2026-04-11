@@ -8,10 +8,6 @@ import {
 } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
 
-// ... (rest of imports and interfaces)
-
-import FearAndGreedGauge from "../components/FearAndGreedGauge";
-
 interface MacroData {
   value: number;
   trend: "up" | "down" | "flat";
@@ -21,12 +17,12 @@ interface MacroData {
 }
 
 const FALLBACK_DATA: Record<string, MacroData> = {
-  US10Y: { value: 4.34, trend: "up", updatedAt: new Date().toISOString() },
+  US10Y: { value: 4.29, trend: "flat", updatedAt: new Date().toISOString() },
   SE10Y: { value: 2.85, trend: "down", updatedAt: new Date().toISOString() },
-  USDSEK: { value: 9.56, trend: "down", updatedAt: new Date().toISOString() },
+  USDSEK: { value: 9.22, trend: "down", updatedAt: new Date().toISOString() },
   EURSEK: { value: 10.95, trend: "down", updatedAt: new Date().toISOString() },
   OMX30: { value: 2905, trend: "up", updatedAt: new Date().toISOString() },
-  Inflation: { value: 0.5, trend: "flat", updatedAt: new Date().toISOString() }
+  Inflation: { value: 2.95, trend: "flat", updatedAt: new Date().toISOString() }
 };
 
 const MACRO_METRICS = ["US10Y", "SE10Y", "USDSEK", "EURSEK", "OMX30", "Inflation"];
@@ -70,7 +66,7 @@ const MACRO_METADATA: Record<string, { category: string, title: string, descript
   }
 };
 
-// Gemini calls have been moved to the backend to protect API keys.
+import FearAndGreedGauge from "../components/FearAndGreedGauge";
 
 interface MarketEvent {
   id: string;
@@ -87,23 +83,33 @@ interface MarketEvent {
 const INITIAL_EVENTS: MarketEvent[] = [
   {
     id: "1",
-    title: "Global likviditetskris och bankoro (Systemrisk)",
-    impact: "negative",
-    description: "Efter en oöverträffad cykel av räntehöjningar ser vi nu djupa sprickor i det finansiella systemets fundament. Marknaden drar direkta paralleller till finanskrisen 2008 då panik kring orealiserade förluster i obligationsportföljer eskalerar. Detta har drivit vårt Fear & Greed Index till extremlåga nivåer, vilket signalerar en extrem marknadsrädsla (Systemic Risk).",
-    whyItMatters: "När förtroendet mellan finansiella institutioner vacklar uppstår en omedelbar frysning av interbank- och kreditmarknaden. Utan tillgång till likviditet drabbas bolag oavsett sektor av akuta refinansieringsproblem. Det är denna systemiska risk för en bred kreditkontraktion som tvingar kapital att fly aktiemarknaden mot riskfria tillgångar. Utvecklingen kräver ofta snabba interventioner från centralbankerna för att undvika en lågkonjunktur.",
-    swedishCompanies: "De svenska storbankerna (SEB, Swedbank, Handelsbanken) står i skottlinjen för ränte- och makrooro, även om deras underliggande kapitalsituation historiskt sett är extremt stabil. Det mest kritiska läget återfinns dock hos högt belånade kommersiella fastighetsbolag (ex. SBB, Balder, Heimstaden) vars massiva obligationsförfall gör dem mycket sårbara ifall obligationsmarknaden fryser helt.",
-    usCompanies: "Elden brinner starkast hos regionala amerikanska banker som dras med enorma orealiserade förluster inom kommersiella fastighetslån (CRE). Den globala smittoeffekten drabbar snabbt de stora systemkritiska investmentbankerna som Goldman Sachs och JPMorgan, vilka pressas av minskad M&A-aktivitet och behov av ökade reserveringar när motpartsriskerna stiger radikalt.",
-    winners: "I lägen av systemkris utklassar 'Safe Havens' allt annat. Guld (XAU) agerar ultimat hedge, jämte statsobligationer där underliggande värdeutveckling stiger när investerare förväntar sig räddande styrräntesänkningar. På aktiemarknaden söker sig kapital uteslutande till defensiva pjäser (t.ex. Axfood, Essity, AAK) vars kassaflöden är säkrade oavsett en allmän finansiell kollaps."
+    title: "Starkare Krona Utmanar Export, Gynnar Import",
+    impact: "neutral",
+    description: "En USDSEK-kurs på 9.22 representerar en signifikant förstärkning av den svenska kronan jämfört med tidigare år. Detta kan dels tolkas som ett tecken på förbättrad global riskaptit, där investerare söker sig bort från säkra hamnar som USD, dels som en indikation på en stabilare svensk ekonomi. Förändringen påverkar lönsamheten för svenska företag beroende på deras exponering mot utländska marknader och valutarörelser.",
+    whyItMatters: "En starkare krona minskar värdet på utländska intäkter vid omräkning till SEK, vilket pressar marginalerna för Sveriges stora exportbolag. Samtidigt dämpar det inflationen genom billigare importvaror, vilket ger Riksbanken mer utrymme för räntesänkningar.",
+    swedishCompanies: "Exportjättar som Volvo, Atlas Copco och Sandvik påverkas negativt vid omräkning, medan konsumentbolag och importörer som H&M och ICA kan få lägre inköpskostnader.",
+    usCompanies: "Amerikanska bolag med stor försäljning i Sverige ser sina intäkter öka i USD-termer, men påverkan är generellt marginell för de största S&P 500-bolagen.",
+    winners: "Importberoende bolag, svenska konsumenter och bolag med stora skulder i utländsk valuta som nu blir billigare att serva."
   },
   {
     id: "2",
-    title: "Eskalerande geopolitisk konflikt (Mellanöstern)",
+    title: "Navigering mot en 'Mjuklandning' för Ekonomin",
+    impact: "positive",
+    description: "Att inflationen globalt har sänkts till nästan 2.95% från sina toppnivåer stärker förhoppningarna om en 'mjuklandning', där inflationen tämjs utan att utlösa en djup recession. Detta indikerar att centralbankernas åtstramning har haft önskad effekt, vilket minskar risken för en kraftig ekonomisk nedgång och banar väg för en mer stabil miljö.",
+    whyItMatters: "En mjuklandning är det ideala scenariot för börsen då det innebär att räntetoppen är passerad utan att bolagsvinsterna kollapsar. Det skapar en stabil grund för riskaptit och gör att investerare vågar blicka framåt mot nästa expansionsfas.",
+    swedishCompanies: "Hela börsen gynnas generellt, men särskilt investmentbolag som Investor och Kinnevik samt de stora industrivardagarna som drar nytta av en stabil global efterfrågan.",
+    usCompanies: "Tekniksektorn och tillväxtbolag (t.ex. Microsoft, Apple, NVIDIA) är de stora vinnarna då lägre inflationsrisk minskar trycket på diskonteringsräntorna.",
+    winners: "Tillväxtaktier, småbolag och cykliska sektorer som tidigare pressats av recessionsoro."
+  },
+  {
+    id: "3",
+    title: "Ihållande Höga Räntor och Kapitalets Pris",
     impact: "negative",
-    description: "Konflikten i Mellanöstern har nått en oerhört kritisk eskaleringspunkt där direkta hot mot globala logistiknoder och fartygsleder nu realt påverkar världshandeln. Oljemarknaden upplever brutal volatilitet då aktörer börjar prisa in en reell risk för bestående störningar kring Hormuzsundet och Röda havet.",
-    whyItMatters: "En eskalerande konflikt i världens hjärta för energiproduktion riskerar att skapa en inflationär chock (‘stagflation’) i absolut sämsta tänkbara läge för Riksbanken och FED. Minskad framkomlighet i Suez-kanalen tvingar global frakt runt Afrikas horn, vilket drastiskt fördyrar fraktavgifter och massivt förlänger ledtider. Detta slår mot global BNP-tillväxt och spär på underliggande inflation.",
-    swedishCompanies: "Den extremt exporttunga svenska verkstadsindustrin (Volvo, Sandvik, Atlas Copco, Alfa Laval) är djupt sårbar för plötsliga leveransstörningar och skenande fraktkostnader. Vidare drabbas all transport- och reseindustri (som SAS och rederier med ohedgade bränsleinköp) av stark marginalpress till följd av exploderande energipriser.",
-    usCompanies: "Globala transportjättar som Amazon, FedEx och UPS pressas svårt av oplanerade drifthöjningar för frakt och drivmedel, vilket omedelbart försämrar prognoserna framåt. I samma andetag agerar oroligheterna raketbränsle ifall amerikanska aktörer med omfattande försvarskontrakt kallas in.",
-    winners: "Energisektorn blir den tvivellösa direkta vinnaren — olje- och gasjättar (ExxonMobil, Chevron) samt diversifierade rederier cashar in på en premiumprissatt marknad på grund av utbudsoro. Samtidigt omvärderas Försvarsindustrin (Lockheed Martin, Saab, BAE Systems) strukturellt uppåt och trendar urstarkt då västvärlden omedelbart ökar sina framtida materielanslag."
+    description: "Med en US10Y-ränta på 4.29% och inflation strax under 3% signalerar marknaden att kostnaden för kapital förblir betydande. Centralbanker, trots framgång med att sänka inflationen från toppnivåer, är fortsatt försiktiga och undviker för snabba räntesänkningar. Detta pressar marginaler för bolag med hög skuldsättning.",
+    whyItMatters: "Higher for longer innebär att den riskfria räntan sätter en hög ribba för alla andra investeringar. Det tvingar bolag att prioritera kassaflöde och effektivitet snarare än aggressiv expansion driven av billig skuld.",
+    swedishCompanies: "Fastighetsbolag (ex. Castellum, Balder) och högt belånade tillväxtbolag är mest känsliga. De svenska storbankerna gynnas däremot av ett högre räntenetto.",
+    usCompanies: "Regionala banker och småbolag i Russell 2000 drabbas hårdast då de ofta har rörliga lån eller behov av frekvent refinansiering.",
+    winners: "Banker, bolag med stora nettokassor (t.ex. Evolution, Fortnox) och försäkringsbolag som kan placera sina reserver till högre avkastning."
   }
 ];
 
@@ -113,7 +119,7 @@ const PHASES = [
     name: 'Tidig återhämtning',
     description: 'Låga räntor, stimulanser börjar bita. Fokus på Småbolag & Cykliskt.',
     timing: 'Vändning uppåt.',
-    rotation: 30,
+    rotation: 0,
     color: 'text-emerald-400',
     bg: 'bg-emerald-400/10',
     isCurrent: false
@@ -123,7 +129,7 @@ const PHASES = [
     name: 'Expansion',
     description: 'Stark tillväxt, bred vinstökning. "All-in" på risk.',
     timing: 'Stark tjurmarknad.',
-    rotation: 90,
+    rotation: 60,
     color: 'text-emerald-500',
     bg: 'bg-emerald-500/10',
     isCurrent: false
@@ -133,7 +139,7 @@ const PHASES = [
     name: 'Överhettning',
     description: 'Hög inflation, aggressiva höjningar. Fokus på Råvaror & Energi.',
     timing: 'Volatiliteten ökar.',
-    rotation: 150,
+    rotation: 120,
     color: 'text-orange-500',
     bg: 'bg-orange-500/10',
     isCurrent: false
@@ -143,7 +149,7 @@ const PHASES = [
     name: 'Sen cykel',
     description: 'Inflation faller, räntor höga. Fokus på Kvalitet & Kassaflöde.',
     timing: 'Selektiv uppgång.',
-    rotation: 210,
+    rotation: 180,
     color: 'text-amber-500',
     bg: 'bg-amber-500/10',
     isCurrent: true
@@ -153,7 +159,7 @@ const PHASES = [
     name: 'Avmattning',
     description: 'Vinster revideras ned, tillväxt bromsar. Fokus på Defensivt & Utdelning.',
     timing: 'Börsen skakar.',
-    rotation: 270,
+    rotation: 240,
     color: 'text-red-400',
     bg: 'bg-red-400/10',
     isCurrent: false
@@ -163,7 +169,7 @@ const PHASES = [
     name: 'Recession',
     description: 'Negativ tillväxt, räntesänkningar börjar. Fokus på Likviditet (Cash).',
     timing: 'Bottnar mitt i krisen.',
-    rotation: 330,
+    rotation: 300,
     color: 'text-red-600',
     bg: 'bg-red-600/10',
     isCurrent: false
@@ -244,7 +250,6 @@ export default function MacroDashboard() {
         const response = await fetch("/api/market-sentiment");
         if (response.ok) {
           const data = await response.json();
-          // The RapidAPI response format for v1/fgi is: { fgi: { now: { value: 45, valueText: "Neutral" } } }
           if (data.fgi && data.fgi.now) {
             setFearGreed({
               value: data.fgi.now.value,
@@ -261,8 +266,6 @@ export default function MacroDashboard() {
 
     fetchFearGreed();
   }, []);
-
-
 
   const getAIInsight = async (event: MarketEvent) => {
     setLoadingAI(event.id);
@@ -420,7 +423,6 @@ export default function MacroDashboard() {
                         className="mb-8 relative overflow-hidden group cursor-pointer"
                       >
                         <div className="p-10 bg-gradient-to-br from-primary/10 via-background/60 to-primary/5 border border-primary/20 rounded-[2.5rem] backdrop-blur-sm flex flex-col items-center justify-center text-center gap-8 transition-all hover:border-primary/40 hover:bg-primary/10">
-                          {/* Animated background glow */}
                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-primary/20 rounded-full blur-[80px] group-hover:w-64 group-hover:h-64 transition-all duration-700 pointer-events-none" />
                           
                           <div className="w-20 h-20 bg-primary/20 rounded-[2rem] flex items-center justify-center text-primary group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 relative z-10">
@@ -434,7 +436,6 @@ export default function MacroDashboard() {
                             </p>
                           </div>
 
-                          {/* Sneak peek badges */}
                           <div className="flex flex-wrap justify-center gap-3 relative z-10">
                             {["Marknadspåverkan", "Svenska Bolag", "USA Bolag", "Sektorer"].map(tag => (
                               <div key={tag} className="px-4 py-2 bg-foreground/[0.03] border border-foreground/10 rounded-xl text-[10px] font-black uppercase tracking-[0.2em] opacity-80 backdrop-blur-md">
@@ -477,7 +478,7 @@ export default function MacroDashboard() {
               </div>
             </section>
 
-            {/* Market Pulse & Macro Section (Moved down) */}
+            {/* Market Pulse & Macro Section */}
             <section className="space-y-8">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
@@ -508,12 +509,10 @@ export default function MacroDashboard() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {/* Fear & Greed Gauge */}
                 <div className="lg:col-span-1">
                   <FearAndGreedGauge />
                 </div>
 
-                {/* Dynamic Macro Indicators */}
                 {loadingMacro ? (
                   MACRO_METRICS.map((key) => <SkeletonIndicator key={key} />)
                 ) : (
@@ -633,7 +632,6 @@ export default function MacroDashboard() {
               </div>
 
               <div className="aspect-square bg-transparent rounded-full flex items-center justify-center relative group/clock w-full max-w-[280px] mx-auto">
-                {/* Outer Ring for Phase Labels */}
                 <div className="absolute inset-0 pointer-events-none z-0">
                   {PHASES.map((phase) => {
                     const angle = phase.rotation; 
@@ -658,46 +656,46 @@ export default function MacroDashboard() {
                   })}
                 </div>
 
-                {/* Inner Clock Face */}
                 <div className="w-[70%] h-[70%] bg-white/5 rounded-full border border-white/10 relative overflow-hidden flex items-center justify-center">
                   <div className="absolute inset-0 z-10">
-                    {PHASES.map((phase, idx) => {
-                      const rotation = idx * 60;
+                    {PHASES.map((phase) => {
+                      const startAngle = phase.rotation;
+                      const endAngle = phase.rotation + 60;
                       return (
                         <div 
                           key={phase.id}
                           onClick={() => setActivePhase(phase)}
-                          className={`absolute inset-0 origin-center cursor-pointer transition-all duration-300 hover:bg-white/5`}
+                          className={`absolute inset-0 origin-center cursor-pointer transition-all duration-300 hover:bg-primary/15 hover:scale-[1.02] group/slice z-10`}
                           style={{ 
-                            clipPath: `polygon(50% 50%, ${50 + 50 * Math.cos((rotation - 30 - 90) * Math.PI / 180)}% ${50 + 50 * Math.sin((rotation - 30 - 90) * Math.PI / 180)}%, ${50 + 50 * Math.cos((rotation + 30 - 90) * Math.PI / 180)}% ${50 + 50 * Math.sin((rotation + 30 - 90) * Math.PI / 180)}%)` 
+                            clipPath: `polygon(50% 50%, ${50 + 200 * Math.cos((startAngle - 90) * Math.PI / 180)}% ${50 + 200 * Math.sin((startAngle - 90) * Math.PI / 180)}%, ${50 + 200 * Math.cos((endAngle - 90) * Math.PI / 180)}% ${50 + 200 * Math.sin((endAngle - 90) * Math.PI / 180)}%)` 
                           }}
                         />
                       );
                     })}
                   </div>
 
-                  {/* Indicators */}
                   <div className="absolute inset-0 pointer-events-none z-20">
                     <motion.div style={{ rotate: 210 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
                       <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                        <div className="w-2 h-2 bg-blue-500 rounded-full" />
+                        <div className="w-2 h-2 bg-blue-500 rounded-full shadow-[0_0_8px_#3b82f6]" />
                       </div>
                     </motion.div>
                     <motion.div style={{ rotate: 240 }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
                       <div className="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                        <div className="w-2 h-2 bg-yellow-400 rounded-full" />
+                        <div className="w-2 h-2 bg-yellow-400 rounded-full shadow-[0_0_8px_#facc15]" />
                       </div>
                     </motion.div>
                   </div>
 
-                  {/* Clock Hand */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
                     <motion.div 
+                      initial={false}
                       animate={{ rotate: activePhase.rotation }}
-                      className="w-1 h-16 bg-primary rounded-full origin-bottom"
+                      transition={{ type: "spring", stiffness: 60, damping: 15 }}
+                      className="w-1.5 h-[35%] bg-primary rounded-full origin-bottom -translate-y-[50%] shadow-[0_0_15px_#10B981]"
                     />
                   </div>
-                  <div className="w-3 h-3 bg-foreground rounded-full border-2 border-primary z-40 pointer-events-none" />
+                  <div className="w-3 h-3 bg-foreground rounded-full border-2 border-primary z-40 pointer-events-none shadow-[0_0_10px_#10B981]" />
                 </div>
               </div>
 
@@ -725,7 +723,6 @@ export default function MacroDashboard() {
           </aside>
         </div>
 
-        {/* Strategisk Analys: Konjunkturklockan 2.0 */}
         <section className="space-y-10 pt-16 border-t border-border">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-2">
@@ -744,7 +741,6 @@ export default function MacroDashboard() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card 1: Tidsskillnaden */}
             <motion.div 
               whileHover={{ y: -8 }}
               className="bg-card border border-border rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden group"
@@ -769,7 +765,6 @@ export default function MacroDashboard() {
               </div>
             </motion.div>
 
-            {/* Card 2: Early Bird */}
             <motion.div 
               whileHover={{ y: -8 }}
               className="bg-card border border-border rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden group"
@@ -793,7 +788,6 @@ export default function MacroDashboard() {
               </div>
             </motion.div>
 
-            {/* Card 3: Selektivitet */}
             <motion.div 
               whileHover={{ y: -8 }}
               className="bg-card border border-border rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden group"

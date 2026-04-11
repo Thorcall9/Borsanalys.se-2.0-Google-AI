@@ -45,6 +45,7 @@ export interface AIDrivenAnalysis {
       omsattningstillvaxt: string;
       vinsttillvaxt: string;
       rorelsemarginal: string;
+      kapitalisering?: string;
     };
     nyckeltal: {
       roe: string;
@@ -53,6 +54,7 @@ export interface AIDrivenAnalysis {
     };
     vardering: {
       pe: string;
+      pb?: string;
       evEbit: string;
       direktavkastning: string;
     };

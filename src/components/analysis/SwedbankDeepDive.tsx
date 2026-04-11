@@ -51,7 +51,7 @@ const roeData = [
   {ar:"2023", v:18.3},
   {ar:"2024", v:17.1},
   {ar:"2025", v:15.2},
-  {ar:"2026e", v:13.8, e:true},
+  {ar:"2026e", v:13.5, e:true},
 ];
 
 const allScores = [
@@ -332,7 +332,7 @@ export default function SwedbankDeepDive({
             <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`}}>
               <div style={{fontSize:11,fontWeight:700,color:T.accent,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Analytikerns bedömning</div>
               <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                Swedbank är ett kvalitetsbolag med en kassaflödesmaskin i grunden. Banken har stark marknadsposition, låg kostnadsbas, mycket stark kreditkvalitet och robust kapitalisering. Vid nuvarande nivå är aktien en bra bas i en portfölj för utdelningsinvestare, men ett tydligare köpläge uppstår vid kursfall mot 290–300 kr. Vi rekommenderar bevakning med köp på svaghet.
+                Swedbank är ett kvalitetsbolag med stark marknadsposition, låg kostnadsbas, mycket stark kreditkvalitet och robust kapitalisering. För en bank är det främst lönsamhet, kapitalstyrka och utdelningskapacitet som bär caset. Vid nuvarande nivå är aktien en bra bas i en portfölj för utdelningsinvesterare, men ett tydligare köpläge uppstår vid kursfall mot 290–300 kr. Vi rekommenderar bevakning med köp på svaghet.
               </p>
             </div>
           </FadeIn>
@@ -348,10 +348,10 @@ export default function SwedbankDeepDive({
               
               <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`,marginBottom:24}}>
                 <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Moaten bygger på fem huvudpelare: urstarkt varumärke, Sparbanksekosystemets unika distributionskraft, en av Europas lägsta kostnadskvoter (K/I 0,36), ledande digital distribution och strategiska strukturaffärer. Swedbank är djupt förankrad i svenska hushåll och är ohotad marknadsledare i Baltikum där kredittillväxten ligger klart högre än i Sverige.
+                  Moaten bygger på fem huvudpelare: ett mycket starkt varumärke, Sparbanksekosystemets unika distributionskraft, en av Europas lägsta kostnadskvoter (K/I 0,36), ledande digital distribution och strategiska strukturaffärer. Swedbank är djupt förankrad i svenska hushåll och har en ledande marknadsposition i Baltikum, där kredittillväxten varit klart högre än i Sverige.
                 </p>
                 <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Distributionen via sparbankerna ger lokal närvaro som konkurrenter har svårt att replikera, vilket syns tydligt i både bolån och SME-affären. K/I-talet på 0,36 är ett verkligt kvalitetsbevis i en sektor med ständig prispress. Digitalt besvaras nu 86% av kundsamtalen inom tre minuter, vilket stärker lojaliteten.
+                  Distributionen via sparbankerna ger lokal närvaro som konkurrenter har svårt att replikera, vilket syns tydligt i både bolån och SME-affären. K/I-talet på 0,36 är ett tydligt kvalitetsbevis och mycket starkt i nordisk storbankskontext. Mot slutet av 2025 besvarades 86% av kundsamtalen i Sverige inom tre minuter, vilket stärker kundupplevelsen och tillgängligheten.
                 </p>
                 <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
                   Förvärven av <strong>Stabelo</strong> och <strong>Entercard</strong> under 2025 är strategiskt viktiga. Stabelo stärker bolåneerbjudandet mot digitala kunder medan Entercard gör Swedbank till ägare av en mycket stor kort- och konsumentkreditaffär, vilket diversifierar intäkterna bort från ränteberoendet.
@@ -405,7 +405,7 @@ export default function SwedbankDeepDive({
                     <ul style={{margin:0, paddingLeft:16, fontSize:12.5, color:"#92400E", lineHeight:1.7}}>
                       <li>Fintech-disruptörer utmanar framför allt bolåne- och betalningsaffären</li>
                       <li>Räntemarginaltryck vid fortsatta centralbanksräntesänkningar</li>
-                      <li>Kvarvarande regulatorisk exponering – US Department of Financial Services har inlett en ny granskning av Swedbank trots att DOJ avslutade sin utredning i januari 2026</li>
+                      <li>Kvarvarande regulatorisk exponering – Department of Financial Services i New York utreder fortfarande Swedbank trots att DOJ avslutade sin utredning utan åtgärd i januari 2026</li>
                     </ul>
                   </div>
                 </div>
@@ -414,7 +414,7 @@ export default function SwedbankDeepDive({
                 <div style={{marginTop:20, background:T.accentL, border:`1.5px solid ${T.accent}33`, borderRadius:12, padding:"16px 20px", borderLeft:`4px solid ${T.accent}`}}>
                   <div style={{fontSize:11,fontWeight:700,color:T.accent,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>SWOT sammanfattat</div>
                   <p style={{margin:0, color:T.ink, fontSize:13.5, lineHeight:1.85}}>
-                    <strong>Styrkor:</strong> låg kostnadskvot, dominerande position i Baltikum och lojal kundbas. <strong>Svagheter:</strong> ränteberoendet och historiska regulatoriska bekymmer. <strong>Möjligheter:</strong> förvärvssynergier, AI-driven effektivisering och bolånevolymer vid sjunkande räntor. <strong>Hot:</strong> fintech-disruptörer, räntemarginaltryck och kvarvarande regulatorisk exponering – US Department of Financial Services har inlett en ny granskning av Swedbank trots att DOJ avslutade sin utredning i januari 2026.
+                    <strong>Styrkor:</strong> låg kostnadskvot, ledande position i Baltikum och lojal kundbas. <strong>Svagheter:</strong> ränteberoendet och historiska regulatoriska bekymmer. <strong>Möjligheter:</strong> förvärvssynergier, AI-driven effektivisering och bolånevolymer vid sjunkande räntor. <strong>Hot:</strong> fintech-disruptörer, räntemarginaltryck och kvarvarande regulatorisk exponering – Department of Financial Services i New York utreder fortfarande Swedbank trots att DOJ avslutade sin utredning utan åtgärd i januari 2026.
                   </p>
                 </div>
               </div>
@@ -437,7 +437,7 @@ export default function SwedbankDeepDive({
                   Bilden är en tydlig normalisering efter rekordåren 2022-2023. <strong>Kostnadssidan</strong> förblev dock urstark med sänkta kostnader (24 532 Mkr) trots investeringar. <strong>K/I-talet på 0,36</strong> är ett av bankens främsta kvalitetsbevis.
                 </p>
                 <p style={{margin:"14px 0 0",color:T.ink,fontSize:14,lineHeight:1.85}}>
-                  Lönsamheten hölls hög med ett ROE på <strong>15,2%</strong>. Kreditkvaliteten var exceptionell med 0,00% i kreditförlustnivå, vilket visar på en mycket välskött portfölj. Kapitaliseringen är robust med en CET1-kvot på 17,8%, en buffert på 3 procentenheter över kraven.
+                  Lönsamheten hölls hög med ett ROE på <strong>15,2%</strong>. Kreditförlustnivån var exceptionellt låg (0,00%), vilket visar på en mycket välskött portfölj. Kapitaliseringen är robust med en CET1-kvot på 17,8%. Det totala kärnprimärkapitalkravet inklusive Pelare 2-vägledning var 14,8%, vilket ger en buffert på 3,0 procentenheter.
                 </p>
               </div>
 
@@ -526,8 +526,8 @@ export default function SwedbankDeepDive({
                   </thead>
                   <tbody>
                     {[
-                      ["ROE (%)","18,3%","16,7%","14,7%","13,5%"],
-                      ["P/E-tal","10,5","10,3","11,0","12,1"],
+                      ["ROE (%)","18,3%","17,1%","15,2%","13,5%"],
+                      ["P/E-tal","10,5","10,3","11,1","12,1"],
                       ["K/I-kvot","0,33","0,34","0,36","0,40"],
                       ["Utdelning (kr)","15,10","15,70","29,80*","24,19"],
                       ["CET1-kvot (%)","19,0%","19,0%","17,8%","17,5%"],
@@ -552,8 +552,8 @@ export default function SwedbankDeepDive({
                     ["2021","~20 Mdkr","Räntorna fortfarande låga. Pandemireservationer reverserades och lyfte resultatet.", T.sub],
                     ["2022","Kraftig uppgång","Vinsten steg markant när styrräntorna började stiga – bankernas gyllene era inleddes.", T.sub],
                     ["2023 🏆","ROE 18,3% · K/I 0,33","Rekordår. Alla viktiga mål uppnåddes och slogs med god marginal.", T.green],
-                    ["2024","Vinst 34,9 Mdkr · ROE 16,7%","Fortsatt starkt men räntenormalisering påbörjad. K/I-kvoten höll trots press.", T.sub],
-                    ["2025","Vinst 32,8 Mdkr · ROE 14,7%","Normalisering fortsätter. 15%-målet uppnått marginellt. Förvärven skapar nya intäktsströmmar.", T.accent],
+                    ["2024","Vinst 34,9 Mdkr · ROE 17,1%","Fortsatt starkt men räntenormalisering påbörjad. K/I-kvoten höll trots press.", T.sub],
+                    ["2025","Vinst 32,8 Mdkr · ROE 15,2%","Normalisering fortsätter, men banken levererade fortsatt över sitt lönsamhetsmål. Förvärven skapar nya intäktsströmmar.", T.accent],
                     ["2026e","Vinst ~30,3 Mdkr · EPS 26,94 kr","Ytterligare normalisering väntas. Synergier från Stabelo/Entercard börjar leverera.", T.sub],
                   ].map(([år,rubrik,text,color])=>(
                     <div key={år} style={{background:color===T.green?T.greenL:color===T.accent?T.accentL:T.bg, border:`1px solid ${color}22`, borderRadius:12, padding:14}}>
@@ -565,14 +565,13 @@ export default function SwedbankDeepDive({
                 </div>
               </div>
 
-              {/* Balansräkning & kassaflöde */}
               <div style={{marginTop:24, background:T.bg, border:`1px solid ${T.border}`, borderRadius:14, padding:20}}>
-                <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:10}}>Balansräkning & kassaflöde</div>
+                <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:10}}>Balansräkning, kapital & likviditet</div>
                 <p style={{margin:0,fontSize:13.5,color:T.sub,lineHeight:1.8}}>
-                  Totala tillgångar uppgick till <strong>3 063 Mdkr</strong> vid utgången av 2025. <strong>CET1-kvoten</strong> (bankens kapitalstyrka i förhållande till riskberäknade tillgångar, reglerat av FI) var 17,8% mot ett regulatoriskt krav på 15,2% – en buffert på 2,6 procentenheter. Kreditimpairmentskvoten var <strong>0,00%</strong> för helåret 2025, vilket signalerar exceptionell kreditkvalitet. Eget kapital uppgick till 225 826 Mkr.
+                  Totala tillgångar uppgick till <strong>3 063 Mdkr</strong> vid utgången av 2025. <strong>CET1-kvoten</strong> var 17,8% mot ett totalt kärnprimärkapitalkrav inklusive Pelare 2-vägledning på 14,8% – en buffert på 3,0 procentenheter. Kreditförlustnivån var <strong>0,00%</strong> för helåret 2025, vilket signalerar mycket stark kreditkvalitet. Eget kapital uppgick till 225 826 Mkr.
                 </p>
                 <p style={{margin:"12px 0 0",fontSize:13.5,color:T.sub,lineHeight:1.8}}>
-                  Kassaflödet från löpande verksamhet var stabilt på 31 069 Mkr. Det negativa operativa kassaflödet på –8 710 Mkr förklaras av kraftigt ökad utlåning och förvärvsaktivitet under 2025 – inte av underliggande svaghet. Capex var blygsamma 490 Mkr och av- och nedskrivningar uppgick till 2 225 Mkr.
+                  För banker är traditionell kassaflödesanalys mindre central än för industribolag. Viktigare är kapitalstyrka, kreditkvalitet och likviditet. Swedbank avslutade året med en likviditetsreserv på 523 Mdkr, LCR på 184% och NSFR på 124%, vilket understryker den finansiella motståndskraften.
                 </p>
               </div>
 
@@ -587,17 +586,17 @@ export default function SwedbankDeepDive({
               <SectionLabel number="IV" title="Värdering & Jämförelse"/>
               
               <p style={{fontSize:14, color:T.sub, lineHeight:1.7, marginBottom:24}}>
-                Swedbank värderas till P/E 11,0x på 2025 års vinst och framåtblickande P/E om 12,1x för 2026, vilket speglar en förväntad vinstnormalisering när räntenettot krymper. P/B-talet på 1,59x är i nederkanten av historiska intervallet.
+                Swedbank värderas till cirka P/E 11,1x på 2025 års vinst och framåtblickande P/E om cirka 12,1x för 2026, vilket speglar en förväntad vinstnormalisering när räntenettot krymper. P/B-talet på omkring 1,6x signalerar en kvalitetsbank som fortfarande handlas över bokfört värde, men utan någon tydlig premiumeufori.
               </p>
 
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
                 {[
-                  ["P/E (2025)", "11,0x", "På 2025 EPS 29,14 kr"],
-                  ["P/E (2026e)", "12,1x", "EPS-estimat 26,94 kr"],
-                  ["P/B", "1,59x", "Lägre del av hist. intervall", true],
+                  ["P/E (2025)", "11,1x", "På 2025 EPS 28,98 kr"],
+                  ["P/E (2026e)", "12,1x", "EPS-estimat 26,50 kr"],
+                  ["P/B", "1,6x", "Normaliserad värdering", true],
                   ["Direktavkastning", "9,3%", "Inkl. specialutdelning 2025"],
-                  ["DA (2026e)", "7,43%", "Normaliserad, 24,19 kr/aktie"],
-                  ["CET1-kvot", "17,8%", "+2,6%-enh. buffert mot krav"],
+                  ["DA (2026e)", "7,5%", "Normaliserad, 24,19 kr/aktie"],
+                  ["CET1-kvot", "17,8%", "+3,0%-enh. buffert"],
                 ].map(([l,v,s,acc], i) => (
                   <div key={i} style={{background:acc?T.accentL:T.bg, border:`1px solid ${acc?T.accent+"33":T.border}`, borderRadius:12, padding:14}}>
                     <div style={{fontSize:10, fontWeight:800, color:acc?T.accent:T.muted, textTransform:"uppercase", letterSpacing:0.5, marginBottom:4}}>{l}</div>
@@ -610,7 +609,7 @@ export default function SwedbankDeepDive({
               <div style={{background:T.ink, borderRadius:16, padding:24, color:"#fff", boxShadow:T.shadowLg}}>
                 <div style={{fontSize:11, fontWeight:800, color:"rgba(255,255,255,0.6)", textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Analytikerns värderingskommentar</div>
                 <p style={{margin:0, fontSize:13.5, color:"rgba(255,255,255,0.8)", lineHeight:1.7}}>
-                  Vid 321 kr är Swedbank rimligt värderad. P/E 11x och P/B 1,6x speglar en kvalitetsbank som väger tungt i en portfölj. Den höga direktavkastningen på 9,3% inkluderar en extrautdelning och ska ses som en stabil kapitalåterföring. Vi ser en rimlig uppsida mot <strong>330-360 kr</strong>.
+                  Vid 321 kr är Swedbank rimligt värderad. P/E 11,1x och P/B 1,6x speglar en kvalitetsbank som väger tungt i en portfölj. Den höga direktavkastningen på 9,3% inkluderar en extrautdelning och ska därför inte ses som en uthållig normalnivå, utan som kapitalåterföring från en stark balansräkning. Vi ser en rimlig uppsida mot <strong>330-360 kr</strong>.
                 </p>
               </div>
             </Card>
@@ -644,20 +643,20 @@ export default function SwedbankDeepDive({
                   {
                     icon: "🌍",
                     bg: "#FFFBEB",
-                    title: "3. Baltikum – kreditexpansion 12-16%",
-                    body: "Kreditportföljerna i Estland, Lettland och Litauen växte 12–16% under 2025. Swedbanks dominerande ställning i regionen ger kostnadsfördel och starka marginaler i en marknad med fortsatt hög tillväxtpotential."
+                    title: "3. Baltikum – attraktiv tillväxtmix",
+                    body: "Kredittillväxten i Baltikum var klart högre än i Sverige under 2025. Swedbanks ledande ställning i regionen ger banken en attraktiv kombination av tillväxt, skala och stark marknadsposition."
                   },
                   {
                     icon: "🤖",
                     bg: "#F5F3FF",
-                    title: "4. AI-driven kostnadseffektivisering",
-                    body: "Ledningen guidar för kostnadsbas på 27,5 Mdkr för 2026. AI och processautomation förväntas hålla K/I-kvoten i schack trots löneökningar och ökade IT-investeringar."
+                    title: "4. Digitalisering & AI-effektivisering",
+                    body: "Ledningen guidar för en kostnadsbas på 27,5 Mdkr för 2026. Digitalisering, AI-stöd och processautomation kan bidra till att hålla K/I-kvoten i schack trots löneökningar och ökade IT-investeringar."
                   },
                   {
                     icon: "📉",
                     bg: "#FEF2F2",
-                    title: "5. Räntecykelns vändning",
-                    body: "Riksbankens räntesänkningar trycker ned räntenettot på kort sikt, men skapar simultant katalysatorer för bolåne- och kreditvolymtillväxt. Vändpunkten för räntenettot estimeras till 2027."
+                    title: "5. Räntecykelns normalisering",
+                    body: "På kort sikt pressas räntenettot av lägre räntor, men högre volymer inom bolån, kort och Baltikum kan gradvis dämpa effekten över tid."
                   }
                 ].map((item, i) => (
                   <div key={i} style={{background:T.bg, border:`1px solid ${T.border}`, borderRadius:16, padding:20, display:"flex", gap:16, alignItems:"flex-start"}}>
@@ -700,11 +699,11 @@ export default function SwedbankDeepDive({
                   </thead>
                   <tbody>
                     {[
-                      ["US DFS-granskning", "Department of Financial Services (NY) har inlett ny granskning 2026 trots att DOJ avslutade sin utredning i januari. Skapar osäkerhet kring böter och nytt varumärkestapp.", "Aktiv dialog med regulatorer, stärkt compliance-funktion."],
-                      ["FI kundkännedom", "Finansinspektionen inledde granskning av kundkännedomsprocesser i början av 2026. Risk för böter eller åtgärdsplaner.", "Ökade resurser på KYC och AML-processer."],
+                      ["DFS-utredning", "Department of Financial Services (NY) utreder fortfarande Swedbank trots att DOJ avslutade sin utredning utan åtgärd i januari 2026. Skapar osäkerhet kring eventuella böter.", "Aktiv dialog med regulatorer, sänkt compliance-funktion."],
+                      ["Pensionsmyndighetens krav", "Krav om 2 790 Mkr kopplat till Optimus High Yield är en separat juridisk riskpost att bevaka, även om banken bestrider kravet.", "Banken har bestridit kravet och inte gjort någon reservering."],
                       ["Räntemarginaltryck", "Riksbankens sänkningar pressar räntenettot, som föll 11% 2025 och väntas sjunka ytterligare 2026.", "Volymtillväxt och avgiftsintäkter ska kompensera."],
-                      ["Fastighetsexponering", "Svenska bolåneportföljen är exponerad mot högt belånade hushåll. Vid ett prisfall >15% riskerar kreditkvaliteten försämras.", "Konservativ amorteringskultur och god kreditkvalitet (impairmentskvot 0,00%)."],
-                      ["Geopolitik Baltikum", "Säkerhetssituationen i regionen är förhöjd. En destabilisering skulle minska investeringsviljan och öka kreditriskerna.", "Baltisko bankerna är välkapitaliserade med god likviditet."],
+                      ["Fastighetsexponering", "Den svenska bolåneportföljen är stor och känslig för ett svagare bostadsmarknadsscenario, även om kreditkvaliteten 2025 var mycket stark.", "Konservativ amorteringskultur och mycket stark kreditförlustnivå."],
+                      ["Geopolitik Baltikum", "Säkerhetssituationen i regionen är förhöjd. En destabilisering skulle minska investeringsviljan och öka kreditriskerna.", "Baltiska bankerna är välkapitaliserade med god likviditet."],
                     ].map(([r, b, h], i) => (
                       <tr key={i} style={{borderBottom:`1px solid ${T.border}`}}>
                         <td style={{padding:"12px", fontWeight:700, color:T.ink}}>{r}</td>
@@ -724,7 +723,7 @@ export default function SwedbankDeepDive({
                   <div>
                     <div style={{fontSize:11, fontWeight:800, color:T.gold, textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Viktigaste riskfaktorn just nu</div>
                     <p style={{margin:0, fontSize:13.5, color:T.ink, lineHeight:1.7}}>
-                      Department of Financial Services (NY) har inlett en ny granskning 2026 trots att DOJ avslutade sin utredning i januari. Regulatorisk risk och AML-bagaget är de enskilt största hoten mot multipeln kortsiktigt.
+                      Department of Financial Services (NY) utreder fortfarande Swedbank trots att DOJ avslutade sin utredning utan åtgärd i januari 2026. Regulatorisk risk och AML-bagaget är de enskilt största hoten mot multipeln kortsiktigt.
                     </p>
                   </div>
                 </div>
@@ -742,7 +741,7 @@ export default function SwedbankDeepDive({
               <SectionLabel number="VII" title="ESG & Makro"/>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 {[
-                  ["🌱","Miljö (E)","4/5","Hög CSRD-rapportering. Fokus på grön utlåning och klimatmål. Utsågs till Sveriges mest hållbara bankvarumärke 2025.",T.green,T.greenL],
+                  ["🌱","Miljö (E)","4/5","Rapporterar enligt CSRD och har tydligt fokus på hållbar finansiering, grön utlåning och klimatmål. Utsågs till Sveriges mest hållbara bankvarumärke 2025.",T.green,T.greenL],
                   ["👥","Socialt (S)","4/5","Finansiell utbildning för över 110 000 barn 2025. Stark lokal förankring via sparbanksekosystemet.",T.accent,T.accentL],
                   ["🏛️","Styrning (G)","4/5","S&P uppgraderade till AA- med stabil outlook. Transparent styrning och tydliga ESG-mål post-skandal.",T.green,T.greenL],
                 ].map(([icon,label,score,body,color,bg]) => (
@@ -759,7 +758,7 @@ export default function SwedbankDeepDive({
               <div style={{background:T.bg, border:`1px solid ${T.border}`, borderRadius:14, padding:20}}>
                 <div style={{fontSize:11, fontWeight:700, color:T.muted, letterSpacing:0.5, textTransform:"uppercase", marginBottom:10}}>Makropåverkan</div>
                 <p style={{margin:0, fontSize:13.5, color:T.sub, lineHeight:1.8}}>
-                  Riksbankens räntesänkningscykel är den dominerande makrovariabeln. CET1-kvoten på 17,8% – 2,6 procentenheter över kravet – ger en stor buffert mot regulatoriska kapitalkrav och möjliggör fortsatt utdelning och återköp. En svagare svensk konjunktur ökar kreditförlusterna men Swedbanks exceptionella kreditkvalitet (impairmentskvot 0,00%) dempar effekten.
+                  Riksbankens räntesänkningscykel är den dominerande makrovariabeln. CET1-kvoten på 17,8% – 3,0 procentenheter över det totala kärnprimärkapitalkravet inklusive Pelare 2-vägledning – ger en god buffert mot regulatoriska kapitalkrav och möjliggör fortsatt utdelning. En svagare svensk konjunktur ökar kreditriskerna men Swedbanks mycket starka kreditkvalitet dämpar effekten.
                 </p>
               </div>
             </Card>
@@ -774,9 +773,9 @@ export default function SwedbankDeepDive({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
                   ["📰 Sentimentanalys","Sentimentbilden är lätt negativ till neutral efter 12% kursnedgång från toppen. Marknaden prissätter en vinstnormalisering korrekt – inga tecken på överhettning, men heller inget momentum."],
-                  ["📊 Insiderhandel & ägardata","Sparbanksstiftelserna håller stabilt kring 13,3%. Inga alarmerande insidersälj registrerade. Institutionella ägare som Alecta och AMF kvarstår som förtroendesignal."],
-                  ["🔍 Kreditkvalitet","AI-screening av kreditportföljdata visar exceptionell kvalitet: impairmentskvot 0,00% och Stage 2-lån på låga nivåer. En positiv outlier bland europeiska banker."],
-                  ["⚠️ Regulatorisk flagga","US DFS-granskningen är den enskilt viktigaste kortsiktiga varningssignalen i vår AI-bevakning. FI-granskningen höjer det regulatoriska tryckindexet ytterligare."],
+                  ["📊 Insiderhandel & ägardata","Sparbanksstiftelserna håller en stabil ägarandel. Inga alarmerande insidersälj registrerade. Institutionella ägare som Alecta och AMF kvarstår som förtroendesignal."],
+                  ["🔍 Kreditkvalitet","Revision av kreditportföljdata visar exceptionell kvalitet: kreditförlustnivå på 0,00% och Stage 2-lån på låga nivåer. En positiv outlier bland europeiska banker."],
+                  ["⚠️ Regulatorisk flagga","Department of Financial Services (NY) utreder fortfarande Swedbank trots att DOJ avslutade sin utredning utan åtgärd i januari 2026."],
                 ].map(([title,body]) => (
                   <div key={title} style={{background:T.bg,border:`1.5px solid ${T.border}`,borderRadius:12,padding:16}}>
                     <div style={{fontWeight:700,color:T.ink,fontSize:13,marginBottom:8}}>{title}</div>
@@ -796,8 +795,8 @@ export default function SwedbankDeepDive({
               <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-start">
                 <div>
                   {[
-                    ["Är Swedbank ett kvalitetsbolag?","Ja. Stark marknadsposition, låg kostnadsbas, mycket stark kreditkvalitet och robust kapitalisering gör Swedbank till ett kvalitetsbolag för utdelningsinvestare."],
-                    ["Är det rimligt värderat?","Ja. På cirka 11x årsvinst och drygt 6 procent normaliserad direktavkastning är aktien attraktiv, men det finns ingen uppenbar felprissättning."],
+                    ["Är Swedbank ett kvalitetsbolag?","Ja. Stark marknadsposition, låg kostnadsbas, mycket stark kreditkvalitet och robust kapitalisering gör Swedbank till ett kvalitetsbolag för utdelningsinvesterare."],
+                    ["Är det rimligt värderat?","Ja. På cirka 11,1x årsvinst och drygt 6 procent normaliserad direktavkastning är aktien attraktiv för rätt typ av investerare, men det finns ingen uppenbar felprissättning."],
                     ["Kan man hålla det 5–10 år?","Ja, om man vill ha trygg och hög utdelningskapacitet samt exponering mot Norden/Baltikum med hög effektivitet."],
                   ].map(([q,a]) => (
                     <div key={q} style={{marginBottom:16}}>
@@ -810,7 +809,7 @@ export default function SwedbankDeepDive({
                       <strong style={{color:T.sub}}>Målpris 330-360 kronor (12 månaders sikt)</strong>. Caset är attraktivt men ett tydligare köpläge uppstår vid svaghet eller marknadsoro kring 290-300 kr.
                     </p>
                     <p style={{margin:"12px 0 0 0", fontSize:13, color:T.gold, fontWeight:700}}>
-                      Beslut: Bevaka/Köp på svaghet.
+                      Beslut: BEVAKA. Aktien är attraktiv som kvalitetsbank och utdelningscase, men det tydligare köpläge uppstår först vid svaghet eller marknadsoro.
                     </p>
                   </div>
                 </div>
