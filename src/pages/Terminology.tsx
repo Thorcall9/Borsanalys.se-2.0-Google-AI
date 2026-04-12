@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Book, Info, ChevronRight, TrendingUp, DollarSign, BarChart3, ShieldCheck, Zap, Activity, Waves, ArrowRight, Search, X, Filter, ChevronDown } from "lucide-react";
 import { terminology } from "../data/terminology";
 import { guides } from "../data/guides";
+import AdZone from "../components/AdZone";
+
 
 const CategoryIconMap: Record<string, any> = {
   "Värdering": DollarSign,
@@ -296,7 +298,10 @@ export default function Terminology() {
         )}
       </section>
 
+      <AdZone id="terminology-middle" type="banner" discrete={true} />
+      
       {/* Guides Section */}
+
       <section className="space-y-12">
         <div className="flex items-end justify-between">
           <div className="space-y-4">
