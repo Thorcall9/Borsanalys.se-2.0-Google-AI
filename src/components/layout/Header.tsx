@@ -154,17 +154,30 @@ export default function Header() {
           <div className="pt-4">
             {user ? (
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
+                <Link 
+                  to="/profil" 
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-3 group active:opacity-70 transition-opacity"
+                >
                   {user.photoURL ? (
-                    <img src={user.photoURL} alt="" className="w-10 h-10 rounded-full" />
+                    <img src={user.photoURL} alt="" className="w-10 h-10 rounded-full border border-border group-hover:border-primary transition-colors" />
                   ) : (
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary/20 transition-colors">
                       <UserIcon size={20} />
                     </div>
                   )}
-                  <span className="font-black">{user.displayName}</span>
-                </div>
-                <button onClick={logout} className="text-red-500 font-bold text-sm">Logga ut</button>
+                  <div className="flex flex-col text-left">
+                    <span className="font-black text-foreground group-hover:text-primary transition-colors">{user.displayName}</span>
+                    <span className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Visa profil</span>
+                  </div>
+                </Link>
+                <button 
+                  onClick={() => { logout(); setIsMenuOpen(false); }} 
+                  className="px-3 py-2 rounded-xl bg-red-500/10 text-red-500 font-bold text-xs hover:bg-red-500 hover:text-white transition-all flex items-center gap-2"
+                >
+                  <LogOut size={14} />
+                  Logga ut
+                </button>
               </div>
             ) : (
               <button 
