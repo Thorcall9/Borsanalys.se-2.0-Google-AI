@@ -15,6 +15,7 @@ import marketEventsHandler from "./api/market-events.ts";
 import generateEventsHandler from "./api/admin/generate-events.ts";
 import rssHandler from "./api/rss.ts";
 import sitemapHandler from "./api/sitemap.ts";
+import watchlistHandler from "./api/watchlist.ts";
 import rateLimit from "express-rate-limit";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import helmet from "helmet";
@@ -196,6 +197,9 @@ async function startServer() {
 
   // Market Events
   app.get("/api/market-events", marketEventsHandler as any);
+
+  // Watchlist (MVP)
+  app.all("/api/watchlist", watchlistHandler as any);
 
   // Admin: Generate AI Events
   app.all("/api/admin/generate-events", generateEventsHandler as any);
