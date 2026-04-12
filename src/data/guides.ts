@@ -10,6 +10,7 @@ export interface Guide {
   seoTitle?: string;
   metaDescription?: string;
   faqSchema?: any;
+  publishedDate?: string;
 }
 
 export const guides: Record<string, Guide> = {
@@ -1723,7 +1724,6 @@ export const guides: Record<string, Guide> = {
         <section class="not-prose p-12 bg-primary/5 border border-primary/20 rounded-[3rem] space-y-6 relative overflow-hidden mt-16">
           <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
           <h3 class="text-3xl md:text-4xl font-black tracking-tighter">Slutsats</h3>
-          <p class="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
             ISK är standardvalet för de allra flesta. Välj kapitalförsäkring om du har ett specifikt skäl som rör barnsparande, förmånstagare eller utländska utdelningar. Det viktigaste är att du börjar spara – båda formerna är milsvida bättre än ett vanligt sparkonto eller en traditionell depå.
           </p>
         </section>
@@ -1747,9 +1747,9 @@ export const guides: Record<string, Guide> = {
   "pensionssparande-sverige": {
     slug: "pensionssparande-sverige",
     title: "Pensionssparande i Sverige 2026",
-    excerpt: "Lär dig skillnaden mellan allmän pension, tjänstepension och privat pensionssparande – med konkreta råd, tabeller och checklista.",
-    seoTitle: "Pensionssparande i Sverige 2026 – guide till allmän pension, tjänstepension och privat sparande",
-    metaDescription: "Så fungerar pension i Sverige 2026. Lär dig skillnaden mellan allmän pension, tjänstepension och privat pensionssparande – med konkreta råd, tabeller, checklista och vanliga misstag.",
+    excerpt: "En fördjupad guide till det svenska pensionssystemet – från allmän pension och tjänstepension till strategisk uttagsplanering och skatteeffekter.",
+    seoTitle: "Pensionssparande i Sverige 2026 – En komplett guide till din framtida ekonomi",
+    metaDescription: "Lär dig navigera i det svenska pensionssystemet 2026. Vi går igenom allmän pension, tjänstepension, uttagsstrategier och hur du optimerar ditt sparande på ett nyanserat sätt.",
     content: `
       <div class="space-y-24">
         <!-- Intro Section -->
@@ -1759,223 +1759,285 @@ export const guides: Record<string, Guide> = {
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
-            Guide: Pension 2026
+            Uppdaterad för 2026: Redaktionell Genomgång
           </div>
-          <p class="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
-            Pension är en av de viktigaste ekonomiska frågorna i livet, men också en av de mest missförstådda. Många tänker att pension är något man kan ta tag i senare. Problemet är att <span class="text-foreground font-black italic">senare ofta blir dyrt</span>.
+          <p class="text-xl md:text-2xl text-muted-foreground leading-relaxed font-medium max-w-4xl">
+            Pensionen är för många den enskilt största ekonomiska tillgången i livet, men också en av de mest komplexa utmaningarna att navigera. Det handlar inte bara om att spara rätt, utan om att förstå hur systemets olika delar samverkar för att skapa en trygg helhet.
           </p>
           <div class="p-10 bg-muted/30 border border-border rounded-[3rem] relative overflow-hidden group hover:border-primary/30 transition-all duration-500">
             <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors duration-700"></div>
             <p class="text-lg text-muted-foreground leading-relaxed font-medium relative z-10">
-              Det som gör pension svårt är inte att systemet är omöjligt att förstå. Det är att det består av flera delar som ofta förklaras var för sig. När man väl ser helheten blir logiken betydligt enklare: för de flesta kommer pensionen från tre håll – <span class="text-primary font-black uppercase tracking-tighter italic">staten, arbetsgivaren och det egna sparandet</span>.
+              Det svenska pensionssystemet vilar på tre ben: <span class="text-primary font-black uppercase tracking-tighter italic">staten, arbetsgivaren och det egna komplementet</span>. I den här guiden analyserar vi hur du kan förhålla dig till dessa delar 2026 baserat på dina unika förutsättningar och mål.
             </p>
           </div>
         </section>
 
-        <!-- Varför viktigt -->
-        <section class="not-prose grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div class="p-10 bg-card border border-border rounded-[2.5rem] space-y-6">
-            <h3 class="text-2xl font-black tracking-tighter">Tid & Struktur</h3>
-            <p class="text-muted-foreground leading-relaxed font-medium">
-              Tid spelar stor roll eftersom pengar som får arbeta länge kan växa kraftigt via <a href="/guider/utdelningsstrategier" class="text-primary hover:underline">ränta-på-ränta</a>. Struktur spelar roll eftersom du inte kan bedöma din framtida ekonomi genom att bara titta på en del.
+        <!-- NY SEKTION: Hur mycket av lönen blir pension? -->
+        <section class="not-prose space-y-12">
+          <div class="space-y-6">
+            <h2 class="text-3xl md:text-5xl font-black tracking-tighter">I relation till lönen — vad kan du förvänta dig?</h2>
+            <p class="text-lg text-muted-foreground leading-relaxed font-medium max-w-4xl">
+              En vanlig tumregel är att man kan förvänta sig mellan 60 och 70 procent av sin slutlön i pension, men detta är ett förenklat mått som döljer stora individuella variationer. Din slutliga pensionsnivå avgörs av en rad faktorer: antal arbetsår i Sverige, löneutveckling, avkastning på tjänstepensionen och vid vilken ålder du väljer att påbörja uttagen.
             </p>
           </div>
-          <div class="p-10 bg-primary/5 border border-primary/20 rounded-[2.5rem] space-y-6">
-            <h3 class="text-2xl font-black tracking-tighter">Det vanliga misstaget</h3>
-            <p class="text-muted-foreground leading-relaxed font-medium">
-              Det stora misstaget är sällan att välja "fel" fond. Det stora misstaget är att inte ha koll alls. Många svenskar underskattar särskilt tjänstepensionens betydelse, som för höginkomsttagare kan stå för en mycket stor del av slutresultatet.
-            </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="p-10 bg-card border border-border rounded-[2.5rem] space-y-6 relative overflow-hidden">
+              <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
+              <h4 class="text-xl font-black tracking-tighter">Ett vägledande exempel</h4>
+              <p class="text-sm text-muted-foreground leading-relaxed">
+                Tänk dig en person med en genomsnittlig månadslön på 45 000 kr som haft tjänstepension under hela arbetslivet. Vid pensionering vid riktåldern kan den allmänna pensionen ge ca 19 500 kr och tjänstepensionen ca 9 000 kr. Det ger en total på 28 500 kr före skatt.
+              </p>
+              <p class="text-base text-primary font-black italic">
+                Resonemang: Detta innebär ett inkomstbortfall på nästan 40%. För att bibehålla samma levnadsstandard som under yrkeslivet krävs ofta ett privat sparande eller en amorteringsplan som sänker utgifterna i motsvarande grad.
+              </p>
+            </div>
+            <div class="p-10 bg-muted/30 border border-border rounded-[2.5rem] space-y-6">
+              <h4 class="text-xl font-black tracking-tighter">Effekten av inkomsttak</h4>
+              <p class="text-sm text-muted-foreground leading-relaxed">
+                Den allmänna pensionen har ett intjänandetak som för 2026 motsvarar en månadslön på ca 52 125 kr (7,5 inkomstbasbelopp). För inkomster över denna nivå tjänar du inte in mer till din allmänna pension. Detta gör tjänstepensionen och det privata sparandet särskilt centralt för höginkomsttagare för att undvika ett dramatiskt fall i disponibel inkomst.
+              </p>
+            </div>
           </div>
         </section>
 
         <!-- Pensionspyramiden -->
         <section class="not-prose space-y-12">
-          <h3 class="text-3xl md:text-5xl font-black tracking-tighter text-center italic opacity-50">Pensionspyramiden — Bas, Mitten & Topp</h3>
+          <h3 class="text-3xl md:text-5xl font-black tracking-tighter text-center italic opacity-50">Systemets uppbyggnad</h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="p-8 bg-muted/30 border border-border rounded-[2rem] space-y-4 relative overflow-hidden group">
               <div class="absolute -right-4 -bottom-4 text-7xl font-black text-primary/5 group-hover:text-primary/10 transition-colors">01</div>
               <div class="text-primary font-black text-xs uppercase tracking-widest bg-primary/10 w-fit px-3 py-1 rounded-full">Bas</div>
               <h4 class="text-xl font-black tracking-tighter">Allmän pension</h4>
-              <p class="text-sm text-muted-foreground">Grunden från staten. Tjänas in via inkomst, föräldrapenning och sjukpenning. Räcker sällan ensam.</p>
+              <p class="text-sm text-muted-foreground">Den lagstadgade delen som administreras av Pensionsmyndigheten. Består främst av inkomstpension och den mindre men viktiga premiepensionen (PPM).</p>
             </div>
             <div class="p-8 bg-muted/30 border border-border rounded-[2rem] space-y-4 relative overflow-hidden group">
               <div class="absolute -right-4 -bottom-4 text-7xl font-black text-primary/5 group-hover:text-primary/10 transition-colors">02</div>
               <div class="text-primary font-black text-xs uppercase tracking-widest bg-primary/10 w-fit px-3 py-1 rounded-full">Mitten</div>
               <h4 class="text-xl font-black tracking-tighter">Tjänstepension</h4>
-              <p class="text-sm text-muted-foreground">Förstärkningen från jobbet. Ofta den del som gör störst skillnad mellan en svag och en rimlig nivå.</p>
+              <p class="text-sm text-muted-foreground">Pension från din arbetsgivare. För de allra flesta är detta den mest avgörande faktorn för en flexibel och trygg ekonomi efter yrkeslivet.</p>
             </div>
             <div class="p-8 bg-muted/30 border border-border rounded-[2rem] space-y-4 relative overflow-hidden group">
               <div class="absolute -right-4 -bottom-4 text-7xl font-black text-primary/5 group-hover:text-primary/10 transition-colors">03</div>
-              <div class="text-primary font-black text-xs uppercase tracking-widest bg-primary/10 w-fit px-3 py-1 rounded-full">Topp</div>
+              <div class="text-primary font-black text-xs uppercase tracking-widest bg-primary/10 w-fit px-3 py-1 rounded-full">Komplement</div>
               <h4 class="text-xl font-black tracking-tighter">Privat sparande</h4>
-              <p class="text-sm text-muted-foreground">Det du bygger själv för extra marginal, flexibilitet eller för att kunna gå i pension tidigare.</p>
+              <p class="text-sm text-muted-foreground">Ett frivilligt sparande som ger extra marginaler. Mycket viktigt för egenföretagare eller för den som önskar gå i pension tidigare än planerat.</p>
             </div>
           </div>
         </section>
 
-        <!-- Allmän Pension -->
-        <section class="not-prose space-y-12">
-          <div class="p-12 md:p-16 bg-muted/30 border border-border rounded-[3.5rem] space-y-10 relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
-            <div class="space-y-6">
-              <h3 class="text-4xl md:text-6xl font-black tracking-tighter">1. Allmän pension — Statens bidrag</h3>
-              <p class="text-xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
-                Den allmänna pensionen är den del som administreras av Pensionsmyndigheten. Den tjänas in varje år du arbetar och betalar skatt. Totalt sätts 18,5% av din inkomst av till systemet.
-              </p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div class="space-y-4 p-8 bg-card border border-border rounded-3xl">
-                <h4 class="text-xl font-black tracking-tighter">Inkomstpension (16%)</h4>
-                <p class="text-sm text-muted-foreground italic">Systemets ryggrad. Pengarna du tjänar in i dag används för att betala ut dagens pensioner, medan du får en rätt mot framtida intäkter.</p>
-              </div>
-              <div class="space-y-4 p-8 bg-card border border-border rounded-3xl">
-                <h4 class="text-xl font-black tracking-tighter">Premiepension (2,5%)</h4>
-                <p class="text-sm text-muted-foreground italic">Här placeras pengarna i fonder. Det är den del du själv kan påverka genom att välja fonder i det s.k. PPM-systemet.</p>
-              </div>
-            </div>
-
-            <div class="p-8 bg-primary/5 border border-primary/20 rounded-[2rem] space-y-4">
-              <div class="flex items-center gap-2 text-primary font-black text-xs uppercase tracking-widest">
-                <span class="w-2 h-2 rounded-full bg-primary"></span> Riktålder 2026
-              </div>
-              <p class="text-base text-muted-foreground leading-relaxed font-medium">
-                Pensionssystemet använder nu en <span class="text-foreground font-black italic">riktålder</span> som anpassas efter medellivslängden. För dem födda 1963 eller senare är riktåldern 67 år. Detta påverkar när du tidigast kan börja ta ut olika delar av din pension.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <!-- Tjänstepension -->
+        <!-- Tjänstepension Deep-Dive -->
         <section class="not-prose space-y-16">
           <div class="space-y-6">
-            <h3 class="text-3xl md:text-5xl font-black tracking-tighter">2. Tjänstepension — Jobbets viktigaste förmån</h3>
+            <h3 class="text-3xl md:text-5xl font-black tracking-tighter">2. Tjänstepension — Systemets viktigaste förstärkning</h3>
             <p class="text-xl text-muted-foreground leading-relaxed font-medium max-w-3xl">
-              Utan tjänstepension kan din pension bli dramatiskt lägre. Har du kollektivavtal sker detta automatiskt. Saknar du det, måste du själv förhandla fram avsättningar.
+              För de flesta anställda är tjänstepensionen den del som avgör om pensionen blir en ekonomisk trygghet eller en begränsning. Genom att förstå dess beståndsdelar kan du fatta mer välgrundade beslut.
             </p>
           </div>
 
-          <!-- Tabell: Trad vs Fond -->
-          <div class="overflow-hidden border border-border rounded-[2.5rem] bg-card/50">
-            <table class="w-full text-left border-collapse">
-              <thead>
-                <tr class="bg-muted/50">
-                  <th class="p-6 text-xs font-black uppercase tracking-widest text-muted-foreground">Egenskap</th>
-                  <th class="p-6 text-xs font-black uppercase tracking-widest text-primary">Traditionell försäkring</th>
-                  <th class="p-6 text-xs font-black uppercase tracking-widest text-primary">Fondförsäkring</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-border/50">
-                <tr>
-                  <td class="p-6 text-sm font-black text-muted-foreground">Vem förvaltar?</td>
-                  <td class="p-6 text-sm font-medium">Bolaget sköter allt</td>
-                  <td class="p-6 text-sm font-medium">Du väljer fonder själv</td>
-                </tr>
-                <tr>
-                  <td class="p-6 text-sm font-black text-muted-foreground">Risknivå</td>
-                  <td class="p-6 text-sm font-medium">Lägre (blandning)</td>
-                  <td class="p-6 text-sm font-medium">Högre (ofta aktier)</td>
-                </tr>
-                <tr>
-                  <td class="p-6 text-sm font-black text-muted-foreground">Garanti</td>
-                  <td class="p-6 text-sm font-medium">Ofta garanterat belopp</td>
-                  <td class="p-6 text-sm font-medium">Inga garantier</td>
-                </tr>
-                <tr>
-                  <td class="p-6 text-sm font-black text-muted-foreground">Passar för</td>
-                  <td class="p-6 text-sm font-medium">Trygghetssökande / 55+</td>
-                  <td class="p-6 text-sm font-medium">Lång horisont / aktiv</td>
-                </tr>
-              </tbody>
-            </table>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="p-10 bg-muted/30 border border-border rounded-[2.5rem] space-y-6">
+              <h4 class="text-xl font-black tracking-tighter">Flytt av pensionskapital kräver analys</h4>
+              <p class="text-sm text-muted-foreground leading-relaxed font-medium">
+                Många har sina pensionspengar utspridda hos flera olika bolag efter olika anställningar. Även om det kan verka lockande att samla allt på ett ställe för bättre överblick och lägre avgifter, bör äldre pensionsförsäkringar inte flyttas slentrianmässigt. 
+              </p>
+              <p class="text-sm text-primary font-black italic">
+                Resonemang: Vissa äldre avtal kan ha värdefulla garantier, såsom en garanterad ränta eller förmånliga villkor för utbetalning, som går förlorade vid en flytt. Kontrollera alltid flyttavgifter och jämför det nya bolagets villkor mot det gamla innan du agerar.
+              </p>
+            </div>
+            <div class="p-10 bg-card border border-border rounded-[2.5rem] space-y-6">
+              <h4 class="text-xl font-black tracking-tighter">Efterlevandeskydd — En avvägning av trygghet</h4>
+              <p class="text-sm text-muted-foreground leading-relaxed font-medium">
+                Återbetalningsskydd innebär att dina efterlevande får ditt pensionskapital om du går bort under utbetalningstiden. Detta ger en trygghet för familjen, men det innebär också att du avstår från så kallade arvsvinster.
+              </p>
+              <p class="text-sm text-muted-foreground leading-relaxed italic">
+                Analys: För en person utan hemmavarande barn eller en partner med god egen ekonomi kan det vara värt att överväga att ta bort skyddet. Detta kan öka den egna månatliga pensionen märkbart, ofta med 5–15 % beroende på ålder och kapital.
+              </p>
+            </div>
           </div>
 
           <!-- Löneväxling Faktaruta -->
-          <div class="p-10 md:p-12 bg-primary/5 border border-primary/20 rounded-[3rem] space-y-6 relative overflow-hidden">
+          <div class="p-10 md:p-12 bg-primary/5 border border-primary/20 rounded-[3rem] space-y-8 relative overflow-hidden">
             <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
-            <h4 class="text-2xl font-black tracking-tighter">Pro-tip: Löneväxling</h4>
-            <p class="text-muted-foreground leading-relaxed font-medium">
-              Tjänar du över <span class="text-foreground font-black">56 100 kr/mån (2026)</span>? Då kan löneväxling vara extremt fördelaktigt. Du byter bruttolön mot extra pension, och får ofta 5,8% extra av arbetsgivaren eftersom de sparar in på sociala avgifter.
-            </p>
+            <div class="space-y-4 relative z-10">
+              <h4 class="text-2xl font-black tracking-tighter">Löneväxling — Förutsättningar och risker</h4>
+              <p class="text-muted-foreground leading-relaxed font-medium max-w-2xl">
+                Att byta en del av bruttolönen mot extra pensionsavsättning kan för vissa vara ett mycket effektivt sätt att spara, men det är inte ett verktyg som passar alla. Det kräver att din inkomst ligger på en nivå där du inte kompromissar med det allmänna skyddsnätet.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+              <div class="space-y-4">
+                <h5 class="text-sm font-black uppercase tracking-widest text-primary">Kritiska faktorer att kontrollera:</h5>
+                <ul class="space-y-3">
+                  <li class="flex items-start gap-3 text-sm text-muted-foreground">
+                    <div class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></div>
+                    Din lön efter växling bör ligga över ca 56 100 kr (8,07 IBB, 2026). Annars minskar du din intjäning till allmän pension.
+                  </li>
+                  <li class="flex items-start gap-3 text-sm text-muted-foreground">
+                    <div class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></div>
+                    Arbetsgivaren bör föra över sin besparing på sociala avgifter (ca 5,8 %) till din pension för att kalkylen ska bli attraktiv.
+                  </li>
+                  <li class="flex items-start gap-3 text-sm text-muted-foreground">
+                    <div class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></div>
+                    Andra ersättningar som sjukpenning, föräldrapenning och a-kassa kan påverkas negativt beroende på hur avtalet är utformat.
+                  </li>
+                  <li class="flex items-start gap-3 text-sm text-muted-foreground">
+                    <div class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></div>
+                    Kontrollera att de fonder du placerar i har rimliga avgifter och att du har kontroll över placeringen.
+                  </li>
+                </ul>
+              </div>
+              <div class="p-6 bg-card border border-border rounded-2xl">
+                <p class="text-xs text-muted-foreground italic leading-relaxed">
+                  Löneväxling är en långsiktig bindning av kapital. Vid ett eventuellt behov av pengar före pensionering är kapitalet i de flesta fall helt låst. Gör därför alltid en samlad bedömning av din likviditet och dina framtida planer innan du påbörjar en löneväxling.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
-
         <!-- Privat Sparande -->
         <section class="not-prose space-y-12">
-          <div class="p-12 md:p-16 bg-muted/30 border border-border rounded-[3.5rem] space-y-10 relative overflow-hidden">
+          <div class="p-12 md:p-16 bg-muted/30 border border-border rounded-[3.5rem] space-y-12 relative overflow-hidden">
              <div class="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2"></div>
-             <h3 class="text-4xl md:text-6xl font-black tracking-tighter leading-tight">3. Privat sparande — <br /><span class="text-primary italic">Din ekonomiska frihet</span></h3>
+             <h3 class="text-4xl md:text-6xl font-black tracking-tighter leading-tight">3. Privat sparande — <br /><span class="text-primary italic">Ett strategiskt komplement</span></h3>
              
-             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div class="space-y-6">
+             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="space-y-8">
                   <p class="text-xl text-muted-foreground leading-relaxed font-medium">
-                    Privat sparande är grädden på moset. För många räcker det allmänna och tjänstepensionen till ca 60-70% av slutlönen. Vill du ha mer, eller gå tidigare, måste du spara själv.
+                    Privat sparande fungerar ofta som en viktig pusselbit för att skapa flexibilitet. För vissa är det ett sätt att sätta "guldkant" på tillvaron, medan det för andra — exempelvis egenföretagare eller de som saknar tjänstepension — utgör en helt nödvändig del av den framtida försörjningen.
                   </p>
-                  <ul class="space-y-4">
-                    <li class="flex items-start gap-4 p-4 bg-card border border-border rounded-xl">
-                      <div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-xs shrink-0">✓</div>
-                      <p class="text-sm font-medium">Använd ISK för låg skatt och enkelhet.</p>
-                    </li>
-                    <li class="flex items-start gap-4 p-4 bg-card border border-border rounded-xl">
-                      <div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-xs shrink-0">✓</div>
-                      <p class="text-sm font-medium">Globala indexfonder är ofta den bästa basen.</p>
-                    </li>
-                    <li class="flex items-start gap-4 p-4 bg-card border border-border rounded-xl">
-                      <div class="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-xs shrink-0">✓</div>
-                      <p class="text-sm font-medium">Håll avgifterna under 0,40% totalt.</p>
-                    </li>
-                  </ul>
-                </div>
-                
-                <!-- Calculator Promo -->
-                <div class="p-10 bg-gradient-to-br from-primary/20 via-primary/5 to-transparent border border-primary/20 rounded-[2.5rem] flex flex-col justify-between space-y-8 shadow-2xl shadow-primary/10">
+                  
                   <div class="space-y-4">
-                    <h4 class="text-2xl font-black tracking-tighter italic">Se vad ditt sparande kan bli</h4>
-                    <p class="text-sm text-muted-foreground font-medium leading-relaxed">
-                      Liten insats i dag kan bli miljoner i framtiden. Använd våra kalkylatorer för att räkna på ränta-på-ränta och målsparande.
+                    <h4 class="text-xl font-black tracking-tighter italic">Egenföretagarens särskilda ansvar</h4>
+                    <p class="text-sm text-muted-foreground leading-relaxed font-medium">
+                      Som egenföretagare agerar du din egen personalavdelning. Utan kollektivavtalets automatik vilar ansvaret helt på dig att kompensera för utebliven tjänstepension. En vanlig rekommendation är att sätta av mellan 4,5 och 6 procent av din bruttoinkomst till ett dedikerat sparande för att hamna i nivå med anställda med tjänstepension.
                     </p>
                   </div>
-                  <a href="/verktyg" class="inline-flex items-center justify-center px-10 py-4 bg-primary text-primary-foreground rounded-full font-black uppercase tracking-widest text-[10px] hover:scale-105 transition-all shadow-xl shadow-primary/20">
-                    Öppna Kalkylatorer
-                  </a>
+
+                  <div class="p-8 bg-card border border-border rounded-3xl space-y-6">
+                    <h5 class="text-sm font-black uppercase tracking-widest text-primary">Vägledande prioritering:</h5>
+                    <ol class="space-y-3">
+                      <li class="flex items-center gap-4 text-sm font-medium">
+                        <span class="text-primary font-black">1.</span> Buffertsparande för oförutsedda utgifter
+                      </li>
+                      <li class="flex items-center gap-4 text-sm font-medium">
+                        <span class="text-primary font-black">2.</span> Amortering på skulder med hög ränta
+                      </li>
+                      <li class="flex items-center gap-4 text-sm font-medium">
+                        <span class="text-primary font-black">3.</span> Säkerställande av en stabil tjänstepensionsavsättning
+                      </li>
+                      <li class="flex items-center gap-4 text-sm font-medium">
+                        <span class="text-primary font-black">4.</span> Kontinuerlig uppföljning och prognos via minPension
+                      </li>
+                      <li class="flex items-center gap-4 text-sm font-medium">
+                        <span class="text-primary font-black">5.</span> Månadssparande i breda fonder (även mindre belopp gör skillnad över tid)
+                      </li>
+                      <li class="flex items-center gap-4 text-sm font-medium">
+                        <span class="text-primary font-black">6.</span> Översyn av försäkringsskydd och efterlevandeskydd
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+
+                <!-- Inflation och Räkneexempel -->
+                <div class="space-y-8">
+                  <div class="p-10 bg-gradient-to-br from-primary/20 via-primary/5 to-transparent border border-primary/20 rounded-[2.5rem] space-y-6">
+                    <h4 class="text-2xl font-black tracking-tighter italic">Hänsyn till inflation och köpkraft</h4>
+                    <p class="text-base text-muted-foreground leading-relaxed font-medium">
+                      Ett vanligt tankefel är att se på framtida belopp i dagens penningvärde. Med en inflation på 2 % per år halveras köpkraften på ca 35 år. Det innebär att den pension du ser i din prognos i dag kommer att räcka till betydligt mindre i framtiden om den inte är inflationsskyddad.
+                    </p>
+                    <p class="text-sm text-primary font-black italic">
+                      Analys: För att bibehålla köpkraften över tid är det ofta nödvändigt att ha en betydande del av kapitalet placerat i tillgångar som historiskt överträffat inflationen, exempelvis aktier eller aktiefonder, särskilt under uppbyggnadsfasen.
+                    </p>
+                  </div>
+
+                  <div class="p-10 bg-card border border-border rounded-[2.5rem] space-y-6">
+                    <h4 class="text-xl font-black tracking-tighter">Avgifternas betydelse</h4>
+                    <p class="text-sm text-muted-foreground leading-relaxed">
+                      Små skillnader i årliga avgifter kan få stora konsekvenser på sikt. En avgiftsskillnad på 0,5 % kan tyckas obetydlig, men över ett helt arbetsliv kan det röra sig om hundratusentals kronor i utebliven pension på grund av förlorad ränta-på-ränta-effekt. 
+                    </p>
+                    <p class="text-sm text-muted-foreground leading-relaxed italic">
+                      Vägledning: Vid val av passiva indexfonder väljer många att söka alternativ med avgifter under 0,40 %. Högre avgifter kan vara motiverade för aktivt förvaltade fonder, men kraven på överavkastning ökar då i motsvarande grad.
+                    </p>
+                  </div>
                 </div>
              </div>
           </div>
         </section>
 
-        <!-- Checklista -->
-        <section class="not-prose p-12 md:p-20 bg-card border border-border rounded-[4rem] relative overflow-hidden shadow-2xl">
+        <!-- NY SEKTION: Uttagsplanering -->
+        <section class="not-prose space-y-12">
+          <div class="space-y-6">
+            <h2 class="text-3xl md:text-5xl font-black tracking-tighter">Uttagsfasen — En strategisk utmaning</h2>
+            <p class="text-lg text-muted-foreground leading-relaxed font-medium max-w-4xl">
+              När det är dags att gå från att spara till att använda kapitalet ställs du inför nya, viktiga val. Uttagsfasen handlar om att optimera utbetalningarna utifrån livslängd, skatt och önskad livskvalitet.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="p-10 bg-muted/30 border border-border rounded-[2.5rem] space-y-6">
+              <h4 class="text-xl font-black tracking-tighter">Temporärt vs Livsvarigt</h4>
+              <p class="text-sm text-muted-foreground leading-relaxed font-medium">
+                Du kan ofta välja att ta ut din tjänstepension under en begränsad tid (t.ex. 5, 10 eller 20 år) eller livsvarigt. Ett kortare uttag ger högre inkomst tidigt, men kan leda till en kraftigt sänkt levnadsstandard senare i livet när de temporära utbetalningarna upphör.
+              </p>
+            </div>
+            <div class="p-10 bg-card border border-border rounded-[2.5rem] space-y-6">
+              <h4 class="text-xl font-black tracking-tighter">Skatt och nettoeffekt</h4>
+              <p class="text-sm text-muted-foreground leading-relaxed font-medium">
+                Pension beskattas som inkomst av tjänst. Om du tar ut många olika pensioner samtidigt riskerar du att hamna över brytpunkten för statlig inkomstskatt (drygt 52 000 kr/månad 2026), vilket innebär att du betalar betydligt mer i skatt på de sista kronorna. 
+              </p>
+              <p class="text-xs text-muted-foreground italic">
+                Resonemang: Genom att sprida ut uttagen och undvika "pensionsstoppar" kan du ofta maximera beloppet du faktiskt får ut på kontot.
+              </p>
+            </div>
+            <div class="p-10 bg-muted/30 border border-border rounded-[2.5rem] space-y-6">
+              <h4 class="text-xl font-black tracking-tighter">Flexibilitet och valfrihet</h4>
+              <p class="text-sm text-muted-foreground leading-relaxed font-medium">
+                Den allmänna pensionen går att pausa eller ändra omfattning på (t.ex. ta ut 25, 50 eller 75 %). Denna flexibilitet är värdefull om du väljer att arbeta deltid efter att du officiellt gått i pension, för att undvika onödigt hög skatt.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Final Summary -->
+        <section class="not-prose p-12 md:p-20 bg-card border border-border rounded-[4rem] relative overflow-hidden shadow-2xl space-y-12">
           <div class="absolute -top-20 -right-20 w-80 h-80 bg-primary/10 rounded-full blur-[100px]"></div>
-          <h3 class="text-3xl md:text-5xl font-black tracking-tighter mb-12">Checklista — 5 saker att göra i dag</h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="flex gap-6 p-8 bg-muted/30 border border-border rounded-3xl hover:border-primary/30 transition-all group">
-              <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-black group-hover:bg-primary group-hover:text-primary-foreground transition-all shrink-0 shadow-lg shadow-primary/5">1</div>
-              <div class="space-y-2">
-                <h5 class="font-black text-lg">Logga in på minPension.se</h5>
-                <p class="text-sm text-muted-foreground font-medium">Få hela överblicken på 2 minuter. Den samlade prognosen är det viktigaste måttet.</p>
-              </div>
+          <div class="space-y-6 relative z-10">
+            <h3 class="text-3xl md:text-5xl font-black tracking-tighter">Sammanfattning: Din handlingsplan</h3>
+            <p class="text-xl text-muted-foreground max-w-2xl font-medium leading-relaxed">
+              Pension handlar inte om att vara perfekt, utan om att börja i tid. Ju tidigare du tar kontroll, desto mindre behöver du oroa dig senare.
+            </p>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
+            <div class="p-6 bg-muted/30 border border-border rounded-3xl space-y-3">
+              <div class="text-primary font-black text-xs tracking-widest uppercase">Steg 1</div>
+              <p class="text-sm font-black italic">Skaffa överblick på minPension.</p>
             </div>
-            <div class="flex gap-6 p-8 bg-muted/30 border border-border rounded-3xl hover:border-primary/30 transition-all group text-balance">
-              <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-black group-hover:bg-primary group-hover:text-primary-foreground transition-all shrink-0 shadow-lg shadow-primary/5">2</div>
-              <div class="space-y-2">
-                <h5 class="font-black text-lg">Hitta tjänstepensionen</h5>
-                <p class="text-sm text-muted-foreground font-medium">Kontrollera hos din arbetsgivare att avsättning sker. Saknas den? Begär högre lön eller eget sparande.</p>
-              </div>
+            <div class="p-6 bg-muted/30 border border-border rounded-3xl space-y-3">
+              <div class="text-primary font-black text-xs tracking-widest uppercase">Steg 2</div>
+              <p class="text-sm font-black italic">Se över villkoren för tjänstepensionen.</p>
             </div>
-            <div class="flex gap-6 p-8 bg-muted/30 border border-border rounded-3xl hover:border-primary/30 transition-all group">
-              <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-black group-hover:bg-primary group-hover:text-primary-foreground transition-all shrink-0 shadow-lg shadow-primary/5">3</div>
-              <div class="space-y-2">
-                <h5 class="font-black text-lg">Se över avgifter</h5>
-                <p class="text-sm text-muted-foreground font-medium">Över 0,5% för en indexfond är för dyrt. Flytta till billigare alternativ för att rädda din framtida pension.</p>
-              </div>
+            <div class="p-6 bg-muted/30 border border-border rounded-3xl space-y-3">
+              <div class="text-primary font-black text-xs tracking-widest uppercase">Steg 3</div>
+              <p class="text-sm font-black italic">Utvärdera avgifter och fondval.</p>
             </div>
-            <div class="flex gap-6 p-8 bg-muted/30 border border-border rounded-3xl hover:border-primary/30 transition-all group">
-              <div class="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-black group-hover:bg-primary group-hover:text-primary-foreground transition-all shrink-0 shadow-lg shadow-primary/5">4</div>
-              <div class="space-y-2">
-                <h5 class="font-black text-lg">Välj risknivå efter ålder</h5>
-                <p class="text-sm text-muted-foreground font-medium">Långt kvar? Välj fondförsäkring med 100% aktier. Nära pension? Börja växla ned till tryggare balans.</p>
-              </div>
+            <div class="p-6 bg-muted/30 border border-border rounded-3xl space-y-3">
+              <div class="text-primary font-black text-xs tracking-widest uppercase">Steg 4</div>
+              <p class="text-sm font-black italic">Påbörja eller justera ett långsiktigt sparande.</p>
             </div>
+            <div class="p-6 bg-muted/30 border border-border rounded-3xl space-y-3">
+              <div class="text-primary font-black text-xs tracking-widest uppercase">Steg 5</div>
+              <p class="text-sm font-black italic">Gör en årlig översyn av din prognos.</p>
+            </div>
+          </div>
+
+
+          <div class="pt-12 border-t border-border/50 relative z-10">
+            <p class="text-2xl md:text-3xl font-black tracking-tighter leading-tight italic max-w-3xl">
+              "Den som börjar i tid behöver sällan vara perfekt. Den som väntar för länge tvingas nästan alltid kompensera med högre sparande eller lägre framtida konsumtion."
+            </p>
           </div>
         </section>
 
@@ -1993,13 +2055,13 @@ export const guides: Record<string, Guide> = {
               <div class="p-10 bg-muted/20 border border-border rounded-[2.5rem] space-y-4">
                 <h5 class="text-xl font-black tracking-tight">Är premiepensionen (PPM) viktig?</h5>
                 <p class="text-base text-muted-foreground leading-relaxed font-medium">
-                  Ja, den är motorn i den allmänna pensionen. Genom att välja bra fonder med låga avgifter kan kapitalet växa betydligt mer än i den tröga inkomstpensionen. Standardvalet AP7 Söfa har historiskt presterat mycket bra.
+                  Ja, men det är viktigt att komma ihåg att den utgör en mindre del (2,5 % av din pensionsgrundande inkomst) jämfört med inkomstpensionen (16 %), som är den största delen av den allmänna pensionen. Premiepensionens betydelse ligger i att du själv kan välja fonder och därmed påverka avkastningen.
                 </p>
               </div>
               <div class="p-10 bg-muted/20 border border-border rounded-[2.5rem] space-y-4">
                 <h5 class="text-xl font-black tracking-tight">Hur mycket bör man spara privat?</h5>
                 <p class="text-base text-muted-foreground leading-relaxed font-medium">
-                  Det beror på dina mål, men en tumregel är att försöka spara ca 10% av din nettolön långsiktigt. För specifikt pensionssparande kan 500–2 000 kr i månaden göra underverk om du börjar i tid.
+                  Behovet är individuellt och beror på dina framtida mål och när du planerar att gå i pension. Många väljer att försöka spara ca 10 % av sin nettolön långsiktigt, men även mindre belopp som 500–1 000 kr i månaden kan göra stor skillnad över tid tack vare ränta-på-ränta-effekten.
                 </p>
               </div>
             </div>
@@ -2011,6 +2073,7 @@ export const guides: Record<string, Guide> = {
     readTime: "8 min",
     part: 1,
     icon: "Shield",
+    publishedDate: "2026-03-15",
     faqSchema: {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -2028,7 +2091,7 @@ export const guides: Record<string, Guide> = {
           "name": "Vad är skillnaden mellan inkomstpension och premiepension?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Inkomstpension är den stora delen av den allmänna pensionen. Premiepension är den mindre del som placeras i fonder. Av pensionsrätten går 16 procent till inkomstpension och 2,5 procent till premiepension."
+            "text": "Inkomstpensionen är den största delen av den allmänna pensionen och grundas på 16 procent av din pensionsgrundande inkomst. Premiepensionen är en mindre del, 2,5 procent, som placeras i fonder där du själv kan välja risknivå och inriktning."
           }
         },
         {

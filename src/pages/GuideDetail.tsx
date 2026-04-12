@@ -92,7 +92,7 @@ export default function GuideDetail() {
             </div>
             <div className="space-y-1">
               <div className="text-sm font-black tracking-tight">Börsanalys.se Redaktionen</div>
-              <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.2em]">Publicerad: 2025-03-20</div>
+              <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.2em]">Publicerad: {guide.publishedDate || "2025-03-20"}</div>
             </div>
           </div>
           <div className="flex items-center gap-3">
