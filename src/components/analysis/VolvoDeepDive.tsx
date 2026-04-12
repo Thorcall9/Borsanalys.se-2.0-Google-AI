@@ -8,6 +8,7 @@ import {
 import AdUnit from "../AdUnit";
 import MultiplexAd from "../MultiplexAd";
 import NextAnalysisButton from "./NextAnalysisButton";
+import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -962,29 +963,6 @@ export default function VolvoDeepDive({
           </FadeIn>
         </div>
 
-        {/* ── FRISKRIVNING ── */}
-        <div className="mt-16 pt-8 border-t border-slate-200">
-          <div className="bg-slate-50 rounded-2xl p-6 md:p-8">
-            <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
-              <Info size={16} className="text-slate-400" />
-              Friskrivning
-            </h3>
-            <div className="space-y-4 text-xs text-slate-500 leading-relaxed">
-              <p>
-                Informationen på denna webbplats är avsedd att utgöra allmän marknadsinformation och ska inte betraktas som finansiell rådgivning, investeringsrekommendation eller uppmaning att köpa eller sälja finansiella instrument.
-              </p>
-              <p>
-                Investeringar i aktier och andra finansiella instrument innebär alltid en risk. Det investerade kapitalet kan både öka och minska i värde, och det är inte säkert att du får tillbaka hela det investerade beloppet. Historisk avkastning är ingen garanti för framtida resultat.
-              </p>
-              <p>
-                All information tillhandahålls i informationssyfte och utan garantier avseende fullständighet, korrekthet eller aktualitet. Varje investerare ansvarar själv för sina investeringsbeslut och uppmanas att göra en egen analys samt, vid behov, rådgöra med en licensierad finansiell rådgivare.
-              </p>
-              <p>
-                Börsanalys.se och dess företrädare friskriver sig från allt ansvar för direkta eller indirekta förluster som kan uppstå till följd av användning av informationen på webbplatsen.
-              </p>
-            </div>
-          </div>
-        </div>
 
         {nextAnalysis && (
           <div className="max-w-5xl mx-auto px-6 md:px-12 mt-16 mb-8 text-left">
@@ -993,6 +971,7 @@ export default function VolvoDeepDive({
         )}
         
         <MultiplexAd />
+        <AnalysisDisclaimer theme="light" />
       </div>
     </div>
   );

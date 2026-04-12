@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Menu, X, ArrowLeft, Star, StarOff, Loader2 } from 'lucide-react';
 import AdZone from '../AdZone';
 import MultiplexAd from '../MultiplexAd';
+import AnalysisDisclaimer from './AnalysisDisclaimer';
 import { AnalysisData } from '../../data/analyses';
 import NextAnalysisButton from './NextAnalysisButton';
 
@@ -241,6 +242,7 @@ export default function AnalysisLayout({
           <div className="mt-20 border-t border-border/50 pt-16">
             <AdZone id="analysis-bottom" type="banner" />
             <MultiplexAd />
+            <AnalysisDisclaimer theme={theme} />
           </div>
         </div>
       </main>

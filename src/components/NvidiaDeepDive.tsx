@@ -22,6 +22,7 @@ import {
 import AdUnit from "./AdUnit";
 import MultiplexAd from "./MultiplexAd";
 import NextAnalysisButton from "./analysis/NextAnalysisButton";
+import AnalysisDisclaimer from "./analysis/AnalysisDisclaimer";
 import { AnalysisData } from "../data/analyses";
 
 const T = {
@@ -1173,17 +1174,13 @@ export default function NvidiaDeepDive({
             />
           </div>
 
-          <div className="mt-16 p-6 bg-slate-50 rounded-2xl border border-slate-100">
-            <p className="text-[10px] text-slate-400 leading-relaxed">
-              <span className="font-bold text-slate-500">DISCLAIMER:</span> Denna analys är framtagen av börsanalys.se för informationsändamål och utgör inte finansiell rådgivning. Historisk avkastning garanterar inte framtida avkastning. Investering i aktier innebär alltid risk.
-            </p>
-          </div>
           {nextAnalysis && (
             <div className="max-w-7xl mx-auto px-6 md:px-10 mt-20">
               <NextAnalysisButton analysis={nextAnalysis} />
             </div>
           )}
           <MultiplexAd />
+          <AnalysisDisclaimer theme="light" />
         </section>
       </div>
     </div>

@@ -6,6 +6,7 @@ import {
   Tooltip, ResponsiveContainer, Cell
 } from "recharts";
 import AdUnit from "../AdUnit";
+import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -903,7 +904,7 @@ export default function HandelsbankenDeepDive({
             </Card>
           </FadeIn>
         </div>
-
+        <AnalysisDisclaimer theme="light" />
       </div>
     </div>
   );

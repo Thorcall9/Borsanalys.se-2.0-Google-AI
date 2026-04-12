@@ -54,6 +54,7 @@ export default function App() {
                       <Route path="/aktier/:slug" element={<StockHub />} />
                       <Route path="/guider" element={<Guides />} />
                       <Route path="/guider/:slug" element={<GuideDetail />} />
+                      <Route path="/borsskolan/:slug" element={<GuideDetail />} />
                       <Route path="/skola" element={<Terminology />} />
                       <Route path="/marknad" element={<MacroDashboard />} />
                       <Route path="/kontakt" element={<Contact />} />

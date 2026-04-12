@@ -23,6 +23,7 @@ import {
 } from "recharts";
 import AdUnit from "../AdUnit";
 import NextAnalysisButton from "./NextAnalysisButton";
+import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -746,6 +747,7 @@ export default function NewWaveDeepDive({
         <div className="space-y-12">
           <AdUnit slot="8273645192" />
           <NextAnalysisButton analysis={nextAnalysis} />
+          <AnalysisDisclaimer theme="light" />
         </div>
       </div>
     </div>

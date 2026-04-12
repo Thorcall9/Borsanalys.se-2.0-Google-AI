@@ -4,6 +4,9 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Clock, BookOpen, Share2, Bookmark, ChevronRight } from "lucide-react";
 import { guides } from "../data/guides";
 import AdZone from "../components/AdZone";
+import SEO from "../components/SEO";
+import AnalysisDisclaimer from "../components/analysis/AnalysisDisclaimer";
+import { Helmet } from "react-helmet-async";
 
 
 export default function GuideDetail() {
@@ -39,6 +42,18 @@ export default function GuideDetail() {
 
   return (
     <div className="max-w-4xl mx-auto px-6 py-24 space-y-16">
+      <SEO 
+        title={guide.seoTitle || guide.title}
+        description={guide.metaDescription || guide.excerpt}
+      />
+      
+      {guide.faqSchema && (
+        <Helmet>
+          <script type="application/ld+json">
+            {JSON.stringify(guide.faqSchema)}
+          </script>
+        </Helmet>
+      )}
       {/* Breadcrumbs */}
       <div className="flex items-center gap-3 text-[10px] font-black text-muted-foreground/40 uppercase tracking-[0.3em]">
         <Link to="/" className="hover:text-primary transition-colors">Hem</Link>
@@ -98,6 +113,8 @@ export default function GuideDetail() {
       >
         <div dangerouslySetInnerHTML={{ __html: guide.content }} />
       </article>
+
+      <AnalysisDisclaimer />
 
       <AdZone id="guide-detail-end" type="inline" discrete={true} />
 

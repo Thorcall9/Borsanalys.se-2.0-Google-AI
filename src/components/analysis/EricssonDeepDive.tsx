@@ -8,6 +8,7 @@ import {
 import AdUnit from "../AdUnit";
 import MultiplexAd from "../MultiplexAd";
 import NextAnalysisButton from "./NextAnalysisButton";
+import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -850,6 +851,7 @@ export default function EricssonDeepDive({
 
       <div className="max-w-7xl mx-auto px-6 md:px-10 pb-20">
         <MultiplexAd />
+        <AnalysisDisclaimer theme="light" />
       </div>
     </div>
   );

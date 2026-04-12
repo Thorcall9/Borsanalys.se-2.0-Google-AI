@@ -9,6 +9,7 @@ import {
 import AdUnit from "../AdUnit";
 import MultiplexAd from "../MultiplexAd";
 import NextAnalysisButton from "./NextAnalysisButton";
+import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -1106,17 +1107,13 @@ export default function EvolutionDeepDive({
               </div>
             </Card>
 
-            <div style={{background:T.bg,border:`1px solid ${T.border}`,borderRadius:10,padding:"14px 18px"}}>
-              <p style={{margin:0,color:T.muted,fontSize:12,lineHeight:1.7}}>
-                <strong style={{color:T.sub}}>Disclaimer:</strong> Denna analys är framtagen av börsanalys.se för informationsändamål och utgör inte finansiell rådgivning. Historisk avkastning garanterar inte framtida avkastning. Investering i aktier innebär alltid risk.
-              </p>
-            </div>
             {nextAnalysis && (
               <div className="mt-10 mb-10 text-left">
                 <NextAnalysisButton analysis={nextAnalysis} />
               </div>
             )}
             <MultiplexAd />
+            <AnalysisDisclaimer theme="light" />
           </FadeIn>
         </section>
       </div>
