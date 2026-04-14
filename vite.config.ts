@@ -19,6 +19,7 @@ export default defineConfig(({mode}) => {
             'vendor-react': ['react', 'react-dom', 'react-router-dom', 'react-helmet-async'],
             'vendor-motion': ['framer-motion', 'motion'],
             'vendor-charts': ['recharts', 'chart.js', 'react-chartjs-2', 'lightweight-charts'],
+            'vendor-firebase': ['firebase/app', 'firebase/auth', 'firebase/firestore'],
             'vendor-icons': ['lucide-react'],
           }
         }

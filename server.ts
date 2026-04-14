@@ -16,6 +16,7 @@ import generateEventsHandler from "./api/admin/generate-events.ts";
 import rssHandler from "./api/rss.ts";
 import sitemapHandler from "./api/sitemap.ts";
 import watchlistHandler from "./api/watchlist.ts";
+import { createTickerNotifications, NotificationType } from "./src/lib/notifications.ts";
 import rateLimit from "express-rate-limit";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import helmet from "helmet";
@@ -110,6 +111,27 @@ async function startServer() {
 
   app.use("/api/", apiLimiter);
 
+  // --- Auth Middleware ---
+  const cronAuthMiddleware = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    const authHeader = req.headers["x-cron-auth"];
+    if (!process.env.CRON_SECRET || authHeader !== process.env.CRON_SECRET) {
+      console.warn(`[SECURITY] Unauthorized access attempt to ${req.originalUrl} from ${req.ip}`);
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+    next();
+  };
+
+  // --- AI Rate Limiter & Security ---
+  const aiRateLimiter = rateLimit({
+    windowMs: 60 * 60 * 1000, // 1 hour
+    max: 30, // limit each IP to 30 requests per hour
+    message: { error: "Gränsen för AI-anrop har uppnåtts. Vänligen försök igen senare." },
+    standardHeaders: true,
+    legacyHeaders: false,
+  });
+
+  const aiBodyLimit = express.json({ limit: "5kb" });
+
   app.get("/api/health", (req, res) => {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
   });
@@ -154,27 +176,21 @@ async function startServer() {
     }
   });
 
-  // Admin: List Subscribers (Prisma)
-  app.get("/api/admin/subscribers", async (req, res) => {
+  // Admin: List Subscribers (Prisma) - PROTECTED
+  app.get("/api/admin/subscribers", cronAuthMiddleware, async (req, res) => {
     try {
       const subscribers = await prisma.subscriber.findMany({
         orderBy: { createdAt: 'desc' }
       });
       res.json(subscribers);
     } catch (error: any) {
-      console.error('Admin Fetch Error:', error);
-      res.status(500).json({ error: "Kunde inte hämta prenumeranter. Kontrollera att DATABASE_URL är konfigurerad." });
+      console.error('Admin Fetch Error:', error.message);
+      res.status(500).json({ error: "Internt serverfel vid hämtning av prenumeranter." });
     }
   });
 
-  // Admin: Update Macro Data (Cron)
-  app.get("/api/admin/update-macro", async (req, res) => {
-    const authHeader = req.headers["x-cron-auth"];
-    if (!process.env.CRON_SECRET || authHeader !== process.env.CRON_SECRET) {
-      console.warn(`[ADMIN] Unauthorized macro update attempt from ${req.ip}`);
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-
+  // Admin: Update Macro Data (Cron) - PROTECTED
+  app.get("/api/admin/update-macro", cronAuthMiddleware, async (req, res) => {
     try {
       console.log("[ADMIN] Starting manual macro update...");
       const result = await updateAllMacroData();
@@ -201,13 +217,64 @@ async function startServer() {
   // Watchlist (MVP)
   app.all("/api/watchlist", watchlistHandler as any);
 
-  // Admin: Generate AI Events
-  app.all("/api/admin/generate-events", generateEventsHandler as any);
+  // Admin: Generate AI Events - PROTECTED
+  app.all("/api/admin/generate-events", cronAuthMiddleware, generateEventsHandler as any);
 
-  // AI Routes (Client safe calls)
+  // Admin: Trigger Test Notification - PROTECTED
+  app.post("/api/admin/test-notification", cronAuthMiddleware, async (req, res) => {
+    const notificationSchema = z.object({
+      ticker: z.string().min(1).max(20),
+      type: z.enum(['price_alert', 'new_analysis', 'news', 'earnings']),
+      title: z.string().min(1).max(100),
+      message: z.string().min(1).max(500)
+    });
+
+    const parsed = notificationSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ error: "Ogiltig input", details: parsed.error.issues });
+    }
+
+    const { ticker, type, title, message } = parsed.data;
+
+    try {
+      const result = await createTickerNotifications({
+        ticker,
+        type: type as NotificationType,
+        title,
+        message
+      });
+      res.json(result);
+    } catch (error: any) {
+      console.error("[ADMIN NOTIF TEST ERROR]", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  /**
+   * CONCEPTUAL FLOW: Publicera Analys & Notifiera
+   * Detta är en mall för hur du kan koppla ihop flödet senare.
+   * 
+   * app.post("/api/admin/publish-analysis", async (req, res) => {
+   *   const { analysisData } = req.body;
+   *   // 1. Spara analysen i DB (Prisma)
+   *   // const analysis = await prisma.analysis.create({ data: analysisData });
+   *   
+   *   // 2. Skicka notiser till alla som bevakar
+   *   // await createTickerNotifications({
+   *   //   ticker: analysis.ticker,
+   *   //   type: 'new_analysis',
+   *   //   title: `Ny analys ute: ${analysis.companyName}`,
+   *   //   message: `Vi har precis publicerat en ny analys av ${analysis.companyName}.`
+   *   // });
+   *   
+   *   // res.json({ success: true });
+   * });
+   */
+
+  // AI Routes (Client safe calls) - PROTECTED WITH RATE LIMIT & VALIDATION
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
   
-  app.post("/api/ai/macro-outlook", async (req, res) => {
+  app.post("/api/ai/macro-outlook", aiBodyLimit, aiRateLimiter, async (req, res) => {
     logger(`[API] Received POST request to /api/ai/macro-outlook`);
     try {
       if (!process.env.GEMINI_API_KEY) {
@@ -298,11 +365,9 @@ Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
 
     } catch (err: any) {
       const errorMsg = err.message || "Okänt serverfel";
-      const errorStack = err.stack || "";
-      logger(`[CRITICAL ERROR] /api/ai/macro-outlook: ${errorMsg}\nStack: ${errorStack}`);
+      logger(`[CRITICAL ERROR] /api/ai/macro-outlook: ${errorMsg}`);
       res.status(500).json({ 
-        error: `Serverfel: ${errorMsg}`,
-        details: process.env.NODE_ENV !== "production" ? errorStack : undefined
+        error: `Serverfel vid generering av makroanalys.`
       });
     }
   });
@@ -315,8 +380,18 @@ Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
   });
 
 
-  app.post("/api/ai/event-insight", async (req, res) => {
-    const { title, description } = req.body;
+  app.post("/api/ai/event-insight", aiBodyLimit, aiRateLimiter, async (req, res) => {
+    const insightSchema = z.object({
+      title: z.string().min(1).max(200),
+      description: z.string().min(1).max(1000)
+    });
+
+    const parsed = insightSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ error: "Ogiltig input", details: parsed.error.issues });
+    }
+
+    const { title, description } = parsed.data;
     try {
       const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
       const result = await model.generateContent(
@@ -324,7 +399,7 @@ Svara EXAKT i detta JSON-format utan någon annan text eller markdown:
       );
       res.json({ insight: result.response.text() || "Kunde inte generera insikt." });
     } catch (err: any) {
-      console.error("AI Insight Error:", err);
+      console.error("AI Insight Error:", err.message);
       res.status(500).json({ error: "Kunde inte generera insikt" });
     }
   });

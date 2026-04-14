@@ -20,12 +20,7 @@ export const Hero: React.FC = () => {
       </div>
 
       <div className="container mx-auto px-6 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-5xl mx-auto"
-        >
+        <div className="max-w-5xl mx-auto">
           <h1 className="text-6xl md:text-[100px] font-black tracking-tighter leading-[0.85] mb-4 text-foreground">
             Börsanalys som gör dig <br />
             <span className="text-primary">till en bättre investerare</span>
@@ -40,12 +35,7 @@ export const Hero: React.FC = () => {
           </p>
 
           {/* Search Bar */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="max-w-2xl mx-auto mb-16"
-          >
+          <div className="max-w-2xl mx-auto mb-16">
             <button 
               onClick={() => openSearch("hero")}
               className="w-full flex items-center gap-4 px-8 py-6 bg-card border border-border rounded-3xl text-muted-foreground hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/5 transition-all text-left group shadow-xl shadow-black/5"
@@ -57,7 +47,7 @@ export const Hero: React.FC = () => {
                 <span>K</span>
               </div>
             </button>
-          </motion.div>
+          </div>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             <motion.button
@@ -78,7 +68,7 @@ export const Hero: React.FC = () => {
               Bli medlem gratis
             </motion.button>
           </div>
-        </motion.div>
+        </div>
 
       </div>
     </section>

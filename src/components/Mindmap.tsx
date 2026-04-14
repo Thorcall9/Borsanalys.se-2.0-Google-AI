@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, type Variants } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, type Variants, useInView } from 'framer-motion';
 import { 
   Building2, Shield, TrendingUp, Globe2, 
   BarChart3, Scale, AlertTriangle, Cpu,
@@ -39,6 +39,69 @@ const containerVariants: Variants = {
 const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
+};
+
+interface StepCardProps {
+  step: typeof METHODOLOGY_STEPS[0];
+}
+
+const StepCard: React.FC<StepCardProps> = ({ step }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "400px" });
+  const Icon = ICONS[step.id] || Zap;
+
+  return (
+    <motion.div
+      ref={ref}
+      variants={itemVariants}
+      className="bg-[#0A111A] border border-white/5 hover:border-[#60A5FA]/40 shadow-2xl hover:shadow-[0_0_40px_rgba(96,165,250,0.1)] transition-all duration-500 p-8 rounded-3xl relative group overflow-hidden min-h-[400px]"
+    >
+      {/* Tech Metadata Label - Light rendering */}
+      <div className="absolute top-4 right-6 flex gap-2">
+         <div className="flex items-center gap-1">
+            <div className="w-1 h-1 rounded-full bg-[#60A5FA]/50" />
+            <span className="text-[8px] font-mono text-white/20 uppercase tracking-widest">Live Scan</span>
+         </div>
+      </div>
+
+      <div className="relative z-10">
+        <div className="w-14 h-14 bg-white/5 text-[#60A5FA] group-hover:bg-[#60A5FA]/20 rounded-2xl flex items-center justify-center mb-8 transition-all duration-500 border border-white/5 group-hover:border-[#60A5FA]/30">
+          <Icon size={28} strokeWidth={1.5} />
+        </div>
+        
+        <div className="text-[10px] font-black text-[#60A5FA] uppercase tracking-[0.2em] mb-2 flex items-center justify-between">
+          <span>Steg {step.id}</span>
+        </div>
+        
+        <h3 className="text-lg font-black text-white mb-4 leading-tight">
+          {step.title}
+        </h3>
+        
+        <p className="text-xs text-slate-400 leading-relaxed mb-6 group-hover:text-slate-300 transition-colors">
+          {step.summary}
+        </p>
+
+        {/* Core Analysis Points - SURGICAL DEFERRAL */}
+        {isInView ? (
+          <div className="space-y-3 pt-6 border-t border-white/5">
+            {step.points.map((point, idx) => (
+              <div key={idx} className="flex gap-3 items-start">
+                <div className="w-1 h-1 rounded-full bg-[#60A5FA] mt-1.5 shrink-0" />
+                <span className="text-[10px] font-medium text-slate-500 group-hover:text-slate-300 transition-colors leading-tight italic">
+                  {point}
+                </span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="h-24" /> // Space holder for the points
+        )}
+      </div>
+
+      {/* Corner accent */}
+      <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-br from-transparent to-[#60A5FA]/5 -rotate-45 translate-x-12 translate-y-12" />
+    </motion.div>
+  );
 };
 
 const Mindmap: React.FC = () => {
@@ -92,57 +155,9 @@ const Mindmap: React.FC = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
         >
           {/* THE 8 CORE CATEGORIES (Blue Theme) */}
-          {METHODOLOGY_STEPS.slice(0, 8).map((step) => {
-            const Icon = ICONS[step.id] || Zap;
-            return (
-              <motion.div
-                key={step.id}
-                variants={itemVariants}
-                className="bg-[#0A111A] border border-white/5 hover:border-[#60A5FA]/40 shadow-2xl hover:shadow-[0_0_40px_rgba(96,165,250,0.1)] transition-all duration-500 p-8 rounded-3xl relative group overflow-hidden"
-              >
-                {/* Tech Metadata Label */}
-                <div className="absolute top-4 right-6 flex gap-2">
-                   <div className="flex items-center gap-1">
-                      <div className="w-1 h-1 rounded-full bg-[#60A5FA]/50" />
-                      <span className="text-[8px] font-mono text-white/20 uppercase tracking-widest">Live Scan</span>
-                   </div>
-                </div>
-
-                <div className="relative z-10">
-                  <div className="w-14 h-14 bg-white/5 text-[#60A5FA] group-hover:bg-[#60A5FA]/20 rounded-2xl flex items-center justify-center mb-8 transition-all duration-500 border border-white/5 group-hover:border-[#60A5FA]/30">
-                    <Icon size={28} strokeWidth={1.5} />
-                  </div>
-                  
-                  <div className="text-[10px] font-black text-[#60A5FA] uppercase tracking-[0.2em] mb-2 flex items-center justify-between">
-                    <span>Steg {step.id}</span>
-                  </div>
-                  
-                  <h3 className="text-lg font-black text-white mb-4 leading-tight">
-                    {step.title}
-                  </h3>
-                  
-                  <p className="text-xs text-slate-400 leading-relaxed mb-6 group-hover:text-slate-300 transition-colors">
-                    {step.summary}
-                  </p>
-
-                  {/* Core Analysis Points - The Detail richness */}
-                  <div className="space-y-3 pt-6 border-t border-white/5">
-                    {step.points.map((point, idx) => (
-                      <div key={idx} className="flex gap-3 items-start">
-                        <div className="w-1 h-1 rounded-full bg-[#60A5FA] mt-1.5 shrink-0" />
-                        <span className="text-[10px] font-medium text-slate-500 group-hover:text-slate-300 transition-colors leading-tight italic">
-                          {point}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Corner accent */}
-                <div className="absolute bottom-0 right-0 w-24 h-24 bg-gradient-to-br from-transparent to-[#60A5FA]/5 -rotate-45 translate-x-12 translate-y-12" />
-              </motion.div>
-            );
-          })}
+          {METHODOLOGY_STEPS.slice(0, 8).map((step) => (
+            <StepCard key={step.id} step={step} />
+          ))}
 
           {/* SECTION IX: VERDICT (GOLD HERO CARD) */}
           {METHODOLOGY_STEPS[8] && (

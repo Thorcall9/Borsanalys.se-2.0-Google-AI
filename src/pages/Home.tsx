@@ -2,13 +2,21 @@ import React from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { motion } from "framer-motion";
 import { Hero } from "../components/Hero";
-import { ScoreCard } from "../components/ScoreCard";
-import { Newsletter } from "../components/Newsletter";
 import SEO from "../components/SEO";
-import Mindmap from "../components/Mindmap";
-import { TrendingUp, Shield, Zap, ArrowRight, ChevronRight } from "lucide-react";
+import { TrendingUp, Shield, Zap, ArrowRight, ChevronRight, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import AdZone from "../components/AdZone";
+
+// Lazy load below-the-fold components
+const ScoreCard = React.lazy(() => import("../components/ScoreCard").then(m => ({ default: m.ScoreCard })));
+const Newsletter = React.lazy(() => import("../components/Newsletter").then(m => ({ default: m.Newsletter })));
+const Mindmap = React.lazy(() => import("../components/Mindmap"));
+
+const SectionLoader = () => (
+  <div className="w-full py-20 flex items-center justify-center opacity-20">
+    <Loader2 className="w-6 h-6 animate-spin" />
+  </div>
+);
 
 export default function Home() {
   const { openLoginModal } = useAuth();
@@ -68,17 +76,21 @@ export default function Home() {
           </motion.div>
         </div>
 
-        <ScoreCard 
-          companyName="Evolution" 
-          ticker="EVO.ST" 
-          totalScore={3.9} 
-          categories={evolutionCategories} 
-          linkTo="/analys/evolution-2025"
-        />
+        <React.Suspense fallback={<SectionLoader />}>
+          <ScoreCard 
+            companyName="Evolution" 
+            ticker="EVO.ST" 
+            totalScore={3.9} 
+            categories={evolutionCategories} 
+            linkTo="/analys/evolution-2025"
+          />
+        </React.Suspense>
       </section>
 
       {/* Methodology Section */}
-      <Mindmap />
+      <React.Suspense fallback={<SectionLoader />}>
+        <Mindmap />
+      </React.Suspense>
 
       {/* Mindmap Section - Moved to hidden route /methodology-blueprint */}
       {/* <section className="py-32 container mx-auto px-6">
@@ -91,7 +103,9 @@ export default function Home() {
       </div>
 
       {/* Newsletter Section */}
-      <Newsletter />
+      <React.Suspense fallback={<SectionLoader />}>
+        <Newsletter />
+      </React.Suspense>
 
       {/* Final CTA */}
       <section className="py-32 container mx-auto px-6">

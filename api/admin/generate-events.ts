@@ -5,7 +5,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 export default async function handler(req: Request, res: Response) {
   // Enkel auth-check (använd samma som för makrouppdatering)
   const authHeader = req.headers['x-cron-auth'];
-  if (authHeader !== 'makro_hemlis_2026_xyz') {
+  if (!process.env.CRON_SECRET || authHeader !== process.env.CRON_SECRET) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 

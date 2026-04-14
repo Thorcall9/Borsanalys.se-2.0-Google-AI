@@ -43,9 +43,6 @@ import EricssonDeepDive from "../components/analysis/EricssonDeepDive";
 import HandelsbankenDeepDive from "../components/analysis/HandelsbankenDeepDive";
 import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
-import { useAuth } from "../contexts/AuthContext";
-import { db, handleFirestoreError, OperationType } from "../firebase";
-import { collection, query, where, addDoc, deleteDoc, doc, onSnapshot } from "firebase/firestore";
 import AdZone from "../components/AdZone";
 
 const DEEP_DIVE_COMPONENTS = {
@@ -63,10 +60,8 @@ const DEEP_DIVE_COMPONENTS = {
 export default function Analysis() {
   const { slug: rawSlug } = useParams();
   const slug = rawSlug === 'evolution' ? 'evolution-2025' : rawSlug;
-  const { user, openLoginModal } = useAuth();
   const [isInWatchlist, setIsInWatchlist] = useState(false);
-  const [watchlistDocId, setWatchlistDocId] = useState<string | null>(null);
-  const [isWatchlistLoading, setIsWatchlistLoading] = useState(false);
+  const [isWatchlistLoading, setIsWatchlistLoading] = useState(true);
   const [realTimeData, setRealTimeData] = useState<Record<string, any>>({});
 
   // Filter states
@@ -110,54 +105,49 @@ export default function Analysis() {
     fetchAllData();
   }, [slug]);
 
+  // Watchlist State (Prisma/API)
   useEffect(() => {
-    if (!user || !analysis) return;
+    if (!analysis) return;
 
-    const path = "watchlists";
-    const q = query(
-      collection(db, path), 
-      where("uid", "==", user.uid),
-      where("symbol", "==", analysis.ticker)
-    );
-
-    const unsub = onSnapshot(q, (snapshot) => {
-      if (!snapshot.empty) {
-        setIsInWatchlist(true);
-        setWatchlistDocId(snapshot.docs[0].id);
-      } else {
-        setIsInWatchlist(false);
-        setWatchlistDocId(null);
+    const checkWatchlistStatus = async () => {
+      setIsWatchlistLoading(true);
+      try {
+        const res = await fetch('/api/watchlist');
+        if (res.ok) {
+          const list = await res.json();
+          const isWatched = list.some((item: any) => item.ticker === analysis.ticker.toUpperCase());
+          setIsInWatchlist(isWatched);
+        }
+      } catch (err) {
+        console.error("Failed to fetch watchlist status:", err);
+      } finally {
+        setIsWatchlistLoading(false);
       }
-    }, (error) => {
-      handleFirestoreError(error, OperationType.LIST, path);
-    });
+    };
 
-    return () => unsub();
-  }, [user, analysis]);
+    checkWatchlistStatus();
+  }, [analysis]);
 
   const toggleWatchlist = async () => {
-    if (!user) {
-      openLoginModal();
-      return;
-    }
-
     if (!analysis) return;
 
     setIsWatchlistLoading(true);
-    const path = "watchlists";
     try {
-      if (isInWatchlist && watchlistDocId) {
-        await deleteDoc(doc(db, path, watchlistDocId));
+      const method = isInWatchlist ? 'DELETE' : 'POST';
+      const res = await fetch('/api/watchlist', {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ticker: analysis.ticker })
+      });
+
+      if (res.ok) {
+        setIsInWatchlist(!isInWatchlist);
       } else {
-        await addDoc(collection(db, path), {
-          uid: user.uid,
-          symbol: analysis.ticker,
-          name: analysis.title,
-          addedAt: new Date()
-        });
+        const err = await res.json();
+        console.error("Watchlist operation failed:", err.error);
       }
     } catch (error) {
-      handleFirestoreError(error, OperationType.WRITE, path);
+      console.error("Error toggling watchlist:", error);
     } finally {
       setIsWatchlistLoading(false);
     }

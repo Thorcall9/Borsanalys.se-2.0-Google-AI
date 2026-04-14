@@ -10,7 +10,7 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isSearchOpen, openSearch, closeSearch } = useSearch();
   const location = useLocation();
-  const { user, openLoginModal, logout } = useAuth();
+  const { user, loading, openLoginModal, logout } = useAuth();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -62,7 +62,9 @@ export default function Header() {
           ))}
           <div className="w-px h-4 bg-border mx-2" />
           
-          {user ? (
+          {loading ? (
+            <div className="w-20 h-4 bg-muted animate-pulse rounded-full" />
+          ) : user ? (
             <div className="flex items-center gap-4">
               <Link to="/profil" className="flex items-center gap-2 group cursor-pointer">
                 {user.photoURL ? (
@@ -152,7 +154,9 @@ export default function Header() {
           ))}
           
           <div className="pt-4">
-            {user ? (
+            {loading ? (
+              <div className="w-full h-12 bg-muted animate-pulse rounded-xl" />
+            ) : user ? (
               <div className="flex items-center justify-between">
                 <Link 
                   to="/profil" 

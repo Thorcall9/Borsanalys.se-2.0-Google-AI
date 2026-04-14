@@ -24,12 +24,18 @@ export default function AdUnit({
     // Endast initiera en gång per instans för att undvika hydratiseringsfel
     if (adRef.current && !initialized.current) {
       initialized.current = true;
-      try {
-        // @ts-ignore - adsbygoogle är externt injicerat via index.html
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (error) {
-        console.error('AdSense error:', error);
-      }
+      
+      // Delay ad loading to prioritize LCP (Hero)
+      const timer = setTimeout(() => {
+        try {
+          // @ts-ignore - adsbygoogle är externt injicerat via index.html
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (error) {
+          console.error('AdSense error:', error);
+        }
+      }, 2000);
+
+      return () => clearTimeout(timer);
     }
   }, []);
 

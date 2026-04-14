@@ -1,7 +1,8 @@
 import React from "react";
 import Header from "./Header";
-import Footer from "./Footer";
 import { LoginModal } from "../LoginModal";
+
+const Footer = React.lazy(() => import("./Footer"));
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -12,7 +13,9 @@ export default function Layout({ children }: LayoutProps) {
     <div className="flex flex-col min-h-screen">
       <Header />
       <main className="flex-grow">{children}</main>
-      <Footer />
+      <React.Suspense fallback={<div className="h-40" />}>
+        <Footer />
+      </React.Suspense>
       <LoginModal />
     </div>
   );
