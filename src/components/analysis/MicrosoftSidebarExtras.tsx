@@ -29,7 +29,7 @@ export const MicrosoftSidebarExtras: React.FC<MicrosoftSidebarExtrasProps> = ({
   isMobile = false
 }) => {
   return (
-    <div className={`space-y-10 ${isMobile ? 'mt-12 pt-12 border-t border-border/50 px-6' : 'px-8 pb-16'}`}>
+    <div className={`space-y-10 ${isMobile ? 'mt-12 pt-12 border-t border-border/50 px-6' : 'px-8 pb-32'}`}>
       
       {/* 1. Identity & Quality Signal - MOVED UP & BOLDER */}
       {!isMobile && (

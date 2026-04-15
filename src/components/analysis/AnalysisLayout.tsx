@@ -133,7 +133,7 @@ export default function AnalysisLayout({
 
       {/* Sidebar */}
       <aside className={`
-        fixed top-0 left-0 h-screen ${wideSidebar ? 'w-80 border-r-4 border-primary' : 'w-72'} z-[95] flex flex-col transition-transform duration-500 border-r border-border
+        fixed top-0 left-0 h-screen ${wideSidebar ? 'w-80 border-r-4 border-primary' : 'w-72'} z-[95] flex flex-col transition-transform duration-500 border-r border-border overflow-hidden
         ${isLight ? 'bg-card' : 'bg-card'}
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
@@ -142,7 +142,7 @@ export default function AnalysisLayout({
             {ticker === 'MSFT' ? 'Microsoft Test Active' : 'Debug Active'}
           </div>
         )}
-        <div className="p-8 border-b border-border">
+        <div className="p-8 border-b border-border flex-shrink-0">
           <Link to="/analys" className="inline-flex items-center gap-2 text-[10px] font-black text-muted-foreground hover:text-primary transition-colors mb-8 uppercase tracking-widest">
             <ArrowLeft size={12} /> Tillbaka till arkiv
           </Link>
@@ -186,7 +186,7 @@ export default function AnalysisLayout({
           )}
         </div>
         
-        <nav className="flex-1 py-8 overflow-y-auto scrollbar-hide">
+        <nav className="flex-1 py-8 overflow-y-auto premium-scrollbar min-h-0">
           <div className={`${wideSidebar ? 'px-8 mb-6 text-xs' : 'px-8 mb-4 text-[10px]'} font-black text-muted-foreground/50 uppercase tracking-[0.3em]`}>Analysrapport</div>
           {sections.map((s) => (
             <button
@@ -211,11 +211,11 @@ export default function AnalysisLayout({
           )}
         </nav>
 
-        <div className="px-8 mb-8">
+        <div className="px-8 mb-8 flex-shrink-0">
           <AdZone id="sidebar-bottom" type="sidebar" />
         </div>
 
-        <div className="p-8 border-t border-border bg-muted/10">
+        <div className="p-8 border-t border-border bg-muted/10 flex-shrink-0">
           <div className="flex flex-col gap-1 text-[10px] font-black text-muted-foreground uppercase tracking-widest">
             <span>Publicerad: {date}</span>
             <span className="opacity-50">{dataSources}</span>

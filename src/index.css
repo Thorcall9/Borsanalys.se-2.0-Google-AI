@@ -76,6 +76,20 @@ html {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  
+  .premium-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .premium-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .premium-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(16, 185, 129, 0.2);
+    border-radius: 10px;
+  }
+  .premium-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(16, 185, 129, 0.4);
+  }
 }
 
 @layer base {
