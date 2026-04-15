@@ -19,47 +19,12 @@ interface MacroData {
 }
 
 const FALLBACK_DATA: Record<string, MacroData> = {
-  US10Y: { value: 4.29, trend: "flat", updatedAt: new Date().toISOString() },
-  SE10Y: { value: 2.85, trend: "down", updatedAt: new Date().toISOString() },
-  USDSEK: { value: 9.22, trend: "down", updatedAt: new Date().toISOString() },
-  EURSEK: { value: 10.95, trend: "down", updatedAt: new Date().toISOString() },
-  OMX30: { value: 3109.90, trend: "up", updatedAt: new Date().toISOString() },
   Inflation: { value: 1.6, trend: "down", updatedAt: new Date().toISOString() }
 };
 
-const MACRO_METRICS = ["US10Y", "SE10Y", "USDSEK", "EURSEK", "OMX30", "Inflation"];
+const MACRO_METRICS = ["Inflation"];
 
 const MACRO_METADATA: Record<string, { category: string, title: string, description: string, impact: (val: number) => string }> = {
-  US10Y: {
-    category: "RÄNTOR",
-    title: "US 10Y Treasury Yield",
-    description: "USA:s 10-åriga statsobligationsränta sätter tonen för den globala ekonomin och riskaptiten.",
-    impact: (val) => `Nuvarande nivå på ${val.toFixed(2)}% påverkar värderingar på tillväxtaktier och ökar avavkastningskravet globalt.`
-  },
-  SE10Y: {
-    category: "RÄNTOR",
-    title: "Svensk 10Y Statsobligation",
-    description: "Sveriges 10-åriga statsobligationsränta påverkar bolån och företagens lånekostnader direkt.",
-    impact: (val) => `Nivån runt ${val.toFixed(2)}% speglar ränteförväntningar, vilket dämpar fastighetssektorn men gynnar räntebärande placeringar.`
-  },
-  USDSEK: {
-    category: "VALUTOR",
-    title: "USD/SEK",
-    description: "Viktigt för exportbolag som Volvo, Ericsson och NVIDIA-exponerade portföljer.",
-    impact: (val) => `En kurs på ${val.toFixed(2)} kr påverkar exportbolagens vinster vid omräkning från dollar.`
-  },
-  EURSEK: {
-    category: "VALUTOR",
-    title: "EUR/SEK",
-    description: "Euron påverkar handeln inom Europa och svenska exportbolags marginaler.",
-    impact: (val) => `Kronans nivå mot euron (${val.toFixed(2)}) är avgörande för svenska exportbolags konkurrenskraft i Europa.`
-  },
-  OMX30: {
-    category: "INDEX",
-    title: "OMXS30",
-    description: "De 30 mest omsatta aktierna på Nasdaq Stockholm.",
-    impact: (val) => `Indexet vid ${val.toLocaleString()} speglar det generella sentimentet för Sveriges största bolag.`
-  },
   Inflation: {
     category: "INFLATION",
     title: "Inflation (KPIF)",
