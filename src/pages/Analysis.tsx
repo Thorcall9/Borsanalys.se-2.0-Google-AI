@@ -329,28 +329,35 @@ export default function Analysis() {
                   </motion.div>
                 );
 
-                // Insert ad every 6 items
-                if ((i + 1) % 6 === 0 && i !== filteredAnalyses.length - 1) {
+                // Dynamic Staggered Ad Insertion (Huller om buller)
+                // Cycle of 6 analyses with 2 ads interspersed
+                
+                // After 2nd analysis: [A1, A2, AD1...] -> Row 2 starts with Ad
+                if ((i + 1) % 6 === 2) {
                   acc.push(
                     <motion.div
-                      key={`ad-${i}-1`}
+                      key={`ad-${i}-stagger-1`}
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6 }}
                       viewport={{ once: true }}
                     >
-                      <AdZone id={`archive-middle-${i}-1`} type="card" discrete />
+                      <AdZone id={`archive-stagger-${i}-1`} type="card" discrete />
                     </motion.div>
                   );
+                }
+
+                // After 4th analysis: [..., A4, AD2...] -> Row 3 ends with Ad
+                if ((i + 1) % 6 === 4) {
                   acc.push(
                     <motion.div
-                      key={`ad-${i}-2`}
+                      key={`ad-${i}-stagger-2`}
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6 }}
                       viewport={{ once: true }}
                     >
-                      <AdZone id={`archive-middle-${i}-2`} type="card" discrete />
+                      <AdZone id={`archive-stagger-${i}-2`} type="card" discrete />
                     </motion.div>
                   );
                 }

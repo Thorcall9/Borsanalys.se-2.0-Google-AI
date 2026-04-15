@@ -278,14 +278,29 @@ export default function Terminology() {
                       </div>
                     </div>
                   </motion.div>
-                  {i === 5 && (
+                  {/* Dynamic Staggered Ad Insertion (Huller om buller) */}
+                  {/* Row 2 starts with Ad */}
+                  {(i + 1) % 6 === 2 && (
                     <motion.div
+                      key={`ad-${i}-stagger-1`}
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1, duration: 0.6 }}
                       viewport={{ once: true }}
                     >
-                      <AdZone id="terminology-middle" type="card" discrete={true} />
+                      <AdZone id={`terminology-stagger-${i}-1`} type="card" discrete={true} />
+                    </motion.div>
+                  )}
+                  {/* Row 3 ends with Ad */}
+                  {(i + 1) % 6 === 4 && (
+                    <motion.div
+                      key={`ad-${i}-stagger-2`}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1, duration: 0.6 }}
+                      viewport={{ once: true }}
+                    >
+                      <AdZone id={`terminology-stagger-${i}-2`} type="card" discrete={true} />
                     </motion.div>
                   )}
                 </React.Fragment>
