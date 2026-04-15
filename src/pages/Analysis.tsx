@@ -333,7 +333,7 @@ export default function Analysis() {
                 if ((i + 1) % 6 === 0 && i !== filteredAnalyses.length - 1) {
                   acc.push(
                     <div key={`ad-${i}`} className="col-span-full py-4">
-                      <AdZone id={`archive-middle-${i}`} type="banner" discrete />
+                      <AdZone id={`archive-middle-${i}`} type="card" discrete />
                     </div>
                   );
                 }

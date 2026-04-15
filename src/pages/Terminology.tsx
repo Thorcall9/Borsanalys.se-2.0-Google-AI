@@ -298,7 +298,7 @@ export default function Terminology() {
         )}
       </section>
 
-      <AdZone id="terminology-middle" type="banner" discrete={true} />
+      <AdZone id="terminology-middle" type="card" discrete={true} />
       
       {/* Guides Section */}
 

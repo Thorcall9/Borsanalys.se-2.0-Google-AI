@@ -82,7 +82,7 @@ export default function Guides() {
         })}
       </div>
 
-      <AdZone id="guides-middle" type="banner" discrete={true} />
+      <AdZone id="guides-middle" type="card" discrete={true} />
 
       {/* CTA Section */}
 
