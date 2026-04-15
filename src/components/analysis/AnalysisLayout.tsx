@@ -37,6 +37,7 @@ interface AnalysisLayoutProps {
   sidebarExtras?: React.ReactNode;
   hideDefaultWatchlist?: boolean;
   compactSections?: boolean;
+  wideSidebar?: boolean;
 }
 
 export default function AnalysisLayout({
@@ -61,7 +62,8 @@ export default function AnalysisLayout({
   currency = "SEK",
   sidebarExtras,
   hideDefaultWatchlist = false,
-  compactSections = false
+  compactSections = false,
+  wideSidebar = false
 }: AnalysisLayoutProps) {
   const [activeSection, setActiveSection] = useState(sections[0]?.id);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -131,10 +133,15 @@ export default function AnalysisLayout({
 
       {/* Sidebar */}
       <aside className={`
-        fixed top-0 left-0 h-screen w-72 z-[95] flex flex-col transition-transform duration-500 border-r border-border
+        fixed top-0 left-0 h-screen ${wideSidebar ? 'w-80 border-r-4 border-primary' : 'w-72'} z-[95] flex flex-col transition-transform duration-500 border-r border-border
         ${isLight ? 'bg-card' : 'bg-card'}
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
+        {wideSidebar && (
+          <div className="bg-primary text-primary-foreground text-[8px] font-black uppercase tracking-widest text-center py-1">
+            {ticker === 'MSFT' ? 'Microsoft Test Active' : 'Debug Active'}
+          </div>
+        )}
         <div className="p-8 border-b border-border">
           <Link to="/analys" className="inline-flex items-center gap-2 text-[10px] font-black text-muted-foreground hover:text-primary transition-colors mb-8 uppercase tracking-widest">
             <ArrowLeft size={12} /> Tillbaka till arkiv
@@ -180,7 +187,7 @@ export default function AnalysisLayout({
         </div>
         
         <nav className="flex-1 py-8 overflow-y-auto scrollbar-hide">
-          <div className="px-8 mb-4 text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em]">Analysrapport</div>
+          <div className={`${wideSidebar ? 'px-8 mb-6 text-xs' : 'px-8 mb-4 text-[10px]'} font-black text-muted-foreground/50 uppercase tracking-[0.3em]`}>Analysrapport</div>
           {sections.map((s) => (
             <button
               key={s.id}
@@ -193,7 +200,7 @@ export default function AnalysisLayout({
               `}
             >
               <span className={`font-black text-[10px] w-6 opacity-50 ${compactSections ? 'hidden' : 'block'}`}>{s.number}</span>
-              <span className={`${compactSections ? 'text-[11px] uppercase tracking-wider' : 'tracking-tight'}`}>{s.title}</span>
+              <span className={`${compactSections ? 'text-[11px] uppercase tracking-wider' : wideSidebar ? 'text-sm tracking-tight' : 'tracking-tight'}`}>{s.title}</span>
             </button>
           ))}
           
@@ -217,7 +224,7 @@ export default function AnalysisLayout({
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 lg:ml-72 min-w-0 bg-background">
+      <main className={`flex-1 ${wideSidebar ? 'lg:ml-80' : 'lg:ml-72'} min-w-0 bg-background`}>
         <div className="max-w-5xl mx-auto px-6 lg:px-12 py-12 lg:py-24">
           {priceDiff && (
             <motion.div 

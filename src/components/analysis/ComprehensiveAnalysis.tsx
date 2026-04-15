@@ -151,15 +151,16 @@ export default function ComprehensiveAnalysis({
       analysisPrice={analysisPrice || undefined}
       date={data.date}
       nextAnalysis={nextAnalysis}
-      sidebarExtras={data.slug === 'microsoft' ? (
+      sidebarExtras={(data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT') ? (
         <MicrosoftSidebarExtras 
           isInWatchlist={isInWatchlist} 
           isWatchlistLoading={isWatchlistLoading} 
           onToggleWatchlist={onToggleWatchlist} 
         />
       ) : undefined}
-      hideDefaultWatchlist={data.slug === 'microsoft'}
-      compactSections={data.slug === 'microsoft'}
+      hideDefaultWatchlist={data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT'}
+      compactSections={data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT'}
+      wideSidebar={data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT'}
     >
       <SEO 
         title={`${data.title} (${data.ticker}) - Analys`} 
@@ -648,7 +649,7 @@ export default function ComprehensiveAnalysis({
 
       {/* Mobile-only Extras (Relocated from sidebar) */}
       <div className="lg:hidden">
-        {data.slug === 'microsoft' && (
+        {(data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT') && (
           <MicrosoftSidebarExtras 
             isInWatchlist={isInWatchlist} 
             isWatchlistLoading={isWatchlistLoading} 

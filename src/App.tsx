@@ -8,6 +8,7 @@ import { SearchProvider } from "./contexts/SearchContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Loader2 } from "lucide-react";
 
 // Lazy load components
@@ -40,6 +41,7 @@ export default function App() {
       <Router>
         <ScrollToTop />
         <Analytics />
+        <SpeedInsights />
         <ErrorBoundary>
           <AuthProvider>
             <ThemeProvider>
