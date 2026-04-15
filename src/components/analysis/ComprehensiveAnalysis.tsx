@@ -31,6 +31,7 @@ import { fetchWithCache, RapidAPIQuote } from '../../services/stockService';
 import { AnalysisData } from '../../data/analyses';
 import AdUnit from '../AdUnit';
 import EditorialCallout from './EditorialCallout';
+import { MicrosoftSidebarExtras } from './MicrosoftSidebarExtras';
 
 interface ComprehensiveAnalysisProps {
   data: AnalysisData;
@@ -150,6 +151,15 @@ export default function ComprehensiveAnalysis({
       analysisPrice={analysisPrice || undefined}
       date={data.date}
       nextAnalysis={nextAnalysis}
+      sidebarExtras={data.slug === 'microsoft' ? (
+        <MicrosoftSidebarExtras 
+          isInWatchlist={isInWatchlist} 
+          isWatchlistLoading={isWatchlistLoading} 
+          onToggleWatchlist={onToggleWatchlist} 
+        />
+      ) : undefined}
+      hideDefaultWatchlist={data.slug === 'microsoft'}
+      compactSections={data.slug === 'microsoft'}
     >
       <SEO 
         title={`${data.title} (${data.ticker}) - Analys`} 
@@ -635,6 +645,18 @@ export default function ComprehensiveAnalysis({
           }))} />
         </div>
       </section>
+
+      {/* Mobile-only Extras (Relocated from sidebar) */}
+      <div className="lg:hidden">
+        {data.slug === 'microsoft' && (
+          <MicrosoftSidebarExtras 
+            isInWatchlist={isInWatchlist} 
+            isWatchlistLoading={isWatchlistLoading} 
+            onToggleWatchlist={onToggleWatchlist}
+            isMobile
+          />
+        )}
+      </div>
     </AnalysisLayout>
   );
 }

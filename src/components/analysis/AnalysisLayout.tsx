@@ -34,6 +34,9 @@ interface AnalysisLayoutProps {
   isWatchlistLoading?: boolean;
   onToggleWatchlist?: () => void;
   nextAnalysis?: AnalysisData;
+  sidebarExtras?: React.ReactNode;
+  hideDefaultWatchlist?: boolean;
+  compactSections?: boolean;
 }
 
 export default function AnalysisLayout({
@@ -55,7 +58,10 @@ export default function AnalysisLayout({
   nextAnalysis,
   analysisPrice,
   currentPrice,
-  currency = "SEK"
+  currency = "SEK",
+  sidebarExtras,
+  hideDefaultWatchlist = false,
+  compactSections = false
 }: AnalysisLayoutProps) {
   const [activeSection, setActiveSection] = useState(sections[0]?.id);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -149,7 +155,7 @@ export default function AnalysisLayout({
             </div>
           )}
 
-          {onToggleWatchlist && (
+          {onToggleWatchlist && !hideDefaultWatchlist && (
             <button 
               onClick={onToggleWatchlist}
               disabled={isWatchlistLoading}
@@ -180,16 +186,22 @@ export default function AnalysisLayout({
               key={s.id}
               onClick={() => scrollTo(s.id)}
               className={`
-                w-full flex items-center gap-4 px-8 py-3 text-xs font-bold transition-all border-l-4
+                w-full flex items-center gap-4 px-8 ${compactSections ? 'py-2' : 'py-3'} text-xs font-bold transition-all border-l-4
                 ${activeSection === s.id 
                   ? 'bg-primary/5 border-primary text-foreground'
                   : 'border-transparent text-muted-foreground hover:bg-muted/30 hover:text-foreground'}
               `}
             >
-              <span className="font-black text-[10px] w-6 opacity-50">{s.number}</span>
-              <span className="tracking-tight">{s.title}</span>
+              <span className={`font-black text-[10px] w-6 opacity-50 ${compactSections ? 'hidden' : 'block'}`}>{s.number}</span>
+              <span className={`${compactSections ? 'text-[11px] uppercase tracking-wider' : 'tracking-tight'}`}>{s.title}</span>
             </button>
           ))}
+          
+          {sidebarExtras && (
+            <div className="mt-8 pt-8 border-t border-border/50">
+              {sidebarExtras}
+            </div>
+          )}
         </nav>
 
         <div className="px-8 mb-8">

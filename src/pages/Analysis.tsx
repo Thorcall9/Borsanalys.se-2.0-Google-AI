@@ -59,7 +59,16 @@ const DEEP_DIVE_COMPONENTS = {
 
 export default function Analysis() {
   const { slug: rawSlug } = useParams();
-  const slug = rawSlug === 'evolution' ? 'evolution-2025' : rawSlug;
+  const slugMappings: Record<string, string> = {
+    'evolution': 'evolution-2025',
+    'swedbank': 'swedbank-2025',
+    'handelsbanken': 'handelsbanken-2025',
+    'nvidia': 'nvidia-fy2026',
+    'investor': 'investor-ab',
+    'new-wave': 'new-wave-group-april-2026',
+    'new-wave-group': 'new-wave-group-april-2026'
+  };
+  const slug = rawSlug ? (slugMappings[rawSlug] || rawSlug) : undefined;
   const [isInWatchlist, setIsInWatchlist] = useState(false);
   const [isWatchlistLoading, setIsWatchlistLoading] = useState(true);
   const [realTimeData, setRealTimeData] = useState<Record<string, any>>({});
