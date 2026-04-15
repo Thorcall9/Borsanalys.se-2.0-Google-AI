@@ -32,7 +32,7 @@ const AdZone: React.FC<AdZoneProps> = ({ id, type = "inline", className = "", di
       case "inline":
         return "w-full min-h-[100px] my-8";
       case "card":
-        return "w-full bg-card border border-border rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 relative overflow-hidden shadow-xl shadow-black/5";
+        return "w-full min-h-[450px] bg-card border border-border rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 relative overflow-hidden shadow-xl shadow-black/5";
       default:
         return "w-full min-h-[100px] my-8";
     }

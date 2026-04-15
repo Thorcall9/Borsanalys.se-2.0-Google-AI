@@ -44,45 +44,54 @@ export default function Guides() {
         {guideList.map((guide, i) => {
           const Icon = IconMap[guide.icon] || BookOpen;
           return (
-            <motion.div
-              key={guide.slug}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1, duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Link 
-                to={`/guider/${guide.slug}`}
-                className="group block h-full bg-card border border-border rounded-[2.5rem] p-10 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/5 transition-all relative overflow-hidden shadow-xl shadow-black/5"
+            <React.Fragment key={guide.slug}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.6 }}
+                viewport={{ once: true }}
               >
-                <div className="absolute top-0 right-0 p-6">
-                  <span className="text-[10px] font-black text-primary/30 uppercase tracking-[0.3em]">Del {guide.part}</span>
-                </div>
-                <div className="flex items-center justify-between mb-8">
-                  <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-primary/5">
-                    <Icon size={28} />
+                <Link 
+                  to={`/guider/${guide.slug}`}
+                  className="group block h-full bg-card border border-border rounded-[2.5rem] p-10 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/5 transition-all relative overflow-hidden shadow-xl shadow-black/5"
+                >
+                  <div className="absolute top-0 right-0 p-6">
+                    <span className="text-[10px] font-black text-primary/30 uppercase tracking-[0.3em]">Del {guide.part}</span>
                   </div>
-                  <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em]">{guide.category}</div>
-                </div>
-                <h3 className="text-3xl font-black tracking-tighter mb-4 group-hover:text-primary transition-colors leading-tight">
-                  {guide.title}
-                </h3>
-                <p className="text-base text-muted-foreground leading-relaxed mb-10 font-medium line-clamp-3">
-                  {guide.excerpt}
-                </p>
-                <div className="flex items-center justify-between mt-auto pt-6 border-t border-border/50">
-                  <span className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.2em]">{guide.readTime} läsning</span>
-                  <div className="flex items-center gap-3 text-xs font-black uppercase tracking-widest text-primary group-hover:gap-5 transition-all">
-                    Läs guide <ArrowRight size={16} />
+                  <div className="flex items-center justify-between mb-8">
+                    <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-primary/5">
+                      <Icon size={28} />
+                    </div>
+                    <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em]">{guide.category}</div>
                   </div>
-                </div>
-              </Link>
-            </motion.div>
+                  <h3 className="text-3xl font-black tracking-tighter mb-4 group-hover:text-primary transition-colors leading-tight">
+                    {guide.title}
+                  </h3>
+                  <p className="text-base text-muted-foreground leading-relaxed mb-10 font-medium line-clamp-3">
+                    {guide.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between mt-auto pt-6 border-t border-border/50">
+                    <span className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.2em]">{guide.readTime} läsning</span>
+                    <div className="flex items-center gap-3 text-xs font-black uppercase tracking-widest text-primary group-hover:gap-5 transition-all">
+                      Läs guide <ArrowRight size={16} />
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+              {i === 2 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1, duration: 0.6 }}
+                  viewport={{ once: true }}
+                >
+                  <AdZone id="guides-middle" type="card" discrete />
+                </motion.div>
+              )}
+            </React.Fragment>
           );
         })}
       </div>
-
-      <AdZone id="guides-middle" type="card" discrete={true} />
 
       {/* CTA Section */}
 

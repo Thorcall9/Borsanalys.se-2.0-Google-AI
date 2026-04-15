@@ -332,9 +332,26 @@ export default function Analysis() {
                 // Insert ad every 6 items
                 if ((i + 1) % 6 === 0 && i !== filteredAnalyses.length - 1) {
                   acc.push(
-                    <div key={`ad-${i}`} className="col-span-full py-4">
-                      <AdZone id={`archive-middle-${i}`} type="card" discrete />
-                    </div>
+                    <motion.div
+                      key={`ad-${i}-1`}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6 }}
+                      viewport={{ once: true }}
+                    >
+                      <AdZone id={`archive-middle-${i}-1`} type="card" discrete />
+                    </motion.div>
+                  );
+                  acc.push(
+                    <motion.div
+                      key={`ad-${i}-2`}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6 }}
+                      viewport={{ once: true }}
+                    >
+                      <AdZone id={`archive-middle-${i}-2`} type="card" discrete />
+                    </motion.div>
                   );
                 }
 

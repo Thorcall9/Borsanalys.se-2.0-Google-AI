@@ -231,53 +231,64 @@ export default function Terminology() {
               const Icon = CategoryIconMap[term.category] || Book;
               const diff = DifficultyMap[term.difficulty] || DifficultyMap["Nybörjare"];
               return (
-                <motion.div
-                  key={term.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.05 }}
-                  className="bg-card border border-border rounded-[2.5rem] p-10 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 transition-all group relative overflow-hidden"
-                >
-                  <div className="flex items-start justify-between mb-8">
-                    <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
-                        <Icon size={28} />
-                      </div>
-                      <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${diff.color}`}>
-                        {diff.icon} {diff.label}
-                      </div>
-                    </div>
-                    <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em] bg-muted/50 px-4 py-2 rounded-full">{term.category}</div>
-                  </div>
-
-                  <div className="space-y-6">
-                    <h3 className="text-3xl font-black tracking-tighter group-hover:text-primary transition-colors">{term.title}</h3>
-                    <p className="text-base font-bold text-foreground/80 leading-relaxed">{term.description}</p>
-                    <p className="text-base text-muted-foreground leading-relaxed font-medium">{term.explanation}</p>
-                    
-                    {term.formula && (
-                      <div className="bg-muted/30 p-6 rounded-2xl border border-border/50 relative overflow-hidden">
-                        <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em] mb-3">Formel</div>
-                        <div className="text-lg font-black text-primary tracking-tight">{term.formula}</div>
-                      </div>
-                    )}
-
-                    <div className="pt-8 border-t border-border/50">
-                      <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em] mb-4">Exempel ur verkligheten</div>
-                      <div className="bg-primary/5 border border-primary/10 rounded-2xl p-6 space-y-3 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-[50px] -translate-y-1/2 translate-x-1/2"></div>
-                        <div className="flex items-center justify-between relative z-10">
-                          <span className="text-sm font-black text-primary uppercase tracking-widest">{term.example.company}</span>
-                          <span className="text-sm font-black text-primary">{term.example.value}</span>
+                <React.Fragment key={term.id}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.05 }}
+                    className="bg-card border border-border rounded-[2.5rem] p-10 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 transition-all group relative overflow-hidden"
+                  >
+                    <div className="flex items-start justify-between mb-8">
+                      <div className="flex items-center gap-4">
+                        <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
+                          <Icon size={28} />
                         </div>
-                        <p className="text-sm text-muted-foreground leading-relaxed font-medium italic relative z-10">
-                          "{term.example.context}"
-                        </p>
+                        <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${diff.color}`}>
+                          {diff.icon} {diff.label}
+                        </div>
+                      </div>
+                      <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em] bg-muted/50 px-4 py-2 rounded-full">{term.category}</div>
+                    </div>
+
+                    <div className="space-y-6">
+                      <h3 className="text-3xl font-black tracking-tighter group-hover:text-primary transition-colors">{term.title}</h3>
+                      <p className="text-base font-bold text-foreground/80 leading-relaxed">{term.description}</p>
+                      <p className="text-base text-muted-foreground leading-relaxed font-medium">{term.explanation}</p>
+                      
+                      {term.formula && (
+                        <div className="bg-muted/30 p-6 rounded-2xl border border-border/50 relative overflow-hidden">
+                          <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em] mb-3">Formel</div>
+                          <div className="text-lg font-black text-primary tracking-tight">{term.formula}</div>
+                        </div>
+                      )}
+
+                      <div className="pt-8 border-t border-border/50">
+                        <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em] mb-4">Exempel ur verkligheten</div>
+                        <div className="bg-primary/5 border border-primary/10 rounded-2xl p-6 space-y-3 relative overflow-hidden">
+                          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-[50px] -translate-y-1/2 translate-x-1/2"></div>
+                          <div className="flex items-center justify-between relative z-10">
+                            <span className="text-sm font-black text-primary uppercase tracking-widest">{term.example.company}</span>
+                            <span className="text-sm font-black text-primary">{term.example.value}</span>
+                          </div>
+                          <p className="text-sm text-muted-foreground leading-relaxed font-medium italic relative z-10">
+                            "{term.example.context}"
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                  {i === 5 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1, duration: 0.6 }}
+                      viewport={{ once: true }}
+                    >
+                      <AdZone id="terminology-middle" type="card" discrete={true} />
+                    </motion.div>
+                  )}
+                </React.Fragment>
               );
             })}
           </div>
@@ -297,10 +308,6 @@ export default function Terminology() {
           </div>
         )}
       </section>
-
-      <AdZone id="terminology-middle" type="card" discrete={true} />
-      
-      {/* Guides Section */}
 
       <section className="space-y-12">
         <div className="flex items-end justify-between">
