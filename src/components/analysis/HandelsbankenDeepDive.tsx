@@ -194,7 +194,10 @@ export default function HandelsbankenDeepDive({
                 </h1>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <span className="bg-white/20 px-2 py-0.5 rounded text-xs font-bold tracking-wide">SHB A</span>
+                <div className="flex flex-col">
+                  <span className="bg-white/20 px-2 py-0.5 rounded text-xs font-bold tracking-wide">SHB A</span>
+                  <span className="text-[10px] font-bold text-white/60 mt-1 italic leading-none">Värderingsdata baseras på SHB A</span>
+                </div>
                 <span className="text-sm font-medium opacity-90">Bank & Finans • Stockholm</span>
                 
                 <button 
@@ -232,9 +235,9 @@ export default function HandelsbankenDeepDive({
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Analyskurs</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Analyskurs (SHB A)</span>
               <div className="text-2xl font-black text-slate-900">127,35 kr</div>
-              <span className="text-xs text-slate-500 mt-1 block">Uppdaterad Apr 2026</span>
+              <span className="text-[10px] text-[#004B87] font-bold mt-1 block uppercase tracking-tight">Värdering baserad på A-aktien</span>
             </div>
 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
@@ -328,8 +331,8 @@ export default function HandelsbankenDeepDive({
               <div className="text-sm font-bold text-slate-900">Stockholm (Large Cap)</div>
             </div>
             <div>
-              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Ticker</div>
-              <div className="text-sm font-bold text-slate-900">SHB A</div>
+              <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Aktie</div>
+              <div className="text-sm font-bold text-slate-900">Handelsbanken A (SHB A)</div>
             </div>
             <div>
               <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Valuta</div>
@@ -642,6 +645,9 @@ export default function HandelsbankenDeepDive({
                 <p style={{margin:0,fontSize:14,color:T.sub,lineHeight:1.8}}>
                   Utifrån både P/E och P/B är banken rimligt till lätt attraktivt värderad. Den höga kvaliteten motiverar en premie mot svagare europeiska banker, men samtidigt begränsar den fallande EPS-trenden hur stor premien bör vara. Därför är det svårt att argumentera för att aktien är tydligt felprissatt.
                 </p>
+                <p className="text-xs font-bold text-[#004B87] bg-[#004B87]/5 p-4 rounded-xl border border-[#004B87]/10 leading-relaxed italic">
+                  Analysen avser Svenska Handelsbanken AB som bolag, men aktiekurs, värdering, direktavkastning och målpris i analysen baseras på Handelsbanken A (SHB A).
+                </p>
                 <div style={{background:T.accentL, borderRadius:12, padding:16, borderLeft:`4px solid ${T.accent}`}}>
                   <div style={{fontSize:11,fontWeight:700,color:T.accent,textTransform:"uppercase",marginBottom:8}}>Ett rimligt sätt att tänka</div>
                   <ul style={{margin:0, paddingLeft:18, fontSize:13.5, color:T.ink, lineHeight:1.7}}>
@@ -856,6 +862,9 @@ export default function HandelsbankenDeepDive({
                       <div className="text-2xl font-black mb-1 italic uppercase">Bevaka</div>
                       <p className="text-sm text-white/70 leading-relaxed">
                         Inget för den som söker snabb vinstacceleration, men ett innehav man kan sova gott med. Prioritera kvalitet, motståndskraft och ordinarie utdelningsförmåga.
+                      </p>
+                      <p className="text-[10px] text-white/40 mt-6 leading-relaxed italic pt-4 border-t border-white/5">
+                        Analysen avser Svenska Handelsbanken AB som bolag, men aktiekurs, värdering, direktavkastning och målpris i analysen baseras på Handelsbanken A (SHB A).
                       </p>
                     </div>
                   </div>
