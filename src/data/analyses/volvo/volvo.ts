@@ -11,6 +11,14 @@ export const volvo: AnalysisData = {
   price: "322.40 kr",
   pe: "19.1x",
   yield: "4,04%",
+  relatedAnalysis: {
+    slug: "ericsson",
+    title: "Jämför med sektorkollega",
+    label: "Relaterad analys",
+    text: "Vill du sätta Volvo i relation till en annan svensk exportjätte? Läs också vår analys av Ericsson.",
+    cta: "Läs analys av Ericsson",
+    accentColor: "#004B87"
+  },
   marketCap: "660 Bkr",
   summary: "AB Volvo är en global ledare inom transport- och infrastrukturlösningar, noterad på Nasdaq Stockholm med tickern VOLV B. Bolaget designar, tillverkar och marknadsför lastbilar, bussar, anläggningsmaskiner samt marina och industriella motorer under varumärkena Volvo Trucks, Renault Trucks, Mack och Volvo CE. En central del av affärsmodellen är den breda serviceverksamheten — finansiering, försäkring, reservdelar och underhåll — som strukturellt balanserar de naturliga fluktuationerna i fordonsförsäljningen.",
   date: "2026-03-31",

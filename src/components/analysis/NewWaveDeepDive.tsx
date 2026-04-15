@@ -24,6 +24,7 @@ import {
 import AdUnit from "../AdUnit";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
+import EditorialCallout from "./EditorialCallout";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -122,6 +123,7 @@ const ChartTip=({active,payload,label,unit=""}: any)=>{
 };
 
 interface NewWaveDeepDiveProps {
+  data: AnalysisData;
   onToggleWatchlist?: () => void;
   isInWatchlist?: boolean;
   isWatchlistLoading?: boolean;
@@ -129,6 +131,7 @@ interface NewWaveDeepDiveProps {
 }
 
 export default function NewWaveDeepDive({ 
+  data,
   onToggleWatchlist, 
   isInWatchlist, 
   isWatchlistLoading,
@@ -438,16 +441,18 @@ export default function NewWaveDeepDive({
                   ].map((m, i) => (
                     <div key={i} className="p-4 bg-white border border-slate-200 rounded-xl">
                       <div className="text-[10px] font-black text-slate-400 uppercase mb-1">{m.l}</div>
-                      <div className="text-xl font-black">{m.v}</div>
                     </div>
                   ))}
                 </div>
+                </div>
               </div>
-            </div>
-          </Card>
-        </FadeIn>
+            </Card>
+          </FadeIn>
 
-        <AdUnit slot="9182736451" />
+          <AdUnit slot="7332946752" />
+          
+          {/* RELATED ANALYSIS CALLOUT */}
+          {data.relatedAnalysis && <EditorialCallout {...data.relatedAnalysis} />}
 
         {/* IV. VÄRDERING & JÄMFÖRELSE */}
         <FadeIn delay={300}>

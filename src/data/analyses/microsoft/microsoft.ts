@@ -10,6 +10,14 @@ export const microsoft: AnalysisData = {
   price: "$415,20",
   pe: "32.00",
   yield: "0,75%",
+  relatedAnalysis: {
+    slug: "alphabet",
+    title: "Tech-sektorns giganter",
+    label: "Relaterad analys",
+    text: "Hur står sig Microsoft mot den andra giganten inom moln och AI? Läs vår analys av Alphabet.",
+    cta: "Läs analys av Alphabet",
+    accentColor: "#EA4335"
+  },
   marketCap: "$3.1T",
   summary: "Microsoft är en global ledare inom mjukvara och molntjänster. Genom Azure och integrationen av OpenAI:s teknik i Office-paketet (Copilot) har bolaget tagit en tätposition i AI-racet.",
   date: "2026-03-12",

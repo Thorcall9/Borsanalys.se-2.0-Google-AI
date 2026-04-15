@@ -10,6 +10,14 @@ export const novoNordisk: AnalysisData = {
   price: "845,20 DKK",
   pe: "38.00",
   yield: "1,2%",
+  relatedAnalysis: {
+    slug: "evolution-2025",
+    title: "Globala tillväxtstjärnor",
+    label: "Relaterad analys",
+    text: "Novo Nordisk leder läkemedelsvärlden, men hur ser caset ut i den nordiska tillväxtmaskinen Evolution?",
+    cta: "Läs analys av Evolution",
+    accentColor: "#0D1B2A"
+  },
   marketCap: "3.8 TDKK",
   summary: "Novo Nordisk är världsledande inom diabetesvård och har revolutionerat marknaden för fetmabehandling med sina GLP-1-läkemedel (Ozempic och Wegovy). Bolaget upplever en enorm efterfrågan som för närvarande överstiger produktionskapaciteten.",
   date: "2026-03-05",

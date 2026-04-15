@@ -10,6 +10,14 @@ export const alphabet: AnalysisData = {
   price: "$307",
   pe: "~28.00x",
   yield: "0,45%",
+  relatedAnalysis: {
+    slug: "microsoft",
+    title: "Tech-sektorns giganter",
+    label: "Relaterad analys",
+    text: "Vill du jämföra Alphabet med dess främsta konkurrent inom mjukvara och AI? Läs vår analys av Microsoft.",
+    cta: "Läs analys av Microsoft",
+    accentColor: "#00A4EF"
+  },
   marketCap: "$3.9T",
   summary: "Med ett ohotat monopol inom sök och en snabbväxande molnaffär transformeras Alphabet nu till ett 'compute-first' AI-bolag. Bolagets vertikala integration – från egna chip till världens största dataset – ger dem en strukturell fördel i den pågående AI-kapplöpningen.",
   date: "2026-03-15",

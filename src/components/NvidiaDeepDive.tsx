@@ -23,6 +23,7 @@ import AdUnit from "./AdUnit";
 import MultiplexAd from "./MultiplexAd";
 import NextAnalysisButton from "./analysis/NextAnalysisButton";
 import AnalysisDisclaimer from "./analysis/AnalysisDisclaimer";
+import EditorialCallout from "./analysis/EditorialCallout";
 import { AnalysisData } from "../data/analyses";
 
 const T = {
@@ -191,6 +192,7 @@ function ScenarioCard({label,color,bg,prob,pris,triggers,note}){
 }
 
 interface NvidiaDeepDiveProps {
+  data: AnalysisData;
   onToggleWatchlist?: () => void;
   isInWatchlist?: boolean;
   isWatchlistLoading?: boolean;
@@ -198,6 +200,7 @@ interface NvidiaDeepDiveProps {
 }
 
 export default function NvidiaDeepDive({ 
+  data,
   onToggleWatchlist, 
   isInWatchlist, 
   isWatchlistLoading,
@@ -512,6 +515,9 @@ export default function NvidiaDeepDive({
 
 
         <AdUnit slot="7332946752" />
+        
+        {/* RELATED ANALYSIS CALLOUT */}
+        {data.relatedAnalysis && <EditorialCallout {...data.relatedAnalysis} />}
 
 
         {/* SECTION III: FINANSIELL ANALYS */}

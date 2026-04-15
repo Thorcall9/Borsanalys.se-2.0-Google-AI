@@ -10,6 +10,14 @@ export const evolution2025: AnalysisData = {
   price: "577 kr",
   pe: "9,95x",
   yield: "5,3%",
+  relatedAnalysis: {
+    slug: "novo-nordisk",
+    title: "Globala tillväxtstjärnor",
+    label: "Relaterad analys",
+    text: "Evolution är en nordisk tillväxtstjärna, men missa inte analysen av Danmarks globala gigant Novo Nordisk.",
+    cta: "Läs analys av Novo Nordisk",
+    accentColor: "#004A99"
+  },
   marketCap: "115 Mdr EUR",
   summary: "P/E under 10x, 66% EBITDA-marginal och 818 MEUR i kassan — men UKGC-granskning och stagnerande tillväxt skapar ovisshet. Vi går igenom allt du behöver veta inför investeringsbeslutet.",
   date: "2026-03-21",

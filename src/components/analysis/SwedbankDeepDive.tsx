@@ -6,6 +6,7 @@ import {
   Tooltip, ResponsiveContainer, Cell, ComposedChart
 } from "recharts";
 import AdUnit from "../AdUnit";
+import EditorialCallout from "./EditorialCallout";
 import MultiplexAd from "../MultiplexAd";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
@@ -151,6 +152,7 @@ function ScenarioCard({label,color,bg,prob,pris,upside,assumptions,requirements}
 }
 
 interface SwedbankDeepDiveProps {
+  data: AnalysisData;
   onToggleWatchlist?: () => void;
   isInWatchlist?: boolean;
   isWatchlistLoading?: boolean;
@@ -158,6 +160,7 @@ interface SwedbankDeepDiveProps {
 }
 
 export default function SwedbankDeepDive({ 
+  data,
   onToggleWatchlist, 
   isInWatchlist, 
   isWatchlistLoading,
@@ -424,22 +427,7 @@ export default function SwedbankDeepDive({
         </div>
         
         {/* Sector Comparison Callout */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-6 mb-12 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm hover:shadow-md transition-all group border-l-4 border-l-[#004B87]">
-          <div className="flex-1">
-            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Relaterad analys</div>
-            <h3 className="text-lg font-black text-slate-900 mb-1">Jämför med sektorkollega</h3>
-            <p className="text-sm text-slate-600 leading-relaxed max-w-xl">
-              Vill du sätta Swedbank i relation till en annan svensk storbank? Läs också vår analys av Handelsbanken.
-            </p>
-          </div>
-          <Link 
-            to="/analys/handelsbanken-2025" 
-            className="whitespace-nowrap bg-slate-900 text-white px-8 py-3 rounded-xl text-sm font-bold hover:bg-slate-800 transition-colors flex items-center gap-2 group/btn"
-          >
-            Läs analys av Handelsbanken
-            <ArrowRight size={16} className="group-hover/btn:translate-x-1 transition-transform" />
-          </Link>
-        </div>
+        {data.relatedAnalysis && <EditorialCallout {...data.relatedAnalysis} />}
 
         {/* ── FINANSIELL ── */}
         <div id="finansiell">

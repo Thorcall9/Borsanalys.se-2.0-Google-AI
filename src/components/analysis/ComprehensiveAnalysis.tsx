@@ -30,6 +30,7 @@ import SEO from '../SEO';
 import { fetchWithCache, RapidAPIQuote } from '../../services/stockService';
 import { AnalysisData } from '../../data/analyses';
 import AdUnit from '../AdUnit';
+import EditorialCallout from './EditorialCallout';
 
 interface ComprehensiveAnalysisProps {
   data: AnalysisData;
@@ -364,6 +365,13 @@ export default function ComprehensiveAnalysis({
               rating={data.scores.strategiskMoat} 
               description="Vallgravens styrka och bolagets strategiska positionering i förhållande till marknadstrender." 
             />
+          </div>
+        )}
+
+        {/* RELATED ANALYSIS CALLOUT */}
+        {data.relatedAnalysis && (
+          <div className="mt-16">
+            <EditorialCallout {...data.relatedAnalysis} />
           </div>
         )}
       </section>

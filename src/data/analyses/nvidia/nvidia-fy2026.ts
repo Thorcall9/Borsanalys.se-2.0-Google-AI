@@ -10,6 +10,14 @@ export const nvidiaFy2026: AnalysisData = {
   price: "~178 USD",
   pe: "22.00x (2026e)",
   yield: "0,02%",
+  relatedAnalysis: {
+    slug: "apple",
+    title: "Hårdvaruledare",
+    label: "Relaterad analys",
+    text: "Nvidia leder AI-revolutionen i datacentret, men hur står det till med hårdvarukungen Apple? Läs vår analys.",
+    cta: "Läs analys av Apple",
+    accentColor: "#8e8e93"
+  },
   marketCap: "~4 338 Mdr USD",
   summary: "NVIDIA designar och levererar accelererad beräkning (GPU/AI-chip), systemprogramvara (CUDA) och nätverkslösningar (NVLink, InfiniBand) för datacenters, gaming och autonoma fordon. Bolaget rider på en sekulär supercykel inom AI-infrastruktur där Blackwell-plattformen och CUDA-ekosystemet skapar en oövervinnerlig vallgrav.",
   date: "2026-03-20",

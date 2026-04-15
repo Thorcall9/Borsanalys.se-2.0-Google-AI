@@ -11,6 +11,14 @@ export const ericsson2025: AnalysisData = {
   price: "91.5 kr",
   pe: "13.4x",
   yield: "3.28%", // 3.00 / 91.5
+  relatedAnalysis: {
+    slug: "volvo",
+    title: "Jämför med industrijätte",
+    label: "Relaterad analys",
+    text: "Vill du sätta Ericsson i relation till en annan svensk industrijätte? Läs också vår analys av Volvo.",
+    cta: "Läs analys av Volvo",
+    accentColor: "#1a4f8b"
+  },
   marketCap: "305 Bkr",
   summary: "Ericsson är finansiellt starkare och operationellt bättre än för några år sedan, men slutmarknaden är fortfarande trög, Enterprise är inte helt bevisat och juridiska risker kvarstår. Aktien ser rimligt värderad ut snarare än tydligt billig.",
   date: "2026-04-10",

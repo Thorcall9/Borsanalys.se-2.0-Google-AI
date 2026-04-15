@@ -9,6 +9,7 @@ import AdUnit from "../AdUnit";
 import MultiplexAd from "../MultiplexAd";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
+import EditorialCallout from "./EditorialCallout";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -113,7 +114,16 @@ interface EricssonDeepDiveProps {
   nextAnalysis?: AnalysisData;
 }
 
+interface EricssonDeepDiveProps {
+  data: AnalysisData;
+  onToggleWatchlist?: () => void;
+  isInWatchlist?: boolean;
+  isWatchlistLoading?: boolean;
+  nextAnalysis?: AnalysisData;
+}
+
 export default function EricssonDeepDive({ 
+  data,
   onToggleWatchlist, 
   isInWatchlist, 
   isWatchlistLoading,
@@ -408,6 +418,9 @@ export default function EricssonDeepDive({
             </Card>
           </FadeIn>
         </div>
+        
+        {/* RELATED ANALYSIS CALLOUT */}
+        {data.relatedAnalysis && <EditorialCallout {...data.relatedAnalysis} />}
 
         {/* ── FINANSIELL ── */}
         <div id="finansiell">

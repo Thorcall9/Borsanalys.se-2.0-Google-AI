@@ -150,6 +150,14 @@ export interface AnalysisData {
 
   // AI Driven Data
   aiDrivenData?: AIDrivenAnalysis;
+  relatedAnalysis?: {
+    slug: string;
+    title: string;
+    label: string;
+    text: string;
+    cta: string;
+    accentColor: string;
+  };
   scores?: {
     affarsmodell: number;
     strategiskMoat: number;

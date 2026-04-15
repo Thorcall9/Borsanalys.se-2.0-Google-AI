@@ -9,6 +9,7 @@ import AdUnit from "../AdUnit";
 import MultiplexAd from "../MultiplexAd";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
+import EditorialCallout from "./EditorialCallout";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -151,7 +152,16 @@ interface VolvoDeepDiveProps {
   nextAnalysis?: AnalysisData;
 }
 
+interface VolvoDeepDiveProps {
+  data: AnalysisData;
+  onToggleWatchlist?: () => void;
+  isInWatchlist?: boolean;
+  isWatchlistLoading?: boolean;
+  nextAnalysis?: AnalysisData;
+}
+
 export default function VolvoDeepDive({ 
+  data,
   onToggleWatchlist, 
   isInWatchlist, 
   isWatchlistLoading,
@@ -384,6 +394,9 @@ export default function VolvoDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        {/* RELATED ANALYSIS CALLOUT */}
+        {data.relatedAnalysis && <EditorialCallout {...data.relatedAnalysis} />}
 
         {/* ── FINANSIELL ── */}
         <div id="finansiell">

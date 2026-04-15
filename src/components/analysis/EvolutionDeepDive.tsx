@@ -10,6 +10,7 @@ import AdUnit from "../AdUnit";
 import MultiplexAd from "../MultiplexAd";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
+import EditorialCallout from "./EditorialCallout";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -175,7 +176,16 @@ interface EvolutionDeepDiveProps {
   nextAnalysis?: AnalysisData;
 }
 
+interface EvolutionDeepDiveProps {
+  data: AnalysisData;
+  onToggleWatchlist?: () => void;
+  isInWatchlist?: boolean;
+  isWatchlistLoading?: boolean;
+  nextAnalysis?: AnalysisData;
+}
+
 export default function EvolutionDeepDive({ 
+  data,
   onToggleWatchlist, 
   isInWatchlist, 
   isWatchlistLoading,
@@ -645,21 +655,30 @@ export default function EvolutionDeepDive({
                 </p>
               </div>
 
-              <div style={{background:T.greenL, border:`1.5px solid ${T.green}33`, borderRadius:14, padding:"16px 20px", borderLeft:`4px solid ${T.green}`}}>
+              <div style={{background:T.greenL, border:`1.5px solid ${T.green}33`, borderRadius:14, padding:"16px 20px", borderLeft:`4px solid ${T.green}`, marginBottom: 20}}>
                 <p style={{margin:0, color:T.ink, fontSize:14, lineHeight:1.85}}>
                   <strong>Värderingskonklusionen:</strong> Evolution handlas till ett P/E på under 10x för 2026e. Direktavkastningen på 5,3% (2026e) är en viktig stödnivå som lockar tillbaka utdelningsinriktade institutionella ägare som sålde vid utdelningsindragningen 2025. Återkomsten av utdelningen är i sig en katalysator.
+                </p>
+              </div>
+
+              <div style={{background:T.accentL, border:`1.5px solid ${T.accent}33`, borderRadius:14, padding:"18px 22px", borderLeft:`4px solid ${T.accent}`}}>
+                <div style={{fontSize:11, fontWeight:800, color:T.accent, textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Finansiell Stabilitet</div>
+                <p style={{margin:0, color:T.ink, fontSize:14, lineHeight:1.8}}>
+                  Evolution har noll räntebärande skulder. Med en kassa på 818 MEUR och en soliditet på 72% är bolaget finansiellt ointagligt. Detta gör att de kan rida ut även en stormig regulatorisk period utan att riskera verksamheten.
                 </p>
               </div>
             </Card>
           </FadeIn>
         </div>
 
+        {/* RELATED ANALYSIS CALLOUT */}
+        {data.relatedAnalysis && <EditorialCallout {...data.relatedAnalysis} />}
 
         {/* ── RISK ── */}
         <div id="risk">
           <FadeIn delay={500}>
             <Card mb={20}>
-              <SectionLabel number="VI" title="Riskprofil"/>���
+              <SectionLabel number="VI" title="Riskprofil"/>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
                 <div style={{background:T.redL, border:`1.5px solid ${T.red}33`, borderRadius:12, padding:20, borderLeft:`4px solid ${T.red}`}}>
                   <div style={{fontSize:11, fontWeight:800, color:T.red, textTransform:"uppercase", letterSpacing:0.5, marginBottom:8}}>Risknivå: Medel–Hög</div>

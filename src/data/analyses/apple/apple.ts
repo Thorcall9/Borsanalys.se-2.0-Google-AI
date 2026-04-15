@@ -10,6 +10,14 @@ export const apple: AnalysisData = {
   price: "$228,10",
   pe: "31.00",
   yield: "0,45%",
+  relatedAnalysis: {
+    slug: "nvidia-fy2026",
+    title: "Hårdvaruledare",
+    label: "Relaterad analys",
+    text: "Apple dominerar konsumentledet, men vem driver beräkningskraften bakom kulisserna? Läs analysen av Nvidia.",
+    cta: "Läs analys av Nvidia",
+    accentColor: "#76B900"
+  },
   marketCap: "$3.5T",
   summary: "Apple står inför en brytpunkt där integrationen av 'Apple Intelligence' förväntas driva nästa stora uppgraderingscykel. Medan ekosystemet är starkare än någonsin, sätter en historiskt hög värdering och regulatorisk press i EU och USA ribban högt för framtida överavkastning.",
   date: "2026-03-10",

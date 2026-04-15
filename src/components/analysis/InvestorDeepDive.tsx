@@ -9,6 +9,7 @@ import AdUnit from "../AdUnit";
 import MultiplexAd from "../MultiplexAd";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
+import EditorialCallout from "./EditorialCallout";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -159,6 +160,7 @@ function ScenarioCard({label,color,bg,prob,pris,triggers,note}){
 }
 
 interface InvestorDeepDiveProps {
+  data: AnalysisData;
   onToggleWatchlist?: () => void;
   isInWatchlist?: boolean;
   isWatchlistLoading?: boolean;
@@ -166,6 +168,7 @@ interface InvestorDeepDiveProps {
 }
 
 export default function InvestorDeepDive({ 
+  data,
   onToggleWatchlist, 
   isInWatchlist, 
   isWatchlistLoading,
@@ -392,6 +395,9 @@ export default function InvestorDeepDive({
         </div>
 
         <AdUnit slot="7332946752" />
+        
+        {/* RELATED ANALYSIS CALLOUT */}
+        {data.relatedAnalysis && <EditorialCallout {...data.relatedAnalysis} />}
 
         {/* ── FINANSIELL ── */}
         <div id="finansiell">

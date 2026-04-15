@@ -10,6 +10,7 @@ import MultiplexAd from "../MultiplexAd";
 import NextAnalysisButton from "../analysis/NextAnalysisButton";
 import AnalysisDisclaimer from "../analysis/AnalysisDisclaimer";
 import { AnalysisData } from "../../data/analyses";
+import EditorialCallout from "../analysis/EditorialCallout";
 
 const T = {
   ink:     "#0D1B2A",
@@ -179,6 +180,7 @@ function ScenarioCard({label,color,bg,prob,pris,triggers,note}){
 }
 
 interface NovoNordiskDeepDiveProps {
+  data: AnalysisData;
   onToggleWatchlist?: () => void;
   isInWatchlist?: boolean;
   isWatchlistLoading?: boolean;
@@ -186,6 +188,7 @@ interface NovoNordiskDeepDiveProps {
 }
 
 export default function NovoNordiskDeepDive({ 
+  data,
   onToggleWatchlist, 
   isInWatchlist, 
   isWatchlistLoading,
@@ -438,6 +441,9 @@ export default function NovoNordiskDeepDive({
         </div>
 
         <AdUnit slot="7332946752" />
+        
+        {/* RELATED ANALYSIS CALLOUT */}
+        {data.relatedAnalysis && <EditorialCallout {...data.relatedAnalysis} />}
 
         {/* ── FINANSIELL ── */}
         <div id="finansiell">
