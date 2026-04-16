@@ -185,6 +185,20 @@ export const ericsson2025: AnalysisData = {
       bearCase: "Patentförnyelser blir svagare, juridiska processer fördyras, Enterprise underlevererar."
     }
   },
+  nextSteps: [
+    {
+      slug: "volvo",
+      title: "AB Volvo",
+      label: "Industrijätten",
+      reason: "Efter att ha analyserat Ericssons teknikresa, se hur en annan svensk exportjätte transformerar fordonsindustrin genom mjukvara och elektrifiering."
+    },
+    {
+      slug: "microsoft",
+      title: "Microsoft",
+      label: "Molnets makt",
+      reason: "Sätt Ericssons nätverksstrategi i perspektiv genom att förstå hur Microsofts molnplattform Azure omdefinierar infrastrukturen för framtidens företag."
+    }
+  ],
   scores: {
     affarsmodell: 3,
     strategiskMoat: 4,

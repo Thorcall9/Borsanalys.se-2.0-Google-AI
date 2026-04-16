@@ -19,6 +19,20 @@ export const alphabet: AnalysisData = {
     accentColor: "#00A4EF"
   },
   marketCap: "$3.9T",
+  nextSteps: [
+    {
+      slug: "microsoft",
+      title: "Microsoft",
+      label: "AI-rivalitet",
+      reason: "Jämför Googles dominans inom sök med Microsofts massiva molnsatsning och OpenAI-integration för att se vem som vinner AI-racet."
+    },
+    {
+      slug: "nvidia-fy2026",
+      title: "NVIDIA",
+      label: "Motorn i AI",
+      reason: "Sätt Alphabets mjukvaruövertag i perspektiv genom att analysera bolaget som levererar den nödvändiga beräkningskraften bakom Gemini."
+    }
+  ],
   summary: "Med ett ohotat monopol inom sök och en snabbväxande molnaffär transformeras Alphabet nu till ett 'compute-first' AI-bolag. Bolagets vertikala integration – från egna chip till världens största dataset – ger dem en strukturell fördel i den pågående AI-kapplöpningen.",
   date: "2026-03-15",
   
