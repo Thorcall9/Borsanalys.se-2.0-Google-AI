@@ -78,5 +78,20 @@ export const ericsson: AnalysisData = {
     riskprofil: 2,
     esgMakro: 3,
     aiObservationer: 3
-  }
+  },
+  nextSteps: [
+    {
+      slug: "volvo",
+      title: "AB Volvo",
+      label: "Industriellt sammanhang",
+      reason: "Se hur Ericssons 5G-lösningar blir en del av det framtida ekosystemet för autonoma fordon och industriell automation hos Volvo."
+    },
+    {
+      slug: "investor-ab",
+      title: "Investor AB",
+      label: "Strategisk ägare",
+      reason: "Förstå hur Wallenbergsfärens flaggskepp navigerar den långsiktiga produktutvecklingen och ägarstyrningen i Ericsson."
+    }
+  ],
+  deepDiveComponent: "Ericsson"
 };

@@ -158,6 +158,12 @@ export interface AnalysisData {
     cta: string;
     accentColor: string;
   };
+  nextSteps?: {
+    slug: string;
+    title?: string;
+    reason?: string;
+    label?: string;
+  }[];
   scores?: {
     affarsmodell: number;
     strategiskMoat: number;

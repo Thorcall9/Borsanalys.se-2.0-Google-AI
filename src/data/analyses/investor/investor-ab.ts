@@ -86,5 +86,19 @@ export const investorAb: AnalysisData = {
     esgMakro: 3,
     aiObservationer: 5
   },
+  nextSteps: [
+    {
+      slug: "volvo",
+      title: "AB Volvo",
+      label: "Viktigt kärninnehav",
+      reason: "Dyk ner i Investors näst största noterade innehav och förstå hur Martins Lundstedts ledarskap transformerar fordonsjätten."
+    },
+    {
+      slug: "ericsson",
+      title: "Ericsson",
+      label: "Tekniksprånget",
+      reason: "Utforska hur sfärens nätverksjätte hanterar den globala 5G-utmaningen och positionerar sig för framtidens infrastruktur."
+    }
+  ],
   deepDiveComponent: "Investor"
 };

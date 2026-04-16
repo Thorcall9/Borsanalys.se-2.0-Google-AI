@@ -26,6 +26,8 @@ import ScenarioCards from './ScenarioCards';
 import VerdictBox from './VerdictBox';
 import ProgressBar from './ProgressBar';
 import ChartCard from './ChartCard';
+import NextStepsModule from './NextStepsModule';
+import EditorialReadNext from './EditorialReadNext';
 import SEO from '../SEO';
 import { fetchWithCache, RapidAPIQuote } from '../../services/stockService';
 import { AnalysisData } from '../../data/analyses';
@@ -628,6 +630,11 @@ export default function ComprehensiveAnalysis({
         </div>
       </section>
 
+
+      {/* NEXT STEPS MODULE (REDACTIONAL GUIDANCE) */}
+      {data.nextSteps && (
+        <EditorialReadNext recommendations={data.nextSteps} />
+      )}
 
       {/* SECTION X: SCENARIER & MÅLPRIS */}
       <section id="scenarios" className="scroll-mt-24 mt-24 mb-32">

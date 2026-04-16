@@ -16,3 +16,4 @@ export { default as FadeIn } from './FadeIn';
 export { default as ComprehensiveAnalysis } from './ComprehensiveAnalysis';
 export { default as FinancialTable } from './FinancialTable';
 export type { TableRow } from './FinancialTable';
+export { default as NextStepsModule } from './NextStepsModule';

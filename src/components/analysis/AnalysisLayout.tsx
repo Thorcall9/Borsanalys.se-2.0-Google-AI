@@ -133,7 +133,7 @@ export default function AnalysisLayout({
 
       {/* Sidebar */}
       <aside className={`
-        fixed top-0 left-0 h-screen ${wideSidebar ? 'w-80 border-r-4 border-primary' : 'w-72'} z-[95] flex flex-col transition-transform duration-500 border-r border-border overflow-hidden
+        fixed top-0 left-0 h-screen ${wideSidebar ? 'w-80 border-r-4 border-primary shadow-2xl' : 'w-72'} z-[95] flex flex-col transition-transform duration-500 border-r border-border overflow-y-auto premium-scrollbar
         ${isLight ? 'bg-card' : 'bg-card'}
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
@@ -186,7 +186,7 @@ export default function AnalysisLayout({
           )}
         </div>
         
-        <nav className="flex-1 py-8 overflow-y-auto premium-scrollbar min-h-0">
+        <nav className="py-8">
           <div className={`${wideSidebar ? 'px-8 mb-6 text-xs' : 'px-8 mb-4 text-[10px]'} font-black text-muted-foreground/50 uppercase tracking-[0.3em]`}>Analysrapport</div>
           {sections.map((s) => (
             <button

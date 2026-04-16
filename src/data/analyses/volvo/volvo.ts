@@ -62,5 +62,19 @@ export const volvo: AnalysisData = {
     esgMakro: 4,
     aiObservationer: 3
   },
+  nextSteps: [
+    {
+      slug: "investor-ab",
+      title: "Investor AB",
+      label: "Industriell ryggrad",
+      reason: "Se hur ägarjätten Investor navigerar det globala makroläget och stödjer sina industriella innehav genom cykeln."
+    },
+    {
+      slug: "handelsbanken-2025",
+      title: "Handelsbanken",
+      label: "Finansieringsperspektivet",
+      reason: "Fördjupa dig i sektorn som finansierar Sveriges exportjättar och förstå risksituationen i det nordiska banksystemet."
+    }
+  ],
   deepDiveComponent: "Volvo"
 };

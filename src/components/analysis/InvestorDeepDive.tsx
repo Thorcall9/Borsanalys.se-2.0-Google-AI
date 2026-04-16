@@ -10,6 +10,7 @@ import MultiplexAd from "../MultiplexAd";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import EditorialCallout from "./EditorialCallout";
+import EditorialReadNext from "./EditorialReadNext";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -782,6 +783,9 @@ export default function InvestorDeepDive({
           </FadeIn>
         </div>
 
+        {data.nextSteps && (
+          <EditorialReadNext recommendations={data.nextSteps} />
+        )}
 
         {/* ── SCENARIER ── */}
         <div id="scenarier">
