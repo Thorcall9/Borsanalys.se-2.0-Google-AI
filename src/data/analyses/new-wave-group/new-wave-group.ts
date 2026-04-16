@@ -131,5 +131,19 @@ export const newWaveGroup2025: AnalysisData = {
       bearCase: "75-85 SEK"
     }
   },
+  nextSteps: [
+    {
+      slug: "volvo",
+      title: "AB Volvo",
+      label: "Industriellt ledarskap",
+      reason: "Efter att ha analyserat New Waves varumärkesresa, se hur ett annat svenskt flaggskepp navigerar sin globala transformation inom tunga transporter."
+    },
+    {
+      slug: "alphabet",
+      title: "Alphabet",
+      label: "Digitala varumärken",
+      reason: "Förstå hur världens största digitala plattformar formar framtidens marknadsföring och konsumentbeteende globalt."
+    }
+  ],
   deepDiveComponent: "NewWave"
 };

@@ -21,13 +21,15 @@ export const microsoft: AnalysisData = {
   nextSteps: [
     {
       slug: "alphabet",
-      label: "Sektoranalys",
-      reason: "Hur står sig Microsoft mot den andra giganten inom moln och AI? Jämför med Alphabet."
+      title: "Alphabet",
+      label: "AI-kriget",
+      reason: "Jämför Microsofts offensiva molnsatsning med sökjätten Alphabet för att se vem som drar mest nytta av den generativa AI-vågen."
     },
     {
       slug: "nvidia-fy2026",
-      label: "AI-kontext",
-      reason: "Sätt Microsofts AI-tillväxt i ett större sammanhang med hårdvaruvinnaren Nvidia."
+      title: "NVIDIA",
+      label: "Hårdvaruledaren",
+      reason: "Sätt Microsofts mjukvarudominans i perspektiv genom att analysera bolaget som levererar den nödvändiga beräkningskraften bakom kulisserna."
     }
   ],
   marketCap: "$3.1T",

@@ -64,5 +64,19 @@ export const sbb: AnalysisData = {
     riskprofil: 1,
     esgMakro: 2,
     aiObservationer: 2
-  }
+  },
+  nextSteps: [
+    {
+      slug: "investor-ab",
+      title: "Investor AB",
+      label: "Trygghet & Kvalitet",
+      reason: "Efter att ha analyserat riskerna i SBB, se hur en av Sveriges mest stabila ägarmaskiner navigerar marknaden med en helt annan finansiell disciplin."
+    },
+    {
+      slug: "volvo",
+      title: "AB Volvo",
+      label: "Industriellt fokus",
+      reason: "Växla från fastighetssektorns utmaningar till verkstadsindustrins globala dominans och de kassaflöden som driver svensk industri framåt."
+    }
+  ]
 };

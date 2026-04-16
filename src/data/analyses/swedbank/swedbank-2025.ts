@@ -58,6 +58,20 @@ export const swedbank2025: AnalysisData = {
     { label: "Bear Case", value: "260-290 kr", change: "-15%", type: "bear", description: "ROE 12-13%, räntepress, stora regulatoriska böter." },
   ],
   deepDiveComponent: "Swedbank",
+  nextSteps: [
+    {
+      slug: "handelsbanken-2025",
+      title: "Handelsbanken",
+      label: "Jämförande analys",
+      reason: "Se hur Swedbanks exponering mot Baltikum och bolån står sig mot Handelsbankens mer konservativa och lokala bankmodell i vår djuplodande analys."
+    },
+    {
+      slug: "investor-ab",
+      title: "Investor AB",
+      label: "Makro & Ägande",
+      reason: "Förstå hur Investors ägande i SEB påverkar dynamiken i det svenska banksystemet och hur de stora industriella ägarna navigerar i banksektorn."
+    }
+  ],
   
   scores: {
     affarsmodell: 4,

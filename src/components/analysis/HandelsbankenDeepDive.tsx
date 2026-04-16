@@ -7,6 +7,7 @@ import {
 } from "recharts";
 import AdUnit from "../AdUnit";
 import EditorialCallout from "./EditorialCallout";
+import EditorialReadNext from "./EditorialReadNext";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import { AnalysisData } from "../../data/analyses";
 
@@ -893,6 +894,10 @@ export default function HandelsbankenDeepDive({
             </div>
           </FadeIn>
         </div>
+
+        {data.nextSteps && (
+          <EditorialReadNext recommendations={data.nextSteps} />
+        )}
 
         {/* ── SCENARIER ── */}
         <div id="scenarier">

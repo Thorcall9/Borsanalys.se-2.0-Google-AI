@@ -92,6 +92,20 @@ export const evolution2025: AnalysisData = {
     esgMakro: 3,
     aiObservationer: 4
   },
+  nextSteps: [
+    {
+      slug: "nvidia-fy2026",
+      title: "NVIDIA",
+      label: "Teknikledarskap",
+      reason: "Dyk ner i hårdvarujätten som driver den beräkningskraft som behövs för framtidens molnbaserade speltjänster och AI-grafik."
+    },
+    {
+      slug: "microsoft",
+      title: "Microsoft",
+      label: "Global plattform",
+      reason: "Förstå hur mjukvarumonopolet skapar världens mest stabila kassaflöden och hur deras Azure-moln utmanar spelbranschens infrastruktur."
+    }
+  ],
   deepDiveComponent: "Evolution",
   aiDrivenData: {
     isAIDriven: true,

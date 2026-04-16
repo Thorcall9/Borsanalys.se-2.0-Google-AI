@@ -56,6 +56,20 @@ export const handelsbanken2025: AnalysisData = {
     { label: "Bear Case", value: "115-130 kr", change: "-2%", type: "bear", description: "Räntetrycket fortsätter, regulatoriska kostnader biter och bankmultiplar kommer ned." },
   ],
   deepDiveComponent: "Handelsbanken",
+  nextSteps: [
+    {
+      slug: "swedbank-2025",
+      title: "Swedbank",
+      label: "Banksektorn",
+      reason: "Jämför Handelsbankens riskfokus med Swedbanks breda exponering mot den svenska bolånemarknaden och Baltikums tillväxt."
+    },
+    {
+      slug: "investor-ab",
+      title: "Investor AB",
+      label: "Ägarperspektivet",
+      reason: "Förstå hur bankvärldens ekosystem hänger samman genom Investors strategiska innehav i SEB och det svenska näringslivet."
+    }
+  ],
   
   scores: {
     affarsmodell: 5,

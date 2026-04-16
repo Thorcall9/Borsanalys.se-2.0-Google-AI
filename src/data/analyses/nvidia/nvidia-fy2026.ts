@@ -79,5 +79,19 @@ export const nvidiaFy2026: AnalysisData = {
   esg: "Fokus på energieffektivitet i chip-design (Blackwell är betydligt mer effektiv än Hopper). Utmaningar finns kring energiförbrukning i gigantiska datacenter.",
   aiObservations: "AI-driven analys av sentiment, insiderhandel och tekniska trender indikerar en stabil position för bolaget i nuvarande marknadsklimat. Blackwell-arkitekturen visar på en 30x förbättring i inferens-prestanda.",
   conclusion: "NVIDIA är ett av de starkaste kvalitetsbolagen på marknaden. AI-supercykeln, CUDA-ekosystemets oövervinnerliga vallgrav och Blackwell-arkitekturens dominans skapar en sällsynt genomgång av extremt hög tillväxt och exceptionell lönsamhet.",
+  nextSteps: [
+    {
+      slug: "microsoft",
+      title: "Microsoft",
+      label: "Mjukvaruledaren",
+      reason: "Medan NVIDIA levererar hårdvaran, se hur Microsoft skalar upp mjukvaru- och molnerbjudandet genom sin strategiska OpenAI-integration."
+    },
+    {
+      slug: "alphabet",
+      title: "Alphabet",
+      label: "AI-infrastruktur",
+      reason: "Jämför NVIDIAs dominans med Alphabets egna chip-utveckling (TPU) och hur sökjätten positionerar sig för att minska beroendet av externa leverantörer."
+    }
+  ],
   deepDiveComponent: "Nvidia"
 };

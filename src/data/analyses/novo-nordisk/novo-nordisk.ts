@@ -60,5 +60,19 @@ export const novoNordisk: AnalysisData = {
     esgMakro: 4,
     aiObservationer: 4
   },
+  nextSteps: [
+    {
+      slug: "nvidia-fy2026",
+      title: "NVIDIA",
+      label: "Hårdvaruledaren",
+      reason: "Medan Novo Nordisk leder den medicinska revolutionen, se hur NVIDIA driver den beräkningskraft som behövs för modern läkemedelsforskning och molekylär modellering."
+    },
+    {
+      slug: "apple",
+      title: "Apple",
+      label: "Konsumentfokus",
+      reason: "Jämför Novo Nordisks dominans inom hälsovård med Apples växande ekosystem för personlig hälsa och biometrisk data."
+    }
+  ],
   deepDiveComponent: "NovoNordisk"
 };

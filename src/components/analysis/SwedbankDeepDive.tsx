@@ -7,6 +7,7 @@ import {
 } from "recharts";
 import AdUnit from "../AdUnit";
 import EditorialCallout from "./EditorialCallout";
+import EditorialReadNext from "./EditorialReadNext";
 import MultiplexAd from "../MultiplexAd";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
@@ -833,6 +834,10 @@ export default function SwedbankDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        {data.nextSteps && (
+          <EditorialReadNext recommendations={data.nextSteps} />
+        )}
 
         {/* ── SCENARIER ── */}
         <div id="scenarier">

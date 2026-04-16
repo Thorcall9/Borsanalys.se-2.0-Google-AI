@@ -73,5 +73,19 @@ export const apple: AnalysisData = {
     riskprofil: 4,
     esgMakro: 4,
     aiObservationer: 4
-  }
+  },
+  nextSteps: [
+    {
+      slug: "alphabet",
+      title: "Alphabet",
+      label: "AI-kriget",
+      reason: "Medan Apple fokuserar på on-device AI, se hur sökjätten Alphabet bygger den infrastrukturella ryggraden för nästa generations intelligenta tjänster."
+    },
+    {
+      slug: "nvidia-fy2026",
+      title: "NVIDIA",
+      label: "Hårdvaruledaren",
+      reason: "Förstå bolaget som levererar de chip som gör Apples och Alphabets visioner möjliga – en djupdykning i AI-revolutionens motorrum."
+    }
+  ]
 };

@@ -11,6 +11,7 @@ import MultiplexAd from "../MultiplexAd";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import EditorialCallout from "./EditorialCallout";
+import EditorialReadNext from "./EditorialReadNext";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -1105,6 +1106,9 @@ export default function EvolutionDeepDive({
           </div>
         </section>
 
+        {data.nextSteps && (
+          <EditorialReadNext recommendations={data.nextSteps} />
+        )}
 
         {/* XII. Scenarier (Bull/Base/Bear) */}
         <section id="scenarios" className="pt-24 pb-20">
