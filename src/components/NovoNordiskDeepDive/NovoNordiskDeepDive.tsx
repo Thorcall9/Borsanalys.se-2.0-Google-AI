@@ -11,6 +11,7 @@ import NextAnalysisButton from "../analysis/NextAnalysisButton";
 import AnalysisDisclaimer from "../analysis/AnalysisDisclaimer";
 import { AnalysisData } from "../../data/analyses";
 import EditorialCallout from "../analysis/EditorialCallout";
+import EditorialReadNext from "../analysis/EditorialReadNext";
 
 const T = {
   ink:     "#0D1B2A",
@@ -194,37 +195,26 @@ export default function NovoNordiskDeepDive({
   isWatchlistLoading,
   nextAnalysis
 }: NovoNordiskDeepDiveProps){
-  const { ticker } = useParams();
   const [mounted,setMounted]=useState(false);
-  const [analysisData, setAnalysisData] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(()=>{
     const t=setTimeout(()=>setMounted(true),50);
     return()=>clearTimeout(t);
   },[]);
 
-  useEffect(() => {
-    const fetchAnalysis = async () => {
-      if (!ticker) return;
-      setIsLoading(true);
-      try {
-        const response = await fetch(`/api/analysis/${ticker}`);
-        if (response.ok) {
-          const data = await response.json();
-          setAnalysisData(data);
-        }
-      } catch (error) {
-        console.error("Error fetching analysis:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const scores = data?.scores || {
+    affarsmodell: 0,
+    strategiskMoat: 0,
+    finansiellKvalitet: 0,
+    vardering: 0,
+    tillvaxtutsikter: 0,
+    riskprofil: 0,
+    esgMakro: 0,
+    aiObservationer: 0
+  };
+  const totalRating = Object.values(scores).reduce((a, b) => a + b, 0);
 
-    fetchAnalysis();
-  }, [ticker]);
-
-  if (!mounted || isLoading) {
+  if (!mounted) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <Loader2 className="w-8 h-8 text-[#00A86B] animate-spin" />
@@ -243,7 +233,7 @@ export default function NovoNordiskDeepDive({
             <div className="flex flex-col items-center shrink-0">
               <span className="text-[10px] font-bold tracking-[0.2em] uppercase opacity-80 mb-2">Vår bedömning</span>
               <div className="bg-white text-[#00A86B] w-20 h-20 rounded-full flex items-center justify-center shadow-xl">
-                <span className="text-2xl font-black tracking-tighter">{analysisData?.verdict || "KÖP"}</span>
+                <span className="text-2xl font-black tracking-tighter">{data?.recommendation || "KÖP"}</span>
               </div>
             </div>
             
@@ -253,11 +243,11 @@ export default function NovoNordiskDeepDive({
                   <ArrowLeft size={20} />
                 </Link>
                 <h1 className="text-3xl md:text-4xl font-black tracking-tight leading-tight">
-                  {analysisData?.companyName || "Novo Nordisk A/S"}
+                  {data?.title || "Novo Nordisk A/S"}
                 </h1>
               </div>
               <div className="flex flex-wrap items-center gap-3">
-                <span className="bg-white/20 px-2 py-0.5 rounded text-xs font-bold tracking-wide">{analysisData?.ticker || "NOVO-B • NVO"}</span>
+                <span className="bg-white/20 px-2 py-0.5 rounded text-xs font-bold tracking-wide">{data?.ticker || "NOVO-B • NVO"}</span>
                 <span className="text-sm font-medium opacity-90">Läkemedel • Diabetes & Fetma • Köpenhamn</span>
                 
                 <button 
@@ -279,13 +269,13 @@ export default function NovoNordiskDeepDive({
           {/* Right: Total Score */}
           <div className="flex flex-col items-start md:items-end w-full md:w-64">
             <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-4xl font-black tracking-tighter">{analysisData?.totalRating || "33"}/40</span>
+              <span className="text-4xl font-black tracking-tighter">{totalRating}/40</span>
               <span className="text-sm font-bold opacity-80 uppercase tracking-widest">Poäng</span>
             </div>
             <div className="w-full bg-black/10 h-2 rounded-full overflow-hidden mb-2">
-              <div className="bg-white h-full rounded-full" style={{ width: `${((analysisData?.totalRating || 33) / 40) * 100}%` }} />
+              <div className="bg-white h-full rounded-full" style={{ width: `${(totalRating / 40) * 100}%` }} />
             </div>
-            <span className="text-sm font-bold tracking-tight">{((analysisData?.totalRating || 33) / 40 * 100).toFixed(1).replace('.', ',')} % – {analysisData?.totalRating >= 30 ? "Stark kvalitetsaktie" : "Intressant case"}</span>
+            <span className="text-sm font-bold tracking-tight">{(totalRating / 40 * 100).toFixed(1).replace('.', ',')} % – {totalRating >= 30 ? "Stark kvalitetsaktie" : "Intressant case"}</span>
           </div>
         </div>
       </div>
@@ -383,7 +373,7 @@ export default function NovoNordiskDeepDive({
               <SectionLabel number="I" title="Företagsöversikt"/>
               <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:28}}>
                 {[
-                  ["Bakgrund & Struktur", analysisData?.analysisText || "Novo Nordisk grundades 1923 i Danmark och är världens ledande läkemedelsbolag inom diabetes och fetma. Bolaget kontrolleras av Novo Nordisk Foundation via Novo Holdings – en stiftelsestruktur som omöjliggör fientliga uppköp och skapar ett genuint långsiktigt perspektiv."],
+                  ["Bakgrund & Struktur", data?.summary || "Novo Nordisk grundades 1923 i Danmark och är världens ledande läkemedelsbolag inom diabetes och fetma. Bolaget kontrolleras av Novo Nordisk Foundation via Novo Holdings – en stiftelsestruktur som omöjliggör fientliga uppköp och skapar ett genuint långsiktigt perspektiv."],
                   ["Affärsmodell","Patentskyddade receptläkemedel med återkommande intäkter – patienter tar medicinen kontinuerligt, likt en prenumeration. Bruttomarginalen på ~81% reflekterar unik prissättningsmakt. GLP-1-klassen (Ozempic®, Wegovy®, Rybelsus®) genererar merparten av DKK 309 Mdr omsättning 2025."],
                   ["Ledning","Maziar Mike Doustdar tillträdde som VD 2025, med bakgrund som EVP International Operations. Styrelseordförande Lars Rebien Sørensen är en av Europas mest erfarna läkemedelsledare med 16 år som VD i bolaget."],
                   ["Ägarstruktur","Novo Holdings äger alla A-aktier (100 röster/aktie) och ~28% av B-aktierna = röstmajoritet. A-aktierna kan ej avyttras per stiftelsens stadgar. Free float av B-aktier är 94,1%. Stabilt ankare som eliminerar kortsiktig spekulationsrisk."],
@@ -727,6 +717,9 @@ export default function NovoNordiskDeepDive({
           </FadeIn>
         </div>
 
+        {data.nextSteps && (
+          <EditorialReadNext recommendations={data.nextSteps} />
+        )}
 
         {/* ── SCENARIER ── */}
         <div id="scenarier">

@@ -646,7 +646,7 @@ export default function ComprehensiveAnalysis({
             type: s.type,
             icon: s.type === 'bull' ? '🚀' : s.type === 'base' ? '📊' : '📉',
             title: s.label.toUpperCase(),
-            probability: s.type === 'base' ? '50%' : '25%',
+            probability: s.probability || (s.type === 'base' ? '50%' : '25%'),
             price: s.value,
             change: s.change,
             description: s.description || (s.type === 'bull' ? "Optimistiskt scenario där tillväxten accelererar och multiplar expanderar." : s.type === 'base' ? "Mest troliga utvecklingen baserat på nuvarande trender och estimat." : "Defensivt scenario vid sämre konjunktur eller specifika bakslag.")

@@ -24,7 +24,7 @@ export const analyses: Record<string, AnalysisData> = {
   "alphabet": alphabet,
   "evolution-2025": evolution2025,
   "swedbank-2025": swedbank2025,
-  "ericsson": ericsson2025,
+  "ericsson-2025": ericsson2025,
   "handelsbanken-2025": handelsbanken2025,
   "new-wave-group-april-2026": newWaveGroup2025,
 };

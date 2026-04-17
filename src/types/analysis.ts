@@ -142,7 +142,7 @@ export interface AnalysisData {
   weaknesses?: string[];
   opportunities?: string[];
   threats?: string[];
-  scenarios: { label: string; value: string; change: string; type: "bull" | "base" | "bear"; description?: string }[];
+  scenarios: { label: string; value: string; change: string; type: "bull" | "base" | "bear"; description?: string; probability?: string }[];
   businessModel?: string;
   management?: string;
   advantages?: string[];

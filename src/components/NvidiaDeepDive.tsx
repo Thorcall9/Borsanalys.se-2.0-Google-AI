@@ -17,7 +17,8 @@ import {
   FinancialTable,
   ScenarioCards,
   AlertBox,
-  VerdictBox
+  VerdictBox,
+  EditorialReadNext
 } from "./analysis";
 import AdUnit from "./AdUnit";
 import MultiplexAd from "./MultiplexAd";
@@ -1096,6 +1097,10 @@ export default function NvidiaDeepDive({
             </p>
           </div>
         </section>
+
+        {data.nextSteps && (
+          <EditorialReadNext recommendations={data.nextSteps} />
+        )}
 
         {/* SECTION X: SCENARIER (BULL, BASE & BEAR CASE) */}
         <section id="scenarios" className="scroll-mt-24 mb-32">
