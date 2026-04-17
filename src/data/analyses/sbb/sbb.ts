@@ -12,7 +12,7 @@ export const sbb: AnalysisData = {
   yield: "0%",
   marketCap: "6,8 Bkr",
   summary: "SBB har lämnat den mest akuta krisfasen bakom sig, men har ännu inte bevisat att det nya, renodlade SBB förtjänar att värderas som ett stabilt fastighetsbolag. Caset har gått från överlevnad till exekvering – men risknivån är fortsatt hög.",
-  date: "2026-04-17",
+  date: "17 april 2026",
   
   marketOverview: "Samhällsbyggnadsbolaget i Norden, SBB, är inte längre samma bolag som marknaden lärde känna under nollränteåren. Efter den strategiska översynen som inleddes 2023 har koncernen under 2025 genomfört en omfattande omställning där fokus flyttats från aggressiv expansion till renodling, skuldsänkning och strukturell förenkling. Vid utgången av 2025 bestod SBB i huvudsak av fyra specialiserade ben: Samhälle, Bostad, Utbildning och Utveckling, där stora delar av fastighetsexponeringen ligger i eller via Sveafastigheter, Nordiqus och Public Property Invest.\n\nDet enskilt viktigaste under året var försäljningen av SocialCo till Public Property Invest, PPI. Genom affären avyttrade SBB i praktiken sin samhällsportfölj, använde likviden för att teckna aktier i PPI och för att återbetala skuld, och stod vid årets slut med 34,22 procent av rösterna och 40,63 procent av kapitalet i PPI. Det gör dagens SBB mindre direkt fastighetsoperativt än tidigare och betydligt mer beroende av värdeutveckling, kassaflöden och finansiering i de större innehaven.\n\nAffärsidén är fortsatt tydlig på pappret: att skapa ledande bolag inom social infrastruktur i Norden med stabilt ökande driftnetto. I praktiken är caset nu mer av ett holding- och omställningscase än ett traditionellt svenskt fastighetsbolag. Det måste synas redan i översikten.",
   
