@@ -225,8 +225,8 @@ export const guides: Record<string, Guide> = {
     icon: "BookOpen"
   },
   "vardering-av-aktier": {
-    slug: "grunderna-i-aktieanalys-steg-for-steg",
-    title: "Grunderna i aktieanalys",
+    slug: "vardering-av-aktier",
+    title: "Värdering av aktier",
     excerpt: "Lär dig hur du analyserar ett bolag från grunden – från affärsmodell och rapporter till nyckeltal och värdering.",
     content: `
       <div class="space-y-16">
