@@ -44,6 +44,7 @@ import HandelsbankenDeepDive from "../components/analysis/HandelsbankenDeepDive"
 import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 import AdZone from "../components/AdZone";
+import MobileReadingProgress from "../components/MobileReadingProgress";
 
 const DEEP_DIVE_COMPONENTS = {
   Nvidia: NvidiaDeepDive,
@@ -401,14 +402,32 @@ export default function Analysis() {
   const currentIndex = allAnalyses.findIndex(a => a.slug === (slug === 'evolution' ? 'evolution-2025' : slug));
   const nextAnalysis = currentIndex !== -1 && currentIndex < allAnalyses.length - 1 
     ? allAnalyses[currentIndex + 1] 
-    : allAnalyses[0];
+    : undefined;
 
   // Check for specialized high-fidelity views
   if (analysis.deepDiveComponent && DEEP_DIVE_COMPONENTS[analysis.deepDiveComponent as keyof typeof DEEP_DIVE_COMPONENTS]) {
     const Component = DEEP_DIVE_COMPONENTS[analysis.deepDiveComponent as keyof typeof DEEP_DIVE_COMPONENTS];
-    return <Component data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />;
+    return (
+      <>
+        <Component data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
+        <MobileReadingProgress 
+          label="analys" 
+          nextTitle={nextAnalysis?.title} 
+          nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
+        />
+      </>
+    );
   }
 
   // Use the new comprehensive analysis template for all other stocks
-  return <ComprehensiveAnalysis data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />;
+  return (
+    <>
+      <ComprehensiveAnalysis data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
+      <MobileReadingProgress 
+        label="analys" 
+        nextTitle={nextAnalysis?.title} 
+        nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
+      />
+    </>
+  );
 }

@@ -6,6 +6,7 @@ import { guides } from "../data/guides";
 import AdZone from "../components/AdZone";
 import SEO from "../components/SEO";
 import AnalysisDisclaimer from "../components/analysis/AnalysisDisclaimer";
+import MobileReadingProgress from "../components/MobileReadingProgress";
 import { Helmet } from "react-helmet-async";
 
 
@@ -33,8 +34,8 @@ export default function GuideDetail() {
 
   const guideList = Object.values(guides).sort((a, b) => a.part - b.part);
   const currentIndex = guideList.findIndex(g => g.slug === slug);
-  const nextGuide = guideList[(currentIndex + 1) % guideList.length];
-  const nextSlug = nextGuide.slug;
+  const nextGuide = currentIndex !== -1 && currentIndex < guideList.length - 1 ? guideList[currentIndex + 1] : undefined;
+  const nextSlug = nextGuide?.slug;
 
   const relatedGuides = guideList
     .filter(g => g.category === guide.category && g.slug !== guide.slug)
@@ -190,6 +191,11 @@ export default function GuideDetail() {
           </button>
         </form>
       </footer>
+      <MobileReadingProgress 
+        label="guide" 
+        nextTitle={nextGuide?.title} 
+        nextHref={nextSlug ? `/guider/${nextSlug}` : undefined} 
+      />
     </div>
   );
 }
