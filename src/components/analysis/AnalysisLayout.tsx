@@ -188,20 +188,28 @@ export default function AnalysisLayout({
         
         <nav className="py-8">
           <div className={`${wideSidebar ? 'px-8 mb-6 text-xs' : 'px-8 mb-4 text-[10px]'} font-black text-muted-foreground/50 uppercase tracking-[0.3em]`}>Analysrapport</div>
-          {sections.map((s) => (
-            <button
-              key={s.id}
-              onClick={() => scrollTo(s.id)}
-              className={`
-                w-full flex items-center gap-4 px-8 ${compactSections ? 'py-2' : 'py-3'} text-xs font-bold transition-all border-l-4
-                ${activeSection === s.id 
-                  ? 'bg-primary/5 border-primary text-foreground'
-                  : 'border-transparent text-muted-foreground hover:bg-muted/30 hover:text-foreground'}
-              `}
-            >
-              <span className={`font-black text-[10px] w-6 opacity-50 ${compactSections ? 'hidden' : 'block'}`}>{s.number}</span>
-              <span className={`${compactSections ? 'text-[11px] uppercase tracking-wider' : wideSidebar ? 'text-sm tracking-tight' : 'tracking-tight'}`}>{s.title}</span>
-            </button>
+          {sections.map((s, index) => (
+            <React.Fragment key={s.id}>
+              <button
+                onClick={() => scrollTo(s.id)}
+                className={`
+                  w-full flex items-center gap-4 px-8 ${compactSections ? 'py-2' : 'py-3'} text-xs font-bold transition-all border-l-4
+                  ${activeSection === s.id 
+                    ? 'bg-primary/5 border-primary text-foreground'
+                    : 'border-transparent text-muted-foreground hover:bg-muted/30 hover:text-foreground'}
+                `}
+              >
+                <span className={`font-black text-[10px] w-6 opacity-50 ${compactSections ? 'hidden' : 'block'}`}>{s.number}</span>
+                <span className={`${compactSections ? 'text-[11px] uppercase tracking-wider' : wideSidebar ? 'text-sm tracking-tight' : 'tracking-tight'}`}>{s.title}</span>
+              </button>
+              
+              {/* Inject advertisement in the middle of the navigation menu */}
+              {index === 4 && (
+                <div className="px-8 py-6 my-2">
+                  <AdZone id={`${stockLink}-sidebar-mid`} type="sidebar" discrete={true} />
+                </div>
+              )}
+            </React.Fragment>
           ))}
           
           {sidebarExtras && (
