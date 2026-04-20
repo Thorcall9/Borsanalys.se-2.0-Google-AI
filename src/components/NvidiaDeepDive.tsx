@@ -25,6 +25,7 @@ import MultiplexAd from "./MultiplexAd";
 import NextAnalysisButton from "./analysis/NextAnalysisButton";
 import AnalysisDisclaimer from "./analysis/AnalysisDisclaimer";
 import EditorialCallout from "./analysis/EditorialCallout";
+import AnalysisTopAd from "./ads/AnalysisTopAd";
 import { AnalysisData } from "../data/analyses";
 
 const T = {
@@ -349,6 +350,8 @@ export default function NvidiaDeepDive({
           </div>
         </div>
       </div>
+
+      <AnalysisTopAd />
 
       {/* CONTENT AREA */}
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-12 space-y-16">

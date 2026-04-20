@@ -32,6 +32,7 @@ import SEO from '../SEO';
 import { fetchWithCache, RapidAPIQuote } from '../../services/stockService';
 import { AnalysisData } from '../../data/analyses';
 import AdUnit from '../AdUnit';
+import AnalysisTopAd from '../ads/AnalysisTopAd';
 import EditorialCallout from './EditorialCallout';
 import { MicrosoftSidebarExtras } from './MicrosoftSidebarExtras';
 
@@ -241,6 +242,8 @@ export default function ComprehensiveAnalysis({
           </div>
         )}
       </div>
+
+      <AnalysisTopAd />
 
       {/* SECTION I: FÖRETAGSÖVERSIKT */}
       <section id="overview" className="scroll-mt-24">

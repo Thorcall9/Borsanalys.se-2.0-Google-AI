@@ -12,6 +12,7 @@ import AnalysisDisclaimer from "../analysis/AnalysisDisclaimer";
 import { AnalysisData } from "../../data/analyses";
 import EditorialCallout from "../analysis/EditorialCallout";
 import EditorialReadNext from "../analysis/EditorialReadNext";
+import AnalysisTopAd from "../ads/AnalysisTopAd";
 
 const T = {
   ink:     "#0D1B2A",
@@ -362,6 +363,8 @@ export default function NovoNordiskDeepDive({
           </div>
         </div>
       </div>
+
+      <AnalysisTopAd />
 
       {/* CONTENT AREA */}
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-12 space-y-16">

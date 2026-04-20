@@ -9,6 +9,7 @@ import AdUnit from "../AdUnit";
 import EditorialCallout from "./EditorialCallout";
 import EditorialReadNext from "./EditorialReadNext";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
+import AnalysisTopAd from "../ads/AnalysisTopAd";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -302,6 +303,8 @@ export default function HandelsbankenDeepDive({
           </div>
         </div>
       </div>
+
+      <AnalysisTopAd />
 
       {/* 4. META INFO */}
       <div className="max-w-7xl mx-auto px-6 md:px-10 mt-8 mb-4">

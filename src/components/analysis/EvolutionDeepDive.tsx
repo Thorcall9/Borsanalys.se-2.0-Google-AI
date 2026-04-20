@@ -12,6 +12,7 @@ import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import EditorialCallout from "./EditorialCallout";
 import EditorialReadNext from "./EditorialReadNext";
+import AnalysisTopAd from "../ads/AnalysisTopAd";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -333,6 +334,8 @@ export default function EvolutionDeepDive({
           </div>
         </div>
       </div>
+
+      <AnalysisTopAd />
 
       {/* CONTENT AREA */}
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-12 space-y-16">

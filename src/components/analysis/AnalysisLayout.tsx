@@ -205,8 +205,8 @@ export default function AnalysisLayout({
               
               {/* Inject advertisement in the middle of the navigation menu */}
               {index === 4 && (
-                <div className="px-8 py-6 my-2 border-y border-border/10 bg-muted/5">
-                  <AdZone id={`${stockLink}-sidebar-mid`} type="sidebar" discrete={false} />
+                <div className="px-8 py-6 my-2">
+                  <AdZone id={`${stockLink}-sidebar-mid`} type="sidebar" discrete={true} />
                 </div>
               )}
             </React.Fragment>
