@@ -66,6 +66,7 @@ export default function Analysis() {
     'handelsbanken': 'handelsbanken-2025',
     'nvidia': 'nvidia-fy2026',
     'investor': 'investor-ab',
+    'ericsson': 'ericsson-2025',
     'new-wave': 'new-wave-group-april-2026',
     'new-wave-group': 'new-wave-group-april-2026'
   };
