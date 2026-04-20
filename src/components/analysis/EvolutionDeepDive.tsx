@@ -447,7 +447,6 @@ export default function EvolutionDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" />
 
         {/* ── FINANSIELL ── */}
         <div id="finansiell">
@@ -534,6 +533,8 @@ export default function EvolutionDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        <AdUnit slot="7332946752" className="my-16" />
 
         {/* ── TILLVÄXT ── */}
         <div id="tillvaxt">
@@ -755,6 +756,8 @@ export default function EvolutionDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        <AdUnit slot="7332946752" className="my-16" />
 
         {/* VII. Segmentanalys */}
         <section id="segments" className="pt-24 space-y-12">

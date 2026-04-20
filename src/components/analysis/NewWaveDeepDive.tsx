@@ -453,7 +453,7 @@ export default function NewWaveDeepDive({
             </Card>
           </FadeIn>
 
-          <AdUnit slot="7332946752" />
+        <AdUnit slot="7332946752" className="my-16" />
           
           {/* RELATED ANALYSIS CALLOUT */}
           {data.relatedAnalysis && <EditorialCallout {...data.relatedAnalysis} />}
@@ -607,7 +607,7 @@ export default function NewWaveDeepDive({
           </Card>
         </div>
 
-        <AdUnit slot="1293847561" />
+        <AdUnit slot="7332946752" className="my-16" />
 
         {/* VII & VIII: ESG & AI */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

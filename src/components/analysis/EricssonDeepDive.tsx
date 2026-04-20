@@ -347,7 +347,6 @@ export default function EricssonDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" />
 
         {/* ── STRATEGI & MOAT ── */}
         <div id="strategi">
@@ -560,6 +559,8 @@ export default function EricssonDeepDive({
           </FadeIn>
         </div>
 
+        <AdUnit slot="7332946752" className="my-16" />
+
         {/* ── VÄRDERING ── */}
         <div id="vardering">
           <FadeIn delay={300}>
@@ -713,6 +714,8 @@ export default function EricssonDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        <AdUnit slot="7332946752" className="my-16" />
 
         {/* ── ESG & AI ── */}
         <div id="esg">

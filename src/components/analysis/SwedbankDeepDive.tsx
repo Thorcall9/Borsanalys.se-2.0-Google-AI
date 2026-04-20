@@ -346,7 +346,6 @@ export default function SwedbankDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" />
 
         {/* ── STRATEGI & MOAT ── */}
         <div id="strategi">
@@ -590,6 +589,8 @@ export default function SwedbankDeepDive({
           </FadeIn>
         </div>
 
+        <AdUnit slot="7332946752" className="my-16" />
+
         {/* ── VÄRDERING ── */}
         <div id="vardering">
           <FadeIn delay={300}>
@@ -743,7 +744,7 @@ export default function SwedbankDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="6432013761" />
+        <AdUnit slot="7332946752" className="my-16" />
 
         {/* ── ESG ── */}
         <div id="esg">

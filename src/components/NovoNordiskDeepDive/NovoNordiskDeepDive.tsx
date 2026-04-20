@@ -433,8 +433,7 @@ export default function NovoNordiskDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" />
-        
+
         {/* RELATED ANALYSIS CALLOUT */}
         {data.relatedAnalysis && <EditorialCallout {...data.relatedAnalysis} />}
 
@@ -529,6 +528,8 @@ export default function NovoNordiskDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        <AdUnit slot="7332946752" className="my-16" />
 
         {/* ── VÄRDERING ── */}
         <div id="vardering">
@@ -640,6 +641,8 @@ export default function NovoNordiskDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        <AdUnit slot="7332946752" className="my-16" />
 
         {/* ── ESG ── */}
         <div id="esg">

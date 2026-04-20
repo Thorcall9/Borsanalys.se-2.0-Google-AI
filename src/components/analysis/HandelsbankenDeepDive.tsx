@@ -414,7 +414,6 @@ export default function HandelsbankenDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" />
 
         {/* ── STRATEGI & MOAT ── */}
         <div id="strategi">
@@ -633,6 +632,8 @@ export default function HandelsbankenDeepDive({
           </FadeIn>
         </div>
 
+        <AdUnit slot="7332946752" className="my-16" />
+
         {/* ── VÄRDERING ── */}
         <div id="vardering">
           <FadeIn delay={250}>
@@ -728,8 +729,6 @@ export default function HandelsbankenDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="9323485761" />
-
         {/* ── RISKPROFIL ── */}
         <div id="risk">
           <FadeIn delay={350}>
@@ -777,6 +776,8 @@ export default function HandelsbankenDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        <AdUnit slot="7332946752" className="my-16" />
 
         {/* ── ESG & MAKRO ── */}
         <div id="esg">

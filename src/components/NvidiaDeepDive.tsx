@@ -518,8 +518,7 @@ export default function NvidiaDeepDive({
         </div>
 
 
-        <AdUnit slot="7332946752" />
-        
+
         {/* RELATED ANALYSIS CALLOUT */}
         {data.relatedAnalysis && <EditorialCallout {...data.relatedAnalysis} />}
 
@@ -765,6 +764,7 @@ export default function NvidiaDeepDive({
           />
         </section>
 
+        <AdUnit slot="7332946752" className="my-16" />
 
         {/* SECTION IV: VÄRDERING & JÄMFÖRELSE */}
         <section id="valuation" className="scroll-mt-24 mb-20">
@@ -1011,6 +1011,8 @@ export default function NvidiaDeepDive({
             description="2/5 — (Fokus: Branschspecifika och generella risker. Inverterad skala). (Inverterat betyg: 2 innebär hög risk). Geopolitiskt beroende av Taiwan och TSMC utgör en betydande 'single point of failure'." 
           />
         </section>
+
+        <AdUnit slot="7332946752" className="my-16" />
 
         {/* SECTION VII: ESG & MAKRO */}
         <section id="esg" className="scroll-mt-24 mb-32 pt-16 border-t-4 border-slate-900/5">

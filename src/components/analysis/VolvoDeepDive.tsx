@@ -344,8 +344,6 @@ export default function VolvoDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" />
-
         {/* ── STRATEGI & RISK ── */}
         <div id="strategi">
           <FadeIn delay={100}>
@@ -545,6 +543,8 @@ export default function VolvoDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        <AdUnit slot="7332946752" className="my-16" />
 
         {/* ── VÄRDERING ── */}
         <div id="vardering">
@@ -765,6 +765,8 @@ export default function VolvoDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        <AdUnit slot="7332946752" className="my-16" />
 
         {/* ── ESG ── */}
         <div id="esg">

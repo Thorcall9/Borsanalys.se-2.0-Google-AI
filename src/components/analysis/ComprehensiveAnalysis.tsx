@@ -335,8 +335,6 @@ export default function ComprehensiveAnalysis({
 
       </section>
 
-      <AdUnit slot="7332946752" />
-
       {/* SECTION II: STRATEGISK ANALYS & MOAT */}
       <section id="strategy" className="scroll-mt-24 mt-20">
         <div className="mb-10 flex items-center justify-between">
@@ -549,6 +547,8 @@ export default function ComprehensiveAnalysis({
           />
         )}
       </section>
+
+      <AdUnit slot="7332946752" className="my-16" />
 
       {/* SECTION VII: ESG & MAKRO */}
       <section id="esg" className="scroll-mt-24 mt-24">

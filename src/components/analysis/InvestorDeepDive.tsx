@@ -398,8 +398,7 @@ export default function InvestorDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" />
-        
+
         {/* RELATED ANALYSIS CALLOUT */}
         {data.relatedAnalysis && <EditorialCallout {...data.relatedAnalysis} />}
 
@@ -519,6 +518,8 @@ export default function InvestorDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        <AdUnit slot="7332946752" className="my-16" />
 
         {/* ── VÄRDERING ── */}
         <div id="vardering">
@@ -698,6 +699,8 @@ export default function InvestorDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        <AdUnit slot="7332946752" className="my-16" />
 
         {/* ── ESG ── */}
         <div id="esg">
