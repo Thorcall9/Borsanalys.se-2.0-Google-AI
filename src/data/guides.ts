@@ -2130,7 +2130,7 @@ export const guides: Record<string, Guide> = {
     content: "",
     category: "Spara & Investera",
     readTime: "8 min",
-    part: 9,
+    part: 0,
     icon: "PiggyBank",
     component: "SparaInvesteraGuide",
     publishedDate: "2026-04-21",

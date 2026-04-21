@@ -134,29 +134,31 @@ export default function GuideDetail() {
 
       <div className="pt-24 border-t border-border space-y-16">
         {/* Next Guide */}
-        <Link 
-          to={`/guider/${nextSlug}`}
-          className="group block p-12 bg-muted/30 border border-border rounded-[3rem] hover:border-primary/30 transition-all relative overflow-hidden shadow-xl shadow-black/5"
-        >
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
-          
-          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-10">
-            <div className="space-y-4 max-w-2xl">
-              <div className="text-[10px] font-black uppercase tracking-[0.4em] text-primary flex items-center gap-3">
-                Läs nästa guide <ChevronRight size={14} />
+        {nextGuide && (
+          <Link 
+            to={`/guider/${nextSlug}`}
+            className="group block p-12 bg-muted/30 border border-border rounded-[3rem] hover:border-primary/30 transition-all relative overflow-hidden shadow-xl shadow-black/5"
+          >
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
+            
+            <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-10">
+              <div className="space-y-4 max-w-2xl">
+                <div className="text-[10px] font-black uppercase tracking-[0.4em] text-primary flex items-center gap-3">
+                  Läs nästa guide <ChevronRight size={14} />
+                </div>
+                <h3 className="text-4xl font-black tracking-tighter group-hover:text-primary transition-colors leading-tight">
+                  {nextGuide.title}
+                </h3>
+                <p className="text-lg text-muted-foreground font-medium line-clamp-1">
+                  {nextGuide.excerpt}
+                </p>
               </div>
-              <h3 className="text-4xl font-black tracking-tighter group-hover:text-primary transition-colors leading-tight">
-                {nextGuide.title}
-              </h3>
-              <p className="text-lg text-muted-foreground font-medium line-clamp-1">
-                {nextGuide.excerpt}
-              </p>
+              <div className="flex-shrink-0 w-16 h-16 bg-card border border-border rounded-2xl flex items-center justify-center text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground group-hover:rotate-12 transition-all duration-500 shadow-xl">
+                <ChevronRight size={32} />
+              </div>
             </div>
-            <div className="flex-shrink-0 w-16 h-16 bg-card border border-border rounded-2xl flex items-center justify-center text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground group-hover:rotate-12 transition-all duration-500 shadow-xl">
-              <ChevronRight size={32} />
-            </div>
-          </div>
-        </Link>
+          </Link>
+        )}
 
         {/* Related Guides */}
         {relatedGuides.length > 0 && (
