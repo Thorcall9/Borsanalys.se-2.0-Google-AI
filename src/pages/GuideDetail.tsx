@@ -8,6 +8,11 @@ import SEO from "../components/SEO";
 import AnalysisDisclaimer from "../components/analysis/AnalysisDisclaimer";
 import MobileReadingProgress from "../components/MobileReadingProgress";
 import { Helmet } from "react-helmet-async";
+import SparaInvesteraGuide from "../components/guides/SparaInvesteraGuide";
+
+const GUIDE_COMPONENTS = {
+  SparaInvesteraGuide: SparaInvesteraGuide
+};
 
 
 export default function GuideDetail() {
@@ -108,12 +113,18 @@ export default function GuideDetail() {
       </header>
 
       {/* Content */}
-      <article 
-        className="prose prose-invert prose-2xl max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:font-medium prose-strong:text-foreground prose-strong:font-black prose-a:text-primary hover:prose-a:underline prose-img:rounded-[2.5rem] prose-hr:border-border/50"
-        onClick={handleContentClick}
-      >
-        <div dangerouslySetInnerHTML={{ __html: guide.content }} />
-      </article>
+      {guide.component && GUIDE_COMPONENTS[guide.component as keyof typeof GUIDE_COMPONENTS] ? (
+        <section className="relative">
+          {React.createElement(GUIDE_COMPONENTS[guide.component as keyof typeof GUIDE_COMPONENTS])}
+        </section>
+      ) : (
+        <article 
+          className="prose prose-invert prose-2xl max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:font-medium prose-strong:text-foreground prose-strong:font-black prose-a:text-primary hover:prose-a:underline prose-img:rounded-[2.5rem] prose-hr:border-border/50"
+          onClick={handleContentClick}
+        >
+          <div dangerouslySetInnerHTML={{ __html: guide.content }} />
+        </article>
+      )}
 
       <AnalysisDisclaimer />
 

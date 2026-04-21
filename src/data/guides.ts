@@ -11,6 +11,7 @@ export interface Guide {
   metaDescription?: string;
   faqSchema?: any;
   publishedDate?: string;
+  component?: string;
 }
 
 export const guides: Record<string, Guide> = {
@@ -1735,6 +1736,7 @@ export const guides: Record<string, Guide> = {
             <a href="/guider/vardering-av-aktier" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Värdering av aktier</a>
             <a href="/guider/allt-om-fonder" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Allt om fonder</a>
             <a href="/guider/bygga-en-portfolj" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Bygga en portfölj</a>
+            <a href="/guider/spara-och-investera" class="px-4 py-2 bg-muted hover:bg-primary/10 hover:text-primary transition-colors text-sm font-medium rounded-full">Spara & Investera</a>
           </div>
         </div>
       </div>
@@ -2120,5 +2122,19 @@ export const guides: Record<string, Guide> = {
         }
       ]
     }
+  },
+  "spara-och-investera": {
+    slug: "spara-och-investera",
+    title: "Den osynliga vinsten: Hur du hittar 10 000 kr extra till din portfölj varje år",
+    excerpt: "Sänk dina fasta kostnader och skapa ett större investeringsutrymme med enkla medel. En garanterad vinst för din ekonomi.",
+    content: "",
+    category: "Spara & Investera",
+    readTime: "8 min",
+    part: 9,
+    icon: "PiggyBank",
+    component: "SparaInvesteraGuide",
+    publishedDate: "2026-04-21",
+    seoTitle: "Hitta pengar i vardagen - Spara och Investera | Börsanalys.se",
+    metaDescription: "Lär dig hur du kan spara 10 000 kr extra per år genom att sänka dina fasta kostnader och öka ditt investeringsutrymme."
   }
 };

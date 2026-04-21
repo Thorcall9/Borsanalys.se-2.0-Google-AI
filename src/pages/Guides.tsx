@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Search, Calculator, TrendingUp, ChevronRight, ArrowRight, BookOpen, DollarSign, Zap, Shield } from "lucide-react";
+import { Search, Calculator, TrendingUp, ChevronRight, ArrowRight, BookOpen, DollarSign, Zap, Shield, PiggyBank, ShieldCheck } from "lucide-react";
 import { guides } from "../data/guides";
 import AdZone from "../components/AdZone";
 
@@ -14,6 +14,8 @@ const IconMap: Record<string, any> = {
   Zap: Zap,
   BookOpen: BookOpen,
   Shield: Shield,
+  PiggyBank: PiggyBank,
+  ShieldCheck: ShieldCheck,
 };
 
 export default function Guides() {
