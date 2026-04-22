@@ -1,8 +1,7 @@
-import type { Request, Response } from 'express';
-import { prisma } from '../src/lib/prisma.ts';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-export default async function handler(req: Request, res: Response) {
-  // We only care about GET for capturing votes from links
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Capture stock and source from query
   const { stock, source } = req.query;
 
   if (!stock || typeof stock !== 'string' || stock.trim() === '') {
@@ -22,13 +21,19 @@ export default async function handler(req: Request, res: Response) {
   const voteSource = typeof source === 'string' ? source : 'email';
 
   try {
-    // Save the vote to Prisma (Neon)
+    // Dynamic Prisma import for better Serverless Function compatibility
+    const { PrismaClient } = await import('@prisma/client');
+    const prisma = new PrismaClient();
+
+    // Save the vote
     await prisma.vote.create({
       data: {
         stock: normalizedStock,
         source: voteSource
       }
     });
+
+    await prisma.$disconnect();
 
     // Return the "Thank You" HTML page
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
@@ -49,7 +54,7 @@ export default async function handler(req: Request, res: Response) {
       </html>
     `);
   } catch (error: any) {
-    console.error('Voting Error production:', error.message);
-    return res.status(500).send("Ett oväntat fel uppstod vid röstningen. Försök igen senare.");
+    console.error('Voting Error production:', error);
+    return res.status(500).send("Ett oväntat fel uppstod vid röstningen. Försök igen senare. Kontrollera DATABASE_URL.");
   }
 }
