@@ -222,7 +222,7 @@ export const guides: Record<string, Guide> = {
     `,
     category: "Grundläggande",
     readTime: "5 min",
-    part: 1,
+    part: 2,
     icon: "BookOpen"
   },
   "vardering-av-aktier": {
@@ -390,7 +390,7 @@ export const guides: Record<string, Guide> = {
     `,
     category: "Analys",
     readTime: "12 min",
-    part: 2,
+    part: 3,
     icon: "Search"
   },
   "bygga-en-portfolj": {
@@ -636,7 +636,7 @@ export const guides: Record<string, Guide> = {
     `,
     category: "Strategi",
     readTime: "6 min",
-    part: 3,
+    part: 4,
     icon: "TrendingUp"
   },
   "teknisk-analys-introduktion": {
@@ -700,7 +700,7 @@ export const guides: Record<string, Guide> = {
     `,
     category: "Analys",
     readTime: "10 min",
-    part: 4,
+    part: 5,
     icon: "TrendingUp"
   },
   "utdelningsstrategier": {
@@ -939,7 +939,7 @@ export const guides: Record<string, Guide> = {
     `,
     category: "Strategi",
     readTime: "12 min",
-    part: 5,
+    part: 6,
     icon: "DollarSign"
   },
   "psykologi-pa-borsen": {
@@ -1154,7 +1154,7 @@ export const guides: Record<string, Guide> = {
     `,
     category: "Psykologi",
     readTime: "15 min",
-    part: 6,
+    part: 7,
     icon: "Zap"
   },
   "basta-fonderna-for-nyborjare": {
@@ -1609,7 +1609,7 @@ export const guides: Record<string, Guide> = {
     `,
     category: "Fonder",
     readTime: "10 min",
-    part: 7,
+    part: 8,
     icon: "Layers"
   },
   "isk-vs-kapitalforsakring": {
@@ -1743,7 +1743,7 @@ export const guides: Record<string, Guide> = {
     `,
     category: "Sparande",
     readTime: "10 min",
-    part: 8,
+    part: 9,
     icon: "Shield"
   },
   "pensionssparande-sverige": {
@@ -2130,7 +2130,7 @@ export const guides: Record<string, Guide> = {
     content: "",
     category: "Spara & Investera",
     readTime: "8 min",
-    part: 0,
+    part: 1,
     icon: "PiggyBank",
     component: "SparaInvesteraGuide",
     publishedDate: "2026-04-21",
