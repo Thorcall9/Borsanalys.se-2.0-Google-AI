@@ -9,6 +9,14 @@
     { "source": "/analyser/rss", "destination": "/api/rss" },
     { "source": "/sitemap.xml", "destination": "/api/sitemap" },
     { "source": "/vote", "destination": "/api/vote" },
+    { "source": "/api/market-sentiment", "destination": "/api/market?type=sentiment" },
+    { "source": "/api/macro-data", "destination": "/api/market?type=macro" },
+    { "source": "/api/market-events", "destination": "/api/market?type=events" },
+    { "source": "/api/ai/macro-outlook", "destination": "/api/ai?type=macro-outlook" },
+    { "source": "/api/ai/event-insight", "destination": "/api/ai?type=event-insight" },
+    { "source": "/api/admin/votes", "destination": "/api/admin?type=votes" },
+    { "source": "/api/admin/generate-events", "destination": "/api/admin?type=generate-events" },
+    { "source": "/api/admin/update-macro", "destination": "/api/admin?type=update-macro" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "functions": {

@@ -9,15 +9,13 @@ import { prisma } from "./src/lib/prisma.ts";
 import { sendEmail } from "./src/lib/email.ts";
 import { analyses, AnalysisData } from "./src/data/analyses/index.ts";
 import { updateAllMacroData } from "./src/lib/macroUpdater.ts";
-import marketSentimentHandler from "./api/market-sentiment.ts";
-import macroDataHandler from "./api/macro-data.ts";
-import marketEventsHandler from "./api/market-events.ts";
-import generateEventsHandler from "./api/admin/generate-events.ts";
+import marketHandler from "./api/market.ts";
+import aiHandler from "./api/ai.ts";
+import adminHandler from "./api/admin.ts";
 import rssHandler from "./api/rss.ts";
 import sitemapHandler from "./api/sitemap.ts";
 import watchlistHandler from "./api/watchlist.ts";
 import voteHandler from "./api/vote";
-import adminVotesHandler from "./api/admin/votes";
 import { createTickerNotifications, NotificationType } from "./src/lib/notifications.ts";
 import rateLimit from "express-rate-limit";
 import { GoogleGenerativeAI } from "@google/generative-ai";
@@ -194,18 +192,15 @@ async function startServer() {
 
   // Newsletter Voting (Production compatible)
   app.get("/vote", voteHandler as any);
-  app.get("/api/admin/votes", adminVotesHandler as any);
+  app.get("/api/admin/votes", (req, res) => {
+    req.query.type = 'votes';
+    return adminHandler(req as any, res as any);
+  });
 
   // Admin: Update Macro Data (Cron) - PROTECTED
-  app.get("/api/admin/update-macro", cronAuthMiddleware, async (req, res) => {
-    try {
-      console.log("[ADMIN] Starting manual macro update...");
-      const result = await updateAllMacroData();
-      res.json(result);
-    } catch (error: any) {
-      console.error("[ADMIN] Macro Update Error:", error.message);
-      res.status(500).json({ error: "Internt serverfel vid uppdatering av makrodata." });
-    }
+  app.get("/api/admin/update-macro", cronAuthMiddleware, (req, res) => {
+    req.query.type = 'update-macro';
+    return adminHandler(req as any, res as any);
   });
 
   // In-memory cache for stock data to mitigate 429 errors
@@ -213,19 +208,41 @@ async function startServer() {
   const CACHE_TTL = 2 * 60 * 60 * 1000; // 2 hours
 
   // Fear & Greed Index Proxy (Market Sentiment)
-  app.get("/api/market-sentiment", marketSentimentHandler as any);
+  app.get("/api/market-sentiment", (req, res) => {
+    req.query.type = 'sentiment';
+    return marketHandler(req as any, res as any);
+  });
 
   // Macro Data Proxy
-  app.get("/api/macro-data", macroDataHandler as any);
+  app.get("/api/macro-data", (req, res) => {
+    req.query.type = 'macro';
+    return marketHandler(req as any, res as any);
+  });
 
   // Market Events
-  app.get("/api/market-events", marketEventsHandler as any);
+  app.get("/api/market-events", (req, res) => {
+    req.query.type = 'events';
+    return marketHandler(req as any, res as any);
+  });
 
   // Watchlist (MVP)
   app.all("/api/watchlist", watchlistHandler as any);
 
   // Admin: Generate AI Events - PROTECTED
-  app.all("/api/admin/generate-events", cronAuthMiddleware, generateEventsHandler as any);
+  app.all("/api/admin/generate-events", cronAuthMiddleware, (req, res) => {
+    req.query.type = 'generate-events';
+    return adminHandler(req as any, res as any);
+  });
+
+  // AI Routes (consolidated)
+  app.get("/api/ai/macro-outlook", (req, res) => {
+    req.query.type = 'macro-outlook';
+    return aiHandler(req as any, res as any);
+  });
+  app.post("/api/ai/event-insight", (req, res) => {
+    req.query.type = 'event-insight';
+    return aiHandler(req as any, res as any);
+  });
 
   // Admin: Trigger Test Notification - PROTECTED
   app.post("/api/admin/test-notification", cronAuthMiddleware, async (req, res) => {
