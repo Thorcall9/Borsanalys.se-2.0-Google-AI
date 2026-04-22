@@ -157,13 +157,52 @@ export default function SparaInvesteraGuide() {
         </div>
       </section>
 
+      {/* Från besparing till investering */}
+      <section className="not-prose space-y-12">
+        <div className="space-y-4">
+          <h3 className="text-3xl md:text-5xl font-black tracking-tighter italic">Från besparing till investering</h3>
+          <p className="text-xl text-muted-foreground font-medium leading-relaxed max-w-3xl">
+            Det verkliga värdet uppstår inte bara när du sänker kostnaderna, utan när du automatiskt för över skillnaden till sparande varje månad.
+          </p>
+        </div>
+
+        <div className="p-8 bg-muted/30 border border-border rounded-[2.5rem] space-y-8">
+          <p className="text-lg text-muted-foreground leading-relaxed font-medium">
+            Det är här många missar poängen. Att spara 500 kronor extra spelar mindre roll om pengarna bara blir kvar på kontot och försvinner i annan konsumtion. Men om de istället förs över till ett ISK, en fondportfölj eller ett långsiktigt kvalitetscase, då blir varje förbättrat avtal ett konkret steg mot större finansiell frihet.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-8">
+            {[
+              { step: 1, title: "Identifiera", text: "Onödigt dyra fasta kostnader" },
+              { step: 2, title: "Optimera", text: "Sänk eller förhandla om dem" },
+              { step: 3, title: "Investera", text: "För över skillnaden automatiskt" },
+              { step: 4, title: "Växa", text: "Låt tiden och räntan göra resten" }
+            ].map((item, idx) => (
+              <div key={idx} className="p-6 bg-card border border-border rounded-2xl relative overflow-hidden group">
+                <div className="absolute top-0 right-0 p-4 font-black text-4xl opacity-5 text-primary group-hover:opacity-10 transition-opacity">0{item.step}</div>
+                <div className="text-primary font-black text-xs uppercase tracking-widest mb-2">Steg {item.step}</div>
+                <div className="text-xl font-black tracking-tighter mb-2">{item.title}</div>
+                <p className="text-xs text-muted-foreground font-medium leading-relaxed">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Summary Section */}
-      <section className="not-prose p-12 bg-primary/5 border border-primary/20 rounded-[3rem] space-y-6 relative overflow-hidden text-center">
+      <section className="not-prose p-12 bg-primary/5 border border-primary/20 rounded-[3rem] space-y-8 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 -translate-x-1/2"></div>
-        <h3 className="text-3xl font-black tracking-tighter">Börja i dag</h3>
-        <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium max-w-2xl mx-auto">
-          Det är inte de stora besluten som gör dig rik, det är summan av alla små, smarta val du gör varje dag. Att sänka sina fasta kostnader är det enklaste sättet att få din portfölj att växa snabbare.
-        </p>
+        <div className="relative z-10 space-y-6 text-center max-w-3xl mx-auto">
+          <h3 className="text-3xl md:text-4xl font-black tracking-tighter">Börja i dag</h3>
+          <div className="space-y-6">
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium">
+              För de flesta hushåll är det här den mest realistiska vägen till högre investeringsutrymme. Inte genom att leva snålare, utan genom att sluta betala för mycket i onödan.
+            </p>
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium">
+              Du behöver inte hitta nästa kursraket för att förbättra din ekonomi. Du kan börja med att täppa till de läckor som redan finns. Det är enkelt, rationellt och i många fall betydligt mer kraftfullt än man först tror.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* Legal Disclaimer */}
@@ -173,7 +212,7 @@ export default function SparaInvesteraGuide() {
             <Shield size={14} /> Ansvarsfriskrivning & Affiliate
           </div>
           <p className="text-xs text-muted-foreground/60 leading-relaxed font-medium">
-            Det här inlägget innehåller annonslänkar för Påmind. Börsanalys.se kan erhålla ersättning om du väljer att använda tjänsten. Vi rekommenderar endast tjänster vi bedömer tillför ett tydligt värde för våra läsare. Kom ihåg att alla investeringar innebär risk. Historisk avkastning är ingen garanti för framtida resultat. Du kan förlora delar av eller hela ditt investerade kapital.
+            Det här inlägget innehåller annonslänkar för Påmind. Börsanalys.se kan erhålla ersättning om du väljer att använda tjänsten. Vi rekommenderar endast tjänster som vi bedömer kan tillföra ett tydligt värde för våra läsare. Kom ihåg att alla investeringar innebär risk. Historisk avkastning är ingen garanti för framtida resultat. Du kan förlora delar av eller hela ditt investerade kapital.
           </p>
         </div>
       </footer>
