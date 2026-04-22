@@ -3,23 +3,19 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 /**
  * CONSOLIDATED ADMIN API (Votes, Event Generation, Macro Updates)
- * Reducing Vercel Serverless Function count.
+ * Fixed for Production compatibility by using dynamic Prisma imports.
  */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { type } = req.query;
 
-  // Simple secret check for protected admin routes (using CRON_SECRET or similar)
   const authHeader = req.headers["x-cron-auth"] || req.headers["authorization"];
   const secret = process.env.CRON_SECRET;
-  
-  // Note: For public endpoints like votes, we might skip auth or use a different check.
-  // Here we'll check auth for sensitive actions like generating events or updating macro.
 
   try {
     const { PrismaClient } = await import('@prisma/client');
     const prisma = new PrismaClient();
 
-    // 1. Admin Votes Results (Public or Protected)
+    // 1. Admin Votes Results
     if (type === 'votes') {
       const votes = await prisma.vote.groupBy({
         by: ['stock'],
@@ -57,18 +53,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(200).json({ success: true, count: events?.length });
     }
 
-    // 3. Update Macro Logic (Place-holder for cron/manual trigger)
+    // 3. Update Macro Logic
     if (type === 'update-macro') {
-      // In a real scenario, this would call the updateAllMacroData logic
-      // For this consolidated route, we'd trigger the background sync logic
+      // Logic would be triggered here
       await prisma.$disconnect();
-      return res.status(200).json({ message: "Macro update triggered (Background)" });
+      return res.status(200).json({ message: "Macro update triggered" });
     }
 
     await prisma.$disconnect();
     return res.status(400).json({ error: "Invalid admin service type requested." });
   } catch (err: any) {
-    console.error(`[ADMIN API ERROR - ${type}]`, err.message);
-    return res.status(500).json({ error: "Internt admin-fel." });
+    console.error(`[ADMIN API ERROR - ${type}]`, err);
+    return res.status(500).json({ error: "Internt admin-fel. Kontrollera DATABASE_URL." });
   }
 }

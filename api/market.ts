@@ -1,18 +1,24 @@
-import type { Request, Response } from 'express';
-import { prisma } from '../src/lib/prisma.ts';
+import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 /**
  * CONSOLIDATED MARKET API (Sentiment, Macro, Events)
- * Reducing Vercel Serverless Function count.
+ * Fixed for Production compatibility by using dynamic Prisma imports.
  */
-export default async function handler(req: Request, res: Response) {
+export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { type } = req.query;
 
   try {
+    // Dynamic Prisma import inside the handler (best practice for Vercel Serverless)
+    const { PrismaClient } = await import('@prisma/client');
+    const prisma = new PrismaClient();
+
     // 1. Fear & Greed Index Proxy
     if (type === 'sentiment') {
       const apiKey = process.env.RAPIDAPI_KEY;
-      if (!apiKey) return res.status(500).json({ error: "RAPIDAPI_KEY is not set" });
+      if (!apiKey) {
+        await prisma.$disconnect();
+        return res.status(500).json({ error: "RAPIDAPI_KEY is not set" });
+      }
 
       const response = await fetch("https://fear-and-greed-index.p.rapidapi.com/v1/fgi", {
         method: "GET",
@@ -24,6 +30,7 @@ export default async function handler(req: Request, res: Response) {
 
       if (!response.ok) throw new Error(`RapidAPI error ${response.status}`);
       const data = await response.json();
+      await prisma.$disconnect();
       return res.status(200).json(data);
     }
 
@@ -49,6 +56,7 @@ export default async function handler(req: Request, res: Response) {
         }));
 
       res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate');
+      await prisma.$disconnect();
       return res.status(200).json(formattedData);
     }
 
@@ -60,12 +68,14 @@ export default async function handler(req: Request, res: Response) {
       });
 
       res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate');
+      await prisma.$disconnect();
       return res.status(200).json(events);
     }
 
+    await prisma.$disconnect();
     return res.status(400).json({ error: "Invalid market data type requested." });
   } catch (err: any) {
-    console.error(`[MARKET API ERROR - ${type}]`, err.message);
-    return res.status(500).json({ error: "Internt serverfel vid hämtning av marknadsdata." });
+    console.error(`[MARKET API ERROR - ${type}]`, err);
+    return res.status(500).json({ error: "Internt serverfel vid hämtning av marknadsdata. Kontrollera DATABASE_URL." });
   }
 }

@@ -3,7 +3,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 
 /**
  * CONSOLIDATED AI API (Insights, Outlook)
- * Reducing Vercel Serverless Function count.
+ * Fixed for Production compatibility by using dynamic Prisma imports.
  */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { type } = req.query;
@@ -36,13 +36,16 @@ Analysera var vi befinner oss i konjunkturcykeln och svara i JSON-format med "ou
       const text = response.text().trim().replace(/```json\n?|```/g, "");
       
       await prisma.$disconnect();
-      return res.status(200).send(text); // Returning raw JSON string from AI
+      return res.status(200).send(text);
     }
 
     // 2. Event Insight Logic
     if (type === 'event-insight') {
       const { title, description } = req.body;
-      if (!title || !description) return res.status(400).json({ error: "Missing title or description" });
+      if (!title || !description) {
+        await prisma.$disconnect();
+        return res.status(400).json({ error: "Missing title or description" });
+      }
 
       const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" });
       const prompt = `Analysera följande händelse och dess potentiella påverkan på den svenska börsen (OMX): "${title} - ${description}". Ge ett kort, koncist svar på max 3 meningar om vad investerare bör hålla koll på.`;
@@ -56,7 +59,7 @@ Analysera var vi befinner oss i konjunkturcykeln och svara i JSON-format med "ou
     await prisma.$disconnect();
     return res.status(400).json({ error: "Invalid AI service type requested." });
   } catch (err: any) {
-    console.error(`[AI API ERROR - ${type}]`, err.message);
-    return res.status(500).json({ error: "Kunde inte generera AI-analys." });
+    console.error(`[AI API ERROR - ${type}]`, err);
+    return res.status(500).json({ error: "Kunde inte generera AI-analys. Kontrollera GEMINI_API_KEY och databas." });
   }
 }
