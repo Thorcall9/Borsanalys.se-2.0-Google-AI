@@ -8,6 +8,7 @@
   "rewrites": [
     { "source": "/analyser/rss", "destination": "/api/rss" },
     { "source": "/sitemap.xml", "destination": "/api/sitemap" },
+    { "source": "/vote", "destination": "/api/vote" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "functions": {
