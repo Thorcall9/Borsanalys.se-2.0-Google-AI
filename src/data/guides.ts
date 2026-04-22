@@ -152,6 +152,26 @@ export const guides: Record<string, Guide> = {
             </div>
           </div>
 
+        <!-- NORDNET CTA -->
+        <div class="not-prose my-16 p-10 md:p-12 bg-[#f0f7ff] border border-blue-100 rounded-[3rem] relative overflow-hidden group shadow-xl shadow-blue-500/5">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-blue-100/50 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-200/50 transition-colors duration-700"></div>
+          <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
+            <div class="space-y-6 max-w-2xl">
+              <div class="flex items-center gap-3 text-[#0052FF]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                <span class="text-[10px] font-black uppercase tracking-[0.4em] opacity-80">Rekommenderad plattform</span>
+              </div>
+              <h3 class="text-3xl md:text-4xl font-black tracking-tighter text-[#002B7A] leading-[1.1]">Redo att analysera ditt första bolag?</h3>
+              <p class="text-lg text-slate-600 font-medium leading-relaxed">För att sätta dina kunskaper i verket behöver du en riktigt bra plattform. Nordnet ger dig de verktyg och den data du behöver för att fatta välgrundade beslut direkt på börsen.</p>
+            </div>
+            <div class="flex-shrink-0">
+              <a href="https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-4 bg-[#0052FF] text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-[#0041CC] hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-blue-500/20 group/btn">
+                Öppna konto <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover/btn:translate-x-2 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
           <!-- STEG 4 -->
           <div class="p-10 md:p-12 bg-muted/30 border border-border rounded-[3rem] relative overflow-hidden group hover:border-primary/30 transition-all duration-500">
             <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors duration-700"></div>
@@ -310,6 +330,26 @@ export const guides: Record<string, Guide> = {
               </div>
             </div>
           </div>
+
+        <!-- NORDNET CTA -->
+        <div class="not-prose my-16 p-10 md:p-12 bg-[#f0f7ff] border border-blue-100 rounded-[3rem] relative overflow-hidden group shadow-xl shadow-blue-500/5">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-blue-100/50 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-200/50 transition-colors duration-700"></div>
+          <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
+            <div class="space-y-6 max-w-2xl">
+              <div class="flex items-center gap-3 text-[#0052FF]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                <span class="text-[10px] font-black uppercase tracking-[0.4em] opacity-80">Rekommenderad plattform</span>
+              </div>
+              <h3 class="text-3xl md:text-4xl font-black tracking-tighter text-[#002B7A] leading-[1.1]">Hitta rätt värdering med rätt verktyg</h3>
+              <p class="text-lg text-slate-600 font-medium leading-relaxed">Sätt din värderingsanalys i verket. Med ett konto hos Nordnet kan du enkelt handla alla bolag vi analyserar och få tillgång till marknadens ledande plattform för aktiesparare.</p>
+            </div>
+            <div class="flex-shrink-0">
+              <a href="https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-4 bg-[#0052FF] text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-[#0041CC] hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-blue-500/20 group/btn">
+                Öppna konto <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover/btn:translate-x-2 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
 
           <!-- Steg 4-6 -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -1719,6 +1759,26 @@ export const guides: Record<string, Guide> = {
               <summary class="font-bold cursor-pointer outline-none marker:text-primary">Kan man ha både ISK och kapitalförsäkring?</summary>
               <p class="text-muted-foreground mt-4 text-sm">Ja, det kan du. Många har ISK för det vanliga sparandet och en KF för t.ex. barnsparande.</p>
             </details>
+          </div>
+        </div>
+
+        <!-- NORDNET CTA -->
+        <div class="not-prose my-20 p-10 md:p-12 bg-[#f0f7ff] border border-blue-100 rounded-[3rem] relative overflow-hidden group shadow-xl shadow-blue-500/5 text-left">
+          <div class="absolute top-0 right-0 w-64 h-64 bg-blue-100/50 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-200/50 transition-colors duration-700"></div>
+          <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-10 text-left">
+            <div class="space-y-6 max-w-2xl text-left">
+              <div class="flex items-center gap-3 text-[#0052FF]">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                <span class="text-[10px] font-black uppercase tracking-[0.4em] opacity-80">Rekommenderad plattform</span>
+              </div>
+              <h3 class="text-3xl md:text-4xl font-black tracking-tighter text-[#002B7A] leading-[1.1]">Öppna ditt ISK eller KF hos Nordnet</h3>
+              <p class="text-lg text-slate-600 font-medium leading-relaxed text-left">Oavsett vilken kontotyp du väljer är Nordnet det självklara valet för den medvetna aktiespararen. Det tar bara några minuter att komma igång med BankID.</p>
+            </div>
+            <div class="flex-shrink-0">
+              <a href="https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-4 bg-[#0052FF] text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-[#0041CC] hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-blue-500/20 group/btn">
+                Öppna konto <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover/btn:translate-x-2 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
           </div>
         </div>
 
