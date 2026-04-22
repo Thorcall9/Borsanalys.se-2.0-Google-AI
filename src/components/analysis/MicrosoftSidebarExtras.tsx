@@ -13,7 +13,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import AdUnit from '../AdUnit';
+
 
 interface MicrosoftSidebarExtrasProps {
   isInWatchlist?: boolean;
@@ -151,12 +151,6 @@ export const MicrosoftSidebarExtras: React.FC<MicrosoftSidebarExtrasProps> = ({
         </div>
       </div>
 
-      {/* Real AdSense Unit if available */}
-      {!isMobile && (
-        <div className="mt-12 pt-12 border-t border-border/50">
-          <AdUnit slot="7332946752" minimal className="h-[250px]" />
-        </div>
-      )}
     </div>
   );
 };

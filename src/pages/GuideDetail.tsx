@@ -3,7 +3,7 @@ import { useParams, Link, Navigate, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Clock, BookOpen, Share2, Bookmark, ChevronRight } from "lucide-react";
 import { guides } from "../data/guides";
-import AdZone from "../components/AdZone";
+
 import SEO from "../components/SEO";
 import AnalysisDisclaimer from "../components/analysis/AnalysisDisclaimer";
 import MobileReadingProgress from "../components/MobileReadingProgress";
@@ -128,7 +128,7 @@ export default function GuideDetail() {
 
       <AnalysisDisclaimer />
 
-      <AdZone id="guide-detail-end" type="inline" discrete={true} />
+
 
       {/* Navigation Between Guides */}
 

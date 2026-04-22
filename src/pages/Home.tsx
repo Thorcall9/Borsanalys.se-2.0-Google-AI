@@ -5,7 +5,7 @@ import { Hero } from "../components/Hero";
 import SEO from "../components/SEO";
 import { TrendingUp, Shield, Zap, ArrowRight, ChevronRight, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
-import AdZone from "../components/AdZone";
+
 
 // Lazy load below-the-fold components
 const ScoreCard = React.lazy(() => import("../components/ScoreCard").then(m => ({ default: m.ScoreCard })));
@@ -40,10 +40,7 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
 
-      {/* Ad top banner */}
-      <div className="container mx-auto px-6 mt-12 mb-[-2rem]">
-        <AdZone id="home-top" type="banner" discrete />
-      </div>
+
 
       {/* Featured Analysis / Score Card Section */}
       <section className="py-32 container mx-auto px-6">
@@ -97,10 +94,7 @@ export default function Home() {
         <Mindmap />
       </section> */}
 
-      {/* Ad middle banner */}
-      <div className="container mx-auto px-6 mt-[-4rem] mb-16">
-        <AdZone id="home-middle" type="banner" discrete />
-      </div>
+
 
       {/* Newsletter Section */}
       <React.Suspense fallback={<SectionLoader />}>

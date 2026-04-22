@@ -43,7 +43,7 @@ import EricssonDeepDive from "../components/analysis/EricssonDeepDive";
 import HandelsbankenDeepDive from "../components/analysis/HandelsbankenDeepDive";
 import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
-import AdZone from "../components/AdZone";
+
 import MobileReadingProgress from "../components/MobileReadingProgress";
 
 const DEEP_DIVE_COMPONENTS = {
@@ -272,7 +272,7 @@ export default function Analysis() {
             )}
           </motion.div>
 
-          <AdZone id="archive-top" type="banner" discrete />
+
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {filteredAnalyses.length > 0 ? (
@@ -340,38 +340,7 @@ export default function Analysis() {
                   </motion.div>
                 );
 
-                // Dynamic Staggered Ad Insertion (Huller om buller)
-                // Cycle of 6 analyses with 2 ads interspersed
-                
-                // After 2nd analysis: [A1, A2, AD1...] -> Row 2 starts with Ad
-                if ((i + 1) % 6 === 2) {
-                  acc.push(
-                    <motion.div
-                      key={`ad-${i}-stagger-1`}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6 }}
-                      viewport={{ once: true }}
-                    >
-                      <AdZone id={`archive-stagger-${i}-1`} type="card" discrete />
-                    </motion.div>
-                  );
-                }
 
-                // After 4th analysis: [..., A4, AD2...] -> Row 3 ends with Ad
-                if ((i + 1) % 6 === 4) {
-                  acc.push(
-                    <motion.div
-                      key={`ad-${i}-stagger-2`}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6 }}
-                      viewport={{ once: true }}
-                    >
-                      <AdZone id={`archive-stagger-${i}-2`} type="card" discrete />
-                    </motion.div>
-                  );
-                }
 
                 return acc;
               }, [])

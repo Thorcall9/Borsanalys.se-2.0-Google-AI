@@ -5,13 +5,11 @@ import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Cell, ComposedChart
 } from "recharts";
-import AdUnit from "../AdUnit";
+import NordnetCTA from "./NordnetCTA";
 import EditorialCallout from "./EditorialCallout";
 import EditorialReadNext from "./EditorialReadNext";
-import MultiplexAd from "../MultiplexAd";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
-import AnalysisTopAd from "../ads/AnalysisTopAd";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -310,10 +308,12 @@ export default function SwedbankDeepDive({
         </div>
       </div>
 
-      <AnalysisTopAd />
+
 
       {/* CONTENT AREA */}
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-12 space-y-16">
+
+        <NordnetCTA variant="high" />
 
         {/* ── ÖVERSIKT ── */}
         <div id="oversikt">
@@ -589,7 +589,7 @@ export default function SwedbankDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" className="my-16" />
+
 
         {/* ── VÄRDERING ── */}
         <div id="vardering">
@@ -744,7 +744,7 @@ export default function SwedbankDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" className="my-16" />
+
 
         {/* ── ESG ── */}
         <div id="esg">
@@ -863,6 +863,8 @@ export default function SwedbankDeepDive({
               </div>
             </Card>
 
+            <NordnetCTA variant="low" />
+
             <AnalysisDisclaimer theme="light" />
           </FadeIn>
         </div>
@@ -874,7 +876,6 @@ export default function SwedbankDeepDive({
           </FadeIn>
         )}
       </div>
-      <MultiplexAd />
     </div>
   );
 }

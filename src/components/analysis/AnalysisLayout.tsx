@@ -2,8 +2,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Menu, X, ArrowLeft, Star, StarOff, Loader2 } from 'lucide-react';
-import AdZone from '../AdZone';
-import MultiplexAd from '../MultiplexAd';
+
 import AnalysisDisclaimer from './AnalysisDisclaimer';
 import { AnalysisData } from '../../data/analyses';
 import NextAnalysisButton from './NextAnalysisButton';
@@ -203,12 +202,7 @@ export default function AnalysisLayout({
                 <span className={`${compactSections ? 'text-[11px] uppercase tracking-wider' : wideSidebar ? 'text-sm tracking-tight' : 'tracking-tight'}`}>{s.title}</span>
               </button>
               
-              {/* Inject advertisement in the middle of the navigation menu */}
-              {index === 4 && (
-                <div className="px-8 py-6 my-2">
-                  <AdZone id={`${stockLink}-sidebar-mid`} type="sidebar" discrete={true} />
-                </div>
-              )}
+
             </React.Fragment>
           ))}
           
@@ -219,9 +213,7 @@ export default function AnalysisLayout({
           )}
         </nav>
 
-        <div className="px-8 mb-8 flex-shrink-0">
-          <AdZone id="sidebar-bottom" type="sidebar" />
-        </div>
+
 
         <div className="p-8 border-t border-border bg-muted/10 flex-shrink-0">
           <div className="flex flex-col gap-1 text-[10px] font-black text-muted-foreground uppercase tracking-widest">
@@ -267,8 +259,7 @@ export default function AnalysisLayout({
           {nextAnalysis && <NextAnalysisButton analysis={nextAnalysis} />}
 
           <div className="mt-20 border-t border-border/50 pt-16">
-            <AdZone id="analysis-bottom" type="banner" />
-            <MultiplexAd />
+
             <AnalysisDisclaimer theme={theme} />
           </div>
         </div>

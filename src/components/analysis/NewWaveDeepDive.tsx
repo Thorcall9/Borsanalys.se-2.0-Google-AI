@@ -21,13 +21,12 @@ import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Cell, AreaChart, Area
 } from "recharts";
-import AdUnit from "../AdUnit";
+import NordnetCTA from "./NordnetCTA";
+import { AnalysisData } from "../../data/analyses";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import EditorialCallout from "./EditorialCallout";
 import EditorialReadNext from "./EditorialReadNext";
-import AnalysisTopAd from "../ads/AnalysisTopAd";
-import { AnalysisData } from "../../data/analyses";
 
 const T = {
   ink:     "#0F172A",
@@ -198,7 +197,7 @@ export default function NewWaveDeepDive({
         </div>
       </div>
 
-      <AnalysisTopAd />
+
 
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-12 space-y-16">
         
@@ -233,6 +232,8 @@ export default function NewWaveDeepDive({
             <span className="text-xs text-green-600 font-bold mt-1 block">~38% Uppsida</span>
           </Card>
         </div>
+
+        <NordnetCTA variant="high" />
 
         {/* I. FÖRETAGSÖVERSIKT */}
         <FadeIn>
@@ -453,7 +454,7 @@ export default function NewWaveDeepDive({
             </Card>
           </FadeIn>
 
-        <AdUnit slot="7332946752" className="my-16" />
+
           
           {/* RELATED ANALYSIS CALLOUT */}
           {data.relatedAnalysis && <EditorialCallout {...data.relatedAnalysis} />}
@@ -607,7 +608,7 @@ export default function NewWaveDeepDive({
           </Card>
         </div>
 
-        <AdUnit slot="7332946752" className="my-16" />
+
 
         {/* VII & VIII: ESG & AI */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -756,9 +757,11 @@ export default function NewWaveDeepDive({
           </div>
         </FadeIn>
 
+        <NordnetCTA variant="low" />
+
         {/* BOTTOM AD & NAVIGATION */}
         <div className="space-y-12">
-          <AdUnit slot="8273645192" />
+
           <NextAnalysisButton analysis={nextAnalysis} />
           <AnalysisDisclaimer theme="light" />
         </div>

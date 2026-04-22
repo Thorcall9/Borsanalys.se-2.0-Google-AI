@@ -5,13 +5,11 @@ import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Cell, ComposedChart
 } from "recharts";
-import AdUnit from "../AdUnit";
-import MultiplexAd from "../MultiplexAd";
+import NordnetCTA from "./NordnetCTA";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import EditorialCallout from "./EditorialCallout";
 import EditorialReadNext from "./EditorialReadNext";
-import AnalysisTopAd from "../ads/AnalysisTopAd";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -310,10 +308,12 @@ export default function VolvoDeepDive({
         </div>
       </div>
 
-      <AnalysisTopAd />
+
 
       {/* CONTENT AREA */}
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-12 space-y-16">
+
+        <NordnetCTA variant="high" />
 
         {/* ── ÖVERSIKT ── */}
         <div id="oversikt">
@@ -544,7 +544,7 @@ export default function VolvoDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" className="my-16" />
+
 
         {/* ── VÄRDERING ── */}
         <div id="vardering">
@@ -766,7 +766,7 @@ export default function VolvoDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" className="my-16" />
+
 
         {/* ── ESG ── */}
         <div id="esg">
@@ -983,6 +983,8 @@ export default function VolvoDeepDive({
                 </p>
               </div>
             </Card>
+
+            <NordnetCTA variant="low" />
           </FadeIn>
         </div>
 
@@ -992,8 +994,6 @@ export default function VolvoDeepDive({
             <NextAnalysisButton analysis={nextAnalysis} />
           </div>
         )}
-        
-        <MultiplexAd />
         <AnalysisDisclaimer theme="light" />
       </div>
     </div>

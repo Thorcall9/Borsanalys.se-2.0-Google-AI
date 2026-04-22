@@ -7,7 +7,7 @@ import {
   Newspaper, Gauge, Target
 } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
-import AdZone from "../components/AdZone";
+
 
 
 interface MacroData {
@@ -447,7 +447,7 @@ export default function MacroDashboard() {
               </div>
             </section>
 
-            <AdZone id="macro-main-middle" type="banner" discrete={true} />
+
 
             {/* Market Pulse & Macro Section (Moved down) */}
 
@@ -699,7 +699,7 @@ export default function MacroDashboard() {
               </div>
             </div>
 
-            <AdZone id="macro-sidebar" type="sidebar" discrete={true} />
+
           </aside>
 
         </div>

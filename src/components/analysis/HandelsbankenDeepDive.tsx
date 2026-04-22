@@ -5,11 +5,10 @@ import {
   LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer, Cell
 } from "recharts";
-import AdUnit from "../AdUnit";
+import NordnetCTA from "./NordnetCTA";
 import EditorialCallout from "./EditorialCallout";
 import EditorialReadNext from "./EditorialReadNext";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
-import AnalysisTopAd from "../ads/AnalysisTopAd";
 import { AnalysisData } from "../../data/analyses";
 
 const T = {
@@ -304,7 +303,7 @@ export default function HandelsbankenDeepDive({
         </div>
       </div>
 
-      <AnalysisTopAd />
+
 
       {/* 4. META INFO */}
       <div className="max-w-7xl mx-auto px-6 md:px-10 mt-8 mb-4">
@@ -347,6 +346,8 @@ export default function HandelsbankenDeepDive({
             </div>
           </div>
         </div>
+
+        <NordnetCTA variant="high" />
 
         {/* ── ÖVERSIKT ── */}
         <div id="oversikt">
@@ -632,7 +633,7 @@ export default function HandelsbankenDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" className="my-16" />
+
 
         {/* ── VÄRDERING ── */}
         <div id="vardering">
@@ -777,7 +778,7 @@ export default function HandelsbankenDeepDive({
           </FadeIn>
         </div>
 
-        <AdUnit slot="7332946752" className="my-16" />
+
 
         {/* ── ESG & MAKRO ── */}
         <div id="esg">
@@ -851,6 +852,8 @@ export default function HandelsbankenDeepDive({
             </Card>
           </FadeIn>
         </div>
+
+        <NordnetCTA variant="low" />
 
         {/* ── SAMMANFATTNING ── */}
         <div id="sammanfattning">

@@ -20,12 +20,10 @@ import {
   VerdictBox,
   EditorialReadNext
 } from "./analysis";
-import AdUnit from "./AdUnit";
-import MultiplexAd from "./MultiplexAd";
+import NordnetCTA from "./analysis/NordnetCTA";
 import NextAnalysisButton from "./analysis/NextAnalysisButton";
 import AnalysisDisclaimer from "./analysis/AnalysisDisclaimer";
 import EditorialCallout from "./analysis/EditorialCallout";
-import AnalysisTopAd from "./ads/AnalysisTopAd";
 import { AnalysisData } from "../data/analyses";
 
 const T = {
@@ -351,10 +349,12 @@ export default function NvidiaDeepDive({
         </div>
       </div>
 
-      <AnalysisTopAd />
+
 
       {/* CONTENT AREA */}
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-12 space-y-16">
+
+        <NordnetCTA variant="high" />
 
         {/* ── ÖVERSIKT ── */}
         <div id="oversikt">
@@ -764,7 +764,7 @@ export default function NvidiaDeepDive({
           />
         </section>
 
-        <AdUnit slot="7332946752" className="my-16" />
+
 
         {/* SECTION IV: VÄRDERING & JÄMFÖRELSE */}
         <section id="valuation" className="scroll-mt-24 mb-20">
@@ -1012,7 +1012,7 @@ export default function NvidiaDeepDive({
           />
         </section>
 
-        <AdUnit slot="7332946752" className="my-16" />
+
 
         {/* SECTION VII: ESG & MAKRO */}
         <section id="esg" className="scroll-mt-24 mb-32 pt-16 border-t-4 border-slate-900/5">
@@ -1143,6 +1143,8 @@ export default function NvidiaDeepDive({
             ]} />
           </div>
 
+          <NordnetCTA variant="low" />
+
           <div className="mb-10">
             <ChartCard 
               title="Scenarioprisintervall (USD per aktie)" 
@@ -1195,7 +1197,6 @@ export default function NvidiaDeepDive({
               <NextAnalysisButton analysis={nextAnalysis} />
             </div>
           )}
-          <MultiplexAd />
           <AnalysisDisclaimer theme="light" />
         </section>
       </div>

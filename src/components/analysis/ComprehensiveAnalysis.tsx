@@ -31,8 +31,7 @@ import EditorialReadNext from './EditorialReadNext';
 import SEO from '../SEO';
 import { fetchWithCache, RapidAPIQuote } from '../../services/stockService';
 import { AnalysisData } from '../../data/analyses';
-import AdUnit from '../AdUnit';
-import AnalysisTopAd from '../ads/AnalysisTopAd';
+import NordnetCTA from './NordnetCTA';
 import EditorialCallout from './EditorialCallout';
 import { MicrosoftSidebarExtras } from './MicrosoftSidebarExtras';
 
@@ -243,7 +242,7 @@ export default function ComprehensiveAnalysis({
         )}
       </div>
 
-      <AnalysisTopAd />
+      <NordnetCTA variant="high" />
 
       {/* SECTION I: FÖRETAGSÖVERSIKT */}
       <section id="overview" className="scroll-mt-24">
@@ -440,7 +439,7 @@ export default function ComprehensiveAnalysis({
         )}
       </section>
 
-      <AdUnit slot="6432013761" className="my-16" />
+
 
       {/* SECTION IV: VÄRDERING & JÄMFÖRELSE */}
       <section id="valuation" className="scroll-mt-24 mt-24">
@@ -548,7 +547,7 @@ export default function ComprehensiveAnalysis({
         )}
       </section>
 
-      <AdUnit slot="7332946752" className="my-16" />
+
 
       {/* SECTION VII: ESG & MAKRO */}
       <section id="esg" className="scroll-mt-24 mt-24">
@@ -656,6 +655,8 @@ export default function ComprehensiveAnalysis({
           }))} />
         </div>
       </section>
+
+      <NordnetCTA variant="low" />
 
       {/* Mobile-only Extras (Relocated from sidebar) */}
       <div className="lg:hidden">

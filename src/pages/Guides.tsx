@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Search, Calculator, TrendingUp, ChevronRight, ArrowRight, BookOpen, DollarSign, Zap, Shield, PiggyBank, ShieldCheck } from "lucide-react";
 import { guides } from "../data/guides";
-import AdZone from "../components/AdZone";
+
 
 
 const IconMap: Record<string, any> = {
@@ -80,43 +80,7 @@ export default function Guides() {
                   </div>
                 </Link>
               </motion.div>
-              {/* Dynamic Staggered Ad Insertion (Huller om buller) */}
-              {/* After 3rd: [A1, A2, A3, AD1...] -> Row 2 starts with Ad */}
-              {(i + 1) % 9 === 3 && (
-                <motion.div
-                  key={`ad-${i}-stagger-1`}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1, duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  <AdZone id={`guides-stagger-${i}-1`} type="card" discrete={true} />
-                </motion.div>
-              )}
-              {/* After 6th: [..., A6, AD2...] -> Row 3 middle is Ad */}
-              {(i + 1) % 9 === 6 && (
-                <motion.div
-                  key={`ad-${i}-stagger-2`}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1, duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  <AdZone id={`guides-stagger-${i}-2`} type="card" discrete={true} />
-                </motion.div>
-              )}
-              {/* After 9th: [..., A9, AD3...] -> Row 4 right is Ad */}
-              {(i + 1) % 9 === 0 && i > 0 && (
-                <motion.div
-                  key={`ad-${i}-stagger-3`}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1, duration: 0.6 }}
-                  viewport={{ once: true }}
-                >
-                  <AdZone id={`guides-stagger-${i}-3`} type="card" discrete={true} />
-                </motion.div>
-              )}
+
             </React.Fragment>
           );
         })}
