@@ -10,7 +10,7 @@ export default function SectionHeader({ number, title, accentColor = "#10B981" }
   return (
     <div className="flex items-center gap-3 mb-6">
       <div 
-        className="w-8 h-8 rounded-lg text-white flex items-center justify-center text-[10px] font-black flex-shrink-0 font-serif"
+        className="min-w-[32px] px-2.5 w-auto whitespace-nowrap h-8 rounded-lg text-white flex items-center justify-center text-[10px] font-black flex-shrink-0 font-serif"
         style={{ backgroundColor: accentColor }}
       >
         {number}
