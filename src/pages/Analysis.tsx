@@ -41,6 +41,7 @@ import SwedbankDeepDive from "../components/analysis/SwedbankDeepDive";
 import NewWaveDeepDive from "../components/analysis/NewWaveDeepDive";
 import EricssonDeepDive from "../components/analysis/EricssonDeepDive";
 import HandelsbankenDeepDive from "../components/analysis/HandelsbankenDeepDive";
+import AQGroupDeepDive from "../components/analysis/AQGroupDeepDive";
 import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 
@@ -55,7 +56,8 @@ const DEEP_DIVE_COMPONENTS = {
   Swedbank: SwedbankDeepDive,
   NewWave: NewWaveDeepDive,
   Ericsson: EricssonDeepDive,
-  Handelsbanken: HandelsbankenDeepDive
+  Handelsbanken: HandelsbankenDeepDive,
+  AQGroup: AQGroupDeepDive
 };
 
 export default function Analysis() {
@@ -68,7 +70,8 @@ export default function Analysis() {
     'investor': 'investor-ab',
     'ericsson': 'ericsson-2025',
     'new-wave': 'new-wave-group-april-2026',
-    'new-wave-group': 'new-wave-group-april-2026'
+    'new-wave-group': 'new-wave-group-april-2026',
+    'aq-group': 'aq-group-2026-combo'
   };
   const slug = rawSlug ? (slugMappings[rawSlug] || rawSlug) : undefined;
   const [isInWatchlist, setIsInWatchlist] = useState(false);

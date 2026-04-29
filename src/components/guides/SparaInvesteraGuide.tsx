@@ -189,6 +189,31 @@ export default function SparaInvesteraGuide() {
         </div>
       </section>
 
+      {/* Nordnet CTA */}
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="not-prose p-10 md:p-12 bg-[#f0f7ff] border border-blue-100 rounded-[3rem] relative overflow-hidden group shadow-xl shadow-blue-500/5 mt-16"
+      >
+        <div class="absolute top-0 right-0 w-64 h-64 bg-blue-100/50 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-200/50 transition-colors duration-700"></div>
+        <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
+          <div class="space-y-6 max-w-2xl">
+            <div class="flex items-center gap-3 text-[#0052FF]">
+              <TrendingUp size={28} />
+              <span class="text-[10px] font-black uppercase tracking-[0.4em] opacity-80">Rekommenderad plattform</span>
+            </div>
+            <h3 class="text-3xl md:text-4xl font-black tracking-tighter text-[#002B7A] leading-[1.1]">Maximera ditt sparande med Nordnet</h3>
+            <p class="text-lg text-slate-600 font-medium leading-relaxed">Att sänka kostnader är steg ett, men att låta pengarna arbeta är det som bygger förmögenhet. Med ett konto hos Nordnet får du tillgång till de bästa verktygen för att investera dina sparade tusenlappar.</p>
+          </div>
+          <div class="flex-shrink-0">
+            <a href="https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-4 bg-[#0052FF] text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-sm hover:bg-[#0041CC] hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-blue-500/20 group/btn">
+              Öppna konto <ArrowRight size={20} className="group-hover/btn:translate-x-2 transition-transform" />
+            </a>
+          </div>
+        </div>
+      </motion.div>
+
       {/* Summary Section */}
       <section className="not-prose p-12 bg-primary/5 border border-primary/20 rounded-[3rem] space-y-8 relative overflow-hidden">
         <div className="absolute top-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-[100px] -translate-y-1/2 -translate-x-1/2"></div>
