@@ -704,24 +704,24 @@ export default function AQGroupAnalysis({
               </div>
             </div>
 
-            <div className="bg-[#111827] text-white p-9 my-8 rounded grid grid-cols-1 md:grid-cols-[auto_1fr] gap-9 items-start">
+            <div className="bg-[#14532D] text-white p-9 my-8 rounded grid grid-cols-1 md:grid-cols-[auto_1fr] gap-9 items-start">
               <div className="font-serif text-[56px] leading-none text-white whitespace-nowrap">BEVAKA</div>
               <div className="grid grid-cols-2 gap-y-5 gap-x-8">
                 <div>
                   <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Totalpoäng</div>
-                  <div className="font-mono text-[14px] text-[#FDE047]">30 / 40 · Rating 0,75</div>
+                  <div className="font-mono text-[14px] text-white">30 / 40 · Rating 0,75</div>
                 </div>
                 <div>
                   <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Målpris (base–bull)</div>
-                  <div className="font-mono text-[14px] text-[#FDE047]">225–260 kr</div>
+                  <div className="font-mono text-[14px] text-white">225–260 kr</div>
                 </div>
                 <div>
                   <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Rimligt värde (hist. multipel)</div>
-                  <div className="font-mono text-[14px] text-[#FDE047]">~155–185 kr</div>
+                  <div className="font-mono text-[14px] text-white">~155–185 kr</div>
                 </div>
                 <div>
                   <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Risknivå</div>
-                  <div className="font-mono text-[14px] text-[#FDE047]">Låg (4/5)</div>
+                  <div className="font-mono text-[14px] text-white">Låg (4/5)</div>
                 </div>
                 <div>
                   <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Värderingsbedömning</div>
@@ -729,7 +729,7 @@ export default function AQGroupAnalysis({
                 </div>
                 <div>
                   <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Analysdatum</div>
-                  <div className="font-mono text-[14px] text-[#FDE047]">23 april 2026</div>
+                  <div className="font-mono text-[14px] text-white">23 april 2026</div>
                 </div>
               </div>
             </div>
@@ -788,62 +788,71 @@ export default function AQGroupAnalysis({
             <div className="overflow-x-auto my-5">
               <table className="w-full border-collapse text-[13.5px]">
                 <thead>
-                  <tr className="bg-[#111827] text-white">
-                    <th className="p-2.5 text-left font-mono text-[9.5px] tracking-[0.1em] uppercase font-medium text-white/85">Scenario</th>
-                    <th className="p-2.5 text-left font-mono text-[9.5px] tracking-[0.1em] uppercase font-medium text-white/85">Antaganden</th>
-                    <th className="p-2.5 text-right font-mono text-[9.5px] tracking-[0.1em] uppercase font-medium text-white/85">EPS-estimat</th>
-                    <th className="p-2.5 text-right font-mono text-[9.5px] tracking-[0.1em] uppercase font-medium text-white/85">Multipel</th>
-                    <th className="p-2.5 text-right font-mono text-[9.5px] tracking-[0.1em] uppercase font-medium text-white/85">Riktkurs</th>
-                    <th className="p-2.5 text-right font-mono text-[9.5px] tracking-[0.1em] uppercase font-medium text-white/85">Sannolikhet</th>
+                  <tr className="bg-slate-50 text-slate-500 border-b border-slate-200">
+                    <th className="p-3 text-left font-mono text-[10px] tracking-[0.1em] uppercase font-bold">Scenario</th>
+                    <th className="p-3 text-left font-mono text-[10px] tracking-[0.1em] uppercase font-bold">Antaganden</th>
+                    <th className="p-3 text-right font-mono text-[10px] tracking-[0.1em] uppercase font-bold">EPS-estimat</th>
+                    <th className="p-3 text-right font-mono text-[10px] tracking-[0.1em] uppercase font-bold">Multipel</th>
+                    <th className="p-3 text-right font-mono text-[10px] tracking-[0.1em] uppercase font-bold">Riktkurs</th>
+                    <th className="p-3 text-right font-mono text-[10px] tracking-[0.1em] uppercase font-bold">Sannolikhet</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-200">
-                  <tr className="bg-[#DCFCE7] hover:bg-[#DCFCE7]">
-                    <td className="p-2.5"><strong className="text-[#14532D]">Bull</strong></td>
-                    <td className="p-2.5 text-slate-700">Organisk tillväxt 10%+, mdexx når 8% EBT, datacenter-orderbok skalas till 50+ mEUR, förvärv genomförs</td>
-                    <td className="p-2.5 text-right text-[#92400E]">10,00 kr</td>
-                    <td className="p-2.5 text-right text-[#92400E]">29x</td>
-                    <td className="p-2.5 text-right text-[#14532D]"><strong>290 kr</strong></td>
-                    <td className="p-2.5 text-right text-slate-700">~20%</td>
+                <tbody className="divide-y divide-gray-100 bg-white border-b border-slate-200">
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="p-3"><strong className="text-emerald-600">Bull</strong></td>
+                    <td className="p-3 text-slate-600">Organisk tillväxt 10%+, mdexx når 8% EBT, datacenter-orderbok skalas till 50+ mEUR, förvärv genomförs</td>
+                    <td className="p-3 text-right text-slate-700">10,00 kr</td>
+                    <td className="p-3 text-right text-slate-700">29x</td>
+                    <td className="p-3 text-right text-emerald-600 font-bold">290 kr</td>
+                    <td className="p-3 text-right text-slate-500">~20%</td>
                   </tr>
-                  <tr className="bg-[#FEF3C7] hover:bg-[#FEF3C7]">
-                    <td className="p-2.5"><strong className="text-[#92400E]">Base</strong></td>
-                    <td className="p-2.5 text-slate-700">Organisk tillväxt 5–7%, mdexx förbättras gradvis, datacenter-leverans juni 2026, 1–2 mindre förvärv</td>
-                    <td className="p-2.5 text-right text-[#92400E]">8,18 kr</td>
-                    <td className="p-2.5 text-right text-[#92400E]">29x</td>
-                    <td className="p-2.5 text-right text-slate-700"><strong>240 kr</strong></td>
-                    <td className="p-2.5 text-right text-slate-700">~60%</td>
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="p-3"><strong className="text-[#14532D]">Base</strong></td>
+                    <td className="p-3 text-slate-600">Organisk tillväxt 5–7%, mdexx förbättras gradvis, datacenter-leverans juni 2026, 1–2 mindre förvärv</td>
+                    <td className="p-3 text-right text-slate-700">8,18 kr</td>
+                    <td className="p-3 text-right text-slate-700">29x</td>
+                    <td className="p-3 text-right text-[#14532D] font-bold">240 kr</td>
+                    <td className="p-3 text-right text-slate-500">~60%</td>
                   </tr>
-                  <tr className="bg-[#FEE2E2] hover:bg-[#FEE2E2]">
-                    <td className="p-2.5"><strong className="text-[#B91C1C]">Bear</strong></td>
-                    <td className="p-2.5 text-slate-700">Europeisk recession, mdexx integrationsproblem, datacenter-ordrar försenas, P/E-kompression</td>
-                    <td className="p-2.5 text-right text-[#B91C1C] font-semibold">6,80 kr</td>
-                    <td className="p-2.5 text-right text-[#B91C1C] font-semibold">25x</td>
-                    <td className="p-2.5 text-right text-[#B91C1C] font-semibold"><strong>170 kr</strong></td>
-                    <td className="p-2.5 text-right text-slate-700">~20%</td>
+                  <tr className="hover:bg-slate-50 transition-colors">
+                    <td className="p-3"><strong className="text-rose-600">Bear</strong></td>
+                    <td className="p-3 text-slate-600">Europeisk recession, mdexx integrationsproblem, datacenter-ordrar försenas, P/E-kompression</td>
+                    <td className="p-3 text-right text-slate-700">6,80 kr</td>
+                    <td className="p-3 text-right text-slate-700">25x</td>
+                    <td className="p-3 text-right text-rose-600 font-bold">170 kr</td>
+                    <td className="p-3 text-right text-slate-500">~20%</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 my-5">
-              <div className="p-6 rounded-[2rem] border-t-4 border-[#14532D] bg-[#DCFCE7] relative overflow-hidden group hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-                <div className="font-mono text-[8.5px] uppercase tracking-[0.2em] font-medium mb-1.5 text-[#14532D]">Bull Case · 20%</div>
-                <div className="font-serif text-[30px] text-[#111827] mb-1 leading-none">290 kr</div>
-                <div className="font-mono text-[9.5px] text-slate-500 mb-2.5">+35% från nuv. kurs</div>
-                <div className="text-[13px] text-slate-700 leading-[1.6]">Kräver att AQ levererar organisk tillväxt nära 10 %-målet, att mdexx/Riedel når AQ-marginalmålet, och att datacenter-orderboken skalas kraftigt under H2 2026. P/E om 29x håller med stöd av EPS 10 kr och fortsatt institutionell re-rating. Ett strategiskt förvärv av transformatortillverkare i USA eller Asien kan vara katalysatorn.</div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
+              <div className="p-8 bg-white border border-slate-200 rounded-3xl hover:shadow-xl transition-all group">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500">Bull Case · 20%</span>
+                </div>
+                <div className="font-serif text-4xl text-slate-900 mb-2 leading-none">290 kr</div>
+                <div className="font-mono text-[10px] text-slate-500 mb-4">+35% från nuv. kurs</div>
+                <div className="text-xs text-slate-600 leading-relaxed">Kräver att AQ levererar organisk tillväxt nära 10 %-målet, att mdexx/Riedel når AQ-marginalmålet, och att datacenter-orderboken skalas kraftigt under H2 2026. P/E om 29x håller med stöd av EPS 10 kr och fortsatt institutionell re-rating. Ett strategiskt förvärv av transformatortillverkare i USA eller Asien kan vara katalysatorn.</div>
               </div>
-              <div className="p-6 rounded-[2rem] border-t-4 border-[#92400E] bg-[#FEF3C7] relative overflow-hidden group hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-                <div className="font-mono text-[8.5px] uppercase tracking-[0.2em] font-medium mb-1.5 text-[#92400E]">Base Case · 60% (mest sannolikt)</div>
-                <div className="font-serif text-[30px] text-[#111827] mb-1 leading-none">240 kr</div>
-                <div className="font-mono text-[9.5px] text-slate-500 mb-2.5">+12% från nuv. kurs</div>
-                <div className="text-[13px] text-slate-700 leading-[1.6]">Organisk tillväxt 5–7 %, mdexx-integrationen fortlöper planerat, datacenter-leverans genomförs i tid och 1–2 selektiva förvärv genomförs. EPS 8,18 kr och P/E ~29x ger en kurs ~237–240 kr. Utdelningen höjs mot 1,96 kr. Aktien rör sig gradvis mot 235–250 kr inom 12 månader.</div>
+              <div className="p-8 bg-white border-4 border-[#14532D] rounded-3xl shadow-lg relative overflow-hidden group hover:shadow-xl transition-all">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-2 h-2 rounded-full bg-[#14532D]" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[#14532D]">Base Case · 60%</span>
+                </div>
+                <div className="font-serif text-4xl text-slate-900 mb-2 leading-none">240 kr</div>
+                <div className="font-mono text-[10px] text-slate-500 mb-4">+12% från nuv. kurs</div>
+                <div className="text-xs text-slate-600 leading-relaxed">Organisk tillväxt 5–7 %, mdexx-integrationen fortlöper planerat, datacenter-leverans genomförs i tid och 1–2 selektiva förvärv genomförs. EPS 8,18 kr och P/E ~29x ger en kurs ~237–240 kr. Utdelningen höjs mot 1,96 kr. Aktien rör sig gradvis mot 235–250 kr inom 12 månader.</div>
               </div>
-              <div className="p-6 rounded-[2rem] border-t-4 border-[#B91C1C] bg-[#FEE2E2] relative overflow-hidden group hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-                <div className="font-mono text-[8.5px] uppercase tracking-[0.2em] font-medium mb-1.5 text-[#B91C1C]">Bear Case · 20%</div>
-                <div className="font-serif text-[30px] text-[#111827] mb-1 leading-none">170 kr</div>
-                <div className="font-mono text-[9.5px] text-slate-500 mb-2.5">−21% från nuv. kurs</div>
-                <div className="text-[13px] text-slate-700 leading-[1.6]">Europeisk industrirecession kombineras med mdexx-integrationssvårigheter. Datacenter-orders försenas pga teknikproblem. EPS faller mot 6,80 kr och marknaden komprimerar P/E mot historisk norm ~25x. Bear case visar 21 % nedsida – hanterbar men smärtsam. Nettokassan begränsar nedssidan strukturellt.</div>
+              <div className="p-8 bg-white border border-slate-200 rounded-3xl hover:shadow-xl transition-all group">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-2 h-2 rounded-full bg-rose-500" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-rose-500">Bear Case · 20%</span>
+                </div>
+                <div className="font-serif text-4xl text-slate-900 mb-2 leading-none">170 kr</div>
+                <div className="font-mono text-[10px] text-slate-500 mb-4">−21% från nuv. kurs</div>
+                <div className="text-xs text-slate-600 leading-relaxed">Europeisk industrirecession kombineras med mdexx-integrationssvårigheter. Datacenter-orders försenas pga teknikproblem. EPS faller mot 6,80 kr och marknaden komprimerar P/E mot historisk norm ~25x. Bear case visar 21 % nedsida – hanterbar men smärtsam. Nettokassan begränsar nedssidan strukturellt.</div>
               </div>
             </div>
 
