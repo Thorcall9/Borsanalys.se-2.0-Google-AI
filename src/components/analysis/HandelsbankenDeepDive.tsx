@@ -409,7 +409,7 @@ export default function HandelsbankenDeepDive({
             <div style={{background:T.accentL,border:"1.5px solid rgba(0,75,135,0.2)",borderRadius:14,padding:"18px 22px",borderLeft:"4px solid #004B87"}}>
               <div style={{fontSize:11,fontWeight:700,color:T.accent,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Analytikerns bedömning</div>
               <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                Handelsbanken har en av Europas starkaste bankmodeller. Den är inte snabbväxande, men den är robust, bevisad och mycket lönsam över tid. För en bank är det toppklass. Kombinationen av kultur, kapitalstyrka, kreditkvalitet och kundnöjdhet är ovanlig. Du kan följa Handelsbanken direkt via <a href='https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1' target='_blank' rel='sponsored noopener noreferrer' className='text-[#0046AD] underline decoration-2 underline-offset-4 hover:text-[#002b6b] transition-colors font-bold'>Nordnet</a>.
+                Handelsbanken har en av Europas starkaste bankmodeller. Den är inte snabbväxande, men den är robust, bevisad och mycket lönsam över tid. För en bank är det toppklass. Kombinationen av kultur, kapitalstyrka, kreditkvalitet och kundnöjdhet är ovanlig.
               </p>
             </div>
           </FadeIn>

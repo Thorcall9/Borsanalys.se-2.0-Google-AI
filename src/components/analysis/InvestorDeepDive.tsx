@@ -333,7 +333,7 @@ export default function InvestorDeepDive({
                   ["Bakgrund & Struktur","Investor AB grundades 1916 av familjen Wallenberg och är idag ett av Nordens största investmentbolag, med ett justerat substansvärde på 1 087 miljarder kronor per den 31 december 2025. Bolaget kontrolleras av Wallenberg-stiftelserna via FAM AB."],
                   ["Affärsidé & Modell", <span>Affärsidén är enkel men kraftfull: <strong>bygga starka och hållbara företag för att skapa värde för aktieägare och samhälle</strong>. Till skillnad från en vanlig aktiefond är Investor en aktiv ägare – man sitter i styrelser, utser VD och driver strategiska initiativ. Det gör att Investor kan påverka sina innehav på ett sätt som en passiv fondförvaltare aldrig kan.</span>],
                   ["Ledning","Christian Cederholm tillträdde som VD 2023, efterträdde Johan Forssell. Cederholm har lång erfarenhet inom bolaget och fortsätter den inslagna vägen av disciplinerad kapitalallokering."],
-                  ["Ägarstruktur","Wallenberg-stiftelserna är största ägare via FAM AB. Detta säkerställer ett unikt långsiktigt perspektiv och stabilitet som är svårreplikerad för andra investment bolag. Du kan följa Wallenbergsfärens alla innehav hos <a href='https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1' target='_blank' rel='sponsored noopener noreferrer' className='text-[#10B981] underline decoration-2 underline-offset-4 hover:text-[#0d9468] transition-colors font-bold'>Nordnet</a>."],
+                  ["Ägarstruktur","Wallenberg-stiftelserna är största ägare via FAM AB. Detta säkerställer ett unikt långsiktigt perspektiv och stabilitet som är svårreplikerad för andra investment bolag."],
                 ] as [string, React.ReactNode][]).map(([t,b])=>(
                   <div key={t}>
                     <div style={{fontSize:11,fontWeight:700,color:T.muted,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>{t}</div>
@@ -346,7 +346,7 @@ export default function InvestorDeepDive({
             <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`}}>
               <div style={{fontSize:11,fontWeight:700,color:T.accent,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Analytikerns bedömning</div>
               <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                Investor är utan tvekan ett av de högst kvalitativa bolagen på den nordiska börsen. Wallenbergsfärens flaggskepp erbjuder en unik exponering mot globala industriledare till en attraktiv substansrabatt. Med en extremt stark balansräkning (skuldsättning 2,1%) är bolaget väl rustat för att agera offensivt i alla marknadslägen. <a href='https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1' target='_blank' rel='sponsored noopener noreferrer' className='text-[#10B981] underline decoration-2 underline-offset-4 hover:text-[#0d9468] transition-colors font-bold'>Nordnet</a> är en digital plattform för handel i aktier och fonder där du kan följa Investors substansvärde.
+                Investor är utan tvekan ett av de högst kvalitativa bolagen på den nordiska börsen. Wallenbergsfärens flaggskepp erbjuder en unik exponering mot globala industriledare till en attraktiv substansrabatt. Med en extremt stark balansräkning (skuldsättning 2,1%) är bolaget väl rustat för att agera offensivt i alla marknadslägen.
               </p>
             </div>
           </FadeIn>

@@ -47,7 +47,7 @@ export default function GuideDetail() {
     .slice(0, 2);
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-24 space-y-16">
+    <div className="max-w-6xl mx-auto px-6 py-24 space-y-16">
       <SEO 
         title={guide.seoTitle || guide.title}
         description={guide.metaDescription || guide.excerpt}
@@ -119,7 +119,7 @@ export default function GuideDetail() {
         </section>
       ) : (
         <article 
-          className="prose prose-invert prose-2xl max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:font-medium prose-strong:text-foreground prose-strong:font-black prose-a:text-primary hover:prose-a:underline prose-img:rounded-[2.5rem] prose-hr:border-border/50"
+          className="prose prose-invert prose-2xl mx-auto prose-headings:font-black prose-headings:tracking-tighter prose-p:text-muted-foreground prose-p:leading-relaxed prose-p:font-medium prose-strong:text-foreground prose-strong:font-black prose-a:text-primary hover:prose-a:underline prose-img:rounded-[2.5rem] prose-hr:border-border/50"
           onClick={handleContentClick}
         >
           <div dangerouslySetInnerHTML={{ __html: guide.content }} />

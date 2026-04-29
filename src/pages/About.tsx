@@ -12,8 +12,8 @@ export default function About() {
     },
     {
       icon: Shield,
-      title: "Oberoende",
-      description: "Börsanalys.se drivs av ett genuint intresse för investeringar, inte av provisioner eller reklamlänkar. Vi kan ha ägarintressen i bolag vi analyserar — det framgår alltid tydligt i respektive analys."
+      title: "Transparens & Oberoende",
+      description: "Våra analyser är alltid objektiva och drivs av ett genuint intresse för investeringar. För att finansiera plattformen använder vi utvalda affiliatelänkar. Vi kan även ha ägarintressen i bolag vi analyserar — detta framgår alltid tydligt i respektive analys."
     },
     {
       icon: Zap,
