@@ -197,8 +197,82 @@ export default function NewWaveDeepDive({
         </div>
       </div>
 
+      {/* 2. KEY METRICS ROW */}
+      <div className="w-full bg-slate-50 border-b border-slate-200 py-10 px-6 md:px-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börskurs</span>
+              <div className="text-2xl font-black text-slate-900">99,60 kr</div>
+              <span className="text-xs text-slate-500 mt-1 block">Nasdaq Stockholm</span>
+            </div>
 
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börsvärde</span>
+              <div className="text-2xl font-black text-slate-900">13,2 Mdr</div>
+              <span className="text-xs text-slate-500 mt-1 block">Large Cap</span>
+            </div>
 
+            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">P/E-tal (trailing)</span>
+              <div className="text-2xl font-black text-slate-900">16,85</div>
+              <span className="text-xs text-slate-500 mt-1 block">2026e: 13,3x | 2027e: 10,6x</span>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl border-2 border-[#1E40AF]/20 shadow-lg relative overflow-hidden group">
+              <div className="relative z-10">
+                <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Riktkurs (Base)</span>
+                <div className="flex items-center gap-2">
+                  <div className="text-2xl font-black text-[#1E40AF]">130-145 kr</div>
+                </div>
+                <span className="text-xs text-green-600 font-bold mt-1 block">~38% Uppsida</span>
+              </div>
+              <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:opacity-10 transition-opacity text-[#1E40AF]">
+                <Target size={80} />
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      {/* 3. ANALYSIS CATEGORIES */}
+      <div className="w-full py-8 px-6 md:px-10 border-b border-slate-200 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-wrap gap-3">
+            {allScores.map(({key, val, max}) => {
+              const isWarning = key.includes('⚠');
+              return (
+                <div 
+                  key={key}
+                  className="flex items-center bg-white border border-slate-100 px-4 py-2 rounded-full shadow-sm hover:border-[#1E40AF]/30 transition-colors"
+                >
+                  {isWarning && <AlertTriangle size={14} className="text-amber-500 mr-2" />}
+                  <span className="text-xs font-bold text-slate-600">{key.replace(' ⚠', '')}</span>
+                  <span className={`text-xs font-black ml-2 ${val >= 4 ? 'text-[#1E40AF]' : 'text-slate-500'}`}>
+                    {val}/{max}
+                  </span>
+                  <div className="flex gap-1 ml-2">
+                    {[...Array(max)].map((_, i) => (
+                      <div
+                        key={i}
+                        className={`w-2 h-2 rounded-full ${
+                          i < val 
+                            ? (val >= 4 ? 'bg-[#1E40AF]' : 'bg-slate-400') 
+                            : 'bg-slate-200'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* CONTENT AREA */}
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-12 space-y-16">
         
         {/* 2. WARNING BOX */}
@@ -207,30 +281,6 @@ export default function NewWaveDeepDive({
           <p className="text-sm font-medium leading-relaxed">
             <strong>Intressekonflikt:</strong> Analysförfattaren har en position i det analyserade bolaget. Analysen är inte finansiell rådgivning.
           </p>
-        </div>
-
-        {/* 3. KEY METRICS ROW */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="p-6">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börskurs</span>
-            <div className="text-2xl font-black text-slate-900">99,60 kr</div>
-            <span className="text-xs text-slate-500 mt-1 block">Nasdaq Stockholm</span>
-          </Card>
-          <Card className="p-6">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börsvärde</span>
-            <div className="text-2xl font-black text-slate-900">13,2 Mdr</div>
-            <span className="text-xs text-slate-500 mt-1 block">Large Cap</span>
-          </Card>
-          <Card className="p-6">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">P/E-tal (trailing)</span>
-            <div className="text-2xl font-black text-slate-900">16,85</div>
-            <span className="text-xs text-slate-500 mt-1 block">2026e: 13,3x | 2027e: 10,6x</span>
-          </Card>
-          <Card className="p-6 border-2 border-primary/20">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Riktkurs (Base)</span>
-            <div className="text-2xl font-black text-primary">130-145 kr</div>
-            <span className="text-xs text-green-600 font-bold mt-1 block">~38% Uppsida</span>
-          </Card>
         </div>
 
         <NordnetCTA variant="high" />
