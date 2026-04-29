@@ -1,7 +1,7 @@
 import { AnalysisData } from "../../../types/analysis";
 
-export const aqGroup2026: AnalysisData = {
-  slug: "aq-group-2026-combo",
+export const aqGroup: AnalysisData = {
+  slug: "aq-group",
   title: "AQ Group AB",
   ticker: "AQ",
   deepDiveComponent: 'AQGroup',
@@ -92,7 +92,7 @@ export const aqGroup2026: AnalysisData = {
   
   aiDrivenData: {
     isAIDriven: true,
-    slug: "aq-group-2026-combo",
+    slug: "aq-group",
     name: "AQ Group AB",
     ticker: "AQ",
     isin: "SE0000772956",

@@ -121,7 +121,7 @@ interface AQGroupDeepDiveProps {
   nextAnalysis?: AnalysisData;
 }
 
-export default function AQGroupDeepDive({ 
+export default function AQGroupAnalysis({ 
   data,
   onToggleWatchlist, 
   isInWatchlist, 
@@ -255,28 +255,33 @@ export default function AQGroupDeepDive({
                   <div className="font-mono text-[10px] text-slate-400 mt-1">Ex. leasingskulder</div>
                 </div>
              </div>
+             <div className="relative overflow-hidden bg-white p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-sm group hover:shadow-md transition-all duration-500 mb-8 mt-4">
+               <div className="absolute top-0 right-0 w-96 h-96 bg-[#14532D]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-[#14532D]/10 transition-colors duration-700 pointer-events-none"></div>
+               <div className="relative z-10 space-y-5">
+                 <p className="text-[16.5px] leading-[1.7] text-slate-700 pl-4.5 border-l-4 border-[#14532D]">
+                   Sedan 1994 har AQ Group redovisat positivt resultat varje enskilt kvartal. Det är inte en marknadsföringsslogan – det är ett verifierat finansiellt faktum som sträcker sig över finanskrisen, pandemin och den europeiska industrirecession 2024.
+                 </p>
+                 
+                 <p className="text-[15px] leading-[1.75] text-slate-700">
+                   AQ Group är en global industriell kontraktstillverkare med produktion i 17 länder och 7 800+ anställda. Bolaget delas i två segment: <strong>Komponent</strong> (~85 % av omsättningen) – transformatorer, kablage, mekanikdetaljer, stansad plåt och termoplast – samt <strong>System</strong> (~15 %) med kraft- och automationslösningar. Geografiskt dominerar Europa (85 %), varav Sverige svarar för 27 %.
+                 </p>
+                 <p className="text-[15px] leading-[1.75] text-slate-700">
+                   <strong>Affärsmodellen</strong> är kontraktsbaserad: kunderna beställer specifika komponenter och AQ tillverkar enligt spec i sina fabriker. Intäkterna är <em>projektdrivna och volymberoende</em>, inte återkommande i prenumerationsmodellens bemärkelse. Stabiliteten i intäktsflödet uppnås via bred kunddiversifiering, lång kundrelationer och en decentraliserad struktur av 50+ dotterbolag som konkurrerar oberoende.
+                 </p>
+                 <p className="text-[15px] leading-[1.75] text-slate-700">
+                   <strong>Ledning och styrning.</strong> Grundare-VD James Ahrgren är i ordets sanna bemärkelse "skin in the game" – han har byggt och drivit bolaget sedan start och kontrollerar ~37 % av rösterna tillsammans med Claes Mellgren och Per Olof Andersson. CFO Christina Hegg ansvarar för finansiell rapportering med hög transparens. Optionsprogrammet 2024/2027 (lösenkurs 152 kr, nu kraftigt "in the money") kopplar ledningens belöning direkt till aktiekursen. Inför 2026 uppgraderades styrelsen med ny ordförande Åsa Landén Ericsson och Roland Kasper (fd VD Systemair) – ett professionaliserat governance i takt med Large Cap-statusen.
+                 </p>
+                 <p className="text-[15px] leading-[1.75] text-slate-700">
+                   <strong>Kapitalallokering.</strong> Utdelning om ~25 % av EPS är konsekvent kommunicerat. Utdelningen höjdes från 1,60 kr (2024) till 1,80 kr (2025). Inga återköp sker – bolaget sparar kassan till förvärv och organisk kapacitetsexpansion. Förvärvsstrategin är disciplinerad: bättre att vänta på rätt pris än att köpa för dyrt – vilket dessvärre inneburit ett magert förvärvsflöde under 2025.
+                 </p>
+               </div>
+             </div>
              
-             <p className="text-[16.5px] leading-[1.7] text-slate-700 pl-4.5 border-l-4 border-[#14532D] mb-5">
-               Sedan 1994 har AQ Group redovisat positivt resultat varje enskilt kvartal. Det är inte en marknadsföringsslogan – det är ett verifierat finansiellt faktum som sträcker sig över finanskrisen, pandemin och den europeiska industrirecession 2024.
-             </p>
-             
-             <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-               AQ Group är en global industriell kontraktstillverkare med produktion i 17 länder och 7 800+ anställda. Bolaget delas i två segment: <strong>Komponent</strong> (~85 % av omsättningen) – transformatorer, kablage, mekanikdetaljer, stansad plåt och termoplast – samt <strong>System</strong> (~15 %) med kraft- och automationslösningar. Geografiskt dominerar Europa (85 %), varav Sverige svarar för 27 %.
-             </p>
-             <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-               <strong>Affärsmodellen</strong> är kontraktsbaserad: kunderna beställer specifika komponenter och AQ tillverkar enligt spec i sina fabriker. Intäkterna är <em>projektdrivna och volymberoende</em>, inte återkommande i prenumerationsmodellens bemärkelse. Stabiliteten i intäktsflödet uppnås via bred kunddiversifiering, lång kundrelationer och en decentraliserad struktur av 50+ dotterbolag som konkurrerar oberoende.
-             </p>
-             <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-               <strong>Ledning och styrning.</strong> Grundare-VD James Ahrgren är i ordets sanna bemärkelse "skin in the game" – han har byggt och drivit bolaget sedan start och kontrollerar ~37 % av rösterna tillsammans med Claes Mellgren och Per Olof Andersson. CFO Christina Hegg ansvarar för finansiell rapportering med hög transparens. Optionsprogrammet 2024/2027 (lösenkurs 152 kr, nu kraftigt "in the money") kopplar ledningens belöning direkt till aktiekursen. Inför 2026 uppgraderades styrelsen med ny ordförande Åsa Landén Ericsson och Roland Kasper (fd VD Systemair) – ett professionaliserat governance i takt med Large Cap-statusen.
-             </p>
-             <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-               <strong>Kapitalallokering.</strong> Utdelning om ~25 % av EPS är konsekvent kommunicerat. Utdelningen höjdes från 1,60 kr (2024) till 1,80 kr (2025). Inga återköp sker – bolaget sparar kassan till förvärv och organisk kapacitetsexpansion. Förvärvsstrategin är disciplinerad: bättre att vänta på rätt pris än att köpa för dyrt – vilket dessvärre inneburit ett magert förvärvsflöde under 2025.
-             </p>
-             
-             <div className="bg-[#14532D] text-white p-6 mt-6 rounded">
-               <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/45 mb-1.5">Betyg I – Affärsmodell & Styrning</div>
-               <div className="font-serif text-[22px] mb-2">4 / 5</div>
-               <div className="text-[13.5px] text-white/80 leading-[1.6]">
+             <div className="bg-[#14532D] text-white p-8 mt-8 rounded-[2rem] relative overflow-hidden group hover:shadow-lg transition-all duration-500 hover:-translate-y-1">
+               <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+               <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/50 mb-1.5 relative z-10">Betyg I – Affärsmodell & Styrning</div>
+               <div className="font-serif text-[22px] mb-2 relative z-10">4 / 5</div>
+               <div className="text-[13.5px] text-white/80 leading-[1.6] relative z-10">
                  Bevisad affärsmodell med 30 år obruten lönsamhet, kompetent grundarledning med ~37 % insiderägande och optionsprogram som direktkopplar belöning till aktiekurs. Det enda som håller tillbaka 5:an är att intäkterna är projektbaserade snarare än genuint återkommande (SaaS/prenumeration).
                </div>
              </div>
@@ -288,15 +293,20 @@ export default function AQGroupDeepDive({
              <AnalysisFadeIn delay={100}>
                 <SectionHeader number="Sektion II" title="Strategisk analys & Moat" accentColor="#14532D" />
                 
-                <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                  <strong>Makro och bransch.</strong> AQ verkar i ett konjunkturellt medvind just nu. Europeiska försvarsbudgetar expanderar strukturellt, AI-infrastrukturinvesteringarna driver en oöverträffad datacenter-byggcykel och industriell elektrifiering byter ut fossila drivlinor. Motvinden finns i cykliska kundsegment – bussproduktion (USA/Mexiko), förpackningsmaskiner (Europa) och fartygsutrustning är svaga. Räntenivån normaliseras och påverkar marginellt ett skuldfritt bolag. Valutaexponeringen (EUR, CNY, USD) skapar kvartalsvis volatilitet men hanteras via naturlig hedging i 17-landsstrukturen.
-                </p>
-                <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                  Branschen – kundanpassad industriell kontraktstillverkning – är <strong>mogen och fragmenterad</strong>. Inget enskilt bolag dominerar globalt inom AQ:s specifika nisch (transformatorer + kablage + mekanik för krävande industri). Fragmenteringen är en möjlighet för disciplinerade förvärvare. Cyklikaliteten är medelhög: verksamheten bromsas i recessioner men diversifieringen gör att trågen är grundare än för en renodlad cyklisk aktie.
-                </p>
-                <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                  <strong>Konkurrens och moat.</strong> AQ:s tre konkurrensfördelar: (1) <em>Kostnadseffektivitet</em> via lågkostnadsproduktion i Östeuropa och Kina kombinerat med europeisk kundnärhet. (2) <em>Teknisk kompetens i induktiva komponenter</em> – transformatorer och induktorer kräver decennier av know-how att behärska; förvärvet av mdexx/Riedel stärkte detta ytterligare. (3) <em>Leveranskvalitet och kundlojalitet</em> – 99,6 % produktkvalitet och 94 % leveransprecision (mot mål 98 %) bygger förtroende. Bolaget saknar däremot nätverkseffekter, proprietär IP i skala och byteskostnader av den typ som "låser in" kunder strukturellt.
-                </p>
+                <div className="relative overflow-hidden bg-white p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-sm group hover:shadow-md transition-all duration-500 mb-8 mt-4">
+                  <div className="absolute top-0 right-0 w-96 h-96 bg-[#14532D]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-[#14532D]/10 transition-colors duration-700 pointer-events-none"></div>
+                  <div className="relative z-10 space-y-5">
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      <strong>Makro och bransch.</strong> AQ verkar i ett konjunkturellt medvind just nu. Europeiska försvarsbudgetar expanderar strukturellt, AI-infrastrukturinvesteringarna driver en oöverträffad datacenter-byggcykel och industriell elektrifiering byter ut fossila drivlinor. Motvinden finns i cykliska kundsegment – bussproduktion (USA/Mexiko), förpackningsmaskiner (Europa) och fartygsutrustning är svaga. Räntenivån normaliseras och påverkar marginellt ett skuldfritt bolag. Valutaexponeringen (EUR, CNY, USD) skapar kvartalsvis volatilitet men hanteras via naturlig hedging i 17-landsstrukturen.
+                    </p>
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      Branschen – kundanpassad industriell kontraktstillverkning – är <strong>mogen och fragmenterad</strong>. Inget enskilt bolag dominerar globalt inom AQ:s specifika nisch (transformatorer + kablage + mekanik för krävande industri). Fragmenteringen är en möjlighet för disciplinerade förvärvare. Cyklikaliteten är medelhög: verksamheten bromsas i recessioner men diversifieringen gör att trågen är grundare än för en renodlad cyklisk aktie.
+                    </p>
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      <strong>Konkurrens och moat.</strong> AQ:s tre konkurrensfördelar: (1) <em>Kostnadseffektivitet</em> via lågkostnadsproduktion i Östeuropa och Kina kombinerat med europeisk kundnärhet. (2) <em>Teknisk kompetens i induktiva komponenter</em> – transformatorer och induktorer kräver decennier av know-how att behärska; förvärvet av mdexx/Riedel stärkte detta ytterligare. (3) <em>Leveranskvalitet och kundlojalitet</em> – 99,6 % produktkvalitet och 94 % leveransprecision (mot mål 98 %) bygger förtroende. Bolaget saknar däremot nätverkseffekter, proprietär IP i skala och byteskostnader av den typ som "låser in" kunder strukturellt.
+                    </p>
+                  </div>
+                </div>
 
                 <SwotGrid data={{
                     strengths: ["30 år utan ett enda förlustår – ett unikt industriellt track record", "Nettokassa >1 Mdr ger förvärvskapacitet och finansiell flexibilitet", "Decentraliserat dotterbolagsystem – snabb anpassning, ingen byråkrati", "Produktion i 17 länder – naturlig geopolitisk och valutahedge", "Transformatorkompetens (25 % av omsättning) i rätt marknad", "Stark ledningskultur med grundar-VD och högt insiderägande"],
@@ -305,10 +315,11 @@ export default function AQGroupDeepDive({
                     threats: ["US-tullar drabbar USA/Mexiko-produktion (6 % av försäljning)", "Valutamotvind EUR och CNY komprimerar omsättningen", "Geopolitisk eskalation stör leveranskedjor och energipriser", "Konkurrens från asiatiska transformatortillverkare med lägre kostnad", "Global minimiskatt (Pelare II) ökar skattekostnaden mot 19–20 %"]
                 }} />
                 
-                <div className="bg-[#14532D] text-white p-6 mt-6 rounded">
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/45 mb-1.5">Betyg II – Strategisk Moat</div>
-                  <div className="font-serif text-[22px] mb-2">3 / 5</div>
-                  <div className="text-[13.5px] text-white/80 leading-[1.6]">
+                <div className="bg-[#14532D] text-white p-8 mt-8 rounded-[2rem] relative overflow-hidden group hover:shadow-lg transition-all duration-500 hover:-translate-y-1">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/50 mb-1.5 relative z-10">Betyg II – Strategisk Moat</div>
+                  <div className="font-serif text-[22px] mb-2 relative z-10">3 / 5</div>
+                  <div className="text-[13.5px] text-white/80 leading-[1.6] relative z-10">
                     AQ har en real men inte oemotståndlig moat baserat på kostnadseffektivitet, teknisk transformatorkompetens och djupa kundrelationer. Stabila marknadsandelar men konsekvent organisk tillväxt under eget mål begränsar betyget. Konkurrenter med tillräckliga resurser kan utmana på sikt.
                   </div>
                 </div>
@@ -320,9 +331,14 @@ export default function AQGroupDeepDive({
             <AnalysisFadeIn delay={200}>
                 <SectionHeader number="Sektion III" title="Finansiell analys" accentColor="#14532D" />
                 
-                <p className="text-[16.5px] leading-[1.7] text-slate-700 pl-4.5 border-l-4 border-[#14532D] mb-5">
-                  Trettio år utan ett enda förlustår är ett finansiellt track record som är näst intill unikt bland svenska industribolag. Nettokassa, stark soliditet och konsekvent FCF skapar en finansiell kvalitetsstämpel.
-                </p>
+                <div className="relative overflow-hidden bg-white p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-sm group hover:shadow-md transition-all duration-500 mb-8 mt-4">
+                  <div className="absolute top-0 right-0 w-96 h-96 bg-[#14532D]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-[#14532D]/10 transition-colors duration-700 pointer-events-none"></div>
+                  <div className="relative z-10 space-y-5">
+                    <p className="text-[16.5px] leading-[1.7] text-slate-700 pl-4.5 border-l-4 border-[#14532D]">
+                      Trettio år utan ett enda förlustår är ett finansiellt track record som är näst intill unikt bland svenska industribolag. Nettokassa, stark soliditet och konsekvent FCF skapar en finansiell kvalitetsstämpel.
+                    </p>
+                  </div>
+                </div>
 
                 <h3 className="font-serif text-[19px] text-[#111827] mt-7 mb-3">Resultatutveckling – historik & estimat</h3>
                 
@@ -354,12 +370,17 @@ export default function AQGroupDeepDive({
                 </div>
                 <div className="font-mono text-[11px] text-slate-400 mt-[-14px] mb-5">* Estimat från externa analytiker. EPS-CAGR 2021–2025 ≈ 9 %. Kvartalsvärden Q1 2026 är ej annualiserade.</div>
 
-                <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                  <strong>Omsättningstillväxt:</strong> CAGR ~7 % 2021–2025. Det markanta trendbrott är 2024:s nedgång (−4,6 %) drivet av svag fordonscykel. Återhämtningen 2025 (+6 %) bestod mestadels av förvärvstillskott (+7,2 pp) – den organiska tillväxten var bara 2 %, vilket är den siffran att kritiskt granska.
-                </p>
-                <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                  <strong>Marginaler:</strong> EBIT-marginalen håller stabilt 9,0–10,0 % trots konjunkturcykler. Marginell kompression 2025 (9,3 % vs 9,8 % 2024) förklaras av mdexx/Riedel. Q1 2026 visar återgång till 9,6 % – integrationen fungerar. Bolagets EBT-mål på {">"}8 % som minimumgolv uppfylls med bred marginal.
-                </p>
+                <div className="relative overflow-hidden bg-white p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-sm group hover:shadow-md transition-all duration-500 mb-8 mt-4">
+                  <div className="absolute top-0 right-0 w-96 h-96 bg-[#14532D]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-[#14532D]/10 transition-colors duration-700 pointer-events-none"></div>
+                  <div className="relative z-10 space-y-5">
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      <strong>Omsättningstillväxt:</strong> CAGR ~7 % 2021–2025. Det markanta trendbrott är 2024:s nedgång (−4,6 %) drivet av svag fordonscykel. Återhämtningen 2025 (+6 %) bestod mestadels av förvärvstillskott (+7,2 pp) – den organiska tillväxten var bara 2 %, vilket är den siffran att kritiskt granska.
+                    </p>
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      <strong>Marginaler:</strong> EBIT-marginalen håller stabilt 9,0–10,0 % trots konjunkturcykler. Marginell kompression 2025 (9,3 % vs 9,8 % 2024) förklaras av mdexx/Riedel. Q1 2026 visar återgång till 9,6 % – integrationen fungerar. Bolagets EBT-mål på {">"}8 % som minimumgolv uppfylls med bred marginal.
+                    </p>
+                  </div>
+                </div>
 
                 <h3 className="font-serif text-[19px] text-[#111827] mt-7 mb-3">Balansräkning & kassaflöde</h3>
                 <div className="overflow-x-auto my-5">
@@ -388,14 +409,20 @@ export default function AQGroupDeepDive({
                   </table>
                 </div>
 
-                <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                  Det operativa kassaflödets fall från 1 197 Mkr (2024) till 921 Mkr (2025) förklaras av en ökad kapitalbindning i kundfordringar (+283 Mkr) kopplad till volymtillväxt och avslutad factoring i mdexx. Det är inte ett strukturellt problem – Q1 2026 bekräftar normalisering med 339 Mkr (vs 244 Mkr Q1 2025).
-                </p>
+                <div className="relative overflow-hidden bg-white p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-sm group hover:shadow-md transition-all duration-500 mb-8 mt-4">
+                  <div className="absolute top-0 right-0 w-96 h-96 bg-[#14532D]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-[#14532D]/10 transition-colors duration-700 pointer-events-none"></div>
+                  <div className="relative z-10 space-y-5">
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      Det operativa kassaflödets fall från 1 197 Mkr (2024) till 921 Mkr (2025) förklaras av en ökad kapitalbindning i kundfordringar (+283 Mkr) kopplad till volymtillväxt och avslutad factoring i mdexx. Det är inte ett strukturellt problem – Q1 2026 bekräftar normalisering med 339 Mkr (vs 244 Mkr Q1 2025).
+                    </p>
+                  </div>
+                </div>
 
-                <div className="bg-[#14532D] text-white p-6 mt-6 rounded">
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/45 mb-1.5">Betyg III – Finansiell Kvalitet</div>
-                  <div className="font-serif text-[22px] mb-2">4 / 5</div>
-                  <div className="text-[13.5px] text-white/80 leading-[1.6]">
+                <div className="bg-[#14532D] text-white p-8 mt-8 rounded-[2rem] relative overflow-hidden group hover:shadow-lg transition-all duration-500 hover:-translate-y-1">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/50 mb-1.5 relative z-10">Betyg III – Finansiell Kvalitet</div>
+                  <div className="font-serif text-[22px] mb-2 relative z-10">4 / 5</div>
+                  <div className="text-[13.5px] text-white/80 leading-[1.6] relative z-10">
                     Nettokassa 1 095 Mkr, soliditet 68 %, ROE 14,9 % och 30 år utan förlustår är finansiell kvalitetsklass. EPS-CAGR ~9 % är bra men inte exceptionellt. ROE under 20 % och FCF-minskning 2025 håller tillbaka 5:an, men Q1 2026 normaliserar och trenden är positiv.
                   </div>
                 </div>
@@ -438,17 +465,23 @@ export default function AQGroupDeepDive({
                 </div>
                 <div className="font-mono text-[11px] text-slate-400 mt-[-14px] mb-5">* Estimat. Nordisk industrinorm = indikativt intervall, ej beräknat från specificerade peers.</div>
 
-                <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                  AQ handlas till <strong>P/E om 29x</strong> på löpande EPS – 42 % over bolagets eget 5-årssnitt. Premiet motiveras delvis av Large Cap-flytten, datacenter-omvärderingen och förvärvskapaciteten. Men PEG-talet (P/E / EPS-tillväxt = 29 / ~8 %) på ~3,6x överstiger tydligt den industriella normen om 1,5–2x. Aktien kräver att allt går rätt.
-                </p>
-                <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                  På 2026e faller P/E till 26x och 2027e till 24x – förutsatt att analytikerprognoserna håller. EV/EBITDA på 15,7x är i överkant för sektorn (norm ~10–14x) men inte absurt givet nettokassan. Direktavkastningen på 0,84 % ger ingen meningsfull "floor" för kursen.
-                </p>
+                <div className="relative overflow-hidden bg-white p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-sm group hover:shadow-md transition-all duration-500 mb-8 mt-4">
+                  <div className="absolute top-0 right-0 w-96 h-96 bg-[#14532D]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-[#14532D]/10 transition-colors duration-700 pointer-events-none"></div>
+                  <div className="relative z-10 space-y-5">
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      AQ handlas till <strong>P/E om 29x</strong> på löpande EPS – 42 % over bolagets eget 5-årssnitt. Premiet motiveras delvis av Large Cap-flytten, datacenter-omvärderingen och förvärvskapaciteten. Men PEG-talet (P/E / EPS-tillväxt = 29 / ~8 %) på ~3,6x överstiger tydligt den industriella normen om 1,5–2x. Aktien kräver att allt går rätt.
+                    </p>
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      På 2026e faller P/E till 26x och 2027e till 24x – förutsatt att analytikerprognoserna håller. EV/EBITDA på 15,7x är i överkant för sektorn (norm ~10–14x) men inte absurt givet nettokassan. Direktavkastningen på 0,84 % ger ingen meningsfull "floor" för kursen.
+                    </p>
+                  </div>
+                </div>
                 
-                <div className="bg-[#14532D] text-white p-6 mt-6 rounded">
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/45 mb-1.5">Betyg IV – Värdering</div>
-                  <div className="font-serif text-[22px] mb-2">3 / 5</div>
-                  <div className="text-[13.5px] text-white/80 leading-[1.6]">
+                <div className="bg-[#14532D] text-white p-8 mt-8 rounded-[2rem] relative overflow-hidden group hover:shadow-lg transition-all duration-500 hover:-translate-y-1">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/50 mb-1.5 relative z-10">Betyg IV – Värdering</div>
+                  <div className="font-serif text-[22px] mb-2 relative z-10">3 / 5</div>
+                  <div className="text-[13.5px] text-white/80 leading-[1.6] relative z-10">
                     Rimlig värdering för ett premiumkvalitetsbolag – men inte attraktiv. P/E 29x är 42 % över historiskt snitt och PEG 3,6x kräver näst intill perfekt exekvering. Premiet är delvis rationellt men lämnar begränsat utrymme för besvikelser. Nuvarande kurs prisar in ett nästan optimistiskt scenario som base case.
                   </div>
                 </div>
@@ -460,30 +493,36 @@ export default function AQGroupDeepDive({
              <AnalysisFadeIn delay={400}>
                 <SectionHeader number="Sektion V" title="Tillväxtutsikter & Triggers" accentColor="#14532D" />
                 
-                <p className="text-[16.5px] leading-[1.7] text-slate-700 pl-4.5 border-l-4 border-[#14532D] mb-5">
-                  AQ befinner sig i ett sällsynt läge där tre av decenniets starkaste industriella megatrender – datacenter-AI-infrastruktur, europeisk försvarsupprustning och industriell elektrifiering – konvergerar mot bolagets kärnkompetenser.
-                </p>
-                
-                <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                  <strong>Drivkraft 1 – Datacenter och AI.</strong> Transformatorer är kritisk infrastruktur i varje datacenter. Under Q3 2025 erhöll AQ en order på 15 mEUR mellanspänningstransformatorer. I Q4 2025 signerades ett LOI om 200 enheter och en prototyporder från en ny amerikansk kund. Q1 2026-brevet refererar till pågående kapacitetsexpansion i <em>samtliga</em> transformatorfabriker med leveransmål juni 2026. VD Ahrgren beskriver datacenter som potentiellt "en betydande del av AQ:s omsättning under flera år framöver."
-                </p>
-                <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                  <strong>Drivkraft 2 – Europeisk försvar.</strong> Europeiska försvarsanslag expanderar strukturellt. AQ levererar kablage, elsystem och mekanik till försvarskunder i Sverige, Polen, England och USA. Organisk tillväxt inom försvarsegment var stark i 2025 och in i 2026.
-                </p>
-                <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                  <strong>Drivkraft 3 – Elektrifiering.</strong> Frekvensomriktare, elbussar och traktionssystem driver efterfrågan på induktiva komponenter. Den nyutbyggda Tallinn-fabriken (trefaldig kapacitet, solenergiförsörjning) är ett konkret kapacitetsttecken på detta.
-                </p>
-                <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                  <strong>Förvärv.</strong> Nettokassan ger ~1 Mdr i förvärvskapacitet. Ahrgren bekräftar aktivt förvärvssökande men prioriterar rätt pris framför volym. En förvärvsacceleration under 2026 är den viktigaste potentiella surprise-triggern.
-                </p>
-                <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                  <strong>Katalysatorer (12–24 månader):</strong> (1) Leverans av datacenter-orderbok juni 2026 + nya orders, (2) mdexx/Riedel når 8 % EBT-mål, (3) Nytt strategiskt förvärv adderar {">"}5 % omsättning, (4) Ny order i multimiljoner-EUR-klassen inom försvar.
-                </p>
+                <div className="relative overflow-hidden bg-white p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-sm group hover:shadow-md transition-all duration-500 mb-8 mt-4">
+                  <div className="absolute top-0 right-0 w-96 h-96 bg-[#14532D]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-[#14532D]/10 transition-colors duration-700 pointer-events-none"></div>
+                  <div className="relative z-10 space-y-5">
+                    <p className="text-[16.5px] leading-[1.7] text-slate-700 pl-4.5 border-l-4 border-[#14532D]">
+                      AQ befinner sig i ett sällsynt läge där tre av decenniets starkaste industriella megatrender – datacenter-AI-infrastruktur, europeisk försvarsupprustning och industriell elektrifiering – konvergerar mot bolagets kärnkompetenser.
+                    </p>
+                    
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      <strong>Drivkraft 1 – Datacenter och AI.</strong> Transformatorer är kritisk infrastruktur i varje datacenter. Under Q3 2025 erhöll AQ en order på 15 mEUR mellanspänningstransformatorer. I Q4 2025 signerades ett LOI om 200 enheter och en prototyporder från en ny amerikansk kund. Q1 2026-brevet refererar till pågående kapacitetsexpansion i <em>samtliga</em> transformatorfabriker med leveransmål juni 2026. VD Ahrgren beskriver datacenter som potentiellt "en betydande del av AQ:s omsättning under flera år framöver."
+                    </p>
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      <strong>Drivkraft 2 – Europeisk försvar.</strong> Europeiska försvarsanslag expanderar strukturellt. AQ levererar kablage, elsystem och mekanik till försvarskunder i Sverige, Polen, England och USA. Organisk tillväxt inom försvarsegment var stark i 2025 och in i 2026.
+                    </p>
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      <strong>Drivkraft 3 – Elektrifiering.</strong> Frekvensomriktare, elbussar och traktionssystem driver efterfrågan på induktiva komponenter. Den nyutbyggda Tallinn-fabriken (trefaldig kapacitet, solenergiförsörjning) är ett konkret kapacitetsttecken på detta.
+                    </p>
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      <strong>Förvärv.</strong> Nettokassan ger ~1 Mdr i förvärvskapacitet. Ahrgren bekräftar aktivt förvärvssökande men prioriterar rätt pris framför volym. En förvärvsacceleration under 2026 är den viktigaste potentiella surprise-triggern.
+                    </p>
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      <strong>Katalysatorer (12–24 månader):</strong> (1) Leverans av datacenter-orderbok juni 2026 + nya orders, (2) mdexx/Riedel når 8 % EBT-mål, (3) Nytt strategiskt förvärv adderar {">"}5 % omsättning, (4) Ny order i multimiljoner-EUR-klassen inom försvar.
+                    </p>
+                  </div>
+                </div>
 
-                <div className="bg-[#14532D] text-white p-6 mt-6 rounded">
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/45 mb-1.5">Betyg V – Tillväxtutsikter</div>
-                  <div className="font-serif text-[22px] mb-2">4 / 5</div>
-                  <div className="text-[13.5px] text-white/80 leading-[1.6]">
+                <div className="bg-[#14532D] text-white p-8 mt-8 rounded-[2rem] relative overflow-hidden group hover:shadow-lg transition-all duration-500 hover:-translate-y-1">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/50 mb-1.5 relative z-10">Betyg V – Tillväxtutsikter</div>
+                  <div className="font-serif text-[22px] mb-2 relative z-10">4 / 5</div>
+                  <div className="text-[13.5px] text-white/80 leading-[1.6] relative z-10">
                     Tre samverkande megatrender med konkreta ordrar, kapacitetsinvesteringar och 6,3 % organisk tillväxt Q1 2026 (bättre än helårets 2 %). Katalysatorer synliga inom 12 månader. Det som håller tillbaka 5:an är konsekvent organisk undertillväxt mot eget mål och ojämnt förvärvsflöde.
                   </div>
                 </div>
@@ -531,14 +570,20 @@ export default function AQGroupDeepDive({
                     </table>
                 </div>
                 
-                <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                  Det mest sannolika negativa scenariot för AQ är en kombination av <strong>europeisk industrirecession + mdexx-integration tar längre tid + datacenter-ordrar försenas</strong>. Sannolikheten för detta kombinationsscenario är låg, men konsekvensen är hanterbar givet nettokassabufferten. Det enda strukturella riskscenario som är svårt att prissätta är ett VD-byte – AQ Ahrgren är i en unik position som inte lätt replikeras.
-                </p>
+                <div className="relative overflow-hidden bg-white p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-sm group hover:shadow-md transition-all duration-500 mb-8 mt-4">
+                  <div className="absolute top-0 right-0 w-96 h-96 bg-[#14532D]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-[#14532D]/10 transition-colors duration-700 pointer-events-none"></div>
+                  <div className="relative z-10 space-y-5">
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      Det mest sannolika negativa scenariot för AQ är en kombination av <strong>europeisk industrirecession + mdexx-integration tar längre tid + datacenter-ordrar försenas</strong>. Sannolikheten för detta kombinationsscenario är låg, men konsekvensen är hanterbar givet nettokassabufferten. Det enda strukturella riskscenario som är svårt att prissätta är ett VD-byte – AQ Ahrgren är i en unik position som inte lätt replikeras.
+                    </p>
+                  </div>
+                </div>
 
-                <div className="bg-[#14532D] text-white p-6 mt-6 rounded">
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/45 mb-1.5">Betyg VI – Riskprofil (inverterad: 5 = låg risk)</div>
-                  <div className="font-serif text-[22px] mb-2">4 / 5</div>
-                  <div className="text-[13.5px] text-white/80 leading-[1.6]">
+                <div className="bg-[#14532D] text-white p-8 mt-8 rounded-[2rem] relative overflow-hidden group hover:shadow-lg transition-all duration-500 hover:-translate-y-1">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/50 mb-1.5 relative z-10">Betyg VI – Riskprofil (inverterad: 5 = låg risk)</div>
+                  <div className="font-serif text-[22px] mb-2 relative z-10">4 / 5</div>
+                  <div className="text-[13.5px] text-white/80 leading-[1.6] relative z-10">
                     Skuldfri balansräkning med nettokassa 1 095 Mkr, produktion i 17 länder och 30 år av konjunkturmotstånd klassificerar AQ som ett av de lägst riskfyllda industribolagen på Nasdaq Stockholm. VD-nyckelmansberoende och transformatorreklamationer förhindrar 5:an.
                   </div>
                 </div>
@@ -550,9 +595,14 @@ export default function AQGroupDeepDive({
             <AnalysisFadeIn delay={600}>
                 <SectionHeader number="Sektion VII" title="Analys av VD-ordet" accentColor="#14532D" />
                 
-                <p className="text-[16.5px] leading-[1.7] text-slate-700 pl-4.5 border-l-4 border-[#14532D] mb-5">
-                  James Ahrgrens VD-brev är ovanligt ärliga dokument. Bland 50+ industribolag på Nasdaq Stockholm tillhör hans kommunikation den mest självkritiska och konkretfattiga. Det är en immateriell styrka med reellt analytiskt värde.
-                </p>
+                <div className="relative overflow-hidden bg-white p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-sm group hover:shadow-md transition-all duration-500 mb-8 mt-4">
+                  <div className="absolute top-0 right-0 w-96 h-96 bg-[#14532D]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-[#14532D]/10 transition-colors duration-700 pointer-events-none"></div>
+                  <div className="relative z-10 space-y-5">
+                    <p className="text-[16.5px] leading-[1.7] text-slate-700 pl-4.5 border-l-4 border-[#14532D]">
+                      James Ahrgrens VD-brev är ovanligt ärliga dokument. Bland 50+ industribolag på Nasdaq Stockholm tillhör hans kommunikation den mest självkritiska och konkretfattiga. Det är en immateriell styrka med reellt analytiskt värde.
+                    </p>
+                  </div>
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 my-5">
                   {[
@@ -582,10 +632,11 @@ export default function AQGroupDeepDive({
                   <strong>Summering VD-analys:</strong> James Ahrgrens kommunikation tillhör de transparentaste bland svenska industribolag. Han erkänner proaktivt problem, specifika siffrorna används konsekvent och strategin är stabil. Svagheten: avsaknad av konkreta KPI:er för det organiska tillväxtmålet och för förvärvsstrategin.
                 </div>
 
-                <div className="bg-[#14532D] text-white p-6 mt-6 rounded">
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/45 mb-1.5">Betyg VII – VD-ordet</div>
-                  <div className="font-serif text-[22px] mb-2">4 / 5</div>
-                  <div className="text-[13.5px] text-white/80 leading-[1.6]">
+                <div className="bg-[#14532D] text-white p-8 mt-8 rounded-[2rem] relative overflow-hidden group hover:shadow-lg transition-all duration-500 hover:-translate-y-1">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/50 mb-1.5 relative z-10">Betyg VII – VD-ordet</div>
+                  <div className="font-serif text-[22px] mb-2 relative z-10">4 / 5</div>
+                  <div className="text-[13.5px] text-white/80 leading-[1.6] relative z-10">
                     Klar, ärlig och konsekvent kommunikation med uppföljning av konkreta mål. Ahrgren erkänner öppet reklamationer (Q4 2025), missat tillväxtmål och kapacitetsproblem. Frånvaron av mätbara KPI:er för organisk tillväxt och oklara förvärvsparametrar håller tillbaka 5:an.
                   </div>
                 </div>
@@ -601,23 +652,29 @@ export default function AQGroupDeepDive({
                    <strong>Notera:</strong> Dessa signaler bygger på dataanalys av rapporter, insidertransaktioner och marknadsmönster – de ska tolkas som ytterligare indikationer, inte definitiva slutsatser.
                  </div>
                  
-                 <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                   <strong>Sentimentanalys.</strong> Nyhetsflödet kring AQ Group har accelererat positivt sedan Large Cap-flytten januari 2026. Branschforum lyfter AQ som en "nordisk datacenter-pick" – en positiv re-rating-story som drivit kursen från ~140 kr (2024) till ~214 kr (2026). Mediabevökning har ökat markant och tonen är övervägande positiv kring försvars- och datacenterexponering. Informationskälla: bolagets egna rapporter + observerat mediamönster.
-                 </p>
-                 <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                   <strong>Insidertransaktioner.</strong> Optionsprogrammet 2022/2025 (lösenkurs 70,20 kr) nyttjades till 100 % i maj–juni 2025 – 262 500 aktier registrerades. Det aktiva programmet 2024/2027 (lösenkurs 152 kr) tecknades till 100 % av ledande befattningshavare. Vid nuv. kurs ~214 kr är dessa optioner ~40 % "in the money" – ledningen har kraftiga incitament att driva aktiekursen vidare. Inga nettosäljpositioner identifierade bland insiders.
-                 </p>
-                 <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                   <strong>Analytikerkonsensus.</strong> Formell konsensus-data finns ej i Del 2-materialet och kan inte skapas. Observerbart: EPS-estimaten 2026e (8,18 kr) och 2027e (9,08 kr) implicerar ~10–11 % EPS-tillväxt – konservativt givet att organisk tillväxt nu accelererar och kapaciteten byggs ut. Om dessa estimat justeras upp i kommande kvartal kan aktiekursen snarast röra sig mot bull-case.
-                 </p>
-                 <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-                   <strong>Historiska mönster och avvikelser.</strong> AQ uppvisar ett stabilt <em>säsongsmönster</em>: Q1 starkast, Q3 svagast (bekräftat konsekvent). Den nuvarande P/E-omvärderingen från ~17x (2021–2023) till ~29x utan proportionerlig EPS-acceleration är statistiskt ovanlig och den tydligaste varningssignalen i analysen. Kassaflödets fall 2025 bryter ett historiskt mönster men Q1 2026 normaliserar. Styrelseuppgradering (Landén Ericsson + Kasper) signalerar professionalisering inför ökad institutionell uppmärksamhet.
-                 </p>
+                 <div className="relative overflow-hidden bg-white p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-sm group hover:shadow-md transition-all duration-500 mb-8 mt-4">
+                   <div className="absolute top-0 right-0 w-96 h-96 bg-[#14532D]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-[#14532D]/10 transition-colors duration-700 pointer-events-none"></div>
+                   <div className="relative z-10 space-y-5">
+                     <p className="text-[15px] leading-[1.75] text-slate-700">
+                       <strong>Sentimentanalys.</strong> Nyhetsflödet kring AQ Group har accelererat positivt sedan Large Cap-flytten januari 2026. Branschforum lyfter AQ som en "nordisk datacenter-pick" – en positiv re-rating-story som drivit kursen från ~140 kr (2024) till ~214 kr (2026). Mediabevökning har ökat markant och tonen är övervägande positiv kring försvars- och datacenterexponering. Informationskälla: bolagets egna rapporter + observerat mediamönster.
+                     </p>
+                     <p className="text-[15px] leading-[1.75] text-slate-700">
+                       <strong>Insidertransaktioner.</strong> Optionsprogrammet 2022/2025 (lösenkurs 70,20 kr) nyttjades till 100 % i maj–juni 2025 – 262 500 aktier registrerades. Det aktiva programmet 2024/2027 (lösenkurs 152 kr) tecknades till 100 % av ledande befattningshavare. Vid nuv. kurs ~214 kr är dessa optioner ~40 % "in the money" – ledningen har kraftiga incitament att driva aktiekursen vidare. Inga nettosäljpositioner identifierade bland insiders.
+                     </p>
+                     <p className="text-[15px] leading-[1.75] text-slate-700">
+                       <strong>Analytikerkonsensus.</strong> Formell konsensus-data finns ej i Del 2-materialet och kan inte skapas. Observerbart: EPS-estimaten 2026e (8,18 kr) och 2027e (9,08 kr) implicerar ~10–11 % EPS-tillväxt – konservativt givet att organisk tillväxt nu accelererar och kapaciteten byggs ut. Om dessa estimat justeras upp i kommande kvartal kan aktiekursen snarast röra sig mot bull-case.
+                     </p>
+                     <p className="text-[15px] leading-[1.75] text-slate-700">
+                       <strong>Historiska mönster och avvikelser.</strong> AQ uppvisar ett stabilt <em>säsongsmönster</em>: Q1 starkast, Q3 svagast (bekräftat konsekvent). Den nuvarande P/E-omvärderingen från ~17x (2021–2023) till ~29x utan proportionerlig EPS-acceleration är statistiskt ovanlig och den tydligaste varningssignalen i analysen. Kassaflödets fall 2025 bryter ett historiskt mönster men Q1 2026 normaliserar. Styrelseuppgradering (Landén Ericsson + Kasper) signalerar professionalisering inför ökad institutionell uppmärksamhet.
+                     </p>
+                   </div>
+                 </div>
 
-                 <div className="bg-[#14532D] text-white p-6 mt-6 rounded">
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/45 mb-1.5">Betyg VIII – AI-observationer</div>
-                  <div className="font-serif text-[22px] mb-2">4 / 5</div>
-                  <div className="text-[13.5px] text-white/80 leading-[1.6]">
+                 <div className="bg-[#14532D] text-white p-8 mt-8 rounded-[2rem] relative overflow-hidden group hover:shadow-lg transition-all duration-500 hover:-translate-y-1">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.18em] text-white/50 mb-1.5 relative z-10">Betyg VIII – AI-observationer</div>
+                  <div className="font-serif text-[22px] mb-2 relative z-10">4 / 5</div>
+                  <div className="text-[13.5px] text-white/80 leading-[1.6] relative z-10">
                     Positiva signaler dominerar: 100 % insideroptionsnyttjande, accelererat positivt sentiment, konservativa EPS-estimat givet organisk tillväxtacceleration. Den enda konkreta varningssignalen är P/E-expansion utan proportionerlig EPS-acceleration – vilket är precis vad som håller rekommendationen på BEVAKA snarare än KÖP.
                   </div>
                 </div>
@@ -645,15 +702,20 @@ export default function AQGroupDeepDive({
             </div>
 
             <h3 className="font-serif text-[19px] text-[#111827] mt-7 mb-3">Slutsats</h3>
-            <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-              AQ Group är ett av börsanalys.se:s favorit-case i nordisk industri. Bolaget har en stark affärsmodell, finansiell styrka utan motstycke för sin storlek, en transparent ledning och positionering mitt i tre industriella megatrender. Det finns ingenting fundamentalt fel med bolaget.
-            </p>
-            <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-              Problemet är priset. P/E om 29x – 42 % over historiskt snitt – prisar in ett nästan optimistiskt scenario som base case. Om organisk tillväxt missar igen, om mdexx-integration tar längre tid eller om datacenter-ordrar försenas kan kursen komprimeras mot 170–185 kr utan att något strukturellt förändras i bolaget. Det är en nedsida på 14–21 % från nuv. kurs. För den som vill köpa ett exceptionellt bolag till nuvarande premievärdering: det är möjligt, men komfort-köpet är att invänta bättre ingångspunkt.
-            </p>
-            <p className="text-[15px] leading-[1.75] text-slate-700 mb-4">
-              <strong>Vad krävs för att caset ska utvecklas väl:</strong> Organisk tillväxt {">"}6 % under 2026 (helår), mdexx/Riedel uppnår 8 % EBT-mål, datacenter-orderbok växer mot 50+ mEUR och ett värdeskapande förvärv genomförs. <strong>Vad kan försämra caset:</strong> EPS-tillväxt understiger 8 % kombinerat med P/E-kompression mot historisk norm ~20x.
-            </p>
+            <div className="relative overflow-hidden bg-white p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-sm group hover:shadow-md transition-all duration-500 mb-8 mt-4">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-[#14532D]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-[#14532D]/10 transition-colors duration-700 pointer-events-none"></div>
+              <div className="relative z-10 space-y-5">
+                <p className="text-[15px] leading-[1.75] text-slate-700">
+                  AQ Group är ett av börsanalys.se:s favorit-case i nordisk industri. Bolaget har en stark affärsmodell, finansiell styrka utan motstycke för sin storlek, en transparent ledning och positionering mitt i tre industriella megatrender. Det finns ingenting fundamentalt fel med bolaget.
+                </p>
+                <p className="text-[15px] leading-[1.75] text-slate-700">
+                  Problemet är priset. P/E om 29x – 42 % over historiskt snitt – prisar in ett nästan optimistiskt scenario som base case. Om organisk tillväxt missar igen, om mdexx-integration tar längre tid eller om datacenter-ordrar försenas kan kursen komprimeras mot 170–185 kr utan att något strukturellt förändras i bolaget. Det är en nedsida på 14–21 % från nuv. kurs. För den som vill köpa ett exceptionellt bolag till nuvarande premievärdering: det är möjligt, men komfort-köpet är att invänta bättre ingångspunkt.
+                </p>
+                <p className="text-[15px] leading-[1.75] text-slate-700">
+                  <strong>Vad krävs för att caset ska utvecklas väl:</strong> Organisk tillväxt {">"}6 % under 2026 (helår), mdexx/Riedel uppnår 8 % EBT-mål, datacenter-orderbok växer mot 50+ mEUR och ett värdeskapande förvärv genomförs. <strong>Vad kan försämra caset:</strong> EPS-tillväxt understiger 8 % kombinerat med P/E-kompression mot historisk norm ~20x.
+                </p>
+              </div>
+            </div>
 
             <div className="bg-[#111827] text-white p-9 my-8 rounded grid grid-cols-1 md:grid-cols-[auto_1fr] gap-9 items-start">
               <div className="font-serif text-[56px] leading-none text-white whitespace-nowrap">BEVAKA</div>
@@ -758,19 +820,19 @@ export default function AQGroupDeepDive({
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 my-5">
-              <div className="p-5 rounded border-t-4 border-[#14532D] bg-[#DCFCE7]">
+              <div className="p-6 rounded-[2rem] border-t-4 border-[#14532D] bg-[#DCFCE7] relative overflow-hidden group hover:shadow-md transition-all duration-300 hover:-translate-y-1">
                 <div className="font-mono text-[8.5px] uppercase tracking-[0.2em] font-medium mb-1.5 text-[#14532D]">Bull Case · 20%</div>
                 <div className="font-serif text-[30px] text-[#111827] mb-1 leading-none">290 kr</div>
                 <div className="font-mono text-[9.5px] text-slate-500 mb-2.5">+35% från nuv. kurs</div>
                 <div className="text-[13px] text-slate-700 leading-[1.6]">Kräver att AQ levererar organisk tillväxt nära 10 %-målet, att mdexx/Riedel når AQ-marginalmålet, och att datacenter-orderboken skalas kraftigt under H2 2026. P/E om 29x håller med stöd av EPS 10 kr och fortsatt institutionell re-rating. Ett strategiskt förvärv av transformatortillverkare i USA eller Asien kan vara katalysatorn.</div>
               </div>
-              <div className="p-5 rounded border-t-4 border-[#92400E] bg-[#FEF3C7]">
+              <div className="p-6 rounded-[2rem] border-t-4 border-[#92400E] bg-[#FEF3C7] relative overflow-hidden group hover:shadow-md transition-all duration-300 hover:-translate-y-1">
                 <div className="font-mono text-[8.5px] uppercase tracking-[0.2em] font-medium mb-1.5 text-[#92400E]">Base Case · 60% (mest sannolikt)</div>
                 <div className="font-serif text-[30px] text-[#111827] mb-1 leading-none">240 kr</div>
                 <div className="font-mono text-[9.5px] text-slate-500 mb-2.5">+12% från nuv. kurs</div>
                 <div className="text-[13px] text-slate-700 leading-[1.6]">Organisk tillväxt 5–7 %, mdexx-integrationen fortlöper planerat, datacenter-leverans genomförs i tid och 1–2 selektiva förvärv genomförs. EPS 8,18 kr och P/E ~29x ger en kurs ~237–240 kr. Utdelningen höjs mot 1,96 kr. Aktien rör sig gradvis mot 235–250 kr inom 12 månader.</div>
               </div>
-              <div className="p-5 rounded border-t-4 border-[#B91C1C] bg-[#FEE2E2]">
+              <div className="p-6 rounded-[2rem] border-t-4 border-[#B91C1C] bg-[#FEE2E2] relative overflow-hidden group hover:shadow-md transition-all duration-300 hover:-translate-y-1">
                 <div className="font-mono text-[8.5px] uppercase tracking-[0.2em] font-medium mb-1.5 text-[#B91C1C]">Bear Case · 20%</div>
                 <div className="font-serif text-[30px] text-[#111827] mb-1 leading-none">170 kr</div>
                 <div className="font-mono text-[9.5px] text-slate-500 mb-2.5">−21% från nuv. kurs</div>
