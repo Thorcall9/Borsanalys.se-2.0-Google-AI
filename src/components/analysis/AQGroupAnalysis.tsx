@@ -136,95 +136,90 @@ export default function AQGroupAnalysis({
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pt-16">
       {/* 1. HERO BAND */}
-      <div className="w-full bg-[#111827] text-white py-8 md:py-10 px-6 md:px-10 relative overflow-hidden">
-        <div className="absolute -right-10 -top-10 text-[220px] font-serif font-black text-white/5 pointer-events-none select-none leading-none">
-          AQ
-        </div>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+      <div className="w-full bg-[#14532D] text-white py-8 md:py-10 px-6 md:px-10">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           
           <div className="flex items-center gap-6 w-full md:w-auto">
             <div className="flex flex-col items-center shrink-0">
-              <span className="text-[10px] font-mono tracking-[0.2em] text-white/40 uppercase mb-2">Vår bedömning</span>
-              <div className="bg-white text-[#111827] px-6 py-4 rounded-sm flex items-center justify-center shadow-xl">
-                 <span className="text-xl font-mono tracking-[0.18em] font-medium uppercase">BEVAKA</span>
+              <span className="text-[10px] font-bold tracking-[0.2em] uppercase opacity-80 mb-2">Vår bedömning</span>
+              <div className="bg-white text-[#14532D] w-20 h-20 rounded-full flex items-center justify-center shadow-xl">
+                <span className="text-[18px] font-black tracking-tighter">BEVAKA</span>
               </div>
             </div>
             
             <div className="flex flex-col">
-              <div className="text-[10px] font-mono tracking-[0.2em] text-white/35 uppercase mb-3">
-                börsanalys.se · Djupanalys · v5 · 23 april 2026
-              </div>
               <div className="flex items-center gap-4 mb-2">
                 <Link to="/analys" className="text-white/70 hover:text-white transition-colors">
                   <ArrowLeft size={20} />
                 </Link>
-                <h1 className="text-4xl md:text-5xl font-serif tracking-tight leading-none text-white">
-                  AQ Group AB
-                </h1>
+                  AQ Group AB — 23 april 2026
               </div>
-              <div className="flex flex-wrap items-center gap-3 mt-2">
-                <span className="bg-white/10 px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.15em] text-white/45 rounded-sm">AQ</span>
-                <span className="bg-white/10 px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.15em] text-white/45 rounded-sm">Nasdaq Large Cap</span>
-                <span className="bg-white/10 px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.15em] text-white/45 rounded-sm">SE0000772956</span>
-                <span className="bg-white/10 px-2.5 py-1 text-[10px] font-mono uppercase tracking-[0.15em] text-white/45 rounded-sm">Industriell tillverkning</span>
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="bg-white/20 px-2 py-0.5 rounded text-xs font-bold tracking-wide">AQ</span>
+                <span className="text-sm font-medium opacity-90">Industriell tillverkning • Stockholm</span>
+                
+                <button 
+                  onClick={onToggleWatchlist}
+                  disabled={isWatchlistLoading}
+                  className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-bold transition-all border ${
+                    isInWatchlist 
+                      ? 'bg-white text-[#14532D] border-white' 
+                      : 'bg-white/10 text-white border-white/30 hover:bg-white/20'
+                  }`}
+                >
+                  <Star size={14} fill={isInWatchlist ? "currentColor" : "none"} />
+                  {isWatchlistLoading ? "Laddar..." : isInWatchlist ? "Bevakar" : "Bevaka"}
+                </button>
               </div>
             </div>
           </div>
 
-          <div className="flex flex-col items-start md:items-end w-full md:w-auto">
-            <div className="font-mono text-[11px] text-white/35 leading-[1.9] text-right mb-4">
-              Kurs: ~214 kr · Börsvärde: ~19,7 Mdr<br/>
-              Data: Q1 2026 + Helår 2025<br/>
-              Av Carl Fredrik Thor
+          <div className="flex flex-col items-start md:items-end w-full md:w-64">
+            <div className="flex items-baseline gap-2 mb-2">
+              <span className="text-4xl font-black tracking-tighter">30/40</span>
+              <span className="text-sm font-bold opacity-80 uppercase tracking-widest">Poäng</span>
             </div>
-            <button 
-              onClick={onToggleWatchlist}
-              disabled={isWatchlistLoading}
-              className={`flex items-center gap-2 px-5 py-2 rounded-sm text-xs font-mono font-medium tracking-[0.18em] uppercase transition-all border ${
-                isInWatchlist 
-                  ? 'bg-white text-[#111827] border-white' 
-                  : 'bg-white/10 text-white border-white/30 hover:bg-white/20'
-              }`}
-            >
-              <Star size={14} fill={isInWatchlist ? "currentColor" : "none"} />
-              {isWatchlistLoading ? "Laddar..." : isInWatchlist ? "Bevakar" : "Bevaka"}
-            </button>
+            <div className="w-full bg-black/10 h-2 rounded-full overflow-hidden mb-2">
+              <div className="bg-white h-full rounded-full" style={{ width: '75%' }} />
+            </div>
+            <span className="text-sm font-bold tracking-tight">3.75 / 5.0 – Rating 75%</span>
           </div>
         </div>
       </div>
 
-      {/* 2. TOTAL BAR */}
-      <div className="w-full bg-[#14532D] text-white py-5 px-6 md:px-10">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-5">
-          <div className="flex items-baseline gap-2">
-            <span className="font-serif text-4xl leading-none">30</span>
-            <div className="flex flex-col">
-              <span className="font-mono text-xs text-white/50">/ 40 poäng</span>
-              <span className="font-mono text-xs text-white/50 mt-0.5">Rating 0,75</span>
-            </div>
-          </div>
-          <div className="text-[13px] text-white/70 max-w-[480px] leading-relaxed">
-            Exceptionellt kvalitetsbolag med 30 år obruten vinst, stark nettokassa och exponering mot datacenter, försvar och elektrifiering. Premievärderingen P/E ~29x ger dock begränsad uppsida vid nuvarande kurs.
-          </div>
-        </div>
-      </div>
-
-      {/* 3. SCORE STRIP */}
-      <div className="w-full bg-[#1C1C1E] border-t border-white/5">
-        <div className="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8">
-          {allScores.map(({key, val, max}, i) => (
-            <div key={key} className={`py-4 text-center ${i !== allScores.length - 1 ? 'border-r border-white/5' : ''}`}>
-              <div className="font-mono text-[7.5px] uppercase tracking-[0.12em] text-white/30 mb-1.5">{key}</div>
-              <div className={`font-serif text-xl leading-none ${val >= 4 ? 'text-[#4ADE80]' : val === 3 ? 'text-[#FBBF24]' : 'text-[#F87171]'}`}>
-                {val}<span className="text-[10px] text-white/30 font-mono">/{max}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* CONTENT AREA */}
       <div className="max-w-7xl mx-auto px-6 md:px-10 py-12 space-y-16">
+        
+        {/* 2. SUMMARY BOX */}
+        <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex items-start gap-4 text-emerald-900">
+          <Info size={24} className="shrink-0 mt-1" />
+          <p className="text-sm font-medium leading-relaxed">
+            <strong>Sammanfattning:</strong> Exceptionellt kvalitetsbolag med 30 år obruten vinst, stark nettokassa och exponering mot datacenter, försvar och elektrifiering. Premievärderingen P/E ~29x ger dock begränsad uppsida vid nuvarande kurs.
+          </p>
+        </div>
+
+        {/* 3. KEY METRICS ROW */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <AnalysisCard className="p-6">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börskurs</span>
+            <div className="text-2xl font-black text-slate-900">~214 kr</div>
+            <span className="text-xs text-slate-500 mt-1 block">Nasdaq Large Cap</span>
+          </AnalysisCard>
+          <AnalysisCard className="p-6">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Börsvärde</span>
+            <div className="text-2xl font-black text-slate-900">~19,7 Mdr</div>
+            <span className="text-xs text-slate-500 mt-1 block">91,7 M aktier</span>
+          </AnalysisCard>
+          <AnalysisCard className="p-6">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">P/E-tal (trailing)</span>
+            <div className="text-2xl font-black text-slate-900">29,1x</div>
+            <span className="text-xs text-slate-500 mt-1 block">2026e: 26,2x | 2027e: 23,6x</span>
+          </AnalysisCard>
+          <AnalysisCard className="p-6 border-2 border-[#14532D]/20">
+            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-2">Nettokassa (Q1 2026)</span>
+            <div className="text-2xl font-black text-[#14532D]">1 095 Mkr</div>
+            <span className="text-xs text-[#14532D] font-bold mt-1 block">Exkl. leasingskulder</span>
+          </AnalysisCard>
+        </div>
 
         <NordnetCTA variant="high" />
 
@@ -233,28 +228,6 @@ export default function AQGroupAnalysis({
           <AnalysisFadeIn>
              <SectionHeader number="Sektion I" title="Företagsöversikt" accentColor="#14532D" />
              
-             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-                <div className="bg-white border border-slate-200 border-t-4 border-t-[#14532D] p-4">
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-slate-400 mb-2">Börskurs</div>
-                  <div className="font-serif text-[23px] text-[#111827] leading-none">~214 kr</div>
-                  <div className="font-mono text-[10px] text-slate-400 mt-1">April 2026</div>
-                </div>
-                <div className="bg-white border border-slate-200 border-t-4 border-t-[#14532D] p-4">
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-slate-400 mb-2">Börsvärde</div>
-                  <div className="font-serif text-[23px] text-[#111827] leading-none">~19,7 Mdr</div>
-                  <div className="font-mono text-[10px] text-slate-400 mt-1">91,7 M aktier</div>
-                </div>
-                <div className="bg-white border border-slate-200 border-t-4 border-t-[#14532D] p-4">
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-slate-400 mb-2">Omsättning 2025</div>
-                  <div className="font-serif text-[23px] text-[#111827] leading-none">9 071 Mkr</div>
-                  <div className="font-mono text-[10px] text-slate-400 mt-1">+6 % YoY</div>
-                </div>
-                <div className="bg-white border border-slate-200 border-t-4 border-t-[#14532D] p-4">
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-slate-400 mb-2">Nettokassa (Q1 2026)</div>
-                  <div className="font-serif text-[23px] text-[#111827] leading-none">1 095 Mkr</div>
-                  <div className="font-mono text-[10px] text-slate-400 mt-1">Ex. leasingskulder</div>
-                </div>
-             </div>
              <div className="relative overflow-hidden bg-white p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-sm group hover:shadow-md transition-all duration-500 mb-8 mt-4">
                <div className="absolute top-0 right-0 w-96 h-96 bg-[#14532D]/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 group-hover:bg-[#14532D]/10 transition-colors duration-700 pointer-events-none"></div>
                <div className="relative z-10 space-y-5">
@@ -771,6 +744,26 @@ export default function AQGroupAnalysis({
             </div>
 
         </section>
+
+        <AnalysisCard>
+          <div className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-6 font-mono text-center">Score: 30 / 40</div>
+          <div className="space-y-6">
+            {allScores.map(score => (
+              <div key={score.key}>
+                <div className="flex justify-between text-[10px] font-bold mb-2 uppercase tracking-wide">
+                  <span>{score.key}</span>
+                  <span className="text-[#14532D]">{score.val}/{score.max}</span>
+                </div>
+                <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-[#14532D] rounded-full" 
+                    style={{ width: `${(score.val / score.max) * 100}%` }} 
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </AnalysisCard>
 
         <NordnetCTA variant="low" />
 
