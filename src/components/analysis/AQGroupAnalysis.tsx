@@ -694,28 +694,28 @@ export default function AQGroupAnalysis({
               <div className="font-serif text-[56px] leading-none text-white whitespace-nowrap">BEVAKA</div>
               <div className="grid grid-cols-2 gap-y-5 gap-x-8">
                 <div>
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/40 mb-1">Totalpoäng</div>
-                  <div className="font-mono text-[14px] text-[#FBBF24]">30 / 40 · Rating 0,75</div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Totalpoäng</div>
+                  <div className="font-mono text-[14px] text-[#FDE047]">30 / 40 · Rating 0,75</div>
                 </div>
                 <div>
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/40 mb-1">Målpris (base–bull)</div>
-                  <div className="font-mono text-[14px] text-[#FBBF24]">225–260 kr</div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Målpris (base–bull)</div>
+                  <div className="font-mono text-[14px] text-[#FDE047]">225–260 kr</div>
                 </div>
                 <div>
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/40 mb-1">Rimligt värde (hist. multipel)</div>
-                  <div className="font-mono text-[14px] text-[#FBBF24]">~155–185 kr</div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Rimligt värde (hist. multipel)</div>
+                  <div className="font-mono text-[14px] text-[#FDE047]">~155–185 kr</div>
                 </div>
                 <div>
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/40 mb-1">Risknivå</div>
-                  <div className="font-mono text-[14px] text-[#FBBF24]">Låg (4/5)</div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Risknivå</div>
+                  <div className="font-mono text-[14px] text-[#FDE047]">Låg (4/5)</div>
                 </div>
                 <div>
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/40 mb-1">Värderingsbedömning</div>
-                  <div className="font-mono text-[14px] text-[#F87171]">Hög</div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Värderingsbedömning</div>
+                  <div className="font-mono text-[14px] text-[#FCA5A5]">Hög</div>
                 </div>
                 <div>
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/40 mb-1">Analysdatum</div>
-                  <div className="font-mono text-[14px] text-[#FBBF24]">23 april 2026</div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Analysdatum</div>
+                  <div className="font-mono text-[14px] text-[#FDE047]">23 april 2026</div>
                 </div>
               </div>
             </div>
