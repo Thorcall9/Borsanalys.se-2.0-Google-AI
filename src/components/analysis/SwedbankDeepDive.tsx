@@ -339,8 +339,7 @@ export default function SwedbankDeepDive({
 
             <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`}}>
               <div style={{fontSize:11,fontWeight:700,color:T.accent,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Analytikerns bedömning</div>
-              <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                Swedbank är ett kvalitetsbolag med stark marknadsposition, låg kostnadsbas, mycket stark kreditkvalitet och robust kapitalisering. För en bank är det främst lönsamhet, kapitalstyrka och utdelningskapacitet som bär caset. Vid nuvarande nivå är aktien en bra bas i en portfölj för utdelningsinvesterare, men ett tydligare köpläge uppstår vid kursfall mot 290–300 kr. För att handla Swedbank med marknadens bästa verktyg rekommenderar vi <a href='https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1' target='_blank' rel='noopener noreferrer' class='text-[#EE7203] underline decoration-2 underline-offset-4 hover:text-[#c45e02] transition-colors font-bold'>Nordnet</a>.
+                Swedbank är ett kvalitetsbolag med stark marknadsposition, låg kostnadsbas, mycket stark kreditkvalitet och robust kapitalisering. För en bank är det främst lönsamhet, kapitalstyrka och utdelningskapacitet som bär caset. Vid nuvarande nivå är aktien en bra bas i en portfölj för utdelningsinvesterare, men ett tydligare köpläge uppstår vid kursfall mot 290–300 kr. <a href='https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1' target='_blank' rel='sponsored noopener noreferrer' class='text-[#EE7203] underline decoration-2 underline-offset-4 hover:text-[#c45e02] transition-colors font-bold'>Nordnet</a> är en digital plattform för handel i aktier och fonder där du kan följa Swedbank.
               </p>
             </div>
           </FadeIn>

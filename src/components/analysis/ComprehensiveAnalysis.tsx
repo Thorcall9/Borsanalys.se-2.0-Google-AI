@@ -623,15 +623,15 @@ export default function ComprehensiveAnalysis({
               <a 
                 href="https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1" 
                 target="_blank" 
-                rel="noopener noreferrer" 
-                className="group flex items-center gap-3 bg-[#f0f7ff] hover:bg-[#e0efff] border border-blue-100 p-4 rounded-[2rem] transition-all"
+                rel="sponsored noopener noreferrer" 
+                className="group flex items-center gap-3 bg-[#f0fdf4] hover:bg-[#dcfce7] border border-[#bbf7d0] p-4 rounded-[2rem] transition-all shadow-sm shadow-emerald-500/5"
               >
                 <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
-                  <TrendingUp size={16} className="text-[#0052FF]" />
+                  <TrendingUp size={16} className="text-[#10b981]" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-[8px] font-black uppercase tracking-widest text-[#0052FF]/60">Plattform</span>
-                  <span className="text-xs font-black text-[#002B7A]">Handla hos Nordnet</span>
+                  <span className="text-[8px] font-black uppercase tracking-widest text-[#10b981]">Plattform</span>
+                  <span className="text-xs font-black text-slate-900">Följ aktien hos Nordnet</span>
                 </div>
               </a>
             </div>
