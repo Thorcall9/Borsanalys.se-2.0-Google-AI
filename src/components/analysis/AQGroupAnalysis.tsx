@@ -188,13 +188,13 @@ export default function AQGroupAnalysis({
       </div>
 
       {/* 2. SCORE STRIP */}
-      <div className="w-full bg-[#111827] border-t border-white/5">
+      <div className="w-full bg-[#14532D] border-t border-white/10 text-white">
         <div className="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8">
           {allScores.map(({key, val, max}, i) => (
-            <div key={key} className={`py-4 text-center ${i !== allScores.length - 1 ? 'border-r border-white/5' : ''}`}>
-              <div className="font-mono text-[7.5px] uppercase tracking-[0.12em] text-white/40 mb-1.5">{key}</div>
-              <div className={`font-serif text-xl leading-none ${val >= 4 ? 'text-[#4ADE80]' : val === 3 ? 'text-[#FDE047]' : 'text-[#FCA5A5]'}`}>
-                {val}<span className="text-[10px] text-white/30 font-mono">/{max}</span>
+            <div key={key} className={`py-4 text-center ${i !== allScores.length - 1 ? 'border-r border-white/10' : ''}`}>
+              <div className="font-mono text-[7.5px] uppercase tracking-[0.12em] text-white/70 mb-1.5">{key}</div>
+              <div className="font-serif text-xl leading-none text-white">
+                {val}<span className="text-[10px] text-white/50 font-mono">/{max}</span>
               </div>
             </div>
           ))}
