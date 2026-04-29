@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, ShieldCheck, PiggyBank, ArrowRight, CheckCircle2, Zap, Smartphone, Shield, Percent } from 'lucide-react';
+import { TrendingUp, ShieldCheck, PiggyBank, ArrowRight, CheckCircle2, Zap, Smartphone, Shield, Percent, AlertCircle } from 'lucide-react';
 
 export default function SparaInvesteraGuide() {
   const tableData = [

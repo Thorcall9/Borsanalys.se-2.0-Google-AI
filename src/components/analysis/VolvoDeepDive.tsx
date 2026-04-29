@@ -338,7 +338,7 @@ export default function VolvoDeepDive({
             <div style={{background:T.accentL,border:`1.5px solid ${T.accent}33`,borderRadius:14,padding:"18px 22px",borderLeft:`4px solid ${T.accent}`}}>
               <div style={{fontSize:11,fontWeight:700,color:T.accent,letterSpacing:0.5,textTransform:"uppercase",marginBottom:8}}>Analytikerns bedömning</div>
               <p style={{margin:0,color:T.ink,fontSize:14,lineHeight:1.85}}>
-                Bakom de utmanande siffrorna för 2025 döljer sig en stark underliggande affär. Serviceförsäljningen ökade 5% i konstant valuta under Q4 och anläggningsmaskiner förbättrade marginalen till 13,9%. Volvo avslutar året med en nettokassa om 63,0 mdr SEK och bibehåller sin marknadsledande position i Europa för tunga lastbilar. <a href='https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1' target='_blank' rel='sponsored noopener noreferrer' class='text-[#10B981] underline decoration-2 underline-offset-4 hover:text-[#0d9468] transition-colors font-bold'>Nordnet</a> är en digital plattform för handel i aktier och fonder där du kan följa bolag som Volvo.
+                Bakom de utmanande siffrorna för 2025 döljer sig en stark underliggande affär. Serviceförsäljningen ökade 5% i konstant valuta under Q4 och anläggningsmaskiner förbättrade marginalen till 13,9%. Volvo avslutar året med en nettokassa om 63,0 mdr SEK och bibehåller sin marknadsledande position i Europa för tunga lastbilar. <a href='https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1' target='_blank' rel='sponsored noopener noreferrer' className='text-[#10B981] underline decoration-2 underline-offset-4 hover:text-[#0d9468] transition-colors font-bold'>Nordnet</a> är en digital plattform för handel i aktier och fonder där du kan följa bolag som Volvo.
               </p>
             </div>
           </FadeIn>
@@ -604,7 +604,7 @@ export default function VolvoDeepDive({
 
               <div style={{background:T.bg, borderRadius:16, padding:24, border:`1px solid ${T.border}`, marginBottom:24}}>
                 <p style={{margin:0, fontSize:14, color:T.ink, lineHeight:1.7}}>
-                  Om analytikerkonsensus om EPS 20,91 kr för 2026 levereras landar P/E på 15,5x — i linje med historiskt snitt. Nettokassan om 63,0 mdr SEK (ca 31 kr per aktie) utgör ett starkt golv på nedsidan. Eget kapital per aktie är 87,7 kr vilket ger P/B 3,7x — premiumvärdering motiverad av historiskt hög ROE men sträcker sig vid 322,40 kr. Du kan följa Volvos historiska multiplar hos <a href='https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1' target='_blank' rel='sponsored noopener noreferrer' class='text-[#10B981] underline decoration-2 underline-offset-4 hover:text-[#0d9468] transition-colors font-bold'>Nordnet</a>.
+                  Om analytikerkonsensus om EPS 20,91 kr för 2026 levereras landar P/E på 15,5x — i linje med historiskt snitt. Nettokassan om 63,0 mdr SEK (ca 31 kr per aktie) utgör ett starkt golv på nedsidan. Eget kapital per aktie är 87,7 kr vilket ger P/B 3,7x — premiumvärdering motiverad av historiskt hög ROE men sträcker sig vid 322,40 kr. Du kan följa Volvos historiska multiplar hos <a href='https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1' target='_blank' rel='sponsored noopener noreferrer' className='text-[#10B981] underline decoration-2 underline-offset-4 hover:text-[#0d9468] transition-colors font-bold'>Nordnet</a>.
                 </p>
               </div>
 
