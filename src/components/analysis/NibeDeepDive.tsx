@@ -183,9 +183,7 @@ export default function NibeDeepDive({
                </div>
              </div>
              
-             <RatingBox score={4} max={5} title="Betyg I – Affärsmodell" color="#0F766E">
-               En exceptionellt stark och välstyrd affärsmodell, bevisad förmåga att integrera hundratals förvärv framgångsrikt, och en av börsens i särklass mest respekterade företagsledningar. Att betyget stannar på 4 beror på att bolaget primärt säljer hårdvara och saknar de tunga återkommande prenumerationsintäkter (t.ex. SaaS) som krävs för ett rent toppbetyg.
-             </RatingBox>
+             <RatingBox rating={4} maxRating={5} title="Betyg I – Affärsmodell" accentColor="#0F766E" description="En exceptionellt stark och välstyrd affärsmodell, bevisad förmåga att integrera hundratals förvärv framgångsrikt, och en av börsens i särklass mest respekterade företagsledningar. Att betyget stannar på 4 beror på att bolaget primärt säljer hårdvara och saknar de tunga återkommande prenumerationsintäkter (t.ex. SaaS) som krävs för ett rent toppbetyg." />
           </AnalysisFadeIn>
         </section>
 
@@ -217,9 +215,7 @@ export default function NibeDeepDive({
                     threats: ["Politiskt velande kring gröna subventioner.", "Asiatiska lågprisaktörer ökar närvaron på den europeiska marknaden.", "Handelskrig och tullar, särskilt mellan USA och Kanada."]
                 }} />
                 
-                <RatingBox score={4} max={5} title="Betyg II – Strategisk Moat" color="#0F766E">
-                  De underliggande megatrenderna är urstarka och nätverket av installatörer bygger en tung vallgrav. Att betyget stannar på 4 beror på bolagets visade kortsiktiga sårbarhet för byggcykler och osäkra politiska subventioner, samt det långsiktiga hotet från asiatisk prispress.
-                </RatingBox>
+                <RatingBox rating={4} maxRating={5} title="Betyg II – Strategisk Moat" accentColor="#0F766E" description="De underliggande megatrenderna är urstarka och nätverket av installatörer bygger en tung vallgrav. Att betyget stannar på 4 beror på bolagets visade kortsiktiga sårbarhet för byggcykler och osäkra politiska subventioner, samt det långsiktiga hotet från asiatisk prispress." />
              </AnalysisFadeIn>
         </section>
 
@@ -310,17 +306,15 @@ export default function NibeDeepDive({
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                      <tr className="hover:bg-gray-50"><td className="p-2.5 text-slate-700">2023 (för 2022)</td><td className="p-2.5 text-right font-mono text-[13px] text-slate-700">0,65 kr</td><td className="p-2.5 text-right font-mono text-[13px] text-slate-700">~30%</td></tr>
-                      <tr className="hover:bg-gray-50"><td className="p-2.5 text-slate-700">2024 (för 2023)</td><td className="p-2.5 text-right font-mono text-[13px] text-slate-700">0,30 kr</td><td className="p-2.5 text-right font-mono text-[13px] text-slate-700">38%</td></tr>
-                      <tr className="hover:bg-gray-50"><td className="p-2.5 text-[#0F766E] font-bold">2025 (för 2024)*</td><td className="p-2.5 text-right font-mono text-[13px] text-[#0F766E] font-bold">0,35 kr</td><td className="p-2.5 text-right font-mono text-[13px] text-[#0F766E] font-bold">29%</td></tr>
+                      <tr className="hover:bg-gray-50"><td className="p-2.5 text-slate-700">2024 (för 2023)</td><td className="p-2.5 text-right font-mono text-[13px] text-slate-700">0,65 kr</td><td className="p-2.5 text-right font-mono text-[13px] text-slate-700">~30%</td></tr>
+                      <tr className="hover:bg-gray-50"><td className="p-2.5 text-slate-700">2025 (för 2024)</td><td className="p-2.5 text-right font-mono text-[13px] text-slate-700">0,30 kr</td><td className="p-2.5 text-right font-mono text-[13px] text-slate-700">38%</td></tr>
+                      <tr className="hover:bg-gray-50"><td className="p-2.5 text-[#0F766E] font-bold">2026 (för 2025)*</td><td className="p-2.5 text-right font-mono text-[13px] text-[#0F766E] font-bold">0,35 kr</td><td className="p-2.5 text-right font-mono text-[13px] text-[#0F766E] font-bold">29%</td></tr>
                     </tbody>
                   </table>
                   <div className="font-mono text-[11px] text-slate-400 mt-2">*Styrelsens förslag för utdelning våren 2026.</div>
                 </div>
 
-                <RatingBox score={3} max={5} title="Betyg III – Finansiell Kvalitet" color="#0F766E">
-                  Historiskt en absolut 5-poängare, men fallet 2024 drar ner helhetsbilden. Återhämtningen under 2025 med starka kassaflöden, kraftigt sänkt skuldsättning (från 3,9x till 2,7x EBITDA) och marginaler på väg upp visar stor operativ styrka. Dock är lönsamheten (ROE 8,5 %) fortfarande en bra bit ifrån bolagets historiska guldstandard.
-                </RatingBox>
+                <RatingBox rating={3} maxRating={5} title="Betyg III – Finansiell Kvalitet" accentColor="#0F766E" description="Historiskt en absolut 5-poängare, men fallet 2024 drar ner helhetsbilden. Återhämtningen under 2025 med starka kassaflöden, kraftigt sänkt skuldsättning (från 3,9x till 2,7x EBITDA) och marginaler på väg upp visar stor operativ styrka. Dock är lönsamheten (ROE 8,5 %) fortfarande en bra bit ifrån bolagets historiska guldstandard." />
             </AnalysisFadeIn>
         </section>
 
@@ -366,9 +360,7 @@ export default function NibeDeepDive({
                   </div>
                 </div>
                 
-                <RatingBox score={2} max={5} title="Betyg IV – Värdering" color="#0F766E">
-                  Värderingen är ansträngd. Även om marginalerna klättrar tillbaka, lämnar en multipel på 34x årets vinst (och 26x nästa års förväntade vinst) i princip noll säkerhetsmarginal om marknadsåterhämtningen skulle dra ut på tiden.
-                </RatingBox>
+                <RatingBox rating={2} maxRating={5} title="Betyg IV – Värdering" accentColor="#0F766E" description="Värderingen är ansträngd. Även om marginalerna klättrar tillbaka, lämnar en multipel på 34x årets vinst (och 26x nästa års förväntade vinst) i princip noll säkerhetsmarginal om marknadsåterhämtningen skulle dra ut på tiden." />
             </AnalysisFadeIn>
         </section>
 
@@ -394,9 +386,7 @@ export default function NibeDeepDive({
                   </div>
                 </div>
 
-                <RatingBox score={4} max={5} title="Betyg V – Tillväxtutsikter" color="#0F766E">
-                  Megatrenderna i ryggen (energiomställning, elektrifiering och industriell infrastruktur) är urstarka, och expansionen inom kommersiella fastigheter är mycket lovande. Att det inte blir full pott beror på risken för politisk inbromsning av gröna subventioner.
-                </RatingBox>
+                <RatingBox rating={4} maxRating={5} title="Betyg V – Tillväxtutsikter" accentColor="#0F766E" description="Megatrenderna i ryggen (energiomställning, elektrifiering och industriell infrastruktur) är urstarka, och expansionen inom kommersiella fastigheter är mycket lovande. Att det inte blir full pott beror på risken för politisk inbromsning av gröna subventioner." />
              </AnalysisFadeIn>
         </section>
 
@@ -430,9 +420,7 @@ export default function NibeDeepDive({
                   </div>
                 </div>
 
-                <RatingBox score={3} max={5} title="Betyg VI – Riskprofil" color="#0F766E">
-                  Medelhög risk. Balansräkningen är tryggad och verksamheten är mycket väl diversifierad globalt. Däremot är bolagets exponering mot politiska vindkast (subventioner), räntecykler och tullar bevisligen en direkt riskfaktor för volymtillväxten.
-                </RatingBox>
+                <RatingBox rating={3} maxRating={5} title="Betyg VI – Riskprofil" accentColor="#0F766E" description="Medelhög risk. Balansräkningen är tryggad och verksamheten är mycket väl diversifierad globalt. Däremot är bolagets exponering mot politiska vindkast (subventioner), räntecykler och tullar bevisligen en direkt riskfaktor för volymtillväxten." />
             </AnalysisFadeIn>
         </section>
 
@@ -456,9 +444,7 @@ export default function NibeDeepDive({
                   </div>
                 </div>
 
-                <RatingBox score={4} max={5} title="Betyg VII – VD-ordet" color="#0F766E">
-                  Klart och ärligt med en exceptionell balans mellan framgångar och utmaningar, samt en konsekvent kommunikation. Nås dock inte full pott (5/5) eftersom ledningen, trots sin transparens kring historiska missar, saknar tillräcklig skärpa kring framåtblickande, tidsbundna och mätbara KPI:er för exempelvis specifika förvärvsvolymer eller kapitalallokeringsmål framåt.
-                </RatingBox>
+                <RatingBox rating={4} maxRating={5} title="Betyg VII – VD-ordet" accentColor="#0F766E" description="Klart och ärligt med en exceptionell balans mellan framgångar och utmaningar, samt en konsekvent kommunikation. Nås dock inte full pott (5/5) eftersom ledningen, trots sin transparens kring historiska missar, saknar tillräcklig skärpa kring framåtblickande, tidsbundna och mätbara KPI:er för exempelvis specifika förvärvsvolymer eller kapitalallokeringsmål framåt." />
             </AnalysisFadeIn>
         </section>
 
@@ -482,9 +468,7 @@ export default function NibeDeepDive({
                    </div>
                  </div>
 
-                 <RatingBox score={3} max={5} title="Betyg VIII – AI-observationer" color="#0F766E">
-                  De tekniska och insynsdrivna observationerna lutar svagt åt det positiva hållet tack vare tydliga stödköp från ledningen. Den fundamentala osäkerheten och höga optiska värderingen håller dock analytikerkåren splittrad, varför starkare köpsignaler saknas.
-                </RatingBox>
+                 <RatingBox rating={3} maxRating={5} title="Betyg VIII – AI-observationer" accentColor="#0F766E" description="De tekniska och insynsdrivna observationerna lutar svagt åt det positiva hållet tack vare tydliga stödköp från ledningen. Den fundamentala osäkerheten och höga optiska värderingen håller dock analytikerkåren splittrad, varför starkare köpsignaler saknas." />
              </AnalysisFadeIn>
         </section>
 
@@ -495,7 +479,7 @@ export default function NibeDeepDive({
             <h3 className="font-serif text-[19px] text-[#111827] mt-7 mb-3">De tre centrala frågorna</h3>
 
             <div className="bg-[#CCFBF1] border-l-4 border-[#0F766E] p-3.5 text-[13.5px] text-slate-700 my-4.5 leading-[1.65]">
-              <strong>1. Är detta ett kvalitetsbolag?</strong> Utan tvekan. NIBE är et industribolag av yppersta världsklass. De har en bevisad, extremt skalbar, decentraliserad maskin, ett lojalt nätverk av underleverantörer/installatörer och rider på decenniets största strukturella megatrend: elektrifieringen av världen.
+              <strong>1. Är detta ett kvalitetsbolag?</strong> Utan tvekan. NIBE är ett industribolag av yppersta världsklass. De har en bevisad, extremt skalbar, decentraliserad maskin, ett lojalt nätverk av underleverantörer/installatörer och rider på decenniets största strukturella megatrend: elektrifieringen av världen.
             </div>
             <div className="bg-[#F9FAFB] border-l-4 border-[#92400E] p-3.5 text-[13.5px] text-slate-700 my-4.5 leading-[1.65]">
               <strong>2. Är aktien rimligt värderad?</strong> Nej, vid 41 kr är värderingen krävande. Att betala ett P/E på 34 för 2025 års intjäning, och 26x för ett framtida estimat, lämnar närmast noll utrymme för felsteg. Visserligen repade sig Climate Solutions magiskt snabbt till 13 % EBIT-marginal under året, men hela maskineriet måste prestera felfritt för att 41 kr ska kännas som en fyndlapp.
