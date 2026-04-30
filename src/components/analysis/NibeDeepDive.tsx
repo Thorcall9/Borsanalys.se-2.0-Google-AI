@@ -1,8 +1,9 @@
-import { SectionHeader, MetricCard, VerdictBox, SwotGrid, ScenarioCards, RatingBox, Card as AnalysisCard, ProgressBar, FadeIn as AnalysisFadeIn, ChartCard, EditorialReadNext, SEO } from "./index";
+import { SectionHeader, MetricCard, VerdictBox, SwotGrid, ScenarioCards, RatingBox, Card as AnalysisCard, ProgressBar, FadeIn as AnalysisFadeIn, ChartCard, EditorialReadNext } from "./index";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Star, Info, TrendingUp, AlertTriangle } from "lucide-react";
 import NordnetCTA from "./NordnetCTA";
+import SEO from "../SEO";
 import { AnalysisData } from "../../data/analyses";
 
 const allScores = [
