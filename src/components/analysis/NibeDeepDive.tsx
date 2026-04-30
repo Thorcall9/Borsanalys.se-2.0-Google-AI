@@ -352,7 +352,7 @@ export default function NibeDeepDive({
                       <tr className="hover:bg-gray-50"><td className="p-2.5 text-slate-700 font-bold">5-årshistoriskt snitt</td><td className="p-2.5 text-right font-mono text-[13px] text-slate-700 font-bold">~48,6x</td><td className="p-2.5 text-left text-[13px] text-slate-700">Extremvärderingar från pandemiåren snedvrider historiken.</td></tr>
                       <tr className="hover:bg-gray-50"><td className="p-2.5 text-slate-700">2024 (Krisåret)</td><td className="p-2.5 text-right font-mono text-[13px] text-[#B91C1C]">~51,3x</td><td className="p-2.5 text-left text-[13px] text-slate-700">Vinstkollapsen gjorde att aktien såg extremt dyr ut trots massivt kursras.</td></tr>
                       <tr className="hover:bg-gray-50"><td className="p-2.5 text-[#0F766E] font-bold">2025 (Nuvarande)</td><td className="p-2.5 text-right font-mono text-[13px] text-[#0F766E] font-bold">~34,2x</td><td className="p-2.5 text-left text-[13px] text-slate-700">Vid kurs 41 kr och 2025 justerade EPS på 1,20 kr.</td></tr>
-                      <tr className="hover:bg-gray-50"><td className="p-2.5 text-[#92400E]">2026 (Estimat)</td><td className="p-2.5 text-right font-mono text-[13px] text-[#92400E]">~26,5x</td><td className="p-2.5 text-left text-[13px] text-slate-700">Förutsatt att EPS letar sig upp mot 1,55 kr.</td></tr>
+                      <tr className="hover:bg-gray-50"><td className="p-2.5 text-[#92400E]">2026 (Estimat)</td><td className="p-2.5 text-right font-mono text-[13px] text-[#92400E]">~26,0x</td><td className="p-2.5 text-left text-[13px] text-slate-700">Förutsatt att EPS letar sig upp mot 1,55 kr.</td></tr>
                     </tbody>
                   </table>
                 </div>
@@ -528,13 +528,14 @@ export default function NibeDeepDive({
             </div>
 
             <VerdictBox 
-                verdict="BEVAKA" 
-                targetPrice="36–44 kr" 
-                risk="Medel" 
-                valuation="Hög" 
-                date="30 april 2026"
-                score="27 / 40"
-                rating="0.68"
+              verdict="BEVAKA"
+              score="27/40"
+              rating="0.68"
+              targetPrice="40 kr"
+              buyLevel="35–36 kr"
+              risk="Medel (3/5)"
+              valuation="Neutral/Hög"
+              date="30 april 2026"
             />
 
             <h3 className="font-serif text-[19px] text-[#111827] mt-7 mb-3">Vad ska investeraren bevaka framåt?</h3>
@@ -558,49 +559,102 @@ export default function NibeDeepDive({
 
         {/* ── X. SCENARIER ── */}
         <section id="scenarier" className="scroll-mt-24 pb-12">
-            <SectionHeader number="Sektion X" title="Scenarier: Bull, Base & Bear Case 📈📉" accentColor="#0F766E" />
+            <SectionHeader number="Sektion X" title="Scenarier: Bull, Base & Bear" accentColor="#0F766E" />
             
-            <ScenarioCards scenarios={[
-              {
-                title: "Bull",
-                targetPrice: "50 kr",
-                probability: 25,
-                assumptions: [
-                  "Europas omställning accelererar kraftigt, Stoves vänder och M&A-motorn drar igång storförvärv."
-                ],
-                metrics: { pe: "28x", eps: "1.80 kr" }
-              },
-              {
-                title: "Base",
-                targetPrice: "40 kr",
-                probability: 55,
-                assumptions: [
-                  "Stabil och lugn volymtillväxt. Marginalerna normaliseras helt under 2027."
-                ],
-                metrics: { pe: "26x", eps: "1.55 kr" }
-              },
-              {
-                title: "Bear",
-                targetPrice: "26 kr",
-                probability: 20,
-                assumptions: [
-                  "Tysklands tvärnit smittar Europa. Priskrig bryter ut och tullar förstör Stoves export."
-                ],
-                metrics: { pe: "22x", eps: "1.20 kr" }
-              }
-            ]} />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
+              {/* Bull Case */}
+              <div className="p-8 bg-white border border-slate-200 rounded-3xl hover:shadow-xl transition-all group">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-emerald-500">Bull Case · 25%</span>
+                </div>
+                <div className="font-serif text-4xl text-slate-900 mb-2 leading-none">50 kr</div>
+                <div className="font-mono text-[10px] text-slate-500 mb-6">+22% från nuv. kurs</div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 block mb-1">Antaganden</span>
+                    <p className="text-xs text-slate-600 leading-relaxed font-medium">Europas omställning accelererar kraftigt, Stoves vänder och M&A-motorn drar igång storförvärv.</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 pt-2 border-t border-slate-100">
+                    <div>
+                      <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 block mb-1">EPS-estimat</span>
+                      <span className="text-sm font-bold text-slate-700">1,80 kr</span>
+                    </div>
+                    <div>
+                      <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 block mb-1">Multipel</span>
+                      <span className="text-sm font-bold text-slate-700">28x</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Base Case */}
+              <div className="p-8 bg-white border-4 border-[#0F766E] rounded-3xl shadow-lg relative overflow-hidden group hover:shadow-xl transition-all">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-2 h-2 rounded-full bg-[#0F766E]" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[#0F766E]">Base Case · 50%</span>
+                </div>
+                <div className="font-serif text-4xl text-slate-900 mb-2 leading-none">40 kr</div>
+                <div className="font-mono text-[10px] text-slate-500 mb-6">−2% från nuv. kurs</div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 block mb-1">Antaganden</span>
+                    <p className="text-xs text-slate-600 leading-relaxed font-medium">Stabil och lugn volymtillväxt. Marginalerna normaliseras helt under 2027.</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 pt-2 border-t border-slate-100">
+                    <div>
+                      <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 block mb-1">EPS-estimat</span>
+                      <span className="text-sm font-bold text-slate-700">1,55 kr</span>
+                    </div>
+                    <div>
+                      <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 block mb-1">Multipel</span>
+                      <span className="text-sm font-bold text-slate-700">26x</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bear Case */}
+              <div className="p-8 bg-white border border-slate-200 rounded-3xl hover:shadow-xl transition-all group">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-2 h-2 rounded-full bg-rose-500" />
+                  <span className="text-[10px] font-black uppercase tracking-widest text-rose-500">Bear Case · 25%</span>
+                </div>
+                <div className="font-serif text-4xl text-slate-900 mb-2 leading-none">26 kr</div>
+                <div className="font-mono text-[10px] text-slate-500 mb-6">−37% från nuv. kurs</div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 block mb-1">Antaganden</span>
+                    <p className="text-xs text-slate-600 leading-relaxed font-medium">Tysklands tvärnit smittar Europa. Priskrig bryter ut och tullar förstör Stoves export.</p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4 pt-2 border-t border-slate-100">
+                    <div>
+                      <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 block mb-1">EPS-estimat</span>
+                      <span className="text-sm font-bold text-slate-700">1,20 kr</span>
+                    </div>
+                    <div>
+                      <span className="text-[9px] font-black uppercase tracking-widest text-slate-400 block mb-1">Multipel</span>
+                      <span className="text-sm font-bold text-slate-700">22x</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div className="mt-10 space-y-6">
                 <h3 className="font-serif text-[19px] text-[#111827]">Scenariokommentarer</h3>
                 <div className="relative overflow-hidden bg-white p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-sm space-y-4">
                     <p className="text-[15px] leading-[1.75] text-slate-700">
-                        Vi bedömer <strong>Base case</strong> som allra mest sannolikt (~55 % sannolikhet). Här ser vi att det värsta lagertrasslet är över och att Europa långsamt ställer om mot värmepumpar enligt megatrenderna, utan att det blir den explosion vi såg under pandemiåren. Marginalerna kryper stadigt tillbaka in i komfortzonen, men en kurs på 41 kr innebär att marknaden redan betalar för 40 kr i Base Case.
+                        Vi bedömer <strong>Base case</strong> som allra mest sannolikt (~50 % sannolikhet). Här ser vi att det värsta lagertrasslet är över och att Europa långsamt ställer om mot värmepumpar enligt megatrenderna, utan att det blir den explosion vi såg under pandemiåren. Marginalerna kryper stadigt tillbaka in i komfortzonen, men en kurs på 41 kr innebär att marknaden redan betalar för 40 kr i Base Case.
                     </p>
                     <p className="text-[15px] leading-[1.75] text-slate-700">
                         För att <strong>Bull case</strong> (~25 % sannolikhet) ska slå in krävs att den allmänna konjunkturen i Europa, och särskilt byggmarknaden i Tyskland och Norden, vaknar till liv rejält. Samtidigt lyckas Element kapitalisera massivt på AI-datacenter och skulden faller så pass att ett värdeskapande storförvärv kan genomföras. 
                     </p>
                     <p className="text-[15px] leading-[1.75] text-slate-700">
-                        Om <strong>Bear case</strong> (~20 % sannolikhet) materialiseras beror det troligen på att den geopolitiska spänningen (tullar i Nordamerika) eskalerar utom kontroll och att lågprisaktörer från Asien lyckas penetrera installationsledet i Europa med aggressiv prissättning, vilket raserar branschens lönsamhet. 
+                        Om <strong>Bear case</strong> (~25 % sannolikhet) materialiseras beror det troligen på att den geopolitiska spänningen (tullar i Nordamerika) eskalerar utom kontroll och att lågprisaktörer från Asien lyckas penetrera installationsledet i Europa med aggressiv prissättning, vilket raserar branschens lönsamhet. 
                     </p>
                 </div>
             </div>
