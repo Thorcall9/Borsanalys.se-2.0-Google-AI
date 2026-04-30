@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Star, Info, TrendingUp, AlertTriangle } from "lucide-react";
 import NordnetCTA from "./NordnetCTA";
+import AdUnit from "./AdUnit";
 import SEO from "../SEO";
 import { AnalysisData } from "../../data/analyses";
 
@@ -143,7 +144,21 @@ export default function NibeDeepDive({
           </AnalysisCard>
         </div>
 
-        <NordnetCTA variant="high" />
+        {/*
+          ═══════════════════════════════════════════════════════════
+          AD UNIT: analysis-top-display
+          Placering: Direkt efter snabb översikt (Key Metrics) och
+          omedelbart FÖRE Sektion I.
+
+          SCROLL-LOGIK: Användare visar hög uppmärksamhet direkt
+          efter den snabba översikten – de har fått ett first
+          impression av bolaget och befinner sig i ett naturligt
+          uppehåll innan djupanalysen börjar. CPM maximeras eftersom
+          annonsören når en aktiv, investeringsintresserad läsare i
+          ett "above the fold"-nära läge.
+          ═══════════════════════════════════════════════════════════
+        */}
+        <AdUnit variant="top-display" />
 
         {/* ── INLEDNING ── */}
         <section>
@@ -592,6 +607,22 @@ export default function NibeDeepDive({
 
         </section>
 
+        {/*
+          ═══════════════════════════════════════════════════════════
+          AD UNIT: analysis-middle-article
+          Placering: EXAKT mellan Sektion IX (Sammanfattning) och
+          Sektion X (Scenarier).
+
+          SCROLL-LOGIK: Datapunkten är tydlig – högst engagemang
+          sker vid punkt 9–10. Läsaren har precis absorbe rat
+          investeringsrekommendationen (Sektion IX) och gör ett
+          naturligt mentalt uppehåll INNAN scenarierna. Detta är
+          det optimala "break point" för en kontextuell annons:
+          hög sida-tid, högt scroll-djup = premium CPM-segment.
+          ═══════════════════════════════════════════════════════════
+        */}
+        <AdUnit variant="middle-article" className="my-2" />
+
         {/* ── X. SCENARIER ── */}
         <section id="scenarier" className="scroll-mt-24 pb-12">
             <SectionHeader number="Sektion X" title="Scenarier: Bull, Base & Bear" accentColor="#0F766E" />
@@ -715,7 +746,33 @@ export default function NibeDeepDive({
           </div>
         </AnalysisCard>
 
-        <NordnetCTA variant="low" />
+        {/*
+          ═══════════════════════════════════════════════════════════
+          AD UNIT: analysis-footer-multiplex (slot 4667293922)
+          Placering: Längst ner i artikeln som EXIT-annons.
+
+          SCROLL-LOGIK: Läsaren har konsumerat hela analysen och
+          befinner sig i "exit intent"-zonen. Bred display-annons
+          ger maximal synlighet och täcker hela artikelbredden.
+          ═══════════════════════════════════════════════════════════
+        */}
+        <AdUnit variant="footer-multiplex" />
+
+        {/*
+          ═══════════════════════════════════════════════════════════
+          NORDNET AFFILIATE CTA – Visuellt dominant
+          Placering: EFTER analysens slut och footer-multiplex.
+
+          AFFILIATE-REGLER:
+          • Minst 300px spacing till närmaste annons (uppfylls via
+            mt-[300px] padding + AdUnit-höjd ovan).
+          • CTA är visuellt dominant med gradient-bakgrund,
+            stor typografi och call-to-action-knapp.
+          ═══════════════════════════════════════════════════════════
+        */}
+        <div className="mt-[300px]">
+          <NordnetCTA variant="low" />
+        </div>
 
         {nextAnalysis && (
           <div className="mt-16 pt-16 border-t border-slate-200">
