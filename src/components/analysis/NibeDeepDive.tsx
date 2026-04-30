@@ -529,14 +529,41 @@ export default function NibeDeepDive({
 
             <VerdictBox 
               verdict="BEVAKA"
-              score="27/40"
-              rating="0.68"
-              targetPrice="40 kr"
-              buyLevel="35–36 kr"
-              risk="Medel (3/5)"
-              valuation="Neutral/Hög"
+              target="40 kr"
+              description="NIBE är ett absolut kvalitetsbolag vars finansiella svacka ser ut att bottna ur. Omsättning och marginaler har vänt uppåt, men till nuvarande aktiekurs (ca 41 kr) är mycket av återhämtningen redan inprisad. Vi rekommenderar att avvakta för en bättre ingångsnivå kring 35–36 kr."
               date="30 april 2026"
+              accentColor="#0F766E"
             />
+
+            <div className="bg-[#0F766E] text-white p-9 my-8 rounded-3xl grid grid-cols-1 md:grid-cols-[auto_1fr] gap-9 items-start">
+              <div className="font-serif text-[56px] leading-none text-white whitespace-nowrap uppercase tracking-tighter font-black">BEVAKA</div>
+              <div className="grid grid-cols-2 gap-y-5 gap-x-8">
+                <div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Totalpoäng</div>
+                  <div className="font-mono text-[14px] text-white">27 / 40 · Rating 0,68</div>
+                </div>
+                <div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Målpris (12 mån)</div>
+                  <div className="font-mono text-[14px] text-white">40 kr</div>
+                </div>
+                <div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Mer attraktiv köpnivå</div>
+                  <div className="font-mono text-[14px] text-white">~35–36 kr</div>
+                </div>
+                <div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Risknivå</div>
+                  <div className="font-mono text-[14px] text-white">Medel (3/5)</div>
+                </div>
+                <div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Värderingsbedömning</div>
+                  <div className="font-mono text-[14px] text-[#FCA5A5]">Neutral/Hög</div>
+                </div>
+                <div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Analysdatum</div>
+                  <div className="font-mono text-[14px] text-white">30 april 2026</div>
+                </div>
+              </div>
+            </div>
 
             <h3 className="font-serif text-[19px] text-[#111827] mt-7 mb-3">Vad ska investeraren bevaka framåt?</h3>
             <div className="my-5 space-y-0">
