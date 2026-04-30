@@ -22,3 +22,4 @@ export { default as EditorialReadNext } from './EditorialReadNext';
 export { default as EditorialCallout } from './EditorialCallout';
 export { default as NextAnalysisButton } from './NextAnalysisButton';
 export { default as AnalysisDisclaimer } from './AnalysisDisclaimer';
+export { default as NibeDeepDive } from './NibeDeepDive';

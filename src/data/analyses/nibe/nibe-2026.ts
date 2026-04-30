@@ -55,27 +55,26 @@ export const nibe2026: AnalysisData = {
     "Familjen Lindkvist (A-aktier, röststark), Robur, AMF och tunga institutioner.",
 
   strengths: [
-    "Global marknadsledare med starka lokala varumärken",
-    "Kontinentbaserad tillverkning – naturlig tullhedge",
-    "Stort installatörsnätverk med hög lojalitet och byteskostnader",
-    "Extremt stark och erfaren ledning (VD sedan 1989)",
-    "Exceptionell förvärvshistorik och integrationsförmåga",
+    "Global marknadsledare med oerhört starka lokala varumärken.",
+    "Kontinentbaserad tillverkning som minskar sårbarhet för tullar.",
+    "Stort nätverk av lojala installatörer som skapar höga byteskostnader.",
+    "Exceptionell förvärvshistorik och integration.",
   ],
   weaknesses: [
-    "Cyklisk sårbarhet för räntor och byggmarknad",
-    "NIBE Stoves i utdragen marginalpress (4,1 %)",
-    "Förhöjd skuldsättning begränsar kortsiktigt förvärvsutrymme",
+    "Cyklisk sårbarhet för räntor och byggmarknad (smärtsamt bevisat 2024).",
+    "NIBE Stoves befinner sig i utdragen marginalpress.",
+    "Förhöjd skuldsättning begränsar kortsiktigt förvärvsutrymmet.",
   ],
   opportunities: [
-    "Megatrend kring Europas energiomställning och REPowerEU",
-    "Stark tillväxt kommersiell ventilation och kyla",
-    "AI-datacenter driver NIBE Elements affär",
-    "Normaliserade lagernivåer och sänkta räntor",
+    "Megatrend kring Europas energiomställning och REPowerEU.",
+    "Stark tillväxt inom kommersiell ventilation och kyla.",
+    "Halvledar- och AI-datacenterboom driver NIBE Elements affär.",
+    "Normaliserade lagernivåer och sänkta räntor framåt.",
   ],
   threats: [
-    "Politiska svängningar kring gröna subventioner",
-    "Handelskrig och tullar, särskilt USA/Kanada",
-    "Prispress från asiatiska HVAC-jättar på europeisk marknad",
+    "Politiska svängningar kring gröna subventioner i Europa.",
+    "Handelskrig och tullar, särskilt mellan USA och Kanada.",
+    "Prispress från asiatiska HVAC-jättar på den europeiska marknaden.",
   ],
 
   scenarios: [
@@ -85,7 +84,7 @@ export const nibe2026: AnalysisData = {
       change: "+22%",
       type: "bull",
       description:
-        "Subventioner rullas ut friktionsfritt, Climate Solutions når 15 % EBIT-marginal, Element kapitaliserar på AI-datacenter och M&A-motorn drar igång. EPS 1,80 kr × 28x.",
+        "Europas omställning accelererar kraftigt, Stoves vänder och M&A-motorn drar igång storförvärv. EPS 1,80 kr × 28x.",
     },
     {
       label: "Base Case",
@@ -93,7 +92,7 @@ export const nibe2026: AnalysisData = {
       change: "-2%",
       type: "base",
       description:
-        "Gradvis och stabil återhämtning. Megatrenden driver tillväxt i maklig takt. Marginaler normaliseras mot historiska intervall. EPS 1,55 kr × 26x.",
+        "Stabil och lugn volymtillväxt. Marginalerna normaliseras helt under 2027. EPS 1,55 kr × 26x.",
     },
     {
       label: "Bear Case",
@@ -101,7 +100,7 @@ export const nibe2026: AnalysisData = {
       change: "-37%",
       type: "bear",
       description:
-        "Kvarstående politisk osäkerhet i EU och USA. Svag byggmarknad pressar volymer. Stoves och Element bromsar in. EPS 1,20 kr × 22x.",
+        "Tysklands tvärnit smittar Europa. Priskrig bryter ut och tullar förstör Stoves export. EPS 1,20 kr × 22x.",
     },
   ],
 
@@ -160,7 +159,7 @@ export const nibe2026: AnalysisData = {
           "Exceptionell förvärvshistorik och integration.",
         ],
         svagheter: [
-          "Cyklisk sårbarhet för räntor och byggmarknad.",
+          "Cyklisk sårbarhet för räntor och byggmarknad (smärtsamt bevisat 2024).",
           "NIBE Stoves befinner sig i utdragen marginalpress.",
           "Förhöjd skuldsättning begränsar kortsiktigt förvärvsutrymmet.",
         ],
@@ -242,7 +241,7 @@ export const nibe2026: AnalysisData = {
     sammanfattning: {
       beslut: "Bevaka",
       motivering:
-        "NIBE är ett absolut kvalitetsbolag vars finansiella svacka ser ut att bottna ur. Omsättning och marginaler har vänt uppåt, men till nuvarande aktiekurs (ca 41 kr) är mycket av återhämtningen redan inprisad.",
+        "NIBE är ett absolut kvalitetsbolag vars finansiella svacka ser ut att bottna ur. Omsättning och marginaler har vänt uppåt, men till nuvarande aktiekurs (ca 41 kr) är mycket av återhämtningen redan inprisad. Utan en tydligare säkerhetsmarginal eller snabbare marginallyft i de svagare segmenten rekommenderas investerare att avvakta ett bättre ingångsläge.",
       malpris: "36–44 kr",
       riskniva: "Medel",
       varderingsbedomning: "Hög",
@@ -257,7 +256,7 @@ export const nibe2026: AnalysisData = {
     scenarier: {
       bullCase: {
         antaganden:
-          "Subventioner rullas ut friktionsfritt, konsumenternas plånböcker öppnas via sänkta räntor och Climate Solutions flyger upp till 15% EBIT-marginal.",
+          "Europas omställning accelererar kraftigt, Stoves vänder och M&A-motorn drar igång storförvärv.",
         epsEstimat: "1.80 kr",
         multipel: "28x",
         riktkurs: "50 kr",
@@ -265,7 +264,7 @@ export const nibe2026: AnalysisData = {
       },
       baseCase: {
         antaganden:
-          "Gradvis och stabil återhämtning där megatrenden driver tillväxten i maklig takt. Koncernen närmar sig sina historiska marginalmål.",
+          "Stabil och lugn volymtillväxt. Marginalerna normaliseras helt under 2027.",
         epsEstimat: "1.55 kr",
         multipel: "26x",
         riktkurs: "40 kr",
@@ -273,7 +272,7 @@ export const nibe2026: AnalysisData = {
       },
       bearCase: {
         antaganden:
-          "Kvarstående hög politisk osäkerhet i EU och USA. Svag byggmarknad pressar volymer och Stoves/Element bromsar in.",
+          "Tysklands tvärnit smittar Europa. Priskrig bryter ut och tullar förstör Stoves export.",
         epsEstimat: "1.20 kr",
         multipel: "22x",
         riktkurs: "26 kr",
