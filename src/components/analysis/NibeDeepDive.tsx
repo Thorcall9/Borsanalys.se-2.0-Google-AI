@@ -199,20 +199,44 @@ export default function NibeDeepDive({
                       <strong>Makro & Bransch:</strong> Den breda makrotrenden är NIBEs allra bästa vän: energiomställningen och elektrifieringen av världen. REPowerEU och globala initiativ vill fasa ut gas- och oljepannor, vilket gör värmepumpen till framtidens standard. Men de senaste två åren har visat att även megatrender tar paus när plånboken svider. Höga räntor och inflation kvävde renoveringsviljan, medan politiskt velande skapat osäkerhet. Nu vänder dock räntorna ner och distributionslagren har äntligen ebbat ut och nått acceptabla nivåer.
                     </p>
                     <p className="text-[15px] leading-[1.75] text-slate-700">
-                      <strong>Konkurrens & Moat (Vallgrav):</strong> Marknaden för värmepumpar och industrikomponenter är konkurrensutsatt, med jättar som Daikin, Bosch och kinesiska aktörer som knackar på dörren. Trots detta har NIBE en massiv och bred vallgrav:
+                      Till detta ska läggas den geopolitiska energirisken. Oroligheter i Mellanöstern, exempelvis kring Hormuzsundet, kan driva upp olje- och LNG-priser och skapa ny inflationsoro. För NIBE är effekten dubbel: på kort sikt kan högre energipriser och ökad osäkerhet pressa konsumenternas investeringsvilja och driva upp räntor. På längre sikt stärker det dock argumentet för energieffektivisering och minskat beroende av fossila bränslen. För kunder med höga värme- och kylbehov kan en värmepump – särskilt bergvärme med möjlighet till frikyla – få en tydligare ekonomisk logik när fossila energipriser är volatila.
+                    </p>
+                    <p className="text-[15px] leading-[1.75] text-slate-700">
+                      <strong>Konkurrens &amp; Moat (Vallgrav):</strong> Marknaden för värmepumpar och industrikomponenter är konkurrensutsatt, med jättar som Daikin, Bosch och kinesiska aktörer som knackar på dörren. Trots detta har NIBE en massiv och bred vallgrav:
                     </p>
                     <ol className="list-decimal pl-5 space-y-2 text-[15px] text-slate-700">
                         <li><strong>Distributionsnätverket:</strong> Värmepumpar är komplexa system, inte hyllvaror. NIBE har spenderat decennier på att utbilda och certifiera ett enormt nätverk av lokala installatörer. Dessa byter ogärna ut "sitt" märke (höga byteskostnader).</li>
                         <li><strong>Kontinentbaserad tillverkning:</strong> NIBE strävar efter att tillverka sina produkter nära kunden (Nordamerika för Nordamerika, Europa för Europa). I en värld av eskalerande handelskrig och tullar skapar detta säkrare leveranskedjor och är en strukturell superkraft.</li>
+                        <li><strong>Bergvärme som teknisk vallgrav:</strong> En viktig men lätt förbisedd del av NIBEs konkurrensfördel är bolagets starka position inom mark- och bergvärmepumpar. Till skillnad från enklare luftbaserade lösningar kräver bergvärme borrning, korrekt dimensionering, lokal installationskompetens och systemintegration i fastigheten. Det gör segmentet svårare att kopiera snabbt för lågprisaktörer. Asiatiska konkurrenter kan pressa priset inom mer standardiserade luft/vatten-lösningar, men har inte samma historiska styrka, installatörsnät eller lokala systemkunnande inom bergvärme i Norden och Nordamerika. För fastigheter med stort värmebehov – och särskilt där kylning/frikyla på sommaren är relevant – ger bergvärme en mycket hög årseffektivitet, vilket stärker NIBEs moat inom den tekniskt mest krävande delen av marknaden.</li>
                     </ol>
                   </div>
                 </div>
 
                 <SwotGrid data={{
-                    strengths: ["Global marknadsledare med stark portfölj av lokala premiumvarumärken.", "Kontinentbaserad tillverkning som minskar sårbarhet för tullar.", "Urstarkt installatörsnätverk och egna utbildningscentra (vallgrav).", "Exceptionell förvärvshistorik och integration."],
-                    weaknesses: ["Stark exponering mot nybyggnation och konsumenternas räntekänslighet.", "NIBE Stoves brottas med strukturell och utdragen marginalpress.", "Förhöjd skuldsättning begränsar kortsiktigt förvärvsutrymmet."],
-                    opportunities: ["Expansion inom kommersiell kyla och AI-datacenter (NIBE Element).", "Sjunkande räntor sätter fart på den uppdämda renoveringsviljan.", "Megatrenden kring Europas energiomställning och REPowerEU."],
-                    threats: ["Politiskt velande kring gröna subventioner.", "Asiatiska lågprisaktörer ökar närvaron på den europeiska marknaden.", "Handelskrig och tullar, särskilt mellan USA och Kanada."]
+                    strengths: [
+                      "Global aktör med stark portfölj av lokala premiumvarumärken.",
+                      "Urstarkt installatörsnätverk och egna utbildningscentra.",
+                      "Stark position inom svårkopierad bergvärme/markvärme.",
+                      "Kontinentbaserad tillverkning som minskar sårbarhet för tullar.",
+                      "Exceptionell förvärvshistorik och integration."
+                    ],
+                    weaknesses: [
+                      "Stark exponering mot nybyggnation och konsumenternas räntekänslighet.",
+                      "NIBE Stoves brottas med utdragen marginalpress.",
+                      "Förhöjd skuldsättning begränsar kortsiktigt förvärvsutrymmet."
+                    ],
+                    opportunities: [
+                      "Expansion inom kommersiell kyla och AI-datacenter via NIBE Element.",
+                      "Sjunkande räntor kan sätta fart på uppdämd renoveringsvilja.",
+                      "Volatila fossilpriser kan stärka kalkylen för värmepumpar.",
+                      "Megatrenden kring Europas energiomställning och REPowerEU."
+                    ],
+                    threats: [
+                      "Politiskt velande kring gröna subventioner.",
+                      "Asiatiska lågprisaktörer ökar närvaron inom mer standardiserade segment.",
+                      "Handelskrig och tullar, särskilt mellan USA och Kanada.",
+                      "Energichocker kan skapa inflation, svagare konsumentförtroende och investeringspaus."
+                    ]
                 }} />
                 
                 <RatingBox rating={4} maxRating={5} title="Betyg II – Strategisk Moat" accentColor="#0F766E" description="De underliggande megatrenderna är urstarka och nätverket av installatörer bygger en tung vallgrav. Att betyget stannar på 4 beror på bolagets visade kortsiktiga sårbarhet för byggcykler och osäkra politiska subventioner, samt det långsiktiga hotet från asiatisk prispress." />
