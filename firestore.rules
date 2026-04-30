@@ -37,7 +37,7 @@ service cloud.firestore {
     // Stock Sentiment (Aggregated)
     match /stock_sentiment/{stockSlug} {
       allow read: if true;
-      allow write: if isAuthenticated(); // In a real app, this would be updated via Cloud Functions or strict validation
+      allow write: if isAdmin(); // Endast admins kan skriva, för att förhindra obehörig modifiering
     }
 
     // User Votes

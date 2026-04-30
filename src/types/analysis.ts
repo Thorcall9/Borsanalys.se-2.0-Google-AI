@@ -111,6 +111,7 @@ export interface AnalysisData {
   discount?: string;
   summary: string;
   date?: string; // Format: YYYY-MM-DD
+  image?: string; // URL to analysis image
   
   // Custom View Logic
   deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup";

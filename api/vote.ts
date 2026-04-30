@@ -1,6 +1,19 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
+// In-memory rate limiting (Note: in serverless this is per-instance, but still mitigates simple spam)
+const rateLimitMap = new Map<string, number>();
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const ip = (req.headers['x-forwarded-for'] as string) || 'unknown';
+  const now = Date.now();
+  if (ip !== 'unknown') {
+    const lastVote = rateLimitMap.get(ip) || 0;
+    if (now - lastVote < 60000) { // 1 vote per minute per IP per instance
+      return res.status(429).send("För många försök. Vänligen vänta en minut innan du röstar igen.");
+    }
+    rateLimitMap.set(ip, now);
+  }
+
   // Capture stock and source from query
   const { stock, source } = req.query;
 

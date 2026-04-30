@@ -64,7 +64,7 @@ async function startServer() {
   const allowedOrigins = [
     'http://localhost:3000',
     'http://localhost:5173',
-    /^https:\/\/.*\.vercel\.app$/, // Allow temporary Vercel preview environments
+    /^https:\/\/borsanalys(-[a-zA-Z0-9-]+)?\.vercel\.app$/, // Tillåt enbart Vercel preview-miljöer som börjar på borsanalys
     'https://borsanalys.se',
     'https://www.borsanalys.se'
   ];
