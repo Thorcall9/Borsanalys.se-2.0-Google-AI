@@ -712,12 +712,12 @@ export default function AQGroupAnalysis({
                   <div className="font-mono text-[14px] text-white">30 / 40 · Rating 0,75</div>
                 </div>
                 <div>
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Målpris (base–bull)</div>
-                  <div className="font-mono text-[14px] text-white">225–260 kr</div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Målpris (12 mån)</div>
+                  <div className="font-mono text-[14px] text-white">235–260 kr</div>
                 </div>
                 <div>
-                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Rimligt värde (hist. multipel)</div>
-                  <div className="font-mono text-[14px] text-white">~155–185 kr</div>
+                  <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Mer attraktiv köpnivå</div>
+                  <div className="font-mono text-[14px] text-white">~175–185 kr</div>
                 </div>
                 <div>
                   <div className="font-mono text-[8.5px] uppercase tracking-[0.15em] text-white/70 mb-1">Risknivå</div>
