@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Search, Calculator, TrendingUp, ChevronRight, ArrowRight, BookOpen, DollarSign, Zap, Shield, PiggyBank, ShieldCheck } from "lucide-react";
 import { guides } from "../data/guides";
+import AdUnit from "../components/analysis/AdUnit";
 
 
 
@@ -85,6 +86,9 @@ export default function Guides() {
           );
         })}
       </div>
+
+      {/* AD: top-display – naturlig paus mellan guider och CTA */}
+      <AdUnit variant="top-display" />
 
       {/* CTA Section */}
 

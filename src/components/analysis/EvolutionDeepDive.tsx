@@ -7,6 +7,7 @@ import {
   Tooltip, ResponsiveContainer, Cell, ComposedChart
 } from "recharts";
 import NordnetCTA from "./NordnetCTA";
+import AdUnit from "./AdUnit";
 import { AnalysisData } from "../../data/analyses";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
@@ -1115,6 +1116,9 @@ export default function EvolutionDeepDive({
         {data.nextSteps && (
           <EditorialReadNext recommendations={data.nextSteps} />
         )}
+
+        {/* AD: middle-article – max engagemang vid IX→XII */}
+        <AdUnit variant="middle-article" />
 
         {/* XII. Scenarier (Bull/Base/Bear) */}
         <section id="scenarios" className="pt-24 pb-20">

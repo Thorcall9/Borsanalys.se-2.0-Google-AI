@@ -6,6 +6,7 @@ import {
   Tooltip, ResponsiveContainer, Cell, ComposedChart
 } from "recharts";
 import NordnetCTA from "./NordnetCTA";
+import AdUnit from "./AdUnit";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import EditorialCallout from "./EditorialCallout";
@@ -948,6 +949,9 @@ export default function VolvoDeepDive({
         {data.nextSteps && (
           <EditorialReadNext recommendations={data.nextSteps} />
         )}
+
+        {/* AD: middle-article – max engagemang vid IX→X */}
+        <AdUnit variant="middle-article" />
 
         {/* ── SCENARIER ── */}
         <div id="scenarier">

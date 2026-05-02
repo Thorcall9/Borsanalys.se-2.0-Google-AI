@@ -7,6 +7,7 @@ import {
   Tooltip, ResponsiveContainer, Cell
 } from "recharts";
 import NordnetCTA from "./NordnetCTA";
+import AdUnit from "./AdUnit";
 import { AnalysisData } from "../../data/analyses";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
@@ -780,6 +781,9 @@ export default function AQGroupAnalysis({
         </AnalysisCard>
 
         <NordnetCTA variant="low" />
+
+        {/* AD: middle-article – max engagemang vid IX→X */}
+        <AdUnit variant="middle-article" />
 
         {/* ── X. SCENARIER ── */}
         <section id="scenarier" className="scroll-mt-24 pb-12">

@@ -6,6 +6,7 @@ import {
   Tooltip, ResponsiveContainer, Cell, ComposedChart
 } from "recharts";
 import NordnetCTA from "./NordnetCTA";
+import AdUnit from "./AdUnit";
 import EditorialCallout from "./EditorialCallout";
 import EditorialReadNext from "./EditorialReadNext";
 import NextAnalysisButton from "./NextAnalysisButton";
@@ -842,6 +843,9 @@ export default function SwedbankDeepDive({
         {data.nextSteps && (
           <EditorialReadNext recommendations={data.nextSteps} />
         )}
+
+        {/* AD: middle-article – max engagemang vid IX→X */}
+        <AdUnit variant="middle-article" />
 
         {/* ── SCENARIER ── */}
         <div id="scenarier">

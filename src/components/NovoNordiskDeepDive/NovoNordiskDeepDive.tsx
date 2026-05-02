@@ -6,6 +6,7 @@ import {
   Tooltip, ResponsiveContainer, ReferenceLine, Cell, ComposedChart
 } from "recharts";
 import NordnetCTA from "../analysis/NordnetCTA";
+import AdUnit from "../analysis/AdUnit";
 import NextAnalysisButton from "../analysis/NextAnalysisButton";
 import AnalysisDisclaimer from "../analysis/AnalysisDisclaimer";
 import { AnalysisData } from "../../data/analyses";
@@ -726,6 +727,9 @@ export default function NovoNordiskDeepDive({
         {data.nextSteps && (
           <EditorialReadNext recommendations={data.nextSteps} />
         )}
+
+        {/* AD: middle-article – max engagemang vid IX→X */}
+        <AdUnit variant="middle-article" />
 
         {/* ── SCENARIER ── */}
         <div id="scenarier">

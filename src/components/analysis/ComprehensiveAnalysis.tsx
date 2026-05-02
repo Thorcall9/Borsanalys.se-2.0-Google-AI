@@ -32,6 +32,7 @@ import SEO from '../SEO';
 import { fetchWithCache, RapidAPIQuote } from '../../services/stockService';
 import { AnalysisData } from '../../data/analyses';
 import NordnetCTA from './NordnetCTA';
+import AdUnit from './AdUnit';
 import EditorialCallout from './EditorialCallout';
 import { MicrosoftSidebarExtras } from './MicrosoftSidebarExtras';
 
@@ -640,6 +641,9 @@ export default function ComprehensiveAnalysis({
       {data.nextSteps && (
         <EditorialReadNext recommendations={data.nextSteps} />
       )}
+
+      {/* AD: middle-article – max engagemang vid IX→X */}
+      <AdUnit variant="middle-article" />
 
       {/* SECTION X: SCENARIER & MÅLPRIS */}
       <section id="scenarios" className="scroll-mt-24 mt-24 mb-32">

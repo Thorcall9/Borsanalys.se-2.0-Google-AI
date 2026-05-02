@@ -6,6 +6,7 @@ import {
   Tooltip, ResponsiveContainer, Cell
 } from "recharts";
 import NordnetCTA from "./NordnetCTA";
+import AdUnit from "./AdUnit";
 import EditorialCallout from "./EditorialCallout";
 import EditorialReadNext from "./EditorialReadNext";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
@@ -905,6 +906,9 @@ export default function HandelsbankenDeepDive({
         {data.nextSteps && (
           <EditorialReadNext recommendations={data.nextSteps} />
         )}
+
+        {/* AD: middle-article – max engagemang vid IX→X */}
+        <AdUnit variant="middle-article" />
 
         {/* ── SCENARIER ── */}
         <div id="scenarier">

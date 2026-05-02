@@ -21,6 +21,7 @@ import {
   EditorialReadNext
 } from "./analysis";
 import NordnetCTA from "./analysis/NordnetCTA";
+import AdUnit from "./analysis/AdUnit";
 import NextAnalysisButton from "./analysis/NextAnalysisButton";
 import AnalysisDisclaimer from "./analysis/AnalysisDisclaimer";
 import EditorialCallout from "./analysis/EditorialCallout";
@@ -1106,6 +1107,9 @@ export default function NvidiaDeepDive({
         {data.nextSteps && (
           <EditorialReadNext recommendations={data.nextSteps} />
         )}
+
+        {/* AD: middle-article – max engagemang vid IX→X */}
+        <AdUnit variant="middle-article" />
 
         {/* SECTION X: SCENARIER (BULL, BASE & BEAR CASE) */}
         <section id="scenarios" className="scroll-mt-24 mb-32">

@@ -47,6 +47,7 @@ import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 
 import MobileReadingProgress from "../components/MobileReadingProgress";
+import AdUnit from "../components/analysis/AdUnit";
 
 const DEEP_DIVE_COMPONENTS = {
   Nvidia: NvidiaDeepDive,
@@ -278,6 +279,9 @@ export default function Analysis() {
           </motion.div>
 
 
+
+          {/* AD: sidebar-display – under filterpanelen */}
+          <AdUnit variant="sidebar-display" className="mb-4" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {filteredAnalyses.length > 0 ? (

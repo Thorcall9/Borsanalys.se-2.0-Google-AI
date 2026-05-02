@@ -9,6 +9,7 @@ import AnalysisDisclaimer from "../components/analysis/AnalysisDisclaimer";
 import MobileReadingProgress from "../components/MobileReadingProgress";
 import { Helmet } from "react-helmet-async";
 import SparaInvesteraGuide from "../components/guides/SparaInvesteraGuide";
+import AdUnit from "../components/analysis/AdUnit";
 
 const GUIDE_COMPONENTS = {
   SparaInvesteraGuide: SparaInvesteraGuide
@@ -128,6 +129,8 @@ export default function GuideDetail() {
 
       <AnalysisDisclaimer />
 
+      {/* AD: middle-article – exit-zon efter guide-innehållet */}
+      <AdUnit variant="middle-article" className="my-8" />
 
 
       {/* Navigation Between Guides */}

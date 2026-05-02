@@ -22,6 +22,7 @@ import {
   Tooltip, ResponsiveContainer, Cell, AreaChart, Area
 } from "recharts";
 import NordnetCTA from "./NordnetCTA";
+import AdUnit from "./AdUnit";
 import { AnalysisData } from "../../data/analyses";
 import NextAnalysisButton from "./NextAnalysisButton";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
@@ -773,6 +774,9 @@ export default function NewWaveDeepDive({
         {data.nextSteps && (
           <EditorialReadNext recommendations={data.nextSteps} />
         )}
+
+        {/* AD: middle-article – max engagemang vid IX→X */}
+        <AdUnit variant="middle-article" />
 
         {/* X: SCENARIER */}
         <FadeIn delay={500}>
