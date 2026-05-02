@@ -1,4 +1,5 @@
 import React from 'react';
+import AdUnit from './AdUnit';
 
 interface NordnetCTAProps {
   variant?: 'high' | 'low';
@@ -6,6 +7,11 @@ interface NordnetCTAProps {
 
 /**
  * NordnetCTA – Affiliatekomponent för Nordnet via Adtraction.
+ *
+ * NORDNET_ENABLED = false → renderar en AdSense-annons i stället (väntar på Nordnet-godkännande).
+ * NORDNET_ENABLED = true  → återaktiverar Nordnet-CTA:n.
+ *
+ * Byt ENDAST denna konstant när Nordnet godkänt affiliatepartnerskapet.
  *
  * Compliance (SE finansiell marknadsföring + Nordnets affiliatekrav):
  *  - Ingen text får uppfattas som investeringsrekommendation eller rådgivning.
@@ -15,7 +21,23 @@ interface NordnetCTAProps {
  *  - rel="sponsored" krävs på affiliatelänken.
  *  - Minst 300px avstånd till närmaste annons hanteras av parent-wrapper i NibeDeepDive.
  */
+
+// ─── VÄXEL ────────────────────────────────────────────────────────────────────
+// Sätt till true när Nordnet-partnerskapet är godkänt.
+const NORDNET_ENABLED = false;
+// ─────────────────────────────────────────────────────────────────────────────
+
 const NordnetCTA: React.FC<NordnetCTAProps> = ({ variant }) => {
+  // Visa AdSense-annons medan Nordnet-godkännandet är under behandling
+  if (!NORDNET_ENABLED) {
+    return (
+      <AdUnit
+        variant={variant === 'high' ? 'top-display' : 'legacy-display'}
+        className="my-8"
+      />
+    );
+  }
+
   const affiliateLink = "https://go.adt267.com/t/t?a=1582930370&as=2066019423&t=2&tk=1";
   const imageLink    = "https://track.adtraction.com/t/t?a=2067948486&as=2066019423&t=1&tk=1&i=1";
 
