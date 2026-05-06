@@ -163,7 +163,7 @@ export const nibe2026: AnalysisData = {
           "NIBE Stoves befinner sig i utdragen marginalpress.",
           "Förhöjd skuldsättning begränsar kortsiktigt förvärvsutrymmet.",
         ],
-        möjligheter: [
+        mojligheter: [
           "Megatrenden kring Europas energiomställning och REPowerEU.",
           "Stark tillväxt inom kommersiell ventilation och kyla.",
           "Halvledar- och AI-datacenterboom driver NIBE Elements affär.",
@@ -254,30 +254,9 @@ export const nibe2026: AnalysisData = {
       ],
     },
     scenarier: {
-      bullCase: {
-        antaganden:
-          "Europas omställning accelererar kraftigt, Stoves vänder och M&A-motorn drar igång storförvärv.",
-        epsEstimat: "1.80 kr",
-        multipel: "28x",
-        riktkurs: "50 kr",
-        sannolikhet: "25%",
-      },
-      baseCase: {
-        antaganden:
-          "Stabil och lugn volymtillväxt. Marginalerna normaliseras helt under 2027.",
-        epsEstimat: "1.55 kr",
-        multipel: "26x",
-        riktkurs: "40 kr",
-        sannolikhet: "55%",
-      },
-      bearCase: {
-        antaganden:
-          "Tysklands tvärnit smittar Europa. Priskrig bryter ut och tullar förstör Stoves export.",
-        epsEstimat: "1.20 kr",
-        multipel: "22x",
-        riktkurs: "26 kr",
-        sannolikhet: "20%",
-      },
+      bullCase: "Europas omställning accelererar kraftigt, Stoves vänder och M&A-motorn drar igång storförvärv. Riktkurs: 50 kr.",
+      baseCase: "Stabil och lugn volymtillväxt. Marginalerna normaliseras helt under 2027. Riktkurs: 40 kr.",
+      bearCase: "Tysklands tvärnit smittar Europa. Priskrig bryter ut och tullar förstör Stoves export. Riktkurs: 26 kr.",
     },
   },
 };

@@ -128,7 +128,7 @@ export const swedbank2025: AnalysisData = {
           "Bank är strukturellt regulatoriskt begränsad",
           "Historisk AML-bagage påverkar multipeln"
         ],
-        möjligheter: [
+        mojligheter: [
           "Volymtillväxt i bolån",
           "Synergier från Stabelo och Entercard",
           "Ökad aktivitet i Baltikum",
@@ -152,7 +152,7 @@ export const swedbank2025: AnalysisData = {
     finansiellAnalys: {
       resultatrakning: {
         omsattningstillvaxt: "Summa intäkter 68 736 mkr 2025 mot 74 104 mkr 2024 (-7%).",
-        vinsttillvaxt: "EPS efter utspädning 28,98 kr 2025 mot 30,86 kr 2024 (-6%). ROE 15,2% visade på fortsatt stark intjäningsförmåga.",
+        epsTillvaxt: "EPS efter utspädning 28,98 kr 2025 mot 30,86 kr 2024 (-6%). ROE 15,2% visade på fortsatt stark intjäningsförmåga.",
         rorelsemarginal: "Ej kärnmått för bank; viktigare mått är ROE 15,2% och K/I 0,36."
       },
       nyckeltal: {
@@ -161,9 +161,8 @@ export const swedbank2025: AnalysisData = {
         utdelning: "29,80 kr/aktie föreslagen för 2025, varav 9,35 kr extrautdelning"
       },
       vardering: {
-        pe: "11,1x",
-        evEbit: "N/A",
-        direktavkastning: "9,3% (2025)"
+        pe: 11.1,
+        direktavkastning: 9.3
       }
     },
     sammanfattning: {

@@ -1,0 +1,29 @@
+<USER_REQUEST>
+Kan du göra en ny analys med följande information: {
+  "slug": "nordea-bank-2026",
+  "name": "Nordea Bank Abp",
+  "ticker": "NDA SE",
+  "isin": "FI4000297767",
+  "date": "2026-05-04",
+  "author": "Carl Fredrik Thor",
+  "scores": {
+    "affarsmodell": 4,
+    "strategiskMoat": 4,
+    "finansiellKvalitet": 4,
+    "vardering": 3,
+    "tillvaxtutsikter": 3,
+    "riskprofil": 3,
+    "vdAnalys": 4,
+    "aiObservationer": 3
+  },
+  "totaltPoang": 28,
+  "maxPoang": 40,
+  "rating": 0.70,
+  "overview": {
+    "borskurs": 171.5,
+    "borsvarde": "580,8 mdkr",
+    "bransch": "Bank / Finans",
+    "geografi": "Norden: Sverige, Finland, Danmark och Norge",
+    "affarside": "Nordea erbjuder bank-, spar-, finansierings- och rådgivningstjänster till privatpersoner, företag och institutioner i Norden.",
+    "affarsmodell": "Banken tjänar pengar på räntenetto, avgifter, kapitalförvaltning, försäkring och marknadsrelaterade tjänster.",
+<truncated 29349 bytes>

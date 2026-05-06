@@ -37,6 +37,7 @@ interface AnalysisLayoutProps {
   hideDefaultWatchlist?: boolean;
   compactSections?: boolean;
   wideSidebar?: boolean;
+  hideSidebar?: boolean;
 }
 
 export default function AnalysisLayout({
@@ -62,7 +63,8 @@ export default function AnalysisLayout({
   sidebarExtras,
   hideDefaultWatchlist = false,
   compactSections = false,
-  wideSidebar = false
+  wideSidebar = false,
+  hideSidebar = false
 }: AnalysisLayoutProps) {
   const [activeSection, setActiveSection] = useState(sections[0]?.id);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -131,101 +133,103 @@ export default function AnalysisLayout({
       </button>
 
       {/* Sidebar */}
-      <aside className={`
-        fixed top-0 left-0 h-screen ${wideSidebar ? 'w-80 border-r-4 border-primary shadow-2xl' : 'w-72'} z-[95] flex flex-col transition-transform duration-500 border-r border-border overflow-y-auto premium-scrollbar
-        ${isLight ? 'bg-card' : 'bg-card'}
-        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-      `}>
-        {wideSidebar && (
-          <div className="bg-primary text-primary-foreground text-[8px] font-black uppercase tracking-widest text-center py-1">
-            {ticker === 'MSFT' ? 'Microsoft Test Active' : 'Debug Active'}
-          </div>
-        )}
-        <div className="p-8 border-b border-border flex-shrink-0">
-          <Link to="/analys" className="inline-flex items-center gap-2 text-[10px] font-black text-muted-foreground hover:text-primary transition-colors mb-8 uppercase tracking-widest">
-            <ArrowLeft size={12} /> Tillbaka till arkiv
-          </Link>
-          <Link to={`/aktier/${stockLink}`} className="group block mb-2">
-            <div className="text-2xl font-black tracking-tighter group-hover:text-primary transition-colors leading-none" style={{ color: accentColor }}>{companyName}</div>
-          </Link>
-          <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">{ticker} · {subtitle}</div>
-          
-          {livePrice && (
-            <div className="mt-4 flex items-center gap-3">
-              <div className="text-xl font-black tracking-tighter">{livePrice}</div>
-              {liveChange && (
-                <div className={`text-[10px] font-black uppercase tracking-widest ${liveChange.startsWith('+') || !liveChange.startsWith('-') ? 'text-emerald-500' : 'text-danger'}`}>
-                  {liveChange}
-                </div>
-              )}
+      {!hideSidebar && (
+        <aside className={`
+          fixed top-0 left-0 h-screen ${wideSidebar ? 'w-80 border-r-4 border-primary shadow-2xl' : 'w-72'} z-[95] flex flex-col transition-transform duration-500 border-r border-border overflow-y-auto premium-scrollbar
+          ${isLight ? 'bg-card' : 'bg-card'}
+          ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+        `}>
+          {wideSidebar && (
+            <div className="bg-primary text-primary-foreground text-[8px] font-black uppercase tracking-widest text-center py-1">
+              {ticker === 'MSFT' ? 'Microsoft Test Active' : 'Debug Active'}
             </div>
           )}
+          <div className="p-8 border-b border-border flex-shrink-0">
+            <Link to="/analys" className="inline-flex items-center gap-2 text-[10px] font-black text-muted-foreground hover:text-primary transition-colors mb-8 uppercase tracking-widest">
+              <ArrowLeft size={12} /> Tillbaka till arkiv
+            </Link>
+            <Link to={`/aktier/${stockLink}`} className="group block mb-2">
+              <div className="text-2xl font-black tracking-tighter group-hover:text-primary transition-colors leading-none" style={{ color: accentColor }}>{companyName}</div>
+            </Link>
+            <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">{ticker} · {subtitle}</div>
+            
+            {livePrice && (
+              <div className="mt-4 flex items-center gap-3">
+                <div className="text-xl font-black tracking-tighter">{livePrice}</div>
+                {liveChange && (
+                  <div className={`text-[10px] font-black uppercase tracking-widest ${liveChange.startsWith('+') || !liveChange.startsWith('-') ? 'text-emerald-500' : 'text-danger'}`}>
+                    {liveChange}
+                  </div>
+                )}
+              </div>
+            )}
 
-          {onToggleWatchlist && !hideDefaultWatchlist && (
-            <button 
-              onClick={onToggleWatchlist}
-              disabled={isWatchlistLoading}
-              className={`
-                mt-8 w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border
-                ${isInWatchlist 
-                  ? 'bg-primary/10 border-primary/20 text-primary shadow-lg shadow-primary/5'
-                  : 'bg-muted/30 border-border text-muted-foreground hover:bg-muted/50 hover:text-foreground'}
-                ${isWatchlistLoading ? 'opacity-50 cursor-not-allowed' : ''}
-              `}
-            >
-              {isWatchlistLoading ? (
-                <Loader2 size={14} className="animate-spin" />
-              ) : isInWatchlist ? (
-                <Star size={14} fill="currentColor" />
-              ) : (
-                <StarOff size={14} />
-              )}
-              {isInWatchlist ? 'I bevakningslista' : 'Bevaka aktie'}
-            </button>
-          )}
-        </div>
-        
-        <nav className="py-8">
-          <div className={`${wideSidebar ? 'px-8 mb-6 text-xs' : 'px-8 mb-4 text-[10px]'} font-black text-muted-foreground/50 uppercase tracking-[0.3em]`}>Analysrapport</div>
-          {sections.map((s, index) => (
-            <React.Fragment key={s.id}>
-              <button
-                onClick={() => scrollTo(s.id)}
+            {onToggleWatchlist && !hideDefaultWatchlist && (
+              <button 
+                onClick={onToggleWatchlist}
+                disabled={isWatchlistLoading}
                 className={`
-                  w-full flex items-center gap-4 px-8 ${compactSections ? 'py-2' : 'py-3'} text-xs font-bold transition-all border-l-4
-                  ${activeSection === s.id 
-                    ? 'bg-primary/5 border-primary text-foreground'
-                    : 'border-transparent text-muted-foreground hover:bg-muted/30 hover:text-foreground'}
+                  mt-8 w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border
+                  ${isInWatchlist 
+                    ? 'bg-primary/10 border-primary/20 text-primary shadow-lg shadow-primary/5'
+                    : 'bg-muted/30 border-border text-muted-foreground hover:bg-muted/50 hover:text-foreground'}
+                  ${isWatchlistLoading ? 'opacity-50 cursor-not-allowed' : ''}
                 `}
               >
-                <span className={`font-black text-[10px] w-6 opacity-50 ${compactSections ? 'hidden' : 'block'}`}>{s.number}</span>
-                <span className={`${compactSections ? 'text-[11px] uppercase tracking-wider' : wideSidebar ? 'text-sm tracking-tight' : 'tracking-tight'}`}>{s.title}</span>
+                {isWatchlistLoading ? (
+                  <Loader2 size={14} className="animate-spin" />
+                ) : isInWatchlist ? (
+                  <Star size={14} fill="currentColor" />
+                ) : (
+                  <StarOff size={14} />
+                )}
+                {isInWatchlist ? 'I bevakningslista' : 'Bevaka aktie'}
               </button>
-              
-
-            </React.Fragment>
-          ))}
-          
-          {sidebarExtras && (
-            <div className="mt-8 pt-8 border-t border-border/50">
-              {sidebarExtras}
-            </div>
-          )}
-        </nav>
-
-
-
-        <div className="p-8 border-t border-border bg-muted/10 flex-shrink-0">
-          <div className="flex flex-col gap-1 text-[10px] font-black text-muted-foreground uppercase tracking-widest">
-            <span>Publicerad: {date}</span>
-            <span className="opacity-50">{dataSources}</span>
+            )}
           </div>
-        </div>
-      </aside>
+          
+          <nav className="py-8">
+            <div className={`${wideSidebar ? 'px-8 mb-6 text-xs' : 'px-8 mb-4 text-[10px]'} font-black text-muted-foreground/50 uppercase tracking-[0.3em]`}>Analysrapport</div>
+            {sections.map((s, index) => (
+              <React.Fragment key={s.id}>
+                <button
+                  onClick={() => scrollTo(s.id)}
+                  className={`
+                    w-full flex items-center gap-4 px-8 ${compactSections ? 'py-2' : 'py-3'} text-xs font-bold transition-all border-l-4
+                    ${activeSection === s.id 
+                      ? 'bg-primary/5 border-primary text-foreground'
+                      : 'border-transparent text-muted-foreground hover:bg-muted/30 hover:text-foreground'}
+                  `}
+                >
+                  <span className={`font-black text-[10px] w-6 opacity-50 ${compactSections ? 'hidden' : 'block'}`}>{s.number}</span>
+                  <span className={`${compactSections ? 'text-[11px] uppercase tracking-wider' : wideSidebar ? 'text-sm tracking-tight' : 'tracking-tight'}`}>{s.title}</span>
+                </button>
+                
+
+              </React.Fragment>
+            ))}
+            
+            {sidebarExtras && (
+              <div className="mt-8 pt-8 border-t border-border/50">
+                {sidebarExtras}
+              </div>
+            )}
+          </nav>
+
+
+
+          <div className="p-8 border-t border-border bg-muted/10 flex-shrink-0">
+            <div className="flex flex-col gap-1 text-[10px] font-black text-muted-foreground uppercase tracking-widest">
+              <span>Publicerad: {date}</span>
+              <span className="opacity-50">{dataSources}</span>
+            </div>
+          </div>
+        </aside>
+      )}
 
       {/* Main Content */}
-      <main className={`flex-1 ${wideSidebar ? 'lg:ml-80' : 'lg:ml-72'} min-w-0 bg-background`}>
-        <div className="max-w-5xl mx-auto px-6 lg:px-12 py-12 lg:py-24">
+      <main className={`flex-1 ${hideSidebar ? '' : wideSidebar ? 'lg:ml-80' : 'lg:ml-72'} min-w-0 bg-background`}>
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12 lg:py-24">
           {priceDiff && (
             <motion.div 
               initial={{ opacity: 0, y: -20 }}

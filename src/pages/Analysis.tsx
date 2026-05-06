@@ -74,7 +74,7 @@ export default function Analysis() {
     'ericsson': 'ericsson-2025',
     'new-wave': 'new-wave-group-april-2026',
     'new-wave-group': 'new-wave-group-april-2026',
-
+    'nordea': 'nordea-bank-2026',
   };
   const slug = rawSlug ? (slugMappings[rawSlug] || rawSlug) : undefined;
   const [isInWatchlist, setIsInWatchlist] = useState(false);

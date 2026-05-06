@@ -777,7 +777,7 @@ export default function NibeDeepDive({
         {nextAnalysis && (
           <div className="mt-16 pt-16 border-t border-slate-200">
             <h3 className="font-serif text-2xl text-slate-900 mb-8 text-center">Läs nästa analys</h3>
-            <EditorialReadNext analysis={nextAnalysis} />
+            <EditorialReadNext recommendations={nextAnalysis ? [nextAnalysis] : []} />
           </div>
         )}
 

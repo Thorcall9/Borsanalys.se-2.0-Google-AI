@@ -14,6 +14,7 @@ import { ericsson2025 } from "./ericsson/ericsson-2025";
 import { newWaveGroup2025 } from "./new-wave-group/new-wave-group";
 import { aqGroup } from "./aq-group/aq-group";
 import { nibe2026 } from "./nibe/nibe-2026";
+import { nordea2026 } from "./nordea/nordea-bank-2026";
 
 export const analyses: Record<string, AnalysisData> = {
   "investor-ab": investorAb,
@@ -31,6 +32,7 @@ export const analyses: Record<string, AnalysisData> = {
   "new-wave-group-april-2026": newWaveGroup2025,
   "aq-group": aqGroup,
   "nibe-industrier-2026": nibe2026,
+  "nordea-bank-2026": nordea2026,
 };
 
 export type { AnalysisData, AIDrivenAnalysis } from "../../types/analysis";
