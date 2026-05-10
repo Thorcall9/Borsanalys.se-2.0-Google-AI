@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { analyses } from '../src/data/analyses/index';
+import { analyses } from '../src/data/analyses/index.js';
 
 export default async function handler(req: Request, res: Response) {
   const baseUrl = 'https://www.borsanalys.se';

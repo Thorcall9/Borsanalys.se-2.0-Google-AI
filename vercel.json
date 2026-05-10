@@ -20,6 +20,12 @@
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "functions": {
+    "api/rss.ts": {
+      "includeFiles": "src/data/analyses/**"
+    },
+    "api/sitemap.ts": {
+      "includeFiles": "src/data/analyses/**"
+    },
     "api/newsletter/signup.ts": {
       "maxDuration": 10
     }
