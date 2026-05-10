@@ -1,4 +1,4 @@
-import { AnalysisData } from "../../../types/analysis";
+import { AnalysisData } from "../../../types/analysis.js";
 
 export const newWaveGroup2025: AnalysisData = {
   slug: "new-wave-group-april-2026",

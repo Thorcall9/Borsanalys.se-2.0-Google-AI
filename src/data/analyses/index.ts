@@ -1,20 +1,20 @@
-import { AnalysisData } from "../../types/analysis";
-import { investorAb } from "./investor/investor-ab";
-import { sbb } from "./sbb/sbb";
-import { nvidiaFy2026 } from "./nvidia/nvidia-fy2026";
-import { apple } from "./apple/apple";
-import { microsoft } from "./microsoft/microsoft";
-import { novoNordisk } from "./novo-nordisk/novo-nordisk";
-import { volvo } from "./volvo/volvo";
-import { alphabet } from "./alphabet/alphabet";
-import { evolution2025 } from "./evolution/evolution-2025";
-import { swedbank2025 } from "./swedbank/swedbank-2025";
-import { handelsbanken2025 } from "./handelsbanken/handelsbanken-2025";
-import { ericsson2025 } from "./ericsson/ericsson-2025";
-import { newWaveGroup2025 } from "./new-wave-group/new-wave-group";
-import { aqGroup } from "./aq-group/aq-group";
-import { nibe2026 } from "./nibe/nibe-2026";
-import { nordea2026 } from "./nordea/nordea-bank-2026";
+import { AnalysisData } from "../../types/analysis.js";
+import { investorAb } from "./investor/investor-ab.js";
+import { sbb } from "./sbb/sbb.js";
+import { nvidiaFy2026 } from "./nvidia/nvidia-fy2026.js";
+import { apple } from "./apple/apple.js";
+import { microsoft } from "./microsoft/microsoft.js";
+import { novoNordisk } from "./novo-nordisk/novo-nordisk.js";
+import { volvo } from "./volvo/volvo.js";
+import { alphabet } from "./alphabet/alphabet.js";
+import { evolution2025 } from "./evolution/evolution-2025.js";
+import { swedbank2025 } from "./swedbank/swedbank-2025.js";
+import { handelsbanken2025 } from "./handelsbanken/handelsbanken-2025.js";
+import { ericsson2025 } from "./ericsson/ericsson-2025.js";
+import { newWaveGroup2025 } from "./new-wave-group/new-wave-group.js";
+import { aqGroup } from "./aq-group/aq-group.js";
+import { nibe2026 } from "./nibe/nibe-2026.js";
+import { nordea2026 } from "./nordea/nordea-bank-2026.js";
 
 export const analyses: Record<string, AnalysisData> = {
   "investor-ab": investorAb,
@@ -35,4 +35,4 @@ export const analyses: Record<string, AnalysisData> = {
   "nordea-bank-2026": nordea2026,
 };
 
-export type { AnalysisData, AIDrivenAnalysis } from "../../types/analysis";
+export type { AnalysisData, AIDrivenAnalysis } from "../../types/analysis.js";

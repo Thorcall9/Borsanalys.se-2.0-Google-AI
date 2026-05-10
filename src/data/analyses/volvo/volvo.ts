@@ -1,4 +1,4 @@
-import { AnalysisData } from "../../../types/analysis";
+import { AnalysisData } from "../../../types/analysis.js";
 
 export const volvo: AnalysisData = {
   slug: "volvo",

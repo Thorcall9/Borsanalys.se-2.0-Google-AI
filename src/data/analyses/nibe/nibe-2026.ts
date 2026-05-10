@@ -1,4 +1,4 @@
-import { AnalysisData } from "../../../types/analysis";
+import { AnalysisData } from "../../../types/analysis.js";
 
 export const nibe2026: AnalysisData = {
   slug: "nibe-industrier-2026",

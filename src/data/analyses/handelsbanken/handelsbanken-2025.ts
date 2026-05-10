@@ -1,4 +1,4 @@
-import { AnalysisData } from "../../../types/analysis";
+import { AnalysisData } from "../../../types/analysis.js";
 
 export const handelsbanken2025: AnalysisData = {
   slug: "handelsbanken-2025",
