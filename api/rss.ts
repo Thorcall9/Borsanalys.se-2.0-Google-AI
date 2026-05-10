@@ -29,7 +29,7 @@ export default async function handler(req: Request, res: Response) {
 
     return `
     <item>
-      <title><![CDATA[${post.title} Analys]]></title>
+      <title><![CDATA[${post.title}]]></title>
       <link>${link}</link>
       <description>${description}</description>
       <pubDate>${pubDate}</pubDate>
