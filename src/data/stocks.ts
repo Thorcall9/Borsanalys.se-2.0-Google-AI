@@ -58,11 +58,11 @@ export const stocks: Record<string, StockData> = {
     logoColor: "bg-[#76B900]",
     financialUnit: "Mdr USD",
     stats: {
-      price: "$148.50",
+      price: "~178 USD",
       change: "+2.4%",
-      pe: "48.20",
+      pe: "22.0",
       yield: "0.02%",
-      marketCap: "$3.6T"
+      marketCap: "4 338 Mdr USD"
     },
     financialData: [
       { year: '2020', revenue: 10.9, profit: 2.8 },
@@ -82,11 +82,11 @@ export const stocks: Record<string, StockData> = {
     logoColor: "bg-[#004b89]",
     financialUnit: "Mdkr",
     stats: {
-      price: "245.20 kr",
+      price: "330,40 kr",
       change: "+0.8%",
-      pe: "14.20",
-      yield: "1.8%",
-      marketCap: "750 Bkr"
+      pe: "14.0",
+      yield: "1,7%",
+      marketCap: "1 010 Mdkr"
     },
     financialData: [
       { year: '2020', revenue: 55.1, profit: 52.8 },
@@ -135,7 +135,7 @@ export const stocks: Record<string, StockData> = {
       change: "-1.2%",
       pe: "9.95",
       yield: "5.3%",
-      marketCap: "115 Mdr EUR"
+      marketCap: "125 Mdkr"
     },
     financialData: [
       { year: '2020', revenue: 561, profit: 285 },
@@ -203,9 +203,9 @@ export const stocks: Record<string, StockData> = {
     logoColor: "bg-[#003057]",
     financialUnit: "Bkr",
     stats: {
-      price: "322.40 kr",
+      price: "322,40 kr",
       change: "-1.1%",
-      pe: "19.00",
+      pe: "19.1",
       yield: "4.04%",
       marketCap: "660 Bkr"
     },
@@ -227,11 +227,11 @@ export const stocks: Record<string, StockData> = {
     logoColor: "bg-[#4285F4]",
     financialUnit: "Mdr USD",
     stats: {
-      price: "$175.30",
+      price: "$307",
       change: "+1.1%",
-      pe: "24.20",
+      pe: "28.0",
       yield: "0.45%",
-      marketCap: "$2.2T"
+      marketCap: "$3.9T"
     },
     financialData: [
       { year: '2020', revenue: 182.5, profit: 40.3 },
@@ -251,11 +251,11 @@ export const stocks: Record<string, StockData> = {
     logoColor: "bg-[#003366]",
     financialUnit: "Mdr DKK",
     stats: {
-      price: "845.20 DKK",
+      price: "236 DKK",
       change: "+1.5%",
-      pe: "38.40",
+      pe: "38.0",
       yield: "1.2%",
-      marketCap: "3.8 TDKK"
+      marketCap: "1 050 Mdr DKK"
     },
     financialData: [
       { year: '2020', revenue: 126.9, profit: 42.1 },

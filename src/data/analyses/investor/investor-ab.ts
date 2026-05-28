@@ -20,7 +20,7 @@ export const investorAb: AnalysisData = {
     accentColor: "#1a4f8b"
   },
   marketCap: "750 Bkr",
-  discount: "14,2%",
+  discount: "7,0%",
   summary: "Affärsidén är enkel men kraftfull: **bygga starka och hållbara företag för att skapa värde för aktieägare och samhälle**. Till skillnad från en vanlig aktiefond är Investor en aktiv ägare – man sitter i styrelser, utser VD och driver strategiska initiativ. Det gör att Investor kan påverka sina innehav på ett sätt som en passiv fondförvaltare aldrig kan.",
   businessModel: "Affärsidén är enkel men kraftfull: bygga starka och hållbara företag för att skapa värde för aktieägare och samhälle. Till skillnad från en vanlig aktiefond är Investor en aktiv ägare – man sitter i styrelser, utser VD och driver strategiska initiativ. Det gör att Investor kan påverka sina innehav på ett sätt som en passiv fondförvaltare aldrig kan.",
   date: "2026-03-26",
