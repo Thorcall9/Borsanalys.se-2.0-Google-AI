@@ -35,7 +35,8 @@ import NordnetCTA from './NordnetCTA';
 import AdUnit from './AdUnit';
 import EditorialCallout from './EditorialCallout';
 import { MicrosoftSidebarExtras } from './MicrosoftSidebarExtras';
-import AnalysisDisclosure from './AnalysisDisclosure';
+import AnalysisDisclaimer from './AnalysisDisclaimer';
+
 interface ComprehensiveAnalysisProps {
   data: AnalysisData;
   isInWatchlist?: boolean;
@@ -1403,6 +1404,8 @@ export default function ComprehensiveAnalysis({
       </section>
 
       <NordnetCTA variant="low" />
+
+      <AnalysisDisclaimer className="mt-16" />
 
       {/* Mobile-only Extras (Relocated from sidebar) */}
       <div className="lg:hidden">

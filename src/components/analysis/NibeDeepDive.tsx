@@ -6,6 +6,7 @@ import NordnetCTA from "./NordnetCTA";
 import AdUnit from "./AdUnit";
 import SEO from "../SEO";
 import { AnalysisData } from "../../data/analyses";
+import AnalysisDisclaimer from "./AnalysisDisclaimer";
 
 const allScores = [
   {key:"Affärsmodell",val:4,max:5},
@@ -773,6 +774,8 @@ export default function NibeDeepDive({
         <div className="mt-[300px]">
           <NordnetCTA variant="low" />
         </div>
+
+        <AnalysisDisclaimer theme="light" className="mt-16" />
 
         {nextAnalysis && (
           <div className="mt-16 pt-16 border-t border-slate-200">
