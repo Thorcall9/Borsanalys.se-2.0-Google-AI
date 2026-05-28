@@ -9,7 +9,7 @@ export const volvo: AnalysisData = {
   market: "Large Cap Stockholm",
   sector: "Industri / Fordon",
   recommendation: "BEVAKA",
-  price: "322.40 kr",
+  price: "322,40 kr",
   pe: "19.1x",
   yield: "4,04%",
   relatedAnalysis: {
@@ -49,9 +49,9 @@ export const volvo: AnalysisData = {
   managementOverview: "Martin Lundstedt — VD: Har visat prov på god kostnadskontroll in en nedgång och driver transformationen mot mjukvarudefinierade fordon.",
   ownershipStructure: "Industrivärden garanterar långsiktighet och 'skin in the game'. Geely kvarstår som en stor strategisk ägare.",
   scenarios: [
-    { label: "Bull Case", value: "410 kr", change: "+26%", type: "bull" },
+    { label: "Bull Case", value: "390 kr", change: "+20%", type: "bull" },
     { label: "Base Case", value: "345 kr", change: "+6%", type: "base" },
-    { label: "Bear Case", value: "260 kr", change: "-20%", type: "bear" },
+    { label: "Bear Case", value: "230 kr", change: "-29%", type: "bear" },
   ],
   scores: {
     affarsmodell: 5,

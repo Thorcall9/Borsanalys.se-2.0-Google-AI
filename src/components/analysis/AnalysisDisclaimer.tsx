@@ -33,7 +33,22 @@ const slugToDisclosureKey: Record<string, AnalysisDisclosureKey> = {
 export default function AnalysisDisclaimer({ className = "", theme = "dark" }: AnalysisDisclaimerProps) {
   const location = useLocation();
   const segments = location.pathname.split("/");
-  const slug = segments[segments.length - 1]; // Get the last part of the URL path
+  const rawSlug = segments[segments.length - 1]; // Get the last part of the URL path
+
+  const slugMappings: Record<string, string> = {
+    'evolution': 'evolution-2025',
+    'swedbank': 'swedbank-2025',
+    'handelsbanken': 'handelsbanken-2025',
+    'nvidia': 'nvidia-fy2026',
+    'investor': 'investor-ab',
+    'ericsson': 'ericsson-2025',
+    'new-wave': 'new-wave-group-april-2026',
+    'new-wave-group': 'new-wave-group-april-2026',
+    'nordea': 'nordea-bank-2026',
+    'saab': 'saab-2026',
+    'nibe': 'nibe-industrier-2026',
+  };
+  const slug = slugMappings[rawSlug] || rawSlug;
 
   const disclosureKey = slugToDisclosureKey[slug];
   const analysisData = analyses[slug];

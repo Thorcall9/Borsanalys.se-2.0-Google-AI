@@ -54,9 +54,9 @@ export const nvidiaFy2026: AnalysisData = {
     "Regulatoriska antitrust-risker (EU/USA)"
   ],
   scenarios: [
-    { label: "Bull Case", value: "$320", change: "+76%", type: "bull" },
-    { label: "Base Case", value: "$230", change: "+26%", type: "base" },
-    { label: "Bear Case", value: "$120", change: "-34%", type: "bear" },
+    { label: "Bull Case", value: "280–320 USD", change: "+57%–80%", type: "bull" },
+    { label: "Base Case", value: "210–220 USD", change: "+18%–24%", type: "base" },
+    { label: "Bear Case", value: "100–130 USD", change: "-27%–44%", type: "bear" },
   ],
   scores: {
     affarsmodell: 5,

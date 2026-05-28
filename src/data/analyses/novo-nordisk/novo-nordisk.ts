@@ -8,7 +8,7 @@ export const novoNordisk: AnalysisData = {
   market: "Copenhagen",
   sector: "Hälsovård / Läkemedel",
   recommendation: "KÖP",
-  price: "845,20 DKK",
+  price: "236 DKK",
   pe: "38.00",
   yield: "1,2%",
   relatedAnalysis: {
@@ -47,9 +47,9 @@ export const novoNordisk: AnalysisData = {
   opportunities: ["Expansion inom fetmabehandling", "Nya indikationer för GLP-1"],
   threats: ["Konkurrens från Eli Lilly", "Prispress från myndigheter"],
   scenarios: [
-    { label: "Bull Case", value: "1 100 DKK", change: "+30%", type: "bull" },
-    { label: "Base Case", value: "920 DKK", change: "+9%", type: "base" },
-    { label: "Bear Case", value: "700 DKK", change: "-17%", type: "bear" },
+    { label: "Bull Case", value: "450 DKK", change: "+90%", type: "bull" },
+    { label: "Base Case", value: "340–380 DKK", change: "+52%", type: "base" },
+    { label: "Bear Case", value: "160–200 DKK", change: "-24%", type: "bear" },
   ],
   scores: {
     affarsmodell: 5,

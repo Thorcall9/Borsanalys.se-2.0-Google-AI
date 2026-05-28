@@ -8,9 +8,9 @@ export const investorAb: AnalysisData = {
   market: "Large Cap Stockholm",
   sector: "Investmentbolag",
   recommendation: "KÖP",
-  price: "245,20 kr",
+  price: "330,40 kr",
   pe: "14.00",
-  yield: "1,8%",
+  yield: "1,7%",
   relatedAnalysis: {
     slug: "volvo",
     title: "Viktigt kärninnehav",
@@ -73,9 +73,9 @@ export const investorAb: AnalysisData = {
     "Ökande konkurrens om private equity-deals"
   ],
   scenarios: [
-    { label: "Bull Case", value: "320 kr", change: "+30%", type: "bull" },
-    { label: "Base Case", value: "275 kr", change: "+12%", type: "base" },
-    { label: "Bear Case", value: "210 kr", change: "-14%", type: "bear" },
+    { label: "Bull Case", value: "450 kr", change: "+36%", type: "bull" },
+    { label: "Base Case", value: "395 kr", change: "+20%", type: "base" },
+    { label: "Bear Case", value: "280 kr", change: "-15%", type: "bear" },
   ],
   scores: {
     affarsmodell: 5,
