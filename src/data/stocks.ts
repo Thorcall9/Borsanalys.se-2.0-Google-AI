@@ -24,6 +24,30 @@ export interface StockData {
 }
 
 export const stocks: Record<string, StockData> = {
+  "saab": {
+    slug: "saab",
+    name: "Saab AB",
+    ticker: "SAAB B",
+    market: "Stockholm Large Cap",
+    sector: "Industri / Försvar",
+    description: "Saab utvecklar avancerade försvars- och säkerhetslösningar för luft, land och sjö. Bolaget är känt för stridsflygsystemet Gripen men verksamheten spänner över radar, luftvärn, ubåtar, markstridsystem och ledningssystem. Med en orderstock på 274 mdkr och stark strukturell medvind från Europas upprustning är Saab ett av börsens mest strategiskt intressanta industribolag.",
+    logoColor: "bg-[#005B99]",
+    financialUnit: "Mdkr",
+    stats: {
+      price: "524 kr",
+      change: "+0,0%",
+      pe: "43,7",
+      yield: "0,46%",
+      marketCap: "282,7 Mdkr"
+    },
+    financialData: [
+      { year: '2021', revenue: 38.8, profit: 1.5 },
+      { year: '2022', revenue: 44.8, profit: 2.1 },
+      { year: '2023', revenue: 51.6, profit: 3.3 },
+      { year: '2024', revenue: 63.8, profit: 5.7 },
+      { year: '2025', revenue: 79.1, profit: 8.1 },
+    ]
+  },
   "nvidia": {
     slug: "nvidia",
     name: "NVIDIA Corporation",

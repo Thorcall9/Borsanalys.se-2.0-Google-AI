@@ -25,6 +25,7 @@ const Profile = lazy(() => import("./pages/Profile"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
+const Holdings = lazy(() => import("./pages/Holdings"));
 const AdminSubscribers = lazy(() => import("./components/AdminSubscribers").then(module => ({ default: module.AdminSubscribers })));
 const PreviewHeaderPage = lazy(() => import("./pages/PreviewHeader"));
 const MindmapBlueprint = lazy(() => import("./components/Mindmap"));
@@ -62,6 +63,8 @@ export default function App() {
                       <Route path="/kontakt" element={<Contact />} />
                       <Route path="/villkor" element={<Terms />} />
                       <Route path="/integritet" element={<Privacy />} />
+                      <Route path="/innehav" element={<Holdings />} />
+                      <Route path="/intressekonflikter" element={<Holdings />} />
                       <Route path="/verktyg" element={<Tools />} />
                       <Route path="/verktyg/rantakalkylator" element={<Tools />} />
                       <Route path="/om-oss" element={<About />} />

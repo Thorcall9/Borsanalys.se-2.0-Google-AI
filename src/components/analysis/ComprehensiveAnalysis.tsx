@@ -395,7 +395,7 @@ export default function ComprehensiveAnalysis({
               </h3>
               <div className="space-y-6">
                 <div className="space-y-1">
-                  <div className="text-[10px] font-bold text-muted-foreground uppercase">Börskurs</div>
+                  <div className="text-[10px] font-bold text-muted-foreground uppercase">Analyspris</div>
                   <div className="text-2xl font-black text-foreground">{data.price}</div>
                 </div>
                 <div className="space-y-1">
@@ -711,7 +711,7 @@ export default function ComprehensiveAnalysis({
              <div className="text-[10px] font-black text-primary uppercase tracking-widest">Vår bedömning</div>
              <div className="text-4xl font-black text-foreground">{data.recommendation}</div>
              <div className="w-12 h-1 bg-primary mx-auto rounded-full" />
-             <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">Målkurs (Base Case): {data.scenarios?.find(s => s.type === 'base')?.value || "N/A"}</p>
+             <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">Rimligt värde (Base Case): {data.scenarios?.find(s => s.type === 'base')?.value || "N/A"}</p>
           </div>
         </div>
 
@@ -1387,7 +1387,7 @@ export default function ComprehensiveAnalysis({
       {/* SECTION X: SCENARIER & MÅLPRIS */}
       <section id="scenarios" className="scroll-mt-24 mt-24 mb-32">
         <div className="mb-10">
-          <SectionHeader number="X" title="SCENARIER & MÅLPRIS" accentColor={ACCENT_COLOR} />
+          <SectionHeader number="X" title="SCENARIER & RIMLIGT VÄRDE" accentColor={ACCENT_COLOR} />
         </div>
         <div className="mt-8">
           <ScenarioCards scenarios={data.scenarios.map(s => ({

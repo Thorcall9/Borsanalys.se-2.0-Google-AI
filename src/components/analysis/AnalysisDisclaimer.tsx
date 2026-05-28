@@ -17,18 +17,19 @@ export default function AnalysisDisclaimer({ className = "", theme = 'dark' }: A
       <div className="max-w-4xl mx-auto">
         <h3 className={`text-[11px] font-black uppercase tracking-[0.3em] mb-6 ${
           isLight ? 'text-slate-900' : 'text-foreground'
-        }`}>2. Ingen finansiell rådgivning</h3>
+        }`}>Information och intressekonflikter</h3>
         
         <div className="space-y-4 font-medium leading-relaxed text-sm md:text-base opacity-80">
           <p>
-            Innehållet på Börsanalys.se är endast avsett för informations- och utbildningsändamål. 
-            Ingenting på denna webbplats ska betraktas som finansiell rådgivning, köprekommendation eller investeringsanalys.
+            Analysen är framtagen av Börsanalys.se i informations- och utbildningssyfte och utgör inte personlig investeringsrådgivning. Bedömningen bygger på offentligt tillgänglig information och speglar analytikerns uppfattning vid analystillfället. Aktiekurser, estimat och förutsättningar kan förändras efter publicering.
           </p>
 
           <p>
-            Att investera i aktier och andra finansiella instrument innebär alltid en risk. 
-            Historisk avkastning är ingen garanti för framtida vinst. 
-            Du är själv ansvarig för dina investeringsbeslut.
+            Investeringar i aktier innebär risk. Du ansvarar själv för dina investeringsbeslut och bör göra en egen bedömning utifrån din ekonomi, tidshorisont och risktolerans.
+          </p>
+
+          <p>
+            <strong className={isLight ? 'text-slate-700' : 'text-foreground/90'}>Analytikerns innehav:</strong> Inget innehav &nbsp;·&nbsp; <strong className={isLight ? 'text-slate-700' : 'text-foreground/90'}>Eventuella kommersiella relationer:</strong> Inga
           </p>
         </div>
       </div>
