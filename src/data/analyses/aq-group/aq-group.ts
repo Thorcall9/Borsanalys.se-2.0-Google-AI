@@ -3,6 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const aqGroup: AnalysisData = {
   slug: "aq-group",
   title: "AQ Group AB",
+  disclosureKey: "aqGroup",
   ticker: "AQ",
   deepDiveComponent: 'AQGroup',
   market: "NASDAQ STOCKHOLM LARGE CAP",

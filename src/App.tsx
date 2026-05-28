@@ -65,6 +65,7 @@ export default function App() {
                       <Route path="/integritet" element={<Privacy />} />
                       <Route path="/innehav" element={<Holdings />} />
                       <Route path="/intressekonflikter" element={<Holdings />} />
+                      <Route path="/aktieinnehav-och-intressekonflikter" element={<Holdings />} />
                       <Route path="/verktyg" element={<Tools />} />
                       <Route path="/verktyg/rantakalkylator" element={<Tools />} />
                       <Route path="/om-oss" element={<About />} />

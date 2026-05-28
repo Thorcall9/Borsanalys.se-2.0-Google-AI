@@ -3,6 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const swedbank2025: AnalysisData = {
   slug: "swedbank-2025",
   title: "Swedbank AB",
+  disclosureKey: "swedbank",
   ticker: "SWED A",
   market: "Nasdaq Stockholm Large Cap",
   sector: "Bank / Finans",

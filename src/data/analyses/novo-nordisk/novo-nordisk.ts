@@ -3,6 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const novoNordisk: AnalysisData = {
   slug: "novo-nordisk",
   title: "Novo Nordisk A/S",
+  disclosureKey: "novoNordisk",
   ticker: "NOVO-B.CO",
   market: "Copenhagen",
   sector: "Hälsovård / Läkemedel",

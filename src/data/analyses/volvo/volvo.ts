@@ -3,6 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const volvo: AnalysisData = {
   slug: "volvo",
   title: "AB Volvo",
+  disclosureKey: "volvo",
   listTitle: "AB Volvo",
   ticker: "VOLV-B.ST",
   market: "Large Cap Stockholm",

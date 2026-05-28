@@ -1,6 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function Terms() {
   return (
@@ -10,18 +11,18 @@ export default function Terms() {
         <meta name="description" content="Användarvillkor för Börsanalys.se" />
       </Helmet>
 
-      <motion.div
+      <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="space-y-8"
       >
         <div className="space-y-4">
-          <h1 className="text-5xl font-serif font-bold tracking-tight">Användarvillkor</h1>
-          <p className="text-muted-foreground">Senast uppdaterad: 28 maj 2026</p>
+          <h1 className="text-5xl font-serif font-bold tracking-tight text-foreground">Användarvillkor</h1>
+          <p className="text-muted-foreground font-semibold">Senast uppdaterad: 28 maj 2026</p>
         </div>
 
         <div className="prose prose-neutral dark:prose-invert max-w-none space-y-8 text-foreground/80 leading-relaxed">
-
+          
           <section className="space-y-4">
             <h2 className="text-2xl font-serif font-bold text-foreground">1. Introduktion</h2>
             <p>
@@ -38,16 +39,10 @@ export default function Terms() {
               Innehållet på Börsanalys.se är framtaget för allmän information och utbildning. Innehållet utgör inte personlig investeringsrådgivning och är inte anpassat efter en enskild läsares ekonomiska situation, mål, placeringshorisont, kunskap eller risktolerans.
             </p>
             <p>
-              Börsanalys.se publicerar analyser av noterade bolag och finansiella instrument. Sådana analyser kan innehålla:
+              Börsanalys.se publicerar analyser av noterade bolag och finansiella instrument. Sådana analyser kan innehålla bedömningar av bolagets kvalitet, risker och framtidsutsikter, värderingsresonemang, uppskattat rimligt värde, scenarier, estimat samt investeringsbeslut såsom KÖP, BEVAKA, AVVAKTA eller SÄLJ.
             </p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>bedömningar av bolagets kvalitet, risker och framtidsutsikter,</li>
-              <li>värderingsresonemang och uppskattat rimligt värde,</li>
-              <li>scenarier och estimat,</li>
-              <li>investeringsbeslut såsom KÖP, BEVAKA, AVVAKTA eller SÄLJ.</li>
-            </ul>
             <p>
-              Dessa bedömningar speglar analytikerns uppfattning vid analystillfället och kan förändras om nya uppgifter publiceras, aktiekursen förändras eller marknadsförutsättningarna utvecklas annorlunda än väntat.
+              Dese bedömningar speglar analytikerns uppfattning vid analystillfället och kan förändras om nya uppgifter publiceras, aktiekursen förändras eller marknadsförutsättningarna utvecklas annorlunda än väntat.
             </p>
             <p>
               Varje läsare ansvarar själv för sina investeringsbeslut och bör göra en egen bedömning innan en investering genomförs.
@@ -62,69 +57,36 @@ export default function Terms() {
             <p>
               Historisk utveckling är ingen garanti för framtida avkastning. Prognoser, estimat, scenarier och bedömda värdeintervall bygger på antaganden som kan visa sig vara felaktiga.
             </p>
-            <p>Aktiekurser kan påverkas av bland annat:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>bolagets resultat och finansiella ställning,</li>
-              <li>förändrade marknadsförhållanden,</li>
-              <li>räntor, valutor och konjunktur,</li>
-              <li>politiska och regulatoriska beslut,</li>
-              <li>branschspecifika risker,</li>
-              <li>allmänt börssentiment.</li>
-            </ul>
             <p>
               Börsanalys.se lämnar ingen garanti för att en publicerad analys, ett värdeintervall eller ett investeringsbeslut kommer att leda till positiv avkastning.
             </p>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-serif font-bold text-foreground">4. Metod, källor och uppdateringar</h2>
+            <h2 className="text-2xl font-serif font-bold text-foreground">4. Intressekonflikter och innehav</h2>
             <p>
-              Analyser på Börsanalys.se baseras på offentligt tillgänglig information, exempelvis årsredovisningar, delårsrapporter, bokslutskommunikéer, pressmeddelanden, bolagspresentationer samt offentligt tillgänglig marknads- och konsensusdata.
-            </p>
-            <p>I analyserna eftersträvar Börsanalys.se att tydligt skilja mellan:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>verifierbara fakta från offentliga källor,</li>
-              <li>externa estimat och prognoser,</li>
-              <li>analytikerns egna antaganden, tolkningar och slutsatser.</li>
-            </ul>
-            <p>
-              Varje analys ska ange analysdatum, analyspris, författare, investeringsbeslut, bedömt rimligt värde eller värdeintervall samt relevanta risker och metodantaganden.
+              Börsanalys.se redovisar relevanta direkta innehav och relevanta indirekta exponeringar i anslutning till respektive bolagsanalys samt på sidan <Link to="/aktieinnehav-och-intressekonflikter" className="text-primary hover:underline font-semibold">Aktieinnehav och intressekonflikter</Link>.
             </p>
             <p>
-              En analys speglar bedömningen vid den tidpunkt som anges i analysen. Börsanalys.se åtar sig inte att löpande uppdatera varje analys efter rapporter, kursrörelser eller andra bolagshändelser. Om en analys uppdateras väsentligt ska detta framgå genom uppdateringsdatum eller ändringsinformation på analyssidan.
+              Om Börsanalys.se eller författaren har mottagit ersättning från, utfört uppdrag åt eller haft annan kommersiell relation direkt till ett analyserat bolag ska detta anges i anslutning till den aktuella analysen.
             </p>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-serif font-bold text-foreground">5. Intressekonflikter och innehav</h2>
+            <h2 className="text-2xl font-serif font-bold text-foreground">5. Annonser och affiliatelänkar</h2>
             <p>
-              Börsanalys.se ska i anslutning till varje bolagsanalys redovisa relevanta intressen eller intressekonflikter som rör det analyserade bolaget eller finansiella instrumentet.
-            </p>
-            <p>Detta kan omfatta:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>om författaren äger aktier eller andra finansiella instrument i det analyserade bolaget,</li>
-              <li>om Börsanalys.se eller författaren har mottagit ersättning från det analyserade bolaget,</li>
-              <li>om det finns sponsring, uppdrag eller annan kommersiell relation till det analyserade bolaget,</li>
-              <li>andra omständigheter som rimligen kan påverka läsarens bedömning av analysens objektivitet.</li>
-            </ul>
-            <p>Informationen i respektive analys gäller vid den tidpunkt som anges där.</p>
-          </section>
-
-          <section className="space-y-4">
-            <h2 className="text-2xl font-serif font-bold text-foreground">6. Annonser och affiliatelänkar</h2>
-            <p>
-              Börsanalys.se kan finansieras genom annonser och affiliatelänkar till externa företag eller tjänster, exempelvis banker, nätmäklare eller privatekonomiska tjänster.
+              Börsanalys.se kan finansieras genom annonser och affiliatelänkar till externa företag eller tjänster, exempelvis nätmäklare eller privatekonomiska tjänster.
             </p>
             <p>
-              Annonser och kommersiella länkar ska vara tydligt markerade. Förekomsten av annonser eller affiliatelänkar ska inte påverka analysens poängsättning, investeringsbeslut eller bedömda rimliga värde.
+              Annonser och kommersiella länkar ska vara tydligt markerade. Förekomsten av annonser eller affiliatelänkar påverkar inte analysernas poängsättning, investeringsbeslut eller bedömda rimliga värde.
             </p>
             <p>
-              Om Börsanalys.se har en kommersiell relation direkt till det bolag som analyseras, eller om sådan relation annars är relevant för bedömningen av analysens objektivitet, ska detta anges tydligt i anslutning till analysen.
+              Läs mer på sidan <Link to="/aktieinnehav-och-intressekonflikter" className="text-primary hover:underline font-semibold">Aktieinnehav och intressekonflikter</Link>.
             </p>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-serif font-bold text-foreground">7. Informationens riktighet och ansvarsbegränsning</h2>
+            <h2 className="text-2xl font-serif font-bold text-foreground">6. Informationens riktighet och ansvarsbegränsning</h2>
             <p>
               Börsanalys.se strävar efter att informationen på webbplatsen ska vara korrekt, tydlig och baserad på tillförlitliga offentliga källor. Fel, fördröjningar, ändrade marknadsuppgifter eller ofullständigheter kan dock förekomma.
             </p>
@@ -134,7 +96,7 @@ export default function Terms() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-serif font-bold text-foreground">8. Immateriella rättigheter</h2>
+            <h2 className="text-2xl font-serif font-bold text-foreground">7. Immateriella rättigheter</h2>
             <p>
               Allt innehåll på webbplatsen, inklusive texter, analyser, tabeller, grafik, design, logotyper och annat redaktionellt material, tillhör Börsanalys.se eller dess licensgivare och är skyddat enligt tillämplig upphovsrättslagstiftning.
             </p>
@@ -144,7 +106,7 @@ export default function Terms() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-serif font-bold text-foreground">9. Användarkonto</h2>
+            <h2 className="text-2xl font-serif font-bold text-foreground">8. Användarkonto</h2>
             <p>
               Om du skapar ett konto på Börsanalys.se ansvarar du för att hålla dina inloggningsuppgifter säkra och för aktivitet som sker genom ditt konto.
             </p>
@@ -154,21 +116,21 @@ export default function Terms() {
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-serif font-bold text-foreground">10. Ändringar av villkoren</h2>
+            <h2 className="text-2xl font-serif font-bold text-foreground">9. Ändringar av villkoren</h2>
             <p>
               Börsanalys.se kan uppdatera dessa villkor från tid till annan. Den senaste versionen finns alltid publicerad på denna sida tillsammans med datum för senaste uppdatering.
             </p>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-serif font-bold text-foreground">11. Kontakt</h2>
+            <h2 className="text-2xl font-serif font-bold text-foreground">10. Kontakt</h2>
             <p>
               Frågor om användarvillkor, analyser, metod, källor eller redovisade intressekonflikter kan skickas till:
             </p>
-            <p>
-              Börsanalys.se<br />
-              Carl Fredrik Thor<br />
-              <a href="mailto:carl@borsanalys.se" className="text-primary hover:underline">carl@borsanalys.se</a>
+            <p className="bg-muted/10 border border-border/60 p-6 rounded-2xl shadow-inner max-w-sm">
+              <strong className="text-foreground text-sm uppercase tracking-widest block mb-2">Börsanalys.se</strong>
+              <span className="font-bold text-foreground block mb-1">Carl Fredrik Thor</span>
+              <a href="mailto:carl@borsanalys.se" className="text-primary hover:underline font-bold">carl@borsanalys.se</a>
             </p>
           </section>
 

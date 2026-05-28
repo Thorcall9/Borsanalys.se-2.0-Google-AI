@@ -3,6 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const handelsbanken2025: AnalysisData = {
   slug: "handelsbanken-2025",
   title: "Svenska Handelsbanken AB",
+  disclosureKey: "handelsbanken",
   ticker: "SHB A",
   market: "Nasdaq Stockholm Large Cap",
   sector: "Bank & Finans",

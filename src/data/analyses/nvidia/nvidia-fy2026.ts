@@ -3,6 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const nvidiaFy2026: AnalysisData = {
   slug: "nvidia-fy2026",
   title: "NVIDIA Corporation",
+  disclosureKey: "nvidia",
   ticker: "NVDA",
   market: "NASDAQ",
   sector: "Halvledare & AI-infrastruktur",

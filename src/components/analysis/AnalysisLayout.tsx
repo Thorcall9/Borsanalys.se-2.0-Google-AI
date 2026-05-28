@@ -3,9 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Menu, X, ArrowLeft, Star, StarOff, Loader2 } from 'lucide-react';
 
-import AnalysisDisclaimer from './AnalysisDisclaimer';
-import { AnalysisData } from '../../data/analyses';
 import NextAnalysisButton from './NextAnalysisButton';
+import { AnalysisData } from '../../types/analysis.js';
 
 export interface AnalysisSection {
   id: string;
@@ -260,12 +259,8 @@ export default function AnalysisLayout({
           )}
           {children}
 
+
           {nextAnalysis && <NextAnalysisButton analysis={nextAnalysis} />}
-
-          <div className="mt-20 border-t border-border/50 pt-16">
-
-            <AnalysisDisclaimer theme={theme} />
-          </div>
         </div>
       </main>
     </div>

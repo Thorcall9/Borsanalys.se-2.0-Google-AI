@@ -7,13 +7,13 @@ const directHoldings = [
   { company: "Investor AB", instrument: "Investor B", type: "Direkt innehav" },
   { company: "New Wave Group AB", instrument: "New Wave B", type: "Direkt innehav" },
   { company: "RVRC Holding AB / RevolutionRace", instrument: "Aktie", type: "Direkt innehav" },
-  { company: "Alphabet Inc.", instrument: "Alphabet A", type: "Direkt innehav" },
+  { company: "Alphabet Inc.", instrument: "Alphabet Class A", type: "Direkt innehav" },
   { company: "Bahnhof AB", instrument: "Bahnhof B", type: "Direkt innehav" },
   { company: "AQ Group AB", instrument: "Aktie", type: "Direkt innehav" },
   { company: "Inwido AB", instrument: "Aktie", type: "Direkt innehav" },
   { company: "Microsoft Corporation", instrument: "Aktie", type: "Direkt innehav" },
   { company: "Taiwan Semiconductor Manufacturing Company", instrument: "ADR", type: "Direkt innehav" },
-  { company: "Nvidia Corporation", instrument: "Aktie", type: "Direkt innehav" },
+  { company: "NVIDIA Corporation", instrument: "Aktie", type: "Direkt innehav" },
   { company: "Apple Inc.", instrument: "Aktie", type: "Direkt innehav" },
   { company: "Amazon.com, Inc.", instrument: "Aktie", type: "Direkt innehav" },
   { company: "Europris ASA", instrument: "Aktie", type: "Direkt innehav" },
@@ -34,7 +34,10 @@ export default function Holdings() {
     <div className="max-w-4xl mx-auto px-6 py-20 space-y-12">
       <Helmet>
         <title>Aktieinnehav och intressekonflikter | Börsanalys.se</title>
-        <meta name="description" content="Redovisning av aktieinnehav och potentiella intressekonflikter för Börsanalys.se" />
+        <meta 
+          name="description" 
+          content="Redovisning av författarens aktieinnehav, fondinnehav, indirekta exponeringar och relevanta intressekonflikter för analyser på Börsanalys.se." 
+        />
       </Helmet>
 
       <motion.div 
@@ -43,21 +46,22 @@ export default function Holdings() {
         className="space-y-8"
       >
         <div className="space-y-4">
-          <h1 className="text-5xl font-serif font-bold tracking-tight">Aktieinnehav och intressekonflikter</h1>
-          <p className="text-muted-foreground">Senast uppdaterad: 28 maj 2026 kl. 23:26</p>
+          <h1 className="text-5xl font-serif font-bold tracking-tight text-foreground">Aktieinnehav och intressekonflikter</h1>
+          <p className="text-muted-foreground font-semibold">Senast uppdaterad: 28 maj 2026</p>
         </div>
 
-        <div className="prose prose-neutral dark:prose-invert max-w-none space-y-8 text-foreground/80 leading-relaxed">
+        <div className="prose prose-neutral dark:prose-invert max-w-none space-y-8 text-foreground/85 leading-relaxed">
+          
           <section className="space-y-4">
             <h2 className="text-2xl font-serif font-bold text-foreground">Om denna sida</h2>
             <p>
               Börsanalys.se publicerar analyser av noterade bolag och finansiella instrument. För att läsaren ska kunna bedöma analysernas objektivitet redovisas här författarens direktägda aktier, fondinnehav och relevanta kommersiella relationer.
             </p>
             <p>
-              Uppgifterna avser Carl Fredrik Thor, författare och ansvarig för analyserna på Börsanalys.se.
+              Uppgifterna avser <strong>Carl Fredrik Thor</strong>, författare och ansvarig för analyserna på Börsanalys.se.
             </p>
             <p>
-              Vid varje enskild bolagsanalys anges även om författaren har ett direkt eller relevant indirekt innehav i det analyserade bolaget vid analystillfället eller vid senaste väsentliga uppdatering.
+              Vid varje enskild bolagsanalys anges även om författaren har ett direkt eller relevant indirekt innehav i det analyserade bolaget enligt senast publicerad innehavsredovisning.
             </p>
           </section>
 
@@ -66,7 +70,7 @@ export default function Holdings() {
             <p>
               Författaren äger vid senaste uppdatering följande aktier eller aktierelaterade instrument:
             </p>
-            
+
             <div className="overflow-x-auto border border-border/80 rounded-2xl bg-muted/10 shadow-sm backdrop-blur-sm">
               <table className="min-w-full divide-y divide-border/60">
                 <thead>
@@ -79,9 +83,9 @@ export default function Holdings() {
                 <tbody className="divide-y divide-border/40 text-sm">
                   {directHoldings.map((holding, index) => (
                     <tr key={index} className="hover:bg-muted/20 transition-colors duration-150">
-                      <td className="px-6 py-3 font-semibold text-foreground">{holding.company}</td>
-                      <td className="px-6 py-3 text-muted-foreground">{holding.instrument}</td>
-                      <td className="px-6 py-3 text-muted-foreground">{holding.type}</td>
+                      <td className="px-6 py-3.5 font-bold text-foreground">{holding.company}</td>
+                      <td className="px-6 py-3.5 text-muted-foreground font-semibold">{holding.instrument}</td>
+                      <td className="px-6 py-3.5 text-muted-foreground font-semibold">{holding.type}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -106,26 +110,26 @@ export default function Holdings() {
                 <tbody className="divide-y divide-border/40 text-sm">
                   {fundHoldings.map((fund, index) => (
                     <tr key={index} className="hover:bg-muted/20 transition-colors duration-150">
-                      <td className="px-6 py-3 font-semibold text-foreground">{fund.name}</td>
-                      <td className="px-6 py-3 text-muted-foreground">{fund.exposure}</td>
+                      <td className="px-6 py-3.5 font-bold text-foreground">{fund.name}</td>
+                      <td className="px-6 py-3.5 text-muted-foreground font-semibold">{fund.exposure}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
 
-            <p>
+            <p className="mt-4">
               Fondinnehaven innebär att författaren kan ha indirekt exponering mot bolag som analyseras på Börsanalys.se. Fondinnehavens underliggande portföljbolag förändras över tid och följs inte löpande bolag för bolag i denna redovisning.
             </p>
             <p>
-              Om ett fondinnehav eller annat indirekt innehav bedöms vara särskilt relevant för en enskild analys ska detta anges direkt i den aktuella analysen.
+              Om ett fondinnehav eller annat indirekt innehav bedöms vara särskilt relevant för en enskild analys anges detta direkt i den aktuella analysen.
             </p>
           </section>
 
           <section className="space-y-4">
             <h2 className="text-2xl font-serif font-bold text-foreground">Relevant indirekt exponering</h2>
             <p>
-              Författaren äger aktier i Investor AB, som är en betydande ägare i several noterade bolag. När ett bolag analyseras där Investor AB är en väsentlig ägare kan detta innebära indirekt ekonomisk exponering för författaren. Sådan relevant indirekt exponering ska anges i anslutning till den aktuella analysen.
+              Författaren äger aktier i <strong>Investor AB</strong>, som är en betydande ägare i flera noterade bolag. När ett bolag analyseras där Investor AB är en väsentlig ägare kan detta innebära indirekt ekonomisk exponering för författaren. Sådan relevant indirekt exponering anges i anslutning till den aktuella analysen.
             </p>
           </section>
 
@@ -138,17 +142,20 @@ export default function Holdings() {
               Sådana annonser eller affiliatelänkar ska vara tydligt markerade och påverkar inte analysernas poängsättning, investeringsbeslut eller bedömda rimliga värde.
             </p>
             <p>
-              Om Börsanalys.se eller författaren har mottagit ersättning från, utfört uppdrag åt eller haft annan kommersiell relation direkt till ett analyserat bolag ska detta anges tydligt i anslutning till den aktuella analysen.
+              Om Börsanalys.se or författaren har mottagit ersättning från, utfört uppdrag åt eller haft annan kommersiell relation direkt till ett analyserat bolag ska detta anges tydligt i anslutning till den aktuella analysen.
             </p>
           </section>
 
           <section className="space-y-4">
-            <h2 className="text-2xl font-serif font-bold text-foreground">Handel och uppdateringar</h2>
+            <h2 className="text-2xl font-serif font-bold text-foreground">Förändringar i innehav</h2>
             <p>
               Författarens innehav kan förändras över tid. Denna sida visar innehaven vid angivet uppdateringsdatum.
             </p>
             <p>
-              Om författarens innehav i ett analyserat bolag förändras efter att en analys publicerats innebär det inte automatiskt att analysens tidigare bedömning har ändrats. Vid en väsentlig uppdatering av analysen ska däremot aktuell innehavsstatus framgå på nytt.
+              Om författaren äger, köper eller säljer aktier i ett bolag som analyseras på Börsanalys.se innebär det inte automatiskt att analysens tidigare bedömning har förändrats. Aktuell innehavsstatus redovisas på denna sida och, när det är relevant, i anslutning till respektive analys.
+            </p>
+            <p>
+              Vid eine väsentlig uppdatering av en analys ska aktuell uppgift om direkt eller relevant indirekt innehav framgå i analysens informationsruta.
             </p>
           </section>
 
@@ -157,12 +164,13 @@ export default function Holdings() {
             <p>
               Frågor om innehav, intressekonflikter eller kommersiella relationer kan skickas till:
             </p>
-            <p>
-              Börsanalys.se<br />
-              Carl Fredrik Thor<br />
-              <a href="mailto:carl@borsanalys.se" className="text-primary hover:underline font-medium">carl@borsanalys.se</a>
+            <p className="bg-muted/10 border border-border/60 p-6 rounded-2xl shadow-inner max-w-sm">
+              <strong className="text-foreground text-sm uppercase tracking-widest block mb-2">Börsanalys.se</strong>
+              <span className="font-bold text-foreground block mb-1">Carl Fredrik Thor</span>
+              <a href="mailto:carl@borsanalys.se" className="text-primary hover:underline font-bold">carl@borsanalys.se</a>
             </p>
           </section>
+
         </div>
       </motion.div>
     </div>

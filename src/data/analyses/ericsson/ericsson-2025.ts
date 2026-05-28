@@ -3,6 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const ericsson2025: AnalysisData = {
   slug: "ericsson",
   title: "Telefonaktiebolaget LM Ericsson",
+  disclosureKey: "ericsson",
   listTitle: "Ericsson",
   ticker: "ERIC B",
   market: "Large Cap Stockholm",

@@ -3,6 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const sbb: AnalysisData = {
   slug: "sbb",
   title: "SBB",
+  disclosureKey: "sbb",
   ticker: "SBB-B.ST",
   market: "Large Cap Stockholm",
   sector: "Fastigheter",

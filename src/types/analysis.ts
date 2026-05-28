@@ -165,6 +165,7 @@ export interface AnalysisData {
   
   // Custom View Logic
   deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea";
+  disclosureKey?: string;
 
   // Standardized structure from roadmap
   investmentCase?: string;

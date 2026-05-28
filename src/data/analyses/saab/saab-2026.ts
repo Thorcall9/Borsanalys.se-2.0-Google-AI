@@ -3,6 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const saab2026: AnalysisData = {
   slug: "saab-2026",
   title: "Saab AB – aktieanalys 2026",
+  disclosureKey: "saab",
   ticker: "SAAB B",
   isin: "SE0021921269",
   author: "Carl Fredrik Thor",

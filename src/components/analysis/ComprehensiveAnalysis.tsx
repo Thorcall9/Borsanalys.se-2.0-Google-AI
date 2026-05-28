@@ -35,7 +35,7 @@ import NordnetCTA from './NordnetCTA';
 import AdUnit from './AdUnit';
 import EditorialCallout from './EditorialCallout';
 import { MicrosoftSidebarExtras } from './MicrosoftSidebarExtras';
-
+import AnalysisDisclosure from './AnalysisDisclosure';
 interface ComprehensiveAnalysisProps {
   data: AnalysisData;
   isInWatchlist?: boolean;

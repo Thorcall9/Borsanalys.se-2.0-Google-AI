@@ -3,6 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const investorAb: AnalysisData = {
   slug: "investor-ab",
   title: "Investor AB",
+  disclosureKey: "investor",
   ticker: "INVE-B.ST",
   market: "Large Cap Stockholm",
   sector: "Investmentbolag",

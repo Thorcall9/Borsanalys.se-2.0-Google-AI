@@ -3,6 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const newWaveGroup2025: AnalysisData = {
   slug: "new-wave-group-april-2026",
   title: "New Wave Group AB",
+  disclosureKey: "newWave",
   ticker: "NWG B",
   market: "Large Cap Stockholm",
   sector: "Profilkläder, sport & fritid, gåvor och heminredning",

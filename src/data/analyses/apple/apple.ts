@@ -3,6 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const apple: AnalysisData = {
   slug: "apple",
   title: "Apple Inc.",
+  disclosureKey: "apple",
   ticker: "AAPL",
   market: "NASDAQ",
   sector: "Konsumentelektronik",

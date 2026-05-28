@@ -3,6 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const nibe2026: AnalysisData = {
   slug: "nibe-industrier-2026",
   title: "NIBE Industrier AB",
+  disclosureKey: "nibe",
   ticker: "NIBE B",
   deepDiveComponent: "Nibe",
   market: "NASDAQ STOCKHOLM LARGE CAP",

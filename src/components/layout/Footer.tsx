@@ -131,7 +131,7 @@ export default function Footer() {
         <div className="flex flex-wrap justify-center gap-6 md:gap-10">
           <Link to="/integritet" className="text-[11px] font-bold text-muted-foreground/50 uppercase tracking-widest hover:text-primary transition-colors">Integritetspolicy</Link>
           <Link to="/villkor" className="text-[11px] font-bold text-muted-foreground/50 uppercase tracking-widest hover:text-primary transition-colors">Användarvillkor</Link>
-          <Link to="/innehav" className="text-[11px] font-bold text-muted-foreground/50 uppercase tracking-widest hover:text-primary transition-colors">Aktieinnehav & intressekonflikter</Link>
+          <Link to="/aktieinnehav-och-intressekonflikter" className="text-[11px] font-bold text-muted-foreground/50 uppercase tracking-widest hover:text-primary transition-colors">Aktieinnehav & intressekonflikter</Link>
         </div>
       </div>
     </footer>
