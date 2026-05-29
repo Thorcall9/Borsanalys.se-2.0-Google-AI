@@ -227,7 +227,7 @@ export default function AnalysisLayout({
       )}
 
       {/* Main Content */}
-      <main className={`flex-1 ${hideSidebar ? '' : wideSidebar ? 'lg:ml-80' : 'lg:ml-72'} min-w-0 bg-background`}>
+      <main className={`flex-1 ${hideSidebar ? '' : wideSidebar ? 'lg:ml-80' : 'lg:ml-72'} min-w-0 max-w-full overflow-x-hidden bg-background`}>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12 lg:py-24">
           {priceDiff && (
             <motion.div 

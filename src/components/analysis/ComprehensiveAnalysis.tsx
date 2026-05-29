@@ -181,9 +181,13 @@ export default function ComprehensiveAnalysis({
       {/* Main Title Header */}
       <div className="mb-20 space-y-12">
         <div className="space-y-4">
-          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.4em] flex items-center gap-2">
-            <Globe size={12} className="text-primary" />
-            {data.market} · {data.ticker} · {data.sector}
+          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.15em] sm:tracking-[0.4em] flex flex-wrap items-center gap-x-2 gap-y-1 leading-relaxed">
+            <Globe size={12} className="text-primary shrink-0" />
+            <span>{data.market}</span>
+            <span className="opacity-40">·</span>
+            <span>{data.ticker}</span>
+            <span className="opacity-40">·</span>
+            <span>{data.sector}</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] text-foreground">
             {data.title}
@@ -253,7 +257,7 @@ export default function ComprehensiveAnalysis({
                     )}
                   </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
                     {points.map((p, i) => {
                       const [label, val] = p.split(':');
                       return (

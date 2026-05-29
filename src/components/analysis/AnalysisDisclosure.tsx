@@ -111,71 +111,73 @@ export default function AnalysisDisclosure({
 
               {/* Facts Table */}
               <div className="border border-border/80 rounded-2xl bg-muted/10 overflow-hidden shadow-inner">
-                <table className="w-full text-left text-xs md:text-sm border-collapse">
-                  <thead>
-                    <tr className="bg-muted/30 border-b border-border/60">
-                      <th className="px-6 py-3 font-black uppercase tracking-wider text-muted-foreground/80">Uppgift</th>
-                      <th className="px-6 py-3 font-black uppercase tracking-wider text-muted-foreground/80">Värde</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-border/40 font-semibold text-foreground/95">
-                    <tr className="hover:bg-muted/5 transition-colors">
-                      <td className="px-6 py-3.5 text-muted-foreground font-medium">Författare</td>
-                      <td className="px-6 py-3.5 flex items-center gap-2">
-                        <Award size={14} className="text-primary" />
-                        <span>Carl Fredrik Thor, Börsanalys.se</span>
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-muted/5 transition-colors">
-                      <td className="px-6 py-3.5 text-muted-foreground font-medium">Analysdatum</td>
-                      <td className="px-6 py-3.5 flex items-center gap-2">
-                        <Calendar size={14} className="text-primary" />
-                        <span>{analysisDate || "Ej angivet"}</span>
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-muted/5 transition-colors">
-                      <td className="px-6 py-3.5 text-muted-foreground font-medium">Senast väsentligt uppdaterad</td>
-                      <td className="px-6 py-3.5 flex items-center gap-2">
-                        <Calendar size={14} className="text-primary" />
-                        <span>{updatedAt || "Ej väsentligt uppdaterad efter publicering"}</span>
-                      </td>
-                    </tr>
-                    {analysisPrice && (
+                <div className="overflow-x-auto premium-scrollbar">
+                  <table className="w-full text-left text-xs md:text-sm border-collapse min-w-[500px] md:min-w-0">
+                    <thead>
+                      <tr className="bg-muted/30 border-b border-border/60">
+                        <th className="px-6 py-3 font-black uppercase tracking-wider text-muted-foreground/80">Uppgift</th>
+                        <th className="px-6 py-3 font-black uppercase tracking-wider text-muted-foreground/80">Värde</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-border/40 font-semibold text-foreground/95">
                       <tr className="hover:bg-muted/5 transition-colors">
-                        <td className="px-6 py-3.5 text-muted-foreground font-medium">Analyspris</td>
+                        <td className="px-6 py-3.5 text-muted-foreground font-medium">Författare</td>
                         <td className="px-6 py-3.5 flex items-center gap-2">
-                          <DollarSign size={14} className="text-primary" />
-                          <span>{analysisPrice}</span>
+                          <Award size={14} className="text-primary" />
+                          <span>Carl Fredrik Thor, Börsanalys.se</span>
                         </td>
                       </tr>
-                    )}
-                    {recommendation && (
                       <tr className="hover:bg-muted/5 transition-colors">
-                        <td className="px-6 py-3.5 text-muted-foreground font-medium">Investeringsbeslut</td>
+                        <td className="px-6 py-3.5 text-muted-foreground font-medium">Analysdatum</td>
+                        <td className="px-6 py-3.5 flex items-center gap-2">
+                          <Calendar size={14} className="text-primary" />
+                          <span>{analysisDate || "Ej angivet"}</span>
+                        </td>
+                      </tr>
+                      <tr className="hover:bg-muted/5 transition-colors">
+                        <td className="px-6 py-3.5 text-muted-foreground font-medium">Senast väsentligt uppdaterad</td>
+                        <td className="px-6 py-3.5 flex items-center gap-2">
+                          <Calendar size={14} className="text-primary" />
+                          <span>{updatedAt || "Ej väsentligt uppdaterad efter publicering"}</span>
+                        </td>
+                      </tr>
+                      {analysisPrice && (
+                        <tr className="hover:bg-muted/5 transition-colors">
+                          <td className="px-6 py-3.5 text-muted-foreground font-medium">Analyspris</td>
+                          <td className="px-6 py-3.5 flex items-center gap-2">
+                            <DollarSign size={14} className="text-primary" />
+                            <span>{analysisPrice}</span>
+                          </td>
+                        </tr>
+                      )}
+                      {recommendation && (
+                        <tr className="hover:bg-muted/5 transition-colors">
+                          <td className="px-6 py-3.5 text-muted-foreground font-medium">Investeringsbeslut</td>
+                          <td className="px-6 py-3.5 flex items-center gap-2">
+                            <Activity size={14} className="text-primary" />
+                            <span className="font-black text-primary">{recommendation}</span>
+                          </td>
+                        </tr>
+                      )}
+                      {fairValue && (
+                        <tr className="hover:bg-muted/5 transition-colors">
+                          <td className="px-6 py-3.5 text-muted-foreground font-medium">Rimligt värde</td>
+                          <td className="px-6 py-3.5 flex items-center gap-2">
+                            <DollarSign size={14} className="text-primary" />
+                            <span>{fairValue}</span>
+                          </td>
+                        </tr>
+                      )}
+                      <tr className="hover:bg-muted/5 transition-colors">
+                        <td className="px-6 py-3.5 text-muted-foreground font-medium">Tidshorisont</td>
                         <td className="px-6 py-3.5 flex items-center gap-2">
                           <Activity size={14} className="text-primary" />
-                          <span className="font-black text-primary">{recommendation}</span>
+                          <span>{timeHorizon}</span>
                         </td>
                       </tr>
-                    )}
-                    {fairValue && (
-                      <tr className="hover:bg-muted/5 transition-colors">
-                        <td className="px-6 py-3.5 text-muted-foreground font-medium">Rimligt värde</td>
-                        <td className="px-6 py-3.5 flex items-center gap-2">
-                          <DollarSign size={14} className="text-primary" />
-                          <span>{fairValue}</span>
-                        </td>
-                      </tr>
-                    )}
-                    <tr className="hover:bg-muted/5 transition-colors">
-                      <td className="px-6 py-3.5 text-muted-foreground font-medium">Tidshorisont</td>
-                      <td className="px-6 py-3.5 flex items-center gap-2">
-                        <Activity size={14} className="text-primary" />
-                        <span>{timeHorizon}</span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
               {/* Holdings & Conflicts of Interest */}
