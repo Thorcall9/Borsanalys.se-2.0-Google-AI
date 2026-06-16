@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Star, TrendingUp, TrendingDown, Minus, AlertTriangle, Zap, Shield, BarChart3, Target } from "lucide-react";
 import SEO from "../SEO";
@@ -584,7 +584,7 @@ export default function ABBDeepDive({ data, onToggleWatchlist, isInWatchlist, is
         </section>
 
         <NordnetCTA />
-        <AdUnit variant="analysis-bottom" />
+        <AdUnit variant="footer-multiplex" />
 
         {/* DISCLAIMER */}
         <AnalysisDisclaimer />
