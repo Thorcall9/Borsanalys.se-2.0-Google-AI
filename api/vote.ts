@@ -1,23 +1,17 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { enforceMethods, escapeHtml, rateLimit } from './_security';
 
-// In-memory rate limiting (Note: in serverless this is per-instance, but still mitigates simple spam)
-const rateLimitMap = new Map<string, number>();
+const tickerPattern = /^[a-z0-9.-]{1,20}$/i;
+const sourcePattern = /^[a-z0-9_-]{1,40}$/i;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  const ip = (req.headers['x-forwarded-for'] as string) || 'unknown';
-  const now = Date.now();
-  if (ip !== 'unknown') {
-    const lastVote = rateLimitMap.get(ip) || 0;
-    if (now - lastVote < 60000) { // 1 vote per minute per IP per instance
-      return res.status(429).send("För många försök. Vänligen vänta en minut innan du röstar igen.");
-    }
-    rateLimitMap.set(ip, now);
-  }
+  if (!enforceMethods(req, res, ['GET'])) return;
+  if (!rateLimit(req, res, 'vote', { windowMs: 60 * 1000, max: 1 })) return;
 
   // Capture stock and source from query
   const { stock, source } = req.query;
 
-  if (!stock || typeof stock !== 'string' || stock.trim() === '') {
+  if (!stock || typeof stock !== 'string' || !tickerPattern.test(stock.trim())) {
     return res.status(400).send(`
       <html>
         <head><title>Börsanalys.se - Röstning</title></head>
@@ -31,7 +25,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const normalizedStock = stock.trim().toLowerCase();
-  const voteSource = typeof source === 'string' ? source : 'email';
+  const voteSource = typeof source === 'string' && sourcePattern.test(source) ? source : 'email';
+  const displayStock = escapeHtml(normalizedStock.toUpperCase());
 
   try {
     // Dynamic Prisma import for better Serverless Function compatibility
@@ -60,7 +55,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           <div style="background: white; padding: 2.5rem; border-radius: 1rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); max-width: 90%; width: 400px;">
             <div style="font-size: 3rem; margin-bottom: 1rem;">📈</div>
             <h1 style="color: #1a365d; margin-bottom: 1rem; font-size: 1.5rem;">Tack för din röst!</h1>
-            <p style="line-height: 1.6; margin-bottom: 2rem;">Vi har registrerat ditt intresse för <strong>${normalizedStock.toUpperCase()}</strong>. Vi använder detta för att prioritera nästa analys.</p>
+            <p style="line-height: 1.6; margin-bottom: 2rem;">Vi har registrerat ditt intresse för <strong>${displayStock}</strong>. Vi använder detta för att prioritera nästa analys.</p>
             <a href="https://borsanalys.se" style="display: inline-block; background: #2b6cb0; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; text-decoration: none; font-weight: 600; transition: background 0.2s;">Tillbaka till Börsanalys.se</a>
           </div>
         </body>

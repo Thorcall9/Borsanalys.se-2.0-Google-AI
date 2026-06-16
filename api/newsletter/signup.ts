@@ -1,16 +1,12 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
+import { applyCors, enforceBodyLimit, enforceMethods, rateLimit } from '../_security';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Only allow POST
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  // CORS headers
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  if (!applyCors(req, res, ['POST', 'OPTIONS'])) return;
+  if (!enforceMethods(req, res, ['POST'])) return;
+  if (!enforceBodyLimit(req, res, 2048)) return;
+  if (!rateLimit(req, res, 'newsletter-signup', { windowMs: 60 * 60 * 1000, max: 10 })) return;
 
   // Strict email validation with Zod
   const emailSchema = z.string().email({ message: 'Ogiltig e-postadress. Vänligen kontrollera formatet.' });
@@ -20,7 +16,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: parsed.error.issues[0].message });
   }
 
-  const email = parsed.data;
+  const email = parsed.data.toLowerCase();
 
   try {
     // Save to Neon (via Prisma) — requires DATABASE_URL env var in Vercel
