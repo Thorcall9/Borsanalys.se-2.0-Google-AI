@@ -42,7 +42,7 @@ function ArticleBox({ children }: { children: React.ReactNode }) {
 }
 
 function Paragraph({ children }: { children: React.ReactNode }) {
-  return <p className="text-[15px] leading-[1.75] text-muted-foreground">{children}</p>;
+  return <p className="text-[15px] leading-[1.75] text-slate-800 dark:text-slate-100">{children}</p>;
 }
 
 function DataTable({
@@ -56,7 +56,7 @@ function DataTable({
 }) {
   return (
     <div className="overflow-x-auto my-5">
-      <table className="w-full border-collapse text-[13.5px]">
+      <table className="w-full border-collapse text-[13.5px] text-slate-900 dark:text-slate-100">
         <thead>
           <tr className="bg-foreground text-background">
             {headers.map((header) => (
@@ -70,7 +70,7 @@ function DataTable({
           {rows.map((row, rowIndex) => (
             <tr key={rowIndex} className={rowIndex % 2 === 1 ? "bg-muted/20" : ""}>
               {row.map((cell, cellIndex) => (
-                <td key={cellIndex} className={`${cellIndex > 0 ? "text-right" : ""} p-2.5 font-mono text-[13px]`}>
+                <td key={cellIndex} className={`${cellIndex > 0 ? "text-right" : ""} p-2.5 font-mono text-[13px] ${cellIndex === 0 ? "font-bold" : "font-medium"}`}>
                   {cell}
                 </td>
               ))}
@@ -78,7 +78,7 @@ function DataTable({
           ))}
         </tbody>
       </table>
-      {note && <div className="font-mono text-[11px] text-muted-foreground mt-2">{note}</div>}
+      {note && <div className="font-mono text-[11px] font-semibold text-slate-700 dark:text-slate-200 mt-2">{note}</div>}
     </div>
   );
 }
@@ -155,9 +155,9 @@ export default function ABBDeepDive({
         <div className="max-w-7xl mx-auto px-6 md:px-10 grid grid-cols-4 sm:grid-cols-7">
           {allScores.map(({ key, val, max }, index) => (
             <div key={key} className={`py-4 text-center ${index !== allScores.length - 1 ? "border-r border-white/10" : ""}`}>
-              <div className="font-mono text-[7.5px] uppercase tracking-[0.12em] text-white/70 mb-1.5">{key}</div>
+              <div className="font-mono text-[8px] uppercase tracking-[0.12em] text-white/90 mb-1.5">{key}</div>
               <div className="font-serif text-xl leading-none text-white">
-                {val}<span className="text-[10px] text-white/50 font-mono">/{max}</span>
+                {val}<span className="text-[10px] text-white/80 font-mono">/{max}</span>
               </div>
             </div>
           ))}
@@ -182,9 +182,9 @@ export default function ABBDeepDive({
             ["ROCE", "27,2 %", "Q1 2026"],
           ].map(([label, value, note], index) => (
             <AnalysisCard key={label} className={`p-6 ${index === 2 ? "border-2 border-red-200" : ""}`}>
-              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest block mb-2">{label}</span>
+              <span className="text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-widest block mb-2">{label}</span>
               <div className="text-2xl font-black" style={index >= 2 ? { color: ACCENT } : undefined}>{value}</div>
-              <span className="text-xs text-muted-foreground mt-1 block">{note}</span>
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 mt-1 block">{note}</span>
             </AnalysisCard>
           ))}
         </div>
@@ -205,7 +205,7 @@ export default function ABBDeepDive({
                 Idag har bolaget cirka 105 000 anställda och är verksamt i över 100 länder.
               </Paragraph>
               <Paragraph><strong>Affärsområden:</strong></Paragraph>
-              <ul className="list-disc pl-5 space-y-2 text-[15px] text-muted-foreground">
+              <ul className="list-disc pl-5 space-y-2 text-[15px] font-medium leading-relaxed text-slate-800 dark:text-slate-100">
                 <li><strong>Electrification (ca 53 % av omsättningen):</strong> Eldistribution, låg- och mellanspänningsprodukter, datacenterinfrastruktur och e-mobility. Ordertillväxt +44 % jämförbart i Q1 2026.</li>
                 <li><strong>Motion (ca 25 %):</strong> Motorer, drivsystem och generatorer. Tillväxt +9 % jämförbart, men marginalen sjönk till 18,5 % på grund av Gamesa och High Power.</li>
                 <li><strong>Automation (ca 25 %):</strong> System för processtyrning, digitalisering och marin. Ordertillväxt +5 % jämförbart och påverkan från cykliska slutmarknader.</li>
@@ -244,7 +244,7 @@ export default function ABBDeepDive({
                   <div className={`font-black text-sm uppercase tracking-widest mb-4 ${color}`}>{title}</div>
                   <ul className="space-y-2">
                     {(items as string[]).map((item) => (
-                      <li key={item} className="flex items-start gap-2 text-sm font-medium text-foreground/80">
+                      <li key={item} className="flex items-start gap-2 text-sm font-semibold leading-relaxed text-slate-800 dark:text-slate-100">
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: ACCENT }} />
                         {item}
                       </li>
@@ -332,7 +332,7 @@ export default function ABBDeepDive({
               <Paragraph>
                 <strong>Höjd guidance efter Q1:</strong> ABB förväntar sig nu hög ensiffrig till låg tvåsiffrig procent i jämförbar omsättningstillväxt för helåret 2026, upp från tidigare 6-9 %. Operationell EBITA-marginal ska förbättras år över år även exklusive fastighetsvinsten.
               </Paragraph>
-              <ul className="list-disc pl-5 space-y-2 text-[15px] text-muted-foreground">
+              <ul className="list-disc pl-5 space-y-2 text-[15px] font-medium leading-relaxed text-slate-800 dark:text-slate-100">
                 <li><strong>AI-datacenter och elnät:</strong> Electrification hade tvåsiffrig ordertillväxt i alla regioner.</li>
                 <li><strong>Orderbok 27,5 md USD:</strong> Ger god visibilitet för kommande 4-5 kvartal.</li>
                 <li><strong>Förvärv:</strong> Nettoskuld/EBITDA 0,3x ger utrymme för bolt-on förvärv.</li>
@@ -361,7 +361,7 @@ export default function ABBDeepDive({
                   <AlertTriangle size={16} className="shrink-0 mt-0.5" style={{ color: ACCENT }} />
                   <div>
                     <div className="text-sm font-black">{title}</div>
-                    <p className="text-xs text-muted-foreground font-medium mt-1">{note}</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-200 font-semibold leading-relaxed mt-1">{note}</p>
                   </div>
                 </div>
               ))}
@@ -377,7 +377,7 @@ export default function ABBDeepDive({
               <Paragraph>
                 <strong>Morten Wierod, VD sedan 2023:</strong> Har fokuserat portföljen på kärnverksamheten och stärkt marginalprofilerna. Kommunikationen är tydlig och transparent.
               </Paragraph>
-              <ul className="list-disc pl-5 space-y-2 text-[15px] text-muted-foreground">
+              <ul className="list-disc pl-5 space-y-2 text-[15px] font-medium leading-relaxed text-slate-800 dark:text-slate-100">
                 <li><strong>Utdelning:</strong> cirka 11,10 SEK per aktie. Direktavkastning 1,12 %.</li>
                 <li><strong>Återköp:</strong> Program på upp till 2 md USD löper till januari 2027. Cirka 225 MUSD återköptes i Q1 2026.</li>
                 <li><strong>Investeringar:</strong> 75 MUSD i indiska fabriker och FoU.</li>
@@ -401,11 +401,11 @@ export default function ABBDeepDive({
           </div>
 
           <div className="relative overflow-hidden bg-card border-2 rounded-[3rem] p-10 md:p-12 text-center mt-8 mb-8 shadow-2xl" style={{ borderColor: `${ACCENT}33` }}>
-            <div className="text-[10px] font-black tracking-[0.4em] text-muted-foreground/50 uppercase mb-8">Investeringsbeslut</div>
+            <div className="text-[10px] font-black tracking-[0.4em] text-slate-600 dark:text-slate-300 uppercase mb-8">Investeringsbeslut</div>
             <div className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none mb-4" style={{ color: ACCENT }}>BEVAKA</div>
             <div className="text-2xl md:text-4xl font-black tracking-tighter mb-3" style={{ color: ACCENT }}>Baskurs: 878 SEK</div>
-            <div className="text-sm font-black uppercase tracking-widest text-muted-foreground mb-10">Köpzon: 800-850 SEK</div>
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto font-medium italic">
+            <div className="text-sm font-black uppercase tracking-widest text-slate-700 dark:text-slate-200 mb-10">Köpzon: 800-850 SEK</div>
+            <p className="text-base md:text-lg text-slate-800 dark:text-slate-100 leading-relaxed max-w-2xl mx-auto font-semibold italic">
               "Konsensus EPS x forward P/E = exakt 991 SEK idag. Utan multipelkompression eller vinstöverraskning ger nuläget ingen meningsfull uppsida."
             </p>
           </div>
@@ -451,10 +451,10 @@ export default function ABBDeepDive({
               },
             ].map((item) => (
               <div key={item.num} className="flex gap-4 py-3.5 border-b border-border last:border-b-0 items-start">
-                <div className="font-mono text-[11px] text-muted-foreground shrink-0 pt-0.5 w-6">{item.num}</div>
+                <div className="font-mono text-[11px] font-black text-slate-600 dark:text-slate-300 shrink-0 pt-0.5 w-6">{item.num}</div>
                 <div>
                   <div className="font-semibold mb-1 text-[14px]">{item.title}</div>
-                  <div className="text-[13px] text-muted-foreground leading-[1.55]">{item.text}</div>
+                  <div className="text-[13px] font-medium text-slate-700 dark:text-slate-200 leading-[1.6]">{item.text}</div>
                 </div>
               </div>
             ))}
@@ -465,7 +465,7 @@ export default function ABBDeepDive({
 
         <section id="scenarier" className="scroll-mt-24 pb-12">
           <SectionHeader number="Sektion IX" title="Scenarier: Bull, Bas & Bear" accentColor={ACCENT} />
-          <p className="text-sm text-muted-foreground mb-6 font-medium">
+          <p className="text-sm text-slate-800 dark:text-slate-100 mb-6 font-semibold">
             Baserat på EPS-estimat 2026 och scenarioanpassad P/E. Historisk P/E: <strong>26,9x</strong>. Nuvarande: <strong>38,7x</strong>.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 my-8">
@@ -478,8 +478,8 @@ export default function ABBDeepDive({
                   </span>
                 </div>
                 <div className="font-serif text-4xl mb-2 leading-none" style={{ color: scenario.type === "bull" ? ACCENT : undefined }}>{scenario.value}</div>
-                <div className="font-mono text-[10px] text-muted-foreground mb-6">{scenario.change} från 991 SEK</div>
-                <p className="text-xs text-muted-foreground leading-relaxed font-medium">{scenario.description}</p>
+                <div className="font-mono text-[10px] font-bold text-slate-600 dark:text-slate-300 mb-6">{scenario.change} från 991 SEK</div>
+                <p className="text-xs text-slate-700 dark:text-slate-200 leading-relaxed font-semibold">{scenario.description}</p>
               </div>
             ))}
           </div>
@@ -515,7 +515,7 @@ export default function ABBDeepDive({
             <Link to={`/analys/${nextAnalysis.slug}`} className="group flex items-center justify-between bg-card border border-border rounded-2xl p-6 hover:border-primary/50 hover:shadow-lg transition-all">
               <div>
                 <div className="text-lg font-black tracking-tighter group-hover:text-primary transition-colors">{nextAnalysis.title}</div>
-                <div className="text-xs text-muted-foreground font-medium mt-1">{nextAnalysis.ticker} · {nextAnalysis.recommendation}</div>
+                <div className="text-xs text-slate-700 dark:text-slate-200 font-semibold mt-1">{nextAnalysis.ticker} · {nextAnalysis.recommendation}</div>
               </div>
               <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
                 <ArrowLeft size={18} className="rotate-180" />
