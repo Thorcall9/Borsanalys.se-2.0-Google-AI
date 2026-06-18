@@ -10,6 +10,17 @@ import { SectionHeader, RatingBox, Card as AnalysisCard, FadeIn as AnalysisFadeI
 
 const ACCENT = "#CC0000";
 
+const ABB_READING_THEME = {
+  "--background": "#f6f4f1",
+  "--foreground": "#211d1a",
+  "--card": "#fffdfa",
+  "--card-foreground": "#211d1a",
+  "--border": "#dedbd6",
+  "--muted": "#ebe7e2",
+  "--muted-foreground": "#625c56",
+  "--section-alt": "#f1eee9",
+} as React.CSSProperties;
+
 const allScores = [
   { key: "Affärsmodell", val: 4.5, max: 5 },
   { key: "Strategisk Moat", val: 4.0, max: 5 },
@@ -100,7 +111,10 @@ export default function ABBDeepDive({
   if (!mounted) return null;
 
   return (
-    <div className="min-h-screen bg-background font-sans text-foreground pt-16">
+    <div
+      className="min-h-screen bg-background font-sans text-foreground pt-16"
+      style={ABB_READING_THEME}
+    >
       <SEO title="Analys: ABB Ltd (ABB.ST) - Q1 2026" description={data.summary} />
 
       <div className="w-full text-white py-8 md:py-10 px-6 md:px-10" style={{ background: `linear-gradient(135deg, #991400 0%, ${ACCENT} 100%)` }}>
