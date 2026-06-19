@@ -2774,9 +2774,9 @@ export default function AxfoodDeepDive({
                           <div style={{ position: "absolute", left: 6, top: 4, bottom: 4, width: 2, background: "rgba(120,113,108,0.15)" }} />
 
                           {[
-                            { title: "Klas Balkow (VD)", text: "Köpte 1 500 aktier vid kurs 262,40 kr", date: "April 2026", color: "#10B981" },
+                            { title: "Klas Balkow (VD)", text: "Köpte 1 500 aktier vid kurs 262,40 kr (+3,3 % ökning av innehavet)", date: "April 2026", color: "#10B981" },
                             { title: "Utdelning utbetald", text: "Vårutdelning om 4,50 kr per aktie avstämd och utbetald", date: "Mars 2026", color: "#F59E0B" },
-                            { title: "Simone Margulies (vVD)", text: "Köpte 800 aktier vid kurs 265,10 kr", date: "Februari 2026", color: "#10B981" },
+                            { title: "Simone Margulies (vVD)", text: "Köpte 800 aktier vid kurs 265,10 kr (+5,1 % ökning av innehavet)", date: "Februari 2026", color: "#10B981" },
                           ].map((evt, idx) => (
                             <div key={idx} style={{ position: "relative" }}>
                               {/* Timeline dot */}
