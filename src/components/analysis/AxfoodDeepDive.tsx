@@ -513,6 +513,13 @@ export default function AxfoodDeepDive({
   nextAnalysis,
 }: AxfoodDeepDiveProps) {
   const [mounted, setMounted] = useState(false);
+  const [premiumUnlocked, setPremiumUnlocked] = useState(false);
+  const [isPaying, setIsPaying] = useState(false);
+  const [dcfGrowth, setDcfGrowth] = useState(4.5);
+  const [dcfMargin, setDcfMargin] = useState(4.0);
+  const [dcfWacc, setDcfWacc] = useState(7.5);
+  const [sharesCount, setSharesCount] = useState(100);
+
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 50);
     return () => clearTimeout(t);
@@ -1803,6 +1810,418 @@ export default function AxfoodDeepDive({
               </div>
             </div>
           </div>
+        </section>
+
+        {/* ── PREMIUM / PAYWALL SECTION ── */}
+        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(120,113,108,0.15)", paddingTop: 64 }}>
+          {!premiumUnlocked ? (
+            /* --- Paywall View --- */
+            <div
+              style={{
+                background: "linear-gradient(135deg, #FFFDF9 0%, #FAF6F0 100%)",
+                border: "2px solid #F59E0B",
+                borderRadius: 20,
+                padding: "40px 32px",
+                textAlign: "center",
+                maxWidth: 760,
+                margin: "0 auto",
+                boxShadow: "0 10px 30px rgba(245,158,11,0.08)",
+              }}
+            >
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: 54,
+                  height: 54,
+                  borderRadius: "50%",
+                  background: "rgba(245,158,11,0.1)",
+                  color: "#F59E0B",
+                  marginBottom: 20,
+                }}
+              >
+                <Zap size={28} />
+              </div>
+              
+              <h3 style={{ fontSize: 22, fontWeight: 900, color: "#1C1917", margin: "0 0 8px 0" }}>
+                Ta analysen till nästa nivå
+              </h3>
+              <p style={{ fontSize: 14, color: "#57534E", maxWidth: 480, margin: "0 auto 28px", lineHeight: 1.6 }}>
+                Lås upp de interaktiva värderingsverktygen och ladda ner analysfilerna för Axfood för endast 19 kr.
+              </p>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: 16,
+                  maxWidth: 540,
+                  margin: "0 auto 36px",
+                  textAlign: "left",
+                }}
+              >
+                {[
+                  "Interaktiv DCF-kalkylator (laborera med marginaler live)",
+                  "Utdelningssimulator (ränta-på-ränta & yield-on-cost)",
+                  "5-minuters ljudsammanfattning (.mp3 podd-format)",
+                  "Professionell PDF-rapport & Excel-modell för nedladdning",
+                ].map((feat, idx) => (
+                  <div key={idx} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                    <span style={{ color: "#10B981", fontWeight: "bold", fontSize: 16, lineHeight: 1 }}>✓</span>
+                    <span style={{ fontSize: 13, color: "#44403C", lineHeight: 1.4 }}>{feat}</span>
+                  </div>
+                ))}
+              </div>
+
+              <button
+                onClick={() => {
+                  setIsPaying(true);
+                  setTimeout(() => {
+                    setIsPaying(false);
+                    setPremiumUnlocked(true);
+                  }, 1500);
+                }}
+                disabled={isPaying}
+                style={{
+                  background: "#F59E0B",
+                  color: "#FFFFFF",
+                  border: "none",
+                  borderRadius: 99,
+                  padding: "16px 40px",
+                  fontSize: 15,
+                  fontWeight: 800,
+                  cursor: "pointer",
+                  boxShadow: "0 4px 14px rgba(245,158,11,0.4)",
+                  transition: "all 0.2s ease",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 10,
+                }}
+              >
+                {isPaying ? (
+                  <>
+                    <span className="animate-spin" style={{ display: "inline-block", width: 16, height: 16, border: "2px solid #fff", borderTopColor: "transparent", borderRadius: "50%" }} />
+                    Verifierar med Swish...
+                  </>
+                ) : (
+                  "Lås upp verktyg med Swish (19 kr)"
+                )}
+              </button>
+              
+              <div style={{ marginTop: 14, fontSize: 11, color: "#78716C" }}>
+                Säker direktbetalning via Swish. Ingen registrering krävs.
+              </div>
+            </div>
+          ) : (
+            /* --- Premium View (Unlocked) --- */
+            <div style={{ display: "flex", flexDirection: "column", gap: 48 }}>
+              {/* Unlock success banner */}
+              <div
+                style={{
+                  background: "rgba(16,185,129,0.06)",
+                  border: "1px solid rgba(16,185,129,0.25)",
+                  borderRadius: 16,
+                  padding: "20px 24px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                  gap: 16,
+                }}
+              >
+                <div>
+                  <h4 style={{ fontSize: 15, fontWeight: 800, color: "#10B981", margin: 0 }}>⚡ Premiumverktyg upplåsta!</h4>
+                  <p style={{ fontSize: 13, color: "#44403C", margin: "4px 0 0 0" }}>Du har nu full tillgång till kalkylatorerna och nedladdningarna nedan.</p>
+                </div>
+                <button
+                  onClick={() => setPremiumUnlocked(false)}
+                  style={{
+                    background: "transparent",
+                    border: "1px solid rgba(120,113,108,0.25)",
+                    borderRadius: 99,
+                    padding: "6px 14px",
+                    fontSize: 11,
+                    color: "#57534E",
+                    cursor: "pointer",
+                  }}
+                >
+                  Lås igen (testa flödet)
+                </button>
+              </div>
+
+              {/* 1. DCF Calculator */}
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(120,113,108,0.18)",
+                  borderRadius: 16,
+                  padding: 32,
+                  boxShadow: "0 4px 20px rgba(120,113,108,0.05)",
+                }}
+              >
+                <div style={{ borderBottom: "2px solid #F59E0B", paddingBottom: 16, marginBottom: 24 }}>
+                  <h3 style={{ fontSize: 18, fontWeight: 900, color: "#1C1917", margin: 0 }}>Interaktiv DCF-kalkylator (Kassaflödesmodell)</h3>
+                  <p style={{ fontSize: 13, color: "#57534E", margin: "4px 0 0 0" }}>Justera antagandena för att beräkna ett eget teoretiskt värde på Axfood-aktien.</p>
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }}>
+                  {/* Sliders */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+                    {/* Growth slider */}
+                    <div>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, fontSize: 13, fontWeight: 700, color: "#292524" }}>
+                        <span>Långsiktig tillväxt (YoY):</span>
+                        <span style={{ color: "#F59E0B", fontFamily: "JetBrains Mono, monospace" }}>{dcfGrowth.toFixed(1)} %</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="1"
+                        max="8"
+                        step="0.5"
+                        value={dcfGrowth}
+                        onChange={(e) => setDcfGrowth(parseFloat(e.target.value))}
+                        style={{ width: "100%", accentColor: "#F59E0B" }}
+                      />
+                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#78716C", marginTop: 4 }}>
+                        <span>1.0% (Stagnation)</span>
+                        <span>8.0% (Hög tillväxt)</span>
+                      </div>
+                    </div>
+
+                    {/* Margin slider */}
+                    <div>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, fontSize: 13, fontWeight: 700, color: "#292524" }}>
+                        <span>Långsiktig EBIT-marginal:</span>
+                        <span style={{ color: "#F59E0B", fontFamily: "JetBrains Mono, monospace" }}>{dcfMargin.toFixed(1)} %</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="3.0"
+                        max="5.5"
+                        step="0.1"
+                        value={dcfMargin}
+                        onChange={(e) => setDcfMargin(parseFloat(e.target.value))}
+                        style={{ width: "100%", accentColor: "#F59E0B" }}
+                      />
+                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#78716C", marginTop: 4 }}>
+                        <span>3.0% (Pressad)</span>
+                        <span>5.5% (Maximal exekvering)</span>
+                      </div>
+                    </div>
+
+                    {/* WACC slider */}
+                    <div>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, fontSize: 13, fontWeight: 700, color: "#292524" }}>
+                        <span>Avkastningskrav (WACC):</span>
+                        <span style={{ color: "#F59E0B", fontFamily: "JetBrains Mono, monospace" }}>{dcfWacc.toFixed(1)} %</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="6.0"
+                        max="11.0"
+                        step="0.5"
+                        value={dcfWacc}
+                        onChange={(e) => setDcfWacc(parseFloat(e.target.value))}
+                        style={{ width: "100%", accentColor: "#F59E0B" }}
+                      />
+                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#78716C", marginTop: 4 }}>
+                        <span>6.0% (Låg risk)</span>
+                        <span>11.0% (Hög risk)</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Calculations Result */}
+                  <div
+                    style={{
+                      background: "#FAF8F5",
+                      border: "1px solid rgba(120,113,108,0.15)",
+                      borderRadius: 12,
+                      padding: 24,
+                      textAlign: "center",
+                    }}
+                  >
+                    <div style={{ fontSize: 12, fontWeight: 800, color: "#78716C", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 8 }}>
+                      Beräknat teoretiskt värde
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "JetBrains Mono, monospace",
+                        fontSize: 48,
+                        fontWeight: 900,
+                        color: "#F59E0B",
+                        lineHeight: 1,
+                        marginBottom: 12,
+                      }}
+                    >
+                      {(() => {
+                        const nopat = 89152 * (dcfMargin / 100) * 0.794;
+                        const adjustedWacc = Math.max(dcfWacc, dcfGrowth + 0.5);
+                        const ev = (nopat * (1 + dcfGrowth / 100)) / ((adjustedWacc - dcfGrowth) / 100);
+                        const netDebt = 7800; // Mkr
+                        const equityVal = Math.max(0, ev - netDebt);
+                        return Math.round(equityVal / 215.3);
+                      })()} kr
+                    </div>
+                    
+                    <div style={{ display: "flex", justifyContent: "space-between", borderTop: "1px solid rgba(120,113,108,0.15)", paddingTop: 16, marginTop: 16, fontSize: 12, color: "#57534E" }}>
+                      <span>Dagens kurs:</span>
+                      <span style={{ fontWeight: 700, color: "#1C1917" }}>267,90 kr</span>
+                    </div>
+
+                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8, fontSize: 12, color: "#57534E" }}>
+                      <span>Differens mot dagens kurs:</span>
+                      {(() => {
+                        const nopat = 89152 * (dcfMargin / 100) * 0.794;
+                        const adjustedWacc = Math.max(dcfWacc, dcfGrowth + 0.5);
+                        const ev = (nopat * (1 + dcfGrowth / 100)) / ((adjustedWacc - dcfGrowth) / 100);
+                        const netDebt = 7800;
+                        const target = Math.round(Math.max(0, ev - netDebt) / 215.3);
+                        const diff = ((target - 267.90) / 267.90) * 100;
+                        const isUp = diff >= 0;
+                        return (
+                          <span style={{ fontWeight: 700, color: isUp ? "#10B981" : "#EF4444" }}>
+                            {isUp ? "+" : ""}{diff.toFixed(1)} %
+                          </span>
+                        );
+                      })()}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. Dividend Simulator */}
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(120,113,108,0.18)",
+                  borderRadius: 16,
+                  padding: 32,
+                  boxShadow: "0 4px 20px rgba(120,113,108,0.05)",
+                }}
+              >
+                <div style={{ borderBottom: "2px solid #F59E0B", paddingBottom: 16, marginBottom: 24 }}>
+                  <h3 style={{ fontSize: 18, fontWeight: 900, color: "#1C1917", margin: 0 }}>Utdelningssimulator (Ränta-på-ränta)</h3>
+                  <p style={{ fontSize: 13, color: "#57534E", margin: "4px 0 0 0" }}>Simulera hur dina utdelningar växer över tid om de återinvesteras i nya Axfood-aktier.</p>
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "250px 1fr", gap: 36, alignItems: "start" }}>
+                  <div>
+                    <label style={{ fontSize: 13, fontWeight: 700, color: "#292524", display: "block", marginBottom: 8 }}>Antal aktier vid start:</label>
+                    <input
+                      type="number"
+                      value={sharesCount}
+                      onChange={(e) => setSharesCount(Math.max(1, parseInt(e.target.value) || 0))}
+                      style={{
+                        width: "100%",
+                        padding: "10px 14px",
+                        border: "1px solid rgba(120,113,108,0.25)",
+                        borderRadius: 8,
+                        fontSize: 14,
+                        fontFamily: "JetBrains Mono, monospace",
+                        color: "#1C1917",
+                        marginBottom: 16,
+                      }}
+                    />
+                    <div style={{ fontSize: 12, color: "#57534E", lineHeight: 1.5 }}>
+                      Antar initial utdelning om <strong>9,00 kr/aktie</strong> samt en årlig utdelningstillväxt på <strong>4,0 %</strong>.
+                    </div>
+                  </div>
+
+                  <div style={{ overflowX: "auto" }}>
+                    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+                      <thead>
+                        <tr style={{ borderBottom: "1px solid rgba(120,113,108,0.18)", color: "#78716C", fontSize: 11, textTransform: "uppercase" }}>
+                          <th style={{ padding: "8px 12px", textAlign: "left" }}>År</th>
+                          <th style={{ padding: "8px 12px", textAlign: "right" }}>Utdelning/Aktie</th>
+                          <th style={{ padding: "8px 12px", textAlign: "right" }}>Total utdelning</th>
+                          <th style={{ padding: "8px 12px", textAlign: "right" }}>Ackumulerade aktier</th>
+                          <th style={{ padding: "8px 12px", textAlign: "right" }}>Effektiv direktavkastning</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {(() => {
+                          let currentShares = sharesCount;
+                          const divGrowth = 0.04;
+                          let sharePrice = 267.90;
+                          return Array.from({ length: 5 }).map((_, i) => {
+                            const year = i + 1;
+                            const divPerShare = 9.00 * Math.pow(1 + divGrowth, i);
+                            const totalDiv = currentShares * divPerShare;
+                            const newShares = totalDiv / sharePrice;
+                            currentShares += newShares;
+                            sharePrice *= 1.03; // Assume stock price grows 3% per year too
+                            const yieldOnCost = (totalDiv / (sharesCount * 267.90)) * 100;
+                            return (
+                              <tr key={year} style={{ borderBottom: "1px solid rgba(120,113,108,0.1)", background: i % 2 === 0 ? "transparent" : "rgba(120,113,108,0.02)" }}>
+                                <td style={{ padding: "10px 12px", fontWeight: 700, color: "#1C1917" }}>År {year}</td>
+                                <td style={{ padding: "10px 12px", textAlign: "right", fontFamily: "JetBrains Mono, monospace" }}>{divPerShare.toFixed(2)} kr</td>
+                                <td style={{ padding: "10px 12px", textAlign: "right", fontFamily: "JetBrains Mono, monospace", fontWeight: 700, color: "#F59E0B" }}>{Math.round(totalDiv)} kr</td>
+                                <td style={{ padding: "10px 12px", textAlign: "right", fontFamily: "JetBrains Mono, monospace" }}>{Math.round(currentShares)} st</td>
+                                <td style={{ padding: "10px 12px", textAlign: "right", fontFamily: "JetBrains Mono, monospace", color: "#10B981" }}>{yieldOnCost.toFixed(2)} %</td>
+                              </tr>
+                            );
+                          });
+                        })()}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. Downloads Area */}
+              <div
+                style={{
+                  background: "#FAF8F5",
+                  border: "1px solid rgba(120,113,108,0.15)",
+                  borderRadius: 16,
+                  padding: 24,
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                  gap: 20,
+                }}
+              >
+                <div>
+                  <h4 style={{ fontSize: 14, fontWeight: 800, color: "#1C1917", margin: 0 }}>Hämta analysfiler</h4>
+                  <p style={{ fontSize: 12, color: "#57534E", margin: "2px 0 0 0" }}>Ladda ner materialet för att arbeta vidare offline.</p>
+                </div>
+                
+                <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                  {[
+                    { label: "PDF-Rapport", format: "PDF", action: "Ladda ner" },
+                    { label: "Excel-Modell", format: "XLSX", action: "Hämta" },
+                    { label: "Ljudsammanfattning", format: "MP3", action: "Lyssna" },
+                  ].map((dl) => (
+                    <button
+                      key={dl.label}
+                      onClick={() => alert(`${dl.label} (${dl.format}) simulerad nedladdning startad!`)}
+                      style={{
+                        background: "#FFFFFF",
+                        border: "1px solid rgba(120,113,108,0.25)",
+                        borderRadius: 8,
+                        padding: "10px 16px",
+                        fontSize: 12,
+                        fontWeight: 700,
+                        color: "#292524",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 8,
+                        boxShadow: "0 2px 4px rgba(0,0,0,0.02)",
+                        transition: "all 0.2s",
+                      }}
+                    >
+                      <span style={{ fontSize: 9, background: "#F59E0B", color: "#FFF", padding: "2px 5px", borderRadius: 4, fontWeight: 800 }}>{dl.format}</span>
+                      {dl.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </section>
       </div>
 
