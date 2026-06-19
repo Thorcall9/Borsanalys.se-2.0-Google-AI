@@ -2712,10 +2712,10 @@ export default function AxfoodDeepDive({
                       <div>
                         <h4 style={{ fontSize: 13, fontWeight: 700, color: "#1C1917", marginBottom: 8 }}>Utdelningstillväxt Prognos</h4>
                         <p style={{ fontSize: 12, color: "#57534E", lineHeight: 1.6, marginBottom: 16 }}>
-                          Konsensus pekar mot en fortsatt stabil utdelningshöjning. Analytiker förväntar sig en genomsnittlig höjning med ca **3.5–4.5% per år** de närmaste tre åren.
+                          Konsensus pekar mot en fortsatt stabil utdelningshöjning. Analytiker förväntar sig en genomsnittlig höjning med ca <strong>3.5–4.5% per år</strong> de närmaste tre åren.
                         </p>
                         <Callout icon={<Shield size={16} />}>
-                          Utdelningen bedöms som **stabil och mycket hållbar** tack vare bolagets defensiva intäktsbas. Stresstestet visar att kassaflödet tål en omsättningsminskning på upp till 12% innan utdelningen hotas.
+                          Utdelningen bedöms som <strong>stabil och mycket hållbar</strong> tack vare bolagets defensiva intäktsbas. Stresstestet visar att kassaflödet tål en omsättningsminskning på upp till 12% innan utdelningen hotas.
                         </Callout>
                       </div>
                     </div>
