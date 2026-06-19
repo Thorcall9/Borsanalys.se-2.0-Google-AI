@@ -477,7 +477,7 @@ function DataTable({
               key={ri}
               style={{
                 borderBottom: ri < rows.length - 1 ? "1px solid rgba(120,113,108,0.15)" : "none",
-                background: ri % 2 === 0 ? "transparent" : "rgba(255,255,255,0.015)",
+                background: ri % 2 === 0 ? "transparent" : "rgba(120,113,108,0.04)",
               }}
             >
               {row.map((cell, ci) => (
@@ -485,7 +485,7 @@ function DataTable({
                   key={ci}
                   style={{
                     padding: "11px 16px",
-                    color: ci === accentCol ? "#F1F5F9" : "#94A3B8",
+                    color: ci === accentCol ? "#1C1917" : "#44403C",
                     fontWeight: ci === accentCol ? 600 : 400,
                     fontFamily: typeof cell === "number" ? "JetBrains Mono, monospace" : "inherit",
                     lineHeight: 1.5,
@@ -652,7 +652,7 @@ export default function AxfoodDeepDive({
                   cursor: "pointer",
                   border: isInWatchlist ? "1px solid #F59E0B" : "1px solid rgba(120,113,108,0.25)",
                   background: isInWatchlist ? "rgba(245,158,11,0.15)" : "rgba(120,113,108,0.08)",
-                  color: isInWatchlist ? "#F59E0B" : "#94A3B8",
+                  color: isInWatchlist ? "#F59E0B" : "#44403C",
                   transition: "all 0.2s ease",
                 }}
               >
@@ -1048,10 +1048,10 @@ export default function AxfoodDeepDive({
                   Marknad&nbsp;&amp;&nbsp;Konkurrens
                 </h3>
                 {[
-                  ["ICA", "~35 %", "#94A3B8"],
+                  ["ICA", "~35 %", "#57534E"],
                   ["Axfood", "~25 %", "#F59E0B"],
-                  ["Coop", "~17 %", "#94A3B8"],
-                  ["Lidl m.fl.", "~23 %", "#94A3B8"],
+                  ["Coop", "~17 %", "#57534E"],
+                  ["Lidl m.fl.", "~23 %", "#57534E"],
                 ].map(([name, share, color]) => (
                   <div key={name as string} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
                     <span style={{ fontSize: 13, fontWeight: 600, color: color as string, minWidth: 70 }}>{name as string}</span>
