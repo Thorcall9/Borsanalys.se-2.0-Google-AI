@@ -164,7 +164,7 @@ export interface AnalysisData {
   image?: string; // URL to analysis image
   
   // Custom View Logic
-  deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea";
+  deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea" | "Axfood";
   disclosureKey?: string;
 
   // Standardized structure from roadmap

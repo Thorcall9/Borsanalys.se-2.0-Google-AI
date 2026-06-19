@@ -43,6 +43,7 @@ import EricssonDeepDive from "../components/analysis/EricssonDeepDive";
 import HandelsbankenDeepDive from "../components/analysis/HandelsbankenDeepDive";
 import AQGroupAnalysis from "../components/analysis/AQGroupAnalysis";
 import NibeDeepDive from "../components/analysis/NibeDeepDive";
+import AxfoodDeepDive from "../components/analysis/AxfoodDeepDive";
 import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 
@@ -60,7 +61,8 @@ const DEEP_DIVE_COMPONENTS = {
   Ericsson: EricssonDeepDive,
   Handelsbanken: HandelsbankenDeepDive,
   AQGroup: AQGroupAnalysis,
-  Nibe: NibeDeepDive
+  Nibe: NibeDeepDive,
+  Axfood: AxfoodDeepDive
 };
 
 export default function Analysis() {
