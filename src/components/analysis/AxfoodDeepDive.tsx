@@ -519,6 +519,7 @@ export default function AxfoodDeepDive({
   const [dcfMargin, setDcfMargin] = useState(4.0);
   const [dcfWacc, setDcfWacc] = useState(7.5);
   const [sharesCount, setSharesCount] = useState(100);
+  const [customStockPrice, setCustomStockPrice] = useState(267.90);
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 50);
@@ -2065,20 +2066,35 @@ export default function AxfoodDeepDive({
                       })()} kr
                     </div>
                     
-                    <div style={{ display: "flex", justifyContent: "space-between", borderTop: "1px solid rgba(120,113,108,0.15)", paddingTop: 16, marginTop: 16, fontSize: 12, color: "#57534E" }}>
-                      <span>Dagens kurs:</span>
-                      <span style={{ fontWeight: 700, color: "#1C1917" }}>267,90 kr</span>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid rgba(120,113,108,0.15)", paddingTop: 16, marginTop: 16, fontSize: 12, color: "#57534E" }}>
+                      <span>Jämförelsekurs (kr):</span>
+                      <input
+                        type="number"
+                        value={customStockPrice}
+                        onChange={(e) => setCustomStockPrice(parseFloat(e.target.value) || 0)}
+                        style={{
+                          width: 90,
+                          padding: "4px 8px",
+                          border: "1px solid rgba(120,113,108,0.25)",
+                          borderRadius: 6,
+                          fontSize: 12,
+                          textAlign: "right",
+                          fontFamily: "JetBrains Mono, monospace",
+                          color: "#1C1917",
+                          background: "#FFFFFF",
+                        }}
+                      />
                     </div>
 
-                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8, fontSize: 12, color: "#57534E" }}>
-                      <span>Differens mot dagens kurs:</span>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: 12, fontSize: 12, color: "#57534E" }}>
+                      <span>Differens mot jämförelsekurs:</span>
                       {(() => {
                         const nopat = 89152 * (dcfMargin / 100) * 0.794;
                         const adjustedWacc = Math.max(dcfWacc, dcfGrowth + 0.5);
                         const ev = (nopat * (1 + dcfGrowth / 100)) / ((adjustedWacc - dcfGrowth) / 100);
                         const netDebt = 7800;
                         const target = Math.round(Math.max(0, ev - netDebt) / 215.3);
-                        const diff = ((target - 267.90) / 267.90) * 100;
+                        const diff = ((target - customStockPrice) / (customStockPrice || 1)) * 100;
                         const isUp = diff >= 0;
                         return (
                           <span style={{ fontWeight: 700, color: isUp ? "#10B981" : "#EF4444" }}>
