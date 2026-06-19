@@ -2372,27 +2372,45 @@ export default function AxfoodDeepDive({
                           </thead>
                           <tbody>
                             {[
-                              { name: "DCF Kassaflödesmodell (Bas)", val: 263, desc: "Långsiktig tillväxt 4.5%, WACC 7.5%" },
-                              { name: "P/E-Normaliserad (22,0x)", val: 238, desc: "Baserat på EPS 2025" },
-                              { name: "EV/EBITDA Multipelmodell", val: 252, desc: "Branschsnitt EBITDA-multipel" },
-                              { name: "FCF-Yield Modell (4.5% yield)", val: 248, desc: "Baserat på normaliserat fritt kassaflöde" },
+                              { name: "DCF Kassaflödesmodell (Bas)", val: 263, desc: "Nuvärdet av framtida kassaflöden. Mäter bolagets långsiktiga fundamentala värde." },
+                              { name: "P/E-Normaliserad (22,0x)", val: 238, desc: "Värdering utifrån historisk genomsnittlig vinstmultipel för stabila bolag." },
+                              { name: "EV/EBITDA Multipelmodell", val: 252, desc: "Företagsvärde i relation till rörelseresultat före avskrivningar." },
+                              { name: "FCF-Yield Modell (4.5% yield)", val: 248, desc: "Aktiepris relaterat till fritt kassaflöde. Faktiskt avkastningsmått." },
                             ].map((m, idx) => {
                               const diff = ((m.val - customStockPrice) / customStockPrice) * 100;
+                              const isPositive = diff >= 0;
                               return (
                                 <tr key={idx} style={{ borderBottom: "1px solid rgba(120,113,108,0.1)", background: idx % 2 === 0 ? "transparent" : "rgba(120,113,108,0.015)" }}>
                                   <td style={{ padding: "10px 6px" }}>
                                     <div style={{ fontWeight: 700, color: "#1C1917" }}>{m.name}</div>
-                                    <div style={{ fontSize: 10, color: "#78716C", marginTop: 2 }}>{m.desc}</div>
+                                    <div style={{ fontSize: 10, color: "#78716C", marginTop: 2, lineHeight: 1.4 }}>{m.desc}</div>
                                   </td>
                                   <td style={{ padding: "10px 6px", textAlign: "right", fontFamily: "JetBrains Mono, monospace", fontWeight: 700, color: "#292524" }}>{m.val} kr</td>
-                                  <td style={{ padding: "10px 6px", textAlign: "right", fontFamily: "JetBrains Mono, monospace", fontWeight: 700, color: diff >= 0 ? "#10B981" : "#EF4444" }}>
-                                    {diff >= 0 ? "+" : ""}{diff.toFixed(1)} %
+                                  <td style={{ padding: "10px 6px", textAlign: "right", fontFamily: "JetBrains Mono, monospace", fontWeight: 700, color: isPositive ? "#10B981" : "#EF4444" }}>
+                                    {isPositive ? "▲ +" : "▼ "}{diff.toFixed(1)} %
                                   </td>
                                 </tr>
                               );
                             })}
                           </tbody>
                         </table>
+                        <div style={{ marginTop: 16, textAlign: "right" }}>
+                          <button
+                            onClick={() => setActiveTab("dcf")}
+                            style={{
+                              background: "transparent",
+                              border: "none",
+                              color: "#F59E0B",
+                              fontSize: 12,
+                              fontWeight: 800,
+                              cursor: "pointer",
+                              transition: "color 0.2s",
+                              padding: 0,
+                            }}
+                          >
+                            ← Gå till kalkylatorn för att ändra antaganden
+                          </button>
+                        </div>
                       </div>
                     </div>
 
@@ -2594,9 +2612,30 @@ export default function AxfoodDeepDive({
 
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20 }}>
                       {[
-                        { label: "Nettoskuld / EBITDA (exkl. IFRS 16)", val: "1.6x", status: "Godkänd", desc: "Axfoods skuldsättning ligger inom bekväma ramar och utgör ingen omedelbar finansiell risk.", color: "#10B981" },
-                        { label: "Räntetäckningsgrad (EBIT / Ränta)", val: "8.5x", status: "Mycket Stark", desc: "Resultatet täcker räntekostnaderna med mycket god marginal. Ingen fara för räntechocker.", color: "#10B981" },
-                        { label: "Soliditet (Eget kapital / Tillgångar)", val: "24 %", status: "Medel/Normal", desc: "Normal nivå för dagligvaruhandeln som har snabb omsättning och stabila kassaflöden.", color: "#F59E0B" },
+                        { 
+                          label: "Nettoskuld / EBITDA (exkl. IFRS 16)", 
+                          val: "1.6x", 
+                          status: "Godkänd", 
+                          explain: "Visar hur många år det tar att betala av skulderna med den löpande vinsten. Lägre är säkrare.", 
+                          ref: "Ref: <3.0x · Branschsnitt: 2.0x", 
+                          color: "#10B981" 
+                        },
+                        { 
+                          label: "Räntetäckningsgrad (EBIT / Ränta)", 
+                          val: "8.5x", 
+                          status: "Mycket Stark", 
+                          explain: "Mäter förmågan att betala räntor på skulderna från rörelsens vinst. Högre är säkrare.", 
+                          ref: "Ref: >3.0x · Branschsnitt: 6.0x", 
+                          color: "#10B981" 
+                        },
+                        { 
+                          label: "Soliditet (EK / Tillgångar)", 
+                          val: "24 %", 
+                          status: "God/Normal", 
+                          explain: "Andel av tillgångarna finansierade med eget kapital. Ger motståndskraft mot förluster.", 
+                          ref: "Ref: >20% · Branschsnitt: 25%", 
+                          color: "#F59E0B" 
+                        },
                       ].map((item, idx) => (
                         <div
                           key={idx}
