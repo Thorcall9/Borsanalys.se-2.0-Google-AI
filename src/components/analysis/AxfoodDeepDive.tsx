@@ -850,8 +850,67 @@ export default function AxfoodDeepDive({
       ═══════════════════════════════════════════════════════ */}
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
 
+        {/* ── SCORECARD SUMMARY TABLE ── */}
+        <section style={{ paddingTop: 40, paddingBottom: 40 }}>
+          <div
+            style={{
+              background: "#FFFFFF",
+              border: "1px solid rgba(120,113,108,0.18)",
+              borderRadius: 16,
+              padding: 28,
+              boxShadow: "0 4px 20px rgba(120,113,108,0.05)",
+            }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", borderBottom: "2px solid #F59E0B", paddingBottom: 16, marginBottom: 20 }}>
+              <div>
+                <h2 style={{ fontSize: 20, fontWeight: 800, color: "#1C1917", margin: 0 }}>Scorecard</h2>
+                <div style={{ fontSize: 13, color: "#57534E", marginTop: 4 }}>Analyssammanfattning per dimension</div>
+              </div>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontSize: 24, fontWeight: 900, color: "#F59E0B", fontFamily: "JetBrains Mono, monospace", lineHeight: 1 }}>27/40</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: "#57534E", textTransform: "uppercase", letterSpacing: "0.05em", marginTop: 4 }}>Neutral/Behåll</div>
+              </div>
+            </div>
+
+            <div style={{ overflowX: "auto" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+                <thead>
+                  <tr style={{ borderBottom: "1px solid rgba(120,113,108,0.18)" }}>
+                    <th style={{ padding: "10px 12px", textAlign: "left", fontSize: 11, fontWeight: 800, color: "#78716C", textTransform: "uppercase", letterSpacing: "0.05em" }}>Dimension</th>
+                    <th style={{ padding: "10px 12px", textAlign: "center", fontSize: 11, fontWeight: 800, color: "#78716C", textTransform: "uppercase", letterSpacing: "0.05em", width: 120 }}>Poäng</th>
+                    <th style={{ padding: "10px 12px", textAlign: "left", fontSize: 11, fontWeight: 800, color: "#78716C", textTransform: "uppercase", letterSpacing: "0.05em" }}>Motivering</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    ["Affärsmodell", "4/5", "Integrerad värdekedja med kompletterande butiksformat ger stabil och diversifierad intäktsbas"],
+                    ["Konkurrensfördelar (moat)", "3/5", "Skalfördelar och egna varumärken är reella, men dagligvaruhandel har generellt begränsade strukturella inträdesbarriärer"],
+                    ["Finansiell kvalitet", "4/5", "Starka och växande kassaflöden; leasingskulder via IFRS 16 och pågående logistikkapex bör bevakas"],
+                    ["Tillväxtpotential", "2/5", "Mogen marknad med historisk tillväxt om 4–5 %/år; organisk uppsida är begränsad"],
+                    ["Värdering", "2/5", "P/E ~24,7x och P/B ~7,7x innebär begränsad kursuppsida – base-case ger avkastning enbart via utdelning"],
+                    ["Riskprofil", "4/5", "Defensiv dagligvarusektor med stabila volymer; City Gross-integrering och logistikprojekt utgör de primära exekveringsriskerna"],
+                    ["Utdelning & kapitalallokering", "4/5", "Stabil och konsekvent växande utdelning med god kassaflödestäckning"],
+                    ["Ledning & ESG", "4/5", "God hållbarhetsprofil och starka operativa resultat; koncentrerat ägande begränsar minoritetsägarnas inflytande"],
+                  ].map(([dim, score, text], idx) => (
+                    <tr key={dim} style={{ borderBottom: "1px solid rgba(120,113,108,0.1)", background: idx % 2 === 0 ? "transparent" : "rgba(120,113,108,0.02)" }}>
+                      <td style={{ padding: "12px 12px", fontWeight: 700, color: "#1C1917", whiteSpace: "nowrap" }}>{dim}</td>
+                      <td style={{ padding: "12px 12px", textAlign: "center", fontWeight: 700, color: "#F59E0B", fontFamily: "JetBrains Mono, monospace" }}>{score}</td>
+                      <td style={{ padding: "12px 12px", color: "#57534E", lineHeight: 1.5 }}>{text}</td>
+                    </tr>
+                  ))}
+                  <tr style={{ background: "rgba(245,158,11,0.04)", fontWeight: 700 }}>
+                    <td style={{ padding: "14px 12px", color: "#1C1917" }}>Totalt</td>
+                    <td style={{ padding: "14px 12px", textAlign: "center", color: "#F59E0B", fontFamily: "JetBrains Mono, monospace", fontSize: 15 }}>27/40</td>
+                    <td style={{ padding: "14px 12px", color: "#1C1917" }}>Neutral/Behåll – stabilt defensivt innehav med begränsad kursuppsida</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
         {/* ── SECTION I: Företagsöversikt ── */}
-        <section style={{ paddingTop: 80, paddingBottom: 64 }}>
+        <section style={{ paddingTop: 40, paddingBottom: 64 }}>
           <SectionNumber n="I" />
           <SectionLabel label="Företagsöversikt" />
 
