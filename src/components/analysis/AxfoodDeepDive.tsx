@@ -337,7 +337,7 @@ function SectionNumber({ n }: { n: string }) {
         fontFamily: "JetBrains Mono, monospace",
         fontSize: 80,
         fontWeight: 900,
-        color: "rgba(245,158,11,0.07)",
+        color: "rgba(245,158,11,0.2)",
         lineHeight: 1,
         userSelect: "none",
         marginBottom: -24,
