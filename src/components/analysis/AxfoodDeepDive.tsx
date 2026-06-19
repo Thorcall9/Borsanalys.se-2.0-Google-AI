@@ -2091,7 +2091,159 @@ export default function AxfoodDeepDive({
                 </div>
               </div>
 
-              {/* 2. Dividend Simulator */}
+              {/* 2. Premium Playbook */}
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(120,113,108,0.18)",
+                  borderRadius: 16,
+                  padding: 32,
+                  boxShadow: "0 4px 20px rgba(120,113,108,0.05)",
+                }}
+              >
+                <div style={{ borderBottom: "2px solid #F59E0B", paddingBottom: 16, marginBottom: 24 }}>
+                  <h3 style={{ fontSize: 18, fontWeight: 900, color: "#1C1917", margin: 0 }}>Analytikerns Playbook — Köp- & Säljstrategi</h3>
+                  <p style={{ fontSize: 13, color: "#57534E", margin: "4px 0 0 0" }}>Konkret vägledning för hur du ska agera i Axfood-aktien baserat på olika kursnivåer.</p>
+                </div>
+
+                {/* Visual zone indicator */}
+                <div style={{ margin: "20px 0 36px" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, fontWeight: 700, color: "#78716C", marginBottom: 6 }}>
+                    <span>180 kr</span>
+                    <span>240 kr</span>
+                    <span>280 kr</span>
+                    <span>320 kr+</span>
+                  </div>
+                  
+                  {/* Bands */}
+                  <div style={{ display: "flex", height: 16, borderRadius: 99, overflow: "hidden", position: "relative" }}>
+                    <div style={{ flex: 1.5, background: "linear-gradient(90deg, #10B981aa, #10B981)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFF", fontSize: 9, fontWeight: 800 }}>KÖPZON</div>
+                    <div style={{ flex: 1.2, background: "linear-gradient(90deg, #F59E0Baa, #F59E0B)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFF", fontSize: 9, fontWeight: 800 }}>AVVAKTA</div>
+                    <div style={{ flex: 1, background: "linear-gradient(90deg, #EF4444aa, #EF4444)", display: "flex", alignItems: "center", justifyContent: "center", color: "#FFF", fontSize: 9, fontWeight: 800 }}>SÄLJ</div>
+                  </div>
+
+                  {/* Marker for current price (267.90) */}
+                  <div style={{ position: "relative", width: "100%", height: 20 }}>
+                    <div
+                      style={{
+                        position: "absolute",
+                        left: "56%",
+                        transform: "translateX(-50%)",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        marginTop: 4,
+                      }}
+                    >
+                      <div style={{ width: 0, height: 0, borderLeft: "6px solid transparent", borderRight: "6px solid transparent", borderBottom: "8px solid #F59E0B" }} />
+                      <span style={{ fontSize: 11, fontWeight: 800, color: "#F59E0B", marginTop: 2, fontFamily: "JetBrains Mono, monospace" }}>
+                        Dagens kurs: 267,90 kr (Avvakta)
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20, marginTop: 12 }}>
+                  <div style={{ borderLeft: "3px solid #10B981", paddingLeft: 16 }}>
+                    <h4 style={{ fontSize: 13, fontWeight: 700, color: "#10B981", margin: "0 0 6px 0" }}>Köp under 240 kr</h4>
+                    <p style={{ fontSize: 12, color: "#57534E", lineHeight: 1.6, margin: 0 }}>
+                      Vid en kurs under 240 kr blir direktavkastningen över 3.7 % och nedsidan betryggande låg. Här är Axfood ett mycket bra defensivt köp.
+                    </p>
+                  </div>
+                  <div style={{ borderLeft: "3px solid #F59E0B", paddingLeft: 16 }}>
+                    <h4 style={{ fontSize: 13, fontWeight: 700, color: "#F59E0B", margin: "0 0 6px 0" }}>Avvakta 240–280 kr</h4>
+                    <p style={{ fontSize: 12, color: "#57534E", lineHeight: 1.6, margin: 0 }}>
+                      Dagens läge. P/E ~25x innebär att aktien värderas ganska fullt. Base-case visar att all avkastning kommande åren kommer från utdelningen.
+                    </p>
+                  </div>
+                  <div style={{ borderLeft: "3px solid #EF4444", paddingLeft: 16 }}>
+                    <h4 style={{ fontSize: 13, fontWeight: 700, color: "#EF4444", margin: "0 0 6px 0" }}>Sälj över 280 kr</h4>
+                    <p style={{ fontSize: 12, color: "#57534E", lineHeight: 1.6, margin: 0 }}>
+                      När aktien handlas över 280 kr blir P/E-talet över 26x, vilket är alltför högt för ett moget dagligvarubolag med begränsad organisk tillväxt.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. KPI Tracker / Report Checklist */}
+              <div
+                style={{
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(120,113,108,0.18)",
+                  borderRadius: 16,
+                  padding: 32,
+                  boxShadow: "0 4px 20px rgba(120,113,108,0.05)",
+                }}
+              >
+                <div style={{ borderBottom: "2px solid #F59E0B", paddingBottom: 16, marginBottom: 24 }}>
+                  <h3 style={{ fontSize: 18, fontWeight: 900, color: "#1C1917", margin: 0 }}>Checklista för nästa rapport (KPI-Tracker)</h3>
+                  <p style={{ fontSize: 13, color: "#57534E", margin: "4px 0 0 0" }}>Bevaka dessa tre nyckeltal i kommande rapporter för att säkerställa att investeringstesen håller.</p>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                  {[
+                    {
+                      num: "1",
+                      title: "Willys LFL-omsättningstillväxt",
+                      desc: "Willys måste fortsätta växa snabbare än inflationen och marknaden för att behålla sin tillväxtledande position. Ett tillväxttapp under 3% är en varningsflagg.",
+                      expected: "> 4.0 %",
+                    },
+                    {
+                      num: "2",
+                      title: "Dagabs rörelsemarginal (EBIT)",
+                      desc: "Håll koll på om Kungsbacka- capexbudgeten spårar ur eller om driftsättningen belastar logistikmarginalerna. Standardmarginalen bör ligga stabilt över 4.0%.",
+                      expected: "4.0 % – 4.2 %",
+                    },
+                    {
+                      num: "3",
+                      title: "City Gross rörelseresultat",
+                      desc: "Förvärvet av City Gross belastar Axfoods marginaler för närvarande. Vi vill se en sekventiell minskning av förlusterna och a tydlig trend mot lönsamhet till 2027.",
+                      expected: "Minskad förlust (mot nollan)",
+                    },
+                  ].map((kpi) => (
+                    <div
+                      key={kpi.num}
+                      style={{
+                        background: "#FAF8F5",
+                        border: "1px solid rgba(120,113,108,0.15)",
+                        borderRadius: 12,
+                        padding: 20,
+                        display: "flex",
+                        gap: 20,
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 28,
+                          height: 28,
+                          borderRadius: "50%",
+                          background: "#F59E0B",
+                          color: "#FFF",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          fontWeight: 800,
+                          fontSize: 14,
+                          flexShrink: 0,
+                        }}
+                      >
+                        {kpi.num}
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <h4 style={{ fontSize: 14, fontWeight: 800, color: "#1C1917", margin: "0 0 4px 0" }}>{kpi.title}</h4>
+                        <p style={{ fontSize: 12, color: "#57534E", lineHeight: 1.5, margin: "0 0 12px 0" }}>{kpi.desc}</p>
+                        <div style={{ display: "flex", gap: 16, fontSize: 11 }}>
+                          <span style={{ color: "#78716C" }}>Vårt förväntade utfall:</span>
+                          <span style={{ fontWeight: 700, color: "#F59E0B", fontFamily: "JetBrains Mono, monospace" }}>{kpi.expected}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 4. Dividend Simulator */}
               <div
                 style={{
                   background: "#FFFFFF",
