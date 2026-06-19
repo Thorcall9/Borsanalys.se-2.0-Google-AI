@@ -80,7 +80,7 @@ function ScoreBar({
     <div ref={ref} className="group">
       <div className="flex items-center justify-between mb-2">
         <span
-          style={{ color: "#CBD5E1", fontSize: 12, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}
+          style={{ color: "#44403C", fontSize: 12, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase" }}
         >
           {label}
         </span>
@@ -98,7 +98,7 @@ function ScoreBar({
       <div
         style={{
           height: 6,
-          background: "rgba(255,255,255,0.08)",
+          background: "rgba(120,113,108,0.12)",
           borderRadius: 99,
           overflow: "hidden",
         }}
@@ -160,7 +160,7 @@ function ScenarioGauge({
   return (
     <div ref={ref} style={{ padding: "32px 0" }}>
       {/* Track */}
-      <div style={{ position: "relative", height: 8, borderRadius: 99, background: "rgba(255,255,255,0.08)", margin: "48px 16px 0" }}>
+      <div style={{ position: "relative", height: 8, borderRadius: 99, background: "rgba(120,113,108,0.12)", margin: "48px 16px 0" }}>
         {/* Gradient fill */}
         <div
           style={{
@@ -232,7 +232,7 @@ function ScenarioGauge({
             <span style={{ color: s.color, fontSize: 10, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>
               {s.label}
             </span>
-            <span style={{ color: "#CBD5E1", fontSize: 12, fontWeight: 600, fontFamily: "JetBrains Mono, monospace" }}>
+            <span style={{ color: "#44403C", fontSize: 12, fontWeight: 600, fontFamily: "JetBrains Mono, monospace" }}>
               {s.value} kr
             </span>
           </div>
@@ -319,7 +319,7 @@ function ScenarioGauge({
             <div style={{ fontSize: 13, fontWeight: 700, color: s.color, opacity: 0.8 }}>
               {s.change}
             </div>
-            <p style={{ fontSize: 12, color: "#94A3B8", lineHeight: 1.6, marginTop: 4 }}>
+            <p style={{ fontSize: 12, color: "#57534E", lineHeight: 1.6, marginTop: 4 }}>
               {s.desc}
             </p>
           </div>
@@ -394,7 +394,7 @@ function Callout({ children, icon }: { children: React.ReactNode; icon?: React.R
       }}
     >
       <div style={{ color: "#F59E0B", marginTop: 2, flexShrink: 0 }}>{icon || <Info size={16} />}</div>
-      <div style={{ fontSize: 13, color: "#CBD5E1", lineHeight: 1.7 }}>{children}</div>
+      <div style={{ fontSize: 13, color: "#44403C", lineHeight: 1.7 }}>{children}</div>
     </div>
   );
 }
@@ -410,7 +410,7 @@ function RiskRow({ label, children }: { label: string; children: React.ReactNode
         textAlign: "left",
         background: open ? "rgba(239,68,68,0.06)" : "rgba(255,255,255,0.02)",
         border: "1px solid",
-        borderColor: open ? "rgba(239,68,68,0.25)" : "rgba(255,255,255,0.07)",
+        borderColor: open ? "rgba(239,68,68,0.25)" : "rgba(120,113,108,0.18)",
         borderRadius: 12,
         padding: "14px 18px",
         cursor: "pointer",
@@ -420,7 +420,7 @@ function RiskRow({ label, children }: { label: string; children: React.ReactNode
       <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "space-between" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <AlertTriangle size={14} color="#EF4444" style={{ flexShrink: 0 }} />
-          <span style={{ fontSize: 13, fontWeight: 700, color: "#F1F5F9" }}>{label}</span>
+          <span style={{ fontSize: 13, fontWeight: 700, color: "#292524" }}>{label}</span>
         </div>
         <ChevronRight
           size={14}
@@ -429,7 +429,7 @@ function RiskRow({ label, children }: { label: string; children: React.ReactNode
         />
       </div>
       {open && (
-        <p style={{ fontSize: 12, color: "#94A3B8", lineHeight: 1.7, marginTop: 10, paddingLeft: 24 }}>
+        <p style={{ fontSize: 12, color: "#57534E", lineHeight: 1.7, marginTop: 10, paddingLeft: 24 }}>
           {children}
         </p>
       )}
@@ -448,7 +448,7 @@ function DataTable({
   accentCol?: number;
 }) {
   return (
-    <div style={{ overflowX: "auto", borderRadius: 12, border: "1px solid rgba(255,255,255,0.07)" }}>
+    <div style={{ overflowX: "auto", borderRadius: 12, border: "1px solid rgba(120,113,108,0.18)" }}>
       <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
         <thead>
           <tr style={{ background: "rgba(245,158,11,0.08)", borderBottom: "1px solid rgba(245,158,11,0.15)" }}>
@@ -476,7 +476,7 @@ function DataTable({
             <tr
               key={ri}
               style={{
-                borderBottom: ri < rows.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
+                borderBottom: ri < rows.length - 1 ? "1px solid rgba(120,113,108,0.15)" : "none",
                 background: ri % 2 === 0 ? "transparent" : "rgba(255,255,255,0.015)",
               }}
             >
@@ -535,8 +535,8 @@ export default function AxfoodDeepDive({
     <div
       style={{
         minHeight: "100vh",
-        background: "#0B1120",
-        color: "#F1F5F9",
+        background: "#FAF8F5",
+        color: "#292524",
         fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif",
         paddingTop: 64,
       }}
@@ -553,7 +553,7 @@ export default function AxfoodDeepDive({
         style={{
           position: "relative",
           overflow: "hidden",
-          background: "linear-gradient(135deg, #0B1120 0%, #1a0f00 100%)",
+          background: "linear-gradient(135deg, #F4EFEB 0%, #FAF8F5 100%)",
           borderBottom: "1px solid rgba(245,158,11,0.15)",
         }}
       >
@@ -602,7 +602,7 @@ export default function AxfoodDeepDive({
                   display: "flex",
                   alignItems: "center",
                   gap: 6,
-                  color: "#64748B",
+                  color: "#78716C",
                   textDecoration: "none",
                   fontSize: 13,
                   fontWeight: 600,
@@ -612,7 +612,7 @@ export default function AxfoodDeepDive({
                 <ArrowLeft size={16} />
                 Analysarkiv
               </Link>
-              <span style={{ color: "#334155" }}>/</span>
+              <span style={{ color: "#D6D3D1" }}>/</span>
               <span style={{ color: "#F59E0B", fontSize: 13, fontWeight: 600 }}>AXFO</span>
             </div>
 
@@ -650,8 +650,8 @@ export default function AxfoodDeepDive({
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
                   cursor: "pointer",
-                  border: isInWatchlist ? "1px solid #F59E0B" : "1px solid rgba(255,255,255,0.12)",
-                  background: isInWatchlist ? "rgba(245,158,11,0.15)" : "rgba(255,255,255,0.04)",
+                  border: isInWatchlist ? "1px solid #F59E0B" : "1px solid rgba(120,113,108,0.25)",
+                  background: isInWatchlist ? "rgba(245,158,11,0.15)" : "rgba(120,113,108,0.08)",
                   color: isInWatchlist ? "#F59E0B" : "#94A3B8",
                   transition: "all 0.2s ease",
                 }}
@@ -693,7 +693,7 @@ export default function AxfoodDeepDive({
                   lineHeight: 0.95,
                   letterSpacing: "-0.03em",
                   margin: "0 0 8px 0",
-                  color: "#F8FAFC",
+                  color: "#1C1917",
                 }}
               >
                 Axfood
@@ -702,7 +702,7 @@ export default function AxfoodDeepDive({
                 style={{
                   fontSize: "clamp(16px, 2.5vw, 28px)",
                   fontWeight: 300,
-                  color: "#64748B",
+                  color: "#78716C",
                   letterSpacing: "0.02em",
                   marginBottom: 24,
                 }}
@@ -712,7 +712,7 @@ export default function AxfoodDeepDive({
               <p
                 style={{
                   fontSize: 16,
-                  color: "#94A3B8",
+                  color: "#57534E",
                   lineHeight: 1.7,
                   maxWidth: 560,
                   fontWeight: 400,
@@ -774,7 +774,7 @@ export default function AxfoodDeepDive({
               >
                 27/40
               </div>
-              <div style={{ fontSize: 11, color: "#64748B", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+              <div style={{ fontSize: 11, color: "#78716C", letterSpacing: "0.1em", textTransform: "uppercase" }}>
                 Totalpoäng
               </div>
             </div>
@@ -806,7 +806,7 @@ export default function AxfoodDeepDive({
               <div
                 key={i}
                 style={{
-                  background: "rgba(11,17,32,0.8)",
+                  background: "#FFFFFF",
                   padding: "16px 20px",
                   display: "flex",
                   flexDirection: "column",
@@ -819,7 +819,7 @@ export default function AxfoodDeepDive({
                     fontWeight: 800,
                     letterSpacing: "0.2em",
                     textTransform: "uppercase",
-                    color: "#64748B",
+                    color: "#78716C",
                   }}
                 >
                   {m.label}
@@ -829,7 +829,7 @@ export default function AxfoodDeepDive({
                     fontFamily: "JetBrains Mono, monospace",
                     fontSize: 17,
                     fontWeight: 700,
-                    color: "#F8FAFC",
+                    color: "#1C1917",
                   }}
                 >
                   {m.value}
@@ -862,7 +862,7 @@ export default function AxfoodDeepDive({
                   fontSize: 32,
                   fontWeight: 800,
                   letterSpacing: "-0.02em",
-                  color: "#F8FAFC",
+                  color: "#1C1917",
                   marginBottom: 20,
                   lineHeight: 1.15,
                 }}
@@ -890,7 +890,7 @@ export default function AxfoodDeepDive({
                     >
                       {val}
                     </span>
-                    <span style={{ fontSize: 13, color: "#94A3B8", lineHeight: 1.6 }}>{label}</span>
+                    <span style={{ fontSize: 13, color: "#57534E", lineHeight: 1.6 }}>{label}</span>
                   </div>
                 ))}
               </div>
@@ -899,8 +899,8 @@ export default function AxfoodDeepDive({
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               <div
                 style={{
-                  background: "rgba(255,255,255,0.03)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(120,113,108,0.18)",
                   borderRadius: 16,
                   padding: 24,
                 }}
@@ -917,10 +917,10 @@ export default function AxfoodDeepDive({
                 ].map((f) => (
                   <div key={f.name} style={{ marginBottom: 14 }}>
                     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                      <span style={{ fontSize: 13, fontWeight: 700, color: "#F1F5F9" }}>{f.name}</span>
-                      <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: 12, color: "#64748B" }}>{f.pct}%</span>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: "#292524" }}>{f.name}</span>
+                      <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: 12, color: "#78716C" }}>{f.pct}%</span>
                     </div>
-                    <div style={{ height: 4, background: "rgba(255,255,255,0.06)", borderRadius: 99, overflow: "hidden" }}>
+                    <div style={{ height: 4, background: "rgba(120,113,108,0.12)", borderRadius: 99, overflow: "hidden" }}>
                       <div
                         style={{
                           height: "100%",
@@ -930,7 +930,7 @@ export default function AxfoodDeepDive({
                         }}
                       />
                     </div>
-                    <p style={{ fontSize: 11, color: "#64748B", marginTop: 4, lineHeight: 1.5 }}>{f.desc}</p>
+                    <p style={{ fontSize: 11, color: "#78716C", marginTop: 4, lineHeight: 1.5 }}>{f.desc}</p>
                   </div>
                 ))}
               </div>
@@ -939,7 +939,7 @@ export default function AxfoodDeepDive({
         </section>
 
         {/* ── SECTION II: Affärsmodell ── */}
-        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 64 }}>
+        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(120,113,108,0.15)", paddingTop: 64 }}>
           <SectionNumber n="II" />
           <SectionLabel label="Affärsmodell" />
 
@@ -964,21 +964,21 @@ export default function AxfoodDeepDive({
               <div
                 key={p.title}
                 style={{
-                  background: "rgba(255,255,255,0.025)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(120,113,108,0.18)",
                   borderRadius: 16,
                   padding: 24,
                 }}
               >
                 <div style={{ color: "#F59E0B", marginBottom: 12 }}>{p.icon}</div>
-                <h3 style={{ fontSize: 15, fontWeight: 700, color: "#F8FAFC", marginBottom: 10 }}>{p.title}</h3>
-                <p style={{ fontSize: 13, color: "#94A3B8", lineHeight: 1.7 }}>{p.body}</p>
+                <h3 style={{ fontSize: 15, fontWeight: 700, color: "#1C1917", marginBottom: 10 }}>{p.title}</h3>
+                <p style={{ fontSize: 13, color: "#57534E", lineHeight: 1.7 }}>{p.body}</p>
               </div>
             ))}
           </div>
 
           <Callout icon={<Info size={16} />}>
-            <strong style={{ color: "#F1F5F9" }}>Kungsbacka-projektet (EUR 265 mn, 2026–2031)</strong> är Axfoods hittills enskilt
+            <strong style={{ color: "#292524" }}>Kungsbacka-projektet (EUR 265 mn, 2026–2031)</strong> är Axfoods hittills enskilt
             största investering. Det är ett komplext automationsprojekt med lång löptid. Förseningar eller kostnadsöverskridanden
             kan belasta kassaflödet under en redan kapitalintensiv period — men när det är i drift ska lägre enhetskostnader
             förbättra marginalstrukturen.
@@ -986,13 +986,13 @@ export default function AxfoodDeepDive({
         </section>
 
         {/* ── SECTION III: Konkurrensfördelar ── */}
-        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 64 }}>
+        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(120,113,108,0.15)", paddingTop: 64 }}>
           <SectionNumber n="III" />
           <SectionLabel label="Konkurrensfördelar (Moat)" />
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
             <div>
-              <h2 style={{ fontSize: 26, fontWeight: 800, color: "#F8FAFC", marginBottom: 24, lineHeight: 1.2 }}>
+              <h2 style={{ fontSize: 26, fontWeight: 800, color: "#1C1917", marginBottom: 24, lineHeight: 1.2 }}>
                 Operativa fördelar — inte strukturella vallgravar
               </h2>
               {[
@@ -1018,18 +1018,18 @@ export default function AxfoodDeepDive({
                   style={{
                     paddingBottom: 20,
                     marginBottom: 20,
-                    borderBottom: "1px solid rgba(255,255,255,0.05)",
+                    borderBottom: "1px solid rgba(120,113,108,0.15)",
                   }}
                 >
                   <h4 style={{ fontSize: 14, fontWeight: 700, color: "#F59E0B", marginBottom: 6 }}>{a.title}</h4>
-                  <p style={{ fontSize: 13, color: "#94A3B8", lineHeight: 1.7 }}>{a.text}</p>
+                  <p style={{ fontSize: 13, color: "#57534E", lineHeight: 1.7 }}>{a.text}</p>
                 </div>
               ))}
             </div>
 
             <div>
               <Callout icon={<Shield size={16} />}>
-                <strong style={{ color: "#F1F5F9" }}>Analytisk not:</strong> Dagligvaruhandel är generellt en bransch med
+                <strong style={{ color: "#292524" }}>Analytisk not:</strong> Dagligvaruhandel är generellt en bransch med
                 begränsade strukturella vallgravar. Axfoods konkurrensfördelar är primärt <em>operativa</em> — de bygger på
                 effektiv exekvering, skallogistik och sortimentskontroll snarare än på varaktiga teknologiska eller
                 regulatoriska inträdesbarriärer. Moat-bedömningen är därför måttlig (3/5) trots en stark operativ historik.
@@ -1038,13 +1038,13 @@ export default function AxfoodDeepDive({
               <div
                 style={{
                   marginTop: 24,
-                  background: "rgba(255,255,255,0.025)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(120,113,108,0.18)",
                   borderRadius: 16,
                   padding: 24,
                 }}
               >
-                <h3 style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "#64748B", marginBottom: 16 }}>
+                <h3 style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.15em", textTransform: "uppercase", color: "#78716C", marginBottom: 16 }}>
                   Marknad&nbsp;&amp;&nbsp;Konkurrens
                 </h3>
                 {[
@@ -1055,7 +1055,7 @@ export default function AxfoodDeepDive({
                 ].map(([name, share, color]) => (
                   <div key={name as string} style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
                     <span style={{ fontSize: 13, fontWeight: 600, color: color as string, minWidth: 70 }}>{name as string}</span>
-                    <div style={{ flex: 1, height: 6, background: "rgba(255,255,255,0.06)", borderRadius: 99, overflow: "hidden" }}>
+                    <div style={{ flex: 1, height: 6, background: "rgba(120,113,108,0.12)", borderRadius: 99, overflow: "hidden" }}>
                       <div
                         style={{
                           height: "100%",
@@ -1065,7 +1065,7 @@ export default function AxfoodDeepDive({
                         }}
                       />
                     </div>
-                    <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: 12, color: "#64748B", minWidth: 40 }}>{share as string}</span>
+                    <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: 12, color: "#78716C", minWidth: 40 }}>{share as string}</span>
                   </div>
                 ))}
               </div>
@@ -1074,7 +1074,7 @@ export default function AxfoodDeepDive({
         </section>
 
         {/* ── SECTION IV: Finansiell utveckling ── */}
-        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 64 }}>
+        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(120,113,108,0.15)", paddingTop: 64 }}>
           <SectionNumber n="IV" />
           <SectionLabel label="Finansiell Utveckling" />
 
@@ -1082,14 +1082,14 @@ export default function AxfoodDeepDive({
             {/* 2025 Full Year */}
             <div
               style={{
-                background: "rgba(255,255,255,0.025)",
-                border: "1px solid rgba(255,255,255,0.07)",
+                background: "#FFFFFF",
+                border: "1px solid rgba(120,113,108,0.18)",
                 borderRadius: 16,
                 padding: 28,
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-                <h3 style={{ fontSize: 16, fontWeight: 800, color: "#F8FAFC" }}>Helår 2025</h3>
+                <h3 style={{ fontSize: 16, fontWeight: 800, color: "#1C1917" }}>Helår 2025</h3>
                 <span
                   style={{
                     background: "rgba(16,185,129,0.1)",
@@ -1121,12 +1121,12 @@ export default function AxfoodDeepDive({
                     justifyContent: "space-between",
                     alignItems: "center",
                     padding: "8px 0",
-                    borderBottom: "1px solid rgba(255,255,255,0.04)",
+                    borderBottom: "1px solid rgba(120,113,108,0.08)",
                   }}
                 >
-                  <span style={{ fontSize: 12, color: "#64748B" }}>{k as string}</span>
+                  <span style={{ fontSize: 12, color: "#78716C" }}>{k as string}</span>
                   <div style={{ textAlign: "right" }}>
-                    <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: 13, fontWeight: 600, color: "#F1F5F9" }}>
+                    <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: 13, fontWeight: 600, color: "#292524" }}>
                       {v as string}
                     </span>
                     <span style={{ fontSize: 11, color: "#10B981", marginLeft: 8 }}>{ch as string}</span>
@@ -1138,14 +1138,14 @@ export default function AxfoodDeepDive({
             {/* Q1 2026 */}
             <div
               style={{
-                background: "rgba(255,255,255,0.025)",
-                border: "1px solid rgba(255,255,255,0.07)",
+                background: "#FFFFFF",
+                border: "1px solid rgba(120,113,108,0.18)",
                 borderRadius: 16,
                 padding: 28,
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-                <h3 style={{ fontSize: 16, fontWeight: 800, color: "#F8FAFC" }}>Q1 2026</h3>
+                <h3 style={{ fontSize: 16, fontWeight: 800, color: "#1C1917" }}>Q1 2026</h3>
                 <span
                   style={{
                     background: "rgba(245,158,11,0.1)",
@@ -1177,12 +1177,12 @@ export default function AxfoodDeepDive({
                     justifyContent: "space-between",
                     alignItems: "center",
                     padding: "8px 0",
-                    borderBottom: "1px solid rgba(255,255,255,0.04)",
+                    borderBottom: "1px solid rgba(120,113,108,0.08)",
                   }}
                 >
-                  <span style={{ fontSize: 12, color: "#64748B" }}>{k as string}</span>
+                  <span style={{ fontSize: 12, color: "#78716C" }}>{k as string}</span>
                   <div style={{ textAlign: "right" }}>
-                    <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: 13, fontWeight: 600, color: "#F1F5F9" }}>
+                    <span style={{ fontFamily: "JetBrains Mono, monospace", fontSize: 13, fontWeight: 600, color: "#292524" }}>
                       {v as string}
                     </span>
                     {(ch as string) && (
@@ -1195,7 +1195,7 @@ export default function AxfoodDeepDive({
           </div>
 
           {/* Segment breakdown table */}
-          <h3 style={{ fontSize: 15, fontWeight: 700, color: "#F8FAFC", marginBottom: 16 }}>
+          <h3 style={{ fontSize: 15, fontWeight: 700, color: "#1C1917", marginBottom: 16 }}>
             Segmentutveckling 2025 (andel av extern försäljning)
           </h3>
           <DataTable
@@ -1208,7 +1208,7 @@ export default function AxfoodDeepDive({
               ["Dagab m.fl.", "~19 %*", "Inkl. intern logistik och extern grossistförsäljning"],
             ]}
           />
-          <p style={{ fontSize: 12, color: "#64748B", marginTop: 12, lineHeight: 1.6 }}>
+          <p style={{ fontSize: 12, color: "#78716C", marginTop: 12, lineHeight: 1.6 }}>
             * Dagab är i huvudsak en intern servicefunktion. Andelen avser Dagabs andel av koncernens totala intäkter inklusive internleveranser.
           </p>
         </section>
@@ -1218,7 +1218,7 @@ export default function AxfoodDeepDive({
           style={{
             paddingBottom: 64,
             paddingTop: 64,
-            borderTop: "1px solid rgba(255,255,255,0.05)",
+            borderTop: "1px solid rgba(120,113,108,0.15)",
           }}
         >
           <SectionNumber n="V" />
@@ -1248,13 +1248,13 @@ export default function AxfoodDeepDive({
                     >
                       27
                     </div>
-                    <div style={{ fontSize: 13, color: "#64748B", letterSpacing: "0.05em" }}>av 40 möjliga poäng</div>
+                    <div style={{ fontSize: 13, color: "#78716C", letterSpacing: "0.05em" }}>av 40 möjliga poäng</div>
                   </div>
                   <div style={{ flex: 1 }}>
                     <div
                       style={{
                         height: 8,
-                        background: "rgba(255,255,255,0.06)",
+                        background: "rgba(120,113,108,0.12)",
                         borderRadius: 99,
                         overflow: "hidden",
                         marginBottom: 8,
@@ -1295,14 +1295,14 @@ export default function AxfoodDeepDive({
                 <div
                   key={item.label}
                   style={{
-                    background: "rgba(255,255,255,0.02)",
-                    border: "1px solid rgba(255,255,255,0.06)",
+                    background: "#FFFFFF",
+                    border: "1px solid rgba(120,113,108,0.12)",
                     borderRadius: 10,
                     padding: "14px 18px",
                   }}
                 >
                   <div style={{ fontSize: 12, fontWeight: 700, color: "#F59E0B", marginBottom: 4 }}>{item.label}</div>
-                  <p style={{ fontSize: 12, color: "#94A3B8", lineHeight: 1.6 }}>{item.text}</p>
+                  <p style={{ fontSize: 12, color: "#57534E", lineHeight: 1.6 }}>{item.text}</p>
                 </div>
               ))}
             </div>
@@ -1310,28 +1310,28 @@ export default function AxfoodDeepDive({
         </section>
 
         {/* ── SECTION VI: Värdering ── */}
-        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 64 }}>
+        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(120,113,108,0.15)", paddingTop: 64 }}>
           <SectionNumber n="VI" />
           <SectionLabel label="Värdering" />
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
             <div>
-              <h2 style={{ fontSize: 26, fontWeight: 800, color: "#F8FAFC", marginBottom: 24, lineHeight: 1.2 }}>
+              <h2 style={{ fontSize: 26, fontWeight: 800, color: "#1C1917", marginBottom: 24, lineHeight: 1.2 }}>
                 I mitten av det historiska P/E-spannet — varken billig eller uppenbart dyr
               </h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 32 }}>
-                <p style={{ fontSize: 14, color: "#94A3B8", lineHeight: 1.7 }}>
-                  <strong style={{ color: "#F1F5F9" }}>P/E 24,7x</strong> — Aktiekursen dividerat med EPS 10,84 kr. Marknaden betalar 24,70 kr per rapporterad kröna i vinst. Axfoods historiska spann: ca 20–28x.
+                <p style={{ fontSize: 14, color: "#57534E", lineHeight: 1.7 }}>
+                  <strong style={{ color: "#292524" }}>P/E 24,7x</strong> — Aktiekursen dividerat med EPS 10,84 kr. Marknaden betalar 24,70 kr per rapporterad kröna i vinst. Axfoods historiska spann: ca 20–28x.
                 </p>
-                <p style={{ fontSize: 14, color: "#94A3B8", lineHeight: 1.7 }}>
-                  <strong style={{ color: "#F1F5F9" }}>P/B 7,7x</strong> — Högt i ett brett perspektiv, men typiskt för välpositionerade dagligvarubolag med starka kassaflöden och begränsad kapitalbindning.
+                <p style={{ fontSize: 14, color: "#57534E", lineHeight: 1.7 }}>
+                  <strong style={{ color: "#292524" }}>P/B 7,7x</strong> — Högt i ett brett perspektiv, men typiskt för välpositionerade dagligvarubolag med starka kassaflöden och begränsad kapitalbindning.
                 </p>
-                <p style={{ fontSize: 14, color: "#94A3B8", lineHeight: 1.7 }}>
-                  <strong style={{ color: "#F1F5F9" }}>IFRS 16</strong> — Hyresavtal aktiveras i balansräkningen och ökar rapporterad nettoskuld utan att påverka EBIT. Leasingskulder ska separeras från finansiella skulder för en rättvisande bild.
+                <p style={{ fontSize: 14, color: "#57534E", lineHeight: 1.7 }}>
+                  <strong style={{ color: "#292524" }}>IFRS 16</strong> — Hyresavtal aktiveras i balansräkningen och ökar rapporterad nettoskuld utan att påverka EBIT. Leasingskulder ska separeras från finansiella skulder för en rättvisande bild.
                 </p>
               </div>
               <Callout>
-                <strong style={{ color: "#F1F5F9" }}>Om P/E-diskrepansen i olika källor.</strong> Analysen refererar till tre P/E-nivåer: ~24,7x (beräknat från angivna siffror), 23,33x (Morningstar, normaliserat) och 26,8x (Axfoods egna nyckeltalsida). Skillnaderna är metodologiska, inte faktamässiga. I denna analys används ~24,7x som primär referenspunkt baserat på rapporterat trailing EPS.
+                <strong style={{ color: "#292524" }}>Om P/E-diskrepansen i olika källor.</strong> Analysen refererar till tre P/E-nivåer: ~24,7x (beräknat från angivna siffror), 23,33x (Morningstar, normaliserat) och 26,8x (Axfoods egna nyckeltalsida). Skillnaderna är metodologiska, inte faktamässiga. I denna analys används ~24,7x som primär referenspunkt baserat på rapporterat trailing EPS.
               </Callout>
             </div>
 
@@ -1368,7 +1368,7 @@ export default function AxfoodDeepDive({
                       top: "50%",
                       transform: "translateY(-50%)",
                       height: 6,
-                      background: "rgba(255,255,255,0.06)",
+                      background: "rgba(120,113,108,0.12)",
                       borderRadius: 99,
                     }}
                   />
@@ -1407,7 +1407,7 @@ export default function AxfoodDeepDive({
                       left: 0,
                       bottom: -18,
                       fontSize: 10,
-                      color: "#64748B",
+                      color: "#78716C",
                       fontFamily: "JetBrains Mono, monospace",
                     }}
                   >
@@ -1433,7 +1433,7 @@ export default function AxfoodDeepDive({
                       right: 0,
                       bottom: -18,
                       fontSize: 10,
-                      color: "#64748B",
+                      color: "#78716C",
                       fontFamily: "JetBrains Mono, monospace",
                     }}
                   >
@@ -1446,7 +1446,7 @@ export default function AxfoodDeepDive({
         </section>
 
         {/* ── SECTION VII: Kursdrivare ── */}
-        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 64 }}>
+        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(120,113,108,0.15)", paddingTop: 64 }}>
           <SectionNumber n="VII" />
           <SectionLabel label="Potentiella Kursdrivare" />
 
@@ -1481,8 +1481,8 @@ export default function AxfoodDeepDive({
               <div
                 key={d.title}
                 style={{
-                  background: "rgba(255,255,255,0.025)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(120,113,108,0.18)",
                   borderRadius: 16,
                   padding: 24,
                   display: "flex",
@@ -1509,15 +1509,15 @@ export default function AxfoodDeepDive({
                     {d.importance} vikt
                   </span>
                 </div>
-                <h4 style={{ fontSize: 14, fontWeight: 700, color: "#F1F5F9" }}>{d.title}</h4>
-                <p style={{ fontSize: 12, color: "#94A3B8", lineHeight: 1.7 }}>{d.text}</p>
+                <h4 style={{ fontSize: 14, fontWeight: 700, color: "#292524" }}>{d.title}</h4>
+                <p style={{ fontSize: 12, color: "#57534E", lineHeight: 1.7 }}>{d.text}</p>
               </div>
             ))}
           </div>
         </section>
 
         {/* ── SECTION VIII: Risker ── */}
-        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 64 }}>
+        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(120,113,108,0.15)", paddingTop: 64 }}>
           <SectionNumber n="VIII" />
           <SectionLabel label="Risker" />
 
@@ -1553,12 +1553,12 @@ export default function AxfoodDeepDive({
         <AdUnit variant="middle-article" />
 
         {/* ── SECTION IX: Scenarioanalys ── */}
-        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 64 }}>
+        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(120,113,108,0.15)", paddingTop: 64 }}>
           <SectionNumber n="IX" />
           <SectionLabel label="Scenarioanalys" />
 
           <div style={{ marginBottom: 24 }}>
-            <p style={{ fontSize: 14, color: "#94A3B8", lineHeight: 1.7, maxWidth: 700 }}>
+            <p style={{ fontSize: 14, color: "#57534E", lineHeight: 1.7, maxWidth: 700 }}>
               Utgångspunkten är 2025 års EPS om 10,84 kr och oförändrad kapitalstruktur. Scenarierna är förenklade antaganden, inte prognoser. De inkluderar inte effekter av IFRS 16-skulder, aktieåterköp, förvärv eller exceptionella poster.
             </p>
           </div>
@@ -1577,18 +1577,18 @@ export default function AxfoodDeepDive({
           </div>
 
           <Callout icon={<Info size={16} />}>
-            <strong style={{ color: "#F1F5F9" }}>Base-casets viktigaste implikation:</strong> Den förväntade totalavkastningen är
+            <strong style={{ color: "#292524" }}>Base-casets viktigaste implikation:</strong> Den förväntade totalavkastningen är
             ca 3,4 % per år, driven uteslutande av utdelning — ingen kursuppgång ingår i basantagandet. Det är en meningsfull
             skillnad att hålla i minnet för en investerare som söker kursutveckling.
           </Callout>
         </section>
 
         {/* ── SECTION X: Vad kan förändra investeringstesen ── */}
-        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 64 }}>
+        <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(120,113,108,0.15)", paddingTop: 64 }}>
           <SectionNumber n="X" />
           <SectionLabel label="Vad som kan förändra investeringstesen" />
 
-          <p style={{ fontSize: 14, color: "#94A3B8", lineHeight: 1.7, maxWidth: 700, marginBottom: 32 }}>
+          <p style={{ fontSize: 14, color: "#57534E", lineHeight: 1.7, maxWidth: 700, marginBottom: 32 }}>
             Denna sektion skiljer sig från de kortsiktiga kursdrivarna i sektion VII. Här behandlas faktorer som kan kräva att investeringstesens grundantaganden omvärderas i sin helhet.
           </p>
 
@@ -1618,14 +1618,14 @@ export default function AxfoodDeepDive({
               <div
                 key={item.title}
                 style={{
-                  background: "rgba(255,255,255,0.025)",
-                  border: "1px solid rgba(255,255,255,0.07)",
+                  background: "#FFFFFF",
+                  border: "1px solid rgba(120,113,108,0.18)",
                   borderRadius: 14,
                   padding: 22,
                 }}
               >
                 <h4 style={{ fontSize: 13, fontWeight: 700, color: "#F59E0B", marginBottom: 8 }}>{item.title}</h4>
-                <p style={{ fontSize: 12, color: "#94A3B8", lineHeight: 1.7 }}>{item.text}</p>
+                <p style={{ fontSize: 12, color: "#57534E", lineHeight: 1.7 }}>{item.text}</p>
               </div>
             ))}
           </div>
@@ -1636,7 +1636,7 @@ export default function AxfoodDeepDive({
           style={{
             paddingBottom: 80,
             paddingTop: 64,
-            borderTop: "1px solid rgba(255,255,255,0.05)",
+            borderTop: "1px solid rgba(120,113,108,0.15)",
           }}
         >
           <SectionLabel label="Slutsats & Investeringstes" />
@@ -1683,7 +1683,7 @@ export default function AxfoodDeepDive({
                   <span style={{ fontSize: 28, fontWeight: 900, color: "#F59E0B", fontFamily: "JetBrains Mono, monospace" }}>
                     27
                   </span>
-                  <span style={{ fontSize: 11, color: "#64748B", fontWeight: 600 }}>/ 40</span>
+                  <span style={{ fontSize: 11, color: "#78716C", fontWeight: 600 }}>/ 40</span>
                 </div>
                 <span
                   style={{
@@ -1699,13 +1699,13 @@ export default function AxfoodDeepDive({
               </div>
 
               <div>
-                <h2 style={{ fontSize: 24, fontWeight: 800, color: "#F8FAFC", marginBottom: 16, lineHeight: 1.2 }}>
+                <h2 style={{ fontSize: 24, fontWeight: 800, color: "#1C1917", marginBottom: 16, lineHeight: 1.2 }}>
                   Neutral/Behåll — stabilt defensivt innehav med begränsad kursuppsida
                 </h2>
-                <p style={{ fontSize: 14, color: "#CBD5E1", lineHeight: 1.8, marginBottom: 16 }}>
+                <p style={{ fontSize: 14, color: "#44403C", lineHeight: 1.8, marginBottom: 16 }}>
                   Axfood är ett dagligvarubolag med elva raka år av marknadsandelstillväxt, starka operativa kassaflöden och en konsekvent utdelningspolitik. Den integrerade värdekedjan via Dagab, bredden i butiksformat, och tillgången till nära 6 miljoner kundmöten per vecka är faktabaserade styrkor.
                 </p>
-                <p style={{ fontSize: 14, color: "#CBD5E1", lineHeight: 1.8, marginBottom: 16 }}>
+                <p style={{ fontSize: 14, color: "#44403C", lineHeight: 1.8, marginBottom: 16 }}>
                   Casets begränsningar är lika tydliga: den svenska dagligvarumarknaden är mogen med historisk tillväxttakt om 4–5 % per år, aktien värderas till P/E ~24,7x och P/B ~7,7x, och <strong style={{ color: "#F59E0B" }}>base-case implicerar att all avkastning de kommande åren kommer från utdelning — inte kursutveckling.</strong>
                 </p>
 
@@ -1719,7 +1719,7 @@ export default function AxfoodDeepDive({
                     }}
                   >
                     <h4 style={{ fontSize: 12, fontWeight: 700, color: "#10B981", marginBottom: 8 }}>Passar för investerare som söker…</h4>
-                    <ul style={{ fontSize: 12, color: "#94A3B8", lineHeight: 1.7, paddingLeft: 16, margin: 0 }}>
+                    <ul style={{ fontSize: 12, color: "#57534E", lineHeight: 1.7, paddingLeft: 16, margin: 0 }}>
                       <li>Stabil utdelning (~3,4 %)</li>
                       <li>Exponering mot defensiv konsumentsektor</li>
                       <li>Långsiktigt kärninnehav med låg volatilitet</li>
@@ -1734,7 +1734,7 @@ export default function AxfoodDeepDive({
                     }}
                   >
                     <h4 style={{ fontSize: 12, fontWeight: 700, color: "#EF4444", marginBottom: 8 }}>Passar sämre för investerare som söker…</h4>
-                    <ul style={{ fontSize: 12, color: "#94A3B8", lineHeight: 1.7, paddingLeft: 16, margin: 0 }}>
+                    <ul style={{ fontSize: 12, color: "#57534E", lineHeight: 1.7, paddingLeft: 16, margin: 0 }}>
                       <li>Kursavkastning utöver marknaden</li>
                       <li>Hög tillväxtpotential</li>
                       <li>Lågt pris relativt tillväxttakten (PEG)</li>
@@ -1766,13 +1766,13 @@ export default function AxfoodDeepDive({
       {nextAnalysis && (
         <div
           style={{
-            borderTop: "1px solid rgba(255,255,255,0.05)",
+            borderTop: "1px solid rgba(120,113,108,0.15)",
             maxWidth: 1200,
             margin: "0 auto",
             padding: "40px 24px 80px",
           }}
         >
-          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.25em", textTransform: "uppercase", color: "#64748B", marginBottom: 16 }}>
+          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.25em", textTransform: "uppercase", color: "#78716C", marginBottom: 16 }}>
             Nästa analys
           </div>
           <Link
