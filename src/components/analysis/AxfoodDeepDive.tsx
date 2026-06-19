@@ -401,7 +401,7 @@ function Callout({ children, icon }: { children: React.ReactNode; icon?: React.R
 
 /** Risk row */
 function RiskRow({ label, children }: { label: string; children: React.ReactNode }) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   return (
     <button
       onClick={() => setOpen((v) => !v)}
