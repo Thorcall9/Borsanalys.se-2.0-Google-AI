@@ -1321,7 +1321,7 @@ export default function AxfoodDeepDive({
               </h2>
               <div style={{ display: "flex", flexDirection: "column", gap: 12, marginBottom: 32 }}>
                 <p style={{ fontSize: 14, color: "#57534E", lineHeight: 1.7 }}>
-                  <strong style={{ color: "#292524" }}>P/E 24,7x</strong> — Aktiekursen dividerat med EPS 10,84 kr. Marknaden betalar 24,70 kr per rapporterad kröna i vinst. Axfoods historiska spann: ca 20–28x.
+                  <strong style={{ color: "#292524" }}>P/E 24,7x</strong> — Aktiekursen dividerat med EPS 10,84 kr. Marknaden betalar 24,70 kr per rapporterad krona i vinst. Axfoods historiska spann: ca 20–28x.
                 </p>
                 <p style={{ fontSize: 14, color: "#57534E", lineHeight: 1.7 }}>
                   <strong style={{ color: "#292524" }}>P/B 7,7x</strong> — Högt i ett brett perspektiv, men typiskt för välpositionerade dagligvarubolag med starka kassaflöden och begränsad kapitalbindning.
