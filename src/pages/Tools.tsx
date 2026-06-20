@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Calculator, TrendingUp, Target, ArrowRight, DollarSign } from "lucide-react";
 import CompoundInterestCalculator from "../components/CompoundInterestCalculator";
 import GoalSavingsCalculator from "../components/GoalSavingsCalculator";
@@ -7,7 +8,35 @@ import DCFCalculator from "../components/DCFCalculator";
 import DividendCalculator from "../components/DividendCalculator";
 
 export default function Tools() {
-  const [activeTab, setActiveTab] = useState<"compound" | "goal" | "dcf" | "dividend">("compound");
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Determine active tab from URL pathname
+  const getTabFromPath = (path: string) => {
+    if (path.includes("rantakalkylator") || path.includes("compound")) return "compound";
+    if (path.includes("malsparande") || path.includes("goal")) return "goal";
+    if (path.includes("dcf")) return "dcf";
+    if (path.includes("utdelning") || path.includes("dividend")) return "dividend";
+    return "compound"; // fallback
+  };
+
+  const [activeTab, setActiveTabState] = useState<"compound" | "goal" | "dcf" | "dividend">(() => getTabFromPath(location.pathname));
+
+  // Sync tab state if pathname changes externally (e.g. back button)
+  useEffect(() => {
+    setActiveTabState(getTabFromPath(location.pathname));
+  }, [location.pathname]);
+
+  const setActiveTab = (tab: "compound" | "goal" | "dcf" | "dividend") => {
+    setActiveTabState(tab);
+    const pathMap = {
+      compound: "/verktyg/rantakalkylator",
+      goal: "/verktyg/malsparandekalkylator",
+      dcf: "/verktyg/dcf-kalkylator",
+      dividend: "/verktyg/utdelningskalkylator"
+    };
+    navigate(pathMap[tab]);
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-16">

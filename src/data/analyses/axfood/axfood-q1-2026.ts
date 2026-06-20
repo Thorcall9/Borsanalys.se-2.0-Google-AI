@@ -7,7 +7,7 @@ export const axfoodQ12026: AnalysisData = {
   ticker: "AXFO",
   isin: "SE0006993770",
   author: "Carl Fredrik Thor",
-  date: "2026-06-12",
+  date: "2026-06-22T08:00:00",
   market: "NASDAQ STOCKHOLM LARGE CAP",
   sector: "Dagligvaruhandel",
   recommendation: "AVVAKTA",

@@ -19,17 +19,52 @@ interface MacroData {
 }
 
 const FALLBACK_DATA: Record<string, MacroData> = {
-  Inflation: { value: 1.6, trend: "down", updatedAt: new Date().toISOString() }
+  Inflation: { value: 1.6, trend: "down", updatedAt: new Date().toISOString() },
+  US10Y: { value: 4.29, trend: "flat", updatedAt: new Date().toISOString() },
+  SE10Y: { value: 2.25, trend: "flat", updatedAt: new Date().toISOString() },
+  USDSEK: { value: 10.45, trend: "flat", updatedAt: new Date().toISOString() },
+  EURSEK: { value: 11.25, trend: "flat", updatedAt: new Date().toISOString() },
+  OMX30: { value: 2600, trend: "flat", updatedAt: new Date().toISOString() }
 };
 
-const MACRO_METRICS = ["Inflation"];
+const MACRO_METRICS = ["Inflation", "US10Y", "SE10Y", "USDSEK", "EURSEK", "OMX30"];
 
 const MACRO_METADATA: Record<string, { category: string, title: string, description: string, impact: (val: number) => string }> = {
   Inflation: {
     category: "INFLATION",
     title: "Inflation (KPIF)",
-    description: "KPIF (1,6%) styr Riksbankens räntebeslut medan KPI (0,6%) speglar effekten på hushållen.",
-    impact: (val) => `Nivån på ${val.toFixed(1)}% (KPIF) innebär att vi nu ligger under inflationsmålet, vilket öppnar för snabbare räntesänkningar.`
+    description: "KPIF styr Riksbankens räntebeslut medan KPI speglar effekten på hushållen.",
+    impact: (val) => `Nivån på ${val.toFixed(1)}% (KPIF) innebär att vi ligger nära eller under inflationsmålet, vilket öppnar för räntesänkningar.`
+  },
+  US10Y: {
+    category: "RÄNTOR",
+    title: "USA 10-årig statsobligation",
+    description: "Den amerikanska tioårsräntan (US10Y) fungerar som den globala riskfria räntan och sätter ribban för kapitalkostnader.",
+    impact: (val) => `En ränta på ${val.toFixed(2)}% sätter press på tillväxtbolag om den stiger snabbt, då diskonteringsräntan höjs.`
+  },
+  SE10Y: {
+    category: "RÄNTOR",
+    title: "Svensk 10-årig statsobligation",
+    description: "Den svenska tioårsräntan (SE10Y) speglar långsiktiga svenska ränteförväntningar och påverkar bolåneräntor.",
+    impact: (val) => `Nivån på ${val.toFixed(2)}% indikerar marknadens långsiktiga tro på svensk tillväxt och inflationstakt.`
+  },
+  USDSEK: {
+    category: "VALUTA",
+    title: "USD / SEK",
+    description: "Växelkursen för dollar mot svenska kronor. Mycket viktig för vinsterna hos svenska export- och importbolag.",
+    impact: (val) => `En dollarkurs på ${val.toFixed(2)} kr gynnar exportjättar som Volvo, men ökar importkostnaderna.`
+  },
+  EURSEK: {
+    category: "VALUTA",
+    title: "EUR / SEK",
+    description: "Växelkursen för euro mot svenska kronor. Den absolut viktigaste växelkursen för den svenska utrikeshandeln.",
+    impact: (val) => `En eurokurs på ${val.toFixed(2)} kr sätter ramarna för exportbolagens lönsamhet inom eurozonen.`
+  },
+  OMX30: {
+    category: "INDEX",
+    title: "OMX Stockholm 30",
+    description: "Index över de 30 mest omsatta och likvida aktierna på Stockholmsbörsen.",
+    impact: (val) => `Nivån på ${val.toFixed(0)} visar den generella utvecklingen och riskaptiten på den svenska aktiemarknaden.`
   }
 };
 
@@ -153,10 +188,10 @@ export default function MacroDashboard() {
   const [loadingMacro, setLoadingMacro] = useState(true);
   const [lastUpdated] = useState<string>(new Date().toLocaleDateString('sv-SE'));
   const [upcomingDates] = useState<{date: string, title: string}[]>([
-    { date: "12 April", title: "Räntebesked ECB" },
-    { date: "15 April", title: "KPI-siffror Sverige" },
-    { date: "25 April", title: "BNP-prognos USA" },
-    { date: "01 Maj", title: "Fed Räntebesked" }
+    { date: "18 Juni", title: "Räntebesked Riksbanken" },
+    { date: "15 Juli", title: "KPI-siffror Sverige" },
+    { date: "24 Juli", title: "BNP-prognos USA" },
+    { date: "01 Aug", title: "Fed Räntebesked" }
   ]);
   const [fearGreed, setFearGreed] = useState<{ value: number, classification: string } | null>(null);
   const [loadingFearGreed, setLoadingFearGreed] = useState(true);
@@ -167,7 +202,18 @@ export default function MacroDashboard() {
         const response = await fetch("/api/macro-data");
         if (response.ok) {
           const data = await response.json();
-          if (Object.keys(data).length > 0) {
+          if (Array.isArray(data)) {
+            const formatted: Record<string, MacroData> = {};
+            data.forEach((item: any) => {
+              formatted[item.key] = {
+                value: item.value,
+                trend: item.trend,
+                updatedAt: item.updatedAt,
+                source: item.source
+              };
+            });
+            setMacroData(formatted);
+          } else if (data && typeof data === 'object') {
             setMacroData(data);
           }
         }
@@ -202,7 +248,20 @@ export default function MacroDashboard() {
       const response = await fetch("/api/macro-data");
       if (response.ok) {
         const data = await response.json();
-        setMacroData(data);
+        if (Array.isArray(data)) {
+          const formatted: Record<string, MacroData> = {};
+          data.forEach((item: any) => {
+            formatted[item.key] = {
+              value: item.value,
+              trend: item.trend,
+              updatedAt: item.updatedAt,
+              source: item.source
+            };
+          });
+          setMacroData(formatted);
+        } else if (data && typeof data === 'object') {
+          setMacroData(data);
+        }
       }
     } catch (error) {
       console.error("Manual Refresh Error:", error);

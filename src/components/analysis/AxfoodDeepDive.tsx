@@ -521,6 +521,8 @@ export default function AxfoodDeepDive({
   const [sharesCount, setSharesCount] = useState(100);
   const [customStockPrice, setCustomStockPrice] = useState(267.90);
   const [activeTab, setActiveTab] = useState("dcf");
+  const [showDcfExplanation, setShowDcfExplanation] = useState(false);
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 50);
@@ -1817,7 +1819,7 @@ export default function AxfoodDeepDive({
         {/* ── PREMIUM / PAYWALL SECTION ── */}
         <section style={{ paddingBottom: 64, borderTop: "1px solid rgba(120,113,108,0.15)", paddingTop: 64 }}>
           {!premiumUnlocked ? (
-            /* --- Paywall View --- */
+            /* --- Paywall View (Now Newsletter Subscription) --- */
             <div
               style={{
                 background: "linear-gradient(135deg, #FFFDF9 0%, #FAF6F0 100%)",
@@ -1847,11 +1849,85 @@ export default function AxfoodDeepDive({
               </div>
               
               <h3 style={{ fontSize: 22, fontWeight: 900, color: "#1C1917", margin: "0 0 8px 0" }}>
-                Ta analysen till nästa nivå
+                Lås upp analysverktygen gratis
               </h3>
-              <p style={{ fontSize: 14, color: "#57534E", maxWidth: 480, margin: "0 auto 28px", lineHeight: 1.6 }}>
-                Lås upp de interaktiva värderingsverktygen och ladda ner analysfilerna för Axfood för endast 19 kr.
+              <p style={{ fontSize: 14, color: "#57534E", maxWidth: 480, margin: "0 auto 24px", lineHeight: 1.6 }}>
+                Skriv in din e-postadress för att prenumerera på vårt kostnadsfria nyhetsbrev, så låser vi upp kalkylatorerna och extramaterialet direkt.
               </p>
+
+              <form 
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (!email) return;
+                  setIsPaying(true);
+                  try {
+                    const response = await fetch('/api/newsletter/signup', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ email })
+                    });
+                    if (response.ok) {
+                      setPremiumUnlocked(true);
+                    } else {
+                      const err = await response.json();
+                      alert(err.error || "Det gick inte att registrera din prenumeration. Prova igen.");
+                    }
+                  } catch (err) {
+                    console.error("Newsletter registration failed:", err);
+                    alert("Ett nätverksfel uppstod. Kontrollera din anslutning och försök igen.");
+                  } finally {
+                    setIsPaying(false);
+                  }
+                }}
+                style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 360, margin: "0 auto 28px" }}
+              >
+                <input
+                  type="email"
+                  placeholder="Ange din e-postadress..."
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  style={{
+                    padding: "12px 18px",
+                    border: "1px solid rgba(120, 113, 108, 0.25)",
+                    borderRadius: 99,
+                    fontSize: 14,
+                    textAlign: "center",
+                    outline: "none",
+                    color: "#1C1917",
+                    background: "#FFFFFF",
+                  }}
+                />
+                <button
+                  type="submit"
+                  disabled={isPaying}
+                  style={{
+                    background: "#F59E0B",
+                    color: "#FFFFFF",
+                    border: "none",
+                    borderRadius: 99,
+                    padding: "14px 40px",
+                    fontSize: 14,
+                    fontWeight: 800,
+                    cursor: "pointer",
+                    boxShadow: "0 4px 14px rgba(245,158,11,0.4)",
+                    transition: "all 0.2s ease",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 10,
+                  }}
+                >
+                  {isPaying ? (
+                    <>
+                      <span className="animate-spin" style={{ display: "inline-block", width: 16, height: 16, border: "2px solid #fff", borderTopColor: "transparent", borderRadius: "50%" }} />
+                      Registrerar prenumeration...
+                    </>
+                  ) : (
+                    "Lås upp verktyg & prenumerera"
+                  )}
+                </button>
+              </form>
 
               <div
                 style={{
@@ -1859,8 +1935,10 @@ export default function AxfoodDeepDive({
                   gridTemplateColumns: "1fr 1fr",
                   gap: 16,
                   maxWidth: 540,
-                  margin: "0 auto 36px",
+                  margin: "0 auto",
                   textAlign: "left",
+                  borderTop: "1px solid rgba(120, 113, 108, 0.12)",
+                  paddingTop: 24,
                 }}
               >
                 {[
@@ -1874,45 +1952,6 @@ export default function AxfoodDeepDive({
                     <span style={{ fontSize: 13, color: "#44403C", lineHeight: 1.4 }}>{feat}</span>
                   </div>
                 ))}
-              </div>
-
-              <button
-                onClick={() => {
-                  setIsPaying(true);
-                  setTimeout(() => {
-                    setIsPaying(false);
-                    setPremiumUnlocked(true);
-                  }, 1500);
-                }}
-                disabled={isPaying}
-                style={{
-                  background: "#F59E0B",
-                  color: "#FFFFFF",
-                  border: "none",
-                  borderRadius: 99,
-                  padding: "16px 40px",
-                  fontSize: 15,
-                  fontWeight: 800,
-                  cursor: "pointer",
-                  boxShadow: "0 4px 14px rgba(245,158,11,0.4)",
-                  transition: "all 0.2s ease",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 10,
-                }}
-              >
-                {isPaying ? (
-                  <>
-                    <span className="animate-spin" style={{ display: "inline-block", width: 16, height: 16, border: "2px solid #fff", borderTopColor: "transparent", borderRadius: "50%" }} />
-                    Verifierar med Swish...
-                  </>
-                ) : (
-                  "Lås upp verktyg med Swish (19 kr)"
-                )}
-              </button>
-              
-              <div style={{ marginTop: 14, fontSize: 11, color: "#78716C" }}>
-                Säker direktbetalning via Swish. Ingen registrering krävs.
               </div>
             </div>
           ) : (
@@ -1933,24 +1972,9 @@ export default function AxfoodDeepDive({
                 }}
               >
                 <div>
-                  <h4 style={{ fontSize: 14, fontWeight: 800, color: "#10B981", margin: 0 }}>⚡ Premiumverktyg upplåsta!</h4>
-                  <p style={{ fontSize: 12, color: "#57534E", margin: "2px 0 0 0" }}>Du har nu full tillgång till alla interaktiva moduler, diagram och insiderdata.</p>
+                  <h4 style={{ fontSize: 14, fontWeight: 800, color: "#10B981", margin: 0 }}>⚡ Nyhetsbrev registrerat!</h4>
+                  <p style={{ fontSize: 12, color: "#57534E", margin: "2px 0 0 0" }}>Tack för din prenumeration! Du har nu full tillgång till alla interaktiva verktyg och extramaterial.</p>
                 </div>
-                <button
-                  onClick={() => setPremiumUnlocked(false)}
-                  style={{
-                    background: "transparent",
-                    border: "1px solid rgba(120,113,108,0.25)",
-                    borderRadius: 99,
-                    padding: "6px 14px",
-                    fontSize: 11,
-                    color: "#57534E",
-                    cursor: "pointer",
-                    fontWeight: 600,
-                  }}
-                >
-                  Lås igen (testa flödet)
-                </button>
               </div>
 
               {/* --- Premium Tab Navigation Bar --- */}
@@ -2004,9 +2028,120 @@ export default function AxfoodDeepDive({
                     }}
                   >
                     <div style={{ borderBottom: "2px solid #F59E0B", paddingBottom: 12, marginBottom: 20 }}>
-                      <h3 style={{ fontSize: 16, fontWeight: 900, color: "#1C1917", margin: 0 }}>Interaktiv DCF-kalkylator (Kassaflödesmodell)</h3>
-                      <p style={{ fontSize: 12, color: "#57534E", margin: "2px 0 0 0" }}>Justera antagandena för att beräkna ett eget teoretiskt värde på Axfood-aktien.</p>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <div>
+                          <h3 style={{ fontSize: 16, fontWeight: 900, color: "#1C1917", margin: 0 }}>Interaktiv DCF-kalkylator (Kassaflödesmodell)</h3>
+                          <p style={{ fontSize: 12, color: "#57534E", margin: "2px 0 0 0" }}>Justera antagandena för att beräkna ett eget teoretiskt värde på Axfood-aktien.</p>
+                        </div>
+                        <button
+                          onClick={() => setShowDcfExplanation(!showDcfExplanation)}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: 6,
+                            padding: "6px 12px",
+                            borderRadius: 8,
+                            border: "1px solid rgba(245, 158, 11, 0.3)",
+                            background: showDcfExplanation ? "rgba(245, 158, 11, 0.1)" : "transparent",
+                            color: "#D97706",
+                            fontSize: 12,
+                            fontWeight: 700,
+                            cursor: "pointer",
+                            transition: "all 0.2s ease",
+                          }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                          Förklaring av DCF
+                        </button>
+                      </div>
                     </div>
+
+                    {showDcfExplanation && (
+                      <div
+                        style={{
+                          background: "#FAF8F5",
+                          border: "1px solid rgba(120, 113, 108, 0.15)",
+                          borderRadius: 12,
+                          padding: 24,
+                          marginBottom: 24,
+                          fontSize: 14,
+                          lineHeight: "1.6",
+                          color: "#292524",
+                        }}
+                      >
+                        <p style={{ marginTop: 0, fontWeight: 700, color: "#1C1917" }}>
+                          Här är en sammanhållen, pedagogisk genomgång som väver ihop allt vi pratat om – DCF i grunden, avkastningskravet specifikt, och Axfood som genomgående exempel.
+                        </p>
+
+                        <h4 style={{ fontSize: 15, fontWeight: 800, color: "#1C1917", marginTop: 20, marginBottom: 8 }}>Vad är DCF?</h4>
+                        <p style={{ margin: "0 0 12px 0" }}>
+                          DCF (Discounted Cash Flow, diskonterat kassaflöde) är ett sätt att räkna ut vad ett bolag borde vara värt idag, baserat på hur mycket pengar det väntas generera i framtiden.
+                        </p>
+                        <p style={{ margin: "0 0 12px 0" }}>
+                          Grundtanken är enkel: pengar du får i framtiden är värda mindre än samma summa pengar i handen idag. Om någon erbjuder dig 100 kr om 10 år istället för 100 kr nu, skulle du föredra pengarna nu – dels för att du kan investera dem under tiden, dels för att framtiden är osäker. DCF tar den intuitionen och gör den till matematik: den räknar ut exakt hur mycket mindre framtida pengar är värda idag, och summerar sedan alla bolagets framtida kassaflöden till ett totalt värde i dagens kronor.
+                        </p>
+                        
+                        <p style={{ margin: "0 0 8px 0", fontWeight: 700 }}>Tre saker styr resultatet:</p>
+                        <ul style={{ margin: "0 0 16px 0", paddingLeft: 20, display: "flex", flexDirection: "column", gap: 4 }}>
+                          <li><strong>Tillväxt</strong> – hur mycket bolaget väntas växa</li>
+                          <li><strong>Vinstmarginal</strong> – hur lönsamt bolaget är när det växer</li>
+                          <li><strong>Avkastningskrav</strong> – vilken avkastning du kräver för risken</li>
+                        </ul>
+                        
+                        <p style={{ margin: "0 0 12px 0" }}>
+                          Den tredje punkten är den svåraste att få en intuitiv känsla för, så låt oss gå in på den specifikt.
+                        </p>
+
+                        <h4 style={{ fontSize: 15, fontWeight: 800, color: "#1C1917", marginTop: 20, marginBottom: 8 }}>Vad är avkastningskravet?</h4>
+                        <p style={{ margin: "0 0 12px 0" }}>
+                          Avkastningskravet är svaret på frågan: &quot;Vilken årlig avkastning vill jag ha för att det ska vara värt att äga den här aktien, istället för ett säkrare alternativ?&quot;
+                        </p>
+                        <p style={{ margin: "0 0 12px 0" }}>
+                          Säger du 7,5% betyder det: &quot;Jag är bara villig att betala ett pris idag som ger mig 7,5% avkastning per år framöver, om allt går som väntat.&quot; Ju osäkrare eller mer riskfylld du tycker att bolagets framtid är, desto högre avkastning vill du ha kompenserad – och desto mindre är du villig att betala för aktien idag.
+                        </p>
+
+                        <h4 style={{ fontSize: 15, fontWeight: 800, color: "#1C1917", marginTop: 20, marginBottom: 8 }}>Varför små ändringar i avkastningskravet ger stora prisskillnader</h4>
+                        <p style={{ margin: "0 0 12px 0" }}>
+                          Det här är knuten som gör DCF svårbegriplig: avkastningskravet används för att räkna om varje enskilt års framtida kassaflöde till ett värde idag, och eftersom modellen sträcker sig många år framåt blir effekten exponentiell – inte linjär.
+                        </p>
+                        <p style={{ margin: "0 0 12px 0" }}>
+                          100 kr du får om 1 år, diskonterat med 7,5%, är värt cirka 93 kr idag. Liten skillnad.
+                        </p>
+                        <p style={{ margin: "0 0 12px 0" }}>
+                          100 kr du får om 20 år, diskonterat med samma 7,5%, är bara värt cirka 24 kr idag. Höjer du kravet till 10% istället sjunker det till cirka 15 kr – en minskning på nästan 40%, bara av att höja kravet med 2,5 procentenheter.
+                        </p>
+                        <p style={{ margin: "0 0 12px 0" }}>
+                          Ju längre fram i tiden ett kassaflöde ligger, desto känsligare blir det för förändringar i avkastningskravet. Och i en DCF-modell summerar man alla framtida år, inklusive ett terminalvärde som sträcker sig &quot;i evighet&quot; framåt och ofta utgör majoriteten av hela det beräknade värdet. Det är där den stora känsligheten egentligen sitter.
+                        </p>
+
+                        <h4 style={{ fontSize: 15, fontWeight: 800, color: "#1C1917", marginTop: 20, marginBottom: 8 }}>Konkret: Axfood</h4>
+                        <p style={{ margin: "0 0 8px 0" }}>
+                          I vår kalkylator för Axfood har vi som basantagande satt:
+                        </p>
+                        <ul style={{ margin: "0 0 12px 0", paddingLeft: 20, display: "flex", flexDirection: "column", gap: 4 }}>
+                          <li>Långsiktig tillväxt: <strong>4,5%</strong></li>
+                          <li>Långsiktig EBIT-marginal: <strong>4,0%</strong></li>
+                          <li>Avkastningskrav: <strong>7,5%</strong></li>
+                        </ul>
+                        <p style={{ margin: "0 0 12px 0" }}>
+                          Det ger ett beräknat värde på 263 kr per aktie – nästan exakt i linje med börskursen på 267,9 kr. Aktien handlas alltså, enligt vår modell, ungefär där den &quot;borde&quot;.
+                        </p>
+                        <p style={{ margin: "0 0 12px 0" }}>
+                          Ändrar vi nu bara avkastningskravet, och sänker det från 7,5% till säg 6%, utan att röra tillväxt eller marginal alls, stiger det beräknade värdet markant – helt enkelt eftersom alla framtida kassaflöden (särskilt de långt fram i tiden) blir mer värda idag när vi kräver mindre avkastning för att äga aktien.
+                        </p>
+                        <p style={{ margin: "0 0 12px 0" }}>
+                          Kombinerar vi det med lite högre tillväxt och bättre marginal samtidigt, vilket vi gjorde i vårt Bull-scenario, hamnar vi på 329 kr – och med mer optimistiska antaganden över lag kan modellen ge så högt som 422 kr, jämfört med Bear-scenariots 203 kr.
+                        </p>
+                        <p style={{ margin: "0 0 12px 0" }}>
+                          Det är en skillnad på över 100% mellan det mest pessimistiska och mest optimistiska scenariot – för samma bolag, samma dag, samma faktiska verksamhet. Skillnaden ligger helt i vilka antaganden om framtiden vi matar in.
+                        </p>
+
+                        <h4 style={{ fontSize: 15, fontWeight: 800, color: "#1C1917", marginTop: 20, marginBottom: 8 }}>Vad du ska ta med dig</h4>
+                        <p style={{ margin: "0 0 0 0" }}>
+                          DCF ger inte ett exakt &quot;rätt&quot; pris. Den ger ett pris givet vissa antaganden – och avkastningskravet är den enskilda variabel som har störst hävstång på resultatet, just därför att den påverkar diskonteringen av alla framtida år, särskilt de som ligger längst bort. Det är därför vi alltid visar ett spann (Bear/Base/Bull) snarare än en enskild siffra, och varför DCF bör användas tillsammans med andra värderingsmetoder snarare än som en ensam sanning.
+                        </p>
+                      </div>
+                    )}
 
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 36, alignItems: "start" }}>
                       {/* Sliders */}
@@ -2226,9 +2361,59 @@ export default function AxfoodDeepDive({
                         </table>
                       </div>
                     </div>
+                    
+                    <div style={{ marginTop: 16, fontSize: 11, color: "#78716C", lineHeight: 1.5, borderTop: "1px solid rgba(120,113,108,0.1)", paddingTop: 12 }}>
+                      <strong>Observera:</strong> Simuleringen antar att återinvestering sker till en konstant aktiekurs (267,9 kr) samt att ingen skatt dras på utdelningen. I praktiken påverkas det faktiska utfallet av både aktiekursens utveckling över tid och beskattning (t.ex. ISK/KF-skatt eller kapitalvinstskatt vid vanlig depå), vilket gör att verkligt resultat kan avvika från tabellen ovan.
+                    </div>
                   </div>
                 </div>
               )}
+
+          {/* 3. Frivillig Donation / Kaffe (Visible to everyone) */}
+          <div
+            style={{
+              background: "#FAF8F5",
+              border: "1px dashed rgba(245, 158, 11, 0.4)",
+              borderRadius: 16,
+              padding: 24,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: 24,
+              boxShadow: "0 2px 10px rgba(120,113,108,0.02)",
+              marginTop: 40,
+            }}
+          >
+            <div style={{ flex: 1 }}>
+              <h4 style={{ fontSize: 14, fontWeight: 800, color: "#1C1917", margin: "0 0 6px 0", display: "flex", alignItems: "center", gap: 8 }}>
+                <span style={{ fontSize: 18 }}>☕</span> Gillar du sajten och analyserna?
+              </h4>
+              <p style={{ fontSize: 12, color: "#57534E", margin: 0, lineHeight: 1.5 }}>
+                Borsanalys.se drivs som ett vinstfritt hobbyprojekt. Om du uppskattar kalkylatorerna och granskningarna får du jättegärna skicka en valfri donation för att stödja driftskostnaderna för server och data. Stort tack för ditt stöd!
+              </p>
+            </div>
+            
+            <div
+              style={{
+                background: "#FFFFFF",
+                border: "1px solid rgba(120, 113, 108, 0.12)",
+                borderRadius: 12,
+                padding: "12px 20px",
+                textAlign: "right",
+                minWidth: 200,
+              }}
+            >
+              <div style={{ fontSize: 10, fontWeight: 800, color: "#78716C", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 2 }}>
+                Swisha valfritt belopp
+              </div>
+              <div style={{ fontSize: 15, fontWeight: 900, color: "#F59E0B", fontFamily: "JetBrains Mono, monospace" }}>
+                076-044 45 63
+              </div>
+              <div style={{ fontSize: 11, color: "#57534E", marginTop: 2 }}>
+                Mottagare: <strong>Carl-Fredrik Thor</strong>
+              </div>
+            </div>
+          </div>
 
               {/* --- TAB CONTENT 2: Overview & Valuation --- */}
               {activeTab === "valuation" && (

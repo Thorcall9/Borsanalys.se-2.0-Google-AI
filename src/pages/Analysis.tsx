@@ -180,7 +180,15 @@ export default function Analysis() {
   const sectors = ["Alla", ...new Set(allAnalyses.map(a => a.sector))];
   const recommendations = ["Alla", "KÖP", "AVVAKTA", "SÄLJ", "BEVAKA"];
 
+  const now = new Date();
   const filteredAnalyses = allAnalyses.filter(a => {
+    // Hide future scheduled posts
+    if (a.date) {
+      const isFuture = a.date.includes("T") 
+        ? new Date(a.date) > now 
+        : new Date(a.date + "T00:00:00") > now;
+      if (isFuture) return false;
+    }
     const matchesSearch = a.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
                          a.ticker.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesSector = selectedSector === "Alla" || a.sector === selectedSector;
@@ -378,6 +386,16 @@ export default function Analysis() {
 
   if (!analysis) {
     return <Navigate to="/analys" replace />;
+  }
+
+  // Prevent accessing future scheduled posts directly
+  if (analysis.date) {
+    const isFuture = analysis.date.includes("T") 
+      ? new Date(analysis.date) > now 
+      : new Date(analysis.date + "T00:00:00") > now;
+    if (isFuture) {
+      return <Navigate to="/analys" replace />;
+    }
   }
 
   const currentIndex = allAnalyses.findIndex(a => a.slug === (slug === 'evolution' ? 'evolution-2025' : slug));

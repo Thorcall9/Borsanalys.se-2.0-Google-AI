@@ -21,8 +21,15 @@ async function fetchMacroViaAI(): Promise<MacroDataPoint[]> {
   if (!apiKey) throw new Error("GEMINI_API_KEY is missing");
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  // Using gemini-2.5-flash-lite as configured in server.ts
-  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
+  // Using gemini-2.5-flash with Google Search grounding
+  const model = genAI.getGenerativeModel({
+    model: "gemini-2.5-flash",
+    tools: [
+      {
+        googleSearch: {},
+      } as any
+    ]
+  });
 
   const prompt = `Du är en finansiell data-assistent. Din uppgift är att hämta de absolut senaste och mest korrekta värdena för följande makroindikatorer. 
 Använd sökning om det behövs för att hitta dagsaktuella siffor (datum: ${new Date().toLocaleDateString('sv-SE')}).
@@ -48,12 +55,15 @@ Svara EXAKT i detta JSON-format:
   try {
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    let text = response.text().trim();
+    const text = response.text().trim();
     
-    // Clean potential markdown code blocks
-    text = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/\s*```$/i, '').trim();
+    // Extract JSON using robust regex to handle any pre-amble/post-amble explanations
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      throw new Error("Kunde inte hitta något JSON-objekt i Gemini-svaret.");
+    }
     
-    const data = JSON.parse(text);
+    const data = JSON.parse(jsonMatch[0]);
     const points: MacroDataPoint[] = [];
 
     const mapping: Record<string, string> = {

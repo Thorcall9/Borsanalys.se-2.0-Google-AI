@@ -55,9 +55,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // 3. Update Macro Logic
     if (type === 'update-macro') {
-      // Logic would be triggered here
+      const { updateAllMacroData } = await import('../src/lib/macroUpdater.ts');
+      const result = await updateAllMacroData();
       await prisma.$disconnect();
-      return res.status(200).json({ message: "Macro update triggered" });
+      return res.status(200).json(result);
     }
 
     await prisma.$disconnect();
