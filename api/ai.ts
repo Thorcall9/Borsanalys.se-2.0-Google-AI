@@ -1,5 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { z } from 'zod';
+import { applyCors, enforceBodyLimit, enforceMethods, rateLimit } from './_security';
 
 /**
  * CONSOLIDATED AI API (Insights, Outlook)
@@ -7,6 +9,12 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
  */
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { type } = req.query;
+  const allowedMethods = type === 'event-insight' ? ['POST', 'OPTIONS'] : ['GET', 'POST', 'OPTIONS'];
+  if (!applyCors(req, res, allowedMethods)) return;
+  if (!enforceMethods(req, res, allowedMethods.filter(method => method !== 'OPTIONS'))) return;
+  if (!enforceBodyLimit(req, res, 5 * 1024)) return;
+  if (!rateLimit(req, res, `ai-${String(type || 'unknown')}`, { windowMs: 60 * 60 * 1000, max: 30 })) return;
+
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
   try {
@@ -41,12 +49,17 @@ Analysera var vi befinner oss i konjunkturcykeln och svara i JSON-format med "ou
 
     // 2. Event Insight Logic
     if (type === 'event-insight') {
-      const { title, description } = req.body;
-      if (!title || !description) {
+      const insightSchema = z.object({
+        title: z.string().min(1).max(200),
+        description: z.string().min(1).max(1000),
+      });
+      const parsed = insightSchema.safeParse(req.body);
+      if (!parsed.success) {
         await prisma.$disconnect();
-        return res.status(400).json({ error: "Missing title or description" });
+        return res.status(400).json({ error: "Ogiltig input", details: parsed.error.issues });
       }
 
+      const { title, description } = parsed.data;
       const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" });
       const prompt = `Analysera följande händelse och dess potentiella påverkan på den svenska börsen (OMX): "${title} - ${description}". Ge ett kort, koncist svar på max 3 meningar om vad investerare bör hålla koll på.`;
       

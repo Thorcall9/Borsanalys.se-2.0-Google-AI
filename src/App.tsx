@@ -28,6 +28,7 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Holdings = lazy(() => import("./pages/Holdings"));
 const AdminSubscribers = lazy(() => import("./components/AdminSubscribers").then(module => ({ default: module.AdminSubscribers })));
 const PreviewHeaderPage = lazy(() => import("./pages/PreviewHeader"));
+const AbbQ12026Preview = lazy(() => import("./pages/AbbQ12026Preview"));
 const MindmapBlueprint = lazy(() => import("./components/Mindmap"));
 
 const PageLoader = () => (
@@ -74,6 +75,7 @@ export default function App() {
                       <Route path="/om-oss" element={<About />} />
                       <Route path="/admin/subscribers" element={<AdminSubscribers />} />
                       <Route path="/preview-header" element={<PreviewHeaderPage />} />
+                      <Route path="/preview/abb-q1-2026" element={<AbbQ12026Preview />} />
                       <Route path="/methodology-blueprint" element={<MindmapBlueprint />} />
                     </Routes>
                   </Suspense>

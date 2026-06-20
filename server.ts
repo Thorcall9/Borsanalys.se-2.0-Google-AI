@@ -56,13 +56,27 @@ async function startServer() {
 
   // Security Middleware
   app.use(helmet({
-    contentSecurityPolicy: false, // Disabled to allow Google AdSense scripts without complex Hashes/Nonces
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        baseUri: ["'self'"],
+        objectSrc: ["'none'"],
+        frameAncestors: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://*.googlesyndication.com", "https://*.google.com", "https://*.googleapis.com", "https://*.gstatic.com", "https://va.vercel-scripts.com"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        imgSrc: ["'self'", "data:", "blob:", "https:"],
+        fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
+        connectSrc: ["'self'", "https://*.vercel-insights.com", "https://vitals.vercel-insights.com", "https://*.googleapis.com", "https://*.googlesyndication.com"],
+        frameSrc: ["'self'", "https://*.google.com", "https://*.googlesyndication.com"],
+      },
+    },
     crossOriginEmbedderPolicy: false // Disabled for cross-origin resources
   }));
 
   // CORS Policy: Restrict API usage to the site's domains and localhost instances
   const allowedOrigins = [
     'http://localhost:3000',
+    'http://localhost:3001',
     'http://localhost:5173',
     /^https:\/\/borsanalys(-[a-zA-Z0-9-]+)?\.vercel\.app$/, // Tillåt enbart Vercel preview-miljöer som börjar på borsanalys
     'https://borsanalys.se',
@@ -192,7 +206,7 @@ async function startServer() {
 
   // Newsletter Voting (Production compatible)
   app.get("/vote", voteHandler as any);
-  app.get("/api/admin/votes", (req, res) => {
+  app.get("/api/admin/votes", cronAuthMiddleware, (req, res) => {
     req.query.type = 'votes';
     return adminHandler(req as any, res as any);
   });

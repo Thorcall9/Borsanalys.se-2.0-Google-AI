@@ -1,5 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { enforceBodyLimit, enforceMethods, rateLimit, requireCronSecret } from './_security';
 
 /**
  * CONSOLIDATED ADMIN API (Votes, Event Generation, Macro Updates)
@@ -8,8 +9,10 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { type } = req.query;
 
-  const authHeader = req.headers["x-cron-auth"] || req.headers["authorization"];
-  const secret = process.env.CRON_SECRET;
+  if (!enforceMethods(req, res, ['GET', 'POST'])) return;
+  if (!enforceBodyLimit(req, res, 5 * 1024)) return;
+  if (!rateLimit(req, res, `admin-${String(type || 'unknown')}`, { windowMs: 15 * 60 * 1000, max: 60 })) return;
+  if (!requireCronSecret(req, res)) return;
 
   try {
     const { PrismaClient } = await import('@prisma/client');
@@ -25,12 +28,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const result = votes.map(v => ({ stock: v.stock, count: v._count.stock }));
       await prisma.$disconnect();
       return res.status(200).json(result);
-    }
-
-    // --- PROTECTED ROUTES BELOW ---
-    if (!secret || authHeader !== secret) {
-       await prisma.$disconnect();
-       return res.status(401).json({ error: "Unauthorized" });
     }
 
     // 2. Generate Events Logic

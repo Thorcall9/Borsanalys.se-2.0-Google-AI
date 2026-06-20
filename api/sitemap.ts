@@ -10,7 +10,8 @@ export default async function handler(req: Request, res: Response) {
     '/makro',
     '/om-oss',
     '/analyser/nvidia',
-    '/analyser/microsoft'
+    '/analyser/microsoft',
+    '/analys/abb-q1-2026'
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
