@@ -256,6 +256,7 @@ function ScenarioGauge({
 
       {/* Scenario cards */}
       <div
+        className="mobile-grid-1"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(3, 1fr)",
@@ -552,6 +553,51 @@ export default function AxfoodDeepDive({
         paddingTop: 64,
       }}
     >
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (max-width: 768px) {
+          .mobile-grid-1 {
+            grid-template-columns: 1fr !important;
+            gap: 20px !important;
+          }
+          .mobile-grid-2-1 {
+            grid-template-columns: 1fr !important;
+            gap: 24px !important;
+          }
+          .mobile-flex-col {
+            flex-direction: column !important;
+            align-items: stretch !important;
+          }
+          .mobile-flex-wrap {
+            flex-wrap: wrap !important;
+          }
+          .mobile-width-100 {
+            width: 100% !important;
+            max-width: 100% !important;
+          }
+          .mobile-align-start {
+            align-items: flex-start !important;
+            text-align: left !important;
+          }
+          .mobile-p-16 {
+            padding: 16px !important;
+          }
+          .mobile-p-20 {
+            padding: 20px !important;
+          }
+          .mobile-m-0 {
+            margin: 0 !important;
+          }
+          .mobile-text-lg {
+            font-size: 28px !important;
+          }
+          .mobile-text-md {
+            font-size: 15px !important;
+          }
+          .mobile-hide {
+            display: none !important;
+          }
+        }
+      ` }} />
       <SEO
         title={`Axfood AB (AXFO) Aktieanalys – Börsanalys.se`}
         description="Djupanalys av Axfood AB (AXFO): P/E 24,7x, direktavkastning 3,4 %, scorecard 27/40. Neutral/Behåll vid kurs 267,90 kr (juni 2026)."
@@ -675,6 +721,7 @@ export default function AxfoodDeepDive({
 
           {/* Main hero layout */}
           <div
+            className="mobile-grid-1"
             style={{
               display: "grid",
               gridTemplateColumns: "1fr auto",
@@ -734,7 +781,7 @@ export default function AxfoodDeepDive({
             </div>
 
             {/* Right: Verdict badge */}
-            <div style={{ textAlign: "center", flexShrink: 0 }}>
+            <div className="mobile-align-start" style={{ textAlign: "center", flexShrink: 0 }}>
               <div
                 style={{
                   width: 120,
@@ -925,7 +972,7 @@ export default function AxfoodDeepDive({
           <SectionNumber n="I" />
           <SectionLabel label="Företagsöversikt" />
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
+          <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
             <div>
               <h2
                 style={{
@@ -1013,7 +1060,7 @@ export default function AxfoodDeepDive({
           <SectionNumber n="II" />
           <SectionLabel label="Affärsmodell" />
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginBottom: 40 }}>
+          <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginBottom: 40 }}>
             {[
               {
                 icon: <ShoppingCart size={20} />,
@@ -1060,7 +1107,7 @@ export default function AxfoodDeepDive({
           <SectionNumber n="III" />
           <SectionLabel label="Konkurrensfördelar (Moat)" />
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
+          <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
             <div>
               <h2 style={{ fontSize: 26, fontWeight: 800, color: "#1C1917", marginBottom: 24, lineHeight: 1.2 }}>
                 Operativa fördelar — inte strukturella vallgravar
@@ -1148,7 +1195,7 @@ export default function AxfoodDeepDive({
           <SectionNumber n="IV" />
           <SectionLabel label="Finansiell Utveckling" />
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: 40 }}>
+          <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, marginBottom: 40 }}>
             {/* 2025 Full Year */}
             <div
               style={{
@@ -1294,7 +1341,7 @@ export default function AxfoodDeepDive({
           <SectionNumber n="V" />
           <SectionLabel label="Scorecard — 8 dimensioner" />
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }}>
+          <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }}>
             <div>
               <div
                 style={{
@@ -1384,7 +1431,7 @@ export default function AxfoodDeepDive({
           <SectionNumber n="VI" />
           <SectionLabel label="Värdering" />
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
+          <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48 }}>
             <div>
               <h2 style={{ fontSize: 26, fontWeight: 800, color: "#1C1917", marginBottom: 24, lineHeight: 1.2 }}>
                 I mitten av det historiska P/E-spannet — varken billig eller uppenbart dyr
@@ -1734,7 +1781,7 @@ export default function AxfoodDeepDive({
               }}
             />
 
-            <div style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 40, alignItems: "start" }}>
+            <div className="mobile-grid-1 mobile-align-start" style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 40, alignItems: "start" }}>
               <div style={{ textAlign: "center" }}>
                 <div
                   style={{
@@ -1779,7 +1826,7 @@ export default function AxfoodDeepDive({
                   Casets begränsningar är lika tydliga: den svenska dagligvarumarknaden är mogen med historisk tillväxttakt om 4–5 % per år, aktien värderas till P/E ~24,7x och P/B ~7,7x, och <strong style={{ color: "#F59E0B" }}>base-case implicerar att all avkastning de kommande åren kommer från utdelning — inte kursutveckling.</strong>
                 </p>
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 24 }}>
+                <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginTop: 24 }}>
                   <div
                     style={{
                       background: "rgba(16,185,129,0.06)",
@@ -1930,6 +1977,7 @@ export default function AxfoodDeepDive({
               </form>
 
               <div
+                className="mobile-grid-1"
                 style={{
                   display: "grid",
                   gridTemplateColumns: "1fr 1fr",
@@ -2143,7 +2191,7 @@ export default function AxfoodDeepDive({
                       </div>
                     )}
 
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 36, alignItems: "start" }}>
+                    <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 36, alignItems: "start" }}>
                       {/* Sliders */}
                       <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                         {/* Growth slider */}
@@ -2299,7 +2347,7 @@ export default function AxfoodDeepDive({
                       <p style={{ fontSize: 12, color: "#57534E", margin: "2px 0 0 0" }}>Simulera hur dina utdelningar växer över tid om de återinvesteras i nya Axfood-aktier.</p>
                     </div>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "220px 1fr", gap: 28, alignItems: "start" }}>
+                    <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "220px 1fr", gap: 28, alignItems: "start" }}>
                       <div>
                         <label style={{ fontSize: 12, fontWeight: 700, color: "#292524", display: "block", marginBottom: 6 }}>Antal aktier vid start:</label>
                         <input
@@ -2432,7 +2480,7 @@ export default function AxfoodDeepDive({
                       <p style={{ fontSize: 12, color: "#57534E", margin: "2px 0 0 0" }}>Jämförelse av styrkor mot branschsnitt samt olika teoretiska värderingsmetoder.</p>
                     </div>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 40, alignItems: "center" }}>
+                    <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 40, alignItems: "center" }}>
                       {/* Snowflake Radar Chart (SVG) */}
                       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
                         <h4 style={{ fontSize: 13, fontWeight: 800, color: "#78716C", textTransform: "uppercase", letterSpacing: "0.05em", margin: 0 }}>Bolagets Snowflake-profil</h4>
@@ -2547,38 +2595,40 @@ export default function AxfoodDeepDive({
                       {/* Valuation Table */}
                       <div>
                         <h4 style={{ fontSize: 13, fontWeight: 700, color: "#1C1917", marginBottom: 12 }}>Teoretiskt värde vs Jämförelsekurs</h4>
-                        <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12.5 }}>
-                          <thead>
-                            <tr style={{ borderBottom: "1px solid rgba(120,113,108,0.18)", color: "#78716C", fontSize: 10, textTransform: "uppercase" }}>
-                              <th style={{ padding: "8px 6px", textAlign: "left" }}>Modell</th>
-                              <th style={{ padding: "8px 6px", textAlign: "right" }}>Beräknat Värde</th>
-                              <th style={{ padding: "8px 6px", textAlign: "right" }}>Margin of Safety</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {[
-                              { name: "DCF Kassaflödesmodell (Bas)", val: 263, desc: "Nuvärdet av framtida kassaflöden. Mäter bolagets långsiktiga fundamentala värde." },
-                              { name: "P/E-Normaliserad (22,0x)", val: 238, desc: "Värdering utifrån historisk genomsnittlig vinstmultipel för stabila bolag." },
-                              { name: "EV/EBITDA Multipelmodell", val: 252, desc: "Företagsvärde i relation till rörelseresultat före avskrivningar." },
-                              { name: "FCF-Yield Modell (4.5% yield)", val: 248, desc: "Aktiepris relaterat till fritt kassaflöde. Faktiskt avkastningsmått." },
-                            ].map((m, idx) => {
-                              const diff = ((m.val - customStockPrice) / customStockPrice) * 100;
-                              const isPositive = diff >= 0;
-                              return (
-                                <tr key={idx} style={{ borderBottom: "1px solid rgba(120,113,108,0.1)", background: idx % 2 === 0 ? "transparent" : "rgba(120,113,108,0.015)" }}>
-                                  <td style={{ padding: "10px 6px" }}>
-                                    <div style={{ fontWeight: 700, color: "#1C1917" }}>{m.name}</div>
-                                    <div style={{ fontSize: 10, color: "#78716C", marginTop: 2, lineHeight: 1.4 }}>{m.desc}</div>
-                                  </td>
-                                  <td style={{ padding: "10px 6px", textAlign: "right", fontFamily: "JetBrains Mono, monospace", fontWeight: 700, color: "#292524" }}>{m.val} kr</td>
-                                  <td style={{ padding: "10px 6px", textAlign: "right", fontFamily: "JetBrains Mono, monospace", fontWeight: 700, color: isPositive ? "#10B981" : "#EF4444" }}>
-                                    {isPositive ? "▲ +" : "▼ "}{diff.toFixed(1)} %
-                                  </td>
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
+                        <div style={{ overflowX: "auto" }}>
+                          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12.5 }}>
+                            <thead>
+                              <tr style={{ borderBottom: "1px solid rgba(120,113,108,0.18)", color: "#78716C", fontSize: 10, textTransform: "uppercase" }}>
+                                <th style={{ padding: "8px 6px", textAlign: "left" }}>Modell</th>
+                                <th style={{ padding: "8px 6px", textAlign: "right" }}>Beräknat Värde</th>
+                                <th style={{ padding: "8px 6px", textAlign: "right" }}>Margin of Safety</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {[
+                                { name: "DCF Kassaflödesmodell (Bas)", val: 263, desc: "Nuvärdet av framtida kassaflöden. Mäter bolagets långsiktiga fundamentala värde." },
+                                { name: "P/E-Normaliserad (22,0x)", val: 238, desc: "Värdering utifrån historisk genomsnittlig vinstmultipel för stabila bolag." },
+                                { name: "EV/EBITDA Multipelmodell", val: 252, desc: "Företagsvärde i relation till rörelseresultat före avskrivningar." },
+                                { name: "FCF-Yield Modell (4.5% yield)", val: 248, desc: "Aktiepris relaterat till fritt kassaflöde. Faktiskt avkastningsmått." },
+                              ].map((m, idx) => {
+                                const diff = ((m.val - customStockPrice) / customStockPrice) * 100;
+                                const isPositive = diff >= 0;
+                                return (
+                                  <tr key={idx} style={{ borderBottom: "1px solid rgba(120,113,108,0.1)", background: idx % 2 === 0 ? "transparent" : "rgba(120,113,108,0.015)" }}>
+                                    <td style={{ padding: "10px 6px" }}>
+                                      <div style={{ fontWeight: 700, color: "#1C1917" }}>{m.name}</div>
+                                      <div style={{ fontSize: 10, color: "#78716C", marginTop: 2, lineHeight: 1.4 }}>{m.desc}</div>
+                                    </td>
+                                    <td style={{ padding: "10px 6px", textAlign: "right", fontFamily: "JetBrains Mono, monospace", fontWeight: 700, color: "#292524" }}>{m.val} kr</td>
+                                    <td style={{ padding: "10px 6px", textAlign: "right", fontFamily: "JetBrains Mono, monospace", fontWeight: 700, color: isPositive ? "#10B981" : "#EF4444" }}>
+                                      {isPositive ? "▲ +" : "▼ "}{diff.toFixed(1)} %
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
                         <div style={{ marginTop: 16, textAlign: "right" }}>
                           <button
                             onClick={() => setActiveTab("dcf")}
@@ -2641,7 +2691,7 @@ export default function AxfoodDeepDive({
                       <h3 style={{ fontSize: 16, fontWeight: 900, color: "#1C1917", margin: 0 }}>Analytikerns Playbook — Köp- & Säljstrategi</h3>
                     </div>
                     
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20 }}>
+                    <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20 }}>
                       <div style={{ borderLeft: "3px solid #10B981", paddingLeft: 16 }}>
                         <h4 style={{ fontSize: 13, fontWeight: 700, color: "#10B981", margin: "0 0 6px 0" }}>Köp under 240 kr</h4>
                         <p style={{ fontSize: 12, color: "#57534E", lineHeight: 1.6, margin: 0 }}>
@@ -2702,7 +2752,7 @@ export default function AxfoodDeepDive({
                       const rev2028 = (102.5 * Math.pow(scaleGrowth, 3)).toFixed(1);
 
                       return (
-                        <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 36, alignItems: "start" }}>
+                        <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 36, alignItems: "start" }}>
                           {/* SVG Line chart representing EPS trajectory */}
                           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
                             <span style={{ fontSize: 12, fontWeight: 700, color: "#292524", marginBottom: 12 }}>Prognos: Vinst per aktie (EPS, SEK)</span>
@@ -2755,7 +2805,7 @@ export default function AxfoodDeepDive({
                           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                             <h4 style={{ fontSize: 13, fontWeight: 700, color: "#1C1917", margin: "0 0 4px 0" }}>Justerade Siffror (Känslighetsanalys)</h4>
                             
-                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
+                            <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 12 }}>
                               <div style={{ background: "#FAF8F5", padding: "12px 14px", borderRadius: 8, border: "1px solid rgba(120,113,108,0.1)" }}>
                                 <div style={{ fontSize: 10, color: "#78716C", fontWeight: 700, textTransform: "uppercase" }}>Omsättning (2028e)</div>
                                 <div style={{ fontSize: 16, fontWeight: 900, color: "#F59E0B", fontFamily: "JetBrains Mono, monospace", marginTop: 4 }}>{rev2028} mdkr</div>
@@ -2795,7 +2845,7 @@ export default function AxfoodDeepDive({
                       <p style={{ fontSize: 12, color: "#57534E", margin: "2px 0 0 0" }}>En bedömning av Axfoods finansiella styrka och eventuella risker i skuldstrukturen.</p>
                     </div>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20 }}>
+                    <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20 }}>
                       {[
                         { 
                           label: "Nettoskuld / EBITDA (exkl. IFRS 16)", 
@@ -2865,7 +2915,7 @@ export default function AxfoodDeepDive({
                       <p style={{ fontSize: 12, color: "#57534E", margin: "2px 0 0 0" }}>Stresstest av Axfoods utdelning i förhållande till vinst och fritt kassaflöde.</p>
                     </div>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40 }}>
+                    <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40 }}>
                       {/* Payout metrics bars */}
                       <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
                         {/* Earnings payout */}
@@ -2921,7 +2971,7 @@ export default function AxfoodDeepDive({
                       <p style={{ fontSize: 12, color: "#57534E", margin: "2px 0 0 0" }}>Aktivitet bland insynspersoner (VD, styrelse, ledande befattningshavare) senaste 12 månaderna.</p>
                     </div>
 
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 40, alignItems: "start" }}>
+                    <div className="mobile-grid-1" style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 40, alignItems: "start" }}>
                       {/* Insider buy/sell mini bar chart */}
                       <div>
                         <h4 style={{ fontSize: 13, fontWeight: 700, color: "#1C1917", marginBottom: 16 }}>Insideraffärer senaste året</h4>
