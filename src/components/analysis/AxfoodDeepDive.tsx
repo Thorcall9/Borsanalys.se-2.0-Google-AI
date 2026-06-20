@@ -449,7 +449,11 @@ function DataTable({
   accentCol?: number;
 }) {
   return (
-    <div style={{ overflowX: "auto", borderRadius: 12, border: "1px solid rgba(120,113,108,0.18)" }}>
+    <div style={{ position: "relative" }}>
+      <div className="mobile-scroll-hint" style={{ display: "none", textAlign: "right", fontSize: 11, color: "#78716C", marginBottom: 6, fontWeight: 500 }}>
+        👉 Scrolla i sidled för mer data
+      </div>
+      <div style={{ overflowX: "auto", borderRadius: 12, border: "1px solid rgba(120,113,108,0.18)" }}>
       <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
         <thead>
           <tr style={{ background: "rgba(245,158,11,0.08)", borderBottom: "1px solid rgba(245,158,11,0.15)" }}>
@@ -500,6 +504,7 @@ function DataTable({
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }
@@ -551,6 +556,7 @@ export default function AxfoodDeepDive({
         color: "#292524",
         fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif",
         paddingTop: 64,
+        overflowX: "hidden",
       }}
     >
       <style dangerouslySetInnerHTML={{ __html: `
@@ -595,6 +601,9 @@ export default function AxfoodDeepDive({
           }
           .mobile-hide {
             display: none !important;
+          }
+          .mobile-scroll-hint {
+            display: block !important;
           }
         }
       ` }} />
@@ -1916,12 +1925,18 @@ export default function AxfoodDeepDive({
                     if (response.ok) {
                       setPremiumUnlocked(true);
                     } else {
-                      const err = await response.json();
-                      alert(err.error || "Det gick inte att registrera din prenumeration. Prova igen.");
+                      let errText = "Det gick inte att registrera din prenumeration. Prova igen.";
+                      try {
+                        const err = await response.json();
+                        if (err.error) errText = err.error;
+                      } catch (e) {
+                        // ignore and use default
+                      }
+                      alert(errText);
                     }
                   } catch (err) {
                     console.error("Newsletter registration failed:", err);
-                    alert("Ett nätverksfel uppstod. Kontrollera din anslutning och försök igen.");
+                    alert("Kunde inte ansluta till servern. Har du en adblocker aktiverad som blockerar prenumerationer? Annars kontrollera din internetanslutning.");
                   } finally {
                     setIsPaying(false);
                   }
@@ -2370,6 +2385,9 @@ export default function AxfoodDeepDive({
                         </div>
                       </div>
 
+                      <div className="mobile-scroll-hint" style={{ display: "none", textAlign: "right", fontSize: 11, color: "#78716C", marginBottom: 6, fontWeight: 500 }}>
+                        👉 Scrolla i sidled för mer data
+                      </div>
                       <div style={{ overflowX: "auto" }}>
                         <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
                           <thead>
@@ -2595,6 +2613,9 @@ export default function AxfoodDeepDive({
                       {/* Valuation Table */}
                       <div>
                         <h4 style={{ fontSize: 13, fontWeight: 700, color: "#1C1917", marginBottom: 12 }}>Teoretiskt värde vs Jämförelsekurs</h4>
+                        <div className="mobile-scroll-hint" style={{ display: "none", textAlign: "right", fontSize: 11, color: "#78716C", marginBottom: 6, fontWeight: 500 }}>
+                          👉 Scrolla i sidled för mer data
+                        </div>
                         <div style={{ overflowX: "auto" }}>
                           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12.5 }}>
                             <thead>
