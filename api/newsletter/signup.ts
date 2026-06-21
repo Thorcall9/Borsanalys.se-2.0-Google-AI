@@ -1,12 +1,38 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { z } from 'zod';
-import { applyCors, enforceBodyLimit, enforceMethods, rateLimit } from '../_security';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (!applyCors(req, res, ['POST', 'OPTIONS'])) return;
-  if (!enforceMethods(req, res, ['POST'])) return;
-  if (!enforceBodyLimit(req, res, 2048)) return;
-  if (!rateLimit(req, res, 'newsletter-signup', { windowMs: 60 * 60 * 1000, max: 10 })) return;
+  const origin = typeof req.headers.origin === 'string' ? req.headers.origin : undefined;
+  const allowedOrigins = new Set([
+    'https://borsanalys.se',
+    'https://www.borsanalys.se',
+    'http://localhost:3000',
+    'http://localhost:5173',
+  ]);
+
+  if (origin && !allowedOrigins.has(origin) && !/^https:\/\/borsanalys(?:-[a-zA-Z0-9-]+)?\.vercel\.app$/.test(origin)) {
+    return res.status(403).json({ error: 'Origin not allowed' });
+  }
+
+  if (origin) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(204).end();
+  }
+  if (req.method !== 'POST') {
+    res.setHeader('Allow', 'POST, OPTIONS');
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
+  const contentLength = Number(req.headers['content-length'] || 0);
+  if (contentLength > 2048) {
+    return res.status(413).json({ error: 'Request body too large' });
+  }
 
   // Strict email validation with Zod
   const emailSchema = z.string().email({ message: 'Ogiltig e-postadress. Vänligen kontrollera formatet.' });
