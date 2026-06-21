@@ -1,4 +1,4 @@
-import crypto from 'crypto';
+import { timingSafeEqual } from 'node:crypto';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 const allowedOrigins = [
@@ -101,7 +101,7 @@ export function rateLimit(
 function safeEqual(a: string, b: string): boolean {
   const left = Buffer.from(a);
   const right = Buffer.from(b);
-  return left.length === right.length && crypto.timingSafeEqual(left, right);
+  return left.length === right.length && timingSafeEqual(left, right);
 }
 
 export function requireCronSecret(req: VercelRequest, res: VercelResponse): boolean {
