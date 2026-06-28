@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plejd AB – Hur de tjänar pengar (Q1 2026)</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 32px 16px;
+  }
+  h1 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #e6edf3;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+  .subtitle {
+    font-size: 0.78rem;
+    color: #7d8590;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+  #chart-wrap {
+    width: 100%;
+    max-width: 660px;
+    position: relative;
+  }
+  svg { width: 100%; height: auto; display: block; }
+  .tooltip {
+    position: absolute;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.78rem;
+    color: #e6edf3;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    max-width: 200px;
+    line-height: 1.55;
+    z-index: 10;
+  }
+  .tooltip strong { font-size: 0.85rem; display: block; margin-bottom: 4px; }
+  .tooltip .tip-val { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+  .tip-row { color: #8b949e; }
+  .legend {
+    display: flex;
+    gap: 20px;
+    margin-top: 18px;
+    justify-content: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: #8b949e;
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+
+<h1>Plejd AB – Hur de tjänar pengar</h1>
+<p class="subtitle">Q1 2026 · Intäkter 308 MSEK · EBIT-marginal 34,7 %</p>
+
+<div id="chart-wrap">
+  <svg id="sankey" viewBox="0 0 620 310" xmlns="http://www.w3.org/2000/svg"></svg>
+  <div class="tooltip" id="tt"></div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#3fb950"></div>Intäkt / Vinst</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f85149"></div>Kostnad</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#e07b39"></div>Övriga marknader</div>
+</div>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────
+const NODES = [
+  { id:'sv',    label:'Sverige',      val:160, col:0, color:'#3fb950',
+    tips:['Hemmamarknad','160 MSEK · 52 % av intäkt','+38 % installationstillväxt Y/Y'] },
+  { id:'no',    label:'Norge',        val:116, col:0, color:'#2da044',
+    tips:['Snabbast växande','116 MSEK · 38 % av intäkt','Termostat TRM-01 driver tillväxten'] },
+  { id:'ov',    label:'Övriga',       val:32,  col:0, color:'#e07b39',
+    tips:['Finland, NL m.fl.','32 MSEK · 10 % av intäkt','Centraleuropa under uppbyggnad'] },
+  { id:'rev',   label:'Total intäkt', val:308, col:1, color:'#3fb950',
+    tips:['Omsättning Q1 2026','308 MSEK','+39,7 % Y/Y'] },
+  { id:'gross', label:'Bruttovinst',  val:172, col:2, color:'#3fb950',
+    tips:['Bruttoresultat','172 MSEK · marginal 55,8 %','Bästa kvartalsmarginalen hittills'] },
+  { id:'cogs',  label:'Varukostnad',  val:136, col:2, color:'#f85149',
+    tips:['Kostnad sålda varor','136 MSEK · 44,2 % av intäkt','Egenfabrik i Mölndal ~75 % av prod.'] },
+  { id:'ebit',  label:'EBIT',         val:107, col:3, color:'#3fb950',
+    tips:['Rörelseresultat','107 MSEK · marginal 34,7 %','Rekordhögt – delvis valutaeffekter'] },
+  { id:'opex',  label:'Rörelsekostn.',val:65,  col:3, color:'#f85149',
+    tips:['Opex (S&M, R&D, G&A)','65 MSEK','R&D-aktivering >15 MSEK/kvartal'] },
+  { id:'net',   label:'Nettovinst',   val:84,  col:4, color:'#3fb950',
+    tips:['Periodens resultat','84 MSEK · marginal 27,3 %','EPS ~7,4 kr (11,33 M aktier)'] },
+  { id:'tax',   label:'Skatt',        val:23,  col:4, color:'#f85149',
+    tips:['Inkomstskatt','23 MSEK · effektiv skatt ~21 %','Svensk bolagsskatt'] },
+];
+
+const LINKS = [
+  { s:'sv',    t:'rev',   v:160, color:'#3fb950' },
+  { s:'no',    t:'rev',   v:116, color:'#2da044' },
+  { s:'ov',    t:'rev',   v:32,  color:'#e07b39' },
+  { s:'rev',   t:'gross', v:172, color:'#3fb950' },
+  { s:'rev',   t:'cogs',  v:136, color:'#f85149' },
+  { s:'gross', t:'ebit',  v:107, color:'#3fb950' },
+  { s:'gross', t:'opex',  v:65,  color:'#f85149' },
+  { s:'ebit',  t:'net',   v:84,  color:'#3fb950' },
+  { s:'ebit',  t:'tax',   v:23,  color:'#f85149' },
+];
+
+// ─── LAYOUT ─────────────────────────────────────────────────────────
+const W = 620, H = 310;
+const PAD_TOP = 24, PAD_BOT = 24;
+const NODE_W = 13, GAP = 7;
+const AVAIL_H = H - PAD_TOP - PAD_BOT;
+const SCALE = AVAIL_H / 308; // px per MSEK
+const COL_X = [60, 165, 285, 400, 510];
+const COLS = 5;
+
+// Build node map
+const nodeMap = {};
+NODES.forEach(n => { nodeMap[n.id] = {...n}; });
+
+// Sort nodes within each column (income on top, cost below)
+const colNodes = Array.from({length: COLS}, () => []);
+NODES.forEach(n => colNodes[n.col].push(n));
+colNodes.forEach(col => col.sort((a,b) => {
+  if (a.color === '#f85149' && b.color !== '#f85149') return 1;
+  if (a.color !== '#f85149' && b.color === '#f85149') return -1;
+  return b.val - a.val;
+}));
+
+// Compute node y positions
+colNodes.forEach(col => {
+  const totalH = col.reduce((s, n) => s + n.val * SCALE, 0)
+               + (col.length - 1) * GAP;
+  let y = PAD_TOP + (AVAIL_H - totalH) / 2;
+  col.forEach(n => {
+    n.y0 = y;
+    n.y1 = y + n.val * SCALE;
+    y = n.y1 + GAP;
+  });
+});
+
+// Track slot offsets for ribbon stacking
+NODES.forEach(n => { n._outOff = 0; n._inOff = 0; });
+
+// ─── SVG BUILD ──────────────────────────────────────────────────────
+const svg = document.getElementById('sankey');
+const NS = 'http://www.w3.org/2000/svg';
+
+function el(tag, attrs) {
+  const e = document.createElementNS(NS, tag);
+  Object.entries(attrs).forEach(([k,v]) => e.setAttribute(k,v));
+  return e;
+}
+
+// Grid lines (subtle)
+for (let i = 0; i < COLS; i++) {
+  const x = COL_X[i] + NODE_W / 2;
+  if (i < COLS - 1) {
+    const line = el('line', {
+      x1: x, y1: PAD_TOP - 10,
+      x2: x, y2: H - PAD_BOT + 10,
+      stroke: '#21262d', 'stroke-width': 1
+    });
+    svg.appendChild(line);
+  }
+}
+
+// Ribbons (behind nodes)
+const ribbonGroup = el('g', {});
+svg.appendChild(ribbonGroup);
+
+const allRibbons = [];
+
+LINKS.forEach((lk, li) => {
+  const src = nodeMap[lk.s];
+  const tgt = nodeMap[lk.t];
+  const h   = lk.v * SCALE;
+
+  const x0 = COL_X[src.col] + NODE_W;
+  const x1 = COL_X[tgt.col];
+
+  const y0t = src.y0 + src._outOff;
+  const y0b = y0t + h;
+  const y1t = tgt.y0 + tgt._inOff;
+  const y1b = y1t + h;
+
+  src._outOff += h;
+  tgt._inOff  += h;
+
+  const mx = (x0 + x1) / 2;
+  const d  = `M ${x0},${y0t} C ${mx},${y0t} ${mx},${y1t} ${x1},${y1t}`
+           + ` L ${x1},${y1b} C ${mx},${y1b} ${mx},${y0b} ${x0},${y0b} Z`;
+
+  const path = el('path', {
+    d,
+    fill: lk.color,
+    opacity: '0.22',
+    'data-li': li,
+    style: 'cursor:default; transition: opacity 0.18s;'
+  });
+  ribbonGroup.appendChild(path);
+  allRibbons.push(path);
+});
+
+// Nodes + labels
+const nodeElems = {};
+NODES.forEach(n => {
+  const rect = el('rect', {
+    x: COL_X[n.col],
+    y: n.y0,
+    width: NODE_W,
+    height: n.val * SCALE,
+    rx: 3,
+    fill: n.color,
+    style: 'cursor:pointer; transition: opacity 0.18s;'
+  });
+  svg.appendChild(rect);
+  nodeElems[n.id] = rect;
+
+  // Label
+  const isLeft  = n.col === 0;
+  const isRight = n.col === COLS - 1;
+  const lx = isLeft  ? COL_X[n.col] - 5
+           : isRight ? COL_X[n.col] + NODE_W + 5
+           : COL_X[n.col] + NODE_W / 2;
+  const anchor = isLeft ? 'end' : isRight ? 'start' : 'middle';
+  const ly = (n.y0 + n.y1) / 2;
+
+  // For middle columns, put label above/below
+  if (!isLeft && !isRight) {
+    const above = n.col < 3 ? n.color !== '#f85149' : n.color !== '#f85149';
+    const offset = (n.val * SCALE) < 24 ? (above ? -10 : 10) : 0;
+    const txt = el('text', {
+      x: lx, y: ly + offset,
+      'text-anchor': 'middle',
+      'dominant-baseline': 'middle',
+      fill: '#8b949e',
+      'font-size': '10',
+      'font-family': '-apple-system,sans-serif',
+      style: 'pointer-events:none; user-select:none;'
+    });
+    txt.textContent = n.label;
+    svg.appendChild(txt);
+
+    const val = el('text', {
+      x: lx, y: ly + offset + 12,
+      'text-anchor': 'middle',
+      'dominant-baseline': 'middle',
+      fill: n.color,
+      'font-size': '9',
+      'font-weight': '600',
+      'font-family': '-apple-system,sans-serif',
+      style: 'pointer-events:none; user-select:none;'
+    });
+    val.textContent = n.val + ' M';
+    svg.appendChild(val);
+  } else {
+    const txt = el('text', {
+      x: lx, y: ly - 5,
+      'text-anchor': anchor,
+      'dominant-baseline': 'middle',
+      fill: '#c9d1d9',
+      'font-size': '11',
+      'font-family': '-apple-system,sans-serif',
+      style: 'pointer-events:none; user-select:none;'
+    });
+    txt.textContent = n.label;
+    svg.appendChild(txt);
+
+    const val = el('text', {
+      x: lx, y: ly + 9,
+      'text-anchor': anchor,
+      'dominant-baseline': 'middle',
+      fill: n.color,
+      'font-size': '10',
+      'font-weight': '700',
+      'font-family': '-apple-system,sans-serif',
+      style: 'pointer-events:none; user-select:none;'
+    });
+    val.textContent = n.val + ' MSEK';
+    svg.appendChild(val);
+  }
+});
+
+// Column headers
+const headers = ['Marknad','Intäkt','Brutto','EBIT','Netto'];
+headers.forEach((h, i) => {
+  const txt = el('text', {
+    x: COL_X[i] + NODE_W / 2,
+    y: 12,
+    'text-anchor': 'middle',
+    fill: '#484f58',
+    'font-size': '9',
+    'font-family': '-apple-system,sans-serif',
+    'letter-spacing': '0.05em',
+    style: 'text-transform:uppercase; user-select:none;'
+  });
+  txt.textContent = h.toUpperCase();
+  svg.appendChild(txt);
+});
+
+// ─── INTERACTION ────────────────────────────────────────────────────
+const tt = document.getElementById('tt');
+const wrap = document.getElementById('chart-wrap');
+
+// Map node id to connected link indices
+const nodeLinks = {};
+NODES.forEach(n => { nodeLinks[n.id] = []; });
+LINKS.forEach((lk, li) => {
+  nodeLinks[lk.s].push(li);
+  nodeLinks[lk.t].push(li);
+});
+
+function highlight(nid) {
+  const active = nodeLinks[nid];
+  allRibbons.forEach((r, i) => {
+    r.setAttribute('opacity', active.includes(i) ? '0.52' : '0.1');
+  });
+  Object.entries(nodeElems).forEach(([id, r]) => {
+    r.setAttribute('opacity', id === nid ? '1' : '0.4');
+  });
+}
+
+function reset() {
+  allRibbons.forEach(r => r.setAttribute('opacity', '0.22'));
+  Object.values(nodeElems).forEach(r => r.setAttribute('opacity', '1'));
+  tt.style.opacity = '0';
+}
+
+NODES.forEach(n => {
+  const rect = nodeElems[n.id];
+  rect.addEventListener('mouseenter', (e) => {
+    highlight(n.id);
+    const b = wrap.getBoundingClientRect();
+    const rx = e.clientX - b.left;
+    const ry = e.clientY - b.top;
+    const left = rx > b.width / 2 ? rx - 210 : rx + 16;
+    tt.style.left = left + 'px';
+    tt.style.top  = (ry - 40) + 'px';
+    tt.innerHTML = `<strong>${n.tips[0]}</strong><div class="tip-val" style="color:${n.color}">${n.tips[1]}</div><div class="tip-row">${n.tips[2]}</div>`;
+    tt.style.opacity = '1';
+  });
+  rect.addEventListener('mouseleave', reset);
+});
+
+// ─── FADE-IN ANIMATION ──────────────────────────────────────────────
+allRibbons.forEach((r, i) => {
+  r.style.opacity = '0';
+  setTimeout(() => {
+    r.style.transition = 'opacity 0.5s';
+    r.style.opacity = '0.22';
+  }, 100 + i * 60);
+});
+</script>
+</body>
+</html>
