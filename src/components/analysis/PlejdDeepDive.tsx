@@ -42,7 +42,7 @@ const markdownSource = plejdMarkdown;
 const HERO_STATS = [
   { label: "Totalpoäng", value: "30/40", icon: Target },
   { label: "Rekommendation", value: "KÖP", icon: CheckCircle2 },
-  { label: "P/E TTM", value: "~57-58x", icon: BarChart3 },
+  { label: "P/E TTM", value: "~57x", icon: BarChart3 },
   { label: "Nettokassa", value: "~146 MSEK", icon: ShieldAlert }
 ];
 

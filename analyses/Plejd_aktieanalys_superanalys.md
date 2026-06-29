@@ -18,9 +18,9 @@ Med rekordhög lönsamhet (EBIT-marginal 34,7 % i Q1 2026), nettokassa, organisk
 
 | Nyckeltal | Värde |
 |---|---|
-| Aktiekurs | ~1 075–1 140 kr |
-| Börsvärde | ~12,2–12,9 mdkr |
-| P/E (TTM) | ~57–58x |
+| Aktiekurs | 1 070 kr |
+| Börsvärde | ~12,1 mdkr |
+| P/E (TTM) | ~57x |
 | P/E (2026E) | ~41x |
 | EV/EBIT (TTM) | ~40–46x |
 | EV/EBITDA (TTM) | ~34–37x |
@@ -28,7 +28,7 @@ Med rekordhög lönsamhet (EBIT-marginal 34,7 % i Q1 2026), nettokassa, organisk
 | Direktavkastning | 0 % (ingen utdelning) |
 | Nettokassa | ~146 MSEK (Q1 2026) |
 
-> **Snabbfakta:** Börsvärde ~12,5 mdkr · P/E ~57x · EV/EBIT ~40x · ROIC ~32 % · Direktavkastning 0 % · Nettokassa ~146 MSEK
+> **Snabbfakta:** Börsvärde ~12,1 mdkr · P/E ~57x · EV/EBIT ~40x · ROIC ~32 % · Direktavkastning 0 % · Nettokassa ~146 MSEK
 
 ### Key Takeaways
 
