@@ -437,7 +437,7 @@ export default function PlejdDeepDive({ data, nextAnalysis }: PlejdDeepDiveProps
         </article>
 
         <aside className="hidden lg:block">
-          <div className="sticky top-36 space-y-4">
+          <div className="sticky top-36 max-h-[calc(100vh-10rem)] space-y-4 overflow-y-auto overscroll-contain pr-2 [scrollbar-width:thin] [scrollbar-color:#b7832f_transparent]">
             <div className="rounded border border-amber-700/20 bg-[#fff8eb] p-5 shadow-[0_20px_70px_rgba(61,43,21,0.12)]">
               <div className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-amber-900">
                 <Zap size={15} /> Snabbfakta
