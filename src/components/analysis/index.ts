@@ -23,4 +23,5 @@ export { default as EditorialCallout } from './EditorialCallout';
 export { default as NextAnalysisButton } from './NextAnalysisButton';
 export { default as AnalysisDisclaimer } from './AnalysisDisclaimer';
 export { default as NibeDeepDive } from './NibeDeepDive';
+export { default as PlejdDeepDive } from './PlejdDeepDive';
 export { default as AnalysisDisclosure } from './AnalysisDisclosure';

@@ -7,8 +7,8 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background: #0d1117;
-    color: #e6edf3;
+    background: #f7efe1;
+    color: #1f2a22;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     display: flex;
     flex-direction: column;
@@ -20,13 +20,36 @@
     font-size: 1.15rem;
     font-weight: 600;
     letter-spacing: 0.02em;
-    color: #e6edf3;
+    color: #143326;
     margin-bottom: 4px;
     text-align: center;
   }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #143326;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .brand-mark {
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    background: #4dbb7c;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    line-height: 1;
+  }
   .subtitle {
     font-size: 0.78rem;
-    color: #7d8590;
+    color: #5f6b5d;
     margin-bottom: 28px;
     text-align: center;
   }
@@ -38,12 +61,12 @@
   svg { width: 100%; height: auto; display: block; }
   .tooltip {
     position: absolute;
-    background: #161b22;
-    border: 1px solid #30363d;
+    background: #fffaf0;
+    border: 1px solid rgba(20, 51, 38, 0.18);
     border-radius: 8px;
     padding: 10px 14px;
     font-size: 0.78rem;
-    color: #e6edf3;
+    color: #1f2a22;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.15s;
@@ -65,16 +88,66 @@
     align-items: center;
     gap: 6px;
     font-size: 0.75rem;
-    color: #8b949e;
+    color: #536257;
   }
   .legend-dot {
     width: 10px; height: 10px;
     border-radius: 2px;
   }
+  @media (max-width: 520px) {
+    body {
+      padding: 24px 10px;
+      overflow-x: hidden;
+    }
+    .brand {
+      align-self: flex-start;
+      margin-left: 6px;
+      font-size: 0.62rem;
+      letter-spacing: 0.04em;
+    }
+    .brand-mark {
+      width: 16px;
+      height: 16px;
+      border-radius: 5px;
+      font-size: 0.66rem;
+    }
+    h1 {
+      width: 100%;
+      font-size: 0.96rem;
+      line-height: 1.25;
+      padding: 0 10px;
+    }
+    .subtitle {
+      font-size: 0.68rem;
+      margin-bottom: 18px;
+    }
+    #chart-wrap {
+      max-width: none;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding-bottom: 6px;
+      -webkit-overflow-scrolling: touch;
+    }
+    svg {
+      min-width: 620px;
+    }
+    .legend {
+      width: 100%;
+      justify-content: flex-start;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 0 6px 6px;
+    }
+    .legend-item {
+      flex: 0 0 auto;
+      font-size: 0.68rem;
+    }
+  }
 </style>
 </head>
 <body>
 
+<div class="brand"><span class="brand-mark">↗</span>Börsanalys.se</div>
 <h1>Plejd AB – Hur de tjänar pengar</h1>
 <p class="subtitle">Q1 2026 · Intäkter 308 MSEK · EBIT-marginal 34,7 %</p>
 
@@ -84,46 +157,46 @@
 </div>
 
 <div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:#3fb950"></div>Intäkt / Vinst</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#f85149"></div>Kostnad</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#e07b39"></div>Övriga marknader</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#1f8f4d"></div>Intäkt / Vinst</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#c44236"></div>Kostnad</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#b46b22"></div>Övriga marknader</div>
 </div>
 
 <script>
 // ─── DATA ───────────────────────────────────────────────────────────
 const NODES = [
-  { id:'sv',    label:'Sverige',      val:160, col:0, color:'#3fb950',
+  { id:'sv',    label:'Sverige',      val:160, col:0, color:'#1f8f4d',
     tips:['Hemmamarknad','160 MSEK · 52 % av intäkt','+38 % installationstillväxt Y/Y'] },
-  { id:'no',    label:'Norge',        val:116, col:0, color:'#2da044',
+  { id:'no',    label:'Norge',        val:116, col:0, color:'#17763e',
     tips:['Snabbast växande','116 MSEK · 38 % av intäkt','Termostat TRM-01 driver tillväxten'] },
-  { id:'ov',    label:'Övriga',       val:32,  col:0, color:'#e07b39',
+  { id:'ov',    label:'Övriga',       val:32,  col:0, color:'#b46b22',
     tips:['Finland, NL m.fl.','32 MSEK · 10 % av intäkt','Centraleuropa under uppbyggnad'] },
-  { id:'rev',   label:'Total intäkt', val:308, col:1, color:'#3fb950',
+  { id:'rev',   label:'Total intäkt', val:308, col:1, color:'#1f8f4d',
     tips:['Omsättning Q1 2026','308 MSEK','+39,7 % Y/Y'] },
-  { id:'gross', label:'Bruttovinst',  val:172, col:2, color:'#3fb950',
+  { id:'gross', label:'Bruttovinst',  val:172, col:2, color:'#1f8f4d',
     tips:['Bruttoresultat','172 MSEK · marginal 55,8 %','Bästa kvartalsmarginalen hittills'] },
-  { id:'cogs',  label:'Varukostnad',  val:136, col:2, color:'#f85149',
+  { id:'cogs',  label:'Varukostnad',  val:136, col:2, color:'#c44236',
     tips:['Kostnad sålda varor','136 MSEK · 44,2 % av intäkt','Egenfabrik i Mölndal ~75 % av prod.'] },
-  { id:'ebit',  label:'EBIT',         val:107, col:3, color:'#3fb950',
+  { id:'ebit',  label:'EBIT',         val:107, col:3, color:'#1f8f4d',
     tips:['Rörelseresultat','107 MSEK · marginal 34,7 %','Rekordhögt – delvis valutaeffekter'] },
-  { id:'opex',  label:'Rörelsekostn.',val:65,  col:3, color:'#f85149',
+  { id:'opex',  label:'Rörelsekostn.',val:65,  col:3, color:'#c44236',
     tips:['Opex (S&M, R&D, G&A)','65 MSEK','R&D-aktivering >15 MSEK/kvartal'] },
-  { id:'net',   label:'Nettovinst',   val:84,  col:4, color:'#3fb950',
+  { id:'net',   label:'Nettovinst',   val:84,  col:4, color:'#1f8f4d',
     tips:['Periodens resultat','84 MSEK · marginal 27,3 %','EPS ~7,4 kr (11,33 M aktier)'] },
-  { id:'tax',   label:'Skatt',        val:23,  col:4, color:'#f85149',
+  { id:'tax',   label:'Skatt',        val:23,  col:4, color:'#c44236',
     tips:['Inkomstskatt','23 MSEK · effektiv skatt ~21 %','Svensk bolagsskatt'] },
 ];
 
 const LINKS = [
-  { s:'sv',    t:'rev',   v:160, color:'#3fb950' },
-  { s:'no',    t:'rev',   v:116, color:'#2da044' },
-  { s:'ov',    t:'rev',   v:32,  color:'#e07b39' },
-  { s:'rev',   t:'gross', v:172, color:'#3fb950' },
-  { s:'rev',   t:'cogs',  v:136, color:'#f85149' },
-  { s:'gross', t:'ebit',  v:107, color:'#3fb950' },
-  { s:'gross', t:'opex',  v:65,  color:'#f85149' },
-  { s:'ebit',  t:'net',   v:84,  color:'#3fb950' },
-  { s:'ebit',  t:'tax',   v:23,  color:'#f85149' },
+  { s:'sv',    t:'rev',   v:160, color:'#1f8f4d' },
+  { s:'no',    t:'rev',   v:116, color:'#17763e' },
+  { s:'ov',    t:'rev',   v:32,  color:'#b46b22' },
+  { s:'rev',   t:'gross', v:172, color:'#1f8f4d' },
+  { s:'rev',   t:'cogs',  v:136, color:'#c44236' },
+  { s:'gross', t:'ebit',  v:107, color:'#1f8f4d' },
+  { s:'gross', t:'opex',  v:65,  color:'#c44236' },
+  { s:'ebit',  t:'net',   v:84,  color:'#1f8f4d' },
+  { s:'ebit',  t:'tax',   v:23,  color:'#c44236' },
 ];
 
 // ─── LAYOUT ─────────────────────────────────────────────────────────
@@ -137,14 +210,14 @@ const COLS = 5;
 
 // Build node map
 const nodeMap = {};
-NODES.forEach(n => { nodeMap[n.id] = {...n}; });
+NODES.forEach(n => { nodeMap[n.id] = n; });
 
 // Sort nodes within each column (income on top, cost below)
 const colNodes = Array.from({length: COLS}, () => []);
 NODES.forEach(n => colNodes[n.col].push(n));
 colNodes.forEach(col => col.sort((a,b) => {
-  if (a.color === '#f85149' && b.color !== '#f85149') return 1;
-  if (a.color !== '#f85149' && b.color === '#f85149') return -1;
+  if (a.color === '#c44236' && b.color !== '#c44236') return 1;
+  if (a.color !== '#c44236' && b.color === '#c44236') return -1;
   return b.val - a.val;
 }));
 
@@ -173,6 +246,22 @@ function el(tag, attrs) {
   return e;
 }
 
+function addLabelPlate(x, y, width, height) {
+  const plate = el('rect', {
+    x: x - width / 2,
+    y: y - height / 2,
+    width,
+    height,
+    rx: 4,
+    fill: 'rgba(255,250,240,0.88)',
+    stroke: 'rgba(20,51,38,0.12)',
+    'stroke-width': 0.6,
+    style: 'pointer-events:none;'
+  });
+  svg.appendChild(plate);
+  return plate;
+}
+
 // Grid lines (subtle)
 for (let i = 0; i < COLS; i++) {
   const x = COL_X[i] + NODE_W / 2;
@@ -180,7 +269,7 @@ for (let i = 0; i < COLS; i++) {
     const line = el('line', {
       x1: x, y1: PAD_TOP - 10,
       x2: x, y2: H - PAD_BOT + 10,
-      stroke: '#21262d', 'stroke-width': 1
+      stroke: 'rgba(20,51,38,0.16)', 'stroke-width': 1
     });
     svg.appendChild(line);
   }
@@ -200,24 +289,24 @@ LINKS.forEach((lk, li) => {
   const x0 = COL_X[src.col] + NODE_W;
   const x1 = COL_X[tgt.col];
 
-  const y0t = src.y0 + src._outOff;
-  const y0b = y0t + h;
-  const y1t = tgt.y0 + tgt._inOff;
-  const y1b = y1t + h;
+  const y0 = src.y0 + src._outOff + h / 2;
+  const y1 = tgt.y0 + tgt._inOff + h / 2;
 
   src._outOff += h;
   tgt._inOff  += h;
 
   const mx = (x0 + x1) / 2;
-  const d  = `M ${x0},${y0t} C ${mx},${y0t} ${mx},${y1t} ${x1},${y1t}`
-           + ` L ${x1},${y1b} C ${mx},${y1b} ${mx},${y0b} ${x0},${y0b} Z`;
+  const d  = `M ${x0},${y0} C ${mx},${y0} ${mx},${y1} ${x1},${y1}`;
 
   const path = el('path', {
     d,
-    fill: lk.color,
-    opacity: '0.22',
+    fill: 'none',
+    stroke: lk.color,
+    'stroke-width': Math.max(4, h),
+    'stroke-linecap': 'butt',
+    opacity: '0.42',
     'data-li': li,
-    style: 'cursor:default; transition: opacity 0.18s;'
+    style: 'cursor:default; transition: opacity 0.18s, stroke-width 0.18s; mix-blend-mode:multiply;'
   });
   ribbonGroup.appendChild(path);
   allRibbons.push(path);
@@ -249,14 +338,19 @@ NODES.forEach(n => {
 
   // For middle columns, put label above/below
   if (!isLeft && !isRight) {
-    const above = n.col < 3 ? n.color !== '#f85149' : n.color !== '#f85149';
+    const isCost = n.color === '#c44236';
+    const above = !isCost;
     const offset = (n.val * SCALE) < 24 ? (above ? -10 : 10) : 0;
+    const labelY = ly + offset;
+    const plateWidth = Math.max(56, n.label.length * 5.9);
+    addLabelPlate(lx, labelY + 6, plateWidth, 27);
     const txt = el('text', {
-      x: lx, y: ly + offset,
+      x: lx, y: labelY,
       'text-anchor': 'middle',
       'dominant-baseline': 'middle',
-      fill: '#8b949e',
+      fill: '#1f2a22',
       'font-size': '10',
+      'font-weight': '700',
       'font-family': '-apple-system,sans-serif',
       style: 'pointer-events:none; user-select:none;'
     });
@@ -264,12 +358,12 @@ NODES.forEach(n => {
     svg.appendChild(txt);
 
     const val = el('text', {
-      x: lx, y: ly + offset + 12,
+      x: lx, y: labelY + 12,
       'text-anchor': 'middle',
       'dominant-baseline': 'middle',
       fill: n.color,
       'font-size': '9',
-      'font-weight': '600',
+      'font-weight': '800',
       'font-family': '-apple-system,sans-serif',
       style: 'pointer-events:none; user-select:none;'
     });
@@ -280,7 +374,7 @@ NODES.forEach(n => {
       x: lx, y: ly - 5,
       'text-anchor': anchor,
       'dominant-baseline': 'middle',
-      fill: '#c9d1d9',
+      fill: '#25342a',
       'font-size': '11',
       'font-family': '-apple-system,sans-serif',
       style: 'pointer-events:none; user-select:none;'
@@ -310,7 +404,7 @@ headers.forEach((h, i) => {
     x: COL_X[i] + NODE_W / 2,
     y: 12,
     'text-anchor': 'middle',
-    fill: '#484f58',
+    fill: '#6d705e',
     'font-size': '9',
     'font-family': '-apple-system,sans-serif',
     'letter-spacing': '0.05em',
@@ -335,7 +429,7 @@ LINKS.forEach((lk, li) => {
 function highlight(nid) {
   const active = nodeLinks[nid];
   allRibbons.forEach((r, i) => {
-    r.setAttribute('opacity', active.includes(i) ? '0.52' : '0.1');
+    r.setAttribute('opacity', active.includes(i) ? '0.72' : '0.16');
   });
   Object.entries(nodeElems).forEach(([id, r]) => {
     r.setAttribute('opacity', id === nid ? '1' : '0.4');
@@ -343,7 +437,7 @@ function highlight(nid) {
 }
 
 function reset() {
-  allRibbons.forEach(r => r.setAttribute('opacity', '0.22'));
+  allRibbons.forEach(r => r.setAttribute('opacity', '0.42'));
   Object.values(nodeElems).forEach(r => r.setAttribute('opacity', '1'));
   tt.style.opacity = '0';
 }
@@ -369,7 +463,7 @@ allRibbons.forEach((r, i) => {
   r.style.opacity = '0';
   setTimeout(() => {
     r.style.transition = 'opacity 0.5s';
-    r.style.opacity = '0.22';
+    r.style.opacity = '0.42';
   }, 100 + i * 60);
 });
 </script>

@@ -18,6 +18,7 @@ import { nordea2026 } from "./nordea/nordea-bank-2026.js";
 import { saab2026 } from "./saab/saab-2026.js";
 import { axfoodQ12026 } from "./axfood/axfood-q1-2026.js";
 import { abb2026 } from "./abb/abb-q1-2026.js";
+import { plejdQ12026 } from "./plejd/plejd-q1-2026.js";
 
 export const analyses: Record<string, AnalysisData> = {
   "investor-ab": investorAb,
@@ -39,6 +40,7 @@ export const analyses: Record<string, AnalysisData> = {
   "saab-2026": saab2026,
   "axfood-q1-2026": axfoodQ12026,
   "abb-q1-2026": abb2026,
+  "plejd-q1-2026": plejdQ12026,
 };
 
 export type { AnalysisData, AIDrivenAnalysis } from "../../types/analysis.js";

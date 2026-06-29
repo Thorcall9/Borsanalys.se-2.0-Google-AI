@@ -45,6 +45,7 @@ import AQGroupAnalysis from "../components/analysis/AQGroupAnalysis";
 import NibeDeepDive from "../components/analysis/NibeDeepDive";
 import AxfoodDeepDive from "../components/analysis/AxfoodDeepDive";
 import ABBDeepDive from "../components/analysis/ABBDeepDive";
+import PlejdDeepDive from "../components/analysis/PlejdDeepDive";
 import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 
@@ -65,6 +66,7 @@ const DEEP_DIVE_COMPONENTS = {
   Nibe: NibeDeepDive,
   Axfood: AxfoodDeepDive,
   ABB: ABBDeepDive,
+  Plejd: PlejdDeepDive,
 };
 
 export default function Analysis() {
