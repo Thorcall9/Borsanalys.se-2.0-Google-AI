@@ -1,5 +1,4 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { z } from 'zod';
 import { applyCors, enforceBodyLimit, enforceMethods, rateLimit } from './_security';
 
@@ -15,11 +14,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!enforceBodyLimit(req, res, 5 * 1024)) return;
   if (!rateLimit(req, res, `ai-${String(type || 'unknown')}`, { windowMs: 60 * 60 * 1000, max: 30 })) return;
 
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-
   try {
     const { PrismaClient } = await import('@prisma/client');
     const prisma = new PrismaClient();
+    const { GoogleGenerativeAI } = await import("@google/generative-ai");
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
     // 1. Macro Outlook Logic
     if (type === 'macro-outlook') {

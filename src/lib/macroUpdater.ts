@@ -1,5 +1,4 @@
 import { prisma } from "./prisma.ts";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
 interface MacroDataPoint {
   key: string;
@@ -20,6 +19,7 @@ async function fetchMacroViaAI(): Promise<MacroDataPoint[]> {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error("GEMINI_API_KEY is missing");
 
+  const { GoogleGenerativeAI } = await import("@google/generative-ai");
   const genAI = new GoogleGenerativeAI(apiKey);
   // Using gemini-2.5-flash with Google Search grounding
   const model = genAI.getGenerativeModel({
@@ -280,4 +280,3 @@ export async function updateAllMacroData() {
     timestamp: new Date().toISOString()
   };
 }
-
