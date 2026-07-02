@@ -17,21 +17,26 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
  */
 async function fetchMacroViaAI(): Promise<MacroDataPoint[]> {
   const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) throw new Error("GEMINI_API_KEY is missing");
 
-  const { GoogleGenerativeAI } = await import("@google/generative-ai");
-  const genAI = new GoogleGenerativeAI(apiKey);
-  // Using gemini-2.5-flash with Google Search grounding
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash",
-    tools: [
-      {
-        googleSearch: {},
-      } as any
-    ]
-  });
+  try {
+    if (!apiKey) {
+      console.warn("[MACRO-AI] GEMINI_API_KEY is missing, using fallback APIs.");
+      return [];
+    }
 
-  const prompt = `Du är en finansiell data-assistent. Din uppgift är att hämta de absolut senaste och mest korrekta värdena för följande makroindikatorer. 
+    const { GoogleGenerativeAI } = await import("@google/generative-ai");
+    const genAI = new GoogleGenerativeAI(apiKey);
+    // Using gemini-2.5-flash with Google Search grounding
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash",
+      tools: [
+        {
+          googleSearch: {},
+        } as any
+      ]
+    });
+
+    const prompt = `Du är en finansiell data-assistent. Din uppgift är att hämta de absolut senaste och mest korrekta värdena för följande makroindikatorer. 
 Använd sökning om det behövs för att hitta dagsaktuella siffor (datum: ${new Date().toLocaleDateString('sv-SE')}).
 
 Indikatorer som behövs:
@@ -52,7 +57,6 @@ Svara EXAKT i detta JSON-format:
   "Inflation": number
 }`;
 
-  try {
     const result = await model.generateContent(prompt);
     const response = await result.response;
     const text = response.text().trim();

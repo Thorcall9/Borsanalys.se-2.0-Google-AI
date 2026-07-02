@@ -34,6 +34,12 @@ function enforceBodyLimit(req: VercelRequest, res: VercelResponse, maxBytes: num
   return true;
 }
 
+function configError(message: string): Error {
+  const error = new Error(message);
+  error.name = 'ADMIN_CONFIG_ERROR';
+  return error;
+}
+
 function rateLimit(
   req: VercelRequest,
   res: VercelResponse,
@@ -116,8 +122,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // 2. Generate Events Logic
     if (type === 'generate-events') {
+      if (!process.env.GEMINI_API_KEY) {
+        throw configError("GEMINI_API_KEY is not configured");
+      }
+
       const { GoogleGenerativeAI } = await import("@google/generative-ai");
-      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+      const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
       const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" });
       const prompt = `Skapa 3 högaktuella marknadshändelser för den svenska börsen just nu. Svara i JSON-format med ett "events" array innehållande title, impact (positive/negative/neutral), description, whyItMatters, swedishCompanies, usCompanies, winners.`;
       
@@ -147,6 +157,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: "Invalid admin service type requested." });
   } catch (err: any) {
     console.error(`[ADMIN API ERROR - ${type}]`, err);
+    if (err?.name === 'ADMIN_CONFIG_ERROR') {
+      return res.status(500).json({ code: "AI_CONFIG_MISSING", error: err.message });
+    }
     return res.status(500).json({ error: "Internt admin-fel. Kontrollera DATABASE_URL." });
   }
 }
