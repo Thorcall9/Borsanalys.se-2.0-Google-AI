@@ -22,3 +22,11 @@ test('admin handler reports AI configuration errors separately from database err
   assert.match(admin, /AI_CONFIG_MISSING/);
   assert.match(admin, /ADMIN_CONFIG_ERROR/);
 });
+
+test('admin handler initializes Prisma only inside routes that need it', async () => {
+  const admin = await source('api/admin.ts');
+
+  assert.doesNotMatch(admin, /const prisma = new PrismaClient\(\);\n\n\s*\/\/ 1\. Admin Votes Results/);
+  assert.match(admin, /if \(type === 'votes'\) \{\n\s*const \{ PrismaClient \} = await import\('@prisma\/client'\);\n\s*const prisma = new PrismaClient\(\);/);
+  assert.match(admin, /if \(type === 'generate-events'\)[\s\S]*const \{ PrismaClient \} = await import\('@prisma\/client'\);\n\s*const prisma = new PrismaClient\(\);/);
+});
