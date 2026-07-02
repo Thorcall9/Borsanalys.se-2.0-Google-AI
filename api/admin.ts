@@ -1,5 +1,90 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { enforceBodyLimit, enforceMethods, rateLimit, requireCronSecret } from './_security';
+
+type RateLimitEntry = {
+  count: number;
+  resetAt: number;
+};
+
+const rateLimitStore = new Map<string, RateLimitEntry>();
+
+function firstHeader(value: string | string[] | undefined): string | undefined {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function getClientIp(req: VercelRequest): string {
+  const forwardedFor = firstHeader(req.headers['x-forwarded-for']);
+  return forwardedFor?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
+}
+
+function enforceMethods(req: VercelRequest, res: VercelResponse, methods: string[]): boolean {
+  if (!methods.includes(req.method || '')) {
+    res.setHeader('Allow', methods.join(', '));
+    res.status(405).json({ error: 'Method not allowed' });
+    return false;
+  }
+  return true;
+}
+
+function enforceBodyLimit(req: VercelRequest, res: VercelResponse, maxBytes: number): boolean {
+  const contentLength = Number(firstHeader(req.headers['content-length']) || 0);
+  if (contentLength > maxBytes) {
+    res.status(413).json({ error: 'Request body too large' });
+    return false;
+  }
+  return true;
+}
+
+function rateLimit(
+  req: VercelRequest,
+  res: VercelResponse,
+  namespace: string,
+  options: { windowMs: number; max: number },
+): boolean {
+  const now = Date.now();
+  const key = `${namespace}:${getClientIp(req)}`;
+  const current = rateLimitStore.get(key);
+
+  if (!current || current.resetAt <= now) {
+    rateLimitStore.set(key, { count: 1, resetAt: now + options.windowMs });
+    return true;
+  }
+
+  current.count += 1;
+  if (current.count > options.max) {
+    res.setHeader('Retry-After', String(Math.ceil((current.resetAt - now) / 1000)));
+    res.status(429).json({ error: 'För många anrop. Vänligen försök igen senare.' });
+    return false;
+  }
+
+  return true;
+}
+
+async function safeEqual(a: string, b: string): Promise<boolean> {
+  const { timingSafeEqual } = await import('node:crypto');
+  const left = Buffer.from(a);
+  const right = Buffer.from(b);
+  return left.length === right.length && timingSafeEqual(left, right);
+}
+
+async function requireCronSecret(req: VercelRequest, res: VercelResponse): Promise<boolean> {
+  const secret = process.env.CRON_SECRET;
+  if (!secret) {
+    res.status(500).json({ error: 'Admin secret is not configured' });
+    return false;
+  }
+
+  const cronHeader = firstHeader(req.headers['x-cron-auth']);
+  const authHeader = firstHeader(req.headers.authorization);
+  const bearerToken = authHeader?.startsWith('Bearer ') ? authHeader.slice(7) : undefined;
+  const suppliedSecret = bearerToken || cronHeader;
+
+  if (!suppliedSecret || !(await safeEqual(suppliedSecret, secret))) {
+    res.status(401).json({ error: 'Unauthorized' });
+    return false;
+  }
+
+  return true;
+}
 
 /**
  * CONSOLIDATED ADMIN API (Votes, Event Generation, Macro Updates)
@@ -11,7 +96,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!enforceMethods(req, res, ['GET', 'POST'])) return;
   if (!enforceBodyLimit(req, res, 5 * 1024)) return;
   if (!rateLimit(req, res, `admin-${String(type || 'unknown')}`, { windowMs: 15 * 60 * 1000, max: 60 })) return;
-  if (!requireCronSecret(req, res)) return;
+  if (!(await requireCronSecret(req, res))) return;
 
   try {
     const { PrismaClient } = await import('@prisma/client');

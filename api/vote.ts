@@ -1,8 +1,66 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { enforceMethods, escapeHtml, rateLimit } from './_security';
 
 const tickerPattern = /^[a-z0-9.-]{1,20}$/i;
 const sourcePattern = /^[a-z0-9_-]{1,40}$/i;
+
+type RateLimitEntry = {
+  count: number;
+  resetAt: number;
+};
+
+const rateLimitStore = new Map<string, RateLimitEntry>();
+
+function firstHeader(value: string | string[] | undefined): string | undefined {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function getClientIp(req: VercelRequest): string {
+  const forwardedFor = firstHeader(req.headers['x-forwarded-for']);
+  return forwardedFor?.split(',')[0]?.trim() || req.socket?.remoteAddress || 'unknown';
+}
+
+function enforceMethods(req: VercelRequest, res: VercelResponse, methods: string[]): boolean {
+  if (!methods.includes(req.method || '')) {
+    res.setHeader('Allow', methods.join(', '));
+    res.status(405).json({ error: 'Method not allowed' });
+    return false;
+  }
+  return true;
+}
+
+function rateLimit(
+  req: VercelRequest,
+  res: VercelResponse,
+  namespace: string,
+  options: { windowMs: number; max: number },
+): boolean {
+  const now = Date.now();
+  const key = `${namespace}:${getClientIp(req)}`;
+  const current = rateLimitStore.get(key);
+
+  if (!current || current.resetAt <= now) {
+    rateLimitStore.set(key, { count: 1, resetAt: now + options.windowMs });
+    return true;
+  }
+
+  current.count += 1;
+  if (current.count > options.max) {
+    res.setHeader('Retry-After', String(Math.ceil((current.resetAt - now) / 1000)));
+    res.status(429).send('För många anrop. Vänligen försök igen senare.');
+    return false;
+  }
+
+  return true;
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!enforceMethods(req, res, ['GET'])) return;
