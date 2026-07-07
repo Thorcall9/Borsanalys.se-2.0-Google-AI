@@ -1,5 +1,5 @@
 export interface MethodologyStep {
-  id: string; // I - VIII
+  id: string; // I - VII
   title: string;
   summary: string;
   points: string[];
@@ -9,87 +9,77 @@ export const METHODOLOGY_STEPS: MethodologyStep[] = [
   {
     id: "I",
     title: "Företagsöversikt",
-    summary: "Vi analyserar affärsmodellen på djupet, utvärderar ledningens historik och säkerställer att ägarstrukturen gynnar långsiktiga aktieägare.",
+    summary: "Vi analyserar affärsidén, ledningens historik och ägarstruktur för att säkerställa att bolaget drivs av rätt personer med rätt incitament.",
     points: [
       "Hur tjänar bolaget sina pengar?",
-      "Finns det en historik av värdeskapande kapitalallokering?",
+      "Finns en historik av värdeskapande kapitalallokering?",
       "Är incitamentsstrukturerna i linje med aktieägarnas mål?"
     ]
   },
   {
     id: "II",
-    title: "Strategisk analys & Moat",
-    summary: "Bedömning av bolagets vallgravar och konkurrensfördelar. Hur skyddad är vinstmaskinen mot nya utmanare?",
+    title: "Affärsmodell",
+    summary: "En djupgående genomgång av intäktsmodellen, kostnadsdrivarna och hur skalbar och kapitallätt verksamheten är.",
     points: [
-      "Har bolaget strukturell pricing power?",
-      "Bygger vinsterna på nätverkseffekter eller scale?",
-      "Hur ser hotbilden ut från disruptiva teknologier?"
+      "Är intäktsmodellen återkommande och förutsägbar?",
+      "Hur kapitalintensiv är tillväxten?",
+      "Kan marginaler förbättras med ökad skala?"
     ]
   },
   {
     id: "III",
-    title: "Finansiell analys",
-    summary: "En stenhård genomgång av siffrorna: Vinsttillväxt, kassaflöde och balansräkningens styrka. Vi ser bortom redovisningskosmetik.",
+    title: "Konkurrensfördelar",
+    summary: "Bedömning av bolagets vallgravar och strukturella moat. Hur skyddad är vinstmaskinen mot nya utmanare och prispress?",
     points: [
-      "Är tillväxten organisk och bevisat lönsam?",
-      "Hur bedöms kvaliteten i det operativa kassaflödet?",
-      "Finns det dolda skulder eller aggressiv bokföring?"
+      "Har bolaget strukturell pricing power?",
+      "Bygger vinsterna på nätverkseffekter eller skalfördelar?",
+      "Hur ser hotbilden ut från disruptiva konkurrenter?"
     ]
   },
   {
     id: "IV",
-    title: "Värdering & Jämförelse",
-    summary: "Är aktien objektivt billig eller dyr? Vi ställer prislappen i relation till historiska snitt och tillväxtmål.",
+    title: "Finansiell Utveckling",
+    summary: "En stenhård genomgång av siffrorna: tillväxt, kassaflöde och vinstkvalitet. Vi ser bortom redovisningskosmetik och letar efter varningsflaggor.",
     points: [
-      "Vad är bolagets 'fair value' i ett DCF-scenario?",
-      "Hur förhåller sig EV/EBIT till närmaste peer-group?",
-      "Kan en varaktig marginalexpansion driva uppvärdering?"
+      "Är tillväxten organisk och bevisat lönsam?",
+      "Hur stark är FCF-konverteringen relativt redovisad vinst?",
+      "Finns det dolda skulder eller aggressiv bokföring?"
     ]
   },
   {
     id: "V",
-    title: "Tillväxtmotorer & Triggers",
-    summary: "Identifiering av konkreta katalysatorer. Vi letar efter asymmetriska triggers och underliggande innovation.",
+    title: "Fundamental Värdering",
+    summary: "Är aktien objektivt billig eller dyr? Vi modellerar tre scenarier (Bull/Base/Bear) och beräknar kurszoner för 12 månader och 5 år.",
     points: [
-      "Vilka lanseringar kan driva marknadsförväntningarna?",
-      "Finns operationell hävstång som snabbt kan dubbla EBIT?",
-      "Undersöks uppsida via M&A eller nya geografier?"
+      "Vad ger normaliserat P/E och EV/EBIT för kursmål?",
+      "Vilken CAGR prisar dagens kurs in?",
+      "Var ligger köpvärd zon med tillräcklig säkerhetsmarginal?"
     ]
   },
   {
     id: "VI",
-    title: "Riskprofil",
-    summary: "Vi stress-testar caset och letar efter det som kan gå fel, från branschspecifika hot till finansiella fallgropar.",
+    title: "Potentiella Kursdrivare",
+    summary: "Identifiering av konkreta katalysatorer och triggers. Vi letar efter asymmetriska händelser som kan driva kursen på 12–24 månaders sikt.",
     points: [
-      "Vad är worst-case-scenariot för kärnaffären?",
-      "Finns farlig kundkoncentration eller leverantörsberoende?",
-      "Riskerar regulatoriska ingripanden krossa vallgraven?"
+      "Vilka rapporter eller lanseringar kan flytta aktien?",
+      "Vad säger analytikerkonsensus och insidertransaktioner?",
+      "Finns M&A-optioner eller nya geografier att expandera till?"
     ]
   },
   {
     id: "VII",
-    title: "ESG & Makro",
-    summary: "Analys av hållbarhetsintegrering och motståndskraften mot skiftande makroekonomiska klimat.",
+    title: "Riskprofil",
+    summary: "Vi stress-testar caset och letar efter det som kan gå fel – från branschspecifika hot till makroekonomiska fallgropar och finansiella risker.",
     points: [
-      "Leder bolagets omställning till en faktisk konkurrensfördel?",
-      "Går kostnadsökningar att skicka vidare vid inflation?",
-      "Finns ohälsosam känslighet för räntechocker?"
+      "Vad är worst-case-scenariot för kärnaffären?",
+      "Finns farlig kund- eller geografikoncentration?",
+      "Hur motståndskraftigt är bolaget mot ränte- och valutatryck?"
     ]
   },
   {
     id: "VIII",
-    title: "AI-observationer",
-    summary: "Vår AI skannar miljontals datapunkter, nyhetsflöden och dolda mönster för att fånga avvikelser människan missar.",
-    points: [
-      "Svarar marknaden asymmetriskt på fundamental data?",
-      "Ser vi mönster kring insynsköp eller ökad blankning?",
-      "Kvantitativ sentiment-analys av bolagets kommunikation."
-    ]
-  },
-  {
-    id: "IX",
     title: "Verdict",
-    summary: "Här sammanställs de 8 kategorierna till en totalpoäng. Vår algoritm utmynnar i ett konkret investeringsutlåtande.",
+    summary: "Här sammanställs de 7 dimensionerna till en totalpoäng. Vår algoritm utmynnar i ett konkret investeringsutlåtande.",
     points: [
       "Viktning av fundamental vs teknisk data",
       "Beräkning av asymmetrisk risk/reward",
@@ -97,7 +87,7 @@ export const METHODOLOGY_STEPS: MethodologyStep[] = [
     ]
   },
   {
-    id: "X",
+    id: "IX",
     title: "Scenarios",
     summary: "Sannolikhetsviktad förväntad avkastning visualiserad genom tre marknadsklimat.",
     points: [

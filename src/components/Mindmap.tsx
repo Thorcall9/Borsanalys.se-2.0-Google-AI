@@ -1,23 +1,19 @@
 import React, { useRef } from 'react';
 import { motion, type Variants, useInView } from 'framer-motion';
 import { 
-  Building2, Shield, TrendingUp, Globe2, 
-  BarChart3, Scale, AlertTriangle, Cpu,
-  Target, Activity, Database, Zap
+  Building2, Layers, Shield, BarChart3,
+  Scale, Zap, AlertTriangle, Target, Activity, Database
 } from 'lucide-react';
 import { METHODOLOGY_STEPS } from './Methodology/data';
 
 const ICONS: Record<string, React.ElementType> = {
   "I": Building2,
-  "II": Shield,
-  "III": BarChart3,
-  "IV": Scale,
-  "V": TrendingUp,
-  "VI": AlertTriangle,
-  "VII": Globe2,
-  "VIII": Cpu,
-  "IX": Target,
-  "X": Activity
+  "II": Layers,
+  "III": Shield,
+  "IV": BarChart3,
+  "V": Scale,
+  "VI": Zap,
+  "VII": AlertTriangle
 };
 
 const SCENARIOS = [
@@ -142,7 +138,7 @@ const Mindmap: React.FC = () => {
             className="text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed text-lg md:text-xl"
           >
             Vår metodik kombinerar mänsklig expertis med AI-kraft för att leverera marknadens mest djuplodande bolagsanalyser. 
-            Varje case bearbetas tvärs över 10 rigorösa steg för att identifiera den asymmetriska fördelen.
+            Varje analys bearbetas tvärs över 7 rigorösa dimensioner för att identifiera den asymmetriska fördelen.
           </motion.p>
         </div>
 
@@ -154,13 +150,13 @@ const Mindmap: React.FC = () => {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
         >
-          {/* THE 8 CORE CATEGORIES (Blue Theme) */}
-          {METHODOLOGY_STEPS.slice(0, 8).map((step) => (
+          {/* THE 7 CORE DIMENSIONS (Blue Theme) */}
+          {METHODOLOGY_STEPS.slice(0, 7).map((step) => (
             <StepCard key={step.id} step={step} />
           ))}
 
           {/* SECTION IX: VERDICT (GOLD HERO CARD) */}
-          {METHODOLOGY_STEPS[8] && (
+          {METHODOLOGY_STEPS[7] && (
             <motion.div
               variants={itemVariants}
               className="col-span-1 md:col-span-2 lg:col-span-4 bg-[#0D1520] border border-[#C8A96B]/20 hover:border-[#C8A96B]/50 shadow-[0_0_60px_rgba(0,0,0,0.5)] transition-all duration-500 p-10 md:p-16 rounded-[3rem] mt-6 relative overflow-hidden group"
@@ -177,18 +173,18 @@ const Mindmap: React.FC = () => {
                   <h3 className="text-5xl md:text-6xl font-black tracking-tighter text-white">
                     Summary & <span className="text-[#C8A96B]">Verdict</span>
                   </h3>
-                  <p className="text-base text-slate-400 leading-relaxed max-w-2xl">
-                    {METHODOLOGY_STEPS[8].summary}
-                  </p>
+                   <p className="text-base text-slate-400 leading-relaxed max-w-2xl">
+                     {METHODOLOGY_STEPS[7].summary}
+                   </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8">
-                    {METHODOLOGY_STEPS[8].points.map((point, idx) => (
-                      <div key={idx} className="flex flex-col gap-2 p-4 bg-white/5 rounded-2xl border border-white/5">
-                        <Activity size={14} className="text-[#C8A96B]" />
-                        <span className="text-[11px] font-bold text-slate-300 leading-tight uppercase tracking-wider">{point}</span>
-                      </div>
-                    ))}
-                  </div>
+                     {METHODOLOGY_STEPS[7].points.map((point, idx) => (
+                       <div key={idx} className="flex flex-col gap-2 p-4 bg-white/5 rounded-2xl border border-white/5">
+                         <Activity size={14} className="text-[#C8A96B]" />
+                         <span className="text-[11px] font-bold text-slate-300 leading-tight uppercase tracking-wider">{point}</span>
+                       </div>
+                     ))}
+                   </div>
                 </div>
 
                 {/* Detailed Analysis HUD Widget */}
@@ -206,9 +202,9 @@ const Mindmap: React.FC = () => {
                       whileInView={{ opacity: 1 }}
                       className="text-7xl font-black text-white tracking-tighter"
                     >
-                      32
+                      25
                     </motion.span>
-                    <span className="text-2xl font-bold text-[#C8A96B]/50">/ 40</span>
+                     <span className="text-2xl font-bold text-[#C8A96B]/50">/ 35</span>
                   </div>
 
                   <div className="w-full space-y-4 mb-8">
@@ -235,7 +231,7 @@ const Mindmap: React.FC = () => {
           )}
 
           {/* SECTION X: SCENARIOS (WIDE GRID VIEW) */}
-          {METHODOLOGY_STEPS[9] && (
+          {METHODOLOGY_STEPS[8] && (
             <motion.div
               variants={itemVariants}
               className="col-span-1 md:col-span-2 lg:col-span-4 bg-[#0A111A] border border-white/5 shadow-2xl p-10 md:p-16 rounded-[3rem] mt-6"
@@ -249,9 +245,9 @@ const Mindmap: React.FC = () => {
                   <h3 className="text-4xl md:text-5xl font-black tracking-tighter text-white">
                     Financial <span className="text-[#C8A96B]">Scenarios</span>
                   </h3>
-                  <p className="text-slate-400 text-base mt-4 max-w-xl">
-                    {METHODOLOGY_STEPS[9].summary}
-                  </p>
+                   <p className="text-slate-400 text-base mt-4 max-w-xl">
+                     {METHODOLOGY_STEPS[8].summary}
+                   </p>
                 </div>
                 <div className="hidden md:block text-right">
                   <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest mb-1">Last Update</div>
@@ -261,7 +257,7 @@ const Mindmap: React.FC = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {SCENARIOS.map((s, i) => {
-                  const point = METHODOLOGY_STEPS[9].points[i];
+                  const point = METHODOLOGY_STEPS[8].points[i];
                   return (
                     <motion.div 
                       key={i} 
