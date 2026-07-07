@@ -11,7 +11,8 @@ export default async function handler(req: Request, res: Response) {
     '/om-oss',
     '/analyser/nvidia',
     '/analyser/microsoft',
-    '/analys/abb-q1-2026'
+    '/analys/abb-q1-2026',
+    '/analys/plejd-q1-2026'
   ];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
