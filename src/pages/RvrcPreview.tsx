@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
-import { Navigate } from "react-router-dom";
-import { Eye, FileText } from "lucide-react";
+import { Link, Navigate } from "react-router-dom";
+import { ArrowLeft, FileText, ShoppingBag, Star } from "lucide-react";
 import SEO from "../components/SEO";
 import rvrcMarkdown from "../../scratch/drafts/rvrc-2026-opublicerad-analys.md?raw";
 import rvrcSankeyHtml from "../../analyses/rvrc_sankey_9m_2026.html?raw";
@@ -320,6 +320,118 @@ function RvrcSankeyDiagram() {
   );
 }
 
+function RvrcHero({ isPreviewRoute }: { isPreviewRoute: boolean }) {
+  const metrics = [
+    { label: "Dagens kurs", value: "59,25 kr" },
+    { label: "Rating", value: "25/35" },
+    { label: "12 mån", value: "~58 kr" },
+    { label: "5 år Base", value: "~74 kr" },
+    { label: "Konsensus", value: "74–80 kr" },
+    { label: "Nästa datum", value: "11 aug" },
+  ];
+
+  return (
+    <header
+      className="mb-10 overflow-hidden rounded-lg border border-emerald-700/15 shadow-sm"
+      style={{
+        position: "relative",
+        background: "linear-gradient(135deg, #F4EFEB 0%, #FAF8F5 100%)",
+      }}
+    >
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: -120,
+          right: -120,
+          width: 520,
+          height: 520,
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(5,150,105,0.10) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          bottom: -220,
+          left: -120,
+          width: 420,
+          height: 420,
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(180,83,9,0.08) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      <div className="relative px-5 py-8 md:px-8 md:py-10">
+        <div className="mb-10 flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-3 text-sm font-bold">
+            <Link to="/analys" className="inline-flex items-center gap-2 text-stone-500 transition hover:text-emerald-800">
+              <ArrowLeft size={16} />
+              Analysarkiv
+            </Link>
+            <span className="text-stone-300">/</span>
+            <span className="text-emerald-700">RVRC</span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-700/25 bg-emerald-700/10 px-3.5 py-1.5 text-[10px] font-black uppercase tracking-[0.15em] text-emerald-800">
+              <ShoppingBag size={12} />
+              Outdoor D2C
+            </div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-stone-300 bg-stone-100/70 px-3.5 py-1.5 text-[10px] font-black uppercase tracking-[0.12em] text-stone-700">
+              <Star size={12} />
+              Bevaka
+            </div>
+          </div>
+        </div>
+
+        <div className="grid items-end gap-10 md:grid-cols-[1fr_auto]">
+          <div>
+            <div className="mb-4 text-[10px] font-black uppercase tracking-[0.32em] text-emerald-700">
+              Börsanalys.se · Carl Fredrik Thor · Juli 2026
+            </div>
+            <h1 className="m-0 text-[clamp(42px,7vw,88px)] font-black leading-[0.95] tracking-tight text-stone-950">
+              RevolutionRace
+            </h1>
+            <div className="mt-2 text-[clamp(17px,2.4vw,28px)] font-light tracking-wide text-stone-500">
+              Outdoor/D2C-analys 2026
+            </div>
+            <p className="mt-6 max-w-2xl text-base leading-7 text-stone-700">
+              Kvalitetsbolag med mycket hög lönsamhet, nettokassa och stark DACH-position. Men dagens kurs kräver att tillväxten återaccelererar eller att marknaden fortsätter acceptera en högre multipel än modellens Base-case.
+            </p>
+            {isPreviewRoute && (
+              <div className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-stone-500">
+                <FileText size={16} /> scratch/drafts/rvrc-2026-opublicerad-analys.md
+              </div>
+            )}
+          </div>
+
+          <div className="text-left md:text-center">
+            <div className="flex h-[120px] w-[120px] flex-col items-center justify-center rounded-full border-[3px] border-emerald-700/35 bg-emerald-700/10 shadow-[0_0_40px_rgba(5,150,105,0.14)]">
+              <span className="text-[11px] font-black uppercase tracking-[0.15em] text-emerald-700/80">Vår syn</span>
+              <span className="mt-1 text-base font-black uppercase tracking-[0.05em] text-emerald-800">BEVAKA</span>
+            </div>
+            <div className="mt-4 font-mono text-2xl font-black text-emerald-800">25/35</div>
+            <div className="text-[11px] font-bold uppercase tracking-[0.1em] text-stone-500">Totalpoäng</div>
+          </div>
+        </div>
+
+        <div className="mt-10 grid overflow-hidden rounded-lg border border-emerald-700/15 bg-emerald-700/10 sm:grid-cols-2 lg:grid-cols-6">
+          {metrics.map((metric) => (
+            <div key={metric.label} className="border-b border-r border-emerald-900/10 bg-white/45 px-4 py-4 last:border-r-0 sm:[&:nth-child(even)]:border-r-0 lg:[&:nth-child(even)]:border-r lg:[&:nth-child(6)]:border-r-0">
+              <div className="mb-1 text-[10px] font-black uppercase tracking-[0.14em] text-stone-500">{metric.label}</div>
+              <div className="text-lg font-black text-stone-950">{metric.value}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </header>
+  );
+}
+
 function RvrcPremiumSection() {
   const [email, setEmail] = useState("");
   const [isUnlocked, setIsUnlocked] = useState(false);
@@ -600,24 +712,7 @@ export default function RvrcPreview() {
             </div>
           )}
 
-          <header className="mb-10 rounded-lg border border-slate-200 bg-white p-6 shadow-sm md:p-8">
-            <div className="mb-4 inline-flex items-center gap-2 rounded border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-emerald-800">
-              <Eye size={14} /> {isPreviewRoute ? "Preview" : "Aktieanalys"}
-            </div>
-            <h1 className="text-4xl font-black tracking-tight text-slate-950 md:text-6xl">
-              RevolutionRace (RVRC)
-            </h1>
-            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-700">
-              {isPreviewRoute
-                ? "Opublicerad analysdraft, renderad från lokal Markdown för slutgranskning före publicering."
-                : "Aktieanalys med öppen slutsats och en låst fördjupning som kan öppnas via nyhetsbrevet."}
-            </p>
-            {isPreviewRoute && (
-              <div className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-slate-500">
-                <FileText size={16} /> scratch/drafts/rvrc-2026-opublicerad-analys.md
-              </div>
-            )}
-          </header>
+          <RvrcHero isPreviewRoute={isPreviewRoute} />
 
           <article className="rounded-lg border border-slate-200 bg-[#fffdfa] px-5 py-8 shadow-sm md:px-10 md:py-12">
             {blocks.map((block, index) => (
