@@ -29,6 +29,7 @@ const Holdings = lazy(() => import("./pages/Holdings"));
 const AdminSubscribers = lazy(() => import("./components/AdminSubscribers").then(module => ({ default: module.AdminSubscribers })));
 const PreviewHeaderPage = lazy(() => import("./pages/PreviewHeader"));
 const AbbQ12026Preview = lazy(() => import("./pages/AbbQ12026Preview"));
+const RvrcPreview = lazy(() => import("./pages/RvrcPreview"));
 const MindmapBlueprint = lazy(() => import("./components/Mindmap"));
 
 const PageLoader = () => (
@@ -53,6 +54,8 @@ export default function App() {
                     <Routes>
                       <Route path="/" element={<Home />} />
                       <Route path="/analys" element={<Analysis />} />
+                      <Route path="/analys/revolutionrace-2026" element={<RvrcPreview />} />
+                      <Route path="/analys/rvrc-2026" element={<RvrcPreview />} />
                       <Route path="/analys/:slug" element={<Analysis />} />
                       <Route path="/profil" element={<Profile />} />
                       <Route path="/aktier/:slug" element={<StockHub />} />
@@ -76,6 +79,7 @@ export default function App() {
                       <Route path="/admin/subscribers" element={<AdminSubscribers />} />
                       <Route path="/preview-header" element={<PreviewHeaderPage />} />
                       <Route path="/preview/abb-q1-2026" element={<AbbQ12026Preview />} />
+                      <Route path="/preview/rvrc-2026" element={<RvrcPreview />} />
                       <Route path="/methodology-blueprint" element={<MindmapBlueprint />} />
                     </Routes>
                   </Suspense>
