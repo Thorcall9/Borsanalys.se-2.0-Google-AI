@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { motion } from "framer-motion";
 import { Hero } from "../components/Hero";
 import SEO from "../components/SEO";
-import { TrendingUp, Shield, Zap, ArrowRight, ChevronRight, Loader2 } from "lucide-react";
+import { ArrowRight, ChevronRight, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 
@@ -20,15 +20,14 @@ const SectionLoader = () => (
 
 export default function Home() {
   const { openLoginModal } = useAuth();
-  const evolutionCategories = [
-    { label: "Affärsmodell", score: 5.0 },
-    { label: "Strategisk Moat", score: 5.0 },
-    { label: "Finansiell ställning", score: 4.0 },
-    { label: "Värdering & PEG", score: 4.0 },
-    { label: "Tillväxtmotorer", score: 3.0 },
-    { label: "Riskprofil", score: 3.0 },
-    { label: "ESG & Makro", score: 3.0 },
-    { label: "Marginaler", score: 4.0 },
+  const revolutionRaceCategories = [
+    { label: "Företagsöversikt", score: 4.0 },
+    { label: "Affärsmodell", score: 4.0 },
+    { label: "Konkurrensfördelar", score: 4.0 },
+    { label: "Finansiell utveckling", score: 4.0 },
+    { label: "Fundamental värdering", score: 2.0 },
+    { label: "Potentiella kursdrivare", score: 3.0 },
+    { label: "Risker", score: 4.0 },
   ];
 
   return (
@@ -54,10 +53,10 @@ export default function Home() {
             >
               <h2 className="text-[11px] font-mono font-black uppercase tracking-[0.4em] text-primary mb-4">Utvald Analys</h2>
               <h3 className="text-4xl md:text-5xl font-black tracking-tighter leading-tight mb-6">
-                Evolution: Global dominans inom Live Casino
+                RevolutionRace: Outdoor/D2C med stark lönsamhet
               </h3>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Vår AI-drivna analysmodell ger Evolution högsta betyg inom lönsamhet och marknadsposition. Se hur bolaget presterar i våra åtta kärnkategorier.
+                Nya förklaringsmodellen visar 25/35 poäng: hög bolagskvalitet, nettokassa och stark DACH-position, men värderingen kräver återaccelererad tillväxt.
               </p>
             </motion.div>
           </div>
@@ -67,7 +66,7 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <Link to="/analys/evolution-2025" className="group flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-primary hover:gap-5 transition-all">
+            <Link to="/analys/revolutionrace-2026" className="group flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-primary hover:gap-5 transition-all">
               Se hela analysen <ArrowRight className="w-5 h-5" />
             </Link>
           </motion.div>
@@ -75,11 +74,11 @@ export default function Home() {
 
         <React.Suspense fallback={<SectionLoader />}>
           <ScoreCard 
-            companyName="Evolution" 
-            ticker="EVO.ST" 
-            totalScore={3.9} 
-            categories={evolutionCategories} 
-            linkTo="/analys/evolution-2025"
+            companyName="RevolutionRace" 
+            ticker="RVRC.ST" 
+            totalScore={3.6} 
+            categories={revolutionRaceCategories} 
+            linkTo="/analys/revolutionrace-2026"
           />
         </React.Suspense>
       </section>
