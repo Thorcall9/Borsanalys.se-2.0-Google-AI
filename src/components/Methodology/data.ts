@@ -1,5 +1,5 @@
 export interface MethodologyStep {
-  id: string; // I - VII
+  id: string;
   title: string;
   summary: string;
   points: string[];
@@ -9,91 +9,91 @@ export const METHODOLOGY_STEPS: MethodologyStep[] = [
   {
     id: "I",
     title: "Företagsöversikt",
-    summary: "Vi analyserar affärsidén, ledningens historik och ägarstruktur för att säkerställa att bolaget drivs av rätt personer med rätt incitament.",
+    summary: "Vi börjar med bolagets position, nisch, ägarbild och övergripande kvalitet innan siffrorna vägs in.",
     points: [
-      "Hur tjänar bolaget sina pengar?",
-      "Finns en historik av värdeskapande kapitalallokering?",
-      "Är incitamentsstrukturerna i linje med aktieägarnas mål?"
+      "Är bolaget begripligt och tydligt positionerat?",
+      "Finns nettokassa, historik och styrning som stödjer caset?",
+      "Är kvaliteten tillräckligt hög för att motivera fortsatt analys?"
     ]
   },
   {
     id: "II",
     title: "Affärsmodell",
-    summary: "En djupgående genomgång av intäktsmodellen, kostnadsdrivarna och hur skalbar och kapitallätt verksamheten är.",
+    summary: "Vi bedömer hur bolaget tjänar pengar, hur kapitallätt modellen är och hur stabil intäktsbasen framstår.",
     points: [
-      "Är intäktsmodellen återkommande och förutsägbar?",
-      "Hur kapitalintensiv är tillväxten?",
-      "Kan marginaler förbättras med ökad skala?"
+      "Är modellen skalbar utan tung kapitalbindning?",
+      "Finns lojal kundbas och återkommande köpbeteende?",
+      "Saknas kontrakterade intäkter eller andra stabiliserande mekanismer?"
     ]
   },
   {
     id: "III",
     title: "Konkurrensfördelar",
-    summary: "Bedömning av bolagets vallgravar och strukturella moat. Hur skyddad är vinstmaskinen mot nya utmanare och prispress?",
+    summary: "Vi prövar om varumärke, kunddata, distribution och direktkundsrelation skapar ett verkligt försvar.",
     points: [
-      "Har bolaget strukturell pricing power?",
-      "Bygger vinsterna på nätverkseffekter eller skalfördelar?",
-      "Hur ser hotbilden ut från disruptiva konkurrenter?"
+      "Har bolaget en differentierad position i sin nisch?",
+      "Ger D2C-modellen data- och marginalfördelar?",
+      "Är konkurrensfördelarna starka nog när tillväxten bromsar?"
     ]
   },
   {
     id: "IV",
-    title: "Finansiell Utveckling",
-    summary: "En stenhård genomgång av siffrorna: tillväxt, kassaflöde och vinstkvalitet. Vi ser bortom redovisningskosmetik och letar efter varningsflaggor.",
+    title: "Finansiell utveckling",
+    summary: "Vi analyserar marginaler, kassaflöde, balansräkning och om vinsten backas upp av verklig kassagenerering.",
     points: [
-      "Är tillväxten organisk och bevisat lönsam?",
-      "Hur stark är FCF-konverteringen relativt redovisad vinst?",
-      "Finns det dolda skulder eller aggressiv bokföring?"
+      "Är bruttomarginal och rörelsemarginal fortsatt starka?",
+      "Konverteras vinsten till fritt kassaflöde?",
+      "Finns lager- eller rörelsekapitalrisk som försvagar kvaliteten?"
     ]
   },
   {
     id: "V",
-    title: "Fundamental Värdering",
-    summary: "Är aktien objektivt billig eller dyr? Vi modellerar tre scenarier (Bull/Base/Bear) och beräknar kurszoner för 12 månader och 5 år.",
+    title: "Fundamental värdering",
+    summary: "Vi jämför kursen med 12-månadersankare, multiplar och 5-årig känslighet för att se om säkerhetsmarginalen räcker.",
     points: [
-      "Vad ger normaliserat P/E och EV/EBIT för kursmål?",
-      "Vilken CAGR prisar dagens kurs in?",
-      "Var ligger köpvärd zon med tillräcklig säkerhetsmarginal?"
+      "Är dagens P/E rimligt mot tillväxttakten?",
+      "Hur ser Base-case ut mot aktuell kurs?",
+      "Krävs multipelåterhämtning för acceptabel avkastning?"
     ]
   },
   {
     id: "VI",
-    title: "Potentiella Kursdrivare",
-    summary: "Identifiering av konkreta katalysatorer och triggers. Vi letar efter asymmetriska händelser som kan driva kursen på 12–24 månaders sikt.",
+    title: "Potentiella kursdrivare",
+    summary: "Vi identifierar konkreta triggers som kan flytta caset från kvalitet till tydligare uppsida.",
     points: [
-      "Vilka rapporter eller lanseringar kan flytta aktien?",
-      "Vad säger analytikerkonsensus och insidertransaktioner?",
-      "Finns M&A-optioner eller nya geografier att expandera till?"
+      "Kan lokal valutatillväxt återaccelerera över 10 %?",
+      "Kan kursen falla till en nivå med bättre säkerhetsmarginal?",
+      "Finns marginal-, lager- eller återköpssignaler som stärker tesen?"
     ]
   },
   {
     id: "VII",
-    title: "Riskprofil",
-    summary: "Vi stress-testar caset och letar efter det som kan gå fel – från branschspecifika hot till makroekonomiska fallgropar och finansiella risker.",
+    title: "Risker",
+    summary: "Vi stressar de viktigaste riskerna: värdering, DACH-inbromsning, lager, valuta och exekvering.",
     points: [
-      "Vad är worst-case-scenariot för kärnaffären?",
-      "Finns farlig kund- eller geografikoncentration?",
-      "Hur motståndskraftigt är bolaget mot ränte- och valutatryck?"
+      "Vad händer om DACH fortsätter bromsa?",
+      "Hur känslig är aktien för multipelkontraktion?",
+      "Finns operativa risker som kan urholka kassaflödet?"
     ]
   },
   {
     id: "VIII",
     title: "Verdict",
-    summary: "Här sammanställs de 7 dimensionerna till en totalpoäng. Vår algoritm utmynnar i ett konkret investeringsutlåtande.",
+    summary: "Här sammanställs de sju kategorierna till 25/35 poäng. Slutsatsen blir ett kvalitetscase där värderingen fortfarande kräver disciplin.",
     points: [
-      "Viktning av fundamental vs teknisk data",
-      "Beräkning av asymmetrisk risk/reward",
-      "Generering av slutlig rating"
+      "Kvalitet: stark",
+      "Värdering: krävande",
+      "Slutsats: bevaka"
     ]
   },
   {
     id: "IX",
     title: "Scenarios",
-    summary: "Sannolikhetsviktad förväntad avkastning visualiserad genom tre marknadsklimat.",
+    summary: "Scenarioanalysen visar hur avkastningen påverkas av multipel, tillväxt och om marknaden accepterar en högre värdering.",
     points: [
-      "Bull Case: Optimistiska tillväxtantaganden",
-      "Base Case: Mest troliga utveckling",
-      "Bear Case: Worst-case scenarion"
+      "Bull: multipelåterhämtning",
+      "Base: konservativt 12-månadersankare",
+      "Bear: lägre multipel"
     ]
   }
 ];

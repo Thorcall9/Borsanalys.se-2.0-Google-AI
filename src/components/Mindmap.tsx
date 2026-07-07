@@ -1,25 +1,28 @@
 import React, { useRef } from 'react';
 import { motion, type Variants, useInView } from 'framer-motion';
 import { 
-  Building2, Layers, Shield, BarChart3,
-  Scale, Zap, AlertTriangle, Target, Activity, Database
+  Building2, Shield, TrendingUp,
+  BarChart3, Scale, AlertTriangle,
+  Target, Activity, Database, Zap
 } from 'lucide-react';
 import { METHODOLOGY_STEPS } from './Methodology/data';
 
 const ICONS: Record<string, React.ElementType> = {
   "I": Building2,
-  "II": Layers,
+  "II": Database,
   "III": Shield,
   "IV": BarChart3,
   "V": Scale,
-  "VI": Zap,
-  "VII": AlertTriangle
+  "VI": TrendingUp,
+  "VII": AlertTriangle,
+  "VIII": Target,
+  "IX": Activity
 };
 
 const SCENARIOS = [
-  { type: 'Bull Case', price: '420 SEK', prob: '25% Sannolikhet', color: '#60A5FA', bg: 'bg-[#60A5FA]/10', textCls: 'text-[#60A5FA]', border: 'border-[#60A5FA]/30' },
-  { type: 'Base Case', price: '345 SEK', prob: '50% Sannolikhet', color: '#E5E7EB', bg: 'bg-white/5', textCls: 'text-white', border: 'border-white/10' },
-  { type: 'Bear Case', price: '210 SEK', prob: '25% Sannolikhet', color: '#EF4444', bg: 'bg-red-500/10', textCls: 'text-red-500', border: 'border-red-500/30' },
+  { type: 'Bull Case', price: '74 SEK', prob: '25% Sannolikhet', color: '#60A5FA', bg: 'bg-[#60A5FA]/10', textCls: 'text-[#60A5FA]', border: 'border-[#60A5FA]/30' },
+  { type: 'Base Case', price: '58 SEK', prob: '50% Sannolikhet', color: '#E5E7EB', bg: 'bg-white/5', textCls: 'text-white', border: 'border-white/10' },
+  { type: 'Bear Case', price: '48 SEK', prob: '25% Sannolikhet', color: '#EF4444', bg: 'bg-red-500/10', textCls: 'text-red-500', border: 'border-red-500/30' },
 ];
 
 const containerVariants: Variants = {
@@ -137,8 +140,8 @@ const Mindmap: React.FC = () => {
             transition={{ delay: 0.2 }}
             className="text-slate-400 max-w-3xl mx-auto font-medium leading-relaxed text-lg md:text-xl"
           >
-            Vår metodik kombinerar mänsklig expertis med AI-kraft för att leverera marknadens mest djuplodande bolagsanalyser. 
-            Varje analys bearbetas tvärs över 7 rigorösa dimensioner för att identifiera den asymmetriska fördelen.
+            Vår metodik kombinerar mänsklig analys med strukturerad data för att väga bolagskvalitet mot värdering och risk. 
+            I RevolutionRace-caset sammanfattas analysen i sju kategorier, 35 möjliga poäng och en tydlig förklaringsmodell.
           </motion.p>
         </div>
 
@@ -150,12 +153,12 @@ const Mindmap: React.FC = () => {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
         >
-          {/* THE 7 CORE DIMENSIONS (Blue Theme) */}
+          {/* THE 7 RVRC SCORECARD CATEGORIES (Blue Theme) */}
           {METHODOLOGY_STEPS.slice(0, 7).map((step) => (
             <StepCard key={step.id} step={step} />
           ))}
 
-          {/* SECTION IX: VERDICT (GOLD HERO CARD) */}
+          {/* SECTION VIII: VERDICT (GOLD HERO CARD) */}
           {METHODOLOGY_STEPS[7] && (
             <motion.div
               variants={itemVariants}
@@ -168,23 +171,23 @@ const Mindmap: React.FC = () => {
                 <div className="flex-1 space-y-6 text-center lg:text-left">
                   <div className="inline-flex items-center gap-2 mb-2 px-3 py-1 bg-[#C8A96B]/10 border border-[#C8A96B]/20 rounded-full">
                     <Target size={16} className="text-[#C8A96B]" />
-                    <h4 className="text-[11px] font-black text-[#C8A96B] uppercase tracking-[0.2em]">Section IX // Synthesis</h4>
+                    <h4 className="text-[11px] font-black text-[#C8A96B] uppercase tracking-[0.2em]">Section VIII // Synthesis</h4>
                   </div>
                   <h3 className="text-5xl md:text-6xl font-black tracking-tighter text-white">
                     Summary & <span className="text-[#C8A96B]">Verdict</span>
                   </h3>
-                   <p className="text-base text-slate-400 leading-relaxed max-w-2xl">
-                     {METHODOLOGY_STEPS[7].summary}
-                   </p>
+                  <p className="text-base text-slate-400 leading-relaxed max-w-2xl">
+                    {METHODOLOGY_STEPS[7].summary}
+                  </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8">
-                     {METHODOLOGY_STEPS[7].points.map((point, idx) => (
-                       <div key={idx} className="flex flex-col gap-2 p-4 bg-white/5 rounded-2xl border border-white/5">
-                         <Activity size={14} className="text-[#C8A96B]" />
-                         <span className="text-[11px] font-bold text-slate-300 leading-tight uppercase tracking-wider">{point}</span>
-                       </div>
-                     ))}
-                   </div>
+                    {METHODOLOGY_STEPS[7].points.map((point, idx) => (
+                      <div key={idx} className="flex flex-col gap-2 p-4 bg-white/5 rounded-2xl border border-white/5">
+                        <Activity size={14} className="text-[#C8A96B]" />
+                        <span className="text-[11px] font-bold text-slate-300 leading-tight uppercase tracking-wider">{point}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Detailed Analysis HUD Widget */}
@@ -204,18 +207,18 @@ const Mindmap: React.FC = () => {
                     >
                       25
                     </motion.span>
-                     <span className="text-2xl font-bold text-[#C8A96B]/50">/ 35</span>
+                    <span className="text-2xl font-bold text-[#C8A96B]/50">/ 35</span>
                   </div>
 
                   <div className="w-full space-y-4 mb-8">
                     <div className="flex justify-between text-[9px] font-mono text-white/40 uppercase tracking-widest">
-                       <span>Confidence Interval</span>
-                       <span className="text-[#C8A96B]">86.4%</span>
+                       <span>Scorecard Ratio</span>
+                       <span className="text-[#C8A96B]">71.4%</span>
                     </div>
                     <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
                        <motion.div 
                          initial={{ width: 0 }}
-                         whileInView={{ width: "86.4%" }}
+                         whileInView={{ width: "71.4%" }}
                          transition={{ duration: 1, delay: 0.5 }}
                          className="h-full bg-[#C8A96B]"
                        />
@@ -223,14 +226,14 @@ const Mindmap: React.FC = () => {
                   </div>
 
                   <div className="px-10 py-3 rounded-full bg-[#C8A96B] text-slate-950 font-black text-sm tracking-widest shadow-[0_10px_30px_rgba(200,169,107,0.3)] uppercase">
-                    Confirmed: KÖP
+                    Confirmed: BEVAKA
                   </div>
                 </div>
               </div>
             </motion.div>
           )}
 
-          {/* SECTION X: SCENARIOS (WIDE GRID VIEW) */}
+          {/* SECTION IX: SCENARIOS (WIDE GRID VIEW) */}
           {METHODOLOGY_STEPS[8] && (
             <motion.div
               variants={itemVariants}
@@ -240,18 +243,18 @@ const Mindmap: React.FC = () => {
                 <div className="text-left">
                   <h4 className="text-[11px] font-black text-slate-500 uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
                     <Activity size={14} className="text-[#C8A96B]" />
-                    Section X // Final Output
+                    Section IX // Final Output
                   </h4>
                   <h3 className="text-4xl md:text-5xl font-black tracking-tighter text-white">
                     Financial <span className="text-[#C8A96B]">Scenarios</span>
                   </h3>
-                   <p className="text-slate-400 text-base mt-4 max-w-xl">
-                     {METHODOLOGY_STEPS[8].summary}
-                   </p>
+                  <p className="text-slate-400 text-base mt-4 max-w-xl">
+                    {METHODOLOGY_STEPS[8].summary}
+                  </p>
                 </div>
                 <div className="hidden md:block text-right">
                   <div className="text-[10px] font-mono text-white/20 uppercase tracking-widest mb-1">Last Update</div>
-                  <div className="text-xs font-mono text-[#C8A96B]">2026-04-11 // T-Minus Zero</div>
+                  <div className="text-xs font-mono text-[#C8A96B]">2026-07-07 // RVRC Model</div>
                 </div>
               </div>
 
