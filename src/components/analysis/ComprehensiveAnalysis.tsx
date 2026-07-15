@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Globe, 
@@ -15,7 +15,8 @@ import {
   AlertCircle,
   CheckCircle2,
   Star,
-  Clock3
+  Clock3,
+  ExternalLink
 } from 'lucide-react';
 import AnalysisLayout from './AnalysisLayout';
 import SectionHeader from './SectionHeader';
@@ -29,6 +30,7 @@ import ProgressBar from './ProgressBar';
 import ChartCard from './ChartCard';
 import NextStepsModule from './NextStepsModule';
 import EditorialReadNext from './EditorialReadNext';
+import inwidoSankeyHtml from '../../../analyses/inwido_sankey_2026.html?raw';
 import SEO from '../SEO';
 import { fetchWithCache, RapidAPIQuote } from '../../services/stockService';
 import { AnalysisData } from '../../data/analyses';
@@ -246,289 +248,26 @@ const validateSankeyBalance = (config: InwidoSankeyConfig) => {
     .filter((check) => check.delta > 1);
 };
 
-const InwidoSankeyDiagram = ({ sankey }: { sankey?: InwidoSankeyConfig }) => {
-  const config = sankey || defaultInwidoSankey;
-  const balanceWarnings = validateSankeyBalance(config);
-  const isBalanced = balanceWarnings.length === 0;
-  const revenueSources = config.nodes.filter((node) => node.type === "revenueSource");
-  const financialNodes = config.nodes.filter((node) => node.type !== "revenueSource");
-
-  if (!isBalanced && import.meta.env.DEV) {
-    console.warn("Inwido Sankey data is not balanced. Rendering fallback.", balanceWarnings);
-  }
-
-  const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
-  const nodeById = new Map(config.nodes.map((node) => [node.id, node]));
-  const getNode = (id: string) => nodeById.get(id);
-  const hoverNode = hoverNodeId ? getNode(hoverNodeId) : undefined;
-  const detailLabel = (node: NonNullable<ReturnType<typeof getNode>>) =>
-    node.shareOfRevenue !== undefined ? `${formatPercent(node.shareOfRevenue)} av nettoomsättningen` : config.period;
-  const marginLabel = (node: NonNullable<ReturnType<typeof getNode>>) =>
-    node.margin !== undefined ? `Marginal: ${formatPercent(node.margin)}` : undefined;
-
-  const layout: Record<string, { x: number; y: number; w: number; h: number; lane: "source" | "revenue" | "profit" | "cost" }> = {
-    skandinavien: { x: 54, y: 92, w: 18, h: 66, lane: "source" },
-    vast: { x: 54, y: 178, w: 18, h: 54, lane: "source" },
-    ost: { x: 54, y: 250, w: 18, h: 48, lane: "source" },
-    ecommerce: { x: 54, y: 316, w: 18, h: 42, lane: "source" },
-    ovrigt: { x: 54, y: 374, w: 18, h: 30, lane: "source" },
-    revenue: { x: 292, y: 236, w: 34, h: 86, lane: "revenue" },
-    "gross-profit": { x: 604, y: 236, w: 34, h: 86, lane: "profit" },
-    "operational-ebita": { x: 916, y: 236, w: 34, h: 86, lane: "profit" },
-    ebit: { x: 1228, y: 236, w: 34, h: 86, lane: "profit" },
-    "net-income": { x: 1540, y: 236, w: 34, h: 86, lane: "profit" },
-    cogs: { x: 462, y: 420, w: 28, h: 60, lane: "cost" },
-    "operating-costs": { x: 774, y: 420, w: 28, h: 60, lane: "cost" },
-    adjustments: { x: 1086, y: 420, w: 28, h: 60, lane: "cost" },
-    "finance-tax": { x: 1398, y: 420, w: 28, h: 60, lane: "cost" },
-  };
-
-  const flowOrder = [
-    "skandinavien-revenue",
-    "vast-revenue",
-    "ost-revenue",
-    "ecommerce-revenue",
-    "ovrigt-revenue",
-    "revenue-cogs",
-    "revenue-gross-profit",
-    "gross-profit-operating-costs",
-    "gross-profit-operational-ebita",
-    "operational-ebita-adjustments",
-    "operational-ebita-ebit",
-    "ebit-finance-tax",
-    "ebit-net-income",
-  ];
-
-  const flowStyles: Record<string, { color: string; opacity: number }> = {
-    "skandinavien-revenue": { color: "#67E8F9", opacity: 0.72 },
-    "vast-revenue": { color: "#67E8F9", opacity: 0.64 },
-    "ost-revenue": { color: "#67E8F9", opacity: 0.58 },
-    "ecommerce-revenue": { color: "#67E8F9", opacity: 0.52 },
-    "ovrigt-revenue": { color: "#67E8F9", opacity: 0.4 },
-    "revenue-gross-profit": { color: "#22C55E", opacity: 0.92 },
-    "gross-profit-operational-ebita": { color: "#22C55E", opacity: 0.9 },
-    "operational-ebita-ebit": { color: "#22C55E", opacity: 0.88 },
-    "ebit-net-income": { color: "#22C55E", opacity: 0.86 },
-    "revenue-cogs": { color: "#7F1D1D", opacity: 0.72 },
-    "gross-profit-operating-costs": { color: "#7F1D1D", opacity: 0.7 },
-    "operational-ebita-adjustments": { color: "#7F1D1D", opacity: 0.62 },
-    "ebit-finance-tax": { color: "#7F1D1D", opacity: 0.66 },
-  };
-
-  const point = (id: string, side: "left" | "right" | "costStart" | "costEnd") => {
-    const box = layout[id];
-    if (side === "left") return { x: box.x, y: box.y + box.h / 2 };
-    if (side === "right") return { x: box.x + box.w, y: box.y + box.h / 2 };
-    if (side === "costStart") return { x: box.x + box.w, y: box.y + box.h * 0.68 };
-    return { x: box.x, y: box.y + box.h / 2 };
-  };
-
-  const flowWidth = (value: number, target: string) => {
-    const base = Math.sqrt(value) * 0.34;
-    const isCost = layout[target]?.lane === "cost";
-    return Math.max(isCost ? 8 : 7, Math.min(isCost ? 30 : 34, base));
-  };
-
-  const flowPath = (source: string, target: string) => {
-    const targetBox = layout[target];
-    if (targetBox.lane === "cost") {
-      const start = point(source, "costStart");
-      const end = point(target, "costEnd");
-      const c1 = start.x + (end.x - start.x) * 0.38;
-      const c2 = start.x + (end.x - start.x) * 0.72;
-      return `M${start.x},${start.y} C${c1},${start.y + 42} ${c2},${end.y - 18} ${end.x},${end.y}`;
-    }
-    const start = point(source, "right");
-    const end = point(target, "left");
-    const c1 = start.x + (end.x - start.x) * 0.46;
-    const c2 = start.x + (end.x - start.x) * 0.64;
-    return `M${start.x},${start.y} C${c1},${start.y} ${c2},${end.y} ${end.x},${end.y}`;
-  };
-
-  const renderFlow = (link: { source: string; target: string; value: number }) => {
-    if (!layout[link.source] || !layout[link.target]) return null;
-    const source = getNode(link.source);
-    const target = getNode(link.target);
-    const style = flowStyles[`${link.source}-${link.target}`] || { color: "#67E8F9", opacity: 0.5 };
-    const isDimmed = hoverNodeId && hoverNodeId !== link.source && hoverNodeId !== link.target;
-    return (
-      <motion.path
-        key={`${link.source}-${link.target}`}
-        d={flowPath(link.source, link.target)}
-        fill="none"
-        stroke={style.color}
-        strokeWidth={flowWidth(link.value, link.target)}
-        strokeOpacity={isDimmed ? 0.12 : style.opacity}
-        strokeLinecap="round"
-        initial={{ pathLength: 0, opacity: 0 }}
-        animate={{ pathLength: 1, opacity: 1 }}
-        transition={{ duration: 0.65, delay: 0.06 * Math.max(0, flowOrder.indexOf(`${link.source}-${link.target}`)), ease: "easeOut" }}
-        onMouseEnter={() => setHoverNodeId(target?.id || source?.id || null)}
-        onMouseLeave={() => setHoverNodeId(null)}
-      />
-    );
-  };
-
-  const renderNode = (id: string) => {
-    const node = getNode(id);
-    const box = layout[id];
-    if (!node || !box) return null;
-    const isCost = node.type === "cost";
-    const isSource = node.type === "revenueSource";
-    const isRevenue = node.type === "revenue";
-    const isHovered = hoverNodeId === id;
-    const fill = isCost ? "#2A1118" : isSource ? "#132238" : isRevenue ? "#101827" : "#0D2118";
-    const stroke = isCost ? "#991B1B" : isSource || isRevenue ? "#67E8F9" : "#34D399";
-    const labelX = isSource ? box.x + box.w + 12 : box.x + box.w / 2;
-    const label = isSource && node.shareOfRevenue !== undefined ? `${node.label} (${node.shareOfRevenue} %)` : node.label;
-
-    return (
-      <motion.g
-        key={id}
-        onMouseEnter={() => setHoverNodeId(id)}
-        onMouseLeave={() => setHoverNodeId(null)}
-        opacity={hoverNodeId && !isHovered ? 0.55 : 1}
-        className="cursor-default transition-opacity duration-200"
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: hoverNodeId && !isHovered ? 0.55 : 1, y: 0 }}
-        transition={{ duration: 0.45, delay: 0.05 * Math.max(0, flowOrder.findIndex((flow) => flow.endsWith(`-${id}`))) }}
-      >
-        <title>{`${node.label}\n${detailLabel(node)}\n${marginLabel(node) || ""}`}</title>
-        {!isSource && (
-          <>
-            <text x={labelX} y={box.y - 26} fill="#F8FAFC" fontSize={isCost ? 10 : 12} fontWeight="900" textAnchor="middle">
-              {node.label}
-            </text>
-            <text x={labelX} y={box.y - 10} fill={isCost ? "#FCA5A5" : "#A7F3D0"} fontSize="10" fontWeight="800" textAnchor="middle">
-              {formatMkr(node.amount)}{node.margin !== undefined ? ` · ${formatPercent(node.margin)}` : ""}
-            </text>
-          </>
-        )}
-        <rect
-          x={box.x}
-          y={box.y}
-          width={box.w}
-          height={box.h}
-          rx={8}
-          fill={fill}
-          stroke={stroke}
-          strokeWidth={isHovered ? 2 : 1.2}
-          strokeOpacity={isCost ? 0.58 : 0.78}
-        />
-        {isSource && (
-          <text x={labelX} y={box.y + box.h / 2 + 4} fill="#F8FAFC" fontSize="11" fontWeight="900">
-            {label}
-          </text>
-        )}
-      </motion.g>
-    );
-  };
-
-  const fallbackRows = [...revenueSources, ...financialNodes.filter((node) => ["revenue", "gross-profit", "operational-ebita", "ebit", "net-income"].includes(node.id))];
-
+const InwidoSankeyDiagram = (_props?: any) => {
   return (
-    <div className="mb-12 rounded-[2.5rem] border border-slate-700/70 bg-slate-950 text-white shadow-2xl shadow-black/20 overflow-hidden">
-      <div className="p-6 md:p-8 border-b border-slate-800 bg-transparent">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-          <div>
-            <div className="text-[10px] font-black uppercase tracking-[0.24em] text-sky-300 mb-2">
-              Hur tjänar Inwido sina pengar?
-            </div>
-            <h3 className="text-2xl font-black tracking-tighter text-white">
-              Omsättningsmix → Bruttoresultat → Operationell EBITA → EBIT → Nettoresultat
-            </h3>
-          </div>
-          <div className="text-xs font-semibold text-slate-400 max-w-sm">
-            Flödena visar ungefärliga Mkr-belopp baserade på rullande tolv månader per Q2 2026. Kostnadsflödena visar hur omsättningen reduceras på vägen till nettoresultatet.
-          </div>
+    <div className="mb-10 overflow-hidden rounded border border-amber-700/25 bg-[#f7efe1] shadow-[0_24px_90px_rgba(61,43,21,0.16)]">
+      <div className="flex items-center justify-between gap-4 border-b border-emerald-900/10 px-4 py-3">
+        <div>
+          <h3 className="text-sm font-black uppercase tracking-[0.16em] text-amber-900">Sankey-diagram</h3>
         </div>
+        <ExternalLink className="text-emerald-900/42" size={17} />
       </div>
-
-      <div className="p-4 md:p-8">
-        {isBalanced ? (
-          <div className="overflow-x-auto pb-2">
-            <div className="min-w-[1680px]">
-              <div className="mb-3 text-[10px] font-black uppercase tracking-widest text-slate-500 md:hidden">
-                Dra i sidled för att se hela flödet
-              </div>
-              <div className="relative h-[640px] w-[1680px]" role="img" aria-label="Interaktivt Sankeydiagram över Inwidos omsättningsmix, kostnader, bruttovinst, operationell EBITA, EBIT och nettoresultat">
-                <svg viewBox="0 0 1680 640" width="1680" height="640" className="block">
-                  <defs>
-                    <linearGradient id="inwidoRevenueFlow" x1="0" x2="1" y1="0" y2="0">
-                      <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.65" />
-                      <stop offset="100%" stopColor="#10B981" stopOpacity="0.9" />
-                    </linearGradient>
-                    <filter id="inwidoFlowGlow" x="-10%" y="-10%" width="120%" height="120%">
-                      <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor="#000000" floodOpacity="0.18" />
-                    </filter>
-                  </defs>
-                  <rect x="0" y="0" width="1680" height="640" fill="transparent" />
-                  <line x1="260" y1="279" x2="1608" y2="279" stroke="#334155" strokeWidth="1" strokeDasharray="6 10" strokeOpacity="0.25" />
-                  <text x="292" y="132" fill="#64748B" fontSize="10" fontWeight="900" letterSpacing="2">RESULTATRAPPA: DET SOM BLIR KVAR EFTER VARJE STEG</text>
-                  <text x="462" y="526" fill="#64748B" fontSize="10" fontWeight="900" letterSpacing="2">KOSTNADER LÄMNAR RYGGRADEN DIAGONALT</text>
-
-                  <g filter="url(#inwidoFlowGlow)">
-                    {[...config.links]
-                      .sort((a, b) => flowOrder.indexOf(`${a.source}-${a.target}`) - flowOrder.indexOf(`${b.source}-${b.target}`))
-                      .map(renderFlow)}
-                  </g>
-                  <g>
-                    {[
-                      "skandinavien",
-                      "vast",
-                      "ost",
-                      "ecommerce",
-                      "ovrigt",
-                      "revenue",
-                      "gross-profit",
-                      "operational-ebita",
-                      "ebit",
-                      "net-income",
-                      "cogs",
-                      "operating-costs",
-                      "adjustments",
-                      "finance-tax",
-                    ].map(renderNode)}
-                  </g>
-                </svg>
-                {hoverNode && (
-                  <div className="absolute right-8 top-8 w-72 rounded-2xl border border-sky-400/30 bg-slate-950/95 px-4 py-3 shadow-2xl shadow-black/40 text-left">
-                    <div className="text-sm font-black text-white mb-1">{hoverNode.label}</div>
-                    <div className="text-xs font-semibold text-slate-300">{detailLabel(hoverNode)}</div>
-                    <div className="text-xs font-black text-sky-300 mt-2">{formatMkr(hoverNode.amount)}</div>
-                    {marginLabel(hoverNode) && <div className="text-xs font-semibold text-slate-300 mt-1">{marginLabel(hoverNode)}</div>}
-                    {hoverNode.organicGrowth && <div className="text-xs font-semibold text-slate-300 mt-2">Organisk tillväxt: {hoverNode.organicGrowth}</div>}
-                    {hoverNode.segmentMargin && <div className="text-xs font-semibold text-slate-300">Segmentmarginal Q2: {hoverNode.segmentMargin}</div>}
-                    <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 mt-3">{config.period}</div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {fallbackRows.map((node) => (
-              <div key={node.id} className="rounded-2xl border border-slate-700 bg-slate-900 p-4">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <div className="text-sm font-black text-white">{node.label}</div>
-                    {node.shareOfRevenue !== undefined && (
-                      <div className="text-xs font-semibold text-slate-400">{formatPercent(node.shareOfRevenue)} av nettoomsättningen</div>
-                    )}
-                  </div>
-                  <div className="text-right">
-                    <div className={`text-lg font-black ${node.type === "cost" ? "text-red-300" : "text-sky-300"}`}>{formatMkr(node.amount)}</div>
-                    {node.margin !== undefined && <div className="text-xs font-bold text-slate-400">{formatPercent(node.margin)}</div>}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      <iframe
+        title="Inwido Sankey RTM Q2 2026"
+        srcDoc={inwidoSankeyHtml}
+        className="h-[435px] w-full border-0 bg-[#f7efe1]"
+        loading="lazy"
+      />
     </div>
   );
 };
+
+
 
 const InwidoTable = ({
   title,

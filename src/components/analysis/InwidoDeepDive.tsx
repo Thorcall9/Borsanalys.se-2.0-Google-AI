@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from "react";
+import React, { ReactNode, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -14,14 +14,14 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import SEO from "../SEO";
-import plejdMarkdown from "../../../analyses/Plejd_aktieanalys_superanalys.md?raw";
-import plejdSankeyHtml from "../../../analyses/plejd_sankey_Q1_2026.html?raw";
+import inwidoMarkdown from "../../../analyses/Inwido_aktieanalys.md?raw";
 import { AnalysisData } from "../../types/analysis.js";
 import AdUnit from "./AdUnit";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import NextAnalysisButton from "./NextAnalysisButton";
+import FinancialFlow, { FinancialFlowData } from "./FinancialFlow";
 
-type PlejdDeepDiveProps = {
+type InwidoDeepDiveProps = {
   data: AnalysisData;
   onToggleWatchlist?: () => void;
   isInWatchlist?: boolean;
@@ -37,13 +37,13 @@ type MarkdownBlock =
   | { type: "list"; items: string[] }
   | { type: "rule" };
 
-const markdownSource = plejdMarkdown;
+const markdownSource = inwidoMarkdown;
 
 const HERO_STATS = [
-  { label: "Totalpoäng", value: "30/40", icon: Target },
+  { label: "Totalpoäng", value: "29/40", icon: Target },
   { label: "Rekommendation", value: "KÖP", icon: CheckCircle2 },
-  { label: "P/E TTM", value: "~57x", icon: BarChart3 },
-  { label: "Nettokassa", value: "~146 MSEK", icon: ShieldAlert }
+  { label: "P/E TTM", value: "~18,4x", icon: BarChart3 },
+  { label: "Nettoskuld", value: "0,7x EBITDA", icon: ShieldAlert }
 ];
 
 const NAV_ITEMS = [
@@ -59,6 +59,28 @@ const NAV_ITEMS = [
   "Scenarioanalys",
   "Slutlig Bedömning"
 ];
+
+const INWIDO_FLOW_DATA: FinancialFlowData = {
+  companyName: "Inwido AB",
+  currency: "Mkr",
+  year: "2025",
+  segments: [
+    { name: "Skandinavien", value: 4430 },
+    { name: "Väst", value: 1774 },
+    { name: "Öst", value: 1743 },
+    { name: "e-Commerce", value: 1071 },
+    { name: "Övrigt", value: -16 },
+  ],
+  revenue: 9002,
+  cogs: 6741,
+  grossProfit: 2261,
+  opex: 1320,
+  ebita: 941,
+  depreciation: 109,
+  ebit: 832,
+  taxAndFinance: 318,
+  netProfit: 514,
+};
 
 function slugify(text: string) {
   return text
@@ -216,10 +238,6 @@ function splitSections(blocks: MarkdownBlock[]) {
   return sections;
 }
 
-function sanitizeSankey(html: string) {
-  return html.replace(/<body([^>]*)>/, '<body$1 style="margin:0;background:#f7efe1;color:#1f2a22;">');
-}
-
 function TableBlock({ rows }: { rows: string[][] }) {
   const [head, ...body] = rows;
   return (
@@ -341,14 +359,13 @@ function SectionShell({ title, id, children }: { title: string; id: string; chil
   );
 }
 
-export default function PlejdDeepDive({ data, nextAnalysis }: PlejdDeepDiveProps) {
+export default function InwidoDeepDive({ data, nextAnalysis }: InwidoDeepDiveProps) {
   const blocks = useMemo(() => parseMarkdown(markdownSource), []);
   const sections = useMemo(() => splitSections(blocks), [blocks]);
-  const sanitizedSankeyHtml = useMemo(() => sanitizeSankey(plejdSankeyHtml), []);
 
   return (
     <div className="min-h-screen bg-[#f4ead8] text-[#223027]">
-      <SEO title="Analys: Plejd AB (PLEJD)" description={data.summary} />
+      <SEO title="Analys: Inwido AB (INWI)" description={data.summary} />
 
       <header className="relative overflow-hidden border-b border-emerald-900/12 bg-[radial-gradient(circle_at_top_left,rgba(184,134,11,0.22),transparent_34%),linear-gradient(135deg,#fbf4e8_0%,#f1e3cc_58%,#e7d6ba_100%)] pt-24">
         <div className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
@@ -359,10 +376,10 @@ export default function PlejdDeepDive({ data, nextAnalysis }: PlejdDeepDiveProps
           <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
             <div>
               <div className="mb-4 inline-flex items-center gap-2 rounded border border-amber-700/25 bg-amber-700/10 px-3 py-1 text-xs font-black uppercase tracking-[0.18em] text-amber-900">
-                <Sparkles size={14} /> Spotlight · PLEJD
+                <Sparkles size={14} /> Spotlight · INWI
               </div>
               <h1 className="max-w-4xl text-5xl font-black tracking-tight text-emerald-950 md:text-7xl">
-                Plejd AB
+                Inwido AB
               </h1>
               <p className="mt-5 max-w-3xl text-xl leading-9 text-[#334238]">
                 {data.summary}
@@ -406,19 +423,15 @@ export default function PlejdDeepDive({ data, nextAnalysis }: PlejdDeepDiveProps
             <React.Fragment key={section.id}>
               <SectionShell title={section.title} id={section.id}>
                 {section.id === "affarsmodell" && (
-                  <div className="mb-10 overflow-hidden rounded border border-amber-700/25 bg-[#f7efe1] shadow-[0_24px_90px_rgba(61,43,21,0.16)]">
-                    <div className="flex items-center justify-between gap-4 border-b border-emerald-900/10 px-4 py-3">
+                  <div className="mb-10 overflow-hidden rounded border border-amber-700/25 bg-[#f7efe1] shadow-[0_24px_90px_rgba(61,43,21,0.16)] p-6">
+                    <div className="flex items-center justify-between gap-4 border-b border-emerald-900/10 pb-4 mb-6">
                       <div>
-                        <h3 className="text-sm font-black uppercase tracking-[0.16em] text-amber-900">Sankey-diagram</h3>
+                        <h3 className="text-sm font-black uppercase tracking-[0.16em] text-amber-900">Resultatflöde</h3>
                       </div>
                       <ExternalLink className="text-emerald-900/42" size={17} />
                     </div>
-                    <iframe
-                      title="Plejd Sankey Q1 2026"
-                      srcDoc={sanitizedSankeyHtml}
-                      className="h-[620px] w-full border-0 bg-[#f7efe1]"
-                      loading="lazy"
-                    />
+                    {/* Render Interactive SVG FinancialFlow component inline */}
+                    <FinancialFlow data={INWIDO_FLOW_DATA} />
                   </div>
                 )}
 
@@ -438,36 +451,29 @@ export default function PlejdDeepDive({ data, nextAnalysis }: PlejdDeepDiveProps
 
         <aside className="hidden lg:block">
           <div className="sticky top-36 max-h-[calc(100vh-10rem)] space-y-4 overflow-y-auto overscroll-contain pr-2 [scrollbar-width:thin] [scrollbar-color:#b7832f_transparent]">
-            <div className="rounded border border-amber-700/20 bg-[#fff8eb] p-5 shadow-[0_20px_70px_rgba(61,43,21,0.12)]">
-              <div className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-amber-900">
-                <Zap size={15} /> Snabbfakta
-              </div>
-              <div className="space-y-3">
-                {[
-                  ["Kurs", data.price],
-                  ["Börsvärde", data.marketCap || "-"],
-                  ["P/E", data.pe],
-                  ["Direktavkastning", data.yield],
-                  ["Rimligt värde", data.targetPrice || "-"]
-                ].map(([label, value]) => (
-                  <div key={label} className="flex items-center justify-between gap-4 border-b border-emerald-900/10 pb-3 text-sm">
-                    <span className="text-emerald-950/58">{label}</span>
-                    <span className="font-black text-emerald-950">{value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="rounded border border-emerald-900/15 bg-[#fff8eb] p-5">
-              <div className="mb-4 flex items-center gap-2 text-xs font-black uppercase tracking-[0.16em] text-emerald-900/70">
-                <TrendingUp size={15} /> Läsdelar
-              </div>
-              <div className="grid gap-1">
-                {NAV_ITEMS.map((item) => (
-                  <a key={item} href={`#${slugify(item)}`} className="rounded px-3 py-2 text-sm text-emerald-950/65 transition hover:bg-emerald-900/8 hover:text-amber-900">
-                    {item}
-                  </a>
-                ))}
+            <div className="rounded border border-amber-700/20 bg-white/45 p-6 backdrop-blur">
+              <h3 className="text-xs font-black uppercase tracking-[0.18em] text-emerald-950">Analysinformation</h3>
+              <div className="mt-5 space-y-4 text-sm font-semibold text-emerald-900/78">
+                <div>
+                  <span className="block text-[10px] font-black uppercase tracking-wider text-emerald-900/50">Ticker</span>
+                  {data.ticker}
+                </div>
+                <div>
+                  <span className="block text-[10px] font-black uppercase tracking-wider text-emerald-900/50">Börs</span>
+                  {data.market}
+                </div>
+                <div>
+                  <span className="block text-[10px] font-black uppercase tracking-wider text-emerald-900/50">Sektor</span>
+                  {data.sector}
+                </div>
+                <div>
+                  <span className="block text-[10px] font-black uppercase tracking-wider text-emerald-900/50">ISIN</span>
+                  {data.isin}
+                </div>
+                <div>
+                  <span className="block text-[10px] font-black uppercase tracking-wider text-emerald-900/50">Utdelning</span>
+                  {data.yield} (Direktavkastning)
+                </div>
               </div>
             </div>
           </div>

@@ -2910,7 +2910,7 @@ export default function AxfoodDeepDive({
                             <span style={{ fontSize: 24, fontWeight: 900, color: "#1C1917", fontFamily: "JetBrains Mono, monospace" }}>{item.val}</span>
                             <span style={{ fontSize: 10, fontWeight: 800, color: item.color, textTransform: "uppercase" }}>{item.status}</span>
                           </div>
-                          <p style={{ fontSize: 12, color: "#57534E", lineHeight: 1.5, margin: 0 }}>{item.desc}</p>
+                          <p style={{ fontSize: 12, color: "#57534E", lineHeight: 1.5, margin: 0 }}>{item.explain}</p>
                         </div>
                       ))}
                     </div>

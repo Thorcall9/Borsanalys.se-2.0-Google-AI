@@ -40,4 +40,9 @@ export const revolutionRace2026: AnalysisData = {
   rating: "Hög bolagskvalitet, men värderingen drar ned helhetsbetyget",
   targetPrice: "12-månadersankare ~58 kr; 5-årigt Base-värde ~74 kr",
   buyZone: "Under ~50 kr på 12 månader enligt modellen",
+  scenarios: [
+    { label: "Bull Case", value: "85 kr", change: "+43%", type: "bull", description: "Tillväxten återaccelererar över 15%." },
+    { label: "Base Case", value: "58 kr", change: "-2%", type: "base", description: "Stabil D2C-tillväxt och bibehållna marginaler." },
+    { label: "Bear Case", value: "42 kr", change: "-29%", type: "bear", description: "Avmattning på den tyska marknaden och ökad konkurrens." }
+  ],
 };
