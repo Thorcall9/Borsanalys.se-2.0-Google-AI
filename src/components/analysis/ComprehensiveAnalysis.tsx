@@ -116,21 +116,21 @@ export default function ComprehensiveAnalysis({
   }, [data.price]);
 
   const sections = [
-    { id: 'overview', title: 'I. Företagsöversikt', number: 'I' },
-    { id: 'strategy', title: 'II. Strategisk analys & Moat', number: 'II' },
-    { id: 'financials', title: 'III. Finansiell analys', number: 'III' },
-    { id: 'valuation', title: 'IV. Värdering & Jämförelse', number: 'IV' },
-    { id: 'growth', title: 'V. Tillväxtmotorer & Triggers', number: 'V' },
-    { id: 'risk', title: 'VI. Riskprofil', number: 'VI' },
-    { id: 'management', title: isInwido ? 'VII. Ledning, Kapitalallokering & Insideraktivitet' : 'VII. Analys av VD-ordet', number: 'VII' },
-    { id: 'ai', title: isInwido ? 'VIII. Signalbild & Insideraktivitet' : 'VIII. AI-observationer', number: 'VIII' },
-    { id: 'summary', title: 'IX. Investeringsbeslut', number: 'IX' },
-    { id: 'scenarios', title: 'X. Scenarier', number: 'X' }
+    { id: 'overview', title: 'Företagsöversikt', number: 'I' },
+    { id: 'strategy', title: 'Strategisk analys', number: 'II' },
+    { id: 'financials', title: 'Finansiell analys', number: 'III' },
+    { id: 'valuation', title: 'Värdering & jämförelse', number: 'IV' },
+    { id: 'growth', title: 'Tillväxtmotorer', number: 'V' },
+    { id: 'risk', title: 'Riskprofil', number: 'VI' },
+    { id: 'management', title: isInwido ? 'Ledning & kapitalallokering' : 'Analys av VD-ordet', number: 'VII' },
+    { id: 'ai', title: isInwido ? 'Signalbild' : 'AI-observationer', number: 'VIII' },
+    { id: 'summary', title: isInwido ? 'Investeringsbeslut' : 'Sammanfattning', number: 'IX' },
+    { id: 'scenarios', title: 'Scenarier', number: 'X' }
   ];
 
   const SCORE_LABELS: Record<string, string> = {
     affarsmodell: "I. Företagsöversikt",
-    strategiskMoat: "II. Strategisk analys & Moat",
+    strategiskMoat: "II. Strategisk analys",
     finansiellKvalitet: "III. Finansiell analys",
     vardering: "IV. Värdering & Jämförelse",
     tillvaxtutsikter: "V. Tillväxtmotorer & Triggers",
@@ -143,13 +143,33 @@ export default function ComprehensiveAnalysis({
     ? [
         ["foretagsoversiktLedning", 4, "I. Företagsöversikt och ledning"] as const,
         ["affarsmodell", 4, "II. Affärsmodell"] as const,
-        ["strategiskMoat", 3, "III. Strategisk analys & Moat"] as const,
+        ["strategiskMoat", 3, "III. Strategisk analys"] as const,
         ["finansiellKvalitet", 3, "IV. Finansiell analys"] as const,
         ["vardering", 3, "V. Värdering & Jämförelse"] as const,
         ["tillvaxtutsikter", 4, "VI. Tillväxtmotorer & Triggers"] as const,
         ["riskprofil", 3, "VII. Riskprofil"] as const,
       ]
     : Object.entries(data.scores || {}).map(([key, score]) => [key, score, SCORE_LABELS[key] || key] as const);
+
+  const getZoneStyle = (zone: string) => {
+    const normalized = zone.toLowerCase();
+    if (normalized.includes('extremt')) {
+      return 'text-emerald-700 bg-emerald-600/10 group-hover/row:bg-emerald-600/15';
+    }
+    if (normalized.includes('köpvärd')) {
+      return 'text-emerald-600 bg-emerald-500/10 group-hover/row:bg-emerald-500/15';
+    }
+    if (normalized.includes('rimligt')) {
+      return 'text-amber-600 bg-amber-500/10 group-hover/row:bg-amber-500/15';
+    }
+    if (normalized.includes('fullvärderad')) {
+      return 'text-orange-600 bg-orange-500/10 group-hover/row:bg-orange-500/15';
+    }
+    if (normalized.includes('säljzon')) {
+      return 'text-rose-600 bg-rose-500/10 group-hover/row:bg-rose-500/15';
+    }
+    return '';
+  };
 
   const ScoreBadge = ({ score }: { score?: number }) => {
     if (score === undefined) return null;
@@ -184,6 +204,7 @@ export default function ComprehensiveAnalysis({
       compactSections={data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT'}
       wideSidebar={data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT'}
       hideSidebar={data.slug === 'nordea-bank-2026'}
+      tightContent={isInwido}
     >
       <SEO 
         title={`${data.title} (${data.ticker}) - Analys`} 
@@ -205,7 +226,7 @@ export default function ComprehensiveAnalysis({
           <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] text-foreground">
             {data.title}
             {!data.title.includes('analys') && !data.title.includes('Analys') && (
-              <span className="text-primary block mt-2">Strategisk Deep Dive</span>
+              <span className="text-primary block mt-3 text-[0.86em]">Strategisk analys</span>
             )}
           </h1>
         </div>
@@ -262,7 +283,7 @@ export default function ComprehensiveAnalysis({
                         )}
                         {ratingLine && (
                           <div className="flex flex-col items-center p-6 bg-foreground/5 rounded-[2rem] border border-border min-w-[120px]">
-                            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">Rating</span>
+                            <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mb-2">Totalrating</span>
                             <span className="text-3xl font-black text-foreground">{ratingLine}</span>
                           </div>
                         )}
@@ -272,11 +293,16 @@ export default function ComprehensiveAnalysis({
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
                     {points.map((p, i) => {
-                      const [label, val] = p.split(':');
+                      const separatorIndex = p.indexOf(':');
+                      const hasLabelValue = separatorIndex > -1;
+                      const label = hasLabelValue ? p.slice(0, separatorIndex).trim() : '';
+                      const val = hasLabelValue ? p.slice(separatorIndex + 1).trim() : p;
                       return (
                         <div key={i} className="bg-card/50 backdrop-blur-sm border border-border/50 rounded-2xl p-5 hover:border-primary/30 transition-all group/point">
-                          <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-2 group-hover/point:text-primary/70 transition-colors">{label}</div>
-                          <div className="text-base font-black text-foreground">{val}</div>
+                          {hasLabelValue && (
+                            <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-2 group-hover/point:text-primary/70 transition-colors">{label}</div>
+                          )}
+                          <div className={`${hasLabelValue ? 'text-base font-black' : 'text-sm font-semibold leading-relaxed'} text-foreground`}>{val}</div>
                         </div>
                       );
                     })}
@@ -480,10 +506,10 @@ export default function ComprehensiveAnalysis({
         </div>
       </section>
 
-      {/* SECTION II: STRATEGISK ANALYS & MOAT */}
+      {/* SECTION II: STRATEGISK ANALYS */}
       <section id="strategy" className="scroll-mt-24 mt-20">
         <div className="mb-10 flex items-center justify-between">
-          <SectionHeader number="II" title="STRATEGISK ANALYS & MOAT" accentColor={ACCENT_COLOR} />
+          <SectionHeader number="II" title="STRATEGISK ANALYS & KONKURRENSFÖRDELAR" accentColor={ACCENT_COLOR} />
           <ScoreBadge score={data.scores?.strategiskMoat} />
         </div>
         
@@ -499,7 +525,7 @@ export default function ComprehensiveAnalysis({
           </div>
 
           <div className="space-y-6">
-            <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] mb-4">Moat-dimensioner</div>
+            <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.22em] mb-4">Konkurrensfördelar</div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {(data.competitiveAdvantages || data.advantages || []).map((adv, i) => {
                 const parts = adv.split(':');
@@ -769,6 +795,8 @@ export default function ComprehensiveAnalysis({
                             className="hover:bg-primary/[0.03] transition-all duration-300 group/row"
                           >
                             {row.map((cell, ci) => {
+                              const isZoneTable = table.title.toLowerCase().includes('kurszon');
+                              const zoneStyle = isZoneTable ? getZoneStyle(String(row[0])) : '';
                               const cellStr = String(cell);
                               const isPositive = cellStr.includes('+') || (ci > 0 && !cellStr.includes('-') && (cellStr.includes('%') || cellStr.includes('pp')));
                               const isNegative = cellStr.includes('-') || cellStr === 'Neg';
@@ -783,11 +811,11 @@ export default function ComprehensiveAnalysis({
                                   `}
                                 >
                                   <span className={`
-                                    ${ci === 0 ? '' : 'px-3 py-1 rounded-lg transition-colors'}
-                                    ${isPositive && ci > 0 ? 'text-emerald-500 bg-emerald-500/5 group-hover/row:bg-emerald-500/10' : ''}
-                                    ${isNegative && ci > 0 ? 'text-rose-500 bg-rose-500/5 group-hover/row:bg-rose-500/10' : ''}
-                                    ${isNeutral && ci > 0 ? 'text-amber-500 bg-amber-500/5 group-hover/row:bg-amber-500/10' : ''}
-                                    ${!isPositive && !isNegative && !isNeutral && ci > 0 ? 'text-muted-foreground group-hover/row:text-foreground' : ''}
+                                    ${ci === 0 ? '' : 'px-3 py-1'} rounded-lg transition-colors
+                                    ${zoneStyle || (isPositive && ci > 0 ? 'text-emerald-500 bg-emerald-500/5 group-hover/row:bg-emerald-500/10' : '')}
+                                    ${!zoneStyle && isNegative && ci > 0 ? 'text-rose-500 bg-rose-500/5 group-hover/row:bg-rose-500/10' : ''}
+                                    ${!zoneStyle && isNeutral && ci > 0 ? 'text-amber-500 bg-amber-500/5 group-hover/row:bg-amber-500/10' : ''}
+                                    ${!zoneStyle && !isPositive && !isNegative && !isNeutral && ci > 0 ? 'text-muted-foreground group-hover/row:text-foreground' : ''}
                                   `}>
                                     {cell}
                                   </span>
@@ -1373,7 +1401,7 @@ export default function ComprehensiveAnalysis({
                 </div>
                 <div className="flex-1 bg-card border border-border/50 rounded-3xl p-6 flex flex-col items-center justify-center text-center shadow-sm relative overflow-hidden">
                    <div className="absolute top-0 left-0 w-full h-1 bg-primary"></div>
-                   <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Rating</div>
+                   <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Rekommendation</div>
                    <div className="text-4xl font-black text-foreground tracking-tighter">{data.rating}</div>
                 </div>
               </div>
@@ -1415,7 +1443,6 @@ export default function ComprehensiveAnalysis({
         <div className="mt-8">
           <ScenarioCards scenarios={data.scenarios.map(s => ({
             type: s.type,
-            icon: s.type === 'bull' ? '🚀' : s.type === 'base' ? '📊' : '📉',
             title: s.label.toUpperCase(),
             probability: s.probability || (s.type === 'base' ? '50%' : '25%'),
             price: s.value,

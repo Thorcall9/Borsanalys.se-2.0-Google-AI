@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Menu, X, ArrowLeft, Star, StarOff, Loader2 } from 'lucide-react';
+import { Menu, X, ArrowLeft, Star, StarOff, Loader2, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 
 import NextAnalysisButton from './NextAnalysisButton';
 import { AnalysisData } from '../../types/analysis.js';
@@ -37,6 +37,7 @@ interface AnalysisLayoutProps {
   compactSections?: boolean;
   wideSidebar?: boolean;
   hideSidebar?: boolean;
+  tightContent?: boolean;
 }
 
 export default function AnalysisLayout({
@@ -63,10 +64,12 @@ export default function AnalysisLayout({
   hideDefaultWatchlist = false,
   compactSections = false,
   wideSidebar = false,
-  hideSidebar = false
+  hideSidebar = false,
+  tightContent = false
 }: AnalysisLayoutProps) {
   const [activeSection, setActiveSection] = useState(sections[0]?.id);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   
   const stockLink = stockSlug || companyName.toLowerCase().split(' ')[0];
 
@@ -107,6 +110,8 @@ export default function AnalysisLayout({
   };
 
   const isLight = theme === 'light';
+  const sidebarWidthClass = isSidebarCollapsed ? 'lg:w-16' : wideSidebar ? 'w-80' : 'w-60';
+  const mainOffsetClass = isSidebarCollapsed ? 'lg:ml-16' : wideSidebar ? 'lg:ml-80' : 'lg:ml-60';
 
   return (
     <div className={`min-h-screen flex font-sans selection:bg-primary/20 ${isLight ? 'bg-background text-foreground' : 'bg-background text-foreground'}`}>
@@ -134,7 +139,7 @@ export default function AnalysisLayout({
       {/* Sidebar */}
       {!hideSidebar && (
         <aside className={`
-          fixed top-0 left-0 h-screen ${wideSidebar ? 'w-80 border-r-4 border-primary shadow-2xl' : 'w-72'} z-[95] flex flex-col transition-transform duration-500 border-r border-border overflow-y-auto premium-scrollbar
+          fixed top-[73px] left-0 h-[calc(100vh-73px)] ${sidebarWidthClass} ${wideSidebar ? 'border-r-4 border-primary shadow-2xl' : ''} z-[95] flex flex-col transition-[width,transform] duration-500 border-r border-border overflow-y-auto premium-scrollbar
           ${isLight ? 'bg-card' : 'bg-card'}
           ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
         `}>
@@ -143,16 +148,32 @@ export default function AnalysisLayout({
               {ticker === 'MSFT' ? 'Microsoft Test Active' : 'Debug Active'}
             </div>
           )}
-          <div className="p-8 border-b border-border flex-shrink-0">
-            <Link to="/analys" className="inline-flex items-center gap-2 text-[10px] font-black text-muted-foreground hover:text-primary transition-colors mb-8 uppercase tracking-widest">
-              <ArrowLeft size={12} /> Tillbaka till arkiv
-            </Link>
-            <Link to={`/aktier/${stockLink}`} className="group block mb-2">
-              <div className="text-2xl font-black tracking-tighter group-hover:text-primary transition-colors leading-none" style={{ color: accentColor }}>{companyName}</div>
-            </Link>
-            <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">{ticker} · {subtitle}</div>
+          <div className={`${isSidebarCollapsed ? 'p-3' : 'p-6'} border-b border-border flex-shrink-0`}>
+            <div className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'justify-between'} mb-7`}>
+              {!isSidebarCollapsed && (
+                <Link to="/analys" className="inline-flex items-center gap-2 text-[9px] font-black text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest">
+                  <ArrowLeft size={12} /> Tillbaka
+                </Link>
+              )}
+              <button
+                type="button"
+                onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                className="hidden lg:flex h-8 w-8 items-center justify-center rounded-xl border border-border bg-muted/20 text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors"
+                aria-label={isSidebarCollapsed ? 'Visa meny' : 'Fäll ihop meny'}
+              >
+                {isSidebarCollapsed ? <PanelLeftOpen size={15} /> : <PanelLeftClose size={15} />}
+              </button>
+            </div>
+            {!isSidebarCollapsed && (
+              <>
+                <Link to={`/aktier/${stockLink}`} className="group block mb-2">
+                  <div className="text-xl font-black tracking-tighter group-hover:text-primary transition-colors leading-none" style={{ color: accentColor }}>{companyName}</div>
+                </Link>
+                <div className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.16em] leading-relaxed">{ticker} · {subtitle}</div>
+              </>
+            )}
             
-            {livePrice && (
+            {livePrice && !isSidebarCollapsed && (
               <div className="mt-4 flex items-center gap-3">
                 <div className="text-xl font-black tracking-tighter">{livePrice}</div>
                 {liveChange && (
@@ -163,7 +184,7 @@ export default function AnalysisLayout({
               </div>
             )}
 
-            {onToggleWatchlist && !hideDefaultWatchlist && (
+            {onToggleWatchlist && !hideDefaultWatchlist && !isSidebarCollapsed && (
               <button 
                 onClick={onToggleWatchlist}
                 disabled={isWatchlistLoading}
@@ -187,28 +208,33 @@ export default function AnalysisLayout({
             )}
           </div>
           
-          <nav className="py-8">
-            <div className={`${wideSidebar ? 'px-8 mb-6 text-xs' : 'px-8 mb-4 text-[10px]'} font-black text-muted-foreground/50 uppercase tracking-[0.3em]`}>Analysrapport</div>
+          <nav className={`${isSidebarCollapsed ? 'py-4' : 'py-6'}`}>
+            {!isSidebarCollapsed && (
+              <div className={`${wideSidebar ? 'px-6 mb-5 text-xs' : 'px-6 mb-4 text-[9px]'} font-black text-muted-foreground/50 uppercase tracking-[0.22em]`}>Analysrapport</div>
+            )}
             {sections.map((s, index) => (
               <React.Fragment key={s.id}>
                 <button
                   onClick={() => scrollTo(s.id)}
+                  title={s.title}
                   className={`
-                    w-full flex items-center gap-4 px-8 ${compactSections ? 'py-2' : 'py-3'} text-xs font-bold transition-all border-l-4
+                    w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-6'} ${compactSections || isSidebarCollapsed ? 'py-2' : 'py-2.5'} text-[11px] font-bold transition-all border-l-4
                     ${activeSection === s.id 
                       ? 'bg-primary/5 border-primary text-foreground'
                       : 'border-transparent text-muted-foreground hover:bg-muted/30 hover:text-foreground'}
                   `}
                 >
-                  <span className={`font-black text-[10px] w-6 opacity-50 ${compactSections ? 'hidden' : 'block'}`}>{s.number}</span>
-                  <span className={`${compactSections ? 'text-[11px] uppercase tracking-wider' : wideSidebar ? 'text-sm tracking-tight' : 'tracking-tight'}`}>{s.title}</span>
+                  <span className={`font-black text-[10px] ${isSidebarCollapsed ? 'w-auto opacity-80' : 'w-5 opacity-50'} ${compactSections && !isSidebarCollapsed ? 'hidden' : 'block'}`}>{s.number}</span>
+                  {!isSidebarCollapsed && (
+                    <span className={`${compactSections ? 'text-[11px] uppercase tracking-wider' : wideSidebar ? 'text-xs tracking-tight' : 'tracking-tight'} leading-snug text-left`}>{s.title}</span>
+                  )}
                 </button>
                 
 
               </React.Fragment>
             ))}
             
-            {sidebarExtras && (
+            {sidebarExtras && !isSidebarCollapsed && (
               <div className="mt-8 pt-8 border-t border-border/50">
                 {sidebarExtras}
               </div>
@@ -217,7 +243,7 @@ export default function AnalysisLayout({
 
 
 
-          <div className="p-8 border-t border-border bg-muted/10 flex-shrink-0">
+          <div className={`${isSidebarCollapsed ? 'hidden' : 'p-6'} border-t border-border bg-muted/10 flex-shrink-0`}>
             <div className="flex flex-col gap-1 text-[10px] font-black text-muted-foreground uppercase tracking-widest">
               <span>Publicerad: {date}</span>
               <span className="opacity-50">{dataSources}</span>
@@ -227,8 +253,8 @@ export default function AnalysisLayout({
       )}
 
       {/* Main Content */}
-      <main className={`flex-1 ${hideSidebar ? '' : wideSidebar ? 'lg:ml-80' : 'lg:ml-72'} min-w-0 max-w-full overflow-x-hidden bg-background`}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12 lg:py-24">
+      <main className={`flex-1 ${hideSidebar ? '' : mainOffsetClass} min-w-0 max-w-full overflow-x-hidden bg-background`}>
+        <div className={`${tightContent ? 'max-w-6xl' : 'max-w-7xl'} mx-auto px-6 lg:px-10 py-12 lg:py-24`}>
           {priceDiff && (
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
