@@ -308,6 +308,648 @@ const InwidoSankeyDiagram = () => {
   );
 };
 
+const InwidoTable = ({
+  title,
+  headers,
+  rows,
+  footer,
+  compact = false,
+}: {
+  title: string;
+  headers: string[];
+  rows: (string | number)[][];
+  footer?: string;
+  compact?: boolean;
+}) => (
+  <div className="relative">
+    <div className="flex items-center justify-between mb-6">
+      <h3 className="text-xl md:text-2xl font-black tracking-tighter text-foreground flex items-center gap-4">
+        <div className="w-2 h-8 bg-primary rounded-full shadow-[0_0_22px_rgba(16,185,129,0.35)]" />
+        {title}
+      </h3>
+    </div>
+    <div className="bg-card/60 border border-border/60 rounded-[2rem] overflow-hidden shadow-xl shadow-black/5">
+      <div className="overflow-x-auto premium-scrollbar">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="bg-muted/35 border-b border-border/50">
+              {headers.map((header, index) => (
+                <th
+                  key={header}
+                  className={`px-5 md:px-7 ${compact ? 'py-4' : 'py-5'} text-[10px] font-black uppercase tracking-[0.14em] text-muted-foreground/70 ${index === 0 ? 'text-left' : 'text-left md:text-right'}`}
+                >
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border/25">
+            {rows.map((row, rowIndex) => (
+              <tr key={`${title}-${rowIndex}`} className="hover:bg-primary/[0.03] transition-colors">
+                {row.map((cell, cellIndex) => {
+                  const cellText = String(cell);
+                  const positive = cellText.includes('+') || cellText.includes('↑') || cellText.includes('Över');
+                  const negative = cellText.includes('−') || cellText.includes('-') || cellText.includes('Under');
+                  const zone = cellIndex === 0 ? cellText.toLowerCase() : '';
+                  const zoneClass = zone.includes('extremt') || zone === 'köpvärd'
+                    ? 'text-emerald-600 bg-emerald-500/10'
+                    : zone.includes('rimligt')
+                      ? 'text-amber-600 bg-amber-500/10'
+                      : zone.includes('fullvärderad')
+                        ? 'text-orange-600 bg-orange-500/10'
+                        : zone.includes('säljzon')
+                          ? 'text-rose-600 bg-rose-500/10'
+                          : '';
+
+                  return (
+                    <td
+                      key={`${title}-${rowIndex}-${cellIndex}`}
+                      className={`px-5 md:px-7 ${compact ? 'py-4' : 'py-5'} text-sm leading-relaxed ${cellIndex === 0 ? 'font-black text-foreground' : 'font-medium text-muted-foreground md:text-right'}`}
+                    >
+                      <span className={`${zoneClass || (cellIndex > 0 && positive ? 'text-emerald-600' : '')} ${!zoneClass && cellIndex > 0 && negative ? 'text-rose-600' : ''} ${zoneClass ? 'px-3 py-1 rounded-full font-black' : ''}`}>
+                        {cell}
+                      </span>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {footer && (
+      <div className="mt-5 px-6 py-5 bg-primary/5 border border-primary/10 rounded-3xl">
+        <div className="flex items-start gap-3">
+          <Info size={14} className="text-primary mt-0.5 shrink-0" />
+          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed whitespace-pre-line font-medium">{footer}</p>
+        </div>
+      </div>
+    )}
+  </div>
+);
+
+const InwidoNote = ({ title, children, tone = 'primary' }: { title: string; children: React.ReactNode; tone?: 'primary' | 'amber' | 'dark' }) => {
+  const styles = tone === 'dark'
+    ? 'bg-foreground text-background border-foreground'
+    : tone === 'amber'
+      ? 'bg-amber-500/5 border-amber-500/20'
+      : 'bg-primary/5 border-primary/20';
+
+  return (
+    <div className={`rounded-[2rem] border p-7 md:p-8 ${styles}`}>
+      <div className={`text-[10px] font-black uppercase tracking-[0.22em] mb-3 ${tone === 'dark' ? 'text-background/60' : tone === 'amber' ? 'text-amber-600' : 'text-primary'}`}>
+        {title}
+      </div>
+      <div className={`text-base md:text-lg leading-relaxed font-medium ${tone === 'dark' ? 'text-background/90' : 'text-foreground/85'}`}>
+        {children}
+      </div>
+    </div>
+  );
+};
+
+const InwidoTemplateAnalysis = ({
+  data,
+  isInWatchlist,
+  isWatchlistLoading,
+  onToggleWatchlist,
+  nextAnalysis,
+  analysisPrice,
+}: ComprehensiveAnalysisProps & { analysisPrice?: number }) => {
+  const ACCENT_COLOR = "#10B981";
+  const sections = [
+    { id: 'overview', title: 'Företag & ledning', number: 'I' },
+    { id: 'business-model', title: 'Affärsmodell', number: 'II' },
+    { id: 'moat-peers', title: 'Bransch & moat', number: 'III' },
+    { id: 'financials', title: 'Finansiell kvalitet', number: 'IV' },
+    { id: 'scorecard', title: 'Scorecard', number: 'V' },
+    { id: 'valuation', title: 'Fundamental värdering', number: 'VI' },
+    { id: 'zones', title: 'Kurszoner', number: 'VI.C' },
+    { id: 'drivers', title: 'Kursdrivare', number: 'VII' },
+    { id: 'risk', title: 'Risker', number: 'VIII' },
+    { id: 'triggers', title: 'Tesförändrare', number: 'IX' },
+    { id: 'summary', title: 'Investeringsbeslut', number: 'X' },
+  ];
+
+  const baseTableClass = "space-y-12";
+  const scoreRows = data.financialTables?.find(table => table.title === "Scorecard")?.rows || [];
+  const valuationRows = data.valuationTables?.find(table => table.title === "Multiplar")?.rows || [];
+  const modelRows = data.valuationTables?.find(table => table.title === "Femårsmodell")?.rows || [];
+  const zoneRows = data.valuationTables?.find(table => table.title === "Kurszoner")?.rows || [];
+  const driverRows = data.growthTables?.find(table => table.title === "Potentiella kursdrivare")?.rows || [];
+  const insiderRows = data.managementTables?.[0]?.rows || [];
+
+  const overviewRows = [
+    ["Bolagsnamn", "Inwido AB"],
+    ["Ticker", "INWI"],
+    ["ISIN", "SE0006220018"],
+    ["Aktuell kurs", "Cirka 167,90 kr"],
+    ["Börsvärde", "Cirka 9,7 mdkr"],
+    ["Enterprise Value", "Cirka 12,7 mdkr"],
+    ["Huvudkontor", "Malmö"],
+    ["VD", "Fredrik Meuller"],
+    ["Ordförande", "Per Bertland"],
+    ["Rapportvaluta", "SEK"],
+  ];
+
+  const ownershipRows = [
+    ["Swedbank Robur Fonder", "8,55 %", "8,55 %", "Institutionell"],
+    ["NN Group", "6,81 %", "6,81 %", "Institutionell"],
+    ["Övriga tio största ägare", "Cirka 34 %", "Cirka 34 %", "Institutionella"],
+  ];
+
+  const allocationRows = [
+    ["Insiderägande", "Begränsat i relation till bolagets storlek, men flera styrelseledamöter genomförde marknadsköp under juni 2026 vilket stärker förtroendet för värderingen."],
+    ["Förvärvshistorik", "Överlag värdeskapande, men senaste förvärvsvågen är inte fullt utvärderad."],
+    ["Återköp", "Inga materiella återköp."],
+    ["Utdelning", "Målsättning omkring 50 procent av nettovinsten."],
+    ["Incitamentsprogram", "EPS-utveckling över tre år och krav på aktieinnehav."],
+    ["Transparens", "Hög."],
+  ];
+
+  const businessRows = [
+    ["Intäktsmodell", "Försäljning av fönster och dörrar till konsument- och projektmarknad"],
+    ["Återkommande intäkter", "Låg på kundnivå, men strukturellt återkommande renoveringsbehov"],
+    ["Prissättning", "Lokal och varumärkesbaserad"],
+    ["Viktigaste kostnader", "Glas, trä, PVC, aluminium, energi, transport och personal"],
+    ["Skalbarhet", "Medel - högre volym ger bättre fabriksutnyttjande"],
+    ["Kapitalbehov", "Medel"],
+    ["Säsongsvariation", "Hög - Q1 är normalt svagast"],
+  ];
+
+  const segmentRows = [
+    ["Skandinavien", "46 %", "+5 %", "15,1 %"],
+    ["Väst", "22 %", "+10 %", "10,7 %"],
+    ["Öst", "19 %", "−2 %", "5,0 %"],
+    ["e-Commerce", "11 %", "+3 %", "12,6 %"],
+    ["Övrigt", "2 %", "–", "–"],
+  ];
+
+  const marketSegmentRows = [
+    ["Konsument", "59 %"],
+    ["Projekt", "38 %"],
+    ["Övrigt", "3 %"],
+  ];
+
+  const resultRows = [
+    ["Nettoomsättning", "9 468", "100 %"],
+    ["Bruttoresultat", "2 366", "25,0 %"],
+    ["EBITDA", "1 269", "13,4 %"],
+    ["Operationell EBITA", "970", "10,2 %"],
+    ["EBIT", "862", "9,1 %"],
+    ["Resultat till aktieägare", "528", "5,6 %"],
+  ];
+
+  const industryRows = [
+    ["Förväntad långsiktig marknadstillväxt", "Cirka 3-4 %"],
+    ["Inwidos Base-tillväxt", "Cirka 6-8 % inklusive förvärv"],
+    ["Branschmognad", "Mogen"],
+    ["Cyklikalitet", "Hög"],
+    ["Position i cykeln", "Tidig återhämtning"],
+    ["Viktigaste megatrend", "Energieffektivisering av Europas byggnadsbestånd"],
+  ];
+
+  const positionRows = [
+    ["Skandinavien", "Vinner/stabil", "Organisk orderingång +8 %"],
+    ["Storbritannien och Irland", "Vinner", "Tre förvärv och stor projektorder"],
+    ["Finland", "Tappar/stabiliseras", "Prispress och svag efterfrågan"],
+    ["e-Commerce", "Stabil", "Lönsamheten förbättras snabbare än försäljningen"],
+  ];
+
+  const moatRows = [
+    ["Lokal varumärkes- och distributionsposition", "38 affärsenheter, etablerade lokala varumärken och verksamhet i 19 länder", "Medel", "Stärks via förvärv"],
+    ["Skala inom inköp och förvärv", "Gemensam inköpskraft, decentraliserad integration och sex förvärv på sju månader", "Medel", "Stärks, men höjer exekveringsrisken"],
+  ];
+
+  const peerRows = [
+    ["Inwido", "Direkt", "+4,8 % RTM", "9,1 % EBIT", "P/E cirka 18,4"],
+    ["DOVISTA", "Mycket hög", "Ej tillgängligt", "Ej tillgängligt", "Ej tillgängligt"],
+    ["JELD-WEN", "Hög, men mer global och projektorienterad", "Ej jämförbart", "Lägre och mer volatil", "Ej jämförbart"],
+    ["Nordan", "Hög i Norden", "Ej tillgängligt", "Ej tillgängligt", "Privat"],
+  ];
+
+  const historyRows = [
+    ["2021", "7 725", "+15,6 %", "12,29", "26,2 %", "11,7 %", "9,2 %", "687 Mkr"],
+    ["2022", "9 547", "+23,6 %", "13,74", "24,5 %", "11,1 %", "8,3 %", "768 Mkr"],
+    ["2023", "8 970", "−6,0 %", "11,72", "25,6 %", "10,9 %", "7,6 %", "1 260 Mkr"],
+    ["2024", "8 838", "−1,5 %", "9,29", "25,4 %", "9,6 %", "6,1 %", "1 305 Mkr"],
+    ["2025", "9 002", "+1,9 %", "8,87", "25,1 %", "9,2 %", "5,7 %", "2 117 Mkr"],
+    ["RTM Q2 2026", "9 468", "+4,8 %", "9,11", "25,0 %", "9,1 %", "5,6 %", "2 931 Mkr"],
+    ["2026*", "10 100", "+12 %", "9,8", "25,1 %", "9,3 %", "5,8 %", "2 500 Mkr"],
+    ["2027*", "10 850", "+7 %", "10,7", "25,4 %", "9,7 %", "6,1 %", "2 250 Mkr"],
+  ];
+
+  const quarterRows = [
+    ["Q2 2025", "2 339 Mkr", "+3 %", "11,3 %", "2,69 kr", "→"],
+    ["Q3 2025", "2 224 Mkr", "Ej tillgängligt", "12,0 %", "2,65 kr", "→"],
+    ["Q4 2025", "2 440 Mkr", "Ej tillgängligt", "12,2 %", "2,87 kr", "↑"],
+    ["Q1 2026", "2 083 Mkr", "Negativ/svag", "4,3 %", "0,18 kr", "↓↓"],
+    ["Q2 2026", "2 721 Mkr", "+4 %", "11,5 %", "3,40 kr", "↑↑"],
+  ];
+
+  const profitQualityRows = [
+    ["Kassaflöde från löpande verksamhet, RTM", "1 032 Mkr", "↑", "Starkare än rapporterad nettovinst"],
+    ["Rapporterad nettovinst, RTM", "528 Mkr", "→", "Svag återhämtning från 2025"],
+    ["Operativ kassaflödeskonvertering", "195 % av nettovinst", "↑", "Påverkas positivt av avskrivningar och rörelsekapital"],
+    ["FCF före företagsförvärv, H1", "Cirka 212 Mkr", "↑", "353 Mkr operativt kassaflöde minus 141 Mkr materiella investeringar"],
+    ["ROE", "9,6 %", "→", "Under 2021-2022"],
+    ["Avkastning på operativt kapital", "11,8 %", "↓", "Under målet på 15 %"],
+    ["Utdelning per aktie", "5,50 kr", "→", "Cirka 62 % av 2025 års EPS"],
+    ["Antal aktier", "58,0 miljoner", "→", "Ingen materiell utspädning"],
+  ];
+
+  const epsBridgeRows = [
+    ["Organisk vinsttillväxt", "Positiv", "Organisk omsättning +4 %"],
+    ["Marginalförändring", "Positiv", "EBIT-marginal +0,4 procentenheter"],
+    ["Förvärv", "Tydligt positiv", "Total omsättning +16 %, varav struktur +13 %"],
+    ["Antal aktier", "Neutral", "Antalet aktier i stort sett oförändrat"],
+    ["Valuta", "Negativ", "−1 procentenhet på omsättningen"],
+    ["Finansnetto", "Negativ", "Högre skuld och räntenetto"],
+    ["Skatt", "Neutral/positiv", "Effektiv skatt cirka 19 % i kvartalet"],
+    ["Total EPS-tillväxt", "+26 %", "3,40 kr mot 2,69 kr"],
+  ];
+
+  const warningRows = [
+    ["Låg bas", "Delvis. Q2 jämförs inte med ett katastrofkvartal, men konsumentmarknaderna och flera affärsenheter var svaga under 2025."],
+    ["Deceleration", "Nej på koncernnivå i Q2, men bilden är blandad. Organisk försäljning förbättrades till +4 procent medan Öst hade −2 procent organisk försäljning och −6 procent orderingång."],
+    ["Finansiell hävstång", "EPS-tillväxten drivs främst av förvärvad omsättning, högre organisk volym och bättre fabriksutnyttjande, delvis motverkat av högre räntor."],
+    ["Kassaflödeskontroll", "Rörelsekapitalet förbättrade kassaflödet i Q2. Materiella investeringar och företagsförvärv gör att total investeringsrad kräver separat tolkning."],
+  ];
+
+  const valuationSummaryRows = [
+    ["Dagens kurs", "167,90 kr"],
+    ["Base-case framtida totalvärde", "248 kr"],
+    ["Sannolikhetsviktat framtida värde", "241 kr"],
+    ["Base-case CAGR", "8,1 %"],
+    ["Sannolikhetsviktad CAGR", "7,5 %"],
+    ["Björn-CAGR", "−5,7 %"],
+    ["Total femårig avkastning i Base", "Cirka 48 %"],
+  ];
+
+  const scenarioAssumptionRows = [
+    ["Bull – vad krävs?", "Organisk tillväxt normaliseras till minst 5-6 procent. De senaste förvärven ger marginaler i linje med eller över koncernen. Operationell EBITA-marginal etableras över 11 procent. Nettoskulden sjunker trots fortsatt M&A. Kapitalavkastningen återgår över 15 procent."],
+    ["Base – vad antas?", "Organisk tillväxt på omkring 3-4 procent över cykeln. Ytterligare 3-4 procentenheter från förvärv och marknadsandel. Marginalen förbättras gradvis men når inte tidigare cykeltopp. P/E normaliseras till 16x."],
+    ["Björn – vad går fel?", "Konsumentmarknaden förblir svag och projektordern ger låg marginal eller hög rörelsekapitalbindning. Förvärv integreras långsammare än planerat. EPS står stilla över fem år och slutmultipeln faller till 11x."],
+  ];
+
+  const marketWrongRows = [
+    ["Q2-orderingången markerar en bred strukturell vändning", "En betydande del kommer från en rekordstor projektorder på 50 miljoner GBP", "Konsumentorderingång och organisk tillväxt exklusive projektordern"],
+    ["Förvärven ger snabb och relativt säker EPS-tillväxt", "Resultatbidraget kan bli stort, men skuld, räntor och operativt kapital har också ökat", "ROIC, skuldsättning och marginaler i Väst och Öst"],
+  ];
+
+  const anchorRows = [
+    ["NTM-EPS*", "10,3 kr"],
+    ["Motiverad forward P/E", "17x"],
+    ["Motiverad kurs före utdelning", "Cirka 175 kr"],
+    ["Förväntad utdelning", "Cirka 5,5 kr"],
+    ["Totalvärdesankare", "Cirka 180 kr"],
+  ];
+
+  const riskRows = [
+    ["Svag konsumentefterfrågan", "Medel", "Hög", "Tillfällig", "Konsumentorderingång under 0 %"],
+    ["Förvärvsintegration", "Medel", "Hög", "Potentiellt permanent", "Fallande marginal i förvärvade enheter"],
+    ["Högre skuldsättning", "Medel", "Hög", "Potentiellt permanent", "Nettoskuld över 2,5x EBITDA"],
+    ["Materialinflation", "Medel", "Medel", "Tillfällig", "Bruttomarginal under 24 %"],
+    ["Projektkoncentration", "Medel", "Medel", "Tillfällig", "Försening eller svag lönsamhet i Sidey-order"],
+    ["Prispress i Finland", "Hög", "Medel", "Tillfällig/strukturell", "Fortsatt negativ orderingång i Öst"],
+  ];
+
+  const permanentRiskRows = [
+    ["Förvärv genomförs till för höga priser", "Medel", "Goodwillnedskrivning och lägre ROIC", "ROIC under 10 %"],
+    ["Skulden förblir hög efter förvärven", "Medel", "Lägre utdelning och finansiell flexibilitet", "Nettoskuld över 2,5x"],
+    ["Lokala varumärken förlorar prisposition", "Låg-medel", "Strukturellt lägre marginal", "Lägre pris och marginal trots volymökning"],
+  ];
+
+  const triggerRows = [
+    ["Organisk tillväxt", "Över 4 % exklusive stora projektorder", "Under 0 % två kvartal", "Ändra Base-tillväxten"],
+    ["Operationell EBITA-marginal", "Över 11 % RTM", "Under 9 % RTM", "Höj/sänk EPS och slutmultipel"],
+    ["Avkastning på operativt kapital", "Över 15 %", "Under 10 %", "Höj/sänk kvalitetsbetyget"],
+    ["Nettoskuld/EBITDA exkl. leasing", "Under 1,8x", "Över 2,5x", "Ändra riskbetyget"],
+    ["Öst", "Orderingång och marginal vänder upp", "Fortsatt marginal under 5 %", "Ompröva normaliserad lönsamhet"],
+    ["Förvärv", "EPS och ROIC stiger", "Goodwill eller integrationskostnader ökar", "Ompröva kapitalallokeringen"],
+    ["Värdering", "Kurs under 145 kr", "Kurs över 185 kr utan estimathöjningar", "Köp successivt/skala ned"],
+  ];
+
+  const summaryRows = [
+    ["Är detta ett kvalitetsbolag?", "Ja, men kvaliteten begränsas av cyklikalitet, lägre kapitalavkastning och snabbt ökad skuld."],
+    ["Är dagens värdering attraktiv?", "Rimlig på fem års sikt, men inte tillräckligt låg för en tydlig säkerhetsmarginal."],
+    ["Passar aktien som långsiktigt innehav?", "Ja, för investerare som accepterar byggcykel- och förvärvsrisk."],
+    ["Viktigaste osäkerheten?", "Om förvärven kan öka EPS snabbare än skuld, räntor och operativt kapital."],
+  ];
+
+  const fairValueRows = [
+    ["Tolvmånadersankare inklusive utdelning", "Cirka 180 kr"],
+    ["Rimligt kursintervall, 12 månader", "155-185 kr"],
+    ["Base-case totalvärde år 5", "248 kr"],
+    ["Sannolikhetsviktat totalvärde år 5", "241 kr"],
+    ["Rimligt framtida femårsintervall", "215-275 kr"],
+  ];
+
+  const premiumRows = [
+    ["Fullständig resultat-, balans- och kassaflödesanalys", "Premium"],
+    ["Fullständig SWOT och moat-evidens", "Premium"],
+    ["Fullständig VD-ordsanalys", "Premium"],
+    ["Känslighetsanalys – 12 månader och 5 år", "Premium"],
+    ["Kapitalallokering och förvärvsanalys", "Premium"],
+    ["Reverse DCF", "Premium"],
+    ["Fördjupat stresstest", "Premium"],
+  ];
+
+  return (
+    <AnalysisLayout
+      ticker={data.ticker}
+      companyName={data.title}
+      stockSlug={data.slug}
+      accentColor={ACCENT_COLOR}
+      sections={sections}
+      isInWatchlist={isInWatchlist}
+      isWatchlistLoading={isWatchlistLoading}
+      onToggleWatchlist={onToggleWatchlist}
+      analysisPrice={analysisPrice}
+      date={data.date}
+      nextAnalysis={nextAnalysis}
+      tightContent
+    >
+      <SEO title={`${data.title} (${data.ticker}) - Analys`} description={data.summary} ogType="article" />
+
+      <div className="mb-20 space-y-12">
+        <div className="space-y-4">
+          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.15em] sm:tracking-[0.4em] flex flex-wrap items-center gap-x-2 gap-y-1 leading-relaxed">
+            <Globe size={12} className="text-primary shrink-0" />
+            <span>{data.market}</span>
+            <span className="opacity-40">·</span>
+            <span>{data.ticker}</span>
+            <span className="opacity-40">·</span>
+            <span>{data.sector}</span>
+          </div>
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] text-foreground">
+            Inwido AB
+            <span className="text-primary block mt-3 text-[0.78em]">Strategisk analys</span>
+          </h1>
+        </div>
+        <InwidoQuickOverview />
+      </div>
+
+      <NordnetCTA variant="high" />
+
+      <section id="overview" className="scroll-mt-24 mt-20">
+        <div className="mb-10 flex items-center justify-between">
+          <SectionHeader number="I" title="FÖRETAGSÖVERSIKT OCH LEDNING" accentColor={ACCENT_COLOR} />
+          <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black text-primary uppercase tracking-widest">Betyg: 4/5</div>
+        </div>
+        <div className={baseTableClass}>
+          <InwidoTable title="Grunddata" headers={["Grunddata", "Värde"]} rows={overviewRows} compact />
+          <InwidoNote title="Kort bakgrund">
+            Inwido utvecklar, tillverkar och säljer kundanpassade fönster och dörrar. Koncernen består av 38 affärsenheter med cirka 5 200 anställda i 19 länder. Verksamheten är decentraliserad: lokala affärsenheter ansvarar för prissättning, försäljning och kostnader medan koncernen samordnar bland annat inköp, förvärv och produktivitet.
+          </InwidoNote>
+          <InwidoTable title="Ägarstruktur" headers={["Ägare", "Kapitalandel", "Röstandel", "Typ"]} rows={ownershipRows} footer={data.ownershipStructure} compact />
+          <InwidoTable title="Ledning och kapitalallokering" headers={["Faktor", "Data eller bedömning"]} rows={allocationRows} />
+          <InwidoNote title="Betygsmotivering">
+            Inwidos finansiella mål omfattar mer än 15 procents avkastning på operativt kapital, skuldsättning under 2,5 gånger operationell EBITDA samt utdelning motsvarande omkring hälften av nettovinsten. Dokumenterad erfarenhet av decentraliserad styrning, tydliga finansiella mål och insiderköp väger positivt. Den snabba förvärvstakten och fallande kapitalavkastningen gör ändå att högre betyg kräver mer bevis.
+          </InwidoNote>
+        </div>
+      </section>
+
+      <section id="business-model" className="scroll-mt-24 mt-24">
+        <div className="mb-10 flex items-center justify-between">
+          <SectionHeader number="II" title="AFFÄRSMODELL" accentColor={ACCENT_COLOR} />
+          <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black text-primary uppercase tracking-widest">Betyg: 4/5</div>
+        </div>
+        <div className={baseTableClass}>
+          <InwidoSankeyDiagram />
+          <InwidoNote title="Så tjänar Inwido pengar">
+            Materialinköp → lokal tillverkning → varumärkesbaserad försäljning → installation/distribution → eftermarknad och återkommande renoveringsbehov.
+          </InwidoNote>
+          <InwidoTable title="Affärsmodellens komponenter" headers={["Faktor", "Bedömning"]} rows={businessRows} />
+          <InwidoTable title="Intäktsmix, rullande tolv månader" headers={["Segment", "Andel av omsättningen", "Q2 organisk utveckling", "Q2 operationell EBITA-marginal"]} rows={segmentRows} footer="Källa: Inwido Q2 2026, q2-2026-se-report.pdf" />
+          <InwidoTable title="Marknadssegment" headers={["Segment", "Andel"]} rows={marketSegmentRows} compact />
+          <InwidoTable title="Resultatflöde, rullande tolv månader" headers={["Resultatnivå", "Mkr", "Andel av omsättning"]} rows={resultRows} />
+          <InwidoNote title="Betygsmotivering">
+            Den decentraliserade strukturen gör det möjligt att anpassa priser och kostnader till lokala marknader. Geografisk och varumärkesmässig spridning minskar beroendet av en enskild marknad. Affärsmodellen är dock cyklisk och saknar en hög andel avtalsbundna återkommande intäkter.
+          </InwidoNote>
+        </div>
+      </section>
+
+      <section id="moat-peers" className="scroll-mt-24 mt-24">
+        <div className="mb-10 flex items-center justify-between">
+          <SectionHeader number="III" title="KONKURRENSFÖRDELAR, BRANSCH OCH PEERS" accentColor={ACCENT_COLOR} />
+          <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black text-primary uppercase tracking-widest">Betyg: 3/5</div>
+        </div>
+        <div className={baseTableClass}>
+          <InwidoTable title="Branschöversikt" headers={["Faktor", "Bedömning"]} rows={industryRows} />
+          <InwidoNote title="Branschbild">
+            Enligt bolagets egna bedömningar uppgår den långsiktiga underliggande marknadstillväxten till omkring 4 procent. Externa marknadsprognoser pekar på omkring 3-4 procent. Inwido kan växa snabbare än marknaden genom förvärv av lokala marknadsledare, geografisk expansion och förbättrat fabriksutnyttjande snarare än genom en strukturellt snabbväxande slutmarknad.
+          </InwidoNote>
+          <InwidoTable title="Marknadsandel och position" headers={["Region eller segment", "Trend", "Kommentar"]} rows={positionRows} />
+          <InwidoTable title="Konkurrensfördelar" headers={["Konkurrensfördel", "Konkret evidens", "Styrka", "Trend"]} rows={moatRows} />
+          <InwidoNote title="Moat-bedömning">
+            Inwidos konkurrensfördel ligger inte i patent eller nätverkseffekter. Den ligger främst i kombinationen av lokala varumärken, distributionsrelationer, fabriksnärvaro och en etablerad modell för att köpa mindre regionala aktörer.
+          </InwidoNote>
+          <InwidoTable title="Peer-jämförelse" headers={["Bolag", "Operativ relevans", "Omsättningstillväxt", "Rörelsemarginal", "Värderingsdata"]} rows={peerRows} footer="Direkta noterade jämförelsebolag är få eftersom flera stora europeiska konkurrenter är privatägda, däribland DOVISTA/VKR. Premien mot historiken kan försvaras om förvärven lyfter EPS och kapitalavkastningen återgår mot målet, men inte av den nuvarande organiska halvårstillväxten på 1 procent." />
+          <SwotGrid data={{ strengths: data.strengths || [], weaknesses: data.weaknesses || [], opportunities: data.opportunities || [], threats: data.threats || [] }} />
+          <InwidoNote title="Betygsmotivering">
+            Inwido har dokumenterade skalfördelar och lokala marknadspositioner, men inte en svårkopierad strukturell moat. Skandinavien genererar en operationell EBITA-marginal på 15,1 procent, medan Östs marginal på 5,0 procent visar hur snabbt lönsamheten pressas vid svag efterfrågan och lokal prispress.
+          </InwidoNote>
+        </div>
+      </section>
+
+      <section id="financials" className="scroll-mt-24 mt-24">
+        <div className="mb-10 flex items-center justify-between">
+          <SectionHeader number="IV" title="FINANSIELL UTVECKLING OCH VINSTKVALITET" accentColor={ACCENT_COLOR} />
+          <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black text-primary uppercase tracking-widest">Betyg: 3/5</div>
+        </div>
+        <div className={baseTableClass}>
+          <InwidoTable title="Kärnhistorik" headers={["År", "Omsättning, Mkr", "Tillväxt", "EPS, kr", "Bruttomarginal", "EBIT-marginal", "Nettomarginal", "Nettoskuld"]} rows={historyRows} footer="*Estimat" />
+          <InwidoTable title="Kvartalstrend" headers={["Kvartal", "Omsättning", "Organisk tillväxt", "Operationell EBITA-marginal", "EPS", "Trend"]} rows={quarterRows} footer="Q2-resultatet förbättrades successivt från april till juni. Samtidigt var marknaderna fortsatt splittrade: Skandinavien, Norge och Danmark förbättrades medan Finland och den brittiska konsumentmarknaden förblev svaga. Källa: Inwido Q2 2026." />
+          <InwidoTable title="Segmentens lönsamhet" headers={["Segment", "Q2 2025", "Q2 2026", "Förändring"]} rows={[
+            ["Skandinavien", "14,5 %", "15,1 %", "+0,6 procentenheter"],
+            ["Väst", "11,1 %", "10,7 %", "−0,4 procentenheter"],
+            ["Öst", "6,6 %", "5,0 %", "−1,6 procentenheter"],
+            ["e-Commerce", "9,1 %", "12,6 %", "+3,5 procentenheter"],
+            ["Koncernen", "11,3 %", "11,5 %", "+0,2 procentenheter"],
+          ]} footer="e-Commerce är rapportens tydligaste kvalitativa förbättring. Marginalen har stigit fyra kvartal i följd genom prissättning, kostnadsbesparingar och prioritering av lönsamhet framför volym." />
+          <InwidoTable title="Vinstkvalitet" headers={["Nyckeltal", "Värde", "Trend", "Kommentar"]} rows={profitQualityRows} />
+          <InwidoNote title="Kassaflödeskommentar">
+            Det negativa redovisade fria kassaflödet i det historiska underlaget beror huvudsakligen på att företagsförvärv klassificeras som investeringskassaflöde. Under första halvåret genererade rörelsen 353 Mkr efter rörelsekapital. Materiella investeringar uppgick till 141 Mkr, vilket motsvarar ett underliggande fritt kassaflöde före förvärv på omkring 212 Mkr.
+          </InwidoNote>
+          <InwidoTable title="EPS-brygga – Q2 2026 jämfört med Q2 2025" headers={["Komponent", "Riktning", "Kommentar"]} rows={epsBridgeRows} />
+          <InwidoTable title="Varningskontroller" headers={["Kontroll", "Bedömning"]} rows={warningRows} />
+          <InwidoNote title="Betygsmotivering">
+            Inwido är lönsamt genom hela cykeln och har god löpande kassagenerering. EPS ligger fortfarande omkring 34 procent under toppen 2022 och kapitalavkastningen har fallit till 11,8 procent. Skuldsättningen har stigit tydligt efter förvärven, vilket reducerar den finansiella flexibiliteten.
+          </InwidoNote>
+        </div>
+      </section>
+
+      <section id="scorecard" className="scroll-mt-24 mt-24">
+        <div className="mb-10">
+          <SectionHeader number="V" title="SCORECARD" accentColor={ACCENT_COLOR} />
+        </div>
+        <div className={baseTableClass}>
+          <InwidoTable title="Scorecard" headers={["Dimension", "Betyg 1-5", "Kommentar"]} rows={scoreRows} />
+          <InwidoTable title="Sammanvägda mått" headers={["Bedömning", "Poäng", "Resultat"]} rows={[
+            ["Bolagskvalitet", "14/20", "3,5/5 - 70 %"],
+            ["Investeringsattraktivitet", "10/15", "3,3/5 - 67 %"],
+            ["Totalrating", "24/35", "69 %"],
+          ]} />
+          <InwidoNote title="Tolkning">
+            Inwido är ett över genomsnittet välskött industribolag, men aktien erbjuder efter rapportuppgången inte tillräcklig femårig avkastning för ett tydligt KÖP.
+          </InwidoNote>
+        </div>
+      </section>
+
+      <section id="valuation" className="scroll-mt-24 mt-24">
+        <div className="mb-10 flex items-center justify-between">
+          <SectionHeader number="VI" title="FUNDAMENTAL VÄRDERING" accentColor={ACCENT_COLOR} />
+          <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black text-primary uppercase tracking-widest">Betyg: 3/5</div>
+        </div>
+        <div className={baseTableClass}>
+          <InwidoTable title="Multipeltabell" headers={["Multipel", "Idag", "Historik", "Kommentar"]} rows={valuationRows} footer="Den nuvarande värderingen är inte extrem, men den är hög i relation till bolagets historiska värdering och nuvarande kapitalavkastning." />
+          <InwidoTable title="Normaliserad startnivå" headers={["Mått", "Värde"]} rows={[
+            ["Rapporterad EPS, rullande tolv månader", "9,11 kr"],
+            ["Justerad start-EPS i modellen", "9,11 kr"],
+            ["Dagens P/E", "18,4x"],
+            ["Normaliserad EPS 2027*", "Cirka 10,7 kr"],
+          ]} footer="Startnivån är försiktig eftersom flera förvärv ännu inte ingår med tolv månaders resultat. Samtidigt inkluderas inte heller full finansieringskostnad eller eventuella integrationsproblem i ett enkelt proformaantagande." />
+          <InwidoTable title="Femårsmodell" headers={["Scenario", "Sannolikhet", "EPS-tillväxt", "Totalvärde", "CAGR"]} rows={modelRows} />
+          <ScenarioCards scenarios={data.scenarios.map(s => ({ type: s.type, title: s.label.toUpperCase(), probability: s.probability || '25%', price: s.value, change: s.change, valueLabel: "5-årigt totalvärde inkl. utdelningar", changeLabel: "Total avkastning", description: s.description || "" }))} />
+          <InwidoTable title="Scenarioantaganden" headers={["Scenario", "Vad krävs eller antas?"]} rows={scenarioAssumptionRows} />
+          <InwidoTable title="Värderingssammanfattning" headers={["Värderingsmått", "Värde"]} rows={valuationSummaryRows} />
+          <InwidoTable title="Vad kan marknaden ha fel om?" headers={["Marknadens sannolika antagande", "Analysens bedömning", "Vad avgör vem som har rätt?"]} rows={marketWrongRows} footer="Den rekordstora Sidey-ordern ger en stabil produktionsgrund under flera år, men projektordern bör inte extrapoleras som en normal återkommande tillväxttakt." />
+          <InwidoNote title="Betygsmotivering">
+            Sannolikhetsviktad femårs-CAGR är cirka 7,5 procent. Base-scenariot når endast den nedre gränsen för rimlig långsiktig avkastning. Värderingen kräver inte extrem multipel-expansion, men erbjuder en begränsad säkerhetsmarginal mot integrations- och konjunkturrisk.
+          </InwidoNote>
+        </div>
+      </section>
+
+      <section id="zones" className="scroll-mt-24 mt-24">
+        <div className="mb-10">
+          <SectionHeader number="VI.C" title="KURSZONER – 12 MÅNADER OCH 5 ÅR" accentColor={ACCENT_COLOR} />
+        </div>
+        <div className={baseTableClass}>
+          <InwidoTable title="Tolvmånadersankare" headers={["Faktor", "Antagande"]} rows={anchorRows} footer="Forwardmultipeln 17x ligger under dagens cirka 18,4x men över bolagets längre historik. Premien mot historiken motiveras av förbättrad orderingång och förvärvens kommande helårsresultat." />
+          <InwidoTable title="Kurszoner" headers={["Zon", "Kursintervall 12 månader", "Kursintervall 5 år", "Åtgärd"]} rows={zoneRows} />
+          <InwidoNote title="Handlingsnivå" tone="amber">
+            Aktien ligger nära gränsen mellan rimligt värderad och fullvärderad på fem års sikt, men är fullvärderad på tolv månader. Köp successivt under 145 kr, tydligt köpvärd under 120 kr och överväg att skala ned över 185 kr på tolv månaders sikt om vinstestimaten inte höjs.
+          </InwidoNote>
+          <InwidoNote title="Konsensus">
+            Konsensus varierar mellan olika dataleverantörer och bör tolkas med viss försiktighet direkt efter rapporten. De flesta publika sammanställningar ligger omkring 200-210 kr. Skillnaden mot konsensus speglar främst olika antaganden om hur stor och uthållig resultatförbättring de senaste förvärven kommer att ge.
+          </InwidoNote>
+          <InwidoTable title="Modellsäkerhet" headers={["Horisont", "Tillförlitlighet"]} rows={[["12 månader", "Medel"], ["5 år", "Låg-medel"], ["Datakvalitet", "Hög"]]} footer="Zonerna gäller till nästa kvartalsrapport. Därefter ska EPS-ankare, skuld och förvärvens proformaresultat räknas om." compact />
+        </div>
+      </section>
+
+      <section id="drivers" className="scroll-mt-24 mt-24">
+        <div className="mb-10 flex items-center justify-between">
+          <SectionHeader number="VII" title="POTENTIELLA KURSDRIVARE" accentColor={ACCENT_COLOR} />
+          <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black text-primary uppercase tracking-widest">Betyg: 4/5</div>
+        </div>
+        <div className={baseTableClass}>
+          <InwidoTable title="Katalysatorer" headers={["Katalysator", "Tidpunkt", "Påverkan", "Vad ska mätas?"]} rows={driverRows} />
+          <InwidoNote title="Strukturell efterfrågedrivare">
+            EU:s energieffektiviseringsregler och renoveringsbehovet i äldre europeiska bostäder ger en strukturell efterfrågedrivare. Inwido framhåller att fönster och dörrar är centrala för att minska byggnaders energiförbrukning.
+          </InwidoNote>
+          <InwidoTable title="Insidertransaktioner" headers={["Person", "Roll", "Köp", "Belopp", "Datum"]} rows={insiderRows} footer="Fyra styrelseledamöter köpte aktier på den öppna marknaden kring 140-143 kr under juni, alltså drygt en månad före Q2-rapporten. Några motsvarande insiderförsäljningar rapporterades inte under perioden. Det är en tydligt positiv signal eftersom flera oberoende styrelseledamöter köpte aktier under samma period, även om beloppen är relativt små i förhållande till bolagets storlek. Efter rapporten handlas aktien omkring 18-20 procent över insiderköpens nivåer." />
+          <InwidoTable title="Estimat och konsensus" headers={["Mått", "Före Q2", "Efter Q2", "Trend"]} rows={[
+            ["EPS innevarande år", "Ej tillgängligt", "Förväntas revideras upp", "↑"],
+            ["EPS nästa år", "Ej tillgängligt", "Cirka 9-11 kr i publika sammanställningar", "→/↑"],
+            ["Konsensusriktkurs", "Cirka 190-202 kr", "Omkring 200-210 kr i tidiga sammanställningar", "↑"],
+          ]} />
+          <InwidoNote title="Betygsmotivering">
+            Rapporten ger stöd för positiva EPS-revideringar genom högre Q2-resultat och större orderstock. Förvärven och Sidey-ordern ger konkreta och mätbara resultatdrivare. Materialinflation, svaghet i Finland och en fortsatt dämpad brittisk konsumentmarknad kan samtidigt begränsa estimathöjningarna.
+          </InwidoNote>
+        </div>
+      </section>
+
+      <section id="risk" className="scroll-mt-24 mt-24">
+        <div className="mb-10 flex items-center justify-between">
+          <SectionHeader number="VIII" title="RISKER OCH STRESSTEST" accentColor={ACCENT_COLOR} />
+          <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black text-primary uppercase tracking-widest">Betyg: 3/5</div>
+        </div>
+        <div className={baseTableClass}>
+          <InwidoTable title="Huvudrisker" headers={["Risk", "Sannolikhet", "Konsekvens", "Typ", "Tidig varningssignal"]} rows={riskRows} />
+          <InwidoTable title="Risk för permanent kapitalförlust" headers={["Permanent risk", "Sannolikhet", "Potentiell skada", "Tidig signal"]} rows={permanentRiskRows} />
+          <InwidoNote title="Permanent risk">
+            Inwido kan sannolikt återhämta sig efter en normal konjunkturnedgång. Den större permanenta risken ligger i kapitalallokeringen: om den senaste förvärvsvågen inte genererar avkastning över kapitalkostnaden kan det underliggande värdet per aktie försvagas trots högre omsättning.
+          </InwidoNote>
+          <InwidoTable title="Stresstest" headers={["Scenario", "Operativt antagande", "Estimerad EBITDA", "Nettoskuld/EBITDA", "Räntetäckning", "Slutsats"]} rows={[
+            ["Normal", "Dagens nivå", "Cirka 1 270 Mkr", "2,2-2,3x", "6,7x", "Hanterbar"],
+            ["Svag konjunktur", "Omsättning −10 %, marginal −200 bp", "Cirka 965 Mkr", "Cirka 3,0x", "Cirka 4,0x", "Utdelning och M&A bör begränsas"],
+            ["Kraftig nedgång", "Omsättning −20 %, marginal −400 bp", "Cirka 680 Mkr", "Cirka 4,3x", "Cirka 2,3x", "Materiell refinansierings- och kovenantrisk"],
+          ]} footer="Inwido uppfyllde samtliga kovenanter vid halvårsskiftet och hade disponibla medel inklusive outnyttjade krediter på 1 673 Mkr. Nettoskulden exklusive leasing motsvarade 2,1 gånger operationell EBITDA, eller 1,8 gånger proforma inklusive de förvärvade bolagens helårsresultat." />
+          <InwidoNote title="Risknivå: Medel">
+            Skuldsättningen ligger under bolagets målgräns men har ökat från 0,9x till 2,1x exklusive leasing på ett år. Räntetäckningen på 6,7x ger buffert i ett normalt nedgångsscenario. En kraftigare konjunkturnedgång i kombination med integrationsproblem skulle snabbt försämra kreditmåtten.
+          </InwidoNote>
+        </div>
+      </section>
+
+      <section id="triggers" className="scroll-mt-24 mt-24">
+        <div className="mb-10">
+          <SectionHeader number="IX" title="VAD SOM KAN FÖRÄNDRA INVESTERINGSTESEN" accentColor={ACCENT_COLOR} />
+        </div>
+        <div className={baseTableClass}>
+          <InwidoTable title="Tes-triggers" headers={["Bevakningspunkt", "Positiv trigger", "Negativ trigger", "Konsekvens"]} rows={triggerRows} />
+          <InwidoNote title="Vad investeraren bör bevaka">
+            Konsumentorderingången, Östs marginal, förvärvens proformaresultat, kapitalavkastningen och gapet mot konsensus. Konsumentorderingången är en bättre temperaturmätare än den projektorderdrivna totala orderingången på +23 procent. Skillnaden mot konsensus speglar främst olika antaganden om hur stor och uthållig resultatförbättring de senaste förvärven kommer att ge.
+          </InwidoNote>
+        </div>
+      </section>
+
+      <section id="summary" className="scroll-mt-24 mt-24 mb-32">
+        <div className="mb-10">
+          <SectionHeader number="X" title="SAMMANFATTNING OCH INVESTERINGSBESLUT" accentColor={ACCENT_COLOR} />
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-7 space-y-12">
+            <InwidoTable title="Investeringsbeslut" headers={["Fråga", "Svar"]} rows={summaryRows} />
+            <InwidoNote title="Slutlig sammanfattning" tone="dark">
+              Kvalitet: Inwido har en beprövad decentraliserad affärsmodell och har förblivit lönsamt genom en svag europeisk fönstermarknad. Värdering: cirka 18,4x rullande EPS är över historiken och kräver fortsatt resultatåterhämtning. Risk: förvärven har höjt nettoskulden samtidigt som kapitalavkastningen fallit till 11,8 procent. Vad som krävs: organisk tillväxt över 4 procent, uthållig marginal över 11 procent och sjunkande nettoskuld.
+            </InwidoNote>
+            <InwidoNote title="Positiva signaler inför och efter Q2-rapporten">
+              <ul className="space-y-2 list-disc pl-5">
+                <li>Fyra styrelseledamöter köpte aktier på den öppna marknaden inför Q2-rapporten.</li>
+                <li>Den organiska orderingången förbättrades tydligt.</li>
+                <li>Operationell EBITA-marginal steg till 11,5 procent.</li>
+                <li>EPS ökade med 26 procent jämfört med föregående år.</li>
+                <li>Inga insiderförsäljningar rapporterades under samma period.</li>
+                <li>Aktien handlas samtidigt cirka 18-20 procent över nivåerna där insiders köpte, vilket begränsar säkerhetsmarginalen.</li>
+              </ul>
+            </InwidoNote>
+            <InwidoTable title="Rimligt värde" headers={["Mått", "Värde"]} rows={fairValueRows} />
+          </div>
+          <div className="lg:col-span-5">
+            <div className="sticky top-24">
+              <VerdictBox
+                verdict="BEVAKA"
+                target="155-185 kr"
+                description="Inwidos Q2-rapport var operationellt stark och motiverar högre estimat än efter Q1. Den kraftiga kursuppgången på rapportdagen innebär dock att en betydande del av förbättringen redan har prisats in. Uppgradering till KÖP kräver antingen en kurs under cirka 123-145 kr eller tydliga bevis på att normaliserad EPS kan överstiga 11-12 kr utan högre skuldsättning."
+                date="2026-07-15"
+                accentColor={ACCENT_COLOR}
+                buyZone={data.buyZone}
+                targetLabel="Rimligt värdeintervall på 12 månaders sikt"
+                targetNote="Analysdatum: 15 juli 2026. Marknadsdatadatum: 15 juli 2026. Zonernas giltighet: till nästa kvartalsrapport."
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <NordnetCTA variant="low" />
+      <section className="scroll-mt-24 mt-24">
+        <div className="mb-10">
+          <SectionHeader number="P" title="FÖRDJUPNING – PREMIUM" accentColor={ACCENT_COLOR} />
+        </div>
+        <div className={baseTableClass}>
+          <InwidoTable title="Premiumfördjupning" headers={["Modul", "Status"]} rows={premiumRows} compact />
+          <InwidoNote title="Premiuminnehåll">
+            Premiumfördjupningen innehåller värderingsmatris för EPS och slutmultipel, förvärvsanalys med proforma-EBITDA och skuldsättning, normaliserad kassaflödesmodell före företagsförvärv, segmentvis marginalanalys, reverse DCF och implicit marknadsförväntan samt fullständig VD-ords- och kapitalallokeringsanalys.
+          </InwidoNote>
+        </div>
+      </section>
+      <AnalysisDisclaimer className="mt-16" />
+    </AnalysisLayout>
+  );
+};
+
 // Visual Trigger: A component to render geographical or segment distribution as a bar
 const DistributionBar = ({ data, accentColor }: { data: string; accentColor: string }) => {
   const segments = useMemo(() => {
@@ -442,6 +1084,19 @@ export default function ComprehensiveAnalysis({
       </div>
     );
   };
+
+  if (isInwido) {
+    return (
+      <InwidoTemplateAnalysis
+        data={data}
+        isInWatchlist={isInWatchlist}
+        isWatchlistLoading={isWatchlistLoading}
+        onToggleWatchlist={onToggleWatchlist}
+        nextAnalysis={nextAnalysis}
+        analysisPrice={analysisPrice || undefined}
+      />
+    );
+  }
 
   return (
     <AnalysisLayout 
