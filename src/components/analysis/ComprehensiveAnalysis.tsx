@@ -106,6 +106,7 @@ export default function ComprehensiveAnalysis({
   nextAnalysis
 }: ComprehensiveAnalysisProps) {
   const ACCENT_COLOR = "#10B981"; // Emerald Green
+  const isInwido = data.slug === "inwido-2026";
 
   const analysisPrice = useMemo(() => {
     if (!data.price) return null;
@@ -121,8 +122,8 @@ export default function ComprehensiveAnalysis({
     { id: 'valuation', title: 'IV. Värdering & Jämförelse', number: 'IV' },
     { id: 'growth', title: 'V. Tillväxtmotorer & Triggers', number: 'V' },
     { id: 'risk', title: 'VI. Riskprofil', number: 'VI' },
-    { id: 'management', title: 'VII. Analys av VD-ordet', number: 'VII' },
-    { id: 'ai', title: 'VIII. AI-observationer', number: 'VIII' },
+    { id: 'management', title: isInwido ? 'VII. Ledning, Kapitalallokering & Insideraktivitet' : 'VII. Analys av VD-ordet', number: 'VII' },
+    { id: 'ai', title: isInwido ? 'VIII. Signalbild & Insideraktivitet' : 'VIII. AI-observationer', number: 'VIII' },
     { id: 'summary', title: 'IX. Investeringsbeslut', number: 'IX' },
     { id: 'scenarios', title: 'X. Scenarier', number: 'X' }
   ];
@@ -137,6 +138,18 @@ export default function ComprehensiveAnalysis({
     vdAnalys: "VII. Analys av VD-ordet",
     aiObservationer: "VIII. AI-observationer"
   };
+
+  const displayedScores = isInwido
+    ? [
+        ["foretagsoversiktLedning", 4, "I. Företagsöversikt och ledning"] as const,
+        ["affarsmodell", 4, "II. Affärsmodell"] as const,
+        ["strategiskMoat", 3, "III. Strategisk analys & Moat"] as const,
+        ["finansiellKvalitet", 3, "IV. Finansiell analys"] as const,
+        ["vardering", 3, "V. Värdering & Jämförelse"] as const,
+        ["tillvaxtutsikter", 4, "VI. Tillväxtmotorer & Triggers"] as const,
+        ["riskprofil", 3, "VII. Riskprofil"] as const,
+      ]
+    : Object.entries(data.scores || {}).map(([key, score]) => [key, score, SCORE_LABELS[key] || key] as const);
 
   const ScoreBadge = ({ score }: { score?: number }) => {
     if (score === undefined) return null;
@@ -297,10 +310,10 @@ export default function ComprehensiveAnalysis({
                   <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-primary mb-2">Börsanalys Kvalitetsbetyg</h2>
                   <h3 className="text-2xl md:text-3xl font-black tracking-tighter">Analysens nyckelområden</h3>
                 </div>
-                {(data.aiDrivenData?.totaltPoang || Object.values(data.scores).reduce((a, b) => a + b, 0)) && (
+                {(data.aiDrivenData?.totaltPoang || displayedScores.reduce((sum, [, score]) => sum + score, 0)) && (
                   <div className="flex items-center gap-4 bg-primary/10 px-6 py-3 rounded-2xl border border-primary/20">
                     <div className="text-4xl font-black text-primary">
-                      {data.aiDrivenData?.totaltPoang || Object.values(data.scores).reduce((a, b) => a + b, 0)}
+                      {data.aiDrivenData?.totaltPoang || displayedScores.reduce((sum, [, score]) => sum + score, 0)}
                     </div>
                     <div className="text-[10px] font-black uppercase tracking-widest leading-tight opacity-70 italic">
                       av {data.aiDrivenData?.maxPoang || 40} <br /> möjliga poäng
@@ -310,12 +323,12 @@ export default function ComprehensiveAnalysis({
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-x-8 gap-y-10">
-                {Object.entries(data.scores).map(([key, score]) => (
+                {displayedScores.map(([key, score, label]) => (
                   <div key={key} className="space-y-3 group">
                     <div className="flex flex-col gap-2">
                       <div className="flex justify-between items-end gap-2">
                         <span className="text-[10px] font-black text-muted-foreground group-hover:text-primary transition-colors uppercase tracking-[0.1em] leading-tight">
-                          {SCORE_LABELS[key] || key}
+                          {label}
                         </span>
                         <span className="text-sm font-black text-foreground shrink-0">{score}/5</span>
                       </div>
@@ -400,7 +413,7 @@ export default function ComprehensiveAnalysis({
               </h3>
               <div className="space-y-6">
                 <div className="space-y-1">
-                  <div className="text-[10px] font-bold text-muted-foreground uppercase">Analyspris</div>
+                  <div className="text-[10px] font-bold text-muted-foreground uppercase">Aktiekurs vid analys</div>
                   <div className="text-2xl font-black text-foreground">{data.price}</div>
                 </div>
                 <div className="space-y-1">
@@ -716,7 +729,10 @@ export default function ComprehensiveAnalysis({
              <div className="text-[10px] font-black text-primary uppercase tracking-widest">Vår bedömning</div>
              <div className="text-4xl font-black text-foreground">{data.recommendation}</div>
              <div className="w-12 h-1 bg-primary mx-auto rounded-full" />
-             <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">Rimligt värde (Base Case): {data.scenarios?.find(s => s.type === 'base')?.value || "N/A"}</p>
+             <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">
+               {isInwido ? "Base-case: 5-årigt totalvärde" : "Rimligt värde (Base Case)"}: {data.scenarios?.find(s => s.type === 'base')?.value || "N/A"}
+               {isInwido ? " inklusive utdelningar" : ""}
+             </p>
           </div>
         </div>
 
@@ -1063,11 +1079,11 @@ export default function ComprehensiveAnalysis({
 
 
 
-      {/* SECTION VII: ANALYS AV VD-ORDET */}
+      {/* SECTION VII: ANALYS AV VD-ORDET / LEDNING */}
       <section id="management" className="scroll-mt-24 mt-24">
         <div className="mb-10 flex items-center justify-between">
-          <SectionHeader number="VII" title="ANALYS AV VD-ORDET" accentColor={ACCENT_COLOR} />
-          <ScoreBadge score={data.scores?.vdAnalys} />
+          <SectionHeader number="VII" title={isInwido ? "LEDNING, KAPITALALLOKERING & INSIDERAKTIVITET" : "ANALYS AV VD-ORDET"} accentColor={ACCENT_COLOR} />
+          {!isInwido && <ScoreBadge score={data.scores?.vdAnalys} />}
         </div>
         
         <div className="mb-16">
@@ -1140,7 +1156,7 @@ export default function ComprehensiveAnalysis({
           )}
         </div>
 
-        {data.scores && (
+        {data.scores && !isInwido && (
           <div className="mt-12">
             <RatingBox 
               rating={data.scores.vdAnalys} 
@@ -1158,11 +1174,11 @@ export default function ComprehensiveAnalysis({
         </Card>
       </section>
 
-      {/* SECTION VIII: AI-OBSERVATIONER */}
+      {/* SECTION VIII: SIGNALER */}
       <section id="ai" className="scroll-mt-24 mt-24">
         <div className="mb-10 flex items-center justify-between">
-          <SectionHeader number="VIII" title="AI-OBSERVATIONER" accentColor={ACCENT_COLOR} />
-          <ScoreBadge score={data.scores?.aiObservationer} />
+          <SectionHeader number="VIII" title={isInwido ? "SIGNALBILD & INSIDERAKTIVITET" : "AI-OBSERVATIONER"} accentColor={ACCENT_COLOR} />
+          {!isInwido && <ScoreBadge score={data.scores?.aiObservationer} />}
         </div>
         
         <div className="mb-16">
@@ -1235,7 +1251,7 @@ export default function ComprehensiveAnalysis({
           )}
         </div>
 
-        {data.scores && (
+        {data.scores && !isInwido && (
           <div className="mt-12">
             <RatingBox 
               rating={data.scores.aiObservationer} 
@@ -1374,6 +1390,8 @@ export default function ComprehensiveAnalysis({
                 date={data.date || new Date().toISOString().split('T')[0]}
                 accentColor={ACCENT_COLOR}
                 buyZone={data.buyZone}
+                targetLabel={isInwido ? "Rimligt värdeintervall på 12 månaders sikt" : undefined}
+                targetNote={isInwido ? "Tolvmånadersankare inklusive utdelning: cirka 180 kr" : undefined}
               />
             </div>
           </div>
@@ -1402,6 +1420,8 @@ export default function ComprehensiveAnalysis({
             probability: s.probability || (s.type === 'base' ? '50%' : '25%'),
             price: s.value,
             change: s.change,
+            valueLabel: isInwido ? "5-årigt totalvärde inkl. utdelningar" : undefined,
+            changeLabel: isInwido ? "Total avkastning" : undefined,
             description: s.description || (s.type === 'bull' ? "Optimistiskt scenario där tillväxten accelererar och multiplar expanderar." : s.type === 'base' ? "Mest troliga utvecklingen baserat på nuvarande trender och estimat." : "Defensivt scenario vid sämre konjunktur eller specifika bakslag.")
           }))} />
         </div>

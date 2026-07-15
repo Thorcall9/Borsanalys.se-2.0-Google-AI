@@ -143,7 +143,7 @@ export default function AnalysisDisclosure({
                       </tr>
                       {analysisPrice && (
                         <tr className="hover:bg-muted/5 transition-colors">
-                          <td className="px-6 py-3.5 text-muted-foreground font-medium">Analyspris</td>
+                          <td className="px-6 py-3.5 text-muted-foreground font-medium">Aktiekurs vid analys</td>
                           <td className="px-6 py-3.5 flex items-center gap-2">
                             <DollarSign size={14} className="text-primary" />
                             <span>{analysisPrice}</span>

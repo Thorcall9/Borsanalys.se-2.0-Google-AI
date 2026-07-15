@@ -76,10 +76,10 @@ export const inwido2026: AnalysisData = {
     "Inwido kan sannolikt hantera en normal konjunkturnedgång, men en kraftigare nedgång i kombination med integrationsproblem skulle snabbt försämra kreditmåtten. Den större permanenta risken ligger i kapitalallokeringen: om förvärvsvågen inte genererar avkastning över kapitalkostnaden kan värdet per aktie försvagas trots högre omsättning.",
 
   managementOverview:
-    "Fredrik Meuller är VD och koncernchef. Inwido har tydliga finansiella mål, hög transparens och dokumenterad erfarenhet av decentraliserad styrning. Insiderägandet är begränsat, men flera styrelseledamöter genomförde marknadsköp under juni 2026 vilket stärker förtroendet för värderingen.",
+    "Fredrik Meuller är VD och koncernchef. Inwido har tydliga finansiella mål, hög transparens och dokumenterad erfarenhet av decentraliserad styrning. Under företagsöversikt och ledning väger även insiderköpen positivt, men kapitalavkastningen behöver förbättras för att ett högre kvalitetsbetyg ska vara motiverat.",
 
   managementAnalysis:
-    "Ledning och styrelse får 4/5. Styrkan ligger i decentraliserad styrning, tydliga mål och en historiskt fungerande förvärvsmodell. Begränsningen är den snabba förvärvstakten och att kapitalavkastningen behöver tillbaka mot målet innan ett högre betyg motiveras.",
+    "Ledningen har fortsatt exekvera Inwidos decentraliserade strategi och genomfört sex förvärv på sju månader. Styrkan ligger i lokal kostnadsdisciplin, tydliga finansiella mål och en historiskt fungerande förvärvsmodell. Begränsningen är att kapitalavkastningen har fallit till 11,8 procent och att den senaste förvärvsvågen ännu inte har bevisat sitt långsiktiga värdeskapande.\n\nHuvudscore: Företagsöversikt och ledning 4/5.",
 
   ownershipStructure:
     "Enligt bolagets senast publicerade ägarlista i november 2025 kontrollerade de tio största ägarna omkring 49 procent av aktierna. Ägandet är institutionellt förankrat men utan tydlig industriell huvudägare. Ägarbilden kan ha förändrats sedan dess.",
@@ -88,7 +88,7 @@ export const inwido2026: AnalysisData = {
     "Konsensus varierar mellan olika dataleverantörer och bör tolkas med viss försiktighet direkt efter rapporten. De flesta publika sammanställningar ligger omkring 200-210 kr. Skillnaden mot den egna modellen speglar främst olika antaganden om hur stor och uthållig resultatförbättring de senaste förvärven kommer att ge.",
 
   aiSummary:
-    "Fyra styrelseledamöter köpte aktier på den öppna marknaden mellan den 5 och 10 juni 2026 till kurser omkring 140-143 kr. Några motsvarande insiderförsäljningar rapporterades inte under perioden. Även om beloppen är begränsade i relation till bolagets börsvärde är flera samtidiga köp från olika styrelseledamöter normalt en positiv kvalitativ signal. Efter rapporten handlas aktien omkring 18-20 procent över insiderköpens nivåer.",
+    "Signalbild: Måttligt positiv\nInsiderköpen, den förbättrade orderingången och stigande marginalen stärker caset. Signalen begränsas av att aktien nu handlas 18-20 procent över insiderköpens nivåer och att en betydande del av orderingången kom från en enskild projektorder.",
 
   conclusion:
     "Inwidos Q2-rapport var operationellt stark och motiverar högre estimat än efter Q1. Den kraftiga kursuppgången på rapportdagen innebär dock att en betydande del av förbättringen redan har prisats in. Base-scenariot ger cirka 8,1 procent årlig totalavkastning över fem år, vilket inte når modellens krav för KÖP. BEVAKA är därför rätt rekommendation tills kursen blir mer attraktiv eller bolaget visar att EPS kan stiga utan högre skuldsättning.",
@@ -97,18 +97,17 @@ export const inwido2026: AnalysisData = {
   geography: "19 länder i Europa",
   sharesCount: "cirka 58,0 miljoner aktier",
   longTermInvolvement: "Ja, för investerare som accepterar byggcykel- och förvärvsrisk.",
-  targetPrice: "155-185 kr på 12 månaders sikt",
-  buyZone: "Köp successivt under 145 kr och tydligt köpvärd under 120 kr.",
+  targetPrice: "155-185 kr",
+  buyZone: "Modellens gröna tolvmånaderszon börjar under cirka 157 kr. För en tydligare säkerhetsmarginal är handlingsnivån satt till köp successivt under 145 kr och tydligt köpvärd under 120 kr.",
   kopzon: "Bevaka. Uppgradering till köp kräver lägre kurs eller tydligare bevis på uthållig EPS-tillväxt.",
 
   strengths: [
     "Decentraliserad affärsmodell med lokal prissättning och kostnadskontroll.",
     "Geografisk riskspridning över 19 länder.",
     "Q2 visade återhämtad organisk orderingång och stigande marginal.",
-    "Fyra styrelseledamöter köpte aktier inför Q2-rapporten.",
   ],
   weaknesses: [
-    "Cyklist slutmarknad och låg andel avtalsbundna återkommande intäkter.",
+    "Cyklisk slutmarknad och låg andel avtalsbundna återkommande intäkter.",
     "Kapitalavkastning under bolagets mål.",
     "Hög förvärvstakt gör den senaste tillväxten svårare att kvalitetssäkra.",
     "EPS är fortfarande tydligt under toppen 2022.",
@@ -141,7 +140,7 @@ export const inwido2026: AnalysisData = {
     },
     {
       title: "Positiva signaler inför och efter Q2",
-      body: "Fyra styrelseledamöter köpte aktier inför rapporten, orderingången förbättrades tydligt, operationell EBITA-marginal steg till 11,5 procent och EPS ökade 26 procent."
+      body: "Orderingången förbättrades tydligt, operationell EBITA-marginal steg till 11,5 procent och EPS ökade 26 procent."
     },
     {
       title: "Viktig reservation",
@@ -265,15 +264,13 @@ export const inwido2026: AnalysisData = {
 
   aiTables: [
     {
-      title: "Positiva signaler inför och efter Q2-rapporten",
+      title: "Samlad signalbild",
       headers: ["Signal", "Bedömning"],
       rows: [
-        ["Insiderköp", "Fyra styrelseledamöter köpte aktier inför Q2-rapporten."],
+        ["Insideraktivitet", "Fyra styrelseledamöter köpte aktier inför Q2-rapporten och inga insiderförsäljningar rapporterades under samma period."],
         ["Orderingång", "Den organiska orderingången förbättrades tydligt."],
         ["Marginal", "Operationell EBITA-marginal steg till 11,5 procent."],
-        ["EPS", "EPS ökade med 26 procent jämfört med föregående år."],
-        ["Säkerhetsmarginal", "Aktien handlas cirka 18-20 procent över insiderköpens nivåer."],
-        ["Insiderförsäljningar", "Inga insiderförsäljningar rapporterades under samma period."],
+        ["Begränsning", "Aktien handlas cirka 18-20 procent över insiderköpens nivåer och orderingången påverkades av en stor projektorder."],
       ],
     },
   ],
@@ -300,7 +297,7 @@ export const inwido2026: AnalysisData = {
       change: "+105%",
       type: "bull",
       probability: "25%",
-      description: "Organisk tillväxt normaliseras till 5-6 procent, förvärven ger marginaler i linje med koncernen och kapitalavkastningen återgår över 15 procent."
+      description: "CAGR: 15,4%. Organisk tillväxt normaliseras till 5-6 procent, förvärven ger marginaler i linje med koncernen och kapitalavkastningen återgår över 15 procent."
     },
     {
       label: "Base Case",
@@ -308,7 +305,7 @@ export const inwido2026: AnalysisData = {
       change: "+48%",
       type: "base",
       probability: "50%",
-      description: "Organisk tillväxt kring 3-4 procent över cykeln, kompletterad av förvärv och gradvis marginalförbättring. Slutmultipel 16x."
+      description: "CAGR: 8,1%. Organisk tillväxt kring 3-4 procent över cykeln, kompletterad av förvärv och gradvis marginalförbättring. Slutmultipel 16x."
     },
     {
       label: "Bear Case",
@@ -316,7 +313,7 @@ export const inwido2026: AnalysisData = {
       change: "-25%",
       type: "bear",
       probability: "25%",
-      description: "Konsumentmarknaden förblir svag, förvärv integreras långsammare än planerat och EPS står stilla över fem år."
+      description: "CAGR: -5,7%. Konsumentmarknaden förblir svag, förvärv integreras långsammare än planerat och EPS står stilla över fem år."
     },
   ],
 

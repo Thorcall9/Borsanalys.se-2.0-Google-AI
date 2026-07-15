@@ -7,6 +7,8 @@ interface VerdictBoxProps {
   date: string;
   accentColor?: string;
   buyZone?: string;
+  targetLabel?: string;
+  targetNote?: string;
 }
 
 export default function VerdictBox({ 
@@ -15,7 +17,9 @@ export default function VerdictBox({
   description, 
   date, 
   accentColor = "#10B981",
-  buyZone
+  buyZone,
+  targetLabel = "Målpris",
+  targetNote
 }: VerdictBoxProps) {
   return (
     <div className="bg-card border border-border rounded-[3rem] p-10 md:p-12 text-center relative overflow-hidden shadow-2xl shadow-black/10">
@@ -31,7 +35,12 @@ export default function VerdictBox({
           {verdict}
         </div>
         <div className="text-2xl md:text-4xl font-black tracking-tighter mb-10" style={{ color: accentColor }}>
-          Målpris: {target}
+          {targetLabel}: {target}
+          {targetNote && (
+            <div className="text-xs md:text-sm font-black uppercase tracking-widest mt-3 opacity-70 leading-relaxed">
+              {targetNote}
+            </div>
+          )}
           {buyZone && (
             <div className="text-sm font-black uppercase tracking-widest mt-2 opacity-70">
               Köpzon: {buyZone}
