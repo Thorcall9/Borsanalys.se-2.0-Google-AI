@@ -150,6 +150,14 @@ export const analysisDisclosures = {
       "Författaren äger aktier i Investor AB genom Investor A och Investor B. Investor AB är en betydande ägare i Saab AB. Författaren har därmed en indirekt ekonomisk exponering mot Saab AB genom sitt innehav i Investor AB.",
     commercialRelationship:
       "Börsanalys.se har inte mottagit ersättning från och har ingen kommersiell relation till Saab AB i samband med denna analys."
+  },
+  inwido: {
+    companyName: "Inwido AB",
+    holdingType: "none",
+    holdingText:
+      "Författaren äger inte aktier eller andra finansiella instrument direkt i Inwido AB enligt innehavsredovisning senast uppdaterad 28 maj 2026. Författaren äger breda svenska aktiefonder som indirekt kan ha exponering mot bolaget.",
+    commercialRelationship:
+      "Börsanalys.se har inte mottagit ersättning från och har ingen kommersiell relation till Inwido AB i samband med denna analys."
   }
 } as const satisfies Record<string, AnalysisDisclosure>;
 

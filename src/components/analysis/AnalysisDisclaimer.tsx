@@ -27,7 +27,8 @@ const slugToDisclosureKey: Record<string, AnalysisDisclosureKey> = {
   "aq-group": "aqGroup",
   "nibe-industrier-2026": "nibe",
   "nordea-bank-2026": "nordea",
-  "saab-2026": "saab"
+  "saab-2026": "saab",
+  "inwido-2026": "inwido"
 };
 
 export default function AnalysisDisclaimer({ className = "", theme = "dark" }: AnalysisDisclaimerProps) {

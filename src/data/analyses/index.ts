@@ -20,6 +20,7 @@ import { axfoodQ12026 } from "./axfood/axfood-q1-2026.js";
 import { abb2026 } from "./abb/abb-q1-2026.js";
 import { plejdQ12026 } from "./plejd/plejd-q1-2026.js";
 import { revolutionRace2026 } from "./revolutionrace/revolutionrace-2026.js";
+import { inwido2026 } from "./inwido/inwido-2026.js";
 
 export const analyses: Record<string, AnalysisData> = {
   "investor-ab": investorAb,
@@ -43,6 +44,7 @@ export const analyses: Record<string, AnalysisData> = {
   "abb-q1-2026": abb2026,
   "plejd-q1-2026": plejdQ12026,
   "revolutionrace-2026": revolutionRace2026,
+  "inwido-2026": inwido2026,
 };
 
 export type { AnalysisData, AIDrivenAnalysis } from "../../types/analysis.js";
