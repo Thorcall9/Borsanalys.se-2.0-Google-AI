@@ -226,6 +226,33 @@ export interface AnalysisData {
   threats?: string[];
   scenarios: { label: string; value: string; change: string; type: "bull" | "base" | "bear"; description?: string; probability?: string }[];
   businessModel?: string;
+  affarsmodell?: {
+    sankey?: {
+      period: string;
+      currency: string;
+      nodes: {
+        id: string;
+        label: string;
+        type: "revenueSource" | "revenue" | "profit" | "cost";
+        amount?: number;
+        shareOfRevenue?: number;
+        margin?: number;
+        organicGrowth?: string;
+        segmentMargin?: string;
+      }[];
+      links: {
+        source: string;
+        target: string;
+        value: number;
+      }[];
+      financialFlow?: {
+        id: string;
+        label: string;
+        value: number;
+        margin?: number;
+      }[];
+    };
+  };
   management?: string;
   advantages?: string[];
   motivation?: string;

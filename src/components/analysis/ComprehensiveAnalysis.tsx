@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { ResponsiveContainer, Sankey, Tooltip } from 'recharts';
+import { Sankey, Tooltip } from 'recharts';
 import { 
   Globe, 
   Users, 
@@ -184,84 +184,104 @@ const InwidoQuickOverview = () => {
   );
 };
 
-const InwidoSankeyDiagram = () => {
-  const totalRevenue = 9468;
-  const segments = [
-    { name: "Skandinavien", share: 46, amount: 4355, margin: "15,1 %" },
-    { name: "Väst", share: 22, amount: 2083, margin: "10,7 %" },
-    { name: "Öst", share: 19, amount: 1799, margin: "5,0 %" },
-    { name: "e-Commerce", share: 11, amount: 1041, margin: "12,6 %" },
-    { name: "Övrigt", share: 2, amount: 189, margin: "Ej särredovisad" },
-  ];
+type InwidoSankeyConfig = NonNullable<NonNullable<AnalysisData["affarsmodell"]>["sankey"]>;
 
-  const sankeyNodes = [
-    ...segments.map((segment) => ({
-      name: segment.name,
-      label: `${segment.name} (${segment.share} %)`,
-      valueLabel: `${segment.amount.toLocaleString("sv-SE")} Mkr`,
-      detailLabel: `Andel av omsättning: ${segment.share} %`,
-      marginLabel: `Operationell EBITA-marginal Q2: ${segment.margin}`,
-      kind: "segment",
-    })),
-    {
-      name: "Omsättning",
-      label: "Omsättning",
-      valueLabel: "9 468 Mkr",
-      detailLabel: "Rullande tolv månader",
-      marginLabel: "100 % av omsättning",
-      kind: "revenue",
-    },
-    {
-      name: "Bruttoresultat",
-      label: "Bruttoresultat",
-      valueLabel: "2 367 Mkr",
-      detailLabel: "Bruttomarginal",
-      marginLabel: "25,0 %",
-      kind: "profit",
-    },
-    {
-      name: "EBIT",
-      label: "EBIT",
-      valueLabel: "862 Mkr",
-      detailLabel: "EBIT-marginal",
-      marginLabel: "9,1 %",
-      kind: "profit",
-    },
-    {
-      name: "Nettoresultat",
-      label: "Nettoresultat",
-      valueLabel: "528 Mkr",
-      detailLabel: "Nettomarginal",
-      marginLabel: "5,6 %",
-      kind: "profit",
-    },
-  ];
+const defaultInwidoSankey: InwidoSankeyConfig = {
+  period: "RTM Q2 2026",
+  currency: "Mkr",
+  nodes: [
+    { id: "skandinavien", label: "Skandinavien", type: "revenueSource", amount: 4355, shareOfRevenue: 46, organicGrowth: "+5 %", segmentMargin: "15,1 %" },
+    { id: "vast", label: "Väst", type: "revenueSource", amount: 2083, shareOfRevenue: 22, organicGrowth: "+10 %", segmentMargin: "10,7 %" },
+    { id: "ost", label: "Öst", type: "revenueSource", amount: 1799, shareOfRevenue: 19, organicGrowth: "-2 %", segmentMargin: "5,0 %" },
+    { id: "ecommerce", label: "e-Commerce", type: "revenueSource", amount: 1041, shareOfRevenue: 11, organicGrowth: "+3 %", segmentMargin: "12,6 %" },
+    { id: "ovrigt", label: "Övrigt och elimineringar", type: "revenueSource", amount: 190, shareOfRevenue: 2 },
+    { id: "revenue", label: "Nettoomsättning", type: "revenue", amount: 9468, shareOfRevenue: 100 },
+    { id: "cogs", label: "Kostnad sålda varor", type: "cost", amount: 7101, shareOfRevenue: 75 },
+    { id: "gross-profit", label: "Bruttoresultat", type: "profit", amount: 2367, shareOfRevenue: 25, margin: 25 },
+    { id: "operating-costs", label: "Rörelsekostnader", type: "cost", amount: 1397, shareOfRevenue: 14.8 },
+    { id: "operational-ebita", label: "Operationell EBITA", type: "profit", amount: 970, shareOfRevenue: 10.2, margin: 10.2 },
+    { id: "adjustments", label: "Avskrivningar och övriga justeringar", type: "cost", amount: 108, shareOfRevenue: 1.1 },
+    { id: "ebit", label: "EBIT", type: "profit", amount: 862, shareOfRevenue: 9.1, margin: 9.1 },
+    { id: "finance-tax", label: "Finansnetto, skatt och övrigt", type: "cost", amount: 334, shareOfRevenue: 3.5 },
+    { id: "net-income", label: "Nettoresultat", type: "profit", amount: 528, shareOfRevenue: 5.6, margin: 5.6 },
+  ],
+  links: [
+    { source: "skandinavien", target: "revenue", value: 4355 },
+    { source: "vast", target: "revenue", value: 2083 },
+    { source: "ost", target: "revenue", value: 1799 },
+    { source: "ecommerce", target: "revenue", value: 1041 },
+    { source: "ovrigt", target: "revenue", value: 190 },
+    { source: "revenue", target: "cogs", value: 7101 },
+    { source: "revenue", target: "gross-profit", value: 2367 },
+    { source: "gross-profit", target: "operating-costs", value: 1397 },
+    { source: "gross-profit", target: "operational-ebita", value: 970 },
+    { source: "operational-ebita", target: "adjustments", value: 108 },
+    { source: "operational-ebita", target: "ebit", value: 862 },
+    { source: "ebit", target: "finance-tax", value: 334 },
+    { source: "ebit", target: "net-income", value: 528 },
+  ],
+};
 
-  const revenueIndex = segments.length;
-  const grossIndex = revenueIndex + 1;
-  const ebitIndex = grossIndex + 1;
-  const netIndex = ebitIndex + 1;
+const formatMkr = (value?: number) => `${Math.round(value || 0).toLocaleString("sv-SE")} Mkr`;
+const formatPercent = (value?: number) => value === undefined ? undefined : `${value.toLocaleString("sv-SE", { maximumFractionDigits: 1 })} %`;
+
+const validateSankeyBalance = (config: InwidoSankeyConfig) => {
+  const nodeIds = new Set(config.nodes.map((node) => node.id));
+  const incoming = new Map<string, number>();
+  const outgoing = new Map<string, number>();
+
+  config.links.forEach((link) => {
+    if (!nodeIds.has(link.source) || !nodeIds.has(link.target)) return;
+    outgoing.set(link.source, (outgoing.get(link.source) || 0) + link.value);
+    incoming.set(link.target, (incoming.get(link.target) || 0) + link.value);
+  });
+
+  return config.nodes
+    .filter((node) => incoming.has(node.id) && outgoing.has(node.id))
+    .map((node) => ({
+      node: node.label,
+      incoming: incoming.get(node.id) || 0,
+      outgoing: outgoing.get(node.id) || 0,
+      delta: Math.abs((incoming.get(node.id) || 0) - (outgoing.get(node.id) || 0)),
+    }))
+    .filter((check) => check.delta > 1);
+};
+
+const InwidoSankeyDiagram = ({ sankey }: { sankey?: InwidoSankeyConfig }) => {
+  const config = sankey || defaultInwidoSankey;
+  const balanceWarnings = validateSankeyBalance(config);
+  const isBalanced = balanceWarnings.length === 0;
+  const nodeIndex = new Map(config.nodes.map((node, index) => [node.id, index]));
+  const revenueSources = config.nodes.filter((node) => node.type === "revenueSource");
+  const financialNodes = config.nodes.filter((node) => node.type !== "revenueSource");
+
+  if (!isBalanced && import.meta.env.DEV) {
+    console.warn("Inwido Sankey data is not balanced. Rendering fallback.", balanceWarnings);
+  }
 
   const sankeyData = {
-    nodes: sankeyNodes,
-    links: [
-      ...segments.map((segment, index) => ({
-        source: index,
-        target: revenueIndex,
-        value: segment.amount,
-        name: `${segment.name} → Omsättning`,
+    nodes: config.nodes.map((node) => ({
+      ...node,
+      name: node.label,
+      valueLabel: formatMkr(node.amount),
+      detailLabel: node.shareOfRevenue !== undefined ? `${formatPercent(node.shareOfRevenue)} av nettoomsättningen` : config.period,
+      marginLabel: node.margin !== undefined ? `Marginal: ${formatPercent(node.margin)}` : undefined,
+    })),
+    links: config.links
+      .filter((link) => nodeIndex.has(link.source) && nodeIndex.has(link.target))
+      .map((link) => ({
+        source: nodeIndex.get(link.source) || 0,
+        target: nodeIndex.get(link.target) || 0,
+        value: link.value,
       })),
-      { source: revenueIndex, target: grossIndex, value: Math.round(totalRevenue * 0.25), name: "Omsättning → Bruttoresultat" },
-      { source: grossIndex, target: ebitIndex, value: 862, name: "Bruttoresultat → EBIT" },
-      { source: ebitIndex, target: netIndex, value: 528, name: "EBIT → Nettoresultat" },
-    ],
   };
 
   const CustomNode = (props: any) => {
     const { x, y, width, height, payload } = props;
-    const isSegment = payload.kind === "segment";
-    const fill = isSegment ? "#1F2937" : payload.kind === "revenue" ? "#111827" : "#0F172A";
-    const stroke = isSegment ? "#38BDF8" : "#10B981";
+    const isCost = payload.type === "cost";
+    const isSource = payload.type === "revenueSource";
+    const fill = isCost ? "#2F1F24" : isSource ? "#1F2937" : payload.type === "revenue" ? "#111827" : "#0F172A";
+    const stroke = isCost ? "#F87171" : isSource ? "#38BDF8" : "#10B981";
     const nodeHeight = Math.max(height, 34);
 
     return (
@@ -278,25 +298,31 @@ const InwidoSankeyDiagram = () => {
           strokeOpacity={0.55}
           strokeWidth={1.2}
         />
-        <text x={x + Math.max(width, 18) + 10} y={y + Math.min(nodeHeight / 2 - 4, 18)} fill="#F8FAFC" fontSize="11" fontWeight="900">
-          {payload.label}
+        <text x={x + Math.max(width, 18) + 10} y={y + Math.min(nodeHeight / 2 - 6, 18)} fill="#F8FAFC" fontSize="11" fontWeight="900">
+          {payload.type === "revenueSource" && payload.shareOfRevenue !== undefined ? `${payload.label} (${payload.shareOfRevenue} %)` : payload.label}
         </text>
-        <text x={x + Math.max(width, 18) + 10} y={y + Math.min(nodeHeight / 2 + 12, 34)} fill="#94A3B8" fontSize="10" fontWeight="700">
+        <text x={x + Math.max(width, 18) + 10} y={y + Math.min(nodeHeight / 2 + 10, 34)} fill={isCost ? "#FCA5A5" : "#94A3B8"} fontSize="10" fontWeight="700">
           {payload.valueLabel}
         </text>
+        {payload.margin !== undefined && (
+          <text x={x + Math.max(width, 18) + 10} y={y + Math.min(nodeHeight / 2 + 25, 49)} fill="#6EE7B7" fontSize="9" fontWeight="800">
+            {formatPercent(payload.margin)}
+          </text>
+        )}
       </g>
     );
   };
 
   const CustomLink = (props: any) => {
     const { sourceX, sourceY, sourceControlX, targetX, targetY, targetControlX, linkWidth, payload } = props;
-    const isProfitStep = payload?.source?.kind !== "segment";
+    const targetType = payload?.target?.type;
+    const isCostFlow = targetType === "cost";
     return (
       <path
         d={`M${sourceX},${sourceY} C${sourceControlX},${sourceY} ${targetControlX},${targetY} ${targetX},${targetY}`}
-        stroke={isProfitStep ? "#38BDF8" : "#0EA5E9"}
-        strokeWidth={Math.max(2, linkWidth)}
-        strokeOpacity={isProfitStep ? 0.52 : 0.45}
+        stroke={isCostFlow ? "#F87171" : "#0EA5E9"}
+        strokeWidth={Math.max(isCostFlow ? 3 : 2, linkWidth)}
+        strokeOpacity={isCostFlow ? 0.42 : 0.48}
         fill="none"
         strokeLinecap="round"
       />
@@ -313,9 +339,14 @@ const InwidoSankeyDiagram = () => {
         <div className="text-sm font-black text-white mb-1">{data.name || payload[0].name}</div>
         {data.detailLabel && <div className="text-xs font-semibold text-slate-300">{data.detailLabel}</div>}
         {data.marginLabel && <div className="text-xs font-black text-sky-300 mt-2">{data.marginLabel}</div>}
+        {data.organicGrowth && <div className="text-xs font-semibold text-slate-300 mt-2">Organisk tillväxt: {data.organicGrowth}</div>}
+        {data.segmentMargin && <div className="text-xs font-semibold text-slate-300">Segmentmarginal Q2: {data.segmentMargin}</div>}
+        <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 mt-3">{config.period}</div>
       </div>
     );
   };
+
+  const fallbackRows = [...revenueSources, ...financialNodes.filter((node) => ["revenue", "gross-profit", "operational-ebita", "ebit", "net-income"].includes(node.id))];
 
   return (
     <div className="mb-12 rounded-[2.5rem] border border-slate-700/70 bg-slate-950 text-white shadow-2xl shadow-black/20 overflow-hidden">
@@ -326,68 +357,61 @@ const InwidoSankeyDiagram = () => {
               Hur tjänar Inwido sina pengar?
             </div>
             <h3 className="text-2xl font-black tracking-tighter text-white">
-              Omsättningsmix → Bruttoresultat → EBIT → Nettoresultat
+              Omsättningsmix → Bruttoresultat → Operationell EBITA → EBIT → Nettoresultat
             </h3>
           </div>
           <div className="text-xs font-semibold text-slate-400 max-w-sm">
-            Flödena visar ungefärliga Mkr-belopp baserade på rullande omsättning om 9 468 Mkr och redovisade marginaler.
+            Flödena visar ungefärliga Mkr-belopp baserade på rullande tolv månader per Q2 2026. Kostnadsflödena visar hur omsättningen reduceras på vägen till nettoresultatet.
           </div>
         </div>
       </div>
 
       <div className="p-4 md:p-8">
-        <div className="hidden md:block h-[540px]" role="img" aria-label="Interaktivt Sankeydiagram över Inwidos omsättningsmix, bruttovinst, EBIT och nettoresultat">
-          <ResponsiveContainer width="100%" height="100%">
-            <Sankey
-              data={sankeyData}
-              node={CustomNode}
-              link={CustomLink}
-              nodePadding={30}
-              nodeWidth={18}
-              iterations={64}
-              sort={false}
-              align="justify"
-              margin={{ top: 18, right: 160, bottom: 18, left: 12 }}
-            >
-              <Tooltip content={<CustomTooltip />} />
-            </Sankey>
-          </ResponsiveContainer>
-        </div>
-
-        <div className="md:hidden overflow-x-auto pb-2">
-          <div className="min-w-[620px] space-y-4">
-            {segments.map((segment) => (
-              <div key={segment.name} className="rounded-2xl border border-slate-700 bg-slate-900 p-4">
+        {isBalanced ? (
+          <div className="overflow-x-auto pb-2">
+            <div className="min-w-[1120px]">
+              <div className="mb-3 text-[10px] font-black uppercase tracking-widest text-slate-500 md:hidden">
+                Dra i sidled för att se hela flödet
+              </div>
+              <div className="h-[620px] w-[1120px]" role="img" aria-label="Interaktivt Sankeydiagram över Inwidos omsättningsmix, kostnader, bruttovinst, operationell EBITA, EBIT och nettoresultat">
+                <Sankey
+                  width={1120}
+                  height={620}
+                  data={sankeyData}
+                  node={CustomNode}
+                  link={CustomLink}
+                  nodePadding={30}
+                  nodeWidth={18}
+                  iterations={80}
+                  sort={false}
+                  align="justify"
+                  margin={{ top: 24, right: 190, bottom: 32, left: 18 }}
+                >
+                  <Tooltip content={<CustomTooltip />} />
+                </Sankey>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {fallbackRows.map((node) => (
+              <div key={node.id} className="rounded-2xl border border-slate-700 bg-slate-900 p-4">
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <div className="text-sm font-black text-white">{segment.name}</div>
-                    <div className="text-xs font-semibold text-slate-400">Andel av omsättning: {segment.share} %</div>
+                    <div className="text-sm font-black text-white">{node.label}</div>
+                    {node.shareOfRevenue !== undefined && (
+                      <div className="text-xs font-semibold text-slate-400">{formatPercent(node.shareOfRevenue)} av nettoomsättningen</div>
+                    )}
                   </div>
                   <div className="text-right">
-                    <div className="text-lg font-black text-sky-300">{segment.amount.toLocaleString("sv-SE")} Mkr</div>
-                    <div className="text-xs font-bold text-slate-400">EBITA Q2: {segment.margin}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-            {[
-              ["Omsättning", "9 468 Mkr", "100 %"],
-              ["Bruttoresultat", "2 367 Mkr", "25,0 %"],
-              ["EBIT", "862 Mkr", "9,1 %"],
-              ["Nettoresultat", "528 Mkr", "5,6 %"],
-            ].map(([label, value, margin]) => (
-              <div key={label} className="rounded-2xl border border-sky-400/25 bg-slate-900 p-4">
-                <div className="flex items-center justify-between">
-                  <div className="text-sm font-black text-white">{label}</div>
-                  <div className="text-right">
-                    <div className="text-lg font-black text-sky-300">{value}</div>
-                    <div className="text-xs font-bold text-slate-400">{margin}</div>
+                    <div className={`text-lg font-black ${node.type === "cost" ? "text-red-300" : "text-sky-300"}`}>{formatMkr(node.amount)}</div>
+                    {node.margin !== undefined && <div className="text-xs font-bold text-slate-400">{formatPercent(node.margin)}</div>}
                   </div>
                 </div>
               </div>
             ))}
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
@@ -801,7 +825,7 @@ const InwidoTemplateAnalysis = ({
           <div className="flex items-center gap-1.5 px-3 py-1 bg-primary/10 border border-primary/20 rounded-full text-[10px] font-black text-primary uppercase tracking-widest">Betyg: 4/5</div>
         </div>
         <div className={baseTableClass}>
-          <InwidoSankeyDiagram />
+          <InwidoSankeyDiagram sankey={data.affarsmodell?.sankey} />
           <InwidoNote title="Så tjänar Inwido pengar">
             Materialinköp → lokal tillverkning → varumärkesbaserad försäljning → installation/distribution → eftermarknad och återkommande renoveringsbehov.
           </InwidoNote>
