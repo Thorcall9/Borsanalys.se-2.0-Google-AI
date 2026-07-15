@@ -14,7 +14,8 @@ import {
   PieChart,
   AlertCircle,
   CheckCircle2,
-  Star 
+  Star,
+  Clock3
 } from 'lucide-react';
 import AnalysisLayout from './AnalysisLayout';
 import SectionHeader from './SectionHeader';
@@ -44,6 +45,143 @@ interface ComprehensiveAnalysisProps {
   onToggleWatchlist?: () => void;
   nextAnalysis?: AnalysisData;
 }
+
+const InwidoQuickOverview = () => {
+  const quickRows = [
+    ["Totalrating", "24/35 - 69 %"],
+    ["Bolagskvalitet", "3,5/5 - 70 %"],
+    ["Investeringsattraktivitet", "3,3/5 - 67 %"],
+    ["Rekommendation", "BEVAKA"],
+    ["Aktuell kurs", "cirka 167,90 kr"],
+    ["Rimligt värde, 12 månader", "155-185 kr"],
+    ["Base-case, femårigt totalvärde", "248 kr"],
+    ["Sannolikhetsviktat femårsvärde", "241 kr"],
+    ["Kurszon 12 månader", "Fullvärderad", "orange"],
+    ["Kurszon 5 år", "Rimligt värderad", "amber"],
+    ["Handlingsnivå", "Köp successivt under 145 kr, tydligt köpvärd under 120 kr"],
+    ["Risknivå", "Medel"],
+    ["Zoner giltiga till", "Nästa kvartalsrapport"],
+    ["Modellsäkerhet", "Medel på 12 månader, låg-medel på fem år"],
+  ] as const;
+
+  const thesisRows = [
+    ["Varför kan aktien vara attraktiv?", "Inwido har potential att kombinera en normalisering av renoveringsmarknaden med förvärvstillväxt och förbättrad fabriksbeläggning."],
+    ["Vad kan marknaden ha missat?", "De senaste förvärven ingår ännu inte med full årseffekt i resultatet, vilket kan ge högre framtida EPS än den rapporterade rullande nivån antyder."],
+    ["Vad är största risken?", "En stor del av tillväxten är förvärvad och orderingången förstärktes kraftigt av en enskild skotsk projektorder."],
+    ["Vad bekräftar tesen?", "Organisk tillväxt över 4 procent och operationell EBITA-marginal över 11 procent även utan nya stora engångsorder."],
+    ["Vad bryter tesen?", "Nettoskuld över 2,5 gånger EBITDA eller kapitalavkastning under 10 procent trots stabilare marknader."],
+  ];
+
+  const signalCards = [
+    ["Största styrka", "Rekordresultat i Q2, stigande marginal och bred förbättring i Skandinavien, Väst och e-Commerce."],
+    ["Största risk", "Sex förvärv på sju månader har lyft skulden samtidigt som avkastningen på operativt kapital fallit."],
+    ["Nästa katalysator", "Bevis på att orderstocken och de nyförvärvade bolagen ger uthållig EPS- och kassaflödestillväxt."],
+  ];
+
+  const zoneStyle = (tone?: string) => {
+    if (tone === "orange") return "bg-orange-500/10 text-orange-600 border-orange-500/20";
+    if (tone === "amber") return "bg-amber-500/10 text-amber-600 border-amber-500/20";
+    return "bg-muted/40 text-foreground border-border";
+  };
+
+  return (
+    <section className="bg-card border border-border/70 rounded-[2.5rem] shadow-2xl shadow-black/10 overflow-hidden">
+      <div className="p-8 md:p-10 border-b border-border/60 bg-primary/5">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <div className="space-y-3">
+            <div className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.28em] text-primary">
+              <BarChart3 size={14} />
+              Snabböversikt
+            </div>
+            <h2 className="text-2xl md:text-4xl font-black tracking-tighter leading-tight text-foreground">
+              Inwido - stark Q2-rapport, men kursreaktionen lyfter ribban
+            </h2>
+          </div>
+          <div className="shrink-0 rounded-2xl bg-primary/10 border border-primary/20 px-5 py-4 text-center">
+            <div className="text-[10px] font-black uppercase tracking-widest text-primary/70 mb-1">Rekommendation</div>
+            <div className="text-2xl font-black text-primary">BEVAKA</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-0">
+        <div className="xl:col-span-5 border-b xl:border-b-0 xl:border-r border-border/60">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 divide-y sm:divide-y-0 sm:divide-x xl:divide-x-0 xl:divide-y divide-border/40">
+            {quickRows.map(([field, value, tone]) => (
+              <div key={field} className="px-6 py-4 flex items-start justify-between gap-4">
+                <div className="text-[11px] font-black uppercase tracking-[0.12em] text-muted-foreground leading-snug">
+                  {field}
+                </div>
+                {tone ? (
+                  <div className={`shrink-0 rounded-full border px-3 py-1 text-xs font-black ${zoneStyle(tone)}`}>
+                    {value}
+                  </div>
+                ) : (
+                  <div className="text-sm font-black text-foreground text-right leading-snug max-w-[220px]">
+                    {value}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="xl:col-span-7 p-8 md:p-10 space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {signalCards.map(([label, text]) => (
+              <div key={label} className="rounded-2xl border border-border/60 bg-background/50 p-5">
+                <div className="text-[10px] font-black uppercase tracking-widest text-primary mb-2">{label}</div>
+                <p className="text-sm font-semibold leading-relaxed text-foreground/85">{text}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="rounded-3xl border border-primary/15 bg-primary/5 p-6">
+            <div className="flex items-start gap-3">
+              <Info size={16} className="text-primary mt-1 shrink-0" />
+              <p className="text-sm md:text-base leading-relaxed font-medium text-foreground/85">
+                Q2-rapporten visade 16 procents omsättningstillväxt, varav 4 procent organiskt. Operationell EBITA steg 19 procent till 314 Mkr och EPS ökade 26 procent till 3,40 kr. Den organiska orderingången steg 23 procent och orderstocken var 16 procent högre än föregående år.
+              </p>
+            </div>
+            <div className="mt-4 text-[10px] font-black uppercase tracking-widest text-muted-foreground">
+              Källa: Inwido Q2 2026, q2-2026-se-report.pdf
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center gap-3 mb-5">
+              <div className="h-10 w-10 rounded-2xl bg-muted/50 border border-border flex items-center justify-center text-primary">
+                <Clock3 size={18} />
+              </div>
+              <h3 className="text-sm font-black uppercase tracking-[0.24em] text-foreground">
+                Investeringstes på 30 sekunder
+              </h3>
+            </div>
+            <div className="overflow-hidden rounded-3xl border border-border/60">
+              {thesisRows.map(([question, conclusion]) => (
+                <div key={question} className="grid grid-cols-1 md:grid-cols-[220px_1fr] border-b last:border-b-0 border-border/50">
+                  <div className="bg-muted/25 px-5 py-4 text-xs font-black text-foreground">
+                    {question}
+                  </div>
+                  <div className="px-5 py-4 text-sm font-medium leading-relaxed text-muted-foreground">
+                    {conclusion}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-3xl bg-foreground text-background p-6">
+            <div className="text-[10px] font-black uppercase tracking-widest opacity-60 mb-2">Kärnslutsats</div>
+            <p className="text-base md:text-lg font-semibold leading-relaxed">
+              Rapporten bekräftar att verksamheten har vänt upp från ett svagt första kvartal. Kursuppgången innebär dock att investeraren redan betalar för en betydande del av återhämtningen.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 // Visual Trigger: A component to render geographical or segment distribution as a bar
 const DistributionBar = ({ data, accentColor }: { data: string; accentColor: string }) => {
@@ -230,6 +368,8 @@ export default function ComprehensiveAnalysis({
             )}
           </h1>
         </div>
+
+        {isInwido && <InwidoQuickOverview />}
 
         {/* 1. Lead Narrative: Executive Summary or Investment Case */}
         <div className="max-w-4xl">
