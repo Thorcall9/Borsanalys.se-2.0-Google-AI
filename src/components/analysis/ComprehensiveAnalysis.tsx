@@ -183,6 +183,131 @@ const InwidoQuickOverview = () => {
   );
 };
 
+const InwidoSankeyDiagram = () => {
+  const segments = [
+    { label: "Segment A", value: "40 %", x: 46, color: "#10B981" },
+    { label: "Segment B", value: "35 %", x: 150, color: "#14B8A6" },
+    { label: "Segment C", value: "25 %", x: 254, color: "#64748B" },
+  ];
+
+  const flowNodes = [
+    { label: "Omsättning", value: "9 468 Mkr", y: 112, color: "#10B981" },
+    { label: "Bruttovinst", value: "3 850 Mkr", note: "41 %", y: 196, color: "#0F766E" },
+    { label: "Rörelsekostnader", value: "2 880 Mkr", y: 280, color: "#F59E0B" },
+    { label: "EBITA", value: "970 Mkr", note: "10,2 %", y: 364, color: "#10B981" },
+    { label: "Finans + skatt", value: "", y: 448, color: "#94A3B8" },
+    { label: "Nettoresultat", value: "528 Mkr", y: 532, color: "#111827" },
+  ];
+
+  return (
+    <div className="mb-12 rounded-[2.5rem] border border-border/60 bg-card shadow-xl shadow-black/5 overflow-hidden">
+      <div className="p-6 md:p-8 border-b border-border/60 bg-muted/20">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div>
+            <div className="text-[10px] font-black uppercase tracking-[0.24em] text-primary mb-2">
+              Segment- och resultatflöde
+            </div>
+            <h3 className="text-2xl font-black tracking-tighter text-foreground">
+              Från omsättning till nettoresultat
+            </h3>
+          </div>
+          <div className="text-xs font-semibold text-muted-foreground max-w-sm">
+            Schematisk Sankey-bild baserad på rullande tolvmånadersnivåer och angivna segmentandelar.
+          </div>
+        </div>
+      </div>
+
+      <div className="p-5 md:p-8">
+        <svg viewBox="0 0 360 620" role="img" aria-label="Sankeydiagram över Inwidos segment, omsättning, bruttovinst, kostnader, EBITA och nettoresultat" className="hidden md:block w-full h-auto max-h-[720px]">
+          <defs>
+            <filter id="inwidoSankeyShadow" x="-20%" y="-20%" width="140%" height="140%">
+              <feDropShadow dx="0" dy="8" stdDeviation="7" floodColor="#0F172A" floodOpacity="0.10" />
+            </filter>
+            <linearGradient id="segmentFlowA" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#10B981" stopOpacity="0.46" />
+              <stop offset="100%" stopColor="#10B981" stopOpacity="0.14" />
+            </linearGradient>
+            <linearGradient id="segmentFlowB" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#14B8A6" stopOpacity="0.40" />
+              <stop offset="100%" stopColor="#14B8A6" stopOpacity="0.13" />
+            </linearGradient>
+            <linearGradient id="segmentFlowC" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#64748B" stopOpacity="0.34" />
+              <stop offset="100%" stopColor="#64748B" stopOpacity="0.12" />
+            </linearGradient>
+          </defs>
+
+          {segments.map((segment, index) => (
+            <g key={segment.label}>
+              <rect x={segment.x - 36} y="16" width="72" height="52" rx="14" fill={segment.color} fillOpacity={index === 2 ? 0.10 : 0.13} stroke={segment.color} strokeOpacity="0.35" />
+              <text x={segment.x} y="39" textAnchor="middle" className="fill-foreground" fontSize="10" fontWeight="800">{segment.label}</text>
+              <text x={segment.x} y="55" textAnchor="middle" fill={segment.color} fontSize="12" fontWeight="900">{segment.value}</text>
+              <path
+                d={`M ${segment.x - 24} 68 C ${segment.x - 18} 90, 150 ${index === 1 ? 92 : 100}, 164 112 L 196 112 C 186 ${index === 1 ? 92 : 100}, ${segment.x + 18} 90, ${segment.x + 24} 68 Z`}
+                fill={`url(#segmentFlow${index === 0 ? "A" : index === 1 ? "B" : "C"})`}
+              />
+            </g>
+          ))}
+
+          {flowNodes.map((node, index) => {
+            const nextNode = flowNodes[index + 1];
+            const isCostNode = node.label === "Rörelsekostnader" || node.label === "Finans + skatt";
+            return (
+              <g key={node.label}>
+                {nextNode && (
+                  <path
+                    d={`M 180 ${node.y + 42} C 180 ${node.y + 62}, 180 ${nextNode.y - 20}, 180 ${nextNode.y - 2}`}
+                    stroke={isCostNode ? "#F59E0B" : "#10B981"}
+                    strokeWidth={isCostNode ? 18 : 24}
+                    strokeLinecap="round"
+                    opacity={isCostNode ? 0.16 : 0.18}
+                    fill="none"
+                  />
+                )}
+                <rect x="92" y={node.y} width="176" height="62" rx="18" fill="hsl(var(--card))" stroke={node.color} strokeOpacity="0.35" filter="url(#inwidoSankeyShadow)" />
+                <rect x="92" y={node.y} width="5" height="62" rx="2.5" fill={node.color} />
+                <text x="180" y={node.y + 24} textAnchor="middle" className="fill-muted-foreground" fontSize="10" fontWeight="900" letterSpacing="1.4">
+                  {node.label.toUpperCase()}
+                </text>
+                {node.value && (
+                  <text x="180" y={node.y + 43} textAnchor="middle" className="fill-foreground" fontSize="16" fontWeight="900">
+                    {node.value}
+                  </text>
+                )}
+                {node.note && (
+                  <text x="231" y={node.y + 43} textAnchor="start" fill={node.color} fontSize="11" fontWeight="900">
+                    ({node.note})
+                  </text>
+                )}
+              </g>
+            );
+          })}
+        </svg>
+
+        <div className="md:hidden space-y-4">
+          <div className="grid grid-cols-3 gap-3">
+            {segments.map((segment) => (
+              <div key={segment.label} className="rounded-2xl border border-border bg-muted/20 p-3 text-center">
+                <div className="text-[10px] font-black text-muted-foreground">{segment.label}</div>
+                <div className="text-sm font-black" style={{ color: segment.color }}>{segment.value}</div>
+              </div>
+            ))}
+          </div>
+          {flowNodes.map((node) => (
+            <div key={node.label} className="rounded-2xl border border-border bg-card p-4">
+              <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{node.label}</div>
+              <div className="text-xl font-black text-foreground">
+                {node.value || "Avdrag"}
+                {node.note && <span className="ml-2 text-sm text-primary">({node.note})</span>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // Visual Trigger: A component to render geographical or segment distribution as a bar
 const DistributionBar = ({ data, accentColor }: { data: string; accentColor: string }) => {
   const segments = useMemo(() => {
@@ -663,6 +788,8 @@ export default function ComprehensiveAnalysis({
               </div>
             </div>
           </div>
+
+          {isInwido && <InwidoSankeyDiagram />}
 
           <div className="space-y-6">
             <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.22em] mb-4">Konkurrensfördelar</div>
