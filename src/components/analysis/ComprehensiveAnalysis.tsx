@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { ResponsiveContainer, Sankey, Tooltip } from 'recharts';
 import { 
   Globe, 
   Users, 
@@ -184,124 +185,208 @@ const InwidoQuickOverview = () => {
 };
 
 const InwidoSankeyDiagram = () => {
+  const totalRevenue = 9468;
   const segments = [
-    { label: "Segment A", value: "40 %", x: 46, color: "#10B981" },
-    { label: "Segment B", value: "35 %", x: 150, color: "#14B8A6" },
-    { label: "Segment C", value: "25 %", x: 254, color: "#64748B" },
+    { name: "Skandinavien", share: 46, amount: 4355, margin: "15,1 %" },
+    { name: "Väst", share: 22, amount: 2083, margin: "10,7 %" },
+    { name: "Öst", share: 19, amount: 1799, margin: "5,0 %" },
+    { name: "e-Commerce", share: 11, amount: 1041, margin: "12,6 %" },
+    { name: "Övrigt", share: 2, amount: 189, margin: "Ej särredovisad" },
   ];
 
-  const flowNodes = [
-    { label: "Omsättning", value: "9 468 Mkr", y: 112, color: "#10B981" },
-    { label: "Bruttovinst", value: "3 850 Mkr", note: "41 %", y: 196, color: "#0F766E" },
-    { label: "Rörelsekostnader", value: "2 880 Mkr", y: 280, color: "#F59E0B" },
-    { label: "EBITA", value: "970 Mkr", note: "10,2 %", y: 364, color: "#10B981" },
-    { label: "Finans + skatt", value: "", y: 448, color: "#94A3B8" },
-    { label: "Nettoresultat", value: "528 Mkr", y: 532, color: "#111827" },
+  const sankeyNodes = [
+    ...segments.map((segment) => ({
+      name: segment.name,
+      label: `${segment.name} (${segment.share} %)`,
+      valueLabel: `${segment.amount.toLocaleString("sv-SE")} Mkr`,
+      detailLabel: `Andel av omsättning: ${segment.share} %`,
+      marginLabel: `Operationell EBITA-marginal Q2: ${segment.margin}`,
+      kind: "segment",
+    })),
+    {
+      name: "Omsättning",
+      label: "Omsättning",
+      valueLabel: "9 468 Mkr",
+      detailLabel: "Rullande tolv månader",
+      marginLabel: "100 % av omsättning",
+      kind: "revenue",
+    },
+    {
+      name: "Bruttoresultat",
+      label: "Bruttoresultat",
+      valueLabel: "2 367 Mkr",
+      detailLabel: "Bruttomarginal",
+      marginLabel: "25,0 %",
+      kind: "profit",
+    },
+    {
+      name: "EBIT",
+      label: "EBIT",
+      valueLabel: "862 Mkr",
+      detailLabel: "EBIT-marginal",
+      marginLabel: "9,1 %",
+      kind: "profit",
+    },
+    {
+      name: "Nettoresultat",
+      label: "Nettoresultat",
+      valueLabel: "528 Mkr",
+      detailLabel: "Nettomarginal",
+      marginLabel: "5,6 %",
+      kind: "profit",
+    },
   ];
+
+  const revenueIndex = segments.length;
+  const grossIndex = revenueIndex + 1;
+  const ebitIndex = grossIndex + 1;
+  const netIndex = ebitIndex + 1;
+
+  const sankeyData = {
+    nodes: sankeyNodes,
+    links: [
+      ...segments.map((segment, index) => ({
+        source: index,
+        target: revenueIndex,
+        value: segment.amount,
+        name: `${segment.name} → Omsättning`,
+      })),
+      { source: revenueIndex, target: grossIndex, value: Math.round(totalRevenue * 0.25), name: "Omsättning → Bruttoresultat" },
+      { source: grossIndex, target: ebitIndex, value: 862, name: "Bruttoresultat → EBIT" },
+      { source: ebitIndex, target: netIndex, value: 528, name: "EBIT → Nettoresultat" },
+    ],
+  };
+
+  const CustomNode = (props: any) => {
+    const { x, y, width, height, payload } = props;
+    const isSegment = payload.kind === "segment";
+    const fill = isSegment ? "#1F2937" : payload.kind === "revenue" ? "#111827" : "#0F172A";
+    const stroke = isSegment ? "#38BDF8" : "#10B981";
+    const nodeHeight = Math.max(height, 34);
+
+    return (
+      <g>
+        <title>{`${payload.name}\n${payload.detailLabel}\n${payload.marginLabel}`}</title>
+        <rect
+          x={x}
+          y={y}
+          width={Math.max(width, 18)}
+          height={nodeHeight}
+          rx={8}
+          fill={fill}
+          stroke={stroke}
+          strokeOpacity={0.55}
+          strokeWidth={1.2}
+        />
+        <text x={x + Math.max(width, 18) + 10} y={y + Math.min(nodeHeight / 2 - 4, 18)} fill="#F8FAFC" fontSize="11" fontWeight="900">
+          {payload.label}
+        </text>
+        <text x={x + Math.max(width, 18) + 10} y={y + Math.min(nodeHeight / 2 + 12, 34)} fill="#94A3B8" fontSize="10" fontWeight="700">
+          {payload.valueLabel}
+        </text>
+      </g>
+    );
+  };
+
+  const CustomLink = (props: any) => {
+    const { sourceX, sourceY, sourceControlX, targetX, targetY, targetControlX, linkWidth, payload } = props;
+    const isProfitStep = payload?.source?.kind !== "segment";
+    return (
+      <path
+        d={`M${sourceX},${sourceY} C${sourceControlX},${sourceY} ${targetControlX},${targetY} ${targetX},${targetY}`}
+        stroke={isProfitStep ? "#38BDF8" : "#0EA5E9"}
+        strokeWidth={Math.max(2, linkWidth)}
+        strokeOpacity={isProfitStep ? 0.52 : 0.45}
+        fill="none"
+        strokeLinecap="round"
+      />
+    );
+  };
+
+  const CustomTooltip = ({ active, payload }: any) => {
+    if (!active || !payload?.length) return null;
+    const data = payload[0]?.payload?.source || payload[0]?.payload?.target || payload[0]?.payload;
+    if (!data) return null;
+
+    return (
+      <div className="rounded-2xl border border-sky-400/30 bg-slate-950/95 px-4 py-3 shadow-2xl shadow-black/40 text-left">
+        <div className="text-sm font-black text-white mb-1">{data.name || payload[0].name}</div>
+        {data.detailLabel && <div className="text-xs font-semibold text-slate-300">{data.detailLabel}</div>}
+        {data.marginLabel && <div className="text-xs font-black text-sky-300 mt-2">{data.marginLabel}</div>}
+      </div>
+    );
+  };
 
   return (
-    <div className="mb-12 rounded-[2.5rem] border border-border/60 bg-card shadow-xl shadow-black/5 overflow-hidden">
-      <div className="p-6 md:p-8 border-b border-border/60 bg-muted/20">
+    <div className="mb-12 rounded-[2.5rem] border border-slate-700/70 bg-slate-950 text-white shadow-2xl shadow-black/20 overflow-hidden">
+      <div className="p-6 md:p-8 border-b border-slate-800 bg-transparent">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
-            <div className="text-[10px] font-black uppercase tracking-[0.24em] text-primary mb-2">
-              Segment- och resultatflöde
+            <div className="text-[10px] font-black uppercase tracking-[0.24em] text-sky-300 mb-2">
+              Hur tjänar Inwido sina pengar?
             </div>
-            <h3 className="text-2xl font-black tracking-tighter text-foreground">
-              Från omsättning till nettoresultat
+            <h3 className="text-2xl font-black tracking-tighter text-white">
+              Omsättningsmix → Bruttoresultat → EBIT → Nettoresultat
             </h3>
           </div>
-          <div className="text-xs font-semibold text-muted-foreground max-w-sm">
-            Schematisk Sankey-bild baserad på rullande tolvmånadersnivåer och angivna segmentandelar.
+          <div className="text-xs font-semibold text-slate-400 max-w-sm">
+            Flödena visar ungefärliga Mkr-belopp baserade på rullande omsättning om 9 468 Mkr och redovisade marginaler.
           </div>
         </div>
       </div>
 
-      <div className="p-5 md:p-8">
-        <svg viewBox="0 0 360 620" role="img" aria-label="Sankeydiagram över Inwidos segment, omsättning, bruttovinst, kostnader, EBITA och nettoresultat" className="hidden md:block w-full h-auto max-h-[720px]">
-          <defs>
-            <filter id="inwidoSankeyShadow" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="8" stdDeviation="7" floodColor="#0F172A" floodOpacity="0.10" />
-            </filter>
-            <linearGradient id="segmentFlowA" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#10B981" stopOpacity="0.46" />
-              <stop offset="100%" stopColor="#10B981" stopOpacity="0.14" />
-            </linearGradient>
-            <linearGradient id="segmentFlowB" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#14B8A6" stopOpacity="0.40" />
-              <stop offset="100%" stopColor="#14B8A6" stopOpacity="0.13" />
-            </linearGradient>
-            <linearGradient id="segmentFlowC" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#64748B" stopOpacity="0.34" />
-              <stop offset="100%" stopColor="#64748B" stopOpacity="0.12" />
-            </linearGradient>
-          </defs>
+      <div className="p-4 md:p-8">
+        <div className="hidden md:block h-[540px]" role="img" aria-label="Interaktivt Sankeydiagram över Inwidos omsättningsmix, bruttovinst, EBIT och nettoresultat">
+          <ResponsiveContainer width="100%" height="100%">
+            <Sankey
+              data={sankeyData}
+              node={CustomNode}
+              link={CustomLink}
+              nodePadding={30}
+              nodeWidth={18}
+              iterations={64}
+              sort={false}
+              align="justify"
+              margin={{ top: 18, right: 160, bottom: 18, left: 12 }}
+            >
+              <Tooltip content={<CustomTooltip />} />
+            </Sankey>
+          </ResponsiveContainer>
+        </div>
 
-          {segments.map((segment, index) => (
-            <g key={segment.label}>
-              <rect x={segment.x - 36} y="16" width="72" height="52" rx="14" fill={segment.color} fillOpacity={index === 2 ? 0.10 : 0.13} stroke={segment.color} strokeOpacity="0.35" />
-              <text x={segment.x} y="39" textAnchor="middle" className="fill-foreground" fontSize="10" fontWeight="800">{segment.label}</text>
-              <text x={segment.x} y="55" textAnchor="middle" fill={segment.color} fontSize="12" fontWeight="900">{segment.value}</text>
-              <path
-                d={`M ${segment.x - 24} 68 C ${segment.x - 18} 90, 150 ${index === 1 ? 92 : 100}, 164 112 L 196 112 C 186 ${index === 1 ? 92 : 100}, ${segment.x + 18} 90, ${segment.x + 24} 68 Z`}
-                fill={`url(#segmentFlow${index === 0 ? "A" : index === 1 ? "B" : "C"})`}
-              />
-            </g>
-          ))}
-
-          {flowNodes.map((node, index) => {
-            const nextNode = flowNodes[index + 1];
-            const isCostNode = node.label === "Rörelsekostnader" || node.label === "Finans + skatt";
-            return (
-              <g key={node.label}>
-                {nextNode && (
-                  <path
-                    d={`M 180 ${node.y + 42} C 180 ${node.y + 62}, 180 ${nextNode.y - 20}, 180 ${nextNode.y - 2}`}
-                    stroke={isCostNode ? "#F59E0B" : "#10B981"}
-                    strokeWidth={isCostNode ? 18 : 24}
-                    strokeLinecap="round"
-                    opacity={isCostNode ? 0.16 : 0.18}
-                    fill="none"
-                  />
-                )}
-                <rect x="92" y={node.y} width="176" height="62" rx="18" fill="hsl(var(--card))" stroke={node.color} strokeOpacity="0.35" filter="url(#inwidoSankeyShadow)" />
-                <rect x="92" y={node.y} width="5" height="62" rx="2.5" fill={node.color} />
-                <text x="180" y={node.y + 24} textAnchor="middle" className="fill-muted-foreground" fontSize="10" fontWeight="900" letterSpacing="1.4">
-                  {node.label.toUpperCase()}
-                </text>
-                {node.value && (
-                  <text x="180" y={node.y + 43} textAnchor="middle" className="fill-foreground" fontSize="16" fontWeight="900">
-                    {node.value}
-                  </text>
-                )}
-                {node.note && (
-                  <text x="231" y={node.y + 43} textAnchor="start" fill={node.color} fontSize="11" fontWeight="900">
-                    ({node.note})
-                  </text>
-                )}
-              </g>
-            );
-          })}
-        </svg>
-
-        <div className="md:hidden space-y-4">
-          <div className="grid grid-cols-3 gap-3">
+        <div className="md:hidden overflow-x-auto pb-2">
+          <div className="min-w-[620px] space-y-4">
             {segments.map((segment) => (
-              <div key={segment.label} className="rounded-2xl border border-border bg-muted/20 p-3 text-center">
-                <div className="text-[10px] font-black text-muted-foreground">{segment.label}</div>
-                <div className="text-sm font-black" style={{ color: segment.color }}>{segment.value}</div>
+              <div key={segment.name} className="rounded-2xl border border-slate-700 bg-slate-900 p-4">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <div className="text-sm font-black text-white">{segment.name}</div>
+                    <div className="text-xs font-semibold text-slate-400">Andel av omsättning: {segment.share} %</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-lg font-black text-sky-300">{segment.amount.toLocaleString("sv-SE")} Mkr</div>
+                    <div className="text-xs font-bold text-slate-400">EBITA Q2: {segment.margin}</div>
+                  </div>
+                </div>
+              </div>
+            ))}
+            {[
+              ["Omsättning", "9 468 Mkr", "100 %"],
+              ["Bruttoresultat", "2 367 Mkr", "25,0 %"],
+              ["EBIT", "862 Mkr", "9,1 %"],
+              ["Nettoresultat", "528 Mkr", "5,6 %"],
+            ].map(([label, value, margin]) => (
+              <div key={label} className="rounded-2xl border border-sky-400/25 bg-slate-900 p-4">
+                <div className="flex items-center justify-between">
+                  <div className="text-sm font-black text-white">{label}</div>
+                  <div className="text-right">
+                    <div className="text-lg font-black text-sky-300">{value}</div>
+                    <div className="text-xs font-bold text-slate-400">{margin}</div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
-          {flowNodes.map((node) => (
-            <div key={node.label} className="rounded-2xl border border-border bg-card p-4">
-              <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{node.label}</div>
-              <div className="text-xl font-black text-foreground">
-                {node.value || "Avdrag"}
-                {node.note && <span className="ml-2 text-sm text-primary">({node.note})</span>}
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </div>
