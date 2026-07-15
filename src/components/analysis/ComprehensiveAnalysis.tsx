@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Sankey, Tooltip } from 'recharts';
 import { 
   Globe, 
   Users, 
@@ -251,7 +250,6 @@ const InwidoSankeyDiagram = ({ sankey }: { sankey?: InwidoSankeyConfig }) => {
   const config = sankey || defaultInwidoSankey;
   const balanceWarnings = validateSankeyBalance(config);
   const isBalanced = balanceWarnings.length === 0;
-  const nodeIndex = new Map(config.nodes.map((node, index) => [node.id, index]));
   const revenueSources = config.nodes.filter((node) => node.type === "revenueSource");
   const financialNodes = config.nodes.filter((node) => node.type !== "revenueSource");
 
@@ -259,90 +257,137 @@ const InwidoSankeyDiagram = ({ sankey }: { sankey?: InwidoSankeyConfig }) => {
     console.warn("Inwido Sankey data is not balanced. Rendering fallback.", balanceWarnings);
   }
 
-  const sankeyData = {
-    nodes: config.nodes.map((node) => ({
-      ...node,
-      name: node.label,
-      valueLabel: formatMkr(node.amount),
-      detailLabel: node.shareOfRevenue !== undefined ? `${formatPercent(node.shareOfRevenue)} av nettoomsättningen` : config.period,
-      marginLabel: node.margin !== undefined ? `Marginal: ${formatPercent(node.margin)}` : undefined,
-    })),
-    links: config.links
-      .filter((link) => nodeIndex.has(link.source) && nodeIndex.has(link.target))
-      .map((link) => ({
-        source: nodeIndex.get(link.source) || 0,
-        target: nodeIndex.get(link.target) || 0,
-        value: link.value,
-      })),
+  const [hoverNodeId, setHoverNodeId] = useState<string | null>(null);
+  const nodeById = new Map(config.nodes.map((node) => [node.id, node]));
+  const getNode = (id: string) => nodeById.get(id);
+  const hoverNode = hoverNodeId ? getNode(hoverNodeId) : undefined;
+  const detailLabel = (node: NonNullable<ReturnType<typeof getNode>>) =>
+    node.shareOfRevenue !== undefined ? `${formatPercent(node.shareOfRevenue)} av nettoomsättningen` : config.period;
+  const marginLabel = (node: NonNullable<ReturnType<typeof getNode>>) =>
+    node.margin !== undefined ? `Marginal: ${formatPercent(node.margin)}` : undefined;
+
+  const layout: Record<string, { x: number; y: number; w: number; h: number; lane: "source" | "revenue" | "profit" | "cost" }> = {
+    skandinavien: { x: 48, y: 82, w: 18, h: 74, lane: "source" },
+    vast: { x: 48, y: 178, w: 18, h: 52, lane: "source" },
+    ost: { x: 48, y: 252, w: 18, h: 48, lane: "source" },
+    ecommerce: { x: 48, y: 322, w: 18, h: 40, lane: "source" },
+    ovrigt: { x: 48, y: 384, w: 18, h: 28, lane: "source" },
+    revenue: { x: 286, y: 190, w: 22, h: 92, lane: "revenue" },
+    "gross-profit": { x: 570, y: 194, w: 22, h: 84, lane: "profit" },
+    "operational-ebita": { x: 864, y: 198, w: 22, h: 76, lane: "profit" },
+    ebit: { x: 1158, y: 202, w: 22, h: 68, lane: "profit" },
+    "net-income": { x: 1452, y: 206, w: 22, h: 60, lane: "profit" },
+    cogs: { x: 430, y: 526, w: 22, h: 76, lane: "cost" },
+    "operating-costs": { x: 724, y: 570, w: 22, h: 60, lane: "cost" },
+    adjustments: { x: 1018, y: 526, w: 22, h: 44, lane: "cost" },
+    "finance-tax": { x: 1312, y: 604, w: 22, h: 48, lane: "cost" },
   };
 
-  const CustomNode = (props: any) => {
-    const { x, y, width, height, payload } = props;
-    const isCost = payload.type === "cost";
-    const isSource = payload.type === "revenueSource";
-    const fill = isCost ? "#2F1F24" : isSource ? "#1F2937" : payload.type === "revenue" ? "#111827" : "#0F172A";
-    const stroke = isCost ? "#F87171" : isSource ? "#38BDF8" : "#10B981";
-    const nodeHeight = Math.max(height, 34);
-
-    return (
-      <g>
-        <title>{`${payload.name}\n${payload.detailLabel}\n${payload.marginLabel}`}</title>
-        <rect
-          x={x}
-          y={y}
-          width={Math.max(width, 18)}
-          height={nodeHeight}
-          rx={8}
-          fill={fill}
-          stroke={stroke}
-          strokeOpacity={0.55}
-          strokeWidth={1.2}
-        />
-        <text x={x + Math.max(width, 18) + 10} y={y + Math.min(nodeHeight / 2 - 6, 18)} fill="#F8FAFC" fontSize="11" fontWeight="900">
-          {payload.type === "revenueSource" && payload.shareOfRevenue !== undefined ? `${payload.label} (${payload.shareOfRevenue} %)` : payload.label}
-        </text>
-        <text x={x + Math.max(width, 18) + 10} y={y + Math.min(nodeHeight / 2 + 10, 34)} fill={isCost ? "#FCA5A5" : "#94A3B8"} fontSize="10" fontWeight="700">
-          {payload.valueLabel}
-        </text>
-        {payload.margin !== undefined && (
-          <text x={x + Math.max(width, 18) + 10} y={y + Math.min(nodeHeight / 2 + 25, 49)} fill="#6EE7B7" fontSize="9" fontWeight="800">
-            {formatPercent(payload.margin)}
-          </text>
-        )}
-      </g>
-    );
+  const flowStyles: Record<string, { width: number; color: string; opacity: number; bend?: number }> = {
+    "skandinavien-revenue": { width: 23, color: "#38BDF8", opacity: 0.7 },
+    "vast-revenue": { width: 17, color: "#38BDF8", opacity: 0.64 },
+    "ost-revenue": { width: 15, color: "#38BDF8", opacity: 0.6 },
+    "ecommerce-revenue": { width: 11, color: "#38BDF8", opacity: 0.56 },
+    "ovrigt-revenue": { width: 5, color: "#38BDF8", opacity: 0.42 },
+    "revenue-gross-profit": { width: 32, color: "#10B981", opacity: 0.9 },
+    "gross-profit-operational-ebita": { width: 26, color: "#10B981", opacity: 0.9 },
+    "operational-ebita-ebit": { width: 22, color: "#10B981", opacity: 0.9 },
+    "ebit-net-income": { width: 18, color: "#10B981", opacity: 0.9 },
+    "revenue-cogs": { width: 28, color: "#F87171", opacity: 0.26, bend: 130 },
+    "gross-profit-operating-costs": { width: 20, color: "#F87171", opacity: 0.3, bend: 120 },
+    "operational-ebita-adjustments": { width: 8, color: "#F87171", opacity: 0.28, bend: 98 },
+    "ebit-finance-tax": { width: 12, color: "#F87171", opacity: 0.3, bend: 126 },
   };
 
-  const CustomLink = (props: any) => {
-    const { sourceX, sourceY, sourceControlX, targetX, targetY, targetControlX, linkWidth, payload } = props;
-    const targetType = payload?.target?.type;
-    const isCostFlow = targetType === "cost";
+  const point = (id: string, side: "left" | "right" | "top") => {
+    const box = layout[id];
+    if (side === "left") return { x: box.x, y: box.y + box.h / 2 };
+    if (side === "right") return { x: box.x + box.w, y: box.y + box.h / 2 };
+    return { x: box.x + box.w / 2, y: box.y };
+  };
+
+  const flowPath = (source: string, target: string) => {
+    const targetBox = layout[target];
+    const start = point(source, "right");
+    const end = targetBox.lane === "cost" ? point(target, "top") : point(target, "left");
+    const style = flowStyles[`${source}-${target}`];
+    if (targetBox.lane === "cost") {
+      const bendY = Math.max(start.y, end.y) + (style?.bend || 110);
+      const midX = start.x + (end.x - start.x) * 0.52;
+      return `M${start.x},${start.y} C${midX},${start.y} ${midX},${bendY} ${end.x},${bendY} C${end.x},${bendY} ${end.x},${end.y + 22} ${end.x},${end.y}`;
+    }
+    const c1 = start.x + (end.x - start.x) * 0.46;
+    const c2 = start.x + (end.x - start.x) * 0.62;
+    return `M${start.x},${start.y} C${c1},${start.y} ${c2},${end.y} ${end.x},${end.y}`;
+  };
+
+  const renderFlow = (link: { source: string; target: string; value: number }) => {
+    if (!layout[link.source] || !layout[link.target]) return null;
+    const source = getNode(link.source);
+    const target = getNode(link.target);
+    const style = flowStyles[`${link.source}-${link.target}`] || { width: 8, color: "#38BDF8", opacity: 0.5 };
+    const isDimmed = hoverNodeId && hoverNodeId !== link.source && hoverNodeId !== link.target;
     return (
       <path
-        d={`M${sourceX},${sourceY} C${sourceControlX},${sourceY} ${targetControlX},${targetY} ${targetX},${targetY}`}
-        stroke={isCostFlow ? "#F87171" : "#0EA5E9"}
-        strokeWidth={Math.max(isCostFlow ? 3 : 2, linkWidth)}
-        strokeOpacity={isCostFlow ? 0.42 : 0.48}
+        key={`${link.source}-${link.target}`}
+        d={flowPath(link.source, link.target)}
         fill="none"
+        stroke={style.color}
+        strokeWidth={style.width}
+        strokeOpacity={isDimmed ? 0.12 : style.opacity}
         strokeLinecap="round"
+        onMouseEnter={() => setHoverNodeId(target?.id || source?.id || null)}
+        onMouseLeave={() => setHoverNodeId(null)}
       />
     );
   };
 
-  const CustomTooltip = ({ active, payload }: any) => {
-    if (!active || !payload?.length) return null;
-    const data = payload[0]?.payload?.source || payload[0]?.payload?.target || payload[0]?.payload;
-    if (!data) return null;
+  const renderNode = (id: string) => {
+    const node = getNode(id);
+    const box = layout[id];
+    if (!node || !box) return null;
+    const isCost = node.type === "cost";
+    const isSource = node.type === "revenueSource";
+    const isRevenue = node.type === "revenue";
+    const isHovered = hoverNodeId === id;
+    const fill = isCost ? "#2A1D22" : isSource ? "#162033" : isRevenue ? "#101827" : "#0F1F1A";
+    const stroke = isCost ? "#F87171" : isSource || isRevenue ? "#38BDF8" : "#34D399";
+    const labelX = box.x + box.w + 12;
+    const labelY = box.y + box.h / 2;
+    const label = isSource && node.shareOfRevenue !== undefined ? `${node.label} (${node.shareOfRevenue} %)` : node.label;
 
     return (
-      <div className="rounded-2xl border border-sky-400/30 bg-slate-950/95 px-4 py-3 shadow-2xl shadow-black/40 text-left">
-        <div className="text-sm font-black text-white mb-1">{data.name || payload[0].name}</div>
-        {data.detailLabel && <div className="text-xs font-semibold text-slate-300">{data.detailLabel}</div>}
-        {data.marginLabel && <div className="text-xs font-black text-sky-300 mt-2">{data.marginLabel}</div>}
-        {data.organicGrowth && <div className="text-xs font-semibold text-slate-300 mt-2">Organisk tillväxt: {data.organicGrowth}</div>}
-        {data.segmentMargin && <div className="text-xs font-semibold text-slate-300">Segmentmarginal Q2: {data.segmentMargin}</div>}
-        <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 mt-3">{config.period}</div>
-      </div>
+      <g
+        key={id}
+        onMouseEnter={() => setHoverNodeId(id)}
+        onMouseLeave={() => setHoverNodeId(null)}
+        opacity={hoverNodeId && !isHovered ? 0.55 : 1}
+        className="cursor-default transition-opacity duration-200"
+      >
+        <title>{`${node.label}\n${detailLabel(node)}\n${marginLabel(node) || ""}`}</title>
+        <rect
+          x={box.x}
+          y={box.y}
+          width={box.w}
+          height={box.h}
+          rx={8}
+          fill={fill}
+          stroke={stroke}
+          strokeWidth={isHovered ? 2 : 1.2}
+          strokeOpacity={isCost ? 0.58 : 0.78}
+        />
+        <text x={labelX} y={labelY - 8} fill="#F8FAFC" fontSize={isSource ? 11 : 12} fontWeight="900">
+          {label}
+        </text>
+        <text x={labelX} y={labelY + 10} fill={isCost ? "#FCA5A5" : "#A7F3D0"} fontSize="10" fontWeight="800">
+          {formatMkr(node.amount)}
+        </text>
+        {node.margin !== undefined && (
+          <text x={labelX} y={labelY + 27} fill="#94A3B8" fontSize="9" fontWeight="800">
+            {formatPercent(node.margin)}
+          </text>
+        )}
+      </g>
     );
   };
 
@@ -369,26 +414,59 @@ const InwidoSankeyDiagram = ({ sankey }: { sankey?: InwidoSankeyConfig }) => {
       <div className="p-4 md:p-8">
         {isBalanced ? (
           <div className="overflow-x-auto pb-2">
-            <div className="min-w-[1120px]">
+            <div className="min-w-[1560px]">
               <div className="mb-3 text-[10px] font-black uppercase tracking-widest text-slate-500 md:hidden">
                 Dra i sidled för att se hela flödet
               </div>
-              <div className="h-[620px] w-[1120px]" role="img" aria-label="Interaktivt Sankeydiagram över Inwidos omsättningsmix, kostnader, bruttovinst, operationell EBITA, EBIT och nettoresultat">
-                <Sankey
-                  width={1120}
-                  height={620}
-                  data={sankeyData}
-                  node={CustomNode}
-                  link={CustomLink}
-                  nodePadding={30}
-                  nodeWidth={18}
-                  iterations={80}
-                  sort={false}
-                  align="justify"
-                  margin={{ top: 24, right: 190, bottom: 32, left: 18 }}
-                >
-                  <Tooltip content={<CustomTooltip />} />
-                </Sankey>
+              <div className="relative h-[720px] w-[1560px]" role="img" aria-label="Interaktivt Sankeydiagram över Inwidos omsättningsmix, kostnader, bruttovinst, operationell EBITA, EBIT och nettoresultat">
+                <svg viewBox="0 0 1560 720" width="1560" height="720" className="block">
+                  <defs>
+                    <linearGradient id="inwidoRevenueFlow" x1="0" x2="1" y1="0" y2="0">
+                      <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.65" />
+                      <stop offset="100%" stopColor="#10B981" stopOpacity="0.9" />
+                    </linearGradient>
+                    <filter id="inwidoFlowGlow" x="-10%" y="-10%" width="120%" height="120%">
+                      <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor="#000000" floodOpacity="0.18" />
+                    </filter>
+                  </defs>
+                  <rect x="0" y="0" width="1560" height="720" fill="transparent" />
+                  <line x1="268" y1="238" x2="1490" y2="238" stroke="#334155" strokeWidth="1" strokeDasharray="6 10" strokeOpacity="0.28" />
+                  <text x="286" y="150" fill="#64748B" fontSize="10" fontWeight="900" letterSpacing="2">INTÄKT OCH RESULTAT</text>
+                  <text x="430" y="488" fill="#64748B" fontSize="10" fontWeight="900" letterSpacing="2">KOSTNADER, SEPARERADE UNDER HUVUDFLÖDET</text>
+
+                  <g filter="url(#inwidoFlowGlow)">
+                    {config.links.map(renderFlow)}
+                  </g>
+                  <g>
+                    {[
+                      "skandinavien",
+                      "vast",
+                      "ost",
+                      "ecommerce",
+                      "ovrigt",
+                      "revenue",
+                      "gross-profit",
+                      "operational-ebita",
+                      "ebit",
+                      "net-income",
+                      "cogs",
+                      "operating-costs",
+                      "adjustments",
+                      "finance-tax",
+                    ].map(renderNode)}
+                  </g>
+                </svg>
+                {hoverNode && (
+                  <div className="absolute right-8 top-8 w-72 rounded-2xl border border-sky-400/30 bg-slate-950/95 px-4 py-3 shadow-2xl shadow-black/40 text-left">
+                    <div className="text-sm font-black text-white mb-1">{hoverNode.label}</div>
+                    <div className="text-xs font-semibold text-slate-300">{detailLabel(hoverNode)}</div>
+                    <div className="text-xs font-black text-sky-300 mt-2">{formatMkr(hoverNode.amount)}</div>
+                    {marginLabel(hoverNode) && <div className="text-xs font-semibold text-slate-300 mt-1">{marginLabel(hoverNode)}</div>}
+                    {hoverNode.organicGrowth && <div className="text-xs font-semibold text-slate-300 mt-2">Organisk tillväxt: {hoverNode.organicGrowth}</div>}
+                    {hoverNode.segmentMargin && <div className="text-xs font-semibold text-slate-300">Segmentmarginal Q2: {hoverNode.segmentMargin}</div>}
+                    <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 mt-3">{config.period}</div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
