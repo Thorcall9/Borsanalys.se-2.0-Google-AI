@@ -153,9 +153,9 @@ export const analysisDisclosures = {
   },
   inwido: {
     companyName: "Inwido AB",
-    holdingType: "none",
+    holdingType: "direct",
     holdingText:
-      "Författaren äger inte aktier eller andra finansiella instrument direkt i Inwido AB enligt innehavsredovisning senast uppdaterad 28 maj 2026. Författaren äger breda svenska aktiefonder som indirekt kan ha exponering mot bolaget.",
+      "Författaren äger aktier direkt i Inwido AB enligt innehavsredovisning senast uppdaterad 28 maj 2026. Detta utgör ett ekonomiskt intresse i det bolag som analyseras.",
     commercialRelationship:
       "Börsanalys.se har inte mottagit ersättning från och har ingen kommersiell relation till Inwido AB i samband med denna analys."
   }
