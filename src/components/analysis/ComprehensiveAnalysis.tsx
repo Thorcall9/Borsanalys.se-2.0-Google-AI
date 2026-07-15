@@ -267,57 +267,81 @@ const InwidoSankeyDiagram = ({ sankey }: { sankey?: InwidoSankeyConfig }) => {
     node.margin !== undefined ? `Marginal: ${formatPercent(node.margin)}` : undefined;
 
   const layout: Record<string, { x: number; y: number; w: number; h: number; lane: "source" | "revenue" | "profit" | "cost" }> = {
-    skandinavien: { x: 48, y: 82, w: 18, h: 74, lane: "source" },
-    vast: { x: 48, y: 178, w: 18, h: 52, lane: "source" },
-    ost: { x: 48, y: 252, w: 18, h: 48, lane: "source" },
-    ecommerce: { x: 48, y: 322, w: 18, h: 40, lane: "source" },
-    ovrigt: { x: 48, y: 384, w: 18, h: 28, lane: "source" },
-    revenue: { x: 286, y: 190, w: 22, h: 92, lane: "revenue" },
-    "gross-profit": { x: 570, y: 194, w: 22, h: 84, lane: "profit" },
-    "operational-ebita": { x: 864, y: 198, w: 22, h: 76, lane: "profit" },
-    ebit: { x: 1158, y: 202, w: 22, h: 68, lane: "profit" },
-    "net-income": { x: 1452, y: 206, w: 22, h: 60, lane: "profit" },
-    cogs: { x: 430, y: 526, w: 22, h: 76, lane: "cost" },
-    "operating-costs": { x: 724, y: 570, w: 22, h: 60, lane: "cost" },
-    adjustments: { x: 1018, y: 526, w: 22, h: 44, lane: "cost" },
-    "finance-tax": { x: 1312, y: 604, w: 22, h: 48, lane: "cost" },
+    skandinavien: { x: 54, y: 92, w: 18, h: 66, lane: "source" },
+    vast: { x: 54, y: 178, w: 18, h: 54, lane: "source" },
+    ost: { x: 54, y: 250, w: 18, h: 48, lane: "source" },
+    ecommerce: { x: 54, y: 316, w: 18, h: 42, lane: "source" },
+    ovrigt: { x: 54, y: 374, w: 18, h: 30, lane: "source" },
+    revenue: { x: 292, y: 236, w: 34, h: 86, lane: "revenue" },
+    "gross-profit": { x: 604, y: 236, w: 34, h: 86, lane: "profit" },
+    "operational-ebita": { x: 916, y: 236, w: 34, h: 86, lane: "profit" },
+    ebit: { x: 1228, y: 236, w: 34, h: 86, lane: "profit" },
+    "net-income": { x: 1540, y: 236, w: 34, h: 86, lane: "profit" },
+    cogs: { x: 462, y: 420, w: 28, h: 60, lane: "cost" },
+    "operating-costs": { x: 774, y: 420, w: 28, h: 60, lane: "cost" },
+    adjustments: { x: 1086, y: 420, w: 28, h: 60, lane: "cost" },
+    "finance-tax": { x: 1398, y: 420, w: 28, h: 60, lane: "cost" },
   };
 
-  const flowStyles: Record<string, { width: number; color: string; opacity: number; bend?: number }> = {
-    "skandinavien-revenue": { width: 23, color: "#38BDF8", opacity: 0.7 },
-    "vast-revenue": { width: 17, color: "#38BDF8", opacity: 0.64 },
-    "ost-revenue": { width: 15, color: "#38BDF8", opacity: 0.6 },
-    "ecommerce-revenue": { width: 11, color: "#38BDF8", opacity: 0.56 },
-    "ovrigt-revenue": { width: 5, color: "#38BDF8", opacity: 0.42 },
-    "revenue-gross-profit": { width: 32, color: "#10B981", opacity: 0.9 },
-    "gross-profit-operational-ebita": { width: 26, color: "#10B981", opacity: 0.9 },
-    "operational-ebita-ebit": { width: 22, color: "#10B981", opacity: 0.9 },
-    "ebit-net-income": { width: 18, color: "#10B981", opacity: 0.9 },
-    "revenue-cogs": { width: 28, color: "#F87171", opacity: 0.26, bend: 130 },
-    "gross-profit-operating-costs": { width: 20, color: "#F87171", opacity: 0.3, bend: 120 },
-    "operational-ebita-adjustments": { width: 8, color: "#F87171", opacity: 0.28, bend: 98 },
-    "ebit-finance-tax": { width: 12, color: "#F87171", opacity: 0.3, bend: 126 },
+  const flowOrder = [
+    "skandinavien-revenue",
+    "vast-revenue",
+    "ost-revenue",
+    "ecommerce-revenue",
+    "ovrigt-revenue",
+    "revenue-cogs",
+    "revenue-gross-profit",
+    "gross-profit-operating-costs",
+    "gross-profit-operational-ebita",
+    "operational-ebita-adjustments",
+    "operational-ebita-ebit",
+    "ebit-finance-tax",
+    "ebit-net-income",
+  ];
+
+  const flowStyles: Record<string, { color: string; opacity: number }> = {
+    "skandinavien-revenue": { color: "#67E8F9", opacity: 0.72 },
+    "vast-revenue": { color: "#67E8F9", opacity: 0.64 },
+    "ost-revenue": { color: "#67E8F9", opacity: 0.58 },
+    "ecommerce-revenue": { color: "#67E8F9", opacity: 0.52 },
+    "ovrigt-revenue": { color: "#67E8F9", opacity: 0.4 },
+    "revenue-gross-profit": { color: "#22C55E", opacity: 0.92 },
+    "gross-profit-operational-ebita": { color: "#22C55E", opacity: 0.9 },
+    "operational-ebita-ebit": { color: "#22C55E", opacity: 0.88 },
+    "ebit-net-income": { color: "#22C55E", opacity: 0.86 },
+    "revenue-cogs": { color: "#7F1D1D", opacity: 0.72 },
+    "gross-profit-operating-costs": { color: "#7F1D1D", opacity: 0.7 },
+    "operational-ebita-adjustments": { color: "#7F1D1D", opacity: 0.62 },
+    "ebit-finance-tax": { color: "#7F1D1D", opacity: 0.66 },
   };
 
-  const point = (id: string, side: "left" | "right" | "top") => {
+  const point = (id: string, side: "left" | "right" | "costStart" | "costEnd") => {
     const box = layout[id];
     if (side === "left") return { x: box.x, y: box.y + box.h / 2 };
     if (side === "right") return { x: box.x + box.w, y: box.y + box.h / 2 };
-    return { x: box.x + box.w / 2, y: box.y };
+    if (side === "costStart") return { x: box.x + box.w, y: box.y + box.h * 0.68 };
+    return { x: box.x, y: box.y + box.h / 2 };
+  };
+
+  const flowWidth = (value: number, target: string) => {
+    const base = Math.sqrt(value) * 0.34;
+    const isCost = layout[target]?.lane === "cost";
+    return Math.max(isCost ? 8 : 7, Math.min(isCost ? 30 : 34, base));
   };
 
   const flowPath = (source: string, target: string) => {
     const targetBox = layout[target];
-    const start = point(source, "right");
-    const end = targetBox.lane === "cost" ? point(target, "top") : point(target, "left");
-    const style = flowStyles[`${source}-${target}`];
     if (targetBox.lane === "cost") {
-      const bendY = Math.max(start.y, end.y) + (style?.bend || 110);
-      const midX = start.x + (end.x - start.x) * 0.52;
-      return `M${start.x},${start.y} C${midX},${start.y} ${midX},${bendY} ${end.x},${bendY} C${end.x},${bendY} ${end.x},${end.y + 22} ${end.x},${end.y}`;
+      const start = point(source, "costStart");
+      const end = point(target, "costEnd");
+      const c1 = start.x + (end.x - start.x) * 0.38;
+      const c2 = start.x + (end.x - start.x) * 0.72;
+      return `M${start.x},${start.y} C${c1},${start.y + 42} ${c2},${end.y - 18} ${end.x},${end.y}`;
     }
+    const start = point(source, "right");
+    const end = point(target, "left");
     const c1 = start.x + (end.x - start.x) * 0.46;
-    const c2 = start.x + (end.x - start.x) * 0.62;
+    const c2 = start.x + (end.x - start.x) * 0.64;
     return `M${start.x},${start.y} C${c1},${start.y} ${c2},${end.y} ${end.x},${end.y}`;
   };
 
@@ -325,17 +349,20 @@ const InwidoSankeyDiagram = ({ sankey }: { sankey?: InwidoSankeyConfig }) => {
     if (!layout[link.source] || !layout[link.target]) return null;
     const source = getNode(link.source);
     const target = getNode(link.target);
-    const style = flowStyles[`${link.source}-${link.target}`] || { width: 8, color: "#38BDF8", opacity: 0.5 };
+    const style = flowStyles[`${link.source}-${link.target}`] || { color: "#67E8F9", opacity: 0.5 };
     const isDimmed = hoverNodeId && hoverNodeId !== link.source && hoverNodeId !== link.target;
     return (
-      <path
+      <motion.path
         key={`${link.source}-${link.target}`}
         d={flowPath(link.source, link.target)}
         fill="none"
         stroke={style.color}
-        strokeWidth={style.width}
+        strokeWidth={flowWidth(link.value, link.target)}
         strokeOpacity={isDimmed ? 0.12 : style.opacity}
         strokeLinecap="round"
+        initial={{ pathLength: 0, opacity: 0 }}
+        animate={{ pathLength: 1, opacity: 1 }}
+        transition={{ duration: 0.65, delay: 0.06 * Math.max(0, flowOrder.indexOf(`${link.source}-${link.target}`)), ease: "easeOut" }}
         onMouseEnter={() => setHoverNodeId(target?.id || source?.id || null)}
         onMouseLeave={() => setHoverNodeId(null)}
       />
@@ -350,21 +377,33 @@ const InwidoSankeyDiagram = ({ sankey }: { sankey?: InwidoSankeyConfig }) => {
     const isSource = node.type === "revenueSource";
     const isRevenue = node.type === "revenue";
     const isHovered = hoverNodeId === id;
-    const fill = isCost ? "#2A1D22" : isSource ? "#162033" : isRevenue ? "#101827" : "#0F1F1A";
-    const stroke = isCost ? "#F87171" : isSource || isRevenue ? "#38BDF8" : "#34D399";
-    const labelX = box.x + box.w + 12;
-    const labelY = box.y + box.h / 2;
+    const fill = isCost ? "#2A1118" : isSource ? "#132238" : isRevenue ? "#101827" : "#0D2118";
+    const stroke = isCost ? "#991B1B" : isSource || isRevenue ? "#67E8F9" : "#34D399";
+    const labelX = isSource ? box.x + box.w + 12 : box.x + box.w / 2;
     const label = isSource && node.shareOfRevenue !== undefined ? `${node.label} (${node.shareOfRevenue} %)` : node.label;
 
     return (
-      <g
+      <motion.g
         key={id}
         onMouseEnter={() => setHoverNodeId(id)}
         onMouseLeave={() => setHoverNodeId(null)}
         opacity={hoverNodeId && !isHovered ? 0.55 : 1}
         className="cursor-default transition-opacity duration-200"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: hoverNodeId && !isHovered ? 0.55 : 1, y: 0 }}
+        transition={{ duration: 0.45, delay: 0.05 * Math.max(0, flowOrder.findIndex((flow) => flow.endsWith(`-${id}`))) }}
       >
         <title>{`${node.label}\n${detailLabel(node)}\n${marginLabel(node) || ""}`}</title>
+        {!isSource && (
+          <>
+            <text x={labelX} y={box.y - 26} fill="#F8FAFC" fontSize={isCost ? 10 : 12} fontWeight="900" textAnchor="middle">
+              {node.label}
+            </text>
+            <text x={labelX} y={box.y - 10} fill={isCost ? "#FCA5A5" : "#A7F3D0"} fontSize="10" fontWeight="800" textAnchor="middle">
+              {formatMkr(node.amount)}{node.margin !== undefined ? ` · ${formatPercent(node.margin)}` : ""}
+            </text>
+          </>
+        )}
         <rect
           x={box.x}
           y={box.y}
@@ -376,18 +415,12 @@ const InwidoSankeyDiagram = ({ sankey }: { sankey?: InwidoSankeyConfig }) => {
           strokeWidth={isHovered ? 2 : 1.2}
           strokeOpacity={isCost ? 0.58 : 0.78}
         />
-        <text x={labelX} y={labelY - 8} fill="#F8FAFC" fontSize={isSource ? 11 : 12} fontWeight="900">
-          {label}
-        </text>
-        <text x={labelX} y={labelY + 10} fill={isCost ? "#FCA5A5" : "#A7F3D0"} fontSize="10" fontWeight="800">
-          {formatMkr(node.amount)}
-        </text>
-        {node.margin !== undefined && (
-          <text x={labelX} y={labelY + 27} fill="#94A3B8" fontSize="9" fontWeight="800">
-            {formatPercent(node.margin)}
+        {isSource && (
+          <text x={labelX} y={box.y + box.h / 2 + 4} fill="#F8FAFC" fontSize="11" fontWeight="900">
+            {label}
           </text>
         )}
-      </g>
+      </motion.g>
     );
   };
 
@@ -414,12 +447,12 @@ const InwidoSankeyDiagram = ({ sankey }: { sankey?: InwidoSankeyConfig }) => {
       <div className="p-4 md:p-8">
         {isBalanced ? (
           <div className="overflow-x-auto pb-2">
-            <div className="min-w-[1560px]">
+            <div className="min-w-[1680px]">
               <div className="mb-3 text-[10px] font-black uppercase tracking-widest text-slate-500 md:hidden">
                 Dra i sidled för att se hela flödet
               </div>
-              <div className="relative h-[720px] w-[1560px]" role="img" aria-label="Interaktivt Sankeydiagram över Inwidos omsättningsmix, kostnader, bruttovinst, operationell EBITA, EBIT och nettoresultat">
-                <svg viewBox="0 0 1560 720" width="1560" height="720" className="block">
+              <div className="relative h-[640px] w-[1680px]" role="img" aria-label="Interaktivt Sankeydiagram över Inwidos omsättningsmix, kostnader, bruttovinst, operationell EBITA, EBIT och nettoresultat">
+                <svg viewBox="0 0 1680 640" width="1680" height="640" className="block">
                   <defs>
                     <linearGradient id="inwidoRevenueFlow" x1="0" x2="1" y1="0" y2="0">
                       <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.65" />
@@ -429,13 +462,15 @@ const InwidoSankeyDiagram = ({ sankey }: { sankey?: InwidoSankeyConfig }) => {
                       <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor="#000000" floodOpacity="0.18" />
                     </filter>
                   </defs>
-                  <rect x="0" y="0" width="1560" height="720" fill="transparent" />
-                  <line x1="268" y1="238" x2="1490" y2="238" stroke="#334155" strokeWidth="1" strokeDasharray="6 10" strokeOpacity="0.28" />
-                  <text x="286" y="150" fill="#64748B" fontSize="10" fontWeight="900" letterSpacing="2">INTÄKT OCH RESULTAT</text>
-                  <text x="430" y="488" fill="#64748B" fontSize="10" fontWeight="900" letterSpacing="2">KOSTNADER, SEPARERADE UNDER HUVUDFLÖDET</text>
+                  <rect x="0" y="0" width="1680" height="640" fill="transparent" />
+                  <line x1="260" y1="279" x2="1608" y2="279" stroke="#334155" strokeWidth="1" strokeDasharray="6 10" strokeOpacity="0.25" />
+                  <text x="292" y="132" fill="#64748B" fontSize="10" fontWeight="900" letterSpacing="2">RESULTATRAPPA: DET SOM BLIR KVAR EFTER VARJE STEG</text>
+                  <text x="462" y="526" fill="#64748B" fontSize="10" fontWeight="900" letterSpacing="2">KOSTNADER LÄMNAR RYGGRADEN DIAGONALT</text>
 
                   <g filter="url(#inwidoFlowGlow)">
-                    {config.links.map(renderFlow)}
+                    {[...config.links]
+                      .sort((a, b) => flowOrder.indexOf(`${a.source}-${a.target}`) - flowOrder.indexOf(`${b.source}-${b.target}`))
+                      .map(renderFlow)}
                   </g>
                   <g>
                     {[
