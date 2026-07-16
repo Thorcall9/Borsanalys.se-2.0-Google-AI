@@ -17,6 +17,7 @@ import { nibe2026 } from "./nibe/nibe-2026.js";
 import { nordea2026 } from "./nordea/nordea-bank-2026.js";
 import { saab2026 } from "./saab/saab-2026.js";
 import { axfoodQ12026 } from "./axfood/axfood-q1-2026.js";
+import { axfoodQ22026 } from "./axfood/axfood-q2-2026.js";
 import { abb2026 } from "./abb/abb-q1-2026.js";
 import { plejdQ12026 } from "./plejd/plejd-q1-2026.js";
 import { revolutionRace2026 } from "./revolutionrace/revolutionrace-2026.js";
@@ -41,6 +42,7 @@ export const analyses: Record<string, AnalysisData> = {
   "nordea-bank-2026": nordea2026,
   "saab-2026": saab2026,
   "axfood-q1-2026": axfoodQ12026,
+  "axfood-q2-2026": axfoodQ22026,
   "abb-q1-2026": abb2026,
   "plejd-q1-2026": plejdQ12026,
   "revolutionrace-2026": revolutionRace2026,
