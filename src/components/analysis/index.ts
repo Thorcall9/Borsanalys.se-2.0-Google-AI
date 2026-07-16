@@ -25,3 +25,5 @@ export { default as AnalysisDisclaimer } from './AnalysisDisclaimer';
 export { default as NibeDeepDive } from './NibeDeepDive';
 export { default as PlejdDeepDive } from './PlejdDeepDive';
 export { default as AnalysisDisclosure } from './AnalysisDisclosure';
+export { default as ReportComment } from './ReportComment';
+

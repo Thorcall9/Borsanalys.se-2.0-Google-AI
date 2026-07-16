@@ -30,8 +30,10 @@ import {
   VerdictBox, 
   VerdictBadge, 
   ScenarioCards, 
-  ComprehensiveAnalysis 
+  ComprehensiveAnalysis,
+  ReportComment
 } from "../components/analysis";
+import axfoodQ2Markdown from "../../analyses/axfood/Q2_2026.md?raw";
 import NvidiaDeepDive from "../components/NvidiaDeepDive";
 import NovoNordiskDeepDive from "../components/NovoNordiskDeepDive/NovoNordiskDeepDive";
 import EvolutionDeepDive from "../components/analysis/EvolutionDeepDive";
@@ -406,6 +408,20 @@ export default function Analysis() {
   const nextAnalysis = currentIndex !== -1 && currentIndex < allAnalyses.length - 1 
     ? allAnalyses[currentIndex + 1] 
     : undefined;
+
+  // Custom view for Axfood Q2 2026 Report Comment
+  if (slug === "axfood-q2-2026") {
+    return (
+      <>
+        <ReportComment data={analysis} markdown={axfoodQ2Markdown} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
+        <MobileReadingProgress 
+          label="analys" 
+          nextTitle={nextAnalysis?.title} 
+          nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
+        />
+      </>
+    );
+  }
 
   // Check for specialized high-fidelity views
   if (analysis.deepDiveComponent && DEEP_DIVE_COMPONENTS[analysis.deepDiveComponent as keyof typeof DEEP_DIVE_COMPONENTS]) {
