@@ -23,8 +23,19 @@ export const axfoodQ22026: AnalysisData = {
   businessModel:
     "Axfood bedriver dagligvaruhandel i Sverige genom butikskedjorna Willys, Hemköp och City Gross samt partihandel genom Snabbgross. Dagab utgör koncernens gemensamma inköps- och logistikmotor som försörjer hela butiksnätet samt externa handlare.",
 
-  investmentCase:
-    "Axfoods Q2-rapport blev en tydlig påminnelse om skillnaden mellan ett stabilt bolag och en attraktiv aktie. Det stora som har förändrats är därför inte det operativa caset, utan värderingen. Vid vår tidigare analys låg kursen på 267,90 kr. Efter rapportreaktionen handlas Axfood på en betydligt lägre multipel och med högre direktavkastning. Vårt tidigare base-case om cirka 260–265 kr lämnas i huvudsak oförändrat. Skillnaden är att base-case nu inte längre innebär “ingen kursuppgång”, utan ungefär 15–16 % potentiell uppsida från stängningskursen 227,50 kr den 15 juli 2026, utöver en direktavkastning kring 4,0 %. Aktien flyttas från Avvakta till Bevaka / Neutral+.",
+  investmentCase: `BEVAKA / Neutral+ – mer intressant värdering efter kursfallet
+
+• Kvalitet: Hög
+• Värdering: Rimlig
+• Risknivå: Låg-Medel
+• Direktavkastning: ca 4,0 %
+• Uppsida till base-case: ca 15–16 %
+• Totalpoäng: 26/40
+• Rating: Neutral+
+
+Axfoods Q2-rapport blev en tydlig påminnelse om skillnaden mellan ett stabilt bolag och en attraktiv aktie. Det stora som har förändrats är därför inte det operativa caset, utan värderingen. Vid vår tidigare analys låg kursen på 267,90 kr. Efter rapportreaktionen handlas Axfood på en betydligt lägre multipel och med högre direktavkastning.
+
+Vårt tidigare base-case om cirka 260–265 kr lämnas i huvudsak oförändrat. Skillnaden är att base-case nu inte längre innebär “ingen kursuppgång”, utan ungefär 15–16 % potentiell uppsida från stängningskursen 227,50 kr den 15 juli 2026, utöver en direktavkastning kring 4,0 %. Aktien flyttas från Avvakta till Bevaka / Neutral+.`,
 
   financialAnalysis:
     "Nettoomsättning Q2 2026: 23 197 Mkr (+0,9 %). Detaljhandelsomsättning: 20 713 Mkr (+2,1 %). Rörelseresultat (EBIT): 964 Mkr (+3,2 %). Justerat rörelseresultat: 972 Mkr (+1,4 %). Rörelsemarginal: 4,2 % (+0,1 p.p.). EPS före utspädning: 2,94 kr (+3,3 %). Kassaflöde från löpande verksamhet: 1 221 Mkr (-36,7 % YoY, tyngt av momseffekter på rörelsekapitalet). Soliditet: 19,1 % (tillfälligt under 20 %-målet).",
