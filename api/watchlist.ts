@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { prisma } from '../src/lib/prisma';
+import { prisma } from '../src/lib/prisma.js';
 /**
  * Minimal Watchlist MVP
  * Hanterar GET (lista), POST (lägg till) och DELETE (ta bort)
