@@ -3,7 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const axfoodQ22026: AnalysisData = {
   slug: "axfood-q2-2026",
   title: "Axfood Q2 2026",
-  listTitle: "Axfood Q2 2026: Kursras efter svag Willys-tillväxt – men värderingen har blivit mer intressant",
+  listTitle: "Axfood Q2 2026: Svag Willys-tillväxt pressar aktien – men värderingen är mer intressant",
   ticker: "AXFO",
   isin: "SE0006993770",
   author: "Carl Fredrik Thor",
@@ -12,30 +12,32 @@ export const axfoodQ22026: AnalysisData = {
   sector: "Dagligvaruhandel",
   recommendation: "BEVAKA",
   price: "227,50 kr",
-  pe: "20.2",
-  yield: "0.040",
+  pe: "20,2x",
+  yield: "4,0 %",
   marketCap: "49,1 mdkr",
   disclosureKey: "axfood",
 
   summary:
-    "Axfood Q2 2026 var en blandad rapport. Resultatet förbättrades och City Gross tog ett tydligt steg mot lönsamhet, men Willys utveckling var svag och Axfood växte långsammare än marknaden. Kassaflödet försvagades, delvis påverkat av momseffekter, och soliditeten föll till 19,1 %, under målet om minst 20 % vid årets slut. Kursfallet på nästan 15 % gör dock att värderingen nu är betydligt mer rimlig. Base-case på 260–265 kr behålls, vilket ger cirka 15–16 % uppsida från 227,50 kr plus omkring 4 % direktavkastning. Synen höjs från Avvakta till Bevaka/Neutral+, men inte till Köp.",
+    "Axfood Q2 2026 var en blandad rapport. Resultatet förbättrades och City Gross tog ett tydligt steg mot lönsamhet, men Willys utveckling var svag och Axfood växte långsammare än marknaden. Kassaflödet försvagades, delvis påverkat av momseffekter, och soliditeten föll till 19,1 %, under målet om minst 20 % vid årets slut. Kursfallet på nästan 15 % gör dock att värderingen nu är betydligt mer rimlig. Base-case på 260–265 kr behålls, vilket ger cirka 15–16 % uppsida från 227,50 kr plus omkring 4,0 % direktavkastning. Uppdaterad syn: Aktien flyttas från Avvakta till Bevaka. Det motsvarar en mer positiv neutral syn efter kursfallet, men ännu inte ett tydligt köpläge.",
 
   businessModel:
     "Axfood bedriver dagligvaruhandel i Sverige genom butikskedjorna Willys, Hemköp och City Gross samt partihandel genom Snabbgross. Dagab utgör koncernens gemensamma inköps- och logistikmotor som försörjer hela butiksnätet samt externa handlare.",
 
-  investmentCase: `BEVAKA / Neutral+ – mer intressant värdering efter kursfallet
+  investmentCase: `BEVAKA – Neutral+ efter kursfallet
 
 • Kvalitet: Hög
 • Värdering: Rimlig
 • Risknivå: Låg-Medel
-• Direktavkastning: ca 4,0 %
+• Direktavkastning: 4,0 %
 • Uppsida till base-case: ca 15–16 %
 • Totalpoäng: 26/40
 • Rating: Neutral+
 
 Axfoods Q2-rapport blev en tydlig påminnelse om skillnaden mellan ett stabilt bolag och en attraktiv aktie. Det stora som har förändrats är därför inte det operativa caset, utan värderingen. Vid vår tidigare analys låg kursen på 267,90 kr. Efter rapportreaktionen handlas Axfood på en betydligt lägre multipel och med högre direktavkastning.
 
-Vårt tidigare base-case om cirka 260–265 kr lämnas i huvudsak oförändrat. Skillnaden är att base-case nu inte längre innebär “ingen kursuppgång”, utan ungefär 15–16 % potentiell uppsida från stängningskursen 227,50 kr den 15 juli 2026, utöver en direktavkastning kring 4,0 %. Aktien flyttas från Avvakta till Bevaka / Neutral+.`,
+Vårt tidigare base-case om cirka 260–265 kr lämnas i huvudsak oförändrat. Skillnaden är att base-case nu inte längre innebär “ingen kursuppgång”, utan ungefär 15–16 % potentiell uppsida från stängningskursen 227,50 kr den 15 juli 2026, utöver en direktavkastning kring 4,0 %. 
+
+Uppdaterad syn: Aktien flyttas från Avvakta till Bevaka. Det motsvarar en mer positiv neutral syn efter kursfallet, men ännu inte ett tydligt köpläge.`,
 
   financialAnalysis:
     "Nettoomsättning Q2 2026: 23 197 Mkr (+0,9 %). Detaljhandelsomsättning: 20 713 Mkr (+2,1 %). Rörelseresultat (EBIT): 964 Mkr (+3,2 %). Justerat rörelseresultat: 972 Mkr (+1,4 %). Rörelsemarginal: 4,2 % (+0,1 p.p.). EPS före utspädning: 2,94 kr (+3,3 %). Kassaflöde från löpande verksamhet: 1 221 Mkr (-36,7 % YoY, tyngt av momseffekter på rörelsekapitalet). Soliditet: 19,1 % (tillfälligt under 20 %-målet).",

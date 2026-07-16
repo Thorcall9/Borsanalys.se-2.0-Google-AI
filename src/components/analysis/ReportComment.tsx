@@ -307,7 +307,7 @@ export default function ReportComment({
             </div>
             <div>
               <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Direktavkastning</div>
-              <div className="text-lg font-black text-foreground">{parseFloat(data.yield) ? `${(parseFloat(data.yield) * 100).toFixed(1)}%` : data.yield}</div>
+              <div className="text-lg font-black text-foreground">{data.yield?.includes('%') ? data.yield : (parseFloat(data.yield) ? `${(parseFloat(data.yield) * 100).toFixed(1)}%` : data.yield)}</div>
             </div>
           </div>
         </header>
