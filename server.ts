@@ -78,6 +78,9 @@ async function startServer() {
     'http://localhost:3000',
     'http://localhost:3001',
     'http://localhost:5173',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:3001',
+    'http://127.0.0.1:5173',
     /^https:\/\/borsanalys(-[a-zA-Z0-9-]+)?\.vercel\.app$/, // Tillåt enbart Vercel preview-miljöer som börjar på borsanalys
     'https://borsanalys.se',
     'https://www.borsanalys.se'
