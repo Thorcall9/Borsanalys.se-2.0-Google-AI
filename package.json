@@ -64,6 +64,9 @@
     "js-yaml": "^4.2.0",
     "minimatch": "^10.2.5",
     "smol-toml": "^1.6.1",
-    "undici": "^6.24.0"
+    "undici": "^6.24.0",
+    "jwks-rsa": {
+      "jose": "4.15.9"
+    }
   }
 }
