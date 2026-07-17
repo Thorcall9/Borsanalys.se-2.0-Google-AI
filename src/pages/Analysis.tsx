@@ -633,7 +633,7 @@ export default function Analysis() {
       />
 
       {/* Floating Save Button */}
-      <div className="fixed bottom-24 right-6 z-40 md:hidden">
+      <div className="fixed bottom-24 right-6 z-40 lg:hidden">
         <button
           onClick={toggleSave}
           disabled={isSaveLoading}
