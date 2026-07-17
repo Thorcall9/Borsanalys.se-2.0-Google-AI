@@ -106,7 +106,12 @@ export default function About() {
               Jag äger själv aktier i flera av de bolag jag analyserar, vilket innebär att jag har skin in the game. Mina rekommendationer är mina egna och baseras på samma analysmodell som presenteras på sajten.
             </p>
             <div className="flex gap-4 pt-4">
-              <a href="#" className="w-14 h-14 bg-card border border-border rounded-2xl flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-500 shadow-xl shadow-black/5">
+              <a 
+                href="https://x.com/borsanalys" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-14 h-14 bg-card border border-border rounded-2xl flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-500 shadow-xl shadow-black/5"
+              >
                 <Twitter size={24} />
               </a>
               <a href="#" className="w-14 h-14 bg-card border border-border rounded-2xl flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-500 shadow-xl shadow-black/5">

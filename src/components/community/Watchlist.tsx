@@ -1,23 +1,41 @@
 import React, { useEffect, useState } from "react";
-import { Star, Trash2, TrendingUp, TrendingDown, ChevronRight, Plus } from "lucide-react";
+import { Star, Trash2, TrendingUp, TrendingDown, ChevronRight, Plus, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { db, handleFirestoreError, OperationType } from "../../firebase";
-import { collection, query, where, onSnapshot, doc, deleteDoc } from "firebase/firestore";
 import { useAuth } from "../../contexts/AuthContext";
+import { analyses } from "../../data/analyses";
+import { fetchWithCache } from "../../services/stockService";
 
 interface WatchlistItem {
   id: string;
   symbol: string;
   name: string;
+  slug: string;
   price?: number;
   change?: number;
-  addedAt: any;
+  addedAt: string;
+}
+
+function getCompanyDetails(ticker: string) {
+  const analysisEntry = Object.entries(analyses).find(
+    ([_, data]) => data.ticker.toUpperCase() === ticker.toUpperCase()
+  );
+  if (analysisEntry) {
+    return {
+      name: analysisEntry[1].title,
+      slug: analysisEntry[0]
+    };
+  }
+  return {
+    name: ticker,
+    slug: ticker.toLowerCase()
+  };
 }
 
 export default function Watchlist() {
   const { user, openLoginModal } = useAuth();
   const [watchlist, setWatchlist] = useState<WatchlistItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!user) {
@@ -25,30 +43,87 @@ export default function Watchlist() {
       return;
     }
 
-    const path = "watchlists";
-    const q = query(collection(db, path), where("uid", "==", user.uid));
-    const unsub = onSnapshot(q, (snapshot) => {
-      const items = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as WatchlistItem[];
-      
-      // Sort by addedAt
-      setWatchlist(items.sort((a, b) => b.addedAt?.seconds - a.addedAt?.seconds));
-      setLoading(false);
-    }, (error) => {
-      handleFirestoreError(error, OperationType.LIST, path);
-    });
+    const fetchWatchlist = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const token = await user.getIdToken();
+        const res = await fetch('/api/watchlist', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
 
-    return () => unsub();
+        if (res.ok) {
+          const list = await res.json();
+          // Map database items to WatchlistItems and fetch quotes
+          const mappedItems = await Promise.all(
+            list.map(async (dbItem: any) => {
+              const details = getCompanyDetails(dbItem.ticker);
+              let price: number | undefined = undefined;
+              let change: number | undefined = undefined;
+
+              try {
+                const quote = await fetchWithCache(dbItem.ticker);
+                if (quote) {
+                  price = quote.regularMarketPrice;
+                  change = parseFloat(quote.regularMarketChangePercent.toFixed(2));
+                }
+              } catch (qErr) {
+                console.error(`Failed to fetch quote for ${dbItem.ticker}:`, qErr);
+              }
+
+              return {
+                id: dbItem.id.toString(),
+                symbol: dbItem.ticker.toUpperCase(),
+                name: details.name,
+                slug: details.slug,
+                price,
+                change,
+                addedAt: dbItem.createdAt
+              };
+            })
+          );
+
+          setWatchlist(mappedItems);
+        } else {
+          const err = await res.json();
+          setError(err.error || 'Kunde inte hämta bevakningslistan.');
+        }
+      } catch (err) {
+        console.error("Watchlist fetch failed:", err);
+        setError('Kunde inte hämta bevakningslistan på grund av anslutningsfel.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWatchlist();
   }, [user]);
 
-  const removeFromWatchlist = async (id: string) => {
-    const path = `watchlists/${id}`;
+  const removeFromWatchlist = async (ticker: string) => {
+    if (!user) return;
+    setError(null);
     try {
-      await deleteDoc(doc(db, "watchlists", id));
-    } catch (error) {
-      handleFirestoreError(error, OperationType.DELETE, path);
+      const token = await user.getIdToken();
+      const res = await fetch('/api/watchlist', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ ticker })
+      });
+
+      if (res.ok) {
+        setWatchlist(prev => prev.filter(item => item.symbol.toUpperCase() !== ticker.toUpperCase()));
+      } else {
+        const err = await res.json();
+        setError(err.error || 'Kunde inte ta bort aktien.');
+      }
+    } catch (err) {
+      console.error("Failed to delete from watchlist:", err);
+      setError('Anslutningsfel vid borttagning av aktie.');
     }
   };
 
@@ -62,7 +137,7 @@ export default function Watchlist() {
         </p>
         <button 
           onClick={openLoginModal}
-          className="px-6 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary/90 transition-colors"
+          className="px-6 py-3 bg-primary text-white font-bold rounded-xl hover:bg-primary/90 transition-colors cursor-pointer"
         >
           Logga in
         </button>
@@ -94,12 +169,19 @@ export default function Watchlist() {
         </span>
       </div>
 
+      {error && (
+        <div className="p-4 bg-red-500/10 border-b border-border text-red-500 text-sm flex items-center gap-2">
+          <AlertCircle size={16} />
+          <span>{error}</span>
+        </div>
+      )}
+
       <div className="divide-y divide-border">
         {watchlist.length > 0 ? (
           watchlist.map((item) => (
             <div key={item.id} className="p-4 hover:bg-muted/50 transition-colors group">
               <div className="flex items-center justify-between">
-                <Link to={`/analys/${item.symbol.toLowerCase()}`} className="flex-1">
+                <Link to={`/analys/${item.slug}`} className="flex-1">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-background border border-border rounded-lg flex items-center justify-center font-bold text-xs">
                       {item.symbol}
@@ -112,20 +194,22 @@ export default function Watchlist() {
                 </Link>
 
                 <div className="flex items-center gap-4">
-                  {item.price && (
+                  {item.price !== undefined && (
                     <div className="text-right">
                       <div className="font-bold text-sm">{item.price} SEK</div>
-                      <div className={`text-[10px] font-bold flex items-center justify-end gap-1 ${
-                        item.change && item.change >= 0 ? 'text-primary' : 'text-red-500'
-                      }`}>
-                        {item.change && item.change >= 0 ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
-                        {item.change}%
-                      </div>
+                      {item.change !== undefined && (
+                        <div className={`text-[10px] font-bold flex items-center justify-end gap-1 ${
+                          item.change >= 0 ? 'text-primary' : 'text-red-500'
+                        }`}>
+                          {item.change >= 0 ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
+                          {item.change}%
+                        </div>
+                      )}
                     </div>
                   )}
                   <button 
-                    onClick={() => removeFromWatchlist(item.id)}
-                    className="p-2 text-muted-foreground hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100"
+                    onClick={() => removeFromWatchlist(item.symbol)}
+                    className="p-2 text-muted-foreground hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 cursor-pointer"
                   >
                     <Trash2 size={16} />
                   </button>

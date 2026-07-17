@@ -1,81 +1,117 @@
 import { Request, Response } from 'express';
-import { prisma } from '../src/lib/prisma.js';
-/**
- * Minimal Watchlist MVP
- * Hanterar GET (lista), POST (lägg till) och DELETE (ta bort)
- * Hårdkodat userId = 1 enligt önskemål.
- */
+import { auth } from './lib/firebaseAdmin.js';
 
-const USER_ID = 1;
-
-async function ensureUserExists() {
-  // Säkerställer att användare med ID 1 finns så att relationer fungerar
-  await prisma.user.upsert({
-    where: { id: USER_ID },
-    update: {},
-    create: {
-      id: USER_ID,
-      email: 'user1@borsanalys.se',
-      name: 'Demo User',
-    },
-  });
-}
 
 export default async function watchlistHandler(req: Request, res: Response) {
+  const { PrismaClient } = await import('@prisma/client');
+  const prisma = new PrismaClient();
+
   try {
-    // 1. Förberedelse
-    await ensureUserExists();
+    // 1. Extract Bearer Token
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ error: 'Behörighet saknas. Logga in igen.' });
+    }
+
+    const token = authHeader.split('Bearer ')[1];
+    let decodedToken;
+    try {
+      decodedToken = await auth.verifyIdToken(token);
+    } catch (err: any) {
+      console.error('Firebase token verification failed:', err.message);
+      return res.status(401).json({ error: 'Ogiltig eller utgången inloggning. Logga in igen.' });
+    }
+
+    const { uid: firebaseUid, email, name } = decodedToken;
+    if (!email) {
+      return res.status(400).json({ error: 'E-post saknas i inloggningsuppgifterna.' });
+    }
+
+    // 2. Identify or Create User in Prisma database
+    let dbUser = await prisma.user.findUnique({
+      where: { firebaseUid },
+    });
+
+    if (!dbUser) {
+      // Check if user exists with the same email but has no firebaseUid linked yet
+      const existingUserByEmail = await prisma.user.findUnique({
+        where: { email },
+      });
+
+      if (existingUserByEmail) {
+        // Link Firebase UID to existing user
+        dbUser = await prisma.user.update({
+          where: { id: existingUserByEmail.id },
+          data: { firebaseUid },
+        });
+      } else {
+        // Create new user
+        dbUser = await prisma.user.create({
+          data: {
+            email,
+            name: name || null,
+            firebaseUid,
+          },
+        });
+      }
+    }
+
+    const userId = dbUser.id;
     const method = req.method;
 
-    // 2. GET: Hämta hela bevakningslistan
+    // 3. GET: Get watchlist for user
     if (method === 'GET') {
       const watchlist = await prisma.watchlist.findMany({
-        where: { userId: USER_ID },
+        where: { userId },
         orderBy: { createdAt: 'desc' },
       });
       return res.json(watchlist);
     }
 
-    // 3. POST: Lägg till aktie (ticker i body)
+    // 4. POST: Add share to watchlist
     if (method === 'POST') {
       const { ticker } = req.body;
-      if (!ticker) return res.status(400).json({ error: 'Ticker saknas i request body' });
+      if (!ticker) {
+        return res.status(400).json({ error: 'Ticker saknas i förfrågan.' });
+      }
 
       const entry = await prisma.watchlist.upsert({
         where: {
           userId_ticker: {
-            userId: USER_ID,
+            userId,
             ticker: ticker.toUpperCase(),
           },
         },
-        update: {}, // Gör ingenting om den redan finns
+        update: {}, // Do nothing if it already exists
         create: {
-          userId: USER_ID,
+          userId,
           ticker: ticker.toUpperCase(),
         },
       });
       return res.json({ success: true, message: `${ticker.toUpperCase()} tillagd`, entry });
     }
 
-    // 4. DELETE: Ta bort aktie (ticker i body)
+    // 5. DELETE: Remove share from watchlist
     if (method === 'DELETE') {
       const { ticker } = req.body;
-      if (!ticker) return res.status(400).json({ error: 'Ticker saknas i request body' });
+      if (!ticker) {
+        return res.status(400).json({ error: 'Ticker saknas i förfrågan.' });
+      }
 
-      // Vi använder deleteMany för att undvika 404-fel om den inte finns
       await prisma.watchlist.deleteMany({
         where: {
-          userId: USER_ID,
+          userId,
           ticker: ticker.toUpperCase(),
         },
       });
       return res.json({ success: true, message: `${ticker.toUpperCase()} borttagen` });
     }
 
-    // Fel metod
     return res.status(405).json({ error: `Metod ${method} tillåts inte` });
   } catch (error: any) {
     console.error('[WATCHLIST API ERROR]', error);
     return res.status(500).json({ error: 'Internt serverfel i watchlist' });
+  } finally {
+    await prisma.$disconnect();
   }
 }

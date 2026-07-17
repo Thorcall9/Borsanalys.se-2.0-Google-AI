@@ -50,6 +50,7 @@ import ABBDeepDive from "../components/analysis/ABBDeepDive";
 import PlejdDeepDive from "../components/analysis/PlejdDeepDive";
 import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
+import { useAuth } from "../contexts/AuthContext";
 
 import MobileReadingProgress from "../components/MobileReadingProgress";
 import AdUnit from "../components/analysis/AdUnit";
@@ -85,8 +86,10 @@ export default function Analysis() {
     'nordea': 'nordea-bank-2026',
   };
   const slug = rawSlug ? (slugMappings[rawSlug] || rawSlug) : undefined;
+  const { user, openLoginModal } = useAuth();
   const [isInWatchlist, setIsInWatchlist] = useState(false);
   const [isWatchlistLoading, setIsWatchlistLoading] = useState(true);
+  const [watchlistError, setWatchlistError] = useState<string | null>(null);
   const [realTimeData, setRealTimeData] = useState<Record<string, any>>({});
 
   // Filter states
@@ -133,35 +136,60 @@ export default function Analysis() {
   // Watchlist State (Prisma/API)
   useEffect(() => {
     if (!analysis) return;
+    
+    if (!user) {
+      setIsInWatchlist(false);
+      setIsWatchlistLoading(false);
+      return;
+    }
 
     const checkWatchlistStatus = async () => {
       setIsWatchlistLoading(true);
+      setWatchlistError(null);
       try {
-        const res = await fetch('/api/watchlist');
+        const token = await user.getIdToken();
+        const res = await fetch('/api/watchlist', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
         if (res.ok) {
           const list = await res.json();
           const isWatched = list.some((item: any) => item.ticker === analysis.ticker.toUpperCase());
           setIsInWatchlist(isWatched);
+        } else {
+          const err = await res.json();
+          setWatchlistError(err.error || 'Kunde inte hämta bevakningsstatus.');
         }
       } catch (err) {
         console.error("Failed to fetch watchlist status:", err);
+        setWatchlistError('Kunde inte hämta bevakningsstatus på grund av anslutningsfel.');
       } finally {
         setIsWatchlistLoading(false);
       }
     };
 
     checkWatchlistStatus();
-  }, [analysis]);
+  }, [analysis, user]);
 
   const toggleWatchlist = async () => {
     if (!analysis) return;
+    if (!user) {
+      openLoginModal();
+      return;
+    }
 
     setIsWatchlistLoading(true);
+    setWatchlistError(null);
     try {
+      const token = await user.getIdToken();
       const method = isInWatchlist ? 'DELETE' : 'POST';
       const res = await fetch('/api/watchlist', {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({ ticker: analysis.ticker })
       });
 
@@ -169,10 +197,12 @@ export default function Analysis() {
         setIsInWatchlist(!isInWatchlist);
       } else {
         const err = await res.json();
+        setWatchlistError(err.error || 'Kunde inte uppdatera bevakningslistan.');
         console.error("Watchlist operation failed:", err.error);
       }
     } catch (error) {
       console.error("Error toggling watchlist:", error);
+      setWatchlistError('Anslutningsfel vid uppdatering av bevakningslistan.');
     } finally {
       setIsWatchlistLoading(false);
     }
@@ -419,6 +449,15 @@ export default function Analysis() {
           nextTitle={nextAnalysis?.title} 
           nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
         />
+        {watchlistError && (
+          <div className="fixed bottom-6 right-6 z-50 bg-red-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 border border-red-600">
+            <AlertCircle size={20} />
+            <div className="flex-1 text-sm font-medium">{watchlistError}</div>
+            <button onClick={() => setWatchlistError(null)} className="text-white/80 hover:text-white cursor-pointer">
+              <X size={16} />
+            </button>
+          </div>
+        )}
       </>
     );
   }
@@ -434,6 +473,15 @@ export default function Analysis() {
           nextTitle={nextAnalysis?.title} 
           nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
         />
+        {watchlistError && (
+          <div className="fixed bottom-6 right-6 z-50 bg-red-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 border border-red-600">
+            <AlertCircle size={20} />
+            <div className="flex-1 text-sm font-medium">{watchlistError}</div>
+            <button onClick={() => setWatchlistError(null)} className="text-white/80 hover:text-white cursor-pointer">
+              <X size={16} />
+            </button>
+          </div>
+        )}
       </>
     );
   }
@@ -447,6 +495,15 @@ export default function Analysis() {
         nextTitle={nextAnalysis?.title} 
         nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
       />
+      {watchlistError && (
+        <div className="fixed bottom-6 right-6 z-50 bg-red-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 border border-red-600">
+          <AlertCircle size={20} />
+          <div className="flex-1 text-sm font-medium">{watchlistError}</div>
+          <button onClick={() => setWatchlistError(null)} className="text-white/80 hover:text-white cursor-pointer">
+            <X size={16} />
+          </button>
+        </div>
+      )}
     </>
   );
 }

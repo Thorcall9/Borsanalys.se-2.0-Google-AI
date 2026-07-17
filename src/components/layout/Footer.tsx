@@ -45,12 +45,15 @@ export default function Footer() {
             Professionella aktieanalyser drivna av data och AI. Vi hjälper moderna investerare att fatta välgrundade beslut genom objektivitet och precision.
           </p>
           <div className="flex gap-6">
-            <button 
+            <a 
+              href="https://x.com/borsanalys"
+              target="_blank"
+              rel="noopener noreferrer"
               className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all duration-300"
-              aria-label="Följ oss på Twitter"
+              aria-label="Följ oss på X"
             >
               <Twitter size={18} />
-            </button>
+            </a>
             <button 
               className="w-10 h-10 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all duration-300"
               aria-label="Följ oss på LinkedIn"

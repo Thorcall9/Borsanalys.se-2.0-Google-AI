@@ -23,6 +23,7 @@ import {
   ResponsiveContainer,
   Legend
 } from 'recharts';
+// @ts-ignore
 import { GoogleGenAI, Type } from "@google/genai";
 import { stocks } from '../data/stocks';
 import { analyses } from '../data/analyses';
@@ -202,7 +203,6 @@ export default function StockHub() {
                           strokeWidth={2}
                           fillOpacity={1} 
                           fill="url(#colorRevenue)" 
-                          baseLine={0}
                         />
                         <Area 
                           type="monotone" 
@@ -212,7 +212,6 @@ export default function StockHub() {
                           strokeWidth={2}
                           fillOpacity={1} 
                           fill="url(#colorProfit)" 
-                          baseLine={0}
                         />
                       </AreaChart>
                     </ResponsiveContainer>
