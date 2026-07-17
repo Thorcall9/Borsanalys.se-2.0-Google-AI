@@ -13,11 +13,13 @@ try {
       ? process.env.FIREBASE_PRIVATE_KEY.trim()
       : undefined;
 
-    if (privateKey && privateKey.startsWith('"') && privateKey.endsWith('"')) {
-      privateKey = privateKey.substring(1, privateKey.length - 1).trim();
-    }
-
     if (privateKey) {
+      while (privateKey.startsWith('"') || privateKey.startsWith("'")) {
+        privateKey = privateKey.substring(1).trim();
+      }
+      while (privateKey.endsWith('"') || privateKey.endsWith("'")) {
+        privateKey = privateKey.slice(0, -1).trim();
+      }
       privateKey = privateKey.replace(/\\n/g, '\n');
     }
 
