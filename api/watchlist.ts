@@ -1,8 +1,16 @@
 import { Request, Response } from 'express';
-import { auth } from './lib/firebaseAdmin.js';
+import { auth, initError } from './lib/firebaseAdmin.js';
 
 
 export default async function watchlistHandler(req: Request, res: Response) {
+  if (initError) {
+    return res.status(500).json({ 
+      error: 'Firebase Admin initieringsfel', 
+      message: initError.message, 
+      stack: initError.stack 
+    });
+  }
+
   const { PrismaClient } = await import('@prisma/client');
   const prisma = new PrismaClient();
 
@@ -110,7 +118,17 @@ export default async function watchlistHandler(req: Request, res: Response) {
     return res.status(405).json({ error: `Metod ${method} tillåts inte` });
   } catch (error: any) {
     console.error('[WATCHLIST API ERROR]', error);
-    return res.status(500).json({ error: 'Internt serverfel i watchlist' });
+    return res.status(500).json({ 
+      error: 'Internt serverfel i watchlist', 
+      message: error.message,
+      stack: error.stack,
+      env: {
+        hasDbUrl: !!process.env.DATABASE_URL,
+        hasProjectId: !!process.env.FIREBASE_PROJECT_ID,
+        hasEmail: !!process.env.FIREBASE_CLIENT_EMAIL,
+        hasKey: !!process.env.FIREBASE_PRIVATE_KEY
+      }
+    });
   } finally {
     await prisma.$disconnect();
   }
