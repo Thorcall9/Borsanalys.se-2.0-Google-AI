@@ -4,10 +4,22 @@ import { auth, initError } from './lib/firebaseAdmin.js';
 
 export default async function watchlistHandler(req: Request, res: Response) {
   if (initError) {
+    const rawKey = process.env.FIREBASE_PRIVATE_KEY || '';
     return res.status(500).json({ 
       error: 'Firebase Admin initieringsfel', 
       message: initError.message, 
-      stack: initError.stack 
+      stack: initError.stack,
+      keyDebug: {
+        length: rawKey.length,
+        startsWithQuote: rawKey.startsWith('"'),
+        endsWithQuote: rawKey.endsWith('"'),
+        startsWithQuoteTrimmed: rawKey.trim().startsWith('"'),
+        endsWithQuoteTrimmed: rawKey.trim().endsWith('"'),
+        hasLiteralBackslashN: rawKey.includes('\\n'),
+        hasRealNewline: rawKey.includes('\n'),
+        start30: rawKey.slice(0, 30),
+        end30: rawKey.slice(-30)
+      }
     });
   }
 

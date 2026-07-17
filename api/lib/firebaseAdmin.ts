@@ -10,11 +10,15 @@ try {
     const projectId = process.env.FIREBASE_PROJECT_ID;
     const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
     let privateKey = process.env.FIREBASE_PRIVATE_KEY
-      ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n')
+      ? process.env.FIREBASE_PRIVATE_KEY.trim()
       : undefined;
 
     if (privateKey && privateKey.startsWith('"') && privateKey.endsWith('"')) {
-      privateKey = privateKey.substring(1, privateKey.length - 1);
+      privateKey = privateKey.substring(1, privateKey.length - 1).trim();
+    }
+
+    if (privateKey) {
+      privateKey = privateKey.replace(/\\n/g, '\n');
     }
 
     if (projectId && clientEmail && privateKey) {
