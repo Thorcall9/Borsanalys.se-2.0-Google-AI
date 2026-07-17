@@ -21,7 +21,10 @@ import {
   X, 
   Globe, 
   BarChart3, 
-  CheckCircle2 
+  CheckCircle2,
+  Bookmark,
+  BookmarkCheck,
+  Loader2
 } from "lucide-react";
 import SEO from "../components/SEO";
 import { 
@@ -90,6 +93,9 @@ export default function Analysis() {
   const [isInWatchlist, setIsInWatchlist] = useState(false);
   const [isWatchlistLoading, setIsWatchlistLoading] = useState(true);
   const [watchlistError, setWatchlistError] = useState<string | null>(null);
+  const [isSaved, setIsSaved] = useState(false);
+  const [isSaveLoading, setIsSaveLoading] = useState(true);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const [realTimeData, setRealTimeData] = useState<Record<string, any>>({});
 
   // Filter states
@@ -205,6 +211,81 @@ export default function Analysis() {
       setWatchlistError('Anslutningsfel vid uppdatering av bevakningslistan.');
     } finally {
       setIsWatchlistLoading(false);
+    }
+  };
+
+  // Saved status (Prisma/API)
+  useEffect(() => {
+    if (!analysis) return;
+    
+    if (!user) {
+      setIsSaved(false);
+      setIsSaveLoading(false);
+      return;
+    }
+
+    const checkSavedStatus = async () => {
+      setIsSaveLoading(true);
+      setSaveError(null);
+      try {
+        const token = await user.getIdToken();
+        const res = await fetch('/api/saved-analyses', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        if (res.ok) {
+          const list = await res.json();
+          const saved = list.some((item: any) => item.slug === slug);
+          setIsSaved(saved);
+        } else {
+          const err = await res.json();
+          setSaveError(err.error || 'Kunde inte hämta sparstatus.');
+        }
+      } catch (err) {
+        console.error("Failed to fetch saved status:", err);
+        setSaveError('Kunde inte hämta sparstatus på grund av anslutningsfel.');
+      } finally {
+        setIsSaveLoading(false);
+      }
+    };
+
+    checkSavedStatus();
+  }, [analysis, user, slug]);
+
+  const toggleSave = async () => {
+    if (!analysis) return;
+    if (!user) {
+      openLoginModal();
+      return;
+    }
+
+    setIsSaveLoading(true);
+    setSaveError(null);
+    try {
+      const token = await user.getIdToken();
+      const method = isSaved ? 'DELETE' : 'POST';
+      const res = await fetch('/api/saved-analyses', {
+        method,
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ slug })
+      });
+
+      if (res.ok) {
+        setIsSaved(!isSaved);
+      } else {
+        const err = await res.json();
+        setSaveError(err.error || 'Kunde inte spara analysen.');
+        console.error("Save operation failed:", err.error);
+      }
+    } catch (error) {
+      console.error("Error toggling save status:", error);
+      setSaveError('Anslutningsfel vid uppdatering av sparad analys.');
+    } finally {
+      setIsSaveLoading(false);
     }
   };
 
@@ -449,11 +530,34 @@ export default function Analysis() {
           nextTitle={nextAnalysis?.title} 
           nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
         />
-        {watchlistError && (
-          <div className="fixed bottom-6 right-6 z-50 bg-red-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 border border-red-600">
-            <AlertCircle size={20} />
-            <div className="flex-1 text-sm font-medium">{watchlistError}</div>
-            <button onClick={() => setWatchlistError(null)} className="text-white/80 hover:text-white cursor-pointer">
+        
+        {/* Floating Save Button */}
+        <div className="fixed bottom-24 right-6 z-40">
+          <button
+            onClick={toggleSave}
+            disabled={isSaveLoading}
+            className={`flex items-center gap-2 px-5 py-3 rounded-full text-xs font-black uppercase tracking-widest shadow-2xl border backdrop-blur-md transition-all cursor-pointer hover:scale-105 active:scale-95 ${
+              isSaved 
+                ? 'bg-primary/20 border-primary/30 text-primary shadow-primary/10'
+                : 'bg-card/90 border-border text-foreground hover:bg-muted/80'
+            } ${isSaveLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          >
+            {isSaveLoading ? (
+              <Loader2 size={14} className="animate-spin" />
+            ) : isSaved ? (
+              <Bookmark size={14} fill="currentColor" className="text-primary" />
+            ) : (
+              <Bookmark size={14} />
+            )}
+            <span>{isSaveLoading ? 'Laddar...' : isSaved ? 'Sparad' : 'Spara analys'}</span>
+          </button>
+        </div>
+
+        {(watchlistError || saveError) && (
+          <div className="fixed bottom-6 right-6 z-50 bg-red-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 border border-red-600 max-w-sm">
+            <AlertCircle size={20} className="shrink-0" />
+            <div className="flex-1 text-sm font-medium">{watchlistError || saveError}</div>
+            <button onClick={() => { setWatchlistError(null); setSaveError(null); }} className="text-white/80 hover:text-white cursor-pointer shrink-0">
               <X size={16} />
             </button>
           </div>
@@ -473,11 +577,34 @@ export default function Analysis() {
           nextTitle={nextAnalysis?.title} 
           nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
         />
-        {watchlistError && (
-          <div className="fixed bottom-6 right-6 z-50 bg-red-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 border border-red-600">
-            <AlertCircle size={20} />
-            <div className="flex-1 text-sm font-medium">{watchlistError}</div>
-            <button onClick={() => setWatchlistError(null)} className="text-white/80 hover:text-white cursor-pointer">
+
+        {/* Floating Save Button */}
+        <div className="fixed bottom-24 right-6 z-40">
+          <button
+            onClick={toggleSave}
+            disabled={isSaveLoading}
+            className={`flex items-center gap-2 px-5 py-3 rounded-full text-xs font-black uppercase tracking-widest shadow-2xl border backdrop-blur-md transition-all cursor-pointer hover:scale-105 active:scale-95 ${
+              isSaved 
+                ? 'bg-primary/20 border-primary/30 text-primary shadow-primary/10'
+                : 'bg-card/90 border-border text-foreground hover:bg-muted/80'
+            } ${isSaveLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          >
+            {isSaveLoading ? (
+              <Loader2 size={14} className="animate-spin" />
+            ) : isSaved ? (
+              <Bookmark size={14} fill="currentColor" className="text-primary" />
+            ) : (
+              <Bookmark size={14} />
+            )}
+            <span>{isSaveLoading ? 'Laddar...' : isSaved ? 'Sparad' : 'Spara analys'}</span>
+          </button>
+        </div>
+
+        {(watchlistError || saveError) && (
+          <div className="fixed bottom-6 right-6 z-50 bg-red-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 border border-red-600 max-w-sm">
+            <AlertCircle size={20} className="shrink-0" />
+            <div className="flex-1 text-sm font-medium">{watchlistError || saveError}</div>
+            <button onClick={() => { setWatchlistError(null); setSaveError(null); }} className="text-white/80 hover:text-white cursor-pointer shrink-0">
               <X size={16} />
             </button>
           </div>
@@ -489,17 +616,49 @@ export default function Analysis() {
   // Use the new comprehensive analysis template for all other stocks
   return (
     <>
-      <ComprehensiveAnalysis data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
+      <ComprehensiveAnalysis 
+        data={analysis} 
+        onToggleWatchlist={toggleWatchlist} 
+        isInWatchlist={isInWatchlist} 
+        isWatchlistLoading={isWatchlistLoading} 
+        isSaved={isSaved}
+        isSaveLoading={isSaveLoading}
+        onToggleSave={toggleSave}
+        nextAnalysis={nextAnalysis} 
+      />
       <MobileReadingProgress 
         label="analys" 
         nextTitle={nextAnalysis?.title} 
         nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
       />
-      {watchlistError && (
-        <div className="fixed bottom-6 right-6 z-50 bg-red-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 border border-red-600">
-          <AlertCircle size={20} />
-          <div className="flex-1 text-sm font-medium">{watchlistError}</div>
-          <button onClick={() => setWatchlistError(null)} className="text-white/80 hover:text-white cursor-pointer">
+
+      {/* Floating Save Button */}
+      <div className="fixed bottom-24 right-6 z-40 md:hidden">
+        <button
+          onClick={toggleSave}
+          disabled={isSaveLoading}
+          className={`flex items-center gap-2 px-5 py-3 rounded-full text-xs font-black uppercase tracking-widest shadow-2xl border backdrop-blur-md transition-all cursor-pointer hover:scale-105 active:scale-95 ${
+            isSaved 
+              ? 'bg-primary/20 border-primary/30 text-primary shadow-primary/10'
+              : 'bg-card/90 border-border text-foreground hover:bg-muted/80'
+          } ${isSaveLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+        >
+          {isSaveLoading ? (
+            <Loader2 size={14} className="animate-spin" />
+          ) : isSaved ? (
+            <Bookmark size={14} fill="currentColor" className="text-primary" />
+          ) : (
+            <Bookmark size={14} />
+          )}
+          <span>{isSaveLoading ? 'Laddar...' : isSaved ? 'Sparad' : 'Spara analys'}</span>
+        </button>
+      </div>
+
+      {(watchlistError || saveError) && (
+        <div className="fixed bottom-6 right-6 z-50 bg-red-500 text-white px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 border border-red-600 max-w-sm">
+          <AlertCircle size={20} className="shrink-0" />
+          <div className="flex-1 text-sm font-medium">{watchlistError || saveError}</div>
+          <button onClick={() => { setWatchlistError(null); setSaveError(null); }} className="text-white/80 hover:text-white cursor-pointer shrink-0">
             <X size={16} />
           </button>
         </div>

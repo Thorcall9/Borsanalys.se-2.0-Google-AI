@@ -68,6 +68,7 @@ model User {
   createdAt     DateTime       @default(now())
   watchlists    Watchlist[]
   notifications Notification[]
+  savedAnalyses SavedAnalysis[]
 }
 
 model Watchlist {
@@ -93,6 +94,19 @@ model Notification {
   user User @relation(fields: [userId], references: [id])
 }
 
+model SavedAnalysis {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  slug      String
+  title     String
+  ticker     String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, slug])
+}
+
 model Vote {
   id        String   @id @default(cuid())
   stock     String
@@ -101,5 +115,6 @@ model Vote {
 
   @@map("votes")
 }
+
 
 

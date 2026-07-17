@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { Navigate } from "react-router-dom";
 import { User as UserIcon, Settings, LogOut, Shield, Mail, Calendar } from "lucide-react";
 import Watchlist from "../components/community/Watchlist";
+import SavedAnalyses from "../components/community/SavedAnalyses";
 
 export default function Profile() {
   const { user, loading, logout } = useAuth();
@@ -78,6 +79,14 @@ export default function Profile() {
               <p className="text-sm text-muted-foreground">Håll koll på dina favoritaktier</p>
             </div>
             <Watchlist />
+          </section>
+
+          <section className="space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-3xl font-serif font-bold tracking-tight">Mina Sparade Analyser</h2>
+              <p className="text-sm text-muted-foreground">Snabblänkar till dina bokmärkta analyser</p>
+            </div>
+            <SavedAnalyses />
           </section>
 
           <section className="bg-primary/5 border border-primary/10 rounded-3xl p-8 space-y-6">

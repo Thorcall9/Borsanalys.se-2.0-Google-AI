@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Menu, X, ArrowLeft, Star, StarOff, Loader2, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { Menu, X, ArrowLeft, Star, StarOff, Loader2, PanelLeftClose, PanelLeftOpen, Bookmark } from 'lucide-react';
 
 import NextAnalysisButton from './NextAnalysisButton';
 import { AnalysisData } from '../../types/analysis.js';
@@ -31,6 +31,9 @@ interface AnalysisLayoutProps {
   isInWatchlist?: boolean;
   isWatchlistLoading?: boolean;
   onToggleWatchlist?: () => void;
+  isSaved?: boolean;
+  isSaveLoading?: boolean;
+  onToggleSave?: () => void;
   nextAnalysis?: AnalysisData;
   sidebarExtras?: React.ReactNode;
   hideDefaultWatchlist?: boolean;
@@ -56,6 +59,9 @@ export default function AnalysisLayout({
   isInWatchlist,
   isWatchlistLoading,
   onToggleWatchlist,
+  isSaved,
+  isSaveLoading,
+  onToggleSave,
   nextAnalysis,
   analysisPrice,
   currentPrice,
@@ -184,7 +190,7 @@ export default function AnalysisLayout({
               </div>
             )}
 
-            {onToggleWatchlist && !hideDefaultWatchlist && !isSidebarCollapsed && (
+             {onToggleWatchlist && !hideDefaultWatchlist && !isSidebarCollapsed && (
               <button 
                 onClick={onToggleWatchlist}
                 disabled={isWatchlistLoading}
@@ -204,6 +210,29 @@ export default function AnalysisLayout({
                   <StarOff size={14} />
                 )}
                 {isInWatchlist ? 'I bevakningslista' : 'Bevaka aktie'}
+              </button>
+            )}
+
+            {onToggleSave && !isSidebarCollapsed && (
+              <button 
+                onClick={onToggleSave}
+                disabled={isSaveLoading}
+                className={`
+                  mt-2 w-full flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all border
+                  ${isSaved 
+                    ? 'bg-primary/10 border-primary/20 text-primary shadow-lg shadow-primary/5'
+                    : 'bg-muted/30 border-border text-muted-foreground hover:bg-muted/50 hover:text-foreground'}
+                  ${isSaveLoading ? 'opacity-50 cursor-not-allowed' : ''}
+                `}
+              >
+                {isSaveLoading ? (
+                  <Loader2 size={14} className="animate-spin" />
+                ) : isSaved ? (
+                  <Bookmark size={14} fill="currentColor" />
+                ) : (
+                  <Bookmark size={14} />
+                )}
+                {isSaved ? 'Sparad' : 'Spara analys'}
               </button>
             )}
           </div>

@@ -15,6 +15,7 @@ import adminHandler from "./api/admin.ts";
 import rssHandler from "./api/rss.ts";
 import sitemapHandler from "./api/sitemap.ts";
 import watchlistHandler from "./api/watchlist.ts";
+import savedAnalysesHandler from "./api/saved-analyses.ts";
 import voteHandler from "./api/vote";
 import { createTickerNotifications, NotificationType } from "./src/lib/notifications.ts";
 import rateLimit from "express-rate-limit";
@@ -244,6 +245,9 @@ async function startServer() {
 
   // Watchlist (MVP)
   app.all("/api/watchlist", watchlistHandler as any);
+
+  // Saved Analyses
+  app.all("/api/saved-analyses", savedAnalysesHandler as any);
 
   // Admin: Generate AI Events - PROTECTED
   app.all("/api/admin/generate-events", cronAuthMiddleware, (req, res) => {

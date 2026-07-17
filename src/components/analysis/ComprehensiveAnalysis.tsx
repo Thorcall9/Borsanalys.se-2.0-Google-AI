@@ -45,6 +45,9 @@ interface ComprehensiveAnalysisProps {
   isInWatchlist?: boolean;
   isWatchlistLoading?: boolean;
   onToggleWatchlist?: () => void;
+  isSaved?: boolean;
+  isSaveLoading?: boolean;
+  onToggleSave?: () => void;
   nextAnalysis?: AnalysisData;
 }
 
@@ -374,6 +377,9 @@ const InwidoTemplateAnalysis = ({
   isInWatchlist,
   isWatchlistLoading,
   onToggleWatchlist,
+  isSaved,
+  isSaveLoading,
+  onToggleSave,
   nextAnalysis,
   analysisPrice,
 }: ComprehensiveAnalysisProps & { analysisPrice?: number }) => {
@@ -626,6 +632,9 @@ const InwidoTemplateAnalysis = ({
       isInWatchlist={isInWatchlist}
       isWatchlistLoading={isWatchlistLoading}
       onToggleWatchlist={onToggleWatchlist}
+      isSaved={isSaved}
+      isSaveLoading={isSaveLoading}
+      onToggleSave={onToggleSave}
       analysisPrice={analysisPrice}
       date={data.date}
       nextAnalysis={nextAnalysis}
@@ -969,6 +978,9 @@ export default function ComprehensiveAnalysis({
   isInWatchlist, 
   isWatchlistLoading, 
   onToggleWatchlist,
+  isSaved,
+  isSaveLoading,
+  onToggleSave,
   nextAnalysis
 }: ComprehensiveAnalysisProps) {
   const ACCENT_COLOR = "#10B981"; // Emerald Green
@@ -1053,6 +1065,9 @@ export default function ComprehensiveAnalysis({
         isInWatchlist={isInWatchlist}
         isWatchlistLoading={isWatchlistLoading}
         onToggleWatchlist={onToggleWatchlist}
+        isSaved={isSaved}
+        isSaveLoading={isSaveLoading}
+        onToggleSave={onToggleSave}
         nextAnalysis={nextAnalysis}
         analysisPrice={analysisPrice || undefined}
       />
@@ -1069,6 +1084,9 @@ export default function ComprehensiveAnalysis({
       isInWatchlist={isInWatchlist}
       isWatchlistLoading={isWatchlistLoading}
       onToggleWatchlist={onToggleWatchlist}
+      isSaved={isSaved}
+      isSaveLoading={isSaveLoading}
+      onToggleSave={onToggleSave}
       analysisPrice={analysisPrice || undefined}
       date={data.date}
       nextAnalysis={nextAnalysis}
