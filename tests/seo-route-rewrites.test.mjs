@@ -34,4 +34,7 @@ test('every React route in App.tsx has an explicit Vercel SPA rewrite', async ()
     );
   }
   assert.equal(rewriteSources.includes('/(.*)'), false, 'global SPA rewrite must remain absent');
+  for (const family of ['/analys', '/aktier', '/guider', '/borsskolan', '/verktyg']) {
+    assert.ok(rewriteSources.includes(`${family}/:path*/`), `${family} trailing-slash family rewrite is missing`);
+  }
 });
