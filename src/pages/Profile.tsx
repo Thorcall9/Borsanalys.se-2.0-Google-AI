@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { User as UserIcon, Settings, LogOut, Shield, Mail, Calendar } from "lucide-react";
 import Watchlist from "../components/community/Watchlist";
 import SavedAnalyses from "../components/community/SavedAnalyses";
@@ -43,6 +43,9 @@ export default function Profile() {
               <button className="w-full py-2 bg-primary/10 text-primary font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-primary/20 transition-colors">
                 <Settings size={16} /> Redigera profil
               </button>
+              <Link to="/mina-checklistor" className="w-full py-2 border border-border text-foreground font-bold rounded-xl flex items-center justify-center gap-2 hover:border-primary hover:text-primary transition-colors">
+                Mina checklistor
+              </Link>
               <button 
                 onClick={logout}
                 className="w-full py-2 bg-red-500/10 text-red-500 font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-red-500/20 transition-colors"

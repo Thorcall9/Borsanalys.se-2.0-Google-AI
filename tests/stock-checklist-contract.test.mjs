@@ -12,10 +12,14 @@ test("checklist contains the twelve agreed questions and neutral result groups",
   assert.match(source, /inte ett betyg eller en rekommendation/);
 });
 
-test("public checklist route, analysis CTA and private CRUD route are wired", async () => {
-  const [app, popup, page, api, vercel] = await Promise.all([read("src/App.tsx"), read("src/components/AnalysisProgress.tsx"), read("src/pages/StockChecklist.tsx"), read("api/stock-checklists.ts"), read("vercel.json")]);
+test("public checklist route, member navigation, analysis CTA and private CRUD route are wired", async () => {
+  const [app, popup, page, api, vercel, profile, header] = await Promise.all([read("src/App.tsx"), read("src/components/AnalysisProgress.tsx"), read("src/pages/StockChecklist.tsx"), read("api/stock-checklists.ts"), read("vercel.json"), read("src/pages/Profile.tsx"), read("src/components/layout/Header.tsx")]);
   assert.match(app, /path="\/aktiechecklista"/);
   assert.match(app, /path="\/mina-checklistor"/);
+  assert.match(profile, /to="\/mina-checklistor"/);
+  assert.match(profile, /Mina checklistor/);
+  assert.match(header, /to="\/mina-checklistor"/);
+  assert.match(header, /Mina checklistor/);
   assert.match(popup, /checklist-popup-seen/);
   assert.match(popup, /percent < 80/);
   assert.match(page, /Fortsätt utan att spara/);
