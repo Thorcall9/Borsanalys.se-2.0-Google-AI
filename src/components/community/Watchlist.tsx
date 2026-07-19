@@ -209,7 +209,8 @@ export default function Watchlist() {
                   )}
                   <button 
                     onClick={() => removeFromWatchlist(item.symbol)}
-                    className="p-2 text-muted-foreground hover:text-red-500 transition-colors opacity-0 group-hover:opacity-100 cursor-pointer"
+                    aria-label={`Ta bort ${item.name} från bevakningen`}
+                    className="p-2 text-muted-foreground hover:text-red-500 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
                   >
                     <Trash2 size={16} />
                   </button>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Bookmark, Trash2, ChevronRight, AlertCircle, Calendar } from "lucide-react";
+import { Bookmark, Trash2, ChevronRight, AlertCircle, Calendar, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -11,7 +11,11 @@ interface SavedAnalysisItem {
   createdAt: string;
 }
 
-export default function SavedAnalyses() {
+interface SavedAnalysesProps {
+  limit?: number;
+}
+
+export default function SavedAnalyses({ limit }: SavedAnalysesProps) {
   const { user } = useAuth();
   const [savedList, setSavedList] = useState<SavedAnalysisItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -103,7 +107,7 @@ export default function SavedAnalyses() {
       <div className="p-6 border-b border-border flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Bookmark size={20} className="text-primary fill-primary" />
-          <h3 className="font-serif text-lg font-bold">Mina Sparade Analyser</h3>
+          <h3 className="font-serif text-lg font-bold">Sparade analyser</h3>
         </div>
         <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded-full">
           {savedList.length} sparade
@@ -119,7 +123,7 @@ export default function SavedAnalyses() {
 
       <div className="divide-y divide-border">
         {savedList.length > 0 ? (
-          savedList.map((item) => (
+          savedList.slice(0, limit).map((item) => (
             <div key={item.id} className="p-4 hover:bg-muted/50 transition-colors group">
               <div className="flex items-center justify-between">
                 <Link to={`/analys/${item.slug}`} className="flex-1">
@@ -164,6 +168,13 @@ export default function SavedAnalyses() {
           </div>
         )}
       </div>
+      {limit && savedList.length > limit && (
+        <div className="border-t border-border px-6 py-4">
+          <Link to="/analys" className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded">
+            Visa alla sparade analyser <ArrowRight size={15} />
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

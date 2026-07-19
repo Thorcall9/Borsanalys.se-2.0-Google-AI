@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { Link, Navigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { User as UserIcon, Settings, LogOut, Shield, Mail, Calendar } from "lucide-react";
 import Watchlist from "../components/community/Watchlist";
 import SavedAnalyses from "../components/community/SavedAnalyses";
+import ChecklistOverview from "../components/community/ChecklistOverview";
+import RecentPublications from "../components/community/RecentPublications";
 
 export default function Profile() {
   const { user, loading, logout } = useAuth();
@@ -43,9 +45,6 @@ export default function Profile() {
               <button className="w-full py-2 bg-primary/10 text-primary font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-primary/20 transition-colors">
                 <Settings size={16} /> Redigera profil
               </button>
-              <Link to="/mina-checklistor" className="w-full py-2 border border-border text-foreground font-bold rounded-xl flex items-center justify-center gap-2 hover:border-primary hover:text-primary transition-colors">
-                Mina checklistor
-              </Link>
               <button 
                 onClick={logout}
                 className="w-full py-2 bg-red-500/10 text-red-500 font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-red-500/20 transition-colors"
@@ -76,20 +75,31 @@ export default function Profile() {
 
         {/* Main Content */}
         <main className="flex-1 space-y-12">
+          <div>
+            <h1 className="text-4xl font-serif font-bold tracking-tight">Min översikt</h1>
+            <p className="mt-2 text-muted-foreground">Samla nästa steg, bevakade bolag och analyser på ett ställe.</p>
+          </div>
+
+          <ChecklistOverview />
+
           <section className="space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-3xl font-serif font-bold tracking-tight">Min Bevakningslista</h2>
-              <p className="text-sm text-muted-foreground">Håll koll på dina favoritaktier</p>
+              <div>
+                <h2 className="text-3xl font-serif font-bold tracking-tight">Bevakade bolag</h2>
+                <p className="mt-1 text-sm text-muted-foreground">Håll koll på bolagen du vill läsa mer om.</p>
+              </div>
             </div>
             <Watchlist />
           </section>
 
+          <RecentPublications />
+
           <section className="space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-3xl font-serif font-bold tracking-tight">Mina Sparade Analyser</h2>
-              <p className="text-sm text-muted-foreground">Snabblänkar till dina bokmärkta analyser</p>
+            <div>
+              <h2 className="text-3xl font-serif font-bold tracking-tight">Sparade analyser</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Snabblänkar till dina bokmärkta analyser.</p>
             </div>
-            <SavedAnalyses />
+            <SavedAnalyses limit={4} />
           </section>
 
           <section className="bg-primary/5 border border-primary/10 rounded-3xl p-8 space-y-6">
