@@ -1,6 +1,7 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const axfoodQ12026: AnalysisData = {
+  contentType: "analysis",
   slug: "axfood-q1-2026",
   title: "Axfood AB",
   listTitle: "Axfood AB – Dagligvaruanalys",

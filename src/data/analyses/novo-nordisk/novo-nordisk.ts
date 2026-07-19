@@ -1,6 +1,7 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const novoNordisk: AnalysisData = {
+  contentType: "analysis",
   slug: "novo-nordisk",
   title: "Novo Nordisk A/S",
   disclosureKey: "novoNordisk",

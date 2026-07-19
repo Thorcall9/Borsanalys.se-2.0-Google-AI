@@ -1,6 +1,7 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const revolutionRace2026: AnalysisData = {
+  contentType: "analysis",
   slug: "revolutionrace-2026",
   title: "RevolutionRace",
   listTitle: "RevolutionRace – Outdoor/D2C-analys",

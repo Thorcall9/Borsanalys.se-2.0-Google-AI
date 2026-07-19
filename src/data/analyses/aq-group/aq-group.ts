@@ -1,6 +1,7 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const aqGroup: AnalysisData = {
+  contentType: "analysis",
   slug: "aq-group",
   title: "AQ Group AB",
   disclosureKey: "aqGroup",

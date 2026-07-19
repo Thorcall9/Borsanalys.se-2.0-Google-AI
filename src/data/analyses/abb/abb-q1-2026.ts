@@ -1,6 +1,7 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const abb2026: AnalysisData = {
+  contentType: "analysis",
   slug: "abb-q1-2026",
   title: "ABB Ltd",
   listTitle: "ABB Ltd - Q1 2026",

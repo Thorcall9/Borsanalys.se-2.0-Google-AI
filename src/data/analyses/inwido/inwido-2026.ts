@@ -1,6 +1,7 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const inwido2026: AnalysisData = {
+  contentType: "analysis",
   slug: "inwido-2026",
   title: "Inwido AB",
   listTitle: "Inwido AB - stark Q2-rapport",

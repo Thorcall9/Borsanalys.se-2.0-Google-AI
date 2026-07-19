@@ -1,6 +1,7 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const nibe2026: AnalysisData = {
+  contentType: "analysis",
   slug: "nibe-industrier-2026",
   title: "NIBE Industrier AB",
   disclosureKey: "nibe",

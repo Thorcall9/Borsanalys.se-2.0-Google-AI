@@ -1,6 +1,7 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const nordea2026: AnalysisData = {
+  contentType: "analysis",
   slug: "nordea-bank-2026",
   title: "Nordea Bank – aktieanalys 2026",
   disclosureKey: "nordea",

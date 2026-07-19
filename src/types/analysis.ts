@@ -162,6 +162,15 @@ export interface AnalysisData {
   discount?: string;
   summary: string;
   image?: string; // URL to analysis image
+
+  // Content type and filtering metadata
+  contentType: ContentType;
+  tags?: string[];
+  reportPeriod?: string;
+  reportSummary?: string;
+  viewChange?: 'unchanged' | 'upgraded' | 'downgraded' | 'new';
+  upside?: number;
+  updatedAt?: string;
   
   // Custom View Logic
   deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea" | "Axfood" | "ABB" | "Plejd";
@@ -287,3 +296,5 @@ export interface AnalysisData {
     vdAnalys?: number;
   };
 }
+
+export type ContentType = "analysis" | "report-comment";

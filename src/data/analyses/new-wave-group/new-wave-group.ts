@@ -1,6 +1,7 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const newWaveGroup2025: AnalysisData = {
+  contentType: "analysis",
   slug: "new-wave-group-april-2026",
   title: "New Wave Group AB",
   disclosureKey: "newWave",
