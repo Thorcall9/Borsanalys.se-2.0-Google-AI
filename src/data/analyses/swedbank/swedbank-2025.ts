@@ -1,6 +1,7 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const swedbank2025: AnalysisData = {
+  contentType: "analysis",
   slug: "swedbank-2025",
   title: "Swedbank AB",
   disclosureKey: "swedbank",

@@ -1,6 +1,7 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const apple: AnalysisData = {
+  contentType: "analysis",
   slug: "apple",
   title: "Apple Inc.",
   disclosureKey: "apple",

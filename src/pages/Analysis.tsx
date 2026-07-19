@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { 
@@ -34,8 +34,12 @@ import {
   VerdictBadge, 
   ScenarioCards, 
   ComprehensiveAnalysis,
-  ReportComment
+  ReportComment,
+  FilterPanel,
+  FilterChips,
+  MobileFilterDrawer
 } from "../components/analysis";
+import { useAnalysisFilters } from "../hooks/useAnalysisFilters";
 import axfoodQ2Markdown from "../../analyses/axfood/Q2_2026.md?raw";
 import NvidiaDeepDive from "../components/NvidiaDeepDive";
 import NovoNordiskDeepDive from "../components/NovoNordiskDeepDive/NovoNordiskDeepDive";
@@ -98,11 +102,31 @@ export default function Analysis() {
   const [isSaveLoading, setIsSaveLoading] = useState(true);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [realTimeData, setRealTimeData] = useState<Record<string, any>>({});
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
-  // Filter states
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedSector, setSelectedSector] = useState("Alla");
-  const [selectedRecommendation, setSelectedRecommendation] = useState("Alla");
+  const allAnalysesSorted = useMemo(
+    () => Object.values(analyses).sort((a, b) => (b.date || '').localeCompare(a.date || '')),
+    []
+  );
+
+  const {
+    contentType,
+    searchTerm,
+    selectedSector,
+    selectedRecommendation,
+    sortOption,
+    setContentType,
+    setSearchTerm,
+    setSelectedSector,
+    setSelectedRecommendation,
+    setSortOption,
+    sectors,
+    filteredAnalyses,
+    resultCount,
+    activeFilterCount,
+    activeFilterChips,
+    clearAll,
+  } = useAnalysisFilters(allAnalysesSorted);
 
   const analysis = slug ? analyses[slug as keyof typeof analyses] : undefined;
 
@@ -290,29 +314,7 @@ export default function Analysis() {
     }
   };
 
-  const allAnalyses = Object.values(analyses).sort((a, b) => {
-    const dateA = a.date || "0000-00-00";
-    const dateB = b.date || "0000-00-00";
-    return dateB.localeCompare(dateA);
-  });
-  const sectors = ["Alla", ...new Set(allAnalyses.map(a => a.sector))];
-  const recommendations = ["Alla", "KÖP", "AVVAKTA", "SÄLJ", "BEVAKA"];
-
   const now = new Date();
-  const filteredAnalyses = allAnalyses.filter(a => {
-    // Hide future scheduled posts
-    if (a.date) {
-      const isFuture = a.date.includes("T") 
-        ? new Date(a.date) > now 
-        : new Date(a.date + "T00:00:00") > now;
-      if (isFuture) return false;
-    }
-    const matchesSearch = a.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         a.ticker.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesSector = selectedSector === "Alla" || a.sector === selectedSector;
-    const matchesRec = selectedRecommendation === "Alla" || a.recommendation === selectedRecommendation;
-    return matchesSearch && matchesSector && matchesRec;
-  });
 
   // List view if no slug is provided
   if (!slug) {
@@ -320,7 +322,8 @@ export default function Analysis() {
       <div className="bg-background min-h-screen pt-32 pb-24">
         <SEO 
           title="Analysarkiv - Aktieanalyser & Investment Cases" 
-          description="Utforska vårt arkiv av djupgående aktieanalyser. Vi granskar kvalitet, tillväxt och värdering för att hitta de bästa investeringsmöjligheterna."
+          description="Fördjupade aktieanalyser och kortare kommentarer till bolagens senaste rapporter."
+          canonical="/analys"
         />
         <div className="max-w-7xl mx-auto px-6 space-y-20">
           <div className="max-w-3xl">
@@ -340,70 +343,60 @@ export default function Analysis() {
             </motion.div>
           </div>
 
-          {/* Filters */}
+          {/* Filters – Desktop */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
             className="bg-card border border-border rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 shadow-xl shadow-black/5"
           >
-            <div className="flex flex-col lg:flex-row gap-6">
-              <div className="flex-1 relative">
-                <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground/80" size={20} />
-                <input 
-                  type="text" 
-                  placeholder="Sök på bolag eller ticker..."
+            <div className="hidden lg:block">
+              <FilterPanel
+                searchTerm={searchTerm}
+                onSearchChange={setSearchTerm}
+                contentType={contentType}
+                onContentTypeChange={setContentType}
+                selectedSector={selectedSector}
+                onSectorChange={setSelectedSector}
+                sectors={sectors}
+                selectedRecommendation={selectedRecommendation}
+                onRecommendationChange={setSelectedRecommendation}
+                sortOption={sortOption}
+                onSortChange={setSortOption}
+              />
+            </div>
+            <div className="lg:hidden space-y-4">
+              <div className="relative">
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground/80" size={20} aria-hidden="true" />
+                <input
+                  type="text"
+                  placeholder="Sök bolag, ticker eller analys..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  aria-label="Sök bland analyser"
                   className="w-full bg-muted/30 border border-border rounded-2xl pl-14 pr-6 py-4 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-lg font-medium"
                 />
               </div>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <div className="relative group w-full sm:w-auto">
-                  <select 
-                    value={selectedSector}
-                    onChange={(e) => setSelectedSector(e.target.value)}
-                    className="w-full appearance-none bg-muted/30 border border-border rounded-2xl px-6 py-4 pr-12 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm font-black uppercase tracking-widest sm:min-w-[180px] cursor-pointer"
-                  >
-                    {sectors.map(s => <option key={s} value={s}>{s}</option>)}
-                  </select>
-                  <Filter className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/80 pointer-events-none group-hover:text-primary transition-colors" size={16} />
-                </div>
-                <div className="relative group w-full sm:w-auto">
-                  <select 
-                    value={selectedRecommendation}
-                    onChange={(e) => setSelectedRecommendation(e.target.value)}
-                    className="w-full appearance-none bg-muted/30 border border-border rounded-2xl px-6 py-4 pr-12 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm font-black uppercase tracking-widest sm:min-w-[180px] cursor-pointer"
-                  >
-                    {recommendations.map(r => <option key={r} value={r}>{r}</option>)}
-                  </select>
-                  <TrendingUp className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/80 pointer-events-none group-hover:text-primary transition-colors" size={16} />
-                </div>
-              </div>
+              <MobileFilterDrawer
+                isOpen={isMobileFilterOpen}
+                onToggle={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+                onClose={() => setIsMobileFilterOpen(false)}
+                activeFilterCount={activeFilterCount}
+                searchTerm={searchTerm}
+                onSearchChange={setSearchTerm}
+                contentType={contentType}
+                onContentTypeChange={setContentType}
+                selectedSector={selectedSector}
+                onSectorChange={setSelectedSector}
+                sectors={sectors}
+                selectedRecommendation={selectedRecommendation}
+                onRecommendationChange={setSelectedRecommendation}
+                sortOption={sortOption}
+                onSortChange={setSortOption}
+                onClearAll={clearAll}
+              />
             </div>
-
-            {(searchTerm || selectedSector !== "Alla" || selectedRecommendation !== "Alla") && (
-              <div className="flex flex-wrap gap-3 mt-8 pt-8 border-t border-border">
-                {searchTerm && (
-                  <button onClick={() => setSearchTerm("")} className="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/20 hover:bg-primary/20 transition-all">
-                    "{searchTerm}" <X size={12} />
-                  </button>
-                )}
-                {selectedSector !== "Alla" && (
-                  <button onClick={() => setSelectedSector("Alla")} className="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/20 hover:bg-primary/20 transition-all">
-                    {selectedSector} <X size={12} />
-                  </button>
-                )}
-                {selectedRecommendation !== "Alla" && (
-                  <button onClick={() => setSelectedRecommendation("Alla")} className="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/20 hover:bg-primary/20 transition-all">
-                    {selectedRecommendation} <X size={12} />
-                  </button>
-                )}
-                <button onClick={() => {setSearchTerm(""); setSelectedSector("Alla"); setSelectedRecommendation("Alla");}} className="text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors ml-2">
-                  Rensa alla filter
-                </button>
-              </div>
-            )}
+            <FilterChips chips={activeFilterChips} onClearAll={clearAll} />
           </motion.div>
 
 
@@ -411,6 +404,18 @@ export default function Analysis() {
           {/* AD: sidebar-display – under filterpanelen */}
           <AdUnit variant="sidebar-display" className="mb-4" />
 
+          {/* Result count */}
+          <div className="flex items-center justify-between">
+            <p className="text-sm font-black uppercase tracking-widest text-muted-foreground">
+              {contentType === 'report-comment'
+                ? `${resultCount} ${resultCount === 1 ? 'rapportkommentar' : 'rapportkommentarer'}`
+                : contentType === 'analysis'
+                  ? `${resultCount} ${resultCount === 1 ? 'analys' : 'analyser'}`
+                  : `${resultCount} ${resultCount === 1 ? 'publicering' : 'publiceringar'}`}
+            </p>
+          </div>
+
+          {/* Analysis cards grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {filteredAnalyses.length > 0 ? (
               filteredAnalyses.reduce((acc: React.ReactNode[], a, i) => {
@@ -525,9 +530,9 @@ export default function Analysis() {
     />
   );
 
-  const currentIndex = allAnalyses.findIndex(a => a.slug === (slug === 'evolution' ? 'evolution-2025' : slug));
-  const nextAnalysis = currentIndex !== -1 && currentIndex < allAnalyses.length - 1 
-    ? allAnalyses[currentIndex + 1] 
+  const currentIndex = allAnalysesSorted.findIndex(a => a.slug === (slug === 'evolution' ? 'evolution-2025' : slug));
+  const nextAnalysis = currentIndex !== -1 && currentIndex < allAnalysesSorted.length - 1 
+    ? allAnalysesSorted[currentIndex + 1] 
     : undefined;
 
   // Custom view for Axfood Q2 2026 Report Comment

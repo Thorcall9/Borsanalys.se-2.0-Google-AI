@@ -1,6 +1,7 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const nvidiaFy2026: AnalysisData = {
+  contentType: "analysis",
   slug: "nvidia-fy2026",
   title: "NVIDIA Corporation",
   disclosureKey: "nvidia",

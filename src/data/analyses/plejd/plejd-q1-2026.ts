@@ -1,6 +1,7 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const plejdQ12026: AnalysisData = {
+  contentType: "analysis",
   slug: "plejd-q1-2026",
   title: "Plejd AB",
   listTitle: "Plejd AB (PLEJD)",

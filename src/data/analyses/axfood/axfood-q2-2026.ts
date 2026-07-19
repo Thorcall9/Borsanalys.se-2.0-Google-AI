@@ -1,6 +1,12 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const axfoodQ22026: AnalysisData = {
+  contentType: "report-comment",
+  reportPeriod: 'Q2 2026',
+  reportSummary: 'Svag Willys-tillväxt pressar aktien – men värderingen är mer intressant efter kursfallet.',
+  viewChange: 'upgraded',
+  upside: 15.5,
+  tags: ['Q2', '2026', 'rapportkommentar', 'dagligvaror', 'Willys'],
   slug: "axfood-q2-2026",
   title: "Axfood Q2 2026",
   listTitle: "Axfood Q2 2026: Svag Willys-tillväxt pressar aktien – men värderingen är mer intressant",
