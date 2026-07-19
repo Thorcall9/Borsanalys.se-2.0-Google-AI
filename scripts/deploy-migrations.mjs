@@ -6,6 +6,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "..");
 const migrationName = "20260719120000_add_stock_checklists";
 const migrationFile = path.join(root, "prisma", "migrations", migrationName, "migration.sql");
+const schemaFile = path.join(root, "prisma", "schema.prisma");
 
 function run(args) {
   return spawnSync("npx", ["prisma", ...args], { cwd: root, encoding: "utf8", stdio: ["inherit", "pipe", "pipe"] });
@@ -20,7 +21,7 @@ const output = `${deploy.stdout || ""}\n${deploy.stderr || ""}`;
 if (!output.includes("P3005")) process.exit(deploy.status || 1);
 
 console.warn("Prisma hittade en befintlig databas utan migrationshistorik. Applicerar checklistmigrationen och baselinar den.");
-const execute = run(["db", "execute", "--file", migrationFile]);
+const execute = run(["db", "execute", "--schema", schemaFile, "--file", migrationFile]);
 process.stdout.write(execute.stdout || "");
 process.stderr.write(execute.stderr || "");
 if (execute.status !== 0) process.exit(execute.status || 1);
