@@ -300,6 +300,8 @@ Plejd handlas till kraftig premie mot de globala industribolagen – motiverad a
 
 ## IX. Scenarioanalys
 
+Scenarioanalysen avser en bedömd 12-månaders sikt från analyskursen 1 070 kr. Utfallet påverkas särskilt av tillväxt, marginalutveckling och marknadens värderingsmultipel.
+
 ### Bear case (~20–30 % sannolikhet)
 Efterfrågan mattas av till följd av djupare europeisk recession. Expansionen i Centraleuropa tar längre tid än väntat. Konkurrenter pressar priserna och tvingar Plejd att sänka marginalerna.
 
