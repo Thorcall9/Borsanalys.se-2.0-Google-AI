@@ -23,6 +23,12 @@ test("public checklist route, member navigation, analysis CTA and private CRUD r
   assert.match(popup, /checklist-popup-seen/);
   assert.match(popup, /percent < 80/);
   assert.match(page, /Fortsätt utan att spara/);
+  assert.match(page, /NÄSTA STEG/);
+  assert.match(page, /Du har besvarat alla 12 frågor\. Skapa ett gratis konto för att spara checklistan och kunna uppdatera den senare\./);
+  assert.match(page, /Sparad på ditt konto/);
+  assert.doesNotMatch(page, /Din nästa nivå/);
+  assert.doesNotMatch(page, /Checklistan sparas/);
+  assert.match(page, /Checklistan finns kvar tillfälligt i den här webbläsaren, men sparas inte på ditt konto och kan inte öppnas från en annan enhet\./);
   assert.match(api, /where: \{ id, userId: user\.id \}/);
   assert.match(api, /req\.method === "DELETE"/);
   assert.match(vercel, /"\/aktiechecklista"/);

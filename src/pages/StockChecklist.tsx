@@ -46,9 +46,9 @@ function ChecklistResult({ draft }: { draft: ChecklistDraft }) {
 
 function SavePrompt({ onContinue, onSave, saving }: { onContinue: () => void; onSave: () => void; saving: boolean }) {
   return <section className="rounded-3xl border border-primary/20 bg-primary/5 p-5 md:p-8" aria-labelledby="checklist-save-title">
-    <p className="text-[10px] font-black uppercase tracking-[0.25em] text-primary">Din nästa nivå</p>
+    <p className="text-[10px] font-black uppercase tracking-[0.25em] text-primary">NÄSTA STEG</p>
     <h2 id="checklist-save-title" className="mt-2 text-2xl font-black tracking-tight">Bra jobbat – checklistan är klar</h2>
-    <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">Du har besvarat alla 12 frågor. Spara checklistan för att kunna återvända, uppdatera svaren och följa bolaget över tid.</p>
+    <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">Du har besvarat alla 12 frågor. Skapa ett gratis konto för att spara checklistan och kunna uppdatera den senare.</p>
     <div className="mt-6" aria-label="Din progression">
       <div className="flex items-center justify-between gap-3 text-sm font-black"><span>Din progression</span><span className="text-primary">{CHECKLIST_SAVE_PERCENT} % klart</span></div>
       <div role="progressbar" aria-valuenow={CHECKLIST_SAVE_PERCENT} aria-valuemin={0} aria-valuemax={100} aria-label={`${CHECKLIST_SAVE_PERCENT} procent av checklistans sparflöde klart`} className="mt-3 h-2 overflow-hidden rounded-full bg-background/80"><div className="h-full rounded-full bg-primary" style={{ width: `${CHECKLIST_SAVE_PERCENT}%` }} /></div>
@@ -61,7 +61,7 @@ function SavePrompt({ onContinue, onSave, saving }: { onContinue: () => void; on
     </div>
     <div className="mt-6 flex flex-wrap gap-3">
       <button type="button" onClick={onSave} disabled={saving} className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 text-xs font-black uppercase tracking-wider text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:cursor-wait disabled:opacity-60">{saving && <Loader2 size={14} className="animate-spin" />}Slutför och spara gratis</button>
-      <button type="button" onClick={onContinue} disabled={saving} className="rounded-xl border border-border px-5 py-3 text-xs font-black uppercase tracking-wider text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-60">Fortsätt utan att spara</button>
+      <button type="button" onClick={onContinue} disabled={saving} className="rounded-xl px-2 py-3 text-xs font-black uppercase tracking-wider text-muted-foreground underline-offset-4 hover:bg-primary/5 hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:opacity-60">Fortsätt utan att spara</button>
     </div>
   </section>;
 }
