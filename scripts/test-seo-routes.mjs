@@ -1,0 +1,59 @@
+#!/usr/bin/env node
+import assert from 'node:assert/strict';
+
+const baseUrl = (process.argv[2] || 'http://127.0.0.1:4173').replace(/\/$/, '');
+const routes = [
+  { path: '/', status: 200, html: true },
+  { path: '/analys', status: 200, html: true },
+  { path: '/analys/volvo', status: 200, html: true },
+  { path: '/analys/volvo/', status: 200, html: true },
+  { path: '/analys/volvo?utm_source=test', status: 200, html: true },
+  { path: '/analys/helt-pahittad', status: 200, html: true },
+  { path: '/integritet', status: 200, html: true },
+  { path: '/integritetspolicy', status: 301, location: '/integritet' },
+  { path: '/analyser/investor2025q2', status: 301, location: '/analys/investor-ab' },
+  { path: '/analyser/helt-pahittad', status: 404, html: false },
+  { path: '/verktyg/rantakalkylator', status: 200, html: true },
+  { path: '/api/newsletter', status: 404, html: false },
+  { path: '/api/newsletter/signup', status: 405, html: false },
+  { path: '/api/helt-pahittad', status: 404, html: false },
+  { path: '/services-store-test', status: 404, html: false },
+  { path: '/en-helt-pahittad-sida-12345', status: 404, html: false },
+  { path: '/sitemap.xml', status: 200, xml: true },
+  { path: '/robots.txt', status: 200, robots: true },
+];
+
+const result = [];
+for (const expected of routes) {
+  const response = await fetch(`${baseUrl}${expected.path}`, { redirect: 'manual' });
+  const body = await response.text();
+  const location = response.headers.get('location');
+  const contentType = response.headers.get('content-type') || '';
+  const isHtmlShell = body.includes('<div id="root"></div>');
+
+  assert.equal(response.status, expected.status, `${expected.path}: unexpected status`);
+  if (expected.location) assert.equal(location, expected.location, `${expected.path}: unexpected redirect`);
+  if (expected.html) assert.match(contentType, /text\/html/, `${expected.path}: expected HTML`);
+  if (expected.xml) {
+    assert.match(contentType, /application\/xml|text\/xml/, `${expected.path}: expected XML`);
+    assert.match(body, /<urlset[\s>]/, `${expected.path}: expected sitemap XML`);
+  }
+  if (expected.robots) assert.match(contentType, /text\/plain/, `${expected.path}: expected robots text`);
+  if (expected.html === false) assert.equal(isHtmlShell, false, `${expected.path}: must not return SPA HTML`);
+  result.push({ path: expected.path, status: response.status, location, isHtmlShell, contentType });
+}
+
+for (const redirect of routes.filter((route) => route.location)) {
+  const response = await fetch(`${baseUrl}${redirect.path}`, { redirect: 'follow' });
+  assert.equal(new URL(response.url).pathname, redirect.location, `${redirect.path}: follow destination mismatch`);
+  assert.equal(response.status, 200, `${redirect.path}: followed redirect must resolve to 200`);
+}
+
+const sitemap = await (await fetch(`${baseUrl}/sitemap.xml`)).text();
+for (const forbidden of ['/analyser/', '/api/', '/preview/', '/admin/', '/services-store-']) {
+  assert.equal(sitemap.includes(forbidden), false, `sitemap contains forbidden prefix ${forbidden}`);
+}
+assert.equal(sitemap.includes('/analys/volvo'), true, 'sitemap must include Volvo analysis');
+assert.equal(sitemap.includes('/analys/investor-ab'), true, 'sitemap must include Investor analysis');
+
+console.log(JSON.stringify({ baseUrl, routes: result }, null, 2));

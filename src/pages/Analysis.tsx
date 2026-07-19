@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link, Navigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { 
   ArrowLeft, 
@@ -57,6 +57,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 import MobileReadingProgress from "../components/MobileReadingProgress";
 import AdUnit from "../components/analysis/AdUnit";
+import NotFound from "./NotFound";
 
 const DEEP_DIVE_COMPONENTS = {
   Nvidia: NvidiaDeepDive,
@@ -502,7 +503,7 @@ export default function Analysis() {
   }
 
   if (!analysis) {
-    return <Navigate to="/analys" replace />;
+    return <NotFound />;
   }
 
   // Prevent accessing future scheduled posts directly
@@ -511,9 +512,18 @@ export default function Analysis() {
       ? new Date(analysis.date) > now 
       : new Date(analysis.date + "T00:00:00") > now;
     if (isFuture) {
-      return <Navigate to="/analys" replace />;
+      return <NotFound />;
     }
   }
+
+  const analysisMeta = (
+    <SEO
+      title={`${analysis.title} (${analysis.ticker}) - Analys`}
+      description={analysis.summary}
+      canonical={`/analys/${slug}`}
+      ogType="article"
+    />
+  );
 
   const currentIndex = allAnalyses.findIndex(a => a.slug === (slug === 'evolution' ? 'evolution-2025' : slug));
   const nextAnalysis = currentIndex !== -1 && currentIndex < allAnalyses.length - 1 
@@ -524,6 +534,7 @@ export default function Analysis() {
   if (slug === "axfood-q2-2026") {
     return (
       <>
+        {analysisMeta}
         <ReportComment data={analysis} markdown={axfoodQ2Markdown} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
         <MobileReadingProgress 
           label="analys" 
@@ -571,6 +582,7 @@ export default function Analysis() {
     const Component = DEEP_DIVE_COMPONENTS[analysis.deepDiveComponent as keyof typeof DEEP_DIVE_COMPONENTS];
     return (
       <>
+        {analysisMeta}
         <Component data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
         <MobileReadingProgress 
           label="analys" 
@@ -616,6 +628,7 @@ export default function Analysis() {
   // Use the new comprehensive analysis template for all other stocks
   return (
     <>
+      {analysisMeta}
       <ComprehensiveAnalysis 
         data={analysis} 
         onToggleWatchlist={toggleWatchlist} 

@@ -10,6 +10,7 @@ import MobileReadingProgress from "../components/MobileReadingProgress";
 import { Helmet } from "react-helmet-async";
 import SparaInvesteraGuide from "../components/guides/SparaInvesteraGuide";
 import AdUnit from "../components/analysis/AdUnit";
+import NotFound from "./NotFound";
 
 const GUIDE_COMPONENTS = {
   SparaInvesteraGuide: SparaInvesteraGuide
@@ -35,7 +36,7 @@ export default function GuideDetail() {
   };
 
   if (!guide) {
-    return <Navigate to="/guider" replace />;
+    return <NotFound />;
   }
 
   const guideList = Object.values(guides).sort((a, b) => a.part - b.part);

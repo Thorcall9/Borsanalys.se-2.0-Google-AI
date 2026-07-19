@@ -17,7 +17,30 @@
     { "source": "/api/admin/votes", "destination": "/api/admin?type=votes" },
     { "source": "/api/admin/generate-events", "destination": "/api/admin?type=generate-events" },
     { "source": "/api/admin/update-macro", "destination": "/api/admin?type=update-macro" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/analys", "destination": "/index.html" },
+    { "source": "/analys/:path*", "destination": "/index.html" },
+    { "source": "/aktier/:path*", "destination": "/index.html" },
+    { "source": "/guider", "destination": "/index.html" },
+    { "source": "/guider/:path*", "destination": "/index.html" },
+    { "source": "/borsskolan/:path*", "destination": "/index.html" },
+    { "source": "/skola", "destination": "/index.html" },
+    { "source": "/marknad", "destination": "/index.html" },
+    { "source": "/kontakt", "destination": "/index.html" },
+    { "source": "/villkor", "destination": "/index.html" },
+    { "source": "/integritet", "destination": "/index.html" },
+    { "source": "/innehav", "destination": "/index.html" },
+    { "source": "/intressekonflikter", "destination": "/index.html" },
+    { "source": "/aktieinnehav-och-intressekonflikter", "destination": "/index.html" },
+    { "source": "/verktyg", "destination": "/index.html" },
+    { "source": "/verktyg/:path*", "destination": "/index.html" },
+    { "source": "/om-oss", "destination": "/index.html" },
+    { "source": "/profil", "destination": "/index.html" },
+    { "source": "/admin/subscribers", "destination": "/index.html" }
+  ],
+  "redirects": [
+    { "source": "/integritetspolicy", "destination": "/integritet", "permanent": true },
+    { "source": "/analyser/investor2025q2", "destination": "/analys/investor-ab", "permanent": true }
   ],
   "functions": {
     "api/rss.ts": {

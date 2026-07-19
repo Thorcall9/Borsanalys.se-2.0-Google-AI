@@ -10,6 +10,8 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Loader2 } from "lucide-react";
+import SEO from "./components/SEO";
+import NotFound from "./pages/NotFound";
 
 // Lazy load components
 const Home = lazy(() => import("./pages/Home"));
@@ -27,16 +29,22 @@ const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Holdings = lazy(() => import("./pages/Holdings"));
 const AdminSubscribers = lazy(() => import("./components/AdminSubscribers").then(module => ({ default: module.AdminSubscribers })));
-const PreviewHeaderPage = lazy(() => import("./pages/PreviewHeader"));
-const AbbQ12026Preview = lazy(() => import("./pages/AbbQ12026Preview"));
 const RvrcPreview = lazy(() => import("./pages/RvrcPreview"));
-const MindmapBlueprint = lazy(() => import("./components/Mindmap"));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
     <Loader2 className="w-8 h-8 text-primary animate-spin" />
   </div>
 );
+
+function InternalRoute({ children, title }: { children: React.ReactNode; title: string }) {
+  return (
+    <>
+      <SEO title={title} noindex nofollow />
+      {children}
+    </>
+  );
+}
 
 export default function App() {
   return (
@@ -57,7 +65,7 @@ export default function App() {
                       <Route path="/analys/revolutionrace-2026" element={<RvrcPreview />} />
                       <Route path="/analys/rvrc-2026" element={<RvrcPreview />} />
                       <Route path="/analys/:slug" element={<Analysis />} />
-                      <Route path="/profil" element={<Profile />} />
+                      <Route path="/profil" element={<InternalRoute title="Profil"><Profile /></InternalRoute>} />
                       <Route path="/aktier/:slug" element={<StockHub />} />
                       <Route path="/guider" element={<Guides />} />
                       <Route path="/guider/:slug" element={<GuideDetail />} />
@@ -76,11 +84,8 @@ export default function App() {
                       <Route path="/verktyg/dcf-kalkylator" element={<Tools />} />
                       <Route path="/verktyg/utdelningskalkylator" element={<Tools />} />
                       <Route path="/om-oss" element={<About />} />
-                      <Route path="/admin/subscribers" element={<AdminSubscribers />} />
-                      <Route path="/preview-header" element={<PreviewHeaderPage />} />
-                      <Route path="/preview/abb-q1-2026" element={<AbbQ12026Preview />} />
-                      <Route path="/preview/rvrc-2026" element={<RvrcPreview />} />
-                      <Route path="/methodology-blueprint" element={<MindmapBlueprint />} />
+                      <Route path="/admin/subscribers" element={<InternalRoute title="Administratör"><AdminSubscribers /></InternalRoute>} />
+                      <Route path="*" element={<NotFound />} />
                     </Routes>
                   </Suspense>
                 </Layout>

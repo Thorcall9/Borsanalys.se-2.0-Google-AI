@@ -8,6 +8,23 @@ interface SEOProps {
   ogType?: string;
   ogImage?: string;
   twitterHandle?: string;
+  noindex?: boolean;
+  nofollow?: boolean;
+}
+
+export const SITE_ORIGIN = "https://www.borsanalys.se";
+
+export function normalizeCanonical(input?: string): string {
+  const source = input || (typeof window !== "undefined" ? window.location.pathname : "/");
+  const parsed = new URL(source, SITE_ORIGIN);
+  parsed.search = "";
+  parsed.hash = "";
+  let pathname = parsed.pathname.replace(/\/+$/, "") || "/";
+
+  if (pathname === "/analyser") pathname = "/analys";
+  if (pathname.startsWith("/analyser/")) pathname = `/analys/${pathname.slice("/analyser/".length)}`;
+
+  return `${SITE_ORIGIN}${pathname}`;
 }
 
 const SEO: React.FC<SEOProps> = ({
@@ -17,27 +34,30 @@ const SEO: React.FC<SEOProps> = ({
   ogType = "website",
   ogImage = "https://picsum.photos/seed/finance/1200/630",
   twitterHandle = "@borsanalys",
+  noindex = false,
+  nofollow = false,
 }) => {
   const siteName = "Börsanalys.se";
   const fullTitle = title ? `${title} | ${siteName}` : siteName;
   const defaultDescription = "Professionella aktieanalyser drivna av data och AI. En minimalistisk och kraftfull plattform för moderna investerare.";
   const metaDescription = description || defaultDescription;
-  const url = window.location.href;
+  const url = normalizeCanonical(canonical);
+  const robots = noindex ? (nofollow ? "noindex, nofollow" : "noindex, follow") : undefined;
 
   return (
     <Helmet>
       {/* Standard metadata */}
       <title>{fullTitle}</title>
       <meta name="description" content={metaDescription} />
-      {canonical && <link rel="canonical" href={canonical} />}
-      {!canonical && <link rel="canonical" href={url} />}
+      {robots && <meta name="robots" content={robots} />}
+      {!noindex && <link rel="canonical" href={url} />}
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={ogType} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={metaDescription} />
       <meta property="og:image" content={ogImage} />
-      <meta property="og:url" content={url} />
+      {!noindex && <meta property="og:url" content={url} />}
       <meta property="og:site_name" content={siteName} />
 
       {/* Twitter */}
