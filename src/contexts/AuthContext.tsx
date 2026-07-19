@@ -28,6 +28,7 @@ interface AuthContextType {
   loginWithMicrosoft: () => Promise<void>;
   loginWithEmail: (email: string, password: string) => Promise<void>;
   signUpWithEmail: (email: string, password: string, displayName: string) => Promise<void>;
+  updateUserProfile: (profile: { displayName: string; photoURL: string }) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -38,6 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [loginModalMode, setLoginModalMode] = useState<'login' | 'signup'>('login');
+  const [, setProfileVersion] = useState(0);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -141,6 +143,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const updateUserProfile = async ({ displayName, photoURL }: { displayName: string; photoURL: string }) => {
+    const currentUser = auth.currentUser;
+    if (!currentUser) throw new Error('Du måste vara inloggad för att ändra profilen.');
+
+    await updateProfile(currentUser, { displayName, photoURL: photoURL || null });
+    await setDoc(doc(db, 'users', currentUser.uid), {
+      displayName,
+      photoURL: photoURL || null,
+    }, { merge: true });
+    setProfileVersion((version) => version + 1);
+  };
+
   const logout = async () => {
     try {
       await signOut(auth);
@@ -164,6 +178,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       loginWithMicrosoft,
       loginWithEmail,
       signUpWithEmail,
+      updateUserProfile,
       logout 
     }}>
       {children}

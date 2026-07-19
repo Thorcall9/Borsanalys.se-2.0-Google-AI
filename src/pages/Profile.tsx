@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Navigate } from "react-router-dom";
 import { User as UserIcon, Settings, LogOut, Shield, Mail, Calendar } from "lucide-react";
@@ -6,9 +6,15 @@ import Watchlist from "../components/community/Watchlist";
 import SavedAnalyses from "../components/community/SavedAnalyses";
 import ChecklistOverview from "../components/community/ChecklistOverview";
 import RecentPublications from "../components/community/RecentPublications";
+import { normalizeProfileInput } from "../lib/profile";
 
 export default function Profile() {
-  const { user, loading, logout } = useAuth();
+  const { user, loading, logout, updateUserProfile } = useAuth();
+  const [isEditing, setIsEditing] = useState(false);
+  const [savingProfile, setSavingProfile] = useState(false);
+  const [profileError, setProfileError] = useState<string | null>(null);
+  const [profileNotice, setProfileNotice] = useState<string | null>(null);
+  const [profileForm, setProfileForm] = useState({ displayName: "", photoURL: "" });
 
   if (loading) {
     return (
@@ -21,6 +27,35 @@ export default function Profile() {
   if (!user) {
     return <Navigate to="/" replace />;
   }
+
+  const startEditing = () => {
+    setProfileForm({ displayName: user.displayName || "", photoURL: user.photoURL || "" });
+    setProfileError(null);
+    setProfileNotice(null);
+    setIsEditing(true);
+  };
+
+  const cancelEditing = () => {
+    setProfileError(null);
+    setIsEditing(false);
+  };
+
+  const saveProfile = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSavingProfile(true);
+    setProfileError(null);
+    setProfileNotice(null);
+    try {
+      const normalized = normalizeProfileInput(profileForm);
+      await updateUserProfile(normalized);
+      setProfileNotice("Profilen är uppdaterad.");
+      setIsEditing(false);
+    } catch (error) {
+      setProfileError(error instanceof Error ? error.message : "Profilen kunde inte uppdateras.");
+    } finally {
+      setSavingProfile(false);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-12 space-y-12">
@@ -38,20 +73,62 @@ export default function Profile() {
               )}
               <div className="absolute bottom-0 right-0 w-6 h-6 bg-primary border-4 border-background rounded-full" title="Online" />
             </div>
-            <h2 className="text-2xl font-serif font-bold tracking-tight">{user.displayName}</h2>
+            <h2 className="text-2xl font-serif font-bold tracking-tight">{user.displayName || "Medlem"}</h2>
             <p className="text-muted-foreground text-sm mb-6">{user.email}</p>
-            
-            <div className="space-y-2">
-              <button className="w-full py-2 bg-primary/10 text-primary font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-primary/20 transition-colors">
-                <Settings size={16} /> Redigera profil
-              </button>
-              <button 
-                onClick={logout}
-                className="w-full py-2 bg-red-500/10 text-red-500 font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-red-500/20 transition-colors"
-              >
-                <LogOut size={16} /> Logga ut
-              </button>
-            </div>
+
+            {isEditing ? (
+              <form onSubmit={saveProfile} className="space-y-4 text-left">
+                <div>
+                  <label htmlFor="profile-display-name" className="mb-1.5 block text-xs font-bold text-muted-foreground">Visningsnamn</label>
+                  <input
+                    id="profile-display-name"
+                    value={profileForm.displayName}
+                    onChange={(event) => setProfileForm((current) => ({ ...current, displayName: event.target.value }))}
+                    maxLength={80}
+                    required
+                    className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="profile-photo-url" className="mb-1.5 block text-xs font-bold text-muted-foreground">Profilbildens URL</label>
+                  <input
+                    id="profile-photo-url"
+                    type="url"
+                    value={profileForm.photoURL}
+                    onChange={(event) => setProfileForm((current) => ({ ...current, photoURL: event.target.value }))}
+                    placeholder="https://…"
+                    className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="profile-email" className="mb-1.5 block text-xs font-bold text-muted-foreground">E-post</label>
+                  <input id="profile-email" value={user.email || ""} readOnly disabled className="w-full cursor-not-allowed rounded-xl border border-border bg-muted px-3 py-2.5 text-sm text-muted-foreground" />
+                  <p className="mt-1 text-[11px] text-muted-foreground">E-postadressen är kopplad till ditt konto och kan inte ändras här.</p>
+                </div>
+                {profileError && <p role="alert" className="text-sm font-medium text-red-600">{profileError}</p>}
+                <div className="flex flex-wrap gap-2">
+                  <button type="submit" disabled={savingProfile} className="flex-1 rounded-xl bg-primary px-3 py-2.5 text-xs font-black text-primary-foreground hover:bg-primary/90 disabled:cursor-wait disabled:opacity-60">
+                    {savingProfile ? "Sparar…" : "Spara ändringar"}
+                  </button>
+                  <button type="button" onClick={cancelEditing} disabled={savingProfile} className="rounded-xl border border-border px-3 py-2.5 text-xs font-bold text-foreground hover:border-primary hover:text-primary disabled:opacity-60">
+                    Avbryt
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <div className="space-y-2">
+                <button onClick={startEditing} className="w-full py-2 bg-primary/10 text-primary font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-primary/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                  <Settings size={16} /> Redigera profil
+                </button>
+                <button
+                  onClick={logout}
+                  className="w-full py-2 bg-red-500/10 text-red-500 font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-red-500/20 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500"
+                >
+                  <LogOut size={16} /> Logga ut
+                </button>
+                {profileNotice && <p role="status" className="pt-1 text-xs font-bold text-primary">{profileNotice}</p>}
+              </div>
+            )}
           </div>
 
           <div className="bg-card border border-border rounded-3xl p-6 space-y-4 shadow-sm">
