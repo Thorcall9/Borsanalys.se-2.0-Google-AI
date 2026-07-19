@@ -159,13 +159,9 @@ export default function Watchlist() {
 
   return (
     <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm">
-      <div className="p-6 border-b border-border flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Star size={20} className="text-primary fill-primary" />
-          <h3 className="font-serif text-lg font-bold">Bevakningslista</h3>
-        </div>
+      <div className="flex justify-end border-b border-border p-4">
         <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded-full">
-          {watchlist.length} aktier
+          {watchlist.length} bolag
         </span>
       </div>
 
@@ -179,10 +175,10 @@ export default function Watchlist() {
       <div className="divide-y divide-border">
         {watchlist.length > 0 ? (
           watchlist.map((item) => (
-            <div key={item.id} className="p-4 hover:bg-muted/50 transition-colors group">
-              <div className="flex items-center justify-between">
-                <Link to={`/analys/${item.slug}`} className="flex-1">
-                  <div className="flex items-center gap-3">
+            <div key={item.id} className="relative p-4 transition-colors group hover:bg-muted/50">
+              <Link to={`/analys/${item.slug}`} aria-label={`Öppna analys för ${item.name}`} className="absolute inset-0 z-0 rounded-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary" />
+              <div className="relative z-10 flex items-center justify-between pointer-events-none">
+                <div className="flex min-w-0 flex-1 items-center gap-3">
                     <div className="w-10 h-10 bg-background border border-border rounded-lg flex items-center justify-center font-bold text-xs">
                       {item.symbol}
                     </div>
@@ -190,10 +186,9 @@ export default function Watchlist() {
                       <div className="font-black text-base text-foreground">{item.name}</div>
                       <div className="text-[10px] text-foreground/70 uppercase tracking-wider">{item.symbol}</div>
                     </div>
-                  </div>
-                </Link>
+                </div>
 
-                <div className="flex items-center gap-4">
+                <div className="pointer-events-auto flex shrink-0 items-center gap-3 sm:gap-4">
                   {item.price !== undefined && (
                     <div className="text-right">
                       <div className="font-bold text-sm">{item.price} SEK</div>
@@ -208,8 +203,13 @@ export default function Watchlist() {
                     </div>
                   )}
                   <button 
-                    onClick={() => removeFromWatchlist(item.symbol)}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      if (!window.confirm(`Ta bort ${item.name} från bevakningslistan?`)) return;
+                      removeFromWatchlist(item.symbol);
+                    }}
                     aria-label={`Ta bort ${item.name} från bevakningen`}
+                    title={`Ta bort ${item.name} från bevakningen`}
                     className="p-2 text-muted-foreground hover:text-red-500 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
                   >
                     <Trash2 size={16} />

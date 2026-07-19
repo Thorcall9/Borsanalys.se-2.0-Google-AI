@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Bookmark, Trash2, ChevronRight, AlertCircle, Calendar, ArrowRight } from "lucide-react";
+import { Trash2, ChevronRight, AlertCircle, Calendar, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -104,11 +104,7 @@ export default function SavedAnalyses({ limit }: SavedAnalysesProps) {
 
   return (
     <div className="bg-card border border-border rounded-2xl overflow-hidden shadow-sm">
-      <div className="p-6 border-b border-border flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Bookmark size={20} className="text-primary fill-primary" />
-          <h3 className="font-serif text-lg font-bold">Sparade analyser</h3>
-        </div>
+      <div className="flex justify-end border-b border-border p-4">
         <span className="text-xs font-medium px-2 py-1 bg-primary/10 text-primary rounded-full">
           {savedList.length} sparade
         </span>

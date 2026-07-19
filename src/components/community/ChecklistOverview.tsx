@@ -44,12 +44,14 @@ export default function ChecklistOverview() {
     <section className="space-y-4" aria-labelledby="checklist-overview-title">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 id="checklist-overview-title" className="text-3xl font-serif font-bold tracking-tight">Checklistor att fortsätta</h2>
-          <p className="mt-1 text-sm text-muted-foreground">Fortsätt där du slutade i din bolagsgenomgång.</p>
+          <h2 id="checklist-overview-title" className="text-3xl font-serif font-bold tracking-tight">{items.length > 0 ? "Checklistor att fortsätta" : "Dina aktiechecklistor"}</h2>
+          <p className="mt-1 text-sm text-muted-foreground">{items.length > 0 ? "Fortsätt där du slutade i din bolagsgenomgång." : "Testa ett bolag med våra 12 frågor före nästa aktieköp."}</p>
         </div>
-        <Link to="/mina-checklistor" className="inline-flex items-center gap-1 text-sm font-bold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded">
-          Visa alla checklistor <ArrowRight size={15} />
-        </Link>
+        {items.length > 0 && (
+          <Link to="/mina-checklistor" className="inline-flex items-center gap-1 text-sm font-bold text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded">
+            Visa alla checklistor <ArrowRight size={15} />
+          </Link>
+        )}
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">

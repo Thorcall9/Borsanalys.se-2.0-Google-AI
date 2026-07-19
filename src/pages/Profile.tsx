@@ -74,7 +74,7 @@ export default function Profile() {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 space-y-12">
+        <main className="flex-1 space-y-9">
           <div>
             <h1 className="text-4xl font-serif font-bold tracking-tight">Min översikt</h1>
             <p className="mt-2 text-muted-foreground">Samla nästa steg, bevakade bolag och analyser på ett ställe.</p>
