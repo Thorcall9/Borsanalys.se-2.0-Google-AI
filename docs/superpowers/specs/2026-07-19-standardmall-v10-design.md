@@ -2,11 +2,11 @@
 
 ## Mål
 
-Uppdatera endast standardmallen för analyser så att den följer Analysmall v10:s tio huvudsteg. Plejd, ABB, Handelsbanken, Swedbank och Axfood fortsätter använda sina befintliga specialmallar utan ändringar.
+Lägg till en versionsstyrd standardmall som följer Analysmall v10:s tio huvudsteg. Befintliga analyser ska behålla sitt nuvarande utseende. Endast nya standardanalyser som uttryckligen märks med v10 ska använda den nya mallen. Plejd, ABB, Handelsbanken, Swedbank och Axfood fortsätter använda sina befintliga specialmallar utan ändringar.
 
 ## Omfattning
 
-Standardmallen är `src/components/analysis/ComprehensiveAnalysis.tsx` tillsammans med den gemensamma navigeringen i `src/components/analysis/AnalysisLayout.tsx`. Specialkomponenter och deras routing lämnas orörda.
+Den befintliga mallen i `src/components/analysis/ComprehensiveAnalysis.tsx` blir legacy-mall och lämnas funktionellt oförändrad. En separat v10-komponent ska införas och väljas av `src/pages/Analysis.tsx` när analysdata har `templateVersion: "v10"`. Specialkomponenter och deras routing lämnas orörda.
 
 ## Ny huvudstruktur
 
@@ -40,11 +40,11 @@ Sektion-ID:n ska vara stabila, URL-vänliga och gemensamma mellan innehållet oc
 
 ## Kompatibilitet
 
-Befintliga datafält ska återanvändas där de redan täcker den nya sektionen. Om ett gammalt fält saknar direkt motsvarighet ska presentationen använda befintlig fallbacktext eller dölja blocket enligt nuvarande beteende. Ändringen ska inte kräva att specialanalysernas dataformat eller komponenter ändras.
+Befintliga datafält ska återanvändas där de redan täcker den nya sektionen. Om ett gammalt fält saknar direkt motsvarighet ska presentationen använda befintlig fallbacktext eller dölja blocket enligt nuvarande beteende. Äldre analyser utan `templateVersion: "v10"` ska fortsätta gå till legacy-mallen. Nya analyser som ska använda v10 ska sätta `templateVersion: "v10"` i analysdata. Ändringen ska inte kräva att specialanalysernas dataformat eller komponenter ändras.
 
 ## Testning
 
-Ett test ska kontrollera att standardmallens sektionkonfiguration innehåller exakt tio poster, med rätt ID:n, rubriker och ordning. Testet ska rikta sig mot en exporterad eller separat testbar sektionskonfiguration, så att det inte behöver rendera hela React-trädet.
+Ett test ska kontrollera att v10-mallens sektionskonfiguration innehåller exakt tio poster, med rätt ID:n, rubriker och ordning. Ett separat routingtest ska kontrollera att v10-data väljer v10-mallen och att äldre data utan v10-markering väljer legacy-mallen. Testerna ska rikta sig mot exporterade eller separat testbara konfigurationer, så att de inte behöver rendera hela React-trädet.
 
 Verifiering ska även omfatta TypeScript-/byggkontroll och befintlig testsuite. Specialmallarnas routing ska inte ändras.
 
@@ -52,14 +52,18 @@ Verifiering ska även omfatta TypeScript-/byggkontroll och befintlig testsuite. 
 
 Förväntade produktionsändringar:
 
-- `src/components/analysis/ComprehensiveAnalysis.tsx`
+- `src/components/analysis/ComprehensiveAnalysisV10.tsx`
+- `src/pages/Analysis.tsx`
+- `src/types/analysis.ts` eller analysdatats gemensamma typdefinition
 - Eventuellt en liten gemensam konfigurationsmodul om det krävs för testbarhet
 
 Förväntade teständringar:
 
 - En ny mall-/sektionskontraktstestfil i projektets befintliga teststruktur
 
-Ingen ändring görs i:
+Ingen ändring görs i legacy-mallens layout eller i specialmallarna:
+
+- `src/components/analysis/ComprehensiveAnalysis.tsx`
 
 - `PlejdDeepDive.tsx`
 - `ABBDeepDive.tsx`

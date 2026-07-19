@@ -62,6 +62,7 @@ import { useAuth } from "../contexts/AuthContext";
 import MobileReadingProgress from "../components/MobileReadingProgress";
 import AdUnit from "../components/analysis/AdUnit";
 import NotFound from "./NotFound";
+import ComprehensiveAnalysisV10 from "../components/analysis/ComprehensiveAnalysisV10";
 
 const DEEP_DIVE_COMPONENTS = {
   Nvidia: NvidiaDeepDive,
@@ -626,6 +627,19 @@ export default function Analysis() {
             </button>
           </div>
         )}
+      </>
+    );
+  }
+
+  if (analysis.templateVersion === "v10") {
+    return (
+      <>
+        <ComprehensiveAnalysisV10 data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
+        <MobileReadingProgress
+          label="analys"
+          nextTitle={nextAnalysis?.title}
+          nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined}
+        />
       </>
     );
   }

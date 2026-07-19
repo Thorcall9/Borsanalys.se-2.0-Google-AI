@@ -146,6 +146,7 @@ export interface AIDrivenAnalysis {
 
 export interface AnalysisData {
   slug: string;
+  templateVersion?: "legacy" | "v10";
   title: string;
   listTitle?: string;
   ticker: string;
