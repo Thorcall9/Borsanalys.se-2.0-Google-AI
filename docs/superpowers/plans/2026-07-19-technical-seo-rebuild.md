@@ -4,7 +4,7 @@
 
 **Goal:** Make routing, metadata, sitemap, and invalid-route behavior consistent and verifiable on the existing Vite/React/Vercel architecture.
 
-**Architecture:** Keep Vite static hosting and Vercel Functions. Replace the global rewrite with explicit routing rules, use React only for known SPA routes plus a noindex catch-all, and centralize canonical/OG normalization in `SEO.tsx`.
+**Architecture:** Keep Vite static hosting and Vercel Functions. Replace the global rewrite with explicit `/index.html` rewrites for every valid React route and route family, use React only for known SPA routes plus a noindex catch-all after a known rewrite, and centralize canonical/OG normalization in `SEO.tsx`.
 
 **Tech Stack:** Vite 6, React 19, React Router 7, react-helmet-async, Vercel Functions, Node test runner, browser-client Playwright API.
 
@@ -22,11 +22,13 @@
 **Files:**
 - Create: `scripts/test-seo-routes.mjs`
 - Create: `tests/seo-contract.test.mjs`
+- Create: `tests/seo-route-rewrites.test.mjs`
 - Create: `tests/seo-browser.mjs`
 
 - [ ] Write tests for the required route matrix, API HTML exclusion, sitemap entries, and canonical/noindex expectations.
 - [ ] Run the tests against the baseline and record the expected failures.
 - [ ] Keep the tests base-URL configurable and avoid requiring private credentials.
+- [ ] Assert that every non-catch-all `<Route>` in `App.tsx` is covered by an explicit Vercel rewrite whose destination is `/index.html`.
 
 ### Task 2: Implement route boundaries and React 404s
 
@@ -38,7 +40,7 @@
 - Create: `src/pages/NotFound.tsx`
 
 - [ ] Add explicit 301 redirects for `/integritetspolicy` and the verified Investor legacy URL.
-- [ ] Remove the global Vercel rewrite and preserve only explicit API/sitemap rewrites.
+- [ ] Remove the global Vercel rewrite and preserve explicit API/sitemap rewrites plus `/index.html` rewrites for every valid React route family.
 - [ ] Add a catch-all React `NotFound` route after known routes.
 - [ ] Replace unknown analysis and guide redirects with `NotFound` while preserving the URL.
 - [ ] Mark intentionally accessible internal pages noindex/nofollow and keep them outside public navigation/sitemap.

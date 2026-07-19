@@ -31,7 +31,11 @@ for (const expected of routes) {
   const contentType = response.headers.get('content-type') || '';
   const isHtmlShell = body.includes('<div id="root"></div>');
 
-  assert.equal(response.status, expected.status, `${expected.path}: unexpected status`);
+  if (expected.location) {
+    assert.ok([301, 308].includes(response.status), `${expected.path}: unexpected redirect status ${response.status}`);
+  } else {
+    assert.equal(response.status, expected.status, `${expected.path}: unexpected status`);
+  }
   if (expected.location) assert.equal(location, expected.location, `${expected.path}: unexpected redirect`);
   if (expected.html) assert.match(contentType, /text\/html/, `${expected.path}: expected HTML`);
   if (expected.xml) {

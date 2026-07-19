@@ -14,7 +14,7 @@ Make the current Vite/React SPA return consistent, verifiable SEO behavior witho
 
 ## Design
 
-1. Keep Vercel as a static Vite deployment plus serverless functions. Remove the global SPA rewrite. Add only explicit legacy redirects and the existing API/sitemap rewrites. Let Vercel serve real static assets and return 404 for unknown paths.
+1. Keep Vercel as a static Vite deployment plus serverless functions. Remove the global SPA rewrite. Add explicit legacy redirects, API/sitemap rewrites, and an explicit `/index.html` rewrite for every valid React route and route family in `App.tsx`. Let Vercel serve real static assets and return 404 for unknown paths that match none of those rules.
 2. Add a React `NotFound` component for SPA URLs that reach the app. It preserves the requested URL, renders an explicit 404 view, and emits `noindex, follow` without canonical or Open Graph URL. Internal preview/admin/development routes that remain intentionally available emit `noindex, nofollow` and no canonical; they are excluded from sitemap and public navigation.
 3. Make `SEO` own canonical normalization. It always uses `https://www.borsanalys.se`, removes query/hash, removes trailing slash except root, resolves explicit relative paths, and sets `og:url` to the same normalized URL. It supports an explicit noindex mode that suppresses canonical and `og:url`.
 4. Validate route parameters in React. Unknown analysis and guide slugs render `NotFound` without navigation. Existing authenticated profile behavior remains unchanged because it is an intentional access redirect, not a missing public route.
@@ -31,4 +31,4 @@ Make the current Vite/React SPA return consistent, verifiable SEO behavior witho
 
 ## Verification
 
-The branch will include a reusable route test script accepting a base URL and a browser metadata test. Baseline tests must fail on the current behavior; after implementation they must pass against the local preview and, once pushed, against the Vercel Preview URL. No merge or production deployment is part of this change.
+The branch will include a reusable route test script accepting a base URL, a browser metadata test, and a route-coverage test that compares every `App.tsx` route with Vercel's explicit `/index.html` rewrites. Baseline tests must fail on the current behavior; after implementation they must pass against the local preview and, once pushed, against the Vercel Preview URL. No merge or production deployment is part of this change.
