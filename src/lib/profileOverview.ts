@@ -1,4 +1,4 @@
-import { STOCK_CHECKLIST_QUESTIONS } from "../data/stockChecklist";
+import { STOCK_CHECKLIST_QUESTIONS } from "../data/stockChecklist.ts";
 import type { AnalysisData } from "../types/analysis";
 
 export interface SavedChecklistLike {
