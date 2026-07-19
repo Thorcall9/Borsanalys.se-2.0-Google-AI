@@ -1,0 +1,20 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Loader2, Trash2 } from "lucide-react";
+import { useAuth } from "../../contexts/AuthContext";
+import { track } from "@vercel/analytics/react";
+
+interface SavedChecklist { id: number; companyName: string; ticker?: string | null; status: string; updatedAt: string; }
+
+export default function SavedChecklists() {
+  const { user, loading: authLoading, openLoginModal } = useAuth();
+  const [items, setItems] = useState<SavedChecklist[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const load = async () => { if (!user) return; setLoading(true); try { const token = await user.getIdToken(); const response = await fetch("/api/stock-checklists", { headers: { Authorization: `Bearer ${token}` } }); if (!response.ok) throw new Error("Checklistorna kunde inte läsas in."); setItems(await response.json()); } catch (err: any) { setError(err.message); } finally { setLoading(false); } };
+  useEffect(() => { if (!authLoading) load(); }, [authLoading, user]);
+  const remove = async (id: number) => { if (!window.confirm("Vill du ta bort den här checklistan?")) return; try { const token = await user?.getIdToken(); const response = await fetch(`/api/stock-checklists?id=${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` } }); if (!response.ok) throw new Error("Checklistan kunde inte tas bort."); setItems((current) => current.filter((item) => item.id !== id)); try { track("checklist_deleted", { checklist_id: id }); } catch {} } catch (err: any) { setError(err.message); } };
+  if (authLoading || loading) return <div className="flex items-center gap-2 p-6 text-sm text-muted-foreground"><Loader2 size={16} className="animate-spin" /> Läser in checklistor…</div>;
+  if (!user) return <div className="rounded-3xl border border-border bg-card p-8 text-center"><h2 className="text-2xl font-black">Dina sparade checklistor</h2><p className="mt-2 text-sm text-muted-foreground">Logga in för att se och fortsätta med dina checklistor.</p><button onClick={() => openLoginModal()} className="mt-5 rounded-xl bg-primary px-5 py-3 text-xs font-black uppercase tracking-wider text-primary-foreground">Logga in</button></div>;
+  return <section className="rounded-3xl border border-border bg-card p-5 shadow-sm md:p-8"><div className="flex items-start justify-between gap-4"><div><p className="text-[10px] font-black uppercase tracking-[0.25em] text-primary">Medlemsyta</p><h1 className="mt-2 text-3xl font-black tracking-tight">Mina checklistor</h1></div><Link to="/aktiechecklista" className="rounded-xl border border-border px-4 py-2 text-xs font-black uppercase tracking-wider text-muted-foreground">Ny checklista</Link></div>{error && <p role="alert" className="mt-5 text-sm text-red-600">{error}</p>}{items.length === 0 ? <p className="mt-8 text-sm text-muted-foreground">Du har inga sparade checklistor ännu.</p> : <div className="mt-8 divide-y divide-border">{items.map((item) => <div key={item.id} className="flex flex-wrap items-center justify-between gap-4 py-5 first:pt-0"><div><h2 className="font-black">{item.companyName} {item.ticker && <span className="text-muted-foreground">({item.ticker})</span>}</h2><p className="mt-1 text-xs text-muted-foreground">{item.status === "completed" ? "Slutförd" : "Påbörjad"} · uppdaterad {new Date(item.updatedAt).toLocaleDateString("sv-SE")}</p></div><div className="flex items-center gap-2"><Link to={`/aktiechecklista?checklistId=${item.id}`} onClick={() => {}} className="rounded-xl bg-primary px-4 py-2.5 text-xs font-black uppercase tracking-wider text-primary-foreground">Öppna</Link><button onClick={() => remove(item.id)} aria-label={`Ta bort checklistan för ${item.companyName}`} className="rounded-xl border border-border p-2.5 text-muted-foreground hover:text-red-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"><Trash2 size={15} /></button></div></div>)}</div>}</section>;
+}

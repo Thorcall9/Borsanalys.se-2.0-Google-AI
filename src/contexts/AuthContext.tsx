@@ -19,6 +19,8 @@ interface AuthContextType {
   loading: boolean;
   isLoginModalOpen: boolean;
   openLoginModal: () => void;
+  openSignupModal: () => void;
+  loginModalMode: 'login' | 'signup';
   closeLoginModal: () => void;
   loginWithGoogle: () => Promise<void>;
   loginWithFacebook: () => Promise<void>;
@@ -35,6 +37,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [loginModalMode, setLoginModalMode] = useState<'login' | 'signup'>('login');
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -61,7 +64,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => unsubscribe();
   }, []);
 
-  const openLoginModal = () => setIsLoginModalOpen(true);
+  const openLoginModal = () => { setLoginModalMode('login'); setIsLoginModalOpen(true); };
+  const openSignupModal = () => { setLoginModalMode('signup'); setIsLoginModalOpen(true); };
   const closeLoginModal = () => setIsLoginModalOpen(false);
 
   const loginWithGoogle = async () => {
@@ -150,7 +154,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       user, 
       loading, 
       isLoginModalOpen, 
-      openLoginModal, 
+      openLoginModal,
+      openSignupModal,
+      loginModalMode,
       closeLoginModal, 
       loginWithGoogle, 
       loginWithFacebook,

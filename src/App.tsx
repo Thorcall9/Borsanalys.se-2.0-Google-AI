@@ -30,6 +30,8 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Holdings = lazy(() => import("./pages/Holdings"));
 const AdminSubscribers = lazy(() => import("./components/AdminSubscribers").then(module => ({ default: module.AdminSubscribers })));
 const RvrcPreview = lazy(() => import("./pages/RvrcPreview"));
+const StockChecklist = lazy(() => import("./pages/StockChecklist"));
+const MyChecklists = lazy(() => import("./pages/MyChecklists"));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -65,6 +67,8 @@ export default function App() {
                       <Route path="/analys/revolutionrace-2026" element={<RvrcPreview />} />
                       <Route path="/analys/rvrc-2026" element={<RvrcPreview />} />
                       <Route path="/analys/:slug" element={<Analysis />} />
+                      <Route path="/aktiechecklista" element={<StockChecklist />} />
+                      <Route path="/mina-checklistor" element={<InternalRoute title="Mina checklistor"><MyChecklists /></InternalRoute>} />
                       <Route path="/profil" element={<InternalRoute title="Profil"><Profile /></InternalRoute>} />
                       <Route path="/aktier/:slug" element={<StockHub />} />
                       <Route path="/guider" element={<Guides />} />

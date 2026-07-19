@@ -16,6 +16,7 @@ import rssHandler from "./api/rss.ts";
 import sitemapHandler from "./api/sitemap.ts";
 import watchlistHandler from "./api/watchlist.ts";
 import savedAnalysesHandler from "./api/saved-analyses.ts";
+import stockChecklistsHandler from "./api/stock-checklists.ts";
 import voteHandler from "./api/vote";
 import { createTickerNotifications, NotificationType } from "./src/lib/notifications.ts";
 import rateLimit from "express-rate-limit";
@@ -248,6 +249,7 @@ async function startServer() {
 
   // Saved Analyses
   app.all("/api/saved-analyses", savedAnalysesHandler as any);
+  app.all("/api/stock-checklists", stockChecklistsHandler as any);
 
   // Admin: Generate AI Events - PROTECTED
   app.all("/api/admin/generate-events", cronAuthMiddleware, (req, res) => {

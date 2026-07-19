@@ -544,6 +544,10 @@ export default function Analysis() {
         <ReportComment data={analysis} markdown={axfoodQ2Markdown} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
         <MobileReadingProgress 
           label="analys" 
+          analysisSlug={analysis.slug}
+          contentType={analysis.contentType || "analysis"}
+          companyName={analysis.title}
+          ticker={analysis.ticker}
           nextTitle={nextAnalysis?.title} 
           nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
         />
@@ -594,6 +598,8 @@ export default function Analysis() {
           label="analys"
           analysisSlug={analysis.slug}
           contentType={analysis.contentType || "analysis"}
+          companyName={analysis.title}
+          ticker={analysis.ticker}
           nextTitle={nextAnalysis?.title}
           nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
         />
@@ -641,6 +647,8 @@ export default function Analysis() {
           label="analys"
           analysisSlug={analysis.slug}
           contentType={analysis.contentType || "analysis"}
+          companyName={analysis.title}
+          ticker={analysis.ticker}
           nextTitle={nextAnalysis?.title}
           nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined}
         />
@@ -666,6 +674,8 @@ export default function Analysis() {
         label="analys" 
         analysisSlug={analysis.slug}
         contentType={analysis.contentType || "analysis"}
+        companyName={analysis.title}
+        ticker={analysis.ticker}
         nextTitle={nextAnalysis?.title} 
         nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
       />

@@ -13,10 +13,12 @@ export const LoginModal: React.FC = () => {
     loginWithApple,
     loginWithMicrosoft,
     loginWithEmail,
-    signUpWithEmail
+    signUpWithEmail,
+    loginModalMode
   } = useAuth();
 
   const [mode, setMode] = useState<'login' | 'signup'>('login');
+  React.useEffect(() => { if (isLoginModalOpen) setMode(loginModalMode); }, [isLoginModalOpen, loginModalMode]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');

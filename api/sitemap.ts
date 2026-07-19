@@ -5,6 +5,7 @@ const baseUrl = 'https://www.borsanalys.se';
 const staticRoutes = [
   '/',
   '/analys',
+  '/aktiechecklista',
   '/guider',
   '/skola',
   '/marknad',

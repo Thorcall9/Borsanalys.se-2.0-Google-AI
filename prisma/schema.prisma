@@ -69,6 +69,7 @@ model User {
   watchlists    Watchlist[]
   notifications Notification[]
   savedAnalyses SavedAnalysis[]
+  stockChecklists StockChecklist[]
 }
 
 model Watchlist {
@@ -107,6 +108,23 @@ model SavedAnalysis {
   @@unique([userId, slug])
 }
 
+model StockChecklist {
+  id                 Int      @id @default(autoincrement())
+  userId             Int
+  companyName        String
+  ticker             String?
+  sourceAnalysisSlug String?
+  answers            Json
+  notes              Json
+  status             String   @default("started")
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, updatedAt])
+}
+
 model Vote {
   id        String   @id @default(cuid())
   stock     String
@@ -115,6 +133,5 @@ model Vote {
 
   @@map("votes")
 }
-
 
 
