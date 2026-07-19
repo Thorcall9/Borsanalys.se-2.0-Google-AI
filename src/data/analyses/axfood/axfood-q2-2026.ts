@@ -1,7 +1,7 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const axfoodQ22026: AnalysisData = {
-  contentType: "report-comment",
+  contentType: "report-commentary",
   reportPeriod: 'Q2 2026',
   reportSummary: 'Svag Willys-tillväxt pressar aktien – men värderingen är mer intressant efter kursfallet.',
   viewChange: 'upgraded',

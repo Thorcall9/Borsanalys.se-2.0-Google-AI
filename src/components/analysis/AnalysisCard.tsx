@@ -38,7 +38,7 @@ function ViewChangeBadge({ viewChange }: { viewChange: AnalysisData['viewChange'
 }
 
 export default function AnalysisCard({ analysis: a, index, realTimeData: rt }: AnalysisCardProps) {
-  const isReportComment = a.contentType === 'report-comment';
+  const isReportComment = a.contentType === 'report-commentary';
 
   // PE and yield display logic
   const rawPe = rt?.pe || a.pe;

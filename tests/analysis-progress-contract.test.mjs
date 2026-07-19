@@ -5,6 +5,7 @@ import assert from "node:assert/strict";
 const progressUrl = new URL("../src/components/AnalysisProgress.tsx", import.meta.url);
 const layoutUrl = new URL("../src/components/analysis/AnalysisLayout.tsx", import.meta.url);
 const flagsUrl = new URL("../src/config/analysisEngagement.ts", import.meta.url);
+const checklistUrl = new URL("../src/pages/StockChecklist.tsx", import.meta.url);
 
 test("analysis progress uses real section anchors and separate scroll/active state", async () => {
   const source = await readFile(progressUrl, "utf8");
@@ -27,12 +28,18 @@ test("desktop layout and future engagement flags remain shared/configurable", as
 });
 
 test("all progress threshold and membership events use existing analytics", async () => {
-  const source = await readFile(progressUrl, "utf8");
+  const [source, checklist] = await Promise.all([readFile(progressUrl, "utf8"), readFile(checklistUrl, "utf8")]);
   for (const event of [
     "analysis_progress_25", "analysis_progress_50", "analysis_progress_70",
-    "analysis_progress_90", "analysis_progress_100", "membership_prompt_viewed",
-    "membership_prompt_clicked", "membership_prompt_dismissed",
+    "analysis_progress_90", "analysis_progress_100", "checklist_popup_viewed",
+    "checklist_popup_cta_clicked", "checklist_popup_closed",
     "progress_panel_expanded", "progress_panel_collapsed",
   ]) assert.match(source, new RegExp(event));
   assert.match(source, /@vercel\/analytics\/react/);
+  for (const event of ["checklist_popup_viewed", "checklist_popup_cta_clicked", "checklist_popup_closed"]) {
+    assert.match(source, new RegExp(`trackOnce\\([^\\n]*${event}`));
+  }
+  assert.doesNotMatch(source, /membership_prompt_(viewed|clicked|dismissed)/);
+  assert.doesNotMatch(source, /track\(\s*["']checklist_popup_/);
+  assert.doesNotMatch(checklist, /track\([^;]*notes/);
 });

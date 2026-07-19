@@ -64,18 +64,18 @@ const vercelSource = await readFile(
 );
 
 test("the shared model requires the two explicit publication content types", () => {
-  assert.match(typeSource, /type ContentType = ['"]analysis['"] \| ['"]report-comment['"]/);
+  assert.match(typeSource, /type ContentType = ['"]analysis['"] \| ['"]report-commentary['"] \| ['"]guide['"] \| ['"]other['"]/);
   assert.match(typeSource, /contentType: ContentType/);
   assert.doesNotMatch(typeSource, /contentType\?:/);
 });
 
 test("exactly the latest Willys publication is a report comment", () => {
-  const reportComments = dataSources.filter((source) => /contentType: ['"]report-comment['"]/.test(source));
+  const reportComments = dataSources.filter((source) => /contentType: ['"]report-commentary['"]/.test(source));
   const analyses = dataSources.filter((source) => /contentType: ['"]analysis['"]/.test(source));
   assert.equal(reportComments.length, 1);
   assert.equal(analyses.length, dataSources.length - 1);
   assert.match(axfoodQ2Source, /slug: ['"]axfood-q2-2026['"]/);
-  assert.match(axfoodQ2Source, /contentType: ['"]report-comment['"]/);
+  assert.match(axfoodQ2Source, /contentType: ['"]report-commentary['"]/);
   assert.match(axfoodQ1Source, /slug: ['"]axfood-q1-2026['"]/);
   assert.match(axfoodQ1Source, /contentType: ['"]analysis['"]/);
 });
@@ -83,7 +83,7 @@ test("exactly the latest Willys publication is a report comment", () => {
 test("the archive filter uses the Swedish typ parameter and no production fallback", () => {
   assert.match(hookSource, /PARAM_TYPE = ['"]typ['"]/);
   assert.match(hookSource, /analys: ['"]analysis['"]/);
-  assert.match(hookSource, /rapportkommentar: ['"]report-comment['"]/);
+  assert.match(hookSource, /rapportkommentar: ['"]report-commentary['"]/);
   assert.match(hookSource, /analysis: ['"]analys['"]/);
   assert.match(hookSource, /['"]rapportkommentar['"]/);
   assert.match(hookSource, /back\/forward buttons/);

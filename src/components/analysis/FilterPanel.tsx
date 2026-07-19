@@ -21,7 +21,7 @@ interface FilterPanelProps {
   onSortChange: (value: SortOption) => void;
 }
 
-const CONTENT_TYPES: FilterContentType[] = ['all', 'analysis', 'report-comment'];
+const CONTENT_TYPES: FilterContentType[] = ['all', 'analysis', 'report-commentary'];
 const RECOMMENDATIONS = ['Alla', 'KÖP', 'BEVAKA', 'AVVAKTA', 'SÄLJ'];
 
 export default function FilterPanel({

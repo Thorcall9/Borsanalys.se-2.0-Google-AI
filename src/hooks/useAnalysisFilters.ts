@@ -4,13 +4,13 @@ import { AnalysisData, ContentType } from '../types/analysis';
 
 // ─── Content type definitions ───────────────────────────────────────────────
 
-export type FilterContentType = 'all' | ContentType;
+export type FilterContentType = 'all' | Extract<ContentType, 'analysis' | 'report-commentary'>;
 export type SortOption = 'latest' | 'updated' | 'upside' | 'score';
 
 export const CONTENT_TYPE_LABELS: Record<FilterContentType, string> = {
   all: 'Alla',
   analysis: 'Analyser',
-  'report-comment': 'Rapportkommentarer',
+  'report-commentary': 'Rapportkommentarer',
 };
 
 export const SORT_LABELS: Record<SortOption, string> = {
@@ -91,11 +91,11 @@ const PARAM_SEARCH = 'q';
 
 const URL_TYPE_TO_CONTENT_TYPE: Record<string, FilterContentType> = {
   analys: 'analysis',
-  rapportkommentar: 'report-comment',
+  rapportkommentar: 'report-commentary',
 };
 const CONTENT_TYPE_TO_URL_TYPE: Partial<Record<FilterContentType, string>> = {
   analysis: 'analys',
-  'report-comment': 'rapportkommentar',
+  'report-commentary': 'rapportkommentar',
 };
 const VALID_SORT_OPTIONS: SortOption[] = ['latest', 'updated', 'upside', 'score'];
 const VALID_RECOMMENDATIONS = ['Alla', 'KÖP', 'BEVAKA', 'AVVAKTA', 'SÄLJ'];

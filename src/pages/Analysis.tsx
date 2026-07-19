@@ -408,7 +408,7 @@ export default function Analysis() {
           {/* Result count */}
           <div className="flex items-center justify-between">
             <p className="text-sm font-black uppercase tracking-widest text-muted-foreground">
-              {contentType === 'report-comment'
+              {contentType === 'report-commentary'
                 ? `${resultCount} ${resultCount === 1 ? 'rapportkommentar' : 'rapportkommentarer'}`
                 : contentType === 'analysis'
                   ? `${resultCount} ${resultCount === 1 ? 'analys' : 'analyser'}`

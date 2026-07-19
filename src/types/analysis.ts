@@ -146,7 +146,6 @@ export interface AIDrivenAnalysis {
 
 export interface AnalysisData {
   slug: string;
-  contentType?: "analysis" | "report-commentary" | "guide" | "other";
   templateVersion?: "legacy" | "v10";
   title: string;
   listTitle?: string;
@@ -299,4 +298,4 @@ export interface AnalysisData {
   };
 }
 
-export type ContentType = "analysis" | "report-comment";
+export type ContentType = "analysis" | "report-commentary" | "guide" | "other";
