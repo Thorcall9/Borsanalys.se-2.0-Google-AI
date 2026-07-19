@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Star, Trash2, TrendingUp, TrendingDown, ChevronRight, Plus, AlertCircle } from "lucide-react";
+import { Star, Trash2, TrendingUp, TrendingDown, ChevronRight, Plus, AlertCircle, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { analyses } from "../../data/analyses";
+import { getLatestChecklist, getLatestContent, getWatchlistActions, normalizeTicker, type SavedChecklistLike, type WatchlistContent } from "../../lib/profileOverview";
 import { fetchWithCache } from "../../services/stockService";
 
 interface WatchlistItem {
@@ -13,11 +14,13 @@ interface WatchlistItem {
   price?: number;
   change?: number;
   addedAt: string;
+  latestContent: WatchlistContent | null;
+  checklist: SavedChecklistLike | null;
 }
 
 function getCompanyDetails(ticker: string) {
   const analysisEntry = Object.entries(analyses).find(
-    ([_, data]) => data.ticker.toUpperCase() === ticker.toUpperCase()
+    ([_, data]) => normalizeTicker(data.ticker) === normalizeTicker(ticker)
   );
   if (analysisEntry) {
     return {
@@ -48,14 +51,15 @@ export default function Watchlist() {
       setError(null);
       try {
         const token = await user.getIdToken();
-        const res = await fetch('/api/watchlist', {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+        const [res, checklistRes] = await Promise.all([
+          fetch('/api/watchlist', { headers: { 'Authorization': `Bearer ${token}` } }),
+          fetch('/api/stock-checklists', { headers: { 'Authorization': `Bearer ${token}` } }),
+        ]);
 
         if (res.ok) {
           const list = await res.json();
+          const checklists: SavedChecklistLike[] = checklistRes.ok ? await checklistRes.json() : [];
+          if (!checklistRes.ok) console.warn("Could not load checklist context for watchlist.");
           // Map database items to WatchlistItems and fetch quotes
           const mappedItems = await Promise.all(
             list.map(async (dbItem: any) => {
@@ -80,7 +84,9 @@ export default function Watchlist() {
                 slug: details.slug,
                 price,
                 change,
-                addedAt: dbItem.createdAt
+                addedAt: dbItem.createdAt,
+                latestContent: getLatestContent(Object.values(analyses), dbItem.ticker),
+                checklist: getLatestChecklist(checklists, dbItem.ticker),
               };
             })
           );
@@ -176,47 +182,77 @@ export default function Watchlist() {
         {watchlist.length > 0 ? (
           watchlist.map((item) => (
             <div key={item.id} className="relative p-4 transition-colors group hover:bg-muted/50">
-              <Link to={`/analys/${item.slug}`} aria-label={`Öppna analys för ${item.name}`} className="absolute inset-0 z-0 rounded-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary" />
-              <div className="relative z-10 flex items-center justify-between pointer-events-none">
-                <div className="flex min-w-0 flex-1 items-center gap-3">
-                    <div className="w-10 h-10 bg-background border border-border rounded-lg flex items-center justify-center font-bold text-xs">
-                      {item.symbol}
-                    </div>
-                    <div>
-                      <div className="font-black text-base text-foreground">{item.name}</div>
-                      <div className="text-[10px] text-foreground/70 uppercase tracking-wider">{item.symbol}</div>
-                    </div>
-                </div>
+              {(() => {
+                const actions = getWatchlistActions({
+                  ticker: item.symbol,
+                  companyName: item.name,
+                  latestContent: item.latestContent,
+                  checklist: item.checklist,
+                });
+                const rowDestination = item.latestContent ? `/analys/${item.latestContent.slug}` : `/analys/${item.slug}`;
+                const contentLabel = item.latestContent?.contentType === "report-commentary" ? "Rapportkommentar" : "Senaste analys";
+                const checklistLabel = item.checklist ? (item.checklist.status === "completed" ? "Checklista slutförd" : "Checklista påbörjad") : "Ingen checklista";
 
-                <div className="pointer-events-auto flex shrink-0 items-center gap-3 sm:gap-4">
-                  {item.price !== undefined && (
-                    <div className="text-right">
-                      <div className="font-bold text-sm">{item.price} SEK</div>
-                      {item.change !== undefined && (
-                        <div className={`text-[10px] font-bold flex items-center justify-end gap-1 ${
-                          item.change >= 0 ? 'text-primary' : 'text-red-500'
-                        }`}>
-                          {item.change >= 0 ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
-                          {item.change}%
+                return (
+                  <>
+                    <Link to={rowDestination} aria-label={`Öppna ${item.latestContent?.title || item.name}`} className="absolute inset-0 z-0 rounded-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary" />
+                    <div className="relative z-10 flex flex-col gap-4 pointer-events-none sm:flex-row sm:items-center sm:justify-between">
+                      <div className="flex min-w-0 flex-1 items-start gap-3">
+                        <div className="w-10 h-10 shrink-0 bg-background border border-border rounded-lg flex items-center justify-center font-bold text-xs">
+                          {item.symbol}
                         </div>
-                      )}
+                        <div className="min-w-0">
+                          <div className="font-black text-base text-foreground">{item.name}</div>
+                          <div className="text-[10px] text-foreground/70 uppercase tracking-wider">{item.symbol}</div>
+                          <div className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
+                            <span>{item.latestContent ? `${contentLabel}: ${new Date(item.latestContent.date).toLocaleDateString("sv-SE", { day: "numeric", month: "long", year: "numeric" })}` : "Inget relevant innehåll"}</span>
+                            <span aria-hidden="true">·</span>
+                            <span>{checklistLabel}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="flex shrink-0 flex-wrap items-center gap-2 sm:gap-3">
+                        {item.price !== undefined && (
+                          <div className="pointer-events-none text-right">
+                            <div className="font-bold text-sm">{item.price} SEK</div>
+                            {item.change !== undefined && (
+                              <div className={`text-[10px] font-bold flex items-center justify-end gap-1 ${item.change >= 0 ? "text-primary" : "text-red-500"}`}>
+                                {item.change >= 0 ? <TrendingUp size={10} /> : <TrendingDown size={10} />}
+                                {item.change}%
+                              </div>
+                            )}
+                          </div>
+                        )}
+                        <ChevronRight size={16} className="pointer-events-none text-muted-foreground" />
+                        {actions.map((action) => (
+                          <Link
+                            key={action.label}
+                            to={action.to}
+                            onClick={(event) => event.stopPropagation()}
+                            aria-label={`${action.label} för ${item.name}`}
+                            className="pointer-events-auto inline-flex items-center gap-1.5 rounded-xl border border-border bg-card px-3 py-2 text-xs font-black text-foreground hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                          >
+                            {action.label} <ArrowRight size={13} />
+                          </Link>
+                        ))}
+                        <button
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            if (!window.confirm(`Ta bort ${item.name} från bevakningslistan?`)) return;
+                            removeFromWatchlist(item.symbol);
+                          }}
+                          aria-label={`Ta bort ${item.name} från bevakningen`}
+                          title={`Ta bort ${item.name} från bevakningen`}
+                          className="pointer-events-auto p-2 text-muted-foreground hover:text-red-500 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
+                        >
+                          <Trash2 size={16} />
+                        </button>
                     </div>
-                  )}
-                  <button 
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      if (!window.confirm(`Ta bort ${item.name} från bevakningslistan?`)) return;
-                      removeFromWatchlist(item.symbol);
-                    }}
-                    aria-label={`Ta bort ${item.name} från bevakningen`}
-                    title={`Ta bort ${item.name} från bevakningen`}
-                    className="p-2 text-muted-foreground hover:text-red-500 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                  <ChevronRight size={16} className="text-muted-foreground" />
-                </div>
-              </div>
+                    </div>
+                  </>
+                );
+              })()}
             </div>
           ))
         ) : (
