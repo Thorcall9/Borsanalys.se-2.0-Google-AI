@@ -2,6 +2,7 @@ import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { ArrowLeft, FileText, ShoppingBag, Star } from "lucide-react";
 import SEO from "../components/SEO";
+import MobileReadingProgress from "../components/MobileReadingProgress";
 import rvrcMarkdown from "../../scratch/drafts/rvrc-2026-opublicerad-analys.md?raw";
 import rvrcSankeyHtml from "../../analyses/rvrc_sankey_9m_2026.html?raw";
 
@@ -721,6 +722,7 @@ export default function RvrcPreview() {
           </article>
         </div>
       </main>
+      <MobileReadingProgress label="analys" analysisSlug="revolutionrace-2026" contentType="report-commentary" />
     </>
   );
 

@@ -146,6 +146,7 @@ export interface AIDrivenAnalysis {
 
 export interface AnalysisData {
   slug: string;
+  contentType?: "analysis" | "report-commentary" | "guide" | "other";
   templateVersion?: "legacy" | "v10";
   title: string;
   listTitle?: string;

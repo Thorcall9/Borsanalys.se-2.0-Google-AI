@@ -210,6 +210,8 @@ export default function GuideDetail() {
       </footer>
       <MobileReadingProgress 
         label="guide" 
+        analysisSlug={guide.slug}
+        contentType="guide"
         nextTitle={nextGuide?.title} 
         nextHref={nextSlug ? `/guider/${nextSlug}` : undefined} 
       />

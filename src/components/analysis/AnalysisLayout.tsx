@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Menu, X, ArrowLeft, Star, StarOff, Loader2, PanelLeftClose, PanelLeftOpen, Bookmark } from 'lucide-react';
+import { Menu, X, ArrowLeft, Star, StarOff, Loader2, PanelLeftClose, PanelLeftOpen, Bookmark, Check } from 'lucide-react';
 
 import NextAnalysisButton from './NextAnalysisButton';
 import { AnalysisData } from '../../types/analysis.js';
+import { DesktopAnalysisProgress, useAnalysisProgress } from '../AnalysisProgress';
 
 export interface AnalysisSection {
   id: string;
@@ -76,6 +77,7 @@ export default function AnalysisLayout({
   const [activeSection, setActiveSection] = useState(sections[0]?.id);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const progressSnapshot = useAnalysisProgress({ sections, analysisSlug: stockSlug, contentType: 'analysis' });
   
   const stockLink = stockSlug || companyName.toLowerCase().split(' ')[0];
 
@@ -102,6 +104,17 @@ export default function AnalysisLayout({
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, [sections]);
+
+  useEffect(() => {
+    sections.forEach((section, index) => {
+      const element = document.getElementById(section.id);
+      if (element) {
+        element.dataset.analysisSection = 'true';
+        element.dataset.sectionIndex = section.number || String(index + 1);
+        element.dataset.sectionTitle = section.title;
+      }
+    });
   }, [sections]);
 
   const scrollTo = (id: string) => {
@@ -239,21 +252,24 @@ export default function AnalysisLayout({
           
           <nav className={`${isSidebarCollapsed ? 'py-4' : 'py-6'}`}>
             {!isSidebarCollapsed && (
+              <DesktopAnalysisProgress snapshot={progressSnapshot} />
+            )}
+            {!isSidebarCollapsed && (
               <div className={`${wideSidebar ? 'px-6 mb-5 text-xs' : 'px-6 mb-4 text-[9px]'} font-black text-muted-foreground/50 uppercase tracking-[0.22em]`}>Analysrapport</div>
             )}
-            {sections.map((s, index) => (
+            {progressSnapshot.sections.map((s, index) => (
               <React.Fragment key={s.id}>
                 <button
                   onClick={() => scrollTo(s.id)}
                   title={s.title}
                   className={`
                     w-full flex items-center ${isSidebarCollapsed ? 'justify-center px-0' : 'gap-3 px-6'} ${compactSections || isSidebarCollapsed ? 'py-2' : 'py-2.5'} text-[11px] font-bold transition-all border-l-4
-                    ${activeSection === s.id 
+                    ${progressSnapshot.activeId === s.id 
                       ? 'bg-primary/5 border-primary text-foreground'
                       : 'border-transparent text-muted-foreground hover:bg-muted/30 hover:text-foreground'}
                   `}
                 >
-                  <span className={`font-black text-[10px] ${isSidebarCollapsed ? 'w-auto opacity-80' : 'w-5 opacity-50'} ${compactSections && !isSidebarCollapsed ? 'hidden' : 'block'}`}>{s.number}</span>
+                  <span className={`font-black text-[10px] ${isSidebarCollapsed ? 'w-auto opacity-80' : 'w-5 opacity-50'} ${compactSections && !isSidebarCollapsed ? 'hidden' : 'block'} ${index < progressSnapshot.activeIndex || progressSnapshot.percent >= 100 ? 'text-primary opacity-100' : ''}`}>{index < progressSnapshot.activeIndex || progressSnapshot.percent >= 100 ? <Check size={12} /> : s.number}</span>
                   {!isSidebarCollapsed && (
                     <span className={`${compactSections ? 'text-[11px] uppercase tracking-wider' : wideSidebar ? 'text-xs tracking-tight' : 'tracking-tight'} leading-snug text-left`}>{s.title}</span>
                   )}
@@ -283,7 +299,7 @@ export default function AnalysisLayout({
 
       {/* Main Content */}
       <main className={`flex-1 ${hideSidebar ? '' : mainOffsetClass} min-w-0 max-w-full overflow-x-hidden bg-background`}>
-        <div className={`${tightContent ? 'max-w-6xl' : 'max-w-7xl'} mx-auto px-6 lg:px-10 py-12 lg:py-24`}>
+        <div data-analysis-content className={`${tightContent ? 'max-w-6xl' : 'max-w-7xl'} mx-auto px-6 lg:px-10 py-12 lg:py-24`}>
           {priceDiff && (
             <motion.div 
               initial={{ opacity: 0, y: -20 }}
