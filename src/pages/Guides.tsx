@@ -23,27 +23,27 @@ export default function Guides() {
   const guideList = Object.values(guides).sort((a, b) => a.part - b.part);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-24 space-y-24">
+    <div className="min-h-screen bg-white text-slate-900">
       {/* Header */}
-      <header className="space-y-6 max-w-3xl">
+      <header className="relative overflow-hidden bg-[radial-gradient(circle_at_75%_15%,rgba(16,185,129,0.08),transparent_28%),linear-gradient(180deg,#ffffff_0%,#fbfdfc_100%)]">
+        <div className="mx-auto max-w-[1180px] px-5 pb-10 pt-12 md:px-8 md:pb-14 md:pt-14">
+        <div className="pointer-events-none absolute right-[-50px] top-10 hidden h-56 w-[520px] rotate-[-12deg] opacity-20 md:block" aria-hidden="true"><svg viewBox="0 0 520 220" className="h-full w-full text-emerald-500"><path d="M0 180 C55 170 80 155 122 164 S178 133 214 145 S260 108 300 128 S350 72 388 95 S430 45 500 58" fill="none" stroke="currentColor" strokeWidth="2" /><path d="M0 196 C70 185 112 177 148 183 S215 153 250 168 S316 128 350 143 S415 90 500 104" fill="none" stroke="currentColor" strokeWidth="1" opacity=".35" /><circle cx="500" cy="58" r="6" fill="currentColor" /></svg></div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="text-[11px] font-black uppercase tracking-[0.4em] text-primary mb-4">Utbildning & Kunskap</div>
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-8">
-            Börsguider för <br />
-            <span className="text-primary">framgång</span>
-          </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed font-medium max-w-2xl">
+          <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-emerald-700 md:hidden">Utbildning & kunskap</div>
+          <h1 className="font-serif text-[48px] leading-[.98] tracking-[-0.045em] md:text-[64px]">Börsguider</h1>
+          <p className="mt-4 max-w-[620px] text-base leading-7 text-slate-600 md:text-[17px]">
             Lär dig grunderna i aktieanalys, värdering och hur du bygger en vinnande portfölj. Våra guider är skrivna för att göra dig till en bättre investerare.
           </p>
         </motion.div>
+        </div>
       </header>
 
       {/* Guides Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="mx-auto grid min-w-0 max-w-[1180px] grid-cols-1 gap-3 px-5 py-8 md:grid-cols-2 md:px-8 md:py-12 lg:grid-cols-3">
         {guideList.map((guide, i) => {
           const Icon = IconMap[guide.icon] || BookOpen;
           return (
@@ -56,26 +56,26 @@ export default function Guides() {
               >
                 <Link 
                   to={`/guider/${guide.slug}`}
-                  className="group block h-full bg-card border border-border rounded-[2.5rem] p-10 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/5 transition-all relative overflow-hidden shadow-xl shadow-black/5"
+                className="group block h-full min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md md:p-6"
                 >
                   <div className="absolute top-0 right-0 p-6">
-                    <span className="text-[10px] font-black text-primary/30 uppercase tracking-[0.3em]">Del {guide.part}</span>
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700/60">Del {guide.part}</span>
                   </div>
-                  <div className="flex items-center justify-between mb-8">
-                    <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-primary/5">
-                      <Icon size={28} />
+                  <div className="mb-5 flex items-center justify-between gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 transition-transform duration-500 group-hover:scale-105">
+                      <Icon size={22} />
                     </div>
-                    <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em]">{guide.category}</div>
+                    <div className="rounded-full bg-slate-50 px-3 py-1.5 text-[9px] font-bold uppercase tracking-wider text-slate-400">{guide.category}</div>
                   </div>
-                  <h3 className="text-3xl font-black tracking-tighter mb-4 group-hover:text-primary transition-colors leading-tight">
+                  <h3 className="mb-3 text-xl font-bold leading-tight tracking-tight transition-colors group-hover:text-emerald-700 md:text-2xl">
                     {guide.title}
                   </h3>
-                  <p className="text-base text-muted-foreground leading-relaxed mb-10 font-medium line-clamp-3">
+                  <p className="mb-7 line-clamp-3 text-sm leading-6 text-slate-500">
                     {guide.excerpt}
                   </p>
-                  <div className="flex items-center justify-between mt-auto pt-6 border-t border-border/50">
-                    <span className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.2em]">{guide.readTime} läsning</span>
-                    <div className="flex items-center gap-3 text-xs font-black uppercase tracking-widest text-primary group-hover:gap-5 transition-all">
+                  <div className="mt-auto flex items-center justify-between border-t border-slate-100 pt-4">
+                    <span className="text-xs text-slate-400">{guide.readTime} läsning</span>
+                    <div className="flex items-center gap-2 text-sm font-semibold text-emerald-700 transition-all group-hover:gap-3">
                       Läs guide <ArrowRight size={16} />
                     </div>
                   </div>
@@ -88,22 +88,22 @@ export default function Guides() {
       </div>
 
       {/* AD: top-display – naturlig paus mellan guider och CTA */}
-      <AdUnit variant="top-display" />
+      <div className="mx-auto max-w-[760px] px-5 md:px-8"><AdUnit variant="top-display" /></div>
 
       {/* CTA Section */}
 
-      <section className="bg-muted/30 border border-border rounded-[3rem] p-16 md:p-24 text-center space-y-8 relative overflow-hidden">
+      <section className="mx-5 mb-12 overflow-hidden rounded-2xl border border-emerald-100 bg-emerald-50/40 p-8 text-center relative md:mx-auto md:max-w-[1120px] md:p-14">
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />
         
         <div className="relative z-10 space-y-8">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-tight">Saknar du en guide?</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium leading-relaxed">
+          <h2 className="font-serif text-3xl leading-tight tracking-tight md:text-5xl">Saknar du en guide?</h2>
+          <p className="mx-auto max-w-2xl text-base leading-7 text-slate-600 md:text-lg">
             Vi fyller på med nya guider varje vecka. Kontakta oss om det är något speciellt ämne du vill att vi ska förklara.
           </p>
           <Link 
             to="/kontakt" 
-            className="inline-flex items-center gap-4 bg-primary text-primary-foreground px-12 py-5 rounded-full font-black uppercase tracking-widest text-sm hover:scale-105 transition-all shadow-xl shadow-primary/20"
+            className="inline-flex items-center gap-2 rounded-xl bg-emerald-700 px-6 py-3 text-sm font-bold text-white shadow-md shadow-emerald-700/20 transition hover:bg-emerald-800"
           >
             Kontakta oss <ArrowRight size={20} />
           </Link>
