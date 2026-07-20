@@ -43,11 +43,9 @@ export const Newsletter: React.FC = () => {
   };
 
   return (
-    <section className="py-32 bg-card border-y border-border overflow-hidden relative">
-      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] -z-10" />
-      
-      <div className="container mx-auto px-6">
-        <div className="max-w-5xl mx-auto flex flex-col lg:flex-row items-center gap-20">
+    <section className="homepage-section border-y border-border bg-section-alt">
+      <div className="homepage-container">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-12 lg:flex-row">
           <div className="flex-1 text-center lg:text-left">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -55,13 +53,13 @@ export const Newsletter: React.FC = () => {
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/5 text-primary text-[10px] font-black uppercase tracking-[0.3em] mb-8">
-                <Mail className="w-3 h-3" />
+              <div className="mb-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">
+                <Mail className="h-4 w-4" />
                 <span>Veckobrev</span>
               </div>
-              <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-tight mb-6">Håll dig steget före <br /> <span className="text-primary">marknaden</span></h2>
-              <p className="text-lg md:text-xl text-muted-foreground leading-relaxed font-medium max-w-xl mx-auto lg:mx-0">
-                Få våra mest exklusiva analyser och marknadsuppdateringar direkt i din inkorg. Varje söndag, helt gratis.
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Få Börsanalys.se i inkorgen</h2>
+              <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg lg:mx-0">
+                Veckans viktigaste analyser och rapportkommentarer, samlade i ett kort nyhetsbrev.
               </p>
             </motion.div>
           </div>
@@ -72,27 +70,27 @@ export const Newsletter: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
               viewport={{ once: true }}
-              className="relative group"
+              className="relative"
               onSubmit={handleSubmit}
             >
-              <div className="relative flex flex-col sm:flex-row items-center gap-4">
+              <div className="relative flex flex-col items-center gap-3 sm:flex-row">
                 <input 
                   type="email" 
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Din e-postadress" 
                   disabled={status === 'loading' || status === 'success'}
-                  className="w-full px-8 py-6 bg-background border border-border rounded-full focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all text-lg shadow-2xl shadow-black/5 font-medium disabled:opacity-50"
+                  className="w-full rounded-xl border border-border bg-background px-5 py-3.5 text-base font-medium transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-50"
                 />
                 <motion.button
                   type="submit"
                   disabled={status === 'loading' || status === 'success'}
-                  whileHover={status === 'idle' ? { scale: 1.05, y: -2 } : {}}
+                  whileHover={status === 'idle' ? { scale: 1.02 } : {}}
                   whileTap={status === 'idle' ? { scale: 0.95 } : {}}
-                  className={`w-full sm:w-auto sm:absolute sm:right-3 px-10 py-4 rounded-full font-black uppercase tracking-widest text-sm shadow-xl transition-all flex items-center justify-center gap-2 ${
+                  className={`primary-action w-full px-5 py-2.5 sm:absolute sm:right-1.5 sm:w-auto ${
                     status === 'success' 
-                      ? 'bg-emerald-500 text-white shadow-emerald-500/30' 
-                      : 'bg-primary text-primary-foreground shadow-primary/30 hover:bg-primary/90'
+                      ? 'bg-emerald-500 text-white hover:bg-emerald-500'
+                      : ''
                   } disabled:opacity-100`}
                 >
                   {status === 'loading' ? (
@@ -124,8 +122,8 @@ export const Newsletter: React.FC = () => {
                 )}
               </AnimatePresence>
 
-              <p className="mt-6 text-[11px] font-bold text-muted-foreground/80 text-center lg:text-left px-8 uppercase tracking-widest">
-                Genom att prenumerera godkänner du vår integritetspolicy. Inget spam, bara värde.
+              <p className="mt-5 text-center text-xs text-muted-foreground lg:text-left">
+                Genom att prenumerera godkänner du vår integritetspolicy.
               </p>
             </motion.form>
           </div>

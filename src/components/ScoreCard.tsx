@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle2, AlertCircle } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface ScoreItemProps {
@@ -62,7 +62,7 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({ companyName, ticker, total
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
-      className="bg-card border border-border rounded-[2.5rem] p-10 md:p-12 shadow-2xl shadow-black/5 hover:shadow-primary/5 transition-all duration-700 group"
+      className="bg-card border border-border rounded-2xl p-10 md:p-12 shadow-2xl shadow-black/5 hover:shadow-primary/5 transition-all duration-700 group"
     >
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-6">
         <div>
@@ -75,7 +75,7 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({ companyName, ticker, total
         </div>
         <div className="flex flex-col items-end">
           <div className="text-6xl font-black text-primary tracking-tighter leading-none mb-2">{totalScore.toFixed(1)}</div>
-          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">Total Score</div>
+          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">Totalpoäng</div>
         </div>
       </div>
       
@@ -90,25 +90,25 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({ companyName, ticker, total
           <div className="w-8 h-8 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
             <CheckCircle2 size={16} />
           </div>
-          <span>AI-verifierad analys · Uppdaterad idag</span>
+          <span>Sju områden · En sammanvägd bedömning</span>
         </div>
         {linkTo ? (
           <Link to={linkTo} className="w-full sm:w-auto">
             <motion.div 
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full flex items-center justify-center sm:w-auto text-[10px] font-black uppercase tracking-[0.2em] bg-primary text-primary-foreground px-10 py-5 rounded-2xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/20 cursor-pointer"
+              className="primary-action w-full sm:w-auto cursor-pointer"
             >
-              Se Fullständig Analys
+              Läs hela analysen
             </motion.div>
           </Link>
         ) : (
           <motion.button 
             whileHover={{ scale: 1.02, y: -2 }}
             whileTap={{ scale: 0.98 }}
-            className="w-full sm:w-auto text-[10px] font-black uppercase tracking-[0.2em] bg-primary text-primary-foreground px-10 py-5 rounded-2xl hover:bg-primary/90 transition-all shadow-xl shadow-primary/20"
+            className="primary-action w-full sm:w-auto"
           >
-            Se Fullständig Analys
+            Läs hela analysen
           </motion.button>
         )}
       </div>

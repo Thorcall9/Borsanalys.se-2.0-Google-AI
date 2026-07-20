@@ -3,140 +3,255 @@ import { useAuth } from "../contexts/AuthContext";
 import { motion } from "framer-motion";
 import { Hero } from "../components/Hero";
 import SEO from "../components/SEO";
-import { ArrowRight, ChevronRight, Loader2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, ChevronRight, Loader2, Star } from "lucide-react";
 import { Link } from "react-router-dom";
+import RecentPublications from "../components/community/RecentPublications";
 
+const revolutionRaceCategories = [
+  { label: "Företagsöversikt", score: 4.0 },
+  { label: "Affärsmodell", score: 4.0 },
+  { label: "Konkurrensfördelar", score: 4.0 },
+  { label: "Finansiell utveckling", score: 4.0 },
+  { label: "Fundamental värdering", score: 2.0 },
+  { label: "Potentiella kursdrivare", score: 3.0 },
+  { label: "Risker", score: 4.0 },
+];
 
-// Lazy load below-the-fold components
-const ScoreCard = React.lazy(() => import("../components/ScoreCard").then(m => ({ default: m.ScoreCard })));
-const Newsletter = React.lazy(() => import("../components/Newsletter").then(m => ({ default: m.Newsletter })));
+const memberBenefits = [
+  "Spara analyser och checklistor",
+  "Följ bolag som är intressanta för dig",
+  "Få tillgång till rapportkommentarer",
+  "Rösta fram nästa analys",
+];
+
+const scenarios = [
+  { label: "Bull", price: "74 kr", note: "Högre tillväxt och bättre värdering", tone: "positive" },
+  { label: "Base", price: "58 kr", note: "Försiktig återhämtning enligt grundcaset", tone: "neutral" },
+  { label: "Bear", price: "48 kr", note: "Lägre tillväxt och pressad multipel", tone: "caution" },
+] as const;
+
+const scenarioStyles = {
+  positive: "border-emerald-200 text-emerald-700 dark:border-emerald-900 dark:text-emerald-400",
+  neutral: "border-border text-foreground",
+  caution: "border-red-200 text-red-700 dark:border-red-900 dark:text-red-400",
+} as const;
+
+const ScoreCard = React.lazy(() => import("../components/ScoreCard").then((module) => ({ default: module.ScoreCard })));
+const Newsletter = React.lazy(() => import("../components/Newsletter").then((module) => ({ default: module.Newsletter })));
 const MethodologySection = React.lazy(() => import("../components/MethodologySection"));
 
 const SectionLoader = () => (
-  <div className="w-full py-20 flex items-center justify-center opacity-20">
-    <Loader2 className="w-6 h-6 animate-spin" />
+  <div className="flex w-full items-center justify-center py-20 opacity-20">
+    <Loader2 className="h-6 w-6 animate-spin" />
   </div>
 );
 
 export default function Home() {
   const { openLoginModal } = useAuth();
-  const revolutionRaceCategories = [
-    { label: "Företagsöversikt", score: 4.0 },
-    { label: "Affärsmodell", score: 4.0 },
-    { label: "Konkurrensfördelar", score: 4.0 },
-    { label: "Finansiell utveckling", score: 4.0 },
-    { label: "Fundamental värdering", score: 2.0 },
-    { label: "Potentiella kursdrivare", score: 3.0 },
-    { label: "Risker", score: 4.0 },
-  ];
 
   return (
-    <div className="bg-background min-h-screen">
-      <SEO 
-        title="Hem - Professionella Aktieanalyser & AI-insikter" 
+    <div className="min-h-screen bg-background">
+      <SEO
+        title="Hem - Professionella Aktieanalyser & AI-insikter"
         description="Börsanalys.se erbjuder professionella aktieanalyser drivna av data och AI. Hitta nästa vinnare på börsen med våra djupgående investment cases."
       />
-      {/* Hero Section */}
       <Hero />
 
-
-
-      {/* Featured Analysis / Score Card Section */}
-      <section className="py-32 container mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8">
-          <div className="max-w-2xl">
+      <section className="homepage-section" aria-labelledby="featured-analysis-title">
+        <div className="homepage-container">
+          <div className="mb-10 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
+              className="max-w-2xl"
             >
-              <h2 className="text-[11px] font-mono font-black uppercase tracking-[0.4em] text-primary mb-4">Utvald Analys</h2>
-              <h3 className="text-4xl md:text-5xl font-black tracking-tighter leading-tight mb-6">
+              <p className="section-kicker">Utvalda analyser</p>
+              <h2 id="featured-analysis-title" className="text-3xl font-bold tracking-tight md:text-4xl">
                 RevolutionRace: Outdoor/D2C med stark lönsamhet
-              </h3>
-              <p className="text-lg text-muted-foreground leading-relaxed">
+              </h2>
+              <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
                 Nya förklaringsmodellen visar 25/35 poäng: hög bolagskvalitet, nettokassa och stark DACH-position, men värderingen kräver återaccelererad tillväxt.
               </p>
             </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <Link to="/analys/revolutionrace-2026" className="secondary-action">
+                Läs hela analysen <ArrowRight className="h-4 w-4" />
+              </Link>
+            </motion.div>
           </div>
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Link to="/analys/revolutionrace-2026" className="group flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-primary hover:gap-5 transition-all">
-              Se hela analysen <ArrowRight className="w-5 h-5" />
-            </Link>
-          </motion.div>
-        </div>
 
-        <React.Suspense fallback={<SectionLoader />}>
-          <ScoreCard 
-            companyName="RevolutionRace" 
-            ticker="RVRC.ST" 
-            totalScore={3.6} 
-            categories={revolutionRaceCategories} 
-            linkTo="/analys/revolutionrace-2026"
-          />
-        </React.Suspense>
+          <React.Suspense fallback={<SectionLoader />}>
+            <ScoreCard
+              companyName="RevolutionRace"
+              ticker="RVRC.ST"
+              totalScore={3.6}
+              categories={revolutionRaceCategories}
+              linkTo="/analys/revolutionrace-2026"
+            />
+          </React.Suspense>
+        </div>
       </section>
 
-      {/* Methodology Section */}
+      <section className="homepage-section bg-section-alt" aria-labelledby="why-us-title">
+        <div className="homepage-container">
+          <div className="max-w-2xl">
+            <p className="section-kicker">Varför Börsanalys.se</p>
+            <h2 id="why-us-title" className="text-3xl font-bold tracking-tight md:text-4xl">Ett tydligare underlag för dina egna beslut</h2>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">Vi samlar de frågor som hjälper dig att förstå vad som driver bolaget, vad aktien kostar och vad som kan förändra caset.</p>
+          </div>
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
+            {[
+              ["Från bolag till aktie", "Affärsmodell, finansiell utveckling och värdering presenteras i samma sammanhang."],
+              ["Samma frågor varje gång", "Ett konsekvent ramverk gör det enklare att jämföra analysen av olika bolag."],
+              ["Riskerna får plats", "Vi lyfter vad som kan förändra investeringscaset, inte bara vad som talar för det."],
+            ].map(([title, description]) => (
+              <article key={title} className="surface-card surface-card-hover p-6">
+                <h3 className="text-lg font-bold tracking-tight">{title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <React.Suspense fallback={<SectionLoader />}>
         <MethodologySection />
       </React.Suspense>
 
+      <section className="homepage-section" aria-labelledby="analysis-example-title">
+        <div className="homepage-container">
+          <div className="max-w-2xl">
+            <p className="section-kicker">Exempel</p>
+            <h2 id="analysis-example-title" className="text-3xl font-bold tracking-tight md:text-4xl">Så kan en sammanvägd bedömning se ut</h2>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">En analys gör kvalitet, värdering och möjliga utfall konkreta utan att dölja osäkerheten i caset.</p>
+          </div>
+          <div className="surface-card mt-10 p-6 md:p-8">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <p className="text-sm font-semibold text-muted-foreground">RevolutionRace · RVRC.ST</p>
+                <h3 className="mt-2 text-2xl font-bold tracking-tight">Samlad bedömning</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Bolagskvalitet och balansräkning är styrkor, medan värderingen kräver en tydligare återhämtning i tillväxten.</p>
+              </div>
+              <div className="shrink-0 rounded-xl bg-primary/10 px-4 py-3 text-center text-primary">
+                <span className="block text-2xl font-bold">25 / 35</span>
+                <span className="text-xs font-semibold">BEVAKA</span>
+              </div>
+            </div>
+            <div className="mt-8 grid gap-5 border-t border-border pt-6 sm:grid-cols-2">
+              <div>
+                <p className="text-sm font-semibold">Kvalitet</p>
+                <div className="mt-2 flex text-primary" aria-label="Kvalitet: fem av fem stjärnor">
+                  {Array.from({ length: 5 }, (_, index) => <Star key={index} className="h-5 w-5 fill-current" />)}
+                </div>
+              </div>
+              <div>
+                <p className="text-sm font-semibold">Värdering</p>
+                <div className="mt-2 flex" aria-label="Värdering: två av fem stjärnor">
+                  {Array.from({ length: 5 }, (_, index) => <Star key={index} className={`h-5 w-5 ${index < 2 ? "fill-current text-primary" : "fill-muted text-muted-foreground/30"}`} />)}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 grid gap-5 md:grid-cols-3">
+            {scenarios.map((scenario) => (
+              <article key={scenario.label} className={`surface-card p-6 ${scenarioStyles[scenario.tone]}`}>
+                <p className="text-sm font-semibold">{scenario.label}</p>
+                <p className="mt-3 text-3xl font-bold tracking-tight">{scenario.price}</p>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{scenario.note}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
 
+      <section className="homepage-section bg-section-alt" aria-labelledby="report-comments-title">
+        <div className="homepage-container">
+          <header className="max-w-2xl">
+            <p className="section-kicker">Aktuellt innehåll</p>
+            <h2 id="report-comments-title" className="text-3xl font-bold tracking-tight md:text-4xl">Rapportkommentarer</h2>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">Följ våra senaste publiceringar och se hur rapporter förändrar bilden av ett bolag.</p>
+          </header>
+          <div className="mt-10">
+            <RecentPublications />
+          </div>
+        </div>
+      </section>
 
-      {/* Newsletter Section */}
       <React.Suspense fallback={<SectionLoader />}>
         <Newsletter />
       </React.Suspense>
 
-      {/* Final CTA */}
-      <section className="py-32 container mx-auto px-6">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="bg-foreground text-background rounded-[4rem] p-12 md:p-32 text-center relative overflow-hidden shadow-2xl shadow-black/20"
-        >
-          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
-          
-          <div className="relative z-10 max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-10">
-                Redo att maximera <br />
-                <span className="text-primary">din avkastning?</span>
-              </h2>
-              <p className="text-xl md:text-2xl text-background/70 mb-16 leading-relaxed max-w-2xl mx-auto font-medium">
-                Bli en del av Börsanalys.se idag och få tillgång till marknadens mest avancerade analysverktyg.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-8">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={openLoginModal}
-                  className="w-full sm:w-auto px-16 py-7 bg-primary text-primary-foreground rounded-full font-black text-xl shadow-2xl shadow-primary/30 hover:bg-primary/90 transition-all uppercase tracking-widest cursor-pointer"
-                >
-                  Skapa gratis konto
-                </motion.button>
-                <Link to="/om-oss" className="group flex items-center gap-3 text-background font-black uppercase tracking-widest text-sm hover:gap-5 transition-all">
-                  Läs mer om metodiken <ChevronRight className="w-6 h-6 text-primary" />
-                </Link>
-              </div>
-            </motion.div>
+      <section className="homepage-section" aria-labelledby="member-benefits-title">
+        <div className="homepage-container">
+          <div className="surface-card grid gap-10 p-8 md:grid-cols-[1.1fr_1fr] md:p-12">
+            <div>
+              <p className="section-kicker">För medlemmar</p>
+              <h2 id="member-benefits-title" className="text-3xl font-bold tracking-tight md:text-4xl">Gör analysläsningen till din egen</h2>
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">Samla din analysläsning på ett ställe och följ bolag över tid.</p>
+              <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} onClick={openLoginModal} className="primary-action mt-7">
+                Bli medlem gratis
+                <ArrowRight className="h-4 w-4" />
+              </motion.button>
+            </div>
+            <ul className="space-y-4">
+              {memberBenefits.map((benefit) => (
+                <li key={benefit} className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+                  <span>{benefit}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-        </motion.div>
+        </div>
+      </section>
+
+      <section className="homepage-section">
+        <div className="homepage-container">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="rounded-2xl bg-foreground p-8 text-center text-background md:p-16"
+          >
+            <div className="mx-auto max-w-3xl">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <h2 className="text-3xl font-bold tracking-tight md:text-5xl">
+                  Vill du följa fler bolag <br />
+                  <span className="text-primary">med bättre struktur?</span>
+                </h2>
+                <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-background/70 md:text-lg">
+                  Skapa ett konto för att spara det du läser och hålla ordning på de bolag du följer.
+                </p>
+                <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={openLoginModal}
+                    className="primary-action w-full cursor-pointer sm:w-auto"
+                  >
+                    Skapa gratis konto
+                  </motion.button>
+                  <Link to="/om-oss" className="secondary-action w-full border-background/30 bg-transparent text-background hover:bg-background/10 sm:w-auto">
+                    Läs om vår metod <ChevronRight className="h-4 w-4 text-primary" />
+                  </Link>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
       </section>
     </div>
   );
