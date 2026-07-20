@@ -56,23 +56,23 @@ export default function Terminology() {
   }, [searchQuery]);
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-24 space-y-32">
+    <div className="min-h-screen bg-white text-slate-900">
       {/* Header */}
-      <header className="space-y-6 max-w-3xl">
+      <header className="relative overflow-hidden bg-[radial-gradient(circle_at_75%_15%,rgba(16,185,129,0.08),transparent_28%),linear-gradient(180deg,#ffffff_0%,#fbfdfc_100%)]">
+        <div className="mx-auto max-w-[1180px] px-5 pb-9 pt-12 md:px-8 md:pb-12 md:pt-14">
+        <div className="pointer-events-none absolute right-[-50px] top-10 hidden h-56 w-[520px] rotate-[-12deg] opacity-20 md:block" aria-hidden="true"><svg viewBox="0 0 520 220" className="h-full w-full text-emerald-500"><path d="M0 180 C55 170 80 155 122 164 S178 133 214 145 S260 108 300 128 S350 72 388 95 S430 45 500 58" fill="none" stroke="currentColor" strokeWidth="2" /><path d="M0 196 C70 185 112 177 148 183 S215 153 250 168 S316 128 350 143 S415 90 500 104" fill="none" stroke="currentColor" strokeWidth="1" opacity=".35" /><circle cx="500" cy="58" r="6" fill="currentColor" /></svg></div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="text-[11px] font-black uppercase tracking-[0.4em] text-primary mb-4">Utbildning & Kunskap</div>
-          <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-8">
-            Börsskolan: <br />
-            <span className="text-primary">Din väg till framgång</span>
-          </h1>
-          <p className="text-xl text-muted-foreground leading-relaxed font-medium max-w-2xl">
+          <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-emerald-700 md:hidden">Utbildning & kunskap</div>
+          <h1 className="font-serif text-[48px] leading-[.98] tracking-[-0.045em] md:text-[64px]">Börsskolan</h1>
+          <p className="mt-4 max-w-[620px] text-base leading-7 text-slate-600 md:text-[17px]">
             En aktiekurs berättar absolut ingenting om ett bolag. Ett P/E-tal på 15 kan vara extremt billigt i en bransch men varningsflagg i en annan. Det här är din verktygslåda – de pedagogiska nycklarna som hjälper dig att skilja på en bra aktie och en farlig investering genom att läsa bolagets sanna hälsotillstånd.
           </p>
         </motion.div>
+        </div>
       </header>
 
       {/* Search & Filter Section */}
@@ -80,15 +80,15 @@ export default function Terminology() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="space-y-8"
+        className="mx-auto max-w-[1180px] space-y-6 px-5 py-8 md:px-8 md:py-10"
       >
-        <div className="flex flex-col md:flex-row gap-4 items-start md:items-center max-w-4xl">
-          <div className="relative flex-1 w-full z-50">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-muted-foreground/50" size={20} />
+        <div className="flex flex-col gap-3 md:flex-row md:items-center">
+          <div className="relative z-50 w-full max-w-[680px]">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={20} />
             <input
               type="text"
               placeholder="Sök nyckeltal eller begrepp..."
-              className="w-full bg-card border border-border rounded-full py-5 pl-16 pr-6 focus:outline-none focus:border-primary/50 transition-all font-bold text-lg"
+              className="h-14 w-full rounded-xl border border-slate-200 bg-white pl-12 pr-6 text-base shadow-sm outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
               value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
@@ -102,7 +102,7 @@ export default function Terminology() {
                   setSearchQuery("");
                   setShowSuggestions(false);
                 }}
-                className="absolute right-6 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 transition-colors hover:text-slate-700"
               >
                 <X size={20} />
               </button>
@@ -147,10 +147,10 @@ export default function Terminology() {
           <div className="relative z-40 w-full md:w-auto">
             <button
               onClick={() => setIsDifficultyOpen(!isDifficultyOpen)}
-              className={`w-full md:w-auto flex items-center justify-between gap-3 px-8 py-5 rounded-full border transition-all font-black uppercase tracking-widest text-xs ${
+              className={`flex h-14 w-full items-center justify-between gap-3 rounded-xl border px-5 text-sm font-semibold transition-all md:w-auto ${
                 difficultyFilter !== "Alla" 
-                  ? "bg-primary text-primary-foreground border-primary shadow-xl shadow-primary/20" 
-                  : "bg-card border-border text-foreground hover:border-primary/50"
+                ? "border-emerald-700 bg-emerald-700 text-white shadow-md shadow-emerald-700/20"
+                : "border-slate-200 bg-white text-slate-700 hover:border-emerald-300"
               }`}
             >
               <div className="flex items-center gap-2">
@@ -171,7 +171,7 @@ export default function Terminology() {
                     initial={{ opacity: 0, scale: 0.95, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.95, y: 10 }}
-                    className="absolute top-full right-0 mt-4 w-full md:w-64 bg-card border border-border rounded-[2rem] shadow-2xl p-4 space-y-2"
+                    className="absolute right-0 top-full z-20 mt-3 w-full rounded-2xl border border-slate-200 bg-white p-3 shadow-xl md:w-64"
                   >
                     <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.2em] px-4 mb-2">Svårighetsgrad</div>
                     {["Alla", "Nybörjare", "Mellan", "Avancerat"].map((d) => (
@@ -181,10 +181,10 @@ export default function Terminology() {
                           setDifficultyFilter(d);
                           setIsDifficultyOpen(false);
                         }}
-                        className={`w-full text-left px-6 py-4 rounded-2xl transition-all flex items-center gap-3 font-bold ${
+                          className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-semibold transition-all ${
                           difficultyFilter === d 
-                            ? "bg-primary/10 text-primary" 
-                            : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                            ? "bg-emerald-50 text-emerald-700"
+                            : "text-slate-600 hover:bg-slate-50"
                         }`}
                       >
                         {d !== "Alla" && <span>{DifficultyMap[d].icon}</span>}
@@ -199,16 +199,16 @@ export default function Terminology() {
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="flex-none text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.2em] hidden md:block">Kategorier:</div>
-          <div className="flex-1 flex overflow-x-auto no-scrollbar gap-3 pb-2 -mb-2 flex-nowrap">
+          <div className="hidden flex-none text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 md:block">Kategorier:</div>
+          <div className="no-scrollbar flex flex-1 gap-2 overflow-x-auto pb-1">
             {["Alla", "Värdering", "Lönsamhet", "Finansiell styrka", "Tillväxt", "Kassaflöde", "Strategi"].map((c) => (
               <button
                 key={c}
                 onClick={() => setCategoryFilter(c)}
-                className={`flex-none px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.2em] transition-all whitespace-nowrap ${
+                  className={`flex-none rounded-full border px-4 py-2.5 text-xs font-semibold transition-all whitespace-nowrap ${
                   categoryFilter === c 
-                    ? "bg-primary text-primary-foreground shadow-xl shadow-primary/20 scale-105" 
-                    : "bg-card border border-border text-muted-foreground hover:border-primary/30"
+                    ? "border-emerald-700 bg-emerald-700 text-white shadow-md shadow-emerald-700/20"
+                    : "border-slate-200 bg-white text-slate-600 hover:border-emerald-300"
                 }`}
               >
                 {c}
@@ -219,14 +219,17 @@ export default function Terminology() {
       </motion.div>
 
       {/* Terminology Section */}
-      <section className="space-y-16">
-        <div className="space-y-4">
-          <h2 className="text-4xl font-black tracking-tighter">Nyckeltal & Begrepp</h2>
-          <p className="text-lg text-muted-foreground font-medium">De viktigaste verktygen för din analys, kategoriserade för enkel överblick.</p>
+      <section className="mx-auto max-w-[1180px] space-y-6 px-5 pb-12 md:px-8 md:pb-16">
+        <div className="flex items-end justify-between gap-4">
+          <div className="space-y-2">
+            <h2 className="text-xl font-bold md:text-2xl">Nyckeltal & begrepp</h2>
+            <p className="text-sm text-slate-500 md:text-base">De viktigaste verktygen för din analys, kategoriserade för enkel överblick.</p>
+          </div>
+          <span className="hidden text-sm font-semibold text-emerald-700 md:block">{filteredTerminology.length} begrepp</span>
         </div>
 
         {filteredTerminology.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid min-w-0 grid-cols-1 gap-3 md:grid-cols-2">
             {filteredTerminology.map((term, i) => {
               const Icon = CategoryIconMap[term.category] || Book;
               const diff = DifficultyMap[term.difficulty] || DifficultyMap["Nybörjare"];
@@ -237,41 +240,41 @@ export default function Terminology() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: i * 0.05 }}
-                    className="bg-card border border-border rounded-[2.5rem] p-10 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 transition-all group relative overflow-hidden"
+                    className="group relative min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition-all hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md md:p-6"
                   >
-                    <div className="flex items-start justify-between mb-8">
-                      <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-500">
-                          <Icon size={28} />
+                    <div className="mb-5 flex items-start justify-between gap-3">
+                      <div className="flex min-w-0 items-center gap-3">
+                        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 transition-transform duration-500 group-hover:scale-105">
+                          <Icon size={22} />
                         </div>
-                        <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${diff.color}`}>
+                        <div className={`rounded-full px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider ${diff.color}`}>
                           {diff.icon} {diff.label}
                         </div>
                       </div>
-                      <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em] bg-muted/50 px-4 py-2 rounded-full">{term.category}</div>
+                      <div className="hidden rounded-full bg-slate-50 px-3 py-1.5 text-[9px] font-bold uppercase tracking-wider text-slate-400 sm:block">{term.category}</div>
                     </div>
 
-                    <div className="space-y-6">
-                      <h3 className="text-3xl font-black tracking-tighter group-hover:text-primary transition-colors">{term.title}</h3>
-                      <p className="text-base font-bold text-foreground/80 leading-relaxed">{term.description}</p>
-                      <p className="text-base text-muted-foreground leading-relaxed font-medium">{term.explanation}</p>
+                    <div className="space-y-4">
+                      <h3 className="text-xl font-bold tracking-tight transition-colors group-hover:text-emerald-700 md:text-2xl">{term.title}</h3>
+                      <p className="text-sm font-semibold leading-6 text-slate-800">{term.description}</p>
+                      <p className="text-sm font-normal leading-6 text-slate-500">{term.explanation}</p>
                       
                       {term.formula && (
-                        <div className="bg-muted/30 p-6 rounded-2xl border border-border/50 relative overflow-hidden">
-                          <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em] mb-3">Formel</div>
-                          <div className="text-lg font-black text-primary tracking-tight">{term.formula}</div>
+                        <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-4">
+                          <div className="mb-2 text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Formel</div>
+                          <div className="text-sm font-bold tracking-tight text-emerald-700">{term.formula}</div>
                         </div>
                       )}
 
-                      <div className="pt-8 border-t border-border/50">
-                        <div className="text-[10px] font-black text-muted-foreground/50 uppercase tracking-[0.3em] mb-4">Exempel ur verkligheten</div>
-                        <div className="bg-primary/5 border border-primary/10 rounded-2xl p-6 space-y-3 relative overflow-hidden">
+                      <div className="border-t border-slate-100 pt-5">
+                        <div className="mb-3 text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Exempel ur verkligheten</div>
+                        <div className="relative overflow-hidden rounded-xl border border-emerald-100 bg-emerald-50/50 p-4">
                           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-[50px] -translate-y-1/2 translate-x-1/2"></div>
-                          <div className="flex items-center justify-between relative z-10">
-                            <span className="text-sm font-black text-primary uppercase tracking-widest">{term.example.company}</span>
-                            <span className="text-sm font-black text-primary">{term.example.value}</span>
+                          <div className="relative z-10 flex items-center justify-between gap-3">
+                            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700">{term.example.company}</span>
+                            <span className="text-xs font-bold text-emerald-700">{term.example.value}</span>
                           </div>
-                          <p className="text-sm text-muted-foreground leading-relaxed font-medium italic relative z-10">
+                          <p className="relative z-10 text-sm italic leading-6 text-slate-500">
                             "{term.example.context}"
                           </p>
                         </div>
@@ -300,18 +303,18 @@ export default function Terminology() {
         )}
       </section>
 
-      <section className="space-y-12">
-        <div className="flex items-end justify-between">
-          <div className="space-y-4">
-            <h2 className="text-4xl font-black tracking-tighter">Börsguider</h2>
-            <p className="text-lg text-muted-foreground font-medium">Djupdykningar i analys, värdering och strategi.</p>
+      <section className="mx-auto max-w-[1180px] space-y-6 px-5 pb-12 md:px-8 md:pb-16">
+        <div className="flex items-end justify-between gap-4">
+          <div className="space-y-2">
+            <h2 className="text-xl font-bold md:text-2xl">Börsguider</h2>
+            <p className="text-sm text-slate-500 md:text-base">Djupdykningar i analys, värdering och strategi.</p>
           </div>
-          <Link to="/guider" className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-primary hover:gap-4 transition-all">
+          <Link to="/guider" className="flex shrink-0 items-center gap-1 text-sm font-semibold text-emerald-700 transition-all hover:gap-2">
             Visa alla guider <ArrowRight size={16} />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid min-w-0 grid-cols-1 gap-3 md:grid-cols-3">
           {guideList.slice(0, 3).map((guide, i) => (
             <motion.div
               key={guide.slug}
@@ -322,15 +325,15 @@ export default function Terminology() {
             >
               <Link 
                 to={`/guider/${guide.slug}`}
-                className="group block h-full bg-card border border-border rounded-[2.5rem] p-10 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/5 transition-all relative overflow-hidden"
+                className="group relative block h-full min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md md:p-6"
               >
                 <div className="absolute top-0 right-0 p-6">
-                  <span className="text-[10px] font-black text-primary/30 uppercase tracking-[0.3em]">Del {guide.part}</span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700/60">Del {guide.part}</span>
                 </div>
-                <h3 className="text-2xl font-black tracking-tighter mb-4 group-hover:text-primary transition-colors leading-tight">
+                <h3 className="mb-3 text-lg font-bold leading-tight tracking-tight transition-colors group-hover:text-emerald-700">
                   {guide.title}
                 </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed font-medium line-clamp-2">
+                <p className="line-clamp-3 text-sm leading-6 text-slate-500">
                   {guide.excerpt}
                 </p>
               </Link>
@@ -340,18 +343,18 @@ export default function Terminology() {
       </section>
 
       {/* Footer / CTA */}
-      <section className="bg-muted/30 border border-border rounded-[3rem] p-16 md:p-24 text-center space-y-8 relative overflow-hidden">
+      <section className="mx-5 mb-12 overflow-hidden rounded-2xl border border-emerald-100 bg-emerald-50/40 p-8 text-center relative md:mx-auto md:max-w-[1120px] md:p-14">
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2" />
         
         <div className="relative z-10 space-y-8">
-          <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-tight">Fler begrepp på väg</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium leading-relaxed">
+          <h2 className="font-serif text-3xl leading-tight tracking-tight md:text-5xl">Fler begrepp på väg</h2>
+          <p className="mx-auto max-w-2xl text-base leading-7 text-slate-600 md:text-lg">
             Vi uppdaterar Börsskolan löpande med nya förklaringar och djupdykningar. Är det något begrepp du saknar? Hör av dig!
           </p>
           <Link 
             to="/kontakt" 
-            className="inline-flex items-center gap-4 bg-primary text-primary-foreground px-12 py-5 rounded-full font-black uppercase tracking-widest text-sm hover:scale-105 transition-all shadow-xl shadow-primary/20"
+            className="inline-flex items-center gap-2 rounded-xl bg-emerald-700 px-6 py-3 text-sm font-bold text-white shadow-md shadow-emerald-700/20 transition hover:bg-emerald-800"
           >
             Kontakta oss <ArrowRight size={20} />
           </Link>
