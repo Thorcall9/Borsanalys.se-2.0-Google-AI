@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 // Lazy load below-the-fold components
 const ScoreCard = React.lazy(() => import("../components/ScoreCard").then(m => ({ default: m.ScoreCard })));
 const Newsletter = React.lazy(() => import("../components/Newsletter").then(m => ({ default: m.Newsletter })));
-const Mindmap = React.lazy(() => import("../components/Mindmap"));
+const MethodologySection = React.lazy(() => import("../components/MethodologySection"));
 
 const SectionLoader = () => (
   <div className="w-full py-20 flex items-center justify-center opacity-20">
@@ -85,13 +85,8 @@ export default function Home() {
 
       {/* Methodology Section */}
       <React.Suspense fallback={<SectionLoader />}>
-        <Mindmap />
+        <MethodologySection />
       </React.Suspense>
-
-      {/* Mindmap Section - Moved to hidden route /methodology-blueprint */}
-      {/* <section className="py-32 container mx-auto px-6">
-        <Mindmap />
-      </section> */}
 
 
 
