@@ -39,84 +39,88 @@ export default function Tools() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-12 space-y-16">
-      <div className="space-y-4">
-        <div className="text-[11px] font-mono uppercase tracking-widest text-primary font-bold">Verktyg</div>
-        <h1 className="text-5xl md:text-7xl font-serif font-bold tracking-tight leading-none">Finansiella <br /> <span className="italic text-primary">Kalkylatorer</span></h1>
-        <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
+    <div className="min-h-screen bg-white text-slate-900">
+      <div className="relative overflow-hidden bg-[radial-gradient(circle_at_75%_15%,rgba(16,185,129,0.08),transparent_28%),linear-gradient(180deg,#ffffff_0%,#fbfdfc_100%)]">
+      <div className="mx-auto max-w-[1180px] px-5 pb-10 pt-12 md:px-8 md:pb-14 md:pt-14">
+      <div className="relative max-w-[680px] space-y-4">
+        <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-emerald-700">Verktyg</div>
+        <h1 className="font-serif text-[48px] leading-[.98] tracking-[-0.045em] md:text-[64px]">Finansiella kalkylatorer</h1>
+        <p className="max-w-[620px] text-base leading-7 text-slate-600 md:text-[17px]">
           Använd våra interaktiva verktyg för att planera ditt sparande, beräkna framtida avkastning och sätta upp mål för din ekonomi.
         </p>
       </div>
+      </div>
+      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="mx-auto grid min-w-0 max-w-[1180px] grid-cols-1 gap-3 px-5 py-8 md:grid-cols-2 md:px-8 md:py-10 lg:grid-cols-4">
         <div 
           onClick={() => setActiveTab("compound")}
-          className={`bg-card border rounded-2xl p-8 flex flex-col justify-between transition-all group cursor-pointer ${activeTab === "compound" ? "border-primary ring-1 ring-primary" : "border-border hover:border-primary/50"}`}
+          className={`group flex min-w-0 cursor-pointer flex-col justify-between rounded-2xl border bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition-all md:p-6 ${activeTab === "compound" ? "border-emerald-700 ring-1 ring-emerald-700" : "border-slate-200 hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"}`}
         >
           <div className="space-y-6">
-            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-colors ${activeTab === "compound" ? "bg-primary text-white" : "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white"}`}>
-              <TrendingUp size={32} />
+            <div className={`flex h-11 w-11 items-center justify-center rounded-xl transition-colors ${activeTab === "compound" ? "bg-emerald-700 text-white" : "bg-emerald-50 text-emerald-700 group-hover:bg-emerald-700 group-hover:text-white"}`}>
+              <TrendingUp size={22} />
             </div>
-            <h3 className="text-2xl font-serif font-bold">Ränta-på-ränta</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <h3 className="text-xl font-bold tracking-tight">Ränta-på-ränta</h3>
+            <p className="text-sm leading-6 text-slate-500">
               Beräkna hur ditt kapital växer över tid med hjälp av ränta-på-ränta effekten.
             </p>
           </div>
-          <div className="mt-8 flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-widest">
+          <div className="mt-7 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-emerald-700">
             {activeTab === "compound" ? "Aktiv" : "Välj"} <ArrowRight size={14} />
           </div>
         </div>
 
         <div 
           onClick={() => setActiveTab("goal")}
-          className={`bg-card border rounded-2xl p-8 flex flex-col justify-between transition-all group cursor-pointer ${activeTab === "goal" ? "border-primary ring-1 ring-primary" : "border-border hover:border-primary/50"}`}
+          className={`group flex min-w-0 cursor-pointer flex-col justify-between rounded-2xl border bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition-all md:p-6 ${activeTab === "goal" ? "border-emerald-700 ring-1 ring-emerald-700" : "border-slate-200 hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"}`}
         >
           <div className="space-y-6">
-            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-colors ${activeTab === "goal" ? "bg-primary text-white" : "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white"}`}>
-              <Target size={32} />
+            <div className={`flex h-11 w-11 items-center justify-center rounded-xl transition-colors ${activeTab === "goal" ? "bg-emerald-700 text-white" : "bg-emerald-50 text-emerald-700 group-hover:bg-emerald-700 group-hover:text-white"}`}>
+              <Target size={22} />
             </div>
-            <h3 className="text-2xl font-serif font-bold">Målsparande</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <h3 className="text-xl font-bold tracking-tight">Målsparande</h3>
+            <p className="text-sm leading-6 text-slate-500">
               Hur mycket behöver du spara varje månad för att nå ditt mål?
             </p>
           </div>
-          <div className="mt-8 flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-widest">
+          <div className="mt-7 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-emerald-700">
             {activeTab === "goal" ? "Aktiv" : "Välj"} <ArrowRight size={14} />
           </div>
         </div>
 
         <div 
           onClick={() => setActiveTab("dcf")}
-          className={`bg-card border rounded-2xl p-8 flex flex-col justify-between transition-all group cursor-pointer ${activeTab === "dcf" ? "border-primary ring-1 ring-primary" : "border-border hover:border-primary/50"}`}
+          className={`group flex min-w-0 cursor-pointer flex-col justify-between rounded-2xl border bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition-all md:p-6 ${activeTab === "dcf" ? "border-emerald-700 ring-1 ring-emerald-700" : "border-slate-200 hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"}`}
         >
           <div className="space-y-6">
-            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-colors ${activeTab === "dcf" ? "bg-primary text-white" : "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white"}`}>
-              <Calculator size={32} />
+            <div className={`flex h-11 w-11 items-center justify-center rounded-xl transition-colors ${activeTab === "dcf" ? "bg-emerald-700 text-white" : "bg-emerald-50 text-emerald-700 group-hover:bg-emerald-700 group-hover:text-white"}`}>
+              <Calculator size={22} />
             </div>
-            <h3 className="text-2xl font-serif font-bold">DCF-Värdering</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <h3 className="text-xl font-bold tracking-tight">DCF-värdering</h3>
+            <p className="text-sm leading-6 text-slate-500">
               Beräkna ett bolags motiverade värde genom att diskontera framtida kassaflöden.
             </p>
           </div>
-          <div className="mt-8 flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-widest">
+          <div className="mt-7 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-emerald-700">
             {activeTab === "dcf" ? "Aktiv" : "Välj"} <ArrowRight size={14} />
           </div>
         </div>
 
         <div 
           onClick={() => setActiveTab("dividend")}
-          className={`bg-card border rounded-2xl p-8 flex flex-col justify-between transition-all group cursor-pointer ${activeTab === "dividend" ? "border-primary ring-1 ring-primary" : "border-border hover:border-primary/50"}`}
+          className={`group flex min-w-0 cursor-pointer flex-col justify-between rounded-2xl border bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition-all md:p-6 ${activeTab === "dividend" ? "border-emerald-700 ring-1 ring-emerald-700" : "border-slate-200 hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"}`}
         >
           <div className="space-y-6">
-            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center transition-colors ${activeTab === "dividend" ? "bg-primary text-white" : "bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white"}`}>
-              <DollarSign size={32} />
+            <div className={`flex h-11 w-11 items-center justify-center rounded-xl transition-colors ${activeTab === "dividend" ? "bg-emerald-700 text-white" : "bg-emerald-50 text-emerald-700 group-hover:bg-emerald-700 group-hover:text-white"}`}>
+              <DollarSign size={22} />
             </div>
-            <h3 className="text-2xl font-serif font-bold">Utdelning</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <h3 className="text-xl font-bold tracking-tight">Utdelning</h3>
+            <p className="text-sm leading-6 text-slate-500">
               Beräkna din framtida passiva inkomst från utdelningsaktier.
             </p>
           </div>
-          <div className="mt-8 flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-widest">
+          <div className="mt-7 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-emerald-700">
             {activeTab === "dividend" ? "Aktiv" : "Välj"} <ArrowRight size={14} />
           </div>
         </div>
@@ -127,7 +131,7 @@ export default function Tools() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="pt-12"
+        className="mx-auto max-w-[1180px] px-5 pb-16 md:px-8"
       >
         {activeTab === "compound" && <CompoundInterestCalculator />}
         {activeTab === "goal" && <GoalSavingsCalculator />}
