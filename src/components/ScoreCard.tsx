@@ -70,7 +70,7 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({ companyName, ticker, total
           <div className="inline-flex items-center gap-3 px-3 py-1 bg-muted/50 border border-border rounded-full">
             <span className="text-[10px] font-black text-muted-foreground uppercase tracking-widest">{ticker}</span>
             <div className="w-1 h-1 rounded-full bg-muted-foreground/30" />
-            <span className="text-[10px] font-black text-primary uppercase tracking-widest">Large Cap</span>
+            <span className="text-[10px] font-black text-primary uppercase tracking-widest">Stort börsbolag</span>
           </div>
         </div>
         <div className="flex flex-col items-end">

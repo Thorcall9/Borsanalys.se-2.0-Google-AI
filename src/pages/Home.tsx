@@ -69,10 +69,10 @@ export default function Home() {
             >
               <p className="section-kicker">Utvalda analyser</p>
               <h2 id="featured-analysis-title" className="text-3xl font-bold tracking-tight md:text-4xl">
-                RevolutionRace: Outdoor/D2C med stark lönsamhet
+                RevolutionRace: Friluftskläder med direktförsäljning och stark lönsamhet
               </h2>
               <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
-                Nya förklaringsmodellen visar 25/35 poäng: hög bolagskvalitet, nettokassa och stark DACH-position, men värderingen kräver återaccelererad tillväxt.
+                Nya förklaringsmodellen visar 25/35 poäng: hög bolagskvalitet, nettokassa och stark ställning på de tyskspråkiga marknaderna, men värderingen kräver att tillväxten tar fart igen.
               </p>
             </motion.div>
             <motion.div
@@ -171,16 +171,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="homepage-section bg-section-alt" aria-labelledby="report-comments-title">
+      <section className="homepage-section bg-section-alt">
         <div className="homepage-container">
-          <header className="max-w-2xl">
-            <p className="section-kicker">Aktuellt innehåll</p>
-            <h2 id="report-comments-title" className="text-3xl font-bold tracking-tight md:text-4xl">Rapportkommentarer</h2>
-            <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">Följ våra senaste publiceringar och se hur rapporter förändrar bilden av ett bolag.</p>
-          </header>
-          <div className="mt-10">
-            <RecentPublications />
-          </div>
+          <RecentPublications />
         </div>
       </section>
 
