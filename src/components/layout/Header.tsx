@@ -35,9 +35,9 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-[110] bg-background/80 backdrop-blur-md border-b border-border">
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 shadow-lg shadow-primary/20">
-            <TrendingUp size={20} className="text-primary-foreground" />
+        <Link to="/" className="flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+            <TrendingUp size={18} className="text-primary-foreground" />
           </div>
           <span className="text-xl font-black tracking-tighter text-foreground">
             Börsanalys<span className="text-primary">.se</span>
@@ -50,7 +50,7 @@ export default function Header() {
             <Link
               key={item.path}
               to={item.path}
-              className={`text-[13px] font-bold uppercase tracking-widest transition-all hover:text-primary relative group/nav ${
+              className={`relative text-sm font-semibold text-muted-foreground transition-colors hover:text-primary group/nav ${
                 location.pathname.startsWith(item.path) ? "text-primary" : "text-muted-foreground"
               }`}
             >
@@ -97,11 +97,9 @@ export default function Header() {
             </button>
           )}
           
-          <motion.button 
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+          <button
             onClick={() => openSearch("top")}
-            className="w-10 h-10 flex items-center justify-center bg-muted/50 hover:bg-accent text-muted-foreground hover:text-primary transition-colors ml-2 rounded-full border border-border/50 relative group"
+            className="relative ml-2 flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-muted/50 text-muted-foreground transition-colors hover:bg-accent hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 group"
             title="Sök (⌘K)"
             aria-label="Sök efter bolag och analyser"
           >
@@ -109,20 +107,18 @@ export default function Header() {
             <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-card border border-border px-1.5 py-0.5 rounded text-[10px] opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-sm">
               Sök (⌘K)
             </span>
-          </motion.button>
+          </button>
         </nav>
 
         {/* Mobile Menu Button */}
         <div className="flex items-center gap-3 md:hidden">
-          <motion.button 
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+          <button
             onClick={() => openSearch("top")}
-            className="w-10 h-10 flex items-center justify-center bg-muted/50 text-muted-foreground hover:text-primary rounded-full border border-border/50"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-muted/50 text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             aria-label="Öppna sök"
           >
             <Search size={20} />
-          </motion.button>
+          </button>
           <motion.button 
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}

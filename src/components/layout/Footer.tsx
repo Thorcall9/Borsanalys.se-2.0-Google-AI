@@ -33,16 +33,16 @@ export default function Footer() {
     <footer className="bg-background border-t border-border px-6 py-20">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16">
         <div className="md:col-span-5 space-y-8">
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center transition-all duration-500 group-hover:rotate-12 group-hover:scale-110 shadow-lg shadow-primary/20">
-              <TrendingUp size={20} className="text-primary-foreground" />
+          <Link to="/" className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
+              <TrendingUp size={18} className="text-primary-foreground" />
             </div>
             <span className="text-xl font-black tracking-tighter text-foreground">
               Börsanalys<span className="text-primary">.se</span>
             </span>
           </Link>
           <p className="text-base text-muted-foreground max-w-md leading-relaxed font-medium">
-            Professionella aktieanalyser drivna av data och AI. Vi hjälper moderna investerare att fatta välgrundade beslut genom objektivitet och precision.
+            Oberoende aktieanalyser som gör bolag, värdering och risk enklare att förstå.
           </p>
           <div className="flex gap-6">
             <a 
@@ -71,7 +71,7 @@ export default function Footer() {
         </div>
 
         <div className="md:col-span-2 space-y-6">
-          <div className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">Plattform</div>
+          <div className="text-sm font-semibold text-foreground">Plattform</div>
           <ul className="space-y-4 text-sm font-bold text-muted-foreground">
             <li><Link to="/analys" className="hover:text-primary transition-colors">Analyser</Link></li>
             <li><Link to="/guider" className="hover:text-primary transition-colors">Guider</Link></li>
@@ -81,7 +81,7 @@ export default function Footer() {
         </div>
 
         <div className="md:col-span-2 space-y-6">
-          <div className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">Verktyg</div>
+          <div className="text-sm font-semibold text-foreground">Verktyg</div>
           <ul className="space-y-4 text-sm font-bold text-muted-foreground">
             <li><Link to="/verktyg/rantakalkylator" className="hover:text-primary transition-colors">Ränta-på-ränta</Link></li>
             <li><Link to="/verktyg/malsparandekalkylator" className="hover:text-primary transition-colors">Målsparande</Link></li>
@@ -91,7 +91,7 @@ export default function Footer() {
         </div>
 
         <div className="md:col-span-3 space-y-6">
-          <div className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/50">Håll dig uppdaterad</div>
+          <div className="text-sm font-semibold text-foreground">Håll dig uppdaterad</div>
           <p className="text-sm text-muted-foreground leading-relaxed font-medium">
             Få de senaste analyserna och marknadsinsikterna direkt i din inkorg.
           </p>
@@ -107,7 +107,7 @@ export default function Footer() {
             <button 
               type="submit"
               disabled={status === 'loading' || status === 'success'}
-              className={`px-6 py-3 rounded-xl text-sm font-black uppercase tracking-widest transition-all shadow-lg flex items-center justify-center gap-2 ${
+              className={`flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold transition-colors ${
                 status === 'success' 
                   ? 'bg-emerald-500 text-white shadow-emerald-500/20' 
                   : 'bg-primary hover:bg-primary/90 text-primary-foreground shadow-primary/20'
@@ -128,13 +128,13 @@ export default function Footer() {
         </div>
       </div>
       <div className="max-w-7xl mx-auto mt-20 pt-10 border-t border-border flex flex-col md:flex-row justify-between items-center gap-6">
-        <div className="text-[11px] font-bold text-muted-foreground/50 uppercase tracking-widest">
+        <div className="text-sm text-muted-foreground/70">
           © 2026 Börsanalys.se — Precision i varje analys
         </div>
         <div className="flex flex-wrap justify-center gap-6 md:gap-10">
-          <Link to="/integritet" className="text-[11px] font-bold text-muted-foreground/50 uppercase tracking-widest hover:text-primary transition-colors">Integritetspolicy</Link>
-          <Link to="/villkor" className="text-[11px] font-bold text-muted-foreground/50 uppercase tracking-widest hover:text-primary transition-colors">Användarvillkor</Link>
-          <Link to="/aktieinnehav-och-intressekonflikter" className="text-[11px] font-bold text-muted-foreground/50 uppercase tracking-widest hover:text-primary transition-colors">Aktieinnehav & intressekonflikter</Link>
+          <Link to="/integritet" className="text-sm font-medium text-muted-foreground/70 transition-colors hover:text-primary">Integritetspolicy</Link>
+          <Link to="/villkor" className="text-sm font-medium text-muted-foreground/70 transition-colors hover:text-primary">Användarvillkor</Link>
+          <Link to="/aktieinnehav-och-intressekonflikter" className="text-sm font-medium text-muted-foreground/70 transition-colors hover:text-primary">Aktieinnehav & intressekonflikter</Link>
         </div>
       </div>
     </footer>

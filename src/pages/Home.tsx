@@ -208,8 +208,8 @@ export default function Home() {
       <section className="homepage-section">
         <div className="homepage-container">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
             className="rounded-2xl bg-foreground p-8 text-center text-background md:p-16"
@@ -222,23 +222,20 @@ export default function Home() {
                 viewport={{ once: true }}
               >
                 <h2 className="text-3xl font-bold tracking-tight md:text-5xl">
-                  Vill du följa fler bolag <br />
-                  <span className="text-primary">med bättre struktur?</span>
+                  Följ bolagen som betyder något för dig
                 </h2>
                 <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-background/70 md:text-lg">
-                  Skapa ett konto för att spara det du läser och hålla ordning på de bolag du följer.
+                  Spara analyser och följ bolag så att dina viktigaste investeringscase alltid finns samlade.
                 </p>
                 <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                  <button
                     onClick={openLoginModal}
-                    className="primary-action w-full cursor-pointer sm:w-auto"
+                    className="inline-flex w-full cursor-pointer items-center justify-center rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-foreground sm:w-auto"
                   >
                     Skapa gratis konto
-                  </motion.button>
-                  <Link to="/om-oss" className="secondary-action w-full border-background/30 bg-transparent text-background hover:bg-background/10 sm:w-auto">
-                    Läs om vår metod <ChevronRight className="h-4 w-4 text-primary" />
+                  </button>
+                  <Link to="/analys" className="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-background/70 transition-colors hover:text-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-foreground">
+                    Utforska analyser <ChevronRight className="h-4 w-4" />
                   </Link>
                 </div>
               </motion.div>
