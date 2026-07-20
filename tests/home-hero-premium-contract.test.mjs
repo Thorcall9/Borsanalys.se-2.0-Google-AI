@@ -18,10 +18,13 @@ test("homepage hero uses free optical typography and a dominant search interacti
   assert.match(hero, /primary-action[^\n]*hero-primary-action|hero-primary-action[^\n]*primary-action/);
   assert.match(hero, /secondary-action[^\n]*hero-secondary-action|hero-secondary-action[^\n]*secondary-action/);
   assert.match(styles, /\.homepage-hero/);
-  assert.match(styles, /\.hero-title[\s\S]*max-w-\[64rem\]/);
+  assert.match(styles, /\.hero-title[\s\S]*max-w-\[84rem\]/);
+  assert.match(hero, /max-w-\[88rem\]/);
+  assert.match(hero, /text-\[clamp\(2\.25rem,8vw,8rem\)\]/);
+  assert.match(hero, /hero-content-column/);
   assert.match(hero, /tracking-\[-0\.025em\]/);
   assert.match(styles, /\.hero-title-line[\s\S]*md:leading-\[0\.96\]/);
-  assert.match(styles, /\.hero-title-line-accent[\s\S]*text-\[0\.82em\]/);
+  assert.doesNotMatch(styles, /\.hero-title-line-accent[^}]*text-\[/);
   assert.doesNotMatch(styles, /\.hero-title-line-accent[\s\S]*translate-x/);
   assert.doesNotMatch(hero, /bg-muted[^\n]*<h1|<h1[^>]*bg-muted/);
 });
@@ -29,8 +32,8 @@ test("homepage hero uses free optical typography and a dominant search interacti
 test("homepage hero keeps the Swedish value proposition and both actions", async () => {
   const hero = await readFile(heroUrl, "utf8");
 
-  assert.match(hero, /Börsanalys som gör dig/);
-  assert.match(hero, /till en bättre investerare/);
+  assert.match(hero, /Förstå bolaget\./);
+  assert.match(hero, /Investera smartare\./);
   assert.match(hero, /Förstå affärsmodell, värdering och risk innan ditt nästa investeringsbeslut/);
   assert.match(hero, /Utforska analyser/);
   assert.match(hero, /Bli medlem gratis/);

@@ -57,7 +57,7 @@ export default function Home() {
       />
       <Hero />
 
-      <section className="homepage-section" aria-labelledby="featured-analysis-title">
+      <section className="homepage-section pt-12 md:pt-20" aria-labelledby="featured-analysis-title">
         <div className="homepage-container">
           <div className="mb-10 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
             <motion.div
@@ -67,7 +67,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="max-w-2xl"
             >
-              <p className="section-kicker">Utvalda analyser</p>
+              <p className="section-kicker">Se hur en analys ser ut</p>
               <h2 id="featured-analysis-title" className="text-3xl font-bold tracking-tight md:text-4xl">
                 RevolutionRace: Friluftskläder med direktförsäljning och stark lönsamhet
               </h2>

@@ -10,17 +10,20 @@ export const Hero: React.FC = () => {
 
   return (
     <section className="homepage-section homepage-hero pt-24 md:pt-32">
-      <div className="homepage-container text-center">
-        <div className="mx-auto max-w-[64rem]">
-          <h1 className="hero-title text-[clamp(2rem,7vw,7rem)] font-bold tracking-[-0.025em] text-foreground">
-            <span className="hero-title-line hero-title-line-primary">Börsanalys som gör dig</span>
-            <span className="hero-title-line hero-title-line-accent text-primary">till en bättre investerare</span>
+      <div className="homepage-container max-w-[88rem] text-center">
+        <div className="hero-title-container mx-auto max-w-[84rem]">
+          <h1 className="hero-title text-[clamp(2.25rem,8vw,8rem)] font-bold tracking-[-0.025em] text-foreground">
+            <span className="hero-title-line hero-title-line-primary">Förstå bolaget.</span>
+            <span className="hero-title-line hero-title-line-accent text-primary">Investera smartare.</span>
           </h1>
+        </div>
+
+        <div className="hero-content-column mx-auto max-w-2xl">
           <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground md:mt-12 md:text-xl">
             Förstå affärsmodell, värdering och risk innan ditt nästa investeringsbeslut.
           </p>
 
-          <div className="mx-auto mt-11 max-w-2xl md:mt-12">
+          <div className="mx-auto mt-11 md:mt-12">
             <button 
               onClick={() => openSearch("hero")}
               aria-label="Sök efter bolag, analyser eller guider..."
