@@ -112,7 +112,7 @@ html {
   }
 
   .hero-title {
-    @apply mx-auto max-w-5xl;
+    @apply mx-auto max-w-6xl;
   }
 
   .hero-title-line {
@@ -120,7 +120,7 @@ html {
   }
 
   .hero-title-line-accent {
-    @apply mt-2 ml-auto w-fit translate-x-1 text-[0.8em] md:mt-3 md:translate-x-1;
+    @apply mx-auto mt-2 w-fit text-[0.82em] md:mt-3;
   }
 
   .hero-search {

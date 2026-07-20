@@ -11,13 +11,13 @@ export const Hero: React.FC = () => {
   return (
     <section className="homepage-section homepage-hero pt-24 md:pt-32">
       <div className="homepage-container text-center">
-        <div className="mx-auto max-w-[58rem]">
-          <h1 className="hero-title text-5xl font-bold tracking-tight text-foreground md:text-8xl">
-            <span className="hero-title-line hero-title-line-primary">Förstå bolaget.</span>
-            <span className="hero-title-line hero-title-line-accent text-primary">Fatta bättre beslut.</span>
+        <div className="mx-auto max-w-[64rem]">
+          <h1 className="hero-title text-[clamp(2rem,7vw,7rem)] font-bold tracking-[-0.045em] text-foreground">
+            <span className="hero-title-line hero-title-line-primary">Börsanalys som gör dig</span>
+            <span className="hero-title-line hero-title-line-accent text-primary">till en bättre investerare</span>
           </h1>
           <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground md:mt-10 md:text-xl">
-            Oberoende aktieanalyser som gör affärsmodell, värdering och risk enklare att förstå.
+            Djupgående analyser av affärsmodell, värdering och risk.
           </p>
 
           <div className="mx-auto mt-11 max-w-2xl md:mt-12">

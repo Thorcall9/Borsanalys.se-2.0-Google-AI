@@ -14,7 +14,7 @@ Om två lösningar är möjliga väljs alltid den enklare. Premium uppstår geno
 - Ta bort alla bakgrundsplattor eller visuella fält bakom rubriken.
 - Öka Hero-höjden och det vertikala avståndet mellan navigation, rubrik, ingress, sökfält och CTA.
 - Låt rubriken bli första skärmens tydliga fokus och använda optisk, inte mekanisk, centrering.
-- Behåll budskapet “Förstå bolaget. Fatta bättre beslut.” men ge raderna olika bredd, rytm och visuell tyngd. Den gröna raden ska vara något kortare än den svarta och får förskjutas subtilt för balans.
+- Använd den aspirerande rubriken “Börsanalys som gör dig / till en bättre investerare”. Första raden ska vara svart och andra Börsanalys-grön, med naturlig radlängd och typografisk rytm snarare än artificiell horisontell offset.
 - Skriv ingressen så att den fortfarande är enkel och får plats på högst två lugna rader.
 - Gör sökfältet till Hero-sektionens naturliga primära interaktion, med en tydlig men återhållsam yta, bra fokusläge och tillräcklig storlek för att kännas som startsidans huvudfunktion.
 - Låt “Utforska analyser” dominera som primär CTA. “Bli medlem gratis” ska vara sekundär och visuellt balanserad utan att konkurrera.

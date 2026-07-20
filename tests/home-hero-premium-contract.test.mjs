@@ -18,17 +18,16 @@ test("homepage hero uses free optical typography and a dominant search interacti
   assert.match(hero, /primary-action[^\n]*hero-primary-action|hero-primary-action[^\n]*primary-action/);
   assert.match(hero, /secondary-action[^\n]*hero-secondary-action|hero-secondary-action[^\n]*secondary-action/);
   assert.match(styles, /\.homepage-hero/);
-  assert.match(styles, /\.hero-title-line-accent[\s\S]*text-\[0\.8em\]/);
-  assert.match(styles, /\.hero-title-line-accent[\s\S]*md:translate-x-1/);
-  assert.doesNotMatch(styles, /\.hero-title-line-accent[\s\S]*md:translate-x-3/);
+  assert.match(styles, /\.hero-title-line-accent[\s\S]*text-\[0\.82em\]/);
+  assert.doesNotMatch(styles, /\.hero-title-line-accent[\s\S]*translate-x/);
   assert.doesNotMatch(hero, /bg-muted[^\n]*<h1|<h1[^>]*bg-muted/);
 });
 
 test("homepage hero keeps the Swedish value proposition and both actions", async () => {
   const hero = await readFile(heroUrl, "utf8");
 
-  assert.match(hero, /Förstå bolaget\./);
-  assert.match(hero, /Fatta bättre beslut\./);
+  assert.match(hero, /Börsanalys som gör dig/);
+  assert.match(hero, /till en bättre investerare/);
   assert.match(hero, /Utforska analyser/);
   assert.match(hero, /Bli medlem gratis/);
   assert.match(hero, /openSearch\("hero"\)/);
