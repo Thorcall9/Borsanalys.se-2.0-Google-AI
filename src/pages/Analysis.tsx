@@ -63,6 +63,7 @@ import MobileReadingProgress from "../components/MobileReadingProgress";
 import AdUnit from "../components/analysis/AdUnit";
 import NotFound from "./NotFound";
 import ComprehensiveAnalysisV10 from "../components/analysis/ComprehensiveAnalysisV10";
+import AnalysisArchive from "../components/analysis/AnalysisArchive";
 
 const DEEP_DIVE_COMPONENTS = {
   Nvidia: NvidiaDeepDive,
@@ -320,132 +321,42 @@ export default function Analysis() {
   // List view if no slug is provided
   if (!slug) {
     return (
-      <div className="bg-background min-h-screen pt-32 pb-24">
+      <div className="bg-background min-h-screen">
         <SEO 
           title="Analysarkiv - Aktieanalyser & Investment Cases" 
           description="Fördjupade aktieanalyser och kortare kommentarer till bolagens senaste rapporter."
           canonical="/analys"
         />
-        <div className="max-w-7xl mx-auto px-6 space-y-20">
-          <div className="max-w-3xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-[11px] font-black uppercase tracking-[0.4em] text-primary mb-4">Analysarkiv</h2>
-              <h1 className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-8 text-foreground break-words">
-                Aktieanalyser & <br /> 
-                <span className="text-primary">Investment Cases</span>
-              </h1>
-              <p className="text-xl text-muted-foreground leading-relaxed font-medium">
-                Djupgående analyser av noterade bolag på de nordiska och amerikanska marknaderna. Vi fokuserar på kvalitet, tillväxt och värdering.
-              </p>
-            </motion.div>
-          </div>
-
-          <RecommendationInfo compact />
-
-          {/* Filters – Desktop */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="bg-card border border-border rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 shadow-xl shadow-black/5"
-          >
-            <div className="hidden lg:block">
-              <FilterPanel
-                searchTerm={searchTerm}
-                onSearchChange={setSearchTerm}
-                contentType={contentType}
-                onContentTypeChange={setContentType}
-                selectedSector={selectedSector}
-                onSectorChange={setSelectedSector}
-                sectors={sectors}
-                selectedRecommendation={selectedRecommendation}
-                onRecommendationChange={setSelectedRecommendation}
-                sortOption={sortOption}
-                onSortChange={setSortOption}
-              />
-            </div>
-            <div className="lg:hidden space-y-4">
-              <div className="relative">
-                <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-muted-foreground/80" size={20} aria-hidden="true" />
-                <input
-                  type="text"
-                  placeholder="Sök bolag, ticker eller analys..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  aria-label="Sök bland analyser"
-                  className="w-full bg-muted/30 border border-border rounded-2xl pl-14 pr-6 py-4 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-lg font-medium"
-                />
-              </div>
-              <MobileFilterDrawer
-                isOpen={isMobileFilterOpen}
-                onToggle={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
-                onClose={() => setIsMobileFilterOpen(false)}
-                activeFilterCount={activeFilterCount}
-                searchTerm={searchTerm}
-                onSearchChange={setSearchTerm}
-                contentType={contentType}
-                onContentTypeChange={setContentType}
-                selectedSector={selectedSector}
-                onSectorChange={setSelectedSector}
-                sectors={sectors}
-                selectedRecommendation={selectedRecommendation}
-                onRecommendationChange={setSelectedRecommendation}
-                sortOption={sortOption}
-                onSortChange={setSortOption}
-                onClearAll={clearAll}
-              />
-            </div>
-            <FilterChips chips={activeFilterChips} onClearAll={clearAll} />
-          </motion.div>
-
-
-
-          {/* AD: sidebar-display – under filterpanelen */}
-          <AdUnit variant="sidebar-display" className="mb-4" />
-
-          {/* Result count */}
-          <div className="flex items-center justify-between">
-            <p className="text-sm font-black uppercase tracking-widest text-muted-foreground">
-              {contentType === 'report-commentary'
-                ? `${resultCount} ${resultCount === 1 ? 'rapportkommentar' : 'rapportkommentarer'}`
-                : contentType === 'analysis'
-                  ? `${resultCount} ${resultCount === 1 ? 'analys' : 'analyser'}`
-                  : `${resultCount} ${resultCount === 1 ? 'publicering' : 'publiceringar'}`}
-            </p>
-          </div>
-
-          {/* Analysis cards grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {filteredAnalyses.length > 0 ? (
-              filteredAnalyses.map((a, i) => (
-                <AnalysisCard
-                  key={a.slug}
-                  analysis={a}
-                  index={i}
-                  realTimeData={realTimeData[a.ticker]}
-                />
-              ))
-            ) : (
-              <div className="col-span-full py-32 text-center space-y-6 bg-muted/30 rounded-[3rem] border border-dashed border-border">
-                <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto text-muted-foreground/60">
-                  <Search size={40} />
-                </div>
-                <h3 className="text-2xl font-black tracking-tighter">Inga analyser hittades</h3>
-                <p className="text-muted-foreground font-medium">Prova att justera dina filter eller söktermer.</p>
-                <button 
-                  onClick={() => {setSearchTerm(""); setSelectedSector("Alla"); setSelectedRecommendation("Alla");}}
-                  className="text-sm font-black uppercase tracking-widest text-primary hover:underline"
-                >
-                  Visa alla analyser
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
+        <AnalysisArchive
+          analyses={filteredAnalyses}
+          featured={allAnalysesSorted.find((item) => item.slug === "novo-nordisk") || allAnalysesSorted[0]}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          contentType={contentType}
+          onContentTypeChange={setContentType}
+          selectedRecommendation={selectedRecommendation}
+          onRecommendationChange={setSelectedRecommendation}
+          onMoreFilters={() => setIsMobileFilterOpen(true)}
+          resultCount={resultCount}
+        />
+        <MobileFilterDrawer
+          isOpen={isMobileFilterOpen}
+          onToggle={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+          onClose={() => setIsMobileFilterOpen(false)}
+          activeFilterCount={activeFilterCount}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          contentType={contentType}
+          onContentTypeChange={setContentType}
+          selectedSector={selectedSector}
+          onSectorChange={setSelectedSector}
+          sectors={sectors}
+          selectedRecommendation={selectedRecommendation}
+          onRecommendationChange={setSelectedRecommendation}
+          sortOption={sortOption}
+          onSortChange={setSortOption}
+          onClearAll={clearAll}
+        />
       </div>
     );
   }
