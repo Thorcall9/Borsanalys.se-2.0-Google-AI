@@ -2,64 +2,59 @@
 
 ## Mål
 
-Ge Vite/React-versionens startsida samma visuella känsla och informationshierarki som de två bifogade referensbilderna: ljus editorial premium-layout, mörk serif-display, emeraldgrön accent och tydlig väg från förståelse till analys och medlemskap.
+Ge startsidan och den globala headern samma ljusa editoriala premiumkänsla som referensbilderna, men med produktcopy som är sann för nuläget: gratis medlemskap, ingen aktiv Premium-produkt och ingen provperiod.
 
-Arbetet gäller startsidan och den globala headern. Övriga sidor och befintliga auth-/sökflöden ska fortsätta fungera.
+## Produktbegränsning
+
+Visa inte provperiod, betalning, pris, automatisk debitering, dag 5/dag 7 eller uppsägning. Hero-kortet ska i stället vara ett gratis medlemskort med rubriken “Få mer av Börsanalys.se”, beskrivningen “Skapa ett gratis konto och bygg din egen analysbevakning.” och fördelarna Spara analyser, Följ bolag, Få rapportkommentarer och Rösta fram nästa analys.
 
 ## Visuell riktning
 
-- Vit bakgrund med mycket luft, tunna ljusgrå linjer och mjuka skuggor.
-- Mörk serif för stora rubriker och analysrubriker; sans-serif för navigation, metadata och brödtext.
-- Emeraldgrön som primär färg, med bleka gröna ytor och diskret grön börsgrafik bakom hero-innehållet.
-- Rundade kort och kontroller, men med editorial snarare än dashboard-tät känsla.
-- Inga nya rasterbilder krävs; börsgrafiken byggs som en dekorativ, tillgänglig SVG/CSS-komposition bakom den code-native UI:n.
+- Vit bakgrund, mycket luft, tunna ljusgrå borders och återhållsamma skuggor.
+- Mörk editorial serif för displayrubriker och utvalda innehållstitlar; befintlig sans-serif för navigation och UI.
+- Emeraldgrön som enda nya accent, med mycket bleka gröna ytor.
+- Enhetligt radius- och spacingsystem; editorial känsla, inte dashboard- eller AI-generisk känsla.
+- Displayfonten ska införas centralt som design-token.
 
 ## Desktoplayout
 
-1. Header med ikonlogotyp, länkarna Analyser, Guider, Börsskola, Makro, Verktyg och Om oss, följt av sökfält, Logga in och Bli medlem gratis.
-2. Hero i två kolumner:
-   - vänster: trust-pill, rubriken “Förstå bolaget. Investera smartare.”, stödtext, sökfält och två CTA-knappar;
-   - höger: kortet “Prova Börsanalys.se riskfritt” med tidslinjen Idag, Dag 5 och Dag 7 samt grön primärknapp.
-3. Trust-rad med fyra punkter: Oberoende analyser, Datadrivna insikter, Beprövad metodik, Kvalitet & transparens.
-4. Innehållsrad med utvald Novo Nordisk-analys och ett medlems-/kunskapskort.
-5. Befintliga startsidessektioner fortsätter efter den nya första viewporten, men får samma spacing, färg- och kortsystem där det behövs.
+1. Header: ikonlogotyp, Analyser, Guider, Börsskola, Makro, Verktyg, Om oss, sökfält, Logga in och Bli medlem gratis. Befintliga aktiva länkar, authstatus, logout, `GlobalSearch` via `SearchContext` och `LoginModal` via `AuthContext` behålls.
+2. Hero i två kolumner. Vänster: trust-pill “OBEROENDE · DATADRIVEN · PÅLITLIG” eller “OBEROENDE · DATADRIVEN · TRANSPARENT”, rubriken “Förstå bolaget. Investera smartare.” med mörk första rad och grön andra rad, stödtext, befintligt sökfält, “Utforska analyser” till verifierad analysarkivroute och “Skapa gratis konto”/“Bli medlem gratis” till `LoginModal`. Under CTA: “Spara analyser, följ bolag och påverka nästa analys.” samt “Gratis. Ingen betalningsinformation krävs.”
+3. Hero-bakgrund: dekorativ aria-hidden SVG/CSS med ljusa candlesticks, tunn stigande grön linje och mjuk fade; inget verkligt marknadsdata, ingen distraherande animation.
+4. Hero-kort: “Få mer av Börsanalys.se”, gratis medlemsbeskrivning, fyra medlemsfördelar, “Skapa gratis konto” och “Gratis. Ingen betalningsinformation krävs.” Kortet får inte kännas som betalvägg.
+5. Trust-rad: Oberoende analyser, Datadrivna insikter, Beprövad metodik, Kvalitet och transparens, med exakta beskrivningar från prompten, diskreta ikoner och separators.
+6. Innehållsrad: featured-analys från befintligt analysregister/featured-data, utan hårdkodad bolagstitel, poäng, rekommendation, ticker, sammanfattning eller route. Visa label, titel, sammanfattning, exakt KÖP/BEVAKA/AVSTÅ när tillgängligt, totalpoäng när tillgängligt och “Läs analysen”. Sekundärt kort “Bygg din egen bevakning” med “Se medlemsfördelarna”; det ska vara visuellt svagare och inte duplicera hero-CTA:n.
+7. Befintliga startsidessektioner fortsätter efter första upplevelsen. Endast spacing, border, shadow, typografi och emeraldknappar får harmoniseras.
 
 ## Mobillayout
 
-- Toppheader med ikonlogotyp, sökknapp och hamburgerknapp.
-- Hero staplas i en kolumn och behåller rubrik, stödtext, sökfält och CTA-hierarki från referensen.
-- Trust-raden visas som fyra smala kolumner med ikon, rubrik och kort beskrivning.
-- Utvald analys visas som ett kompakt kort med poängindikator, “BEVAKA” och “Läs analysen”.
-- Provperiodskortet visas under analyskortet och kan kollapsas/expanderas visuellt utan att ändra medlemslogik.
-- Fast bottennavigation med Hem, Analyser, Bevakningar, Notiser och Meny. Den ska endast visas på mobil och inte blockera innehåll; sidan får extra bottom padding.
+- Header visar logotyp, sökknapp och hamburgerknapp; befintlig mobilmeny och authstatus behålls.
+- Hero staplas i ordningen trust-pill, rubrik, stödtext, sökfält, primär CTA, sekundär CTA, trygghetstext och trust-signaler. Rubriken ska fungera vid 320 px utan märkliga radbrytningar. ⌘K döljs på touch-enheter.
+- Trust-signaler använder 2×2-grid om inte visuell test visar att fyra kolumner är läsbara.
+- Featured-analys fungerar med lång rubrik och utan logotyp, och visar label, titel, sammanfattning, rekommendation, poäng när tillgänglig och CTA.
+- Gratis medlemskort visar maximalt tre fördelar: Spara analyser, Följ bolag, Rösta på nästa analys. Ingen tidslinje, dagtext eller pris.
+- MobileBottomNav byggs endast om riktiga routes och tydligt användarvärde finns. Om implementerad används bara på mobil, med riktiga routerlänkar, extra bottom padding och utan att blockera modal/cookie-banner/Safari chrome.
+
+## Framtida produktläge
+
+Medlemskortet får vid behov en ren mode-gräns med `free-membership` som aktivt läge nu. Framtida `premium-waitlist` och `premium-trial` får inte aktiveras eller visa copy i detta arbete. Ingen betalnings- eller prenumerationslogik byggs.
 
 ## Funktionella kontrakt
 
 - Hero-sök öppnar befintlig `GlobalSearch` via `SearchContext`.
-- “Logga in” och “Bli medlem gratis” öppnar befintlig `LoginModal` via `AuthContext`.
-- “Utforska analyser” går till `/analys`.
-- Utvald analys länkar till befintlig RevolutionRace-preview eller motsvarande befintlig startsidesdestination.
-- Headerns befintliga aktiva länkar, mobilmeny, användarstatus och logout behålls.
-- Bottennavigationens länkar ska vara riktiga routerlänkar; där en funktion ännu saknar separat sida används närmaste befintliga route eller loginflöde.
+- Login- och medlems-CTA öppnar befintlig `LoginModal` via `AuthContext`.
+- Analys-CTA använder befintlig kanonisk analysarkivroute efter routerinspektion.
+- Featured-analys läser all synlig analysdata från befintlig datamodell.
+- Inga parallella routes, söksystem, authlösningar eller hårdkodade analysresultat.
 
-## Komponentgränser
+## Tillgänglighet och prestanda
 
-- `Hero.tsx`: hero, sök och CTA:er.
-- `Header.tsx`: desktop/mobile-header och auth-synlig state.
-- `Home.tsx`: sektionernas ordning och startsidesdata.
-- Nya små, lokala komponenter får användas för `TrialCard`, `TrustStrip`, `FeaturedAnalysisCard` och `MobileBottomNav` om det gör layouten testbar och läsbar.
-- Globala tokens och återanvändbara utility-klasser läggs i `src/index.css`; inga globala ändringar av analysvyer ska behövas.
+Exakt en h1, korrekt heading-hierarki, aria-label på sök, `aria-hidden` på grafik, keyboard/focus-visible, minst 44×44 px tryckytor, tillräcklig kontrast, textbaserad rekommendation, 200 % zoom, `prefers-reduced-motion`, inga nya tunga bibliotek och ingen försämring av LCP/CLS.
 
 ## Verifiering
 
-- TypeScript/lint och production build.
-- Renderad desktopvy i referensens ungefärliga proportioner.
-- Renderad mobilvy i ungefär 390 × 844.
-- Kontroll av sökknapp, login-CTA, analyslänk, mobilmeny och bottennavigation.
-- Kontroll att ingen text klipps, att bottennavigationen inte täcker innehåll och att dark mode inte får regressionsfel.
+Kör TypeScript/lint och production build. Testa 320 px, 390×844, 768 px, 1024 px och 1440 px. Verifiera GlobalSearch, login-CTA, gratis konto, mobilmeny, featured-länk, aktiv navigation och authstatus/logout. Kontrollera långa analysrubriker, avsaknad av logotyp, KÖP/BEVAKA/AVSTÅ, tangentbordsnavigation, reduced motion och befintligt dark mode om det redan stöds. Ta desktop- och mobilskärmbilder och kontrollera att ingen text klipps och att eventuell bottennavigation inte täcker innehåll.
 
 ## Avgränsningar
 
-- Ingen backend- eller betalningsintegration.
-- Ingen statisk screenshot som UI.
-- Ingen full redesign av undersidor i detta steg.
+Ingen backend, Stripe, betalningsintegration, Premiumprodukt, provperiod, prenumerationslogik, påminnelsesystem, full undersideredesign, ny sökfunktion, ny authlösning eller statisk screenshot som UI.
