@@ -316,45 +316,42 @@ export default function MacroDashboard() {
   };
 
   return (
-    <div className="bg-background min-h-screen pb-32 relative overflow-hidden">
+    <div className="min-h-screen overflow-hidden bg-white text-slate-900 pb-24">
       {/* Background Decorative Gradients */}
       <div className="absolute top-[1200px] right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[180px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute top-[2500px] left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
       
       {/* Hero Section */}
-      <header className="bg-foreground text-background pt-32 pb-32 px-6 relative overflow-hidden">
+      <header className="relative overflow-hidden bg-[radial-gradient(circle_at_75%_15%,rgba(16,185,129,0.08),transparent_28%),linear-gradient(180deg,#ffffff_0%,#fbfdfc_100%)] px-5 pb-10 pt-12 md:px-8 md:pb-14 md:pt-14">
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/30 rounded-full blur-[180px] -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[150px] translate-y-1/2 -translate-x-1/2" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] bg-primary/5 rounded-full blur-[200px] pointer-events-none" />
         
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="relative z-10 mx-auto max-w-[1180px]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="text-[11px] font-black uppercase tracking-[0.4em] text-primary mb-6">Global Marknadsanalys</div>
-            <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.85] mb-8">
-              Makro <br />
-              <span className="text-primary">Dashboard</span>
-            </h1>
-            <p className="text-xl text-background/90 max-w-2xl font-medium leading-relaxed">
+            <div className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-emerald-700">Global marknadsanalys</div>
+            <h1 className="font-serif text-[48px] leading-[.98] tracking-[-0.045em] md:text-[64px]">Makro-dashboard</h1>
+            <p className="mt-4 max-w-[620px] text-base leading-7 text-slate-600 md:text-[17px]">
               Få en samlad bild av de globala krafterna som styr marknaden. Vi analyserar räntor, inflation och geopolitik för att ge dig rätt kontext.
             </p>
           </motion.div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6 mt-12 space-y-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div className="mx-auto mt-8 max-w-[1180px] px-5 md:mt-10 md:px-8">
+        <div className="grid min-w-0 grid-cols-1 gap-8 lg:grid-cols-12">
           {/* Main Content Area */}
-          <div className="lg:col-span-8 space-y-12">
+          <div className="min-w-0 space-y-10 lg:col-span-8">
             {/* Major Events Section */}
             <section className="space-y-8">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-3xl font-black tracking-tighter">Stora händelser som påverkar börsen</h2>
-                  <p className="text-muted-foreground font-medium mt-2">Aktuella händelser analyserade med AI</p>
+                  <h2 className="text-xl font-bold tracking-tight md:text-2xl">Stora händelser som påverkar börsen</h2>
+                  <p className="mt-2 text-sm text-slate-500">Aktuella händelser analyserade med AI</p>
                 </div>
                 <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
                   <Sparkles size={24} />
@@ -369,7 +366,7 @@ export default function MacroDashboard() {
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    className="bg-card border border-border rounded-[2rem] p-8 hover:border-primary/30 transition-all group"
+                    className="group min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition-all hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md md:p-6"
                   >
                     <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-4">
                       <div className="space-y-2">
@@ -378,7 +375,7 @@ export default function MacroDashboard() {
                             event.impact === "positive" ? "bg-emerald-400" : 
                             event.impact === "negative" ? "bg-red-500" : "bg-amber-500"
                           }`} />
-                          <h3 className="text-2xl font-black tracking-tighter">{event.title}</h3>
+                          <h3 className="text-lg font-bold leading-tight tracking-tight md:text-xl">{event.title}</h3>
                         </div>
                         {!user && (
                           <div className="flex items-center gap-2">
@@ -513,11 +510,11 @@ export default function MacroDashboard() {
             <section className="space-y-8">
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                 <div>
-                  <h2 className="text-4xl font-black tracking-tighter">Marknadens Puls & Makro</h2>
-                  <p className="text-muted-foreground font-medium mt-2">Realtidsdata för att navigera marknadens humör och trender.</p>
+                  <h2 className="text-xl font-bold tracking-tight md:text-2xl">Marknadens puls & makro</h2>
+                  <p className="mt-2 text-sm text-slate-500">Realtidsdata för att navigera marknadens humör och trender.</p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <div className="text-[10px] font-black uppercase tracking-widest text-primary/60 bg-primary/5 px-4 py-2 rounded-full border border-primary/10">
+                    <div className="rounded-full border border-emerald-100 bg-emerald-50 px-3 py-2 text-[9px] font-bold uppercase tracking-wider text-emerald-700">
                     Senaste synk: {Object.values(macroData).length > 0 
                       ? new Date(Math.max(...Object.values(macroData).map(v => new Date(v.updatedAt).getTime()))).toLocaleString('sv-SE', { 
                           day: '2-digit', 
@@ -539,7 +536,7 @@ export default function MacroDashboard() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid min-w-0 grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
                 {/* Fear & Greed Gauge */}
                 <div className="lg:col-span-1">
                   <FearAndGreedGauge />
@@ -577,13 +574,13 @@ export default function MacroDashboard() {
             </section>
 
             {/* Macro Case Studies */}
-            <section className="bg-card border border-border rounded-[3rem] p-10 md:p-16 space-y-12">
+            <section className="space-y-8 rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] md:p-8">
               <div className="space-y-4">
-                <h2 className="text-4xl font-black tracking-tighter">Varför spelar makro roll?</h2>
-                <p className="text-muted-foreground font-medium">Verkliga exempel på hur makro påverkar dina bolag</p>
+                <h2 className="text-xl font-bold tracking-tight md:text-2xl">Varför spelar makro roll?</h2>
+                <p className="text-sm text-slate-500">Verkliga exempel på hur makro påverkar dina bolag</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div className="grid min-w-0 grid-cols-1 gap-8 md:grid-cols-2">
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center text-primary font-black">1</div>
@@ -628,8 +625,8 @@ export default function MacroDashboard() {
           </div>
 
           {/* Sidebar */}
-          <aside className="lg:col-span-4 space-y-8">
-            <div className="bg-foreground text-background rounded-[2.5rem] p-10 space-y-8 shadow-2xl shadow-black/20 relative overflow-hidden group/clock-card">
+          <aside className="min-w-0 space-y-6 lg:col-span-4">
+            <div className="relative space-y-8 overflow-hidden rounded-2xl bg-slate-950 p-6 text-white shadow-xl md:p-8 group/clock-card">
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover/clock-card:bg-primary/30 transition-colors" />
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/10 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2 group-hover/clock-card:bg-primary/20 transition-colors" />
               
@@ -749,8 +746,8 @@ export default function MacroDashboard() {
               </motion.div>
             </div>
 
-            <div className="bg-card border border-border rounded-[2.5rem] p-10 space-y-6">
-              <h3 className="text-xl font-black tracking-tighter">Viktiga Datum</h3>
+            <div className="space-y-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+              <h3 className="text-xl font-bold tracking-tight">Viktiga datum</h3>
               <div className="space-y-6">
                 {upcomingDates.map((item, idx) => (
                   <DateItem key={idx} date={item.date} title={item.title} />
@@ -764,12 +761,12 @@ export default function MacroDashboard() {
         </div>
 
         {/* Strategisk Analys: Konjunkturklockan 2.0 */}
-        <section className="space-y-10 pt-16 border-t border-border">
+        <section className="space-y-8 border-t border-slate-200 pt-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-2">
-              <div className="text-[11px] font-black uppercase tracking-[0.4em] text-primary">Konjunkturklockan 2.0</div>
-              <h2 className="text-4xl font-black tracking-tighter">Strategiskt Ramverk</h2>
-              <p className="text-muted-foreground font-medium max-w-2xl">
+              <div className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-700">Konjunkturklockan 2.0</div>
+              <h2 className="text-xl font-bold tracking-tight md:text-2xl">Strategiskt ramverk</h2>
+              <p className="max-w-2xl text-sm text-slate-500">
                 Börsen och ekonomin rör sig sällan i takt. Vi fokuserar på investeringsnyttan och vändpunkterna i marknadens cykel.
               </p>
             </div>
@@ -781,11 +778,11 @@ export default function MacroDashboard() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid min-w-0 grid-cols-1 gap-3 md:grid-cols-3">
             {/* Card 1: Tidsskillnaden */}
             <motion.div 
               whileHover={{ y: -8 }}
-              className="bg-card border border-border rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden group"
+              className="group relative min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md md:p-6"
             >
               <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
                 <Globe size={120} />
@@ -810,7 +807,7 @@ export default function MacroDashboard() {
             {/* Card 2: Early Bird */}
             <motion.div 
               whileHover={{ y: -8 }}
-              className="bg-card border border-border rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden group"
+              className="group relative min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md md:p-6"
             >
               <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
                 <TrendingUp size={120} />
@@ -834,7 +831,7 @@ export default function MacroDashboard() {
             {/* Card 3: Selektivitet */}
             <motion.div 
               whileHover={{ y: -8 }}
-              className="bg-card border border-border rounded-[2.5rem] p-8 space-y-6 relative overflow-hidden group"
+              className="group relative min-w-0 overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md md:p-6"
             >
               <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity">
                 <Target size={120} />
@@ -865,7 +862,7 @@ function DetailedIndicator({ category, date, title, trend, change, value, subVal
   return (
     <motion.div 
       whileHover={{ y: -5 }}
-      className={`bg-card border ${isStale ? 'border-amber-500/30' : 'border-border'} rounded-[2.5rem] p-8 shadow-xl shadow-black/5 flex flex-col group hover:border-primary/50 transition-all relative overflow-hidden`}
+      className={`relative flex min-w-0 flex-col overflow-hidden rounded-2xl border bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition-all group hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md md:p-6 ${isStale ? 'border-amber-300' : 'border-slate-200'}`}
     >
       <div className="absolute top-0 right-0 w-24 h-24 bg-primary/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/10 transition-colors" />
       
@@ -877,8 +874,8 @@ function DetailedIndicator({ category, date, title, trend, change, value, subVal
 
       <div className="flex justify-between items-start mb-6 relative z-10">
         <div className="space-y-1">
-          <div className="text-[10px] font-black text-primary uppercase tracking-[0.2em]">{category}</div>
-          <div className="text-[9px] font-bold text-muted-foreground uppercase opacity-80">Uppdaterad {date}</div>
+          <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-700">{category}</div>
+          <div className="text-[9px] font-semibold uppercase text-slate-400">Uppdaterad {date}</div>
         </div>
         <div className={`flex items-center gap-1 text-xs font-black ${
           trend === "up" ? "text-emerald-400" : "text-red-500"
@@ -889,19 +886,19 @@ function DetailedIndicator({ category, date, title, trend, change, value, subVal
       </div>
 
       <div className="mb-6">
-        <h4 className="text-sm font-black tracking-tight mb-1">{title}</h4>
-        <div className="text-4xl font-black tracking-tighter text-foreground">{value}</div>
-        <div className="text-[10px] font-bold text-muted-foreground mt-1">{subValue}</div>
+        <h4 className="mb-1 text-sm font-bold tracking-tight">{title}</h4>
+        <div className="text-3xl font-bold tracking-tight text-slate-900">{value}</div>
+        <div className="mt-1 text-[10px] font-semibold text-slate-400">{subValue}</div>
       </div>
 
-      <p className="text-xs font-medium text-muted-foreground leading-relaxed mb-6">
+      <p className="mb-6 text-xs leading-relaxed text-slate-500">
         {description}
       </p>
 
       <div className="mt-auto pt-6 border-t border-border flex flex-col gap-4">
         <div>
-          <div className="text-[9px] font-black text-foreground uppercase tracking-widest mb-2">Marknadspåverkan</div>
-          <p className="text-[11px] font-bold leading-relaxed text-primary/80 italic">
+          <div className="mb-2 text-[9px] font-bold uppercase tracking-widest text-slate-700">Marknadspåverkan</div>
+          <p className="text-[11px] font-semibold leading-relaxed text-emerald-700 italic">
             {impact}
           </p>
         </div>
