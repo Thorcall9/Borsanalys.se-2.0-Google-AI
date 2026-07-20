@@ -1,3 +1,5 @@
+import type { Recommendation } from "../lib/recommendation.js";
+
 export interface Scenario {
   type: 'bull' | 'base' | 'bear';
   label: string;
@@ -155,7 +157,8 @@ export interface AnalysisData {
   date: string;
   market: string;
   sector: string;
-  recommendation: "KÖP" | "AVVAKTA" | "SÄLJ" | "BEVAKA";
+  recommendation: Recommendation;
+  recommendationReason?: string;
   price: string;
   pe: string;
   yield: string;

@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { analyses, AnalysisData } from "../data/analyses";
 import { guides, Guide } from "../data/guides";
 import { useSearch } from "../contexts/SearchContext";
+import { RECOMMENDATION_BADGE_CLASSES } from "../lib/recommendation";
 
 interface GlobalSearchProps {
   isOpen: boolean;
@@ -164,11 +165,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
                               </div>
                             </div>
                             <div className="flex items-center gap-4">
-                              <span className={`text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border ${
-                                analysis.recommendation === "KÖP" ? "bg-primary/10 text-primary border-primary/20" :
-                                analysis.recommendation === "SÄLJ" ? "bg-red-500/10 text-red-500 border-red-500/20" :
-                                "bg-amber-500/10 text-amber-500 border-amber-500/20"
-                              }`}>
+                              <span className={`text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest border ${RECOMMENDATION_BADGE_CLASSES[analysis.recommendation]}`}>
                                 {analysis.recommendation}
                               </span>
                               <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center text-muted-foreground group-hover:bg-primary group-hover:text-primary-foreground group-hover:rotate-12 transition-all duration-500">

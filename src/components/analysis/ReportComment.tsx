@@ -5,6 +5,8 @@ import SEO from "../SEO";
 import AdUnit from "./AdUnit";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import NextAnalysisButton from "./NextAnalysisButton";
+import RecommendationInfo from "./RecommendationInfo";
+import VerdictBadge from "./VerdictBadge";
 import { AnalysisData } from "../../types/analysis.js";
 
 type ReportCommentProps = {
@@ -295,7 +297,7 @@ export default function ReportComment({
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-3xl border border-border bg-card/60 backdrop-blur shadow-sm">
             <div>
               <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Syn</div>
-              <div className="text-lg font-black text-primary">{data.recommendation}</div>
+              <VerdictBadge verdict={data.recommendation} />
             </div>
             <div>
               <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Kurs</div>
@@ -310,6 +312,11 @@ export default function ReportComment({
               <div className="text-lg font-black text-foreground">{data.yield?.includes('%') ? data.yield : (parseFloat(data.yield) ? `${(parseFloat(data.yield) * 100).toFixed(1)}%` : data.yield)}</div>
             </div>
           </div>
+
+          {data.recommendationReason && (
+            <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">{data.recommendationReason}</p>
+          )}
+          <RecommendationInfo />
         </header>
 
         {/* Main Content */}

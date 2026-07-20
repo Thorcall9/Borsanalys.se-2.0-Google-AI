@@ -7,6 +7,8 @@ import Card from "./Card";
 import SwotGrid from "./SwotGrid";
 import ScenarioCards, { Scenario as DisplayScenario } from "./ScenarioCards";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
+import RecommendationInfo from "./RecommendationInfo";
+import VerdictBadge from "./VerdictBadge";
 import NextAnalysisButton from "./NextAnalysisButton";
 import { AnalysisData } from "../../types/analysis";
 import { V10_ANALYSIS_SECTIONS } from "./analysisTemplateV10";
@@ -172,7 +174,18 @@ export default function ComprehensiveAnalysisV10({ data, isInWatchlist, isWatchl
 
       <section id="investment-decision" className="scroll-mt-8 mb-20">
         <SectionHeader number="X" title="Investeringsbeslut" accentColor={accentColor} />
-        <Card title="Slutsats" className="border-primary/30"><TextBlock text={data.conclusion || data.investmentCase || data.summary} /><div className="flex flex-wrap items-center gap-8 mt-8"><RatingBox rating={Number(data.rating || 0)} title="Betyg" accentColor={accentColor} /><div><div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Rekommendation</div><div className="text-2xl font-black text-primary">{data.recommendation}</div></div></div></Card>
+        <Card title="Slutsats" className="border-primary/30">
+          <TextBlock text={data.conclusion || data.investmentCase || data.summary} />
+          <div className="flex flex-wrap items-center gap-8 mt-8">
+            <RatingBox rating={Number(data.rating || 0)} title="Betyg" accentColor={accentColor} />
+            <div>
+              <div className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Rekommendation</div>
+              <VerdictBadge verdict={data.recommendation} />
+              {data.recommendationReason && <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">{data.recommendationReason}</p>}
+            </div>
+          </div>
+        </Card>
+        <RecommendationInfo />
         {nextAnalysis && <NextAnalysisButton analysis={nextAnalysis} />}
         <AnalysisDisclaimer className="mt-12" />
       </section>

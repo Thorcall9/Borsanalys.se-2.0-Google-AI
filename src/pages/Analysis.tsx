@@ -39,6 +39,7 @@ import {
 } from "../components/analysis";
 import { useAnalysisFilters } from "../hooks/useAnalysisFilters";
 import AnalysisCard from "../components/analysis/AnalysisCard";
+import RecommendationInfo from "../components/analysis/RecommendationInfo";
 import axfoodQ2Markdown from "../../analyses/axfood/Q2_2026.md?raw";
 import NvidiaDeepDive from "../components/NvidiaDeepDive";
 import NovoNordiskDeepDive from "../components/NovoNordiskDeepDive/NovoNordiskDeepDive";
@@ -342,6 +343,8 @@ export default function Analysis() {
               </p>
             </motion.div>
           </div>
+
+          <RecommendationInfo compact />
 
           {/* Filters – Desktop */}
           <motion.div 

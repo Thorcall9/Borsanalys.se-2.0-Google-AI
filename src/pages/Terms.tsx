@@ -39,7 +39,7 @@ export default function Terms() {
               Innehållet på Börsanalys.se är framtaget för allmän information och utbildning. Innehållet utgör inte personlig investeringsrådgivning och är inte anpassat efter en enskild läsares ekonomiska situation, mål, placeringshorisont, kunskap eller risktolerans.
             </p>
             <p>
-              Börsanalys.se publicerar analyser av noterade bolag och finansiella instrument. Sådana analyser kan innehålla bedömningar av bolagets kvalitet, risker och framtidsutsikter, värderingsresonemang, uppskattat rimligt värde, scenarier, estimat samt investeringsbeslut såsom KÖP, BEVAKA, AVVAKTA eller SÄLJ.
+              Börsanalys.se publicerar analyser av noterade bolag och finansiella instrument. Sådana analyser kan innehålla bedömningar av bolagets kvalitet, risker och framtidsutsikter, värderingsresonemang, uppskattat rimligt värde, scenarier, estimat samt investeringsbeslut såsom KÖP, BEVAKA eller AVSTÅ.
             </p>
             <p>
               Dese bedömningar speglar analytikerns uppfattning vid analystillfället och kan förändras om nya uppgifter publiceras, aktiekursen förändras eller marknadsförutsättningarna utvecklas annorlunda än väntat.

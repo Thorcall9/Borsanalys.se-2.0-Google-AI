@@ -11,7 +11,9 @@ export const axfoodQ12026: AnalysisData = {
   date: "2026-06-20T23:00:00",
   market: "NASDAQ STOCKHOLM LARGE CAP",
   sector: "Dagligvaruhandel",
-  recommendation: "AVVAKTA",
+  recommendation: "BEVAKA",
+  recommendationReason:
+    "Axfood är ett välskött defensivt bolag, men den begränsade kursuppsidan gör att värderingen ännu inte ger ett tydligt köpläge.",
   price: "267,90 kr",
   pe: "24.7",
   yield: "0.034",
@@ -20,7 +22,7 @@ export const axfoodQ12026: AnalysisData = {
   disclosureKey: "axfood",
 
   summary:
-    "Elva raka år med marknadsandelstillväxt, stabila kassaflöden och en konsekvent utdelning om 3,4 %. Till P/E 24,7x och P/B 7,7x lämnar base-case all avkastning till utdelningen — ingen kursuppgång ingår i basantagandet. Neutral/Behåll.",
+    "Elva raka år med marknadsandelstillväxt, stabila kassaflöden och en konsekvent utdelning om 3,4 %. Till P/E 24,7x och P/B 7,7x lämnar base-case all avkastning till utdelningen — ingen kursuppgång ingår i basantagandet. BEVAKA.",
 
   businessModel:
     "Axfood driver Willys (lågpris), Hemköp (fullsortiment), City Gross (hypermarket) och Snabbgross (restauranggrossist) via en integrerad värdekedja med Dagab som inköps- och logistikcentrum. Bolaget möter mer än 5 miljoner kunder per vecka i ca 400 egenägda butiker och ca 260 handlardrivna butiker.",
@@ -119,7 +121,7 @@ export const axfoodQ12026: AnalysisData = {
   totalScore: "27",
   score: 27,
   maxScore: 40,
-  rating: "Neutral/Behåll",
+  rating: "BEVAKA",
   targetPrice: "263 kr (base case)",
 
   financialTables: [
@@ -149,7 +151,7 @@ export const axfoodQ12026: AnalysisData = {
         ["Riskprofil", "4/5", "Defensiv sektor; City Gross och Kungsbacka är primära risker"],
         ["Utdelning & kapitalallokering", "4/5", "Stabil, växande utdelning med god kassaflödestäckning"],
         ["Ledning & ESG", "4/5", "God hållbarhetsprofil; koncentrerat ägande begränsar minoriteter"],
-        ["Totalt", "27/40", "Neutral/Behåll — stabilt defensivt innehav med begränsad kursuppsida"],
+        ["Totalt", "27/40", "BEVAKA — stabilt defensivt innehav med begränsad kursuppsida"],
       ],
     },
   ],
@@ -252,7 +254,7 @@ export const axfoodQ12026: AnalysisData = {
       },
     },
     sammanfattning: {
-      beslut: "Avvakta",
+      beslut: "BEVAKA",
       motivering:
         "Axfood är ett välskött defensivt dagligvarubolag med konsekvent historik. Base-case (~263 kr) implicerar att totalavkastningen de närmaste åren enbart kommer från utdelning (~3,4 %). City Gross-integrationen och logistikprojektet i Kungsbacka utgör de primära exekveringsriskerna under en kapitalintensiv period.",
       malpris: "263 kr (base case)",

@@ -26,8 +26,8 @@
 - Test: `tests/recommendation-contract.test.mjs`
 
 **Interfaces:**
-- Produces `Recommendation`, `CANONICAL_RECOMMENDATIONS`, `RECOMMENDATION_DEFINITIONS`, `RECOMMENDATION_BADGE_CLASSES`, `isCanonicalRecommendation()`, `assertCanonicalRecommendation()`, and `mapLegacyRecommendationForMigration()`.
-- `mapLegacyRecommendationForMigration()` is explicitly migration-only and must not be imported by `src/components`, `src/pages`, or runtime hooks.
+- Produces `Recommendation`, `CANONICAL_RECOMMENDATIONS`, `RECOMMENDATION_DEFINITIONS`, `RECOMMENDATION_BADGE_CLASSES`, `RECOMMENDATION_FILTER_OPTIONS`, `isCanonicalRecommendation()`, and `assertCanonicalRecommendation()`.
+- The reviewed `mapLegacyRecommendationForMigration()` helper lives under `tests/helpers/legacyRecommendationMigration.mjs` and must not be imported by `src/components`, `src/pages`, or runtime hooks.
 
 - [ ] **Step 1: Write failing contract tests** for exact canonical values, definitions, validation behavior, and explicit legacy mappings. Assert that `recommendationReason` is not part of any analytics helper if one exists.
 - [ ] **Step 2: Run the focused test** with `node --test tests/recommendation-contract.test.mjs`; confirm failure because the module does not exist.

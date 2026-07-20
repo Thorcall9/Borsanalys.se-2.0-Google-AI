@@ -4,13 +4,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Info, ChevronDown, ChevronUp, ShieldAlert, Award, Calendar, DollarSign, Activity } from "lucide-react";
 import { analysisDisclosures, AnalysisDisclosureKey } from "../../data/analysisDisclosures.js";
 import type { AnalysisDisclosure as DisclosureType } from "../../data/analysisDisclosures.js";
+import VerdictBadge from "./VerdictBadge";
+import type { Recommendation } from "../../lib/recommendation";
 
 export type AnalysisDisclosureProps = {
   disclosureKey: AnalysisDisclosureKey;
   analysisDate?: string;
   updatedAt?: string | null;
   analysisPrice?: string;
-  recommendation?: string;
+  recommendation?: Recommendation;
   fairValue?: string;
   timeHorizon?: string;
 };
@@ -155,7 +157,7 @@ export default function AnalysisDisclosure({
                           <td className="px-6 py-3.5 text-muted-foreground font-medium">Investeringsbeslut</td>
                           <td className="px-6 py-3.5 flex items-center gap-2">
                             <Activity size={14} className="text-primary" />
-                            <span className="font-black text-primary">{recommendation}</span>
+                            <VerdictBadge verdict={recommendation} />
                           </td>
                         </tr>
                       )}

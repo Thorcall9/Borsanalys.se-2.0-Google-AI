@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { AnalysisData, ContentType } from '../types/analysis';
 import { sortAnalysesByScore } from '../lib/score';
+import { RECOMMENDATION_FILTER_OPTIONS } from '../lib/recommendation';
 
 // ─── Content type definitions ───────────────────────────────────────────────
 
@@ -26,22 +27,6 @@ export const SORT_LABELS: Record<SortOption, string> = {
   updated: 'Senast uppdaterad',
   score: 'Högst poäng',
 };
-
-// ─── Recommendation normalization ───────────────────────────────────────────
-
-const BUY_VARIANTS = ['STARKT KÖP', 'KÖP', 'SVAGT KÖP', 'STRONG BUY', 'BUY'];
-const HOLD_VARIANTS = ['NEUTRAL', 'BEHÅLL', 'AVVAKTA', 'HOLD'];
-const WATCH_VARIANTS = ['BEVAKA', 'WATCH'];
-const SELL_VARIANTS = ['SÄLJ', 'SELL', 'STARKT SÄLJ'];
-
-export function normalizeRecommendation(raw: string): string {
-  const upper = raw.toUpperCase().trim();
-  if (BUY_VARIANTS.includes(upper)) return 'KÖP';
-  if (HOLD_VARIANTS.includes(upper)) return 'AVVAKTA';
-  if (WATCH_VARIANTS.includes(upper)) return 'BEVAKA';
-  if (SELL_VARIANTS.includes(upper)) return 'SÄLJ';
-  return upper;
-}
 
 // ─── Sorting ────────────────────────────────────────────────────────────────
 
@@ -85,7 +70,7 @@ const CONTENT_TYPE_TO_URL_TYPE: Partial<Record<FilterContentType, string>> = {
   'report-commentary': 'rapportkommentar',
 };
 const VALID_SORT_OPTIONS: SortOption[] = ['latest', 'updated', 'score'];
-const VALID_RECOMMENDATIONS = ['Alla', 'KÖP', 'BEVAKA', 'AVVAKTA', 'SÄLJ'];
+const VALID_RECOMMENDATIONS = RECOMMENDATION_FILTER_OPTIONS;
 
 // ─── Hook ───────────────────────────────────────────────────────────────────
 
@@ -116,7 +101,7 @@ export function useAnalysisFilters(allAnalyses: AnalysisData[]) {
     const raw = searchParams.get(PARAM_RECOMMENDATION);
     if (!raw) return 'Alla';
     const upper = raw.toUpperCase();
-    return VALID_RECOMMENDATIONS.includes(upper) ? upper : 'Alla';
+    return (VALID_RECOMMENDATIONS as readonly string[]).includes(upper) ? upper : 'Alla';
   };
 
   const getInitialSearch = (): string => {
@@ -199,8 +184,7 @@ export function useAnalysisFilters(allAnalyses: AnalysisData[]) {
 
       // Recommendation filter
       if (selectedRecommendation !== 'Alla') {
-        const normalized = normalizeRecommendation(a.recommendation);
-        if (normalized !== selectedRecommendation) return false;
+        if (a.recommendation !== selectedRecommendation) return false;
       }
 
       return true;

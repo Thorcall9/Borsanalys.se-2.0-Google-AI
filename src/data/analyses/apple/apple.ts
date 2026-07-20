@@ -8,7 +8,9 @@ export const apple: AnalysisData = {
   ticker: "AAPL",
   market: "NASDAQ",
   sector: "Konsumentelektronik",
-  recommendation: "AVVAKTA",
+  recommendation: "BEVAKA",
+  recommendationReason:
+    "Apple håller mycket hög bolagskvalitet, men dagens värdering ger för liten säkerhetsmarginal för ett tydligt köpläge.",
   price: "$228,10",
   pe: "31.00",
   yield: "0,45%",

@@ -29,7 +29,7 @@ export const axfoodQ22026: AnalysisData = {
   businessModel:
     "Axfood bedriver dagligvaruhandel i Sverige genom butikskedjorna Willys, Hemköp och City Gross samt partihandel genom Snabbgross. Dagab utgör koncernens gemensamma inköps- och logistikmotor som försörjer hela butiksnätet samt externa handlare.",
 
-  investmentCase: `BEVAKA – Neutral+ efter kursfallet
+  investmentCase: `BEVAKA efter kursfallet
 
 • Kvalitet: Hög
 • Värdering: Rimlig
@@ -37,7 +37,7 @@ export const axfoodQ22026: AnalysisData = {
 • Direktavkastning: 4,0 %
 • Uppsida till base-case: ca 15–16 %
 • Totalpoäng: 26/40
-• Rating: Neutral+
+• Rating: BEVAKA
 
 Axfoods Q2-rapport blev en tydlig påminnelse om skillnaden mellan ett stabilt bolag och en attraktiv aktie. Det stora som har förändrats är därför inte det operativa caset, utan värderingen. Vid vår tidigare analys låg kursen på 267,90 kr. Efter rapportreaktionen handlas Axfood på en betydligt lägre multipel och med högre direktavkastning.
 
@@ -73,10 +73,10 @@ Uppdaterad syn: Aktien flyttas från Avvakta till Bevaka. Det motsvarar en mer p
     "Axfood fortsätter sina omfattande hållbarhetsinvesteringar inom fossilfria transporter och logistikautomation. Investeringarna i Kungsbacka-projektet syftar till att öka energieffektiviteten och automatisera varuflödet långsiktigt.",
 
   aiObservations:
-    "Värderingen har blivit betydligt mer rimlig efter kursfallet på nästan 15 % på rapportdagen. Risk/reward-profilen har förbättrats markant, vilket motiverar den högre bevakningsgraden (Neutral+ / Bevaka).",
+    "Värderingen har blivit betydligt mer rimlig efter kursfallet på nästan 15 % på rapportdagen. Risk/reward-profilen har förbättrats markant, vilket motiverar rekommendationen BEVAKA.",
 
   conclusion:
-    "Axfoods Q2-rapport var blandad. Resultatet var stabilt och City Gross förbättrades tydligt, men den svaga utvecklingen i Willys och tillväxten under marknaden förklarar varför aktien föll kraftigt. Det operativa caset är inte starkare än före rapporten, men värderingen är nu betydligt mer rimlig. Base-case lämnas oförändrat kring 260–265 kr, men aktien flyttas från Avvakta till Bevaka / Neutral+. För att bli ett tydligare köpläge krävs bekräftelse på att Willys återtar fart, att City Gross når lönsamhet under andra halvåret 2026 och att kassaflöde/soliditet stabiliseras.",
+    "Axfoods Q2-rapport var blandad. Resultatet var stabilt och City Gross förbättrades tydligt, men den svaga utvecklingen i Willys och tillväxten under marknaden förklarar varför aktien föll kraftigt. Det operativa caset är inte starkare än före rapporten, men värderingen är nu betydligt mer rimlig. Base-case lämnas oförändrat kring 260–265 kr, men rekommendationen är BEVAKA. För att bli ett tydligare köpläge krävs bekräftelse på att Willys återtar fart, att City Gross når lönsamhet under andra halvåret 2026 och att kassaflöde/soliditet stabiliseras.",
 
   employees: "18 600+",
   geography: "Sverige (100 %)",
@@ -135,7 +135,7 @@ Uppdaterad syn: Aktien flyttas från Avvakta till Bevaka. Det motsvarar en mer p
   totalScore: "26",
   score: 26,
   maxScore: 40,
-  rating: "Bevaka / Neutral+",
+  rating: "BEVAKA",
   targetPrice: "263 kr (base case)",
 
   financialTables: [

@@ -39,6 +39,8 @@ import AdUnit from './AdUnit';
 import EditorialCallout from './EditorialCallout';
 import { MicrosoftSidebarExtras } from './MicrosoftSidebarExtras';
 import AnalysisDisclaimer from './AnalysisDisclaimer';
+import RecommendationInfo from './RecommendationInfo';
+import VerdictBadge from './VerdictBadge';
 
 interface ComprehensiveAnalysisProps {
   data: AnalysisData;
@@ -1654,7 +1656,7 @@ export default function ComprehensiveAnalysis({
           </div>
           <div className="lg:col-span-5 bg-primary/10 rounded-[2rem] p-10 border border-primary/20 flex flex-col justify-center gap-4 text-center">
              <div className="text-[10px] font-black text-primary uppercase tracking-widest">Vår bedömning</div>
-             <div className="text-4xl font-black text-foreground">{data.recommendation}</div>
+             <VerdictBadge verdict={data.recommendation} />
              <div className="w-12 h-1 bg-primary mx-auto rounded-full" />
              <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest">
                {isInwido ? "Base-case: 5-årigt totalvärde" : "Rimligt värde (Base Case)"}: {data.scenarios?.find(s => s.type === 'base')?.value || "N/A"}
@@ -2327,6 +2329,11 @@ export default function ComprehensiveAnalysis({
         </div>
       </section>
 
+
+      {data.recommendationReason && (
+        <p className="mt-8 max-w-2xl text-sm leading-relaxed text-muted-foreground">{data.recommendationReason}</p>
+      )}
+      <RecommendationInfo />
 
       {/* NEXT STEPS MODULE (REDACTIONAL GUIDANCE) */}
       {data.nextSteps && (

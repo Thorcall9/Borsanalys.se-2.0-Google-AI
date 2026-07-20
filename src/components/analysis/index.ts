@@ -9,6 +9,7 @@ export { default as ScenarioCards } from './ScenarioCards';
 export type { Scenario } from './ScenarioCards';
 export { default as VerdictBox } from './VerdictBox';
 export { default as VerdictBadge } from './VerdictBadge';
+export { default as RecommendationInfo } from './RecommendationInfo';
 export { default as ProgressBar } from './ProgressBar';
 export { default as ChartCard } from './ChartCard';
 export { default as AlertBox } from './AlertBox';

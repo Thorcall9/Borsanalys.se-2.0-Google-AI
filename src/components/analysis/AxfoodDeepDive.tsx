@@ -609,7 +609,7 @@ export default function AxfoodDeepDive({
       ` }} />
       <SEO
         title={`Axfood AB (AXFO) Aktieanalys – Börsanalys.se`}
-        description="Djupanalys av Axfood AB (AXFO): P/E 24,7x, direktavkastning 3,4 %, scorecard 27/40. Neutral/Behåll vid kurs 267,90 kr (juni 2026)."
+        description="Djupanalys av Axfood AB (AXFO): P/E 24,7x, direktavkastning 3,4 %, scorecard 27/40. BEVAKA vid kurs 267,90 kr (juni 2026)."
       />
 
       {/* ═══════════════════════════════════════════════════════
@@ -827,7 +827,7 @@ export default function AxfoodDeepDive({
                     textTransform: "uppercase",
                   }}
                 >
-                  AVVAKTA
+                  BEVAKA
                 </span>
               </div>
               <div
@@ -935,7 +935,7 @@ export default function AxfoodDeepDive({
               </div>
               <div style={{ textAlign: "right" }}>
                 <div style={{ fontSize: 24, fontWeight: 900, color: "#F59E0B", fontFamily: "JetBrains Mono, monospace", lineHeight: 1 }}>27/40</div>
-                <div style={{ fontSize: 11, fontWeight: 700, color: "#57534E", textTransform: "uppercase", letterSpacing: "0.05em", marginTop: 4 }}>Neutral/Behåll</div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: "#57534E", textTransform: "uppercase", letterSpacing: "0.05em", marginTop: 4 }}>BEVAKA</div>
               </div>
             </div>
 
@@ -968,7 +968,7 @@ export default function AxfoodDeepDive({
                   <tr style={{ background: "rgba(245,158,11,0.04)", fontWeight: 700 }}>
                     <td style={{ padding: "14px 12px", color: "#1C1917" }}>Totalt</td>
                     <td style={{ padding: "14px 12px", textAlign: "center", color: "#F59E0B", fontFamily: "JetBrains Mono, monospace", fontSize: 15 }}>27/40</td>
-                    <td style={{ padding: "14px 12px", color: "#1C1917" }}>Neutral/Behåll – stabilt defensivt innehav med begränsad kursuppsida</td>
+                    <td style={{ padding: "14px 12px", color: "#1C1917" }}>BEVAKA – stabilt defensivt innehav med begränsad kursuppsida</td>
                   </tr>
                 </tbody>
               </table>
@@ -1395,7 +1395,7 @@ export default function AxfoodDeepDive({
                         }}
                       />
                     </div>
-                    <div style={{ fontSize: 12, color: "#F59E0B", fontWeight: 600 }}>67,5 % — Neutral/Behåll</div>
+                    <div style={{ fontSize: 12, color: "#F59E0B", fontWeight: 600 }}>67,5 % — BEVAKA</div>
                   </div>
                 </div>
 
@@ -1826,7 +1826,7 @@ export default function AxfoodDeepDive({
 
               <div>
                 <h2 style={{ fontSize: 24, fontWeight: 800, color: "#1C1917", marginBottom: 16, lineHeight: 1.2 }}>
-                  Neutral/Behåll — stabilt defensivt innehav med begränsad kursuppsida
+                  BEVAKA — stabilt defensivt innehav med begränsad kursuppsida
                 </h2>
                 <p style={{ fontSize: 14, color: "#44403C", lineHeight: 1.8, marginBottom: 16 }}>
                   Axfood är ett dagligvarubolag med elva raka år av marknadsandelstillväxt, starka operativa kassaflöden och en konsekvent utdelningspolitik. Den integrerade värdekedjan via Dagab, bredden i butiksformat, och tillgången till nära 6 miljoner kundmöten per vecka är faktabaserade styrkor.

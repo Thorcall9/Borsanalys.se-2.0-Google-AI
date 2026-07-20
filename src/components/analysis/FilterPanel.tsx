@@ -6,6 +6,7 @@ import {
   CONTENT_TYPE_LABELS,
   SORT_LABELS,
 } from '../../hooks/useAnalysisFilters';
+import { RECOMMENDATION_FILTER_OPTIONS } from '../../lib/recommendation';
 
 interface FilterPanelProps {
   searchTerm: string;
@@ -22,8 +23,6 @@ interface FilterPanelProps {
 }
 
 const CONTENT_TYPES: FilterContentType[] = ['all', 'analysis', 'report-commentary'];
-const RECOMMENDATIONS = ['Alla', 'KÖP', 'BEVAKA', 'AVVAKTA', 'SÄLJ'];
-
 export default function FilterPanel({
   searchTerm,
   onSearchChange,
@@ -110,7 +109,7 @@ export default function FilterPanel({
             aria-label="Filtrera efter rekommendation"
             className="w-full appearance-none bg-muted/30 border border-border rounded-2xl px-6 py-4 pr-12 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm font-black uppercase tracking-widest cursor-pointer"
           >
-            {RECOMMENDATIONS.map((r) => (
+            {RECOMMENDATION_FILTER_OPTIONS.map((r) => (
               <option key={r} value={r}>
                 {r}
               </option>
