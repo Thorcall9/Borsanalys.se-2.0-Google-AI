@@ -120,7 +120,7 @@ html {
   }
 
   .hero-title-line-accent {
-    @apply mt-2 ml-auto w-fit translate-x-1 md:mt-3 md:translate-x-3;
+    @apply mt-2 ml-auto w-fit translate-x-1 text-[0.8em] md:mt-3 md:translate-x-3;
   }
 
   .hero-search {

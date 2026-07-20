@@ -9,7 +9,7 @@ export const Hero: React.FC = () => {
   const { openLoginModal } = useAuth();
 
   return (
-    <section className="homepage-section homepage-hero pt-28 md:pt-40">
+    <section className="homepage-section homepage-hero pt-24 md:pt-32">
       <div className="homepage-container text-center">
         <div className="mx-auto max-w-[58rem]">
           <h1 className="hero-title text-5xl font-bold tracking-tight text-foreground md:text-8xl">
@@ -20,7 +20,7 @@ export const Hero: React.FC = () => {
             Oberoende aktieanalyser som gör affärsmodell, värdering och risk enklare att förstå.
           </p>
 
-          <div className="mx-auto mt-12 max-w-2xl md:mt-14">
+          <div className="mx-auto mt-11 max-w-2xl md:mt-12">
             <button 
               onClick={() => openSearch("hero")}
               aria-label="Sök efter bolag, analyser eller guider..."
@@ -35,7 +35,7 @@ export const Hero: React.FC = () => {
             </button>
           </div>
           
-          <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:mt-8 sm:flex-row">
+          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:mt-7 sm:flex-row">
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.95 }}
