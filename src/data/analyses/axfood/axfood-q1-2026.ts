@@ -117,6 +117,8 @@ export const axfoodQ12026: AnalysisData = {
   },
 
   totalScore: "27",
+  score: 27,
+  maxScore: 40,
   rating: "Neutral/Behåll",
   targetPrice: "263 kr (base case)",
 

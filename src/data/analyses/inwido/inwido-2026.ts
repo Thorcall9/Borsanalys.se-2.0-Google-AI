@@ -379,6 +379,8 @@ export const inwido2026: AnalysisData = {
   },
 
   totalScore: "24/35",
+  score: 24,
+  maxScore: 35,
   rating: "BEVAKA",
 
   aiDrivenData: {

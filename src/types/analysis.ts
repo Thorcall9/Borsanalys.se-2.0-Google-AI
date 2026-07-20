@@ -172,6 +172,8 @@ export interface AnalysisData {
   viewChange?: 'unchanged' | 'upgraded' | 'downgraded' | 'new';
   upside?: number;
   updatedAt?: string;
+  score?: number;
+  maxScore?: number;
   
   // Custom View Logic
   deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea" | "Axfood" | "ABB" | "Plejd";

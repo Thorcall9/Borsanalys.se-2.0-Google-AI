@@ -1,11 +1,12 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { AnalysisData, ContentType } from '../types/analysis';
+import { sortAnalysesByScore } from '../lib/score';
 
 // ─── Content type definitions ───────────────────────────────────────────────
 
 export type FilterContentType = 'all' | Extract<ContentType, 'analysis' | 'report-commentary'>;
-export type SortOption = 'latest' | 'updated' | 'upside' | 'score';
+export type SortOption = 'latest' | 'updated' | 'score';
 
 export const CONTENT_TYPE_LABELS: Record<FilterContentType, string> = {
   all: 'Alla',
@@ -13,11 +14,17 @@ export const CONTENT_TYPE_LABELS: Record<FilterContentType, string> = {
   'report-commentary': 'Rapportkommentarer',
 };
 
+export const CONTENT_TYPE_BADGE_LABELS: Record<ContentType, string> = {
+  analysis: 'ANALYS',
+  'report-commentary': 'RAPPORTKOMMENTAR',
+  guide: 'GUIDE',
+  other: 'ÖVRIGT',
+};
+
 export const SORT_LABELS: Record<SortOption, string> = {
   latest: 'Senast publicerad',
   updated: 'Senast uppdaterad',
-  upside: 'Högst uppsida',
-  score: 'Högst totalpoäng',
+  score: 'Högst poäng',
 };
 
 // ─── Recommendation normalization ───────────────────────────────────────────
@@ -36,37 +43,17 @@ export function normalizeRecommendation(raw: string): string {
   return upper;
 }
 
-// ─── Score parsing ──────────────────────────────────────────────────────────
-
-export function parseTotalScore(raw?: string): number {
-  if (!raw) return -Infinity;
-  // Handle "24/35" format → percentage
-  if (raw.includes('/')) {
-    const [num, den] = raw.split('/').map(s => parseFloat(s.trim()));
-    if (!isNaN(num) && !isNaN(den) && den > 0) return (num / den) * 100;
-    return -Infinity;
-  }
-  const parsed = parseFloat(raw.replace(',', '.'));
-  return isNaN(parsed) ? -Infinity : parsed;
-}
-
 // ─── Sorting ────────────────────────────────────────────────────────────────
 
 function sortAnalyses(list: AnalysisData[], sort: SortOption): AnalysisData[] {
+  if (sort === 'score') return sortAnalysesByScore(list);
+
   return [...list].sort((a, b) => {
     switch (sort) {
       case 'latest':
         return (b.date || '').localeCompare(a.date || '');
       case 'updated':
         return (b.updatedAt || b.date || '').localeCompare(a.updatedAt || a.date || '');
-      case 'upside': {
-        const aUp = a.upside ?? -Infinity;
-        const bUp = b.upside ?? -Infinity;
-        return bUp - aUp;
-      }
-      case 'score': {
-        return parseTotalScore(b.totalScore) - parseTotalScore(a.totalScore);
-      }
       default:
         return 0;
     }
@@ -97,7 +84,7 @@ const CONTENT_TYPE_TO_URL_TYPE: Partial<Record<FilterContentType, string>> = {
   analysis: 'analys',
   'report-commentary': 'rapportkommentar',
 };
-const VALID_SORT_OPTIONS: SortOption[] = ['latest', 'updated', 'upside', 'score'];
+const VALID_SORT_OPTIONS: SortOption[] = ['latest', 'updated', 'score'];
 const VALID_RECOMMENDATIONS = ['Alla', 'KÖP', 'BEVAKA', 'AVVAKTA', 'SÄLJ'];
 
 // ─── Hook ───────────────────────────────────────────────────────────────────

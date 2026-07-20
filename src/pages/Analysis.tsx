@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { 
   ArrowLeft, 
-  ArrowRight, 
   AlertCircle, 
   Info, 
   Shield, 
@@ -31,7 +30,6 @@ import {
   MetricCard, 
   SwotGrid, 
   VerdictBox, 
-  VerdictBadge, 
   ScenarioCards, 
   ComprehensiveAnalysis,
   ReportComment,
@@ -40,6 +38,7 @@ import {
   MobileFilterDrawer
 } from "../components/analysis";
 import { useAnalysisFilters } from "../hooks/useAnalysisFilters";
+import AnalysisCard from "../components/analysis/AnalysisCard";
 import axfoodQ2Markdown from "../../analyses/axfood/Q2_2026.md?raw";
 import NvidiaDeepDive from "../components/NvidiaDeepDive";
 import NovoNordiskDeepDive from "../components/NovoNordiskDeepDive/NovoNordiskDeepDive";
@@ -419,74 +418,14 @@ export default function Analysis() {
           {/* Analysis cards grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {filteredAnalyses.length > 0 ? (
-              filteredAnalyses.reduce((acc: React.ReactNode[], a, i) => {
-                const rt = realTimeData[a.ticker];
-                const rawPe = rt?.pe || a.pe;
-                const displayPe = rawPe ? parseFloat(String(rawPe).replace(',', '.')).toFixed(2) : '-';
-                const displayYield = rt?.yield !== undefined ? rt.yield : a.yield;
-
-                acc.push(
-                  <motion.div
-                    key={a.slug}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: (i % 6) * 0.1, duration: 0.6 }}
-                    viewport={{ once: true }}
-                  >
-                    <Link 
-                      to={`/analys/${a.slug}`}
-                      className="group block h-full bg-card border border-border rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-10 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 relative overflow-hidden"
-                    >
-                      <div className="relative z-10 flex flex-col h-full justify-between">
-                        <div className="space-y-6">
-                           <div className="flex justify-between items-start">
-                            <div className="space-y-2">
-                              <div className="flex items-center gap-3">
-                                <div className="text-[10px] font-black text-muted-foreground/80 uppercase tracking-[0.2em]">{a.ticker} · {a.market}</div>
-                                {a.date && (
-                                  <>
-                                    <div className="w-1 h-1 rounded-full bg-muted-foreground/30" />
-                                    <div className="text-[10px] font-black text-muted-foreground/60 uppercase tracking-[0.2em]">{a.date}</div>
-                                  </>
-                                )}
-                              </div>
-                              <h3 className="text-3xl font-black tracking-tighter group-hover:text-primary transition-colors duration-300 leading-tight">{a.listTitle || a.title}</h3>
-                            </div>
-                            <VerdictBadge verdict={a.recommendation} />
-                          </div>
-                          <p className="text-base text-muted-foreground leading-relaxed line-clamp-3 font-medium">
-                            {a.summary}
-                          </p>
-                        </div>
-                        <div className="mt-10 flex flex-col sm:flex-row sm:items-center justify-between pt-8 border-t border-border/50 gap-6 sm:gap-0">
-                          <div className="flex gap-8">
-                            <div>
-                              <div className="text-[10px] font-black text-muted-foreground/80 uppercase tracking-widest mb-1.5">P/E</div>
-                              <div className="text-lg font-black text-foreground">{displayPe}</div>
-                            </div>
-                            <div>
-                              <div className="text-[10px] font-black text-muted-foreground/80 uppercase tracking-widest mb-1.5">Direktavk.</div>
-                              <div className="text-lg font-black text-foreground">
-                                {typeof displayYield === 'number' 
-                                  ? `${(displayYield * 100).toFixed(2)}%` 
-                                  : (displayYield?.includes('%') ? displayYield : `${(parseFloat(displayYield || '0') * 100).toFixed(2)}%`)}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="w-12 h-12 rounded-2xl bg-muted border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 shadow-lg shadow-black/5">
-                            <ArrowRight size={24} />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="absolute -right-10 -bottom-10 w-32 h-32 bg-primary/5 rounded-full blur-[40px] group-hover:bg-primary/10 transition-colors duration-700" />
-                    </Link>
-                  </motion.div>
-                );
-
-
-
-                return acc;
-              }, [])
+              filteredAnalyses.map((a, i) => (
+                <AnalysisCard
+                  key={a.slug}
+                  analysis={a}
+                  index={i}
+                  realTimeData={realTimeData[a.ticker]}
+                />
+              ))
             ) : (
               <div className="col-span-full py-32 text-center space-y-6 bg-muted/30 rounded-[3rem] border border-dashed border-border">
                 <div className="w-20 h-20 bg-muted rounded-full flex items-center justify-center mx-auto text-muted-foreground/60">

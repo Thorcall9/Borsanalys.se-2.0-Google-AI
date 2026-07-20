@@ -23,6 +23,8 @@ export const saab2026: AnalysisData = {
   buyZone: undefined,
   targetPrice: "400–435 kr",
   totalScore: "27/40",
+  score: 27,
+  maxScore: 40,
   rating: "0,675",
 
   strengths: [

@@ -245,6 +245,8 @@ export const plejdQ12026: AnalysisData = {
     "Plejd är ett av Stockholmsbörsens mest högkvalitativa tillväxtbolag. Värderingen lämnar liten felmarginal, men för en långsiktig investerare som tror på fortsatt geografisk och produktmässig expansion är aktien köpvärd. Position bör byggas gradvis och följas med fokus på installationstillväxt, organisk tillväxt och bruttomarginal.",
 
   totalScore: "30/40",
+  score: 30,
+  maxScore: 40,
   rating: "Attraktiv",
   targetPrice: "1 100-1 200 kr",
   buyZone: "Gradvis positionering vid fortsatt organisk tillväxt över 20%",

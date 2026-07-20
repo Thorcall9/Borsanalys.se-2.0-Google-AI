@@ -100,8 +100,16 @@ test("the archive keeps the shared /analys route and canonical", () => {
 });
 
 test("the common analysis card exposes both content types without separate markup", () => {
-  assert.match(cardSource, /ANALYS|Analys/);
-  assert.match(cardSource, /RAPPORTKOMMENTAR|Rapportkommentar/);
+  assert.match(hookSource, /analysis: ['"]ANALYS['"]/);
+  assert.match(hookSource, /['"]report-commentary['"]: ['"]RAPPORTKOMMENTAR['"]/);
   assert.match(cardSource, /contentType/);
+  assert.match(cardSource, /CONTENT_TYPE_BADGE_LABELS/);
   assert.match(cardSource, /to=\{`\/analys\/\$\{a\.slug\}`\}/);
+});
+
+test("the score sort is percentage-based and the upside sort is removed", () => {
+  assert.match(hookSource, /SortOption = 'latest' \| 'updated' \| 'score'/);
+  assert.match(hookSource, /score: 'Högst poäng'/);
+  assert.doesNotMatch(hookSource, /Högst uppsida/);
+  assert.doesNotMatch(hookSource, /'upside'/);
 });

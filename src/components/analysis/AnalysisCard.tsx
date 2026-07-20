@@ -4,7 +4,8 @@ import { ArrowRight, ArrowUp, ArrowDown, Minus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { VerdictBadge } from './index';
 import { AnalysisData } from '../../types/analysis';
-import { parseTotalScore } from '../../hooks/useAnalysisFilters';
+import { CONTENT_TYPE_BADGE_LABELS } from '../../hooks/useAnalysisFilters';
+import { getAnalysisScore } from '../../lib/score';
 
 interface AnalysisCardProps {
   analysis: AnalysisData;
@@ -37,6 +38,23 @@ function ViewChangeBadge({ viewChange }: { viewChange: AnalysisData['viewChange'
   );
 }
 
+function ScoreMetric({ analysis, reportCommentary = false }: { analysis: AnalysisData; reportCommentary?: boolean }) {
+  const score = getAnalysisScore(analysis);
+  if (!score) return null;
+
+  const percent = Math.round(score.percent);
+  return (
+    <div aria-label={`${reportCommentary ? 'Senaste poäng' : 'Poäng'} ${score.score} av ${score.maxScore}, motsvarande ${percent} procent`}>
+      <div className="text-[10px] font-black text-muted-foreground/80 uppercase tracking-widest mb-1.5">
+        {reportCommentary ? 'Senaste poäng' : 'Poäng'}
+      </div>
+      <div className="text-lg font-black text-foreground">
+        {score.score}/{score.maxScore} · {percent} %
+      </div>
+    </div>
+  );
+}
+
 export default function AnalysisCard({ analysis: a, index, realTimeData: rt }: AnalysisCardProps) {
   const isReportComment = a.contentType === 'report-commentary';
 
@@ -45,10 +63,7 @@ export default function AnalysisCard({ analysis: a, index, realTimeData: rt }: A
   const displayPe = rawPe ? parseFloat(String(rawPe).replace(',', '.')).toFixed(2) : '-';
   const displayYield = rt?.yield !== undefined ? rt.yield : a.yield;
 
-  // Total score display
-  const scoreRaw = a.totalScore;
-  const scoreNumeric = parseTotalScore(scoreRaw);
-  const hasScore = scoreNumeric > -Infinity;
+  const contentTypeLabel = CONTENT_TYPE_BADGE_LABELS[a.contentType];
 
   if (isReportComment) {
     return (
@@ -64,11 +79,11 @@ export default function AnalysisCard({ analysis: a, index, realTimeData: rt }: A
         >
           <div className="relative z-10 flex flex-col h-full justify-between">
             <div className="space-y-4">
-              <div className="flex justify-between items-start gap-3">
+              <div className="flex flex-wrap justify-between items-start gap-3">
                 <div className="space-y-2">
                   <div className="flex items-center gap-3 flex-wrap">
                     <span className="text-[9px] font-black uppercase tracking-[0.3em] text-blue-400 bg-blue-500/10 border border-blue-500/20 px-2.5 py-1 rounded-full">
-                      Rapportkommentar
+                      {contentTypeLabel}
                     </span>
                     <div className="text-[10px] font-black text-muted-foreground/80 uppercase tracking-[0.2em]">
                       {a.ticker}{a.reportPeriod ? ` · ${a.reportPeriod}` : ''} · {a.date}
@@ -85,13 +100,14 @@ export default function AnalysisCard({ analysis: a, index, realTimeData: rt }: A
               </p>
             </div>
             <div className="mt-6 flex items-center justify-between pt-6 border-t border-border/50">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-3">
                 {a.viewChange && <ViewChangeBadge viewChange={a.viewChange} />}
                 {a.upside != null && (
                   <span className="text-[10px] font-black text-muted-foreground/80 uppercase tracking-widest">
                     Uppsida: ~{a.upside}%
                   </span>
                 )}
+                <ScoreMetric analysis={a} reportCommentary />
               </div>
               <div className="w-10 h-10 rounded-xl bg-muted border border-border flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 shadow-lg shadow-black/5">
                 <ArrowRight size={20} />
@@ -119,11 +135,11 @@ export default function AnalysisCard({ analysis: a, index, realTimeData: rt }: A
       >
         <div className="relative z-10 flex flex-col h-full justify-between">
           <div className="space-y-6">
-            <div className="flex justify-between items-start">
+            <div className="flex flex-wrap justify-between items-start gap-3">
               <div className="space-y-2">
                 <div className="flex items-center gap-3 flex-wrap">
                   <span className="text-[9px] font-black uppercase tracking-[0.3em] text-primary/70 bg-primary/5 border border-primary/10 px-2.5 py-1 rounded-full">
-                    Analys
+                    {contentTypeLabel}
                   </span>
                   <div className="text-[10px] font-black text-muted-foreground/80 uppercase tracking-[0.2em]">
                     {a.ticker} · {a.market}
@@ -169,12 +185,7 @@ export default function AnalysisCard({ analysis: a, index, realTimeData: rt }: A
                   <div className="text-lg font-black text-primary">~{a.upside}%</div>
                 </div>
               )}
-              {hasScore && (
-                <div>
-                  <div className="text-[10px] font-black text-muted-foreground/80 uppercase tracking-widest mb-1.5">Totalpoäng</div>
-                  <div className="text-lg font-black text-foreground">{scoreRaw}</div>
-                </div>
-              )}
+              <ScoreMetric analysis={a} />
             </div>
             <div className="w-12 h-12 rounded-2xl bg-muted border border-border flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 shadow-lg shadow-black/5">
               <ArrowRight size={24} />

@@ -449,6 +449,8 @@ I Q4 2025 skriver ledningen att Nordea slutfört strategiperioden 2022–2025 oc
   ],
 
   totalScore: "28/40",
+  score: 28,
+  maxScore: 40,
   rating: "0,70",
 
   longTermInvolvement: "Ja, särskilt för utdelningsinvesterare.",

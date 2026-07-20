@@ -133,6 +133,8 @@ Uppdaterad syn: Aktien flyttas från Avvakta till Bevaka. Det motsvarar en mer p
   },
 
   totalScore: "26",
+  score: 26,
+  maxScore: 40,
   rating: "Bevaka / Neutral+",
   targetPrice: "263 kr (base case)",
 
