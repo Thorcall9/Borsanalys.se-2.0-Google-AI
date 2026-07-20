@@ -112,11 +112,11 @@ html {
   }
 
   .hero-title {
-    @apply mx-auto max-w-[62rem];
+    @apply mx-auto max-w-[64rem];
   }
 
   .hero-title-line {
-    @apply block leading-[0.98] md:leading-[0.94];
+    @apply block leading-[0.98] md:leading-[0.96];
   }
 
   .hero-title-line-accent {
