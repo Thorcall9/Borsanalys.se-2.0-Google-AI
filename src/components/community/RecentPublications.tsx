@@ -21,20 +21,21 @@ export default function RecentPublications() {
       </div>
 
       <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm divide-y divide-border">
-        {publications.map((item) => {
+        {publications.map((item, index) => {
           const isReport = item.contentType === "report-commentary";
+          const isPrimary = index === 0;
           return (
-            <Link key={item.slug} to={`/analys/${item.slug}`} className="group flex items-center gap-4 p-5 hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <Link key={item.slug} to={`/analys/${item.slug}`} className={`group flex items-center gap-4 hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary ${isPrimary ? "recent-publication-primary" : "recent-publication-secondary"}`}>
+              <div className={`flex shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary ${isPrimary ? "h-12 w-12" : "h-10 w-10"}`}>
                 {isReport ? <FileText size={18} /> : <BarChart3 size={18} />}
               </div>
               <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-black uppercase tracking-[0.16em] text-primary">
+                <div className={`flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-black uppercase tracking-[0.16em] text-primary ${isPrimary ? "md:text-[11px]" : ""}`}>
                   <span>{CONTENT_TYPE_LABELS[item.contentType as keyof typeof CONTENT_TYPE_LABELS] || "Analys"}</span>
                   <span className="text-muted-foreground/60">·</span>
                   <span className="text-muted-foreground">{item.ticker}</span>
                 </div>
-                <h3 className="mt-1 truncate font-black text-foreground group-hover:text-primary">{item.listTitle || item.title}</h3>
+                <h3 className={`mt-1 truncate font-black text-foreground group-hover:text-primary ${isPrimary ? "text-base md:text-lg" : "text-sm"}`}>{item.listTitle || item.title}</h3>
                 <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground"><CalendarDays size={12} /> Publicerad {new Date(item.date).toLocaleDateString("sv-SE")}</p>
               </div>
               <ArrowRight size={17} className="shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary" />

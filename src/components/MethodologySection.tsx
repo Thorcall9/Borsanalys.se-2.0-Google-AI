@@ -46,9 +46,9 @@ export default function MethodologySection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35 }}
                 viewport={{ once: true }}
-                className="surface-card surface-card-hover p-6"
+                className="surface-card surface-card-hover group p-6"
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <div className="methodology-icon flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
                   <Icon aria-hidden="true" className="h-5 w-5" />
                 </div>
                 <h3 className="mt-5 text-lg font-bold tracking-tight">{step.title}</h3>

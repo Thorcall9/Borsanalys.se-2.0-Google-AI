@@ -107,6 +107,46 @@ html {
     @apply container mx-auto max-w-6xl px-6;
   }
 
+  .homepage-hero {
+    @apply overflow-hidden;
+  }
+
+  .hero-title {
+    @apply mx-auto max-w-5xl;
+  }
+
+  .hero-title-line {
+    @apply block leading-[0.98] md:leading-[0.94];
+  }
+
+  .hero-title-line-accent {
+    @apply mt-2 ml-auto w-fit translate-x-1 md:mt-3 md:translate-x-3;
+  }
+
+  .hero-search {
+    @apply min-h-[4.25rem] bg-card/95;
+  }
+
+  .hero-primary-action {
+    @apply px-7 py-3.5 shadow-xl shadow-primary/25;
+  }
+
+  .hero-secondary-action {
+    @apply px-6 py-3.5;
+  }
+
+  .methodology-icon {
+    @apply transition-colors duration-200 group-hover:bg-primary/15;
+  }
+
+  .recent-publication-primary {
+    @apply bg-background p-6 md:p-7;
+  }
+
+  .recent-publication-secondary {
+    @apply p-5;
+  }
+
   .surface-card {
     @apply rounded-2xl border border-border bg-card shadow-sm;
   }
