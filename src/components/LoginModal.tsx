@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { X, Mail, Facebook, Apple, Loader2, User, Lock } from 'lucide-react';
+import { X, Mail, Facebook, Apple, Loader2, User, Lock, CheckCircle2 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+
+const membershipBenefits = [
+  { title: 'Spara analyser', description: 'Samla intressanta bolag och hitta enkelt tillbaka till dem senare.' },
+  { title: 'Följa bolag', description: 'Se när en ny analys, rapportkommentar eller viktig uppdatering publiceras.' },
+  { title: 'Påverka vad som analyseras härnäst', description: 'Rösta på de bolag du vill läsa mer om.' },
+  { title: 'Få en personlig överblick', description: 'Håll ordning på dina sparade analyser, bevakningar och senaste uppdateringar.' },
+  { title: 'Följa hur caset utvecklas', description: 'Se nya rapportkommentarer och förändringar i bedömningen över tid.' },
+];
 
 export const LoginModal: React.FC = () => {
   const { 
@@ -78,13 +86,28 @@ export const LoginModal: React.FC = () => {
             <div className="relative z-10 space-y-8">
               <div className="text-center space-y-2">
                 <h2 className="text-3xl font-black tracking-tighter">
-                  {mode === 'login' ? 'Välkommen tillbaka' : 'Skapa konto'}
+                  {mode === 'login' ? 'Välkommen tillbaka' : 'Få mer värde av varje analys'}
                 </h2>
                 <p className="text-muted-foreground font-medium">
                   {mode === 'login' 
                     ? 'Logga in för att spara dina analyser och bevakningar.' 
-                    : 'Börja din resa mot bättre investeringar idag.'}
+                    : 'Skapa ett kostnadsfritt konto och samla allt du följer på ett ställe.'}
                 </p>
+              </div>
+
+              <div className="rounded-2xl border border-border bg-primary/5 p-4">
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-primary">Som medlem kan du</p>
+                <ul className="mt-4 grid gap-4 text-sm text-muted-foreground">
+                  {membershipBenefits.map((benefit) => (
+                    <li key={benefit.title} className="flex items-start gap-2.5">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+                      <span>
+                        <strong className="block text-foreground">{benefit.title}</strong>
+                        <span className="mt-0.5 block leading-relaxed">{benefit.description}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
 
               {/* Social Logins */}
@@ -197,7 +220,7 @@ export const LoginModal: React.FC = () => {
                   {loading ? (
                     <Loader2 className="animate-spin" size={20} />
                   ) : (
-                    mode === 'login' ? 'Logga in' : 'Skapa konto'
+                    mode === 'login' ? 'Logga in' : 'SKAPA KONTO GRATIS'
                   )}
                 </button>
               </form>
@@ -210,6 +233,10 @@ export const LoginModal: React.FC = () => {
                   {mode === 'login' ? 'Inget konto? Skapa ett här' : 'Har du redan ett konto? Logga in'}
                 </button>
               </div>
+
+              {mode === 'signup' && (
+                <p className="text-center text-xs text-muted-foreground">Det tar mindre än en minut att skapa ett konto.</p>
+              )}
 
               <p className="text-center text-[10px] text-muted-foreground leading-relaxed">
                 Genom att logga in godkänner du våra <br />

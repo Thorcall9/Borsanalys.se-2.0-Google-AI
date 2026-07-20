@@ -40,7 +40,7 @@ const SectionLoader = () => (
 );
 
 export default function Home() {
-  const { openLoginModal } = useAuth();
+  const { openLoginModal, openSignupModal } = useAuth();
   const featuredAnalysis = getAnalysisPresentation(getFeaturedAnalysis());
 
   return (
@@ -74,7 +74,7 @@ export default function Home() {
           </div>
           <FeaturedAnalysisCard analysis={featuredAnalysis} />
           <div className="mobile-membership-only">
-            <FreeMembershipCard compact onSignup={openLoginModal} />
+            <FreeMembershipCard compact onSignup={openSignupModal} />
           </div>
           <div className="homepage-value-card">
             <div>
@@ -82,7 +82,7 @@ export default function Home() {
               <h3>Bygg din egen bevakning</h3>
               <p>Samla bolagen du följer och hitta snabbt tillbaka när nya analyser eller rapportkommentarer publiceras.</p>
             </div>
-            <button type="button" className="text-link" onClick={openLoginModal}>Se medlemsfördelarna <ArrowRight size={16} aria-hidden="true" /></button>
+            <button type="button" className="text-link" onClick={openSignupModal}>Se medlemsfördelarna <ArrowRight size={16} aria-hidden="true" /></button>
           </div>
         </div>
       </section>
