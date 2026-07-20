@@ -329,7 +329,7 @@ export default function Analysis() {
         />
         <AnalysisArchive
           analyses={filteredAnalyses}
-          featured={allAnalysesSorted.find((item) => item.slug === "novo-nordisk") || allAnalysesSorted[0]}
+          featured={allAnalysesSorted.find((item) => item.slug === "handelsbanken-2025") || allAnalysesSorted[0]}
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}
           contentType={contentType}
