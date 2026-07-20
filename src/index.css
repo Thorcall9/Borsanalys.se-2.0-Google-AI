@@ -288,6 +288,7 @@ html {
 .text-link { display: inline-flex; align-items: center; gap: 0.35rem; color: #087f55; font-size: 0.78rem; font-weight: 800; white-space: nowrap; }
 .text-link:hover { color: #045f40; }
 .homepage-value-card { display: flex; align-items: center; justify-content: space-between; gap: 2rem; margin-top: 1rem; padding: 1.35rem 1.5rem; border: 1px solid rgb(16 185 129 / 0.14); border-radius: 1rem; background: #f5fbf8; }
+.mobile-membership-only { display: none; }
 .homepage-value-card h3 { margin-top: 0.15rem; color: var(--foreground); font-family: var(--font-serif); font-size: 1.55rem; letter-spacing: -0.03em; }
 .homepage-value-card p:last-child { max-width: 42rem; margin-top: 0.3rem; color: var(--muted-foreground); font-size: 0.8rem; line-height: 1.5; }
 
@@ -301,6 +302,14 @@ html {
 @media (max-width: 900px) {
   .desktop-nav, .header-actions { display: none; }
   .mobile-header-actions { display: flex; }
+  .mobile-menu { display: block; position: absolute; top: 100%; right: 0; left: 0; padding: 1rem; border-bottom: 1px solid var(--border); background: var(--background); box-shadow: 0 16px 30px rgb(10 10 10 / 0.08); }
+  .mobile-menu-link { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 0.35rem; border-bottom: 1px solid var(--border); color: var(--foreground); font-family: var(--font-serif); font-size: 1.1rem; }
+  .mobile-menu-link-active { color: var(--primary); }
+  .mobile-menu-auth { display: flex; gap: 0.65rem; padding-top: 1rem; }
+  .mobile-auth-button { flex: 1; min-height: 2.8rem; }
+  .mobile-profile-link, .mobile-logout-button { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 2.8rem; padding: 0 0.9rem; border-radius: 0.7rem; font-size: 0.8rem; font-weight: 750; }
+  .mobile-profile-link { flex: 1; background: var(--accent); color: var(--accent-foreground); }
+  .mobile-logout-button { border: 1px solid var(--border); color: var(--muted-foreground); }
   .site-header-inner { min-height: 4.2rem; padding: 0 1rem; }
   .hero-layout { grid-template-columns: 1fr; gap: 2rem; }
   .hero-content-column { max-width: none; }
@@ -313,7 +322,7 @@ html {
   .homepage-container { padding-right: 1rem; padding-left: 1rem; }
   .homepage-hero { padding-top: 2.7rem; padding-bottom: 2.25rem; }
   .hero-trust-pill { margin-bottom: 1.2rem; font-size: 0.54rem; }
-  .hero-title { font-size: clamp(3.1rem, 13.2vw, 4.25rem); letter-spacing: -0.07em; }
+  .hero-title { font-size: clamp(2.7rem, 11.8vw, 4.25rem); letter-spacing: -0.07em; }
   .hero-lead { max-width: 21rem; margin-top: 1rem; font-size: 0.98rem; }
   .hero-search { min-height: 3.75rem; margin-top: 1.3rem; padding: 0.72rem 0.85rem; }
   .hero-search span { font-size: 0.78rem; }
@@ -323,6 +332,9 @@ html {
   .hero-reassurance { margin-top: 0.9rem; font-size: 0.68rem; }
   .hero-free-note { font-size: 0.68rem; }
   .market-backdrop { top: -3rem; right: -18rem; width: 34rem; opacity: 0.5; }
+  .hero-visual-column { display: block; min-height: 0; }
+  .hero-visual-column .membership-card { display: none; }
+  .mobile-membership-only { display: block; margin-top: 1rem; }
   .membership-card { padding: 1.25rem; }
   .membership-card h2 { font-size: 1.8rem; }
   .trust-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }

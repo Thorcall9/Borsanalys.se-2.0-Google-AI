@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import RecentPublications from "../components/community/RecentPublications";
 import TrustStrip from "../components/home/TrustStrip";
 import FeaturedAnalysisCard from "../components/home/FeaturedAnalysisCard";
+import FreeMembershipCard from "../components/home/FreeMembershipCard";
 import { getAnalysisPresentation, getFeaturedAnalysis } from "../components/home/analysisPresentation";
 
 const memberBenefits = [
@@ -72,6 +73,9 @@ export default function Home() {
             </motion.div>
           </div>
           <FeaturedAnalysisCard analysis={featuredAnalysis} />
+          <div className="mobile-membership-only">
+            <FreeMembershipCard compact onSignup={openLoginModal} />
+          </div>
           <div className="homepage-value-card">
             <div>
               <p className="section-kicker">För medlemmar</p>
