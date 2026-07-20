@@ -5,6 +5,7 @@ import type { AnalysisData } from "../../types/analysis";
 import { getAnalysisScore } from "../../lib/score";
 import { CONTENT_TYPE_BADGE_LABELS, type FilterContentType } from "../../hooks/useAnalysisFilters";
 import type { Recommendation } from "../../lib/recommendation";
+import AdUnit from "./AdUnit";
 
 interface AnalysisArchiveProps {
   analyses: AnalysisData[];
@@ -107,6 +108,7 @@ export default function AnalysisArchive({ analyses, featured, searchTerm, onSear
             </div>
             <div className="flex items-center justify-between border-t border-slate-100 px-5 py-4 md:block md:border-l md:border-t-0 md:pl-6"><div className="text-[10px] font-bold uppercase tracking-[0.08em] text-slate-500">Rekommendation</div><div className="mt-1 text-2xl"><Recommendation value={featured.recommendation} /></div><div className="mt-3 flex items-center gap-3 md:mt-4"><ScoreRing analysis={featured} /><span className="text-slate-400 transition group-hover:translate-x-1"><ArrowRight size={22} /></span></div></div>
           </Link>
+          <AdUnit variant="top-display" className="mx-auto max-w-[760px]" />
         </>}
 
         <div className="mb-3 flex items-center justify-between"><h2 className="text-sm font-bold md:text-base">Senaste analyser</h2><span className="hidden items-center gap-1 text-sm font-semibold text-emerald-700 md:flex">{resultCount} publiceringar <ArrowRight size={16} /></span></div>
@@ -122,6 +124,7 @@ export default function AnalysisArchive({ analyses, featured, searchTerm, onSear
             return <motion.div key={analysis.slug} className="min-w-0" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: Math.min(index * .04, .2) }}><Link to={`/analys/${analysis.slug}`} className="group flex w-full min-w-0 min-h-[214px] flex-col gap-3 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md md:block md:min-h-[212px] md:p-5"><div className="flex min-w-0 items-start gap-4 md:block"><CompanyMark analysis={analysis} /><div className="min-w-0 flex-1 md:mt-4"><span className={`inline-flex rounded-full px-2 py-1 text-[9px] font-bold uppercase tracking-[0.06em] ${isComment ? "bg-blue-50 text-blue-700" : "bg-emerald-50 text-emerald-700"}`}>{CONTENT_TYPE_BADGE_LABELS[analysis.contentType]}</span><h3 className="mt-2 line-clamp-2 text-sm font-semibold leading-5 text-slate-800">{analysis.listTitle || analysis.title}</h3></div></div><div className="mt-auto flex min-w-0 items-center justify-between gap-3 border-t border-slate-100 pt-3"><div className="min-w-0"><div className="text-sm font-semibold"><Recommendation value={analysis.recommendation} /></div><Meta analysis={analysis} /></div><div className="flex shrink-0 items-center gap-2"><ScoreRing analysis={analysis} /><ArrowRight className="text-slate-400 transition group-hover:translate-x-1" size={18} /></div></div></Link></motion.div>;
           })}
         </div>
+        <AdUnit variant="sidebar-display" className="mx-auto mt-3 max-w-[420px]" />
         <div className="mt-10 grid gap-4 md:grid-cols-2"><div className="rounded-2xl border border-emerald-100 bg-emerald-50/50 p-5"><div className="flex gap-3"><Sparkles className="mt-0.5 shrink-0 text-emerald-700" size={19} /><p className="text-sm leading-6 text-slate-600"><strong className="text-slate-800">Vi kombinerar marknadsdata med beprövad metodik</strong> för att ge dig objektiva och användbara analyser.</p></div></div><div className="hidden rounded-2xl border border-slate-200 bg-white p-5 md:block"><div className="flex gap-3"><Quote className="shrink-0 text-emerald-600" size={18} /><p className="text-sm leading-6 text-slate-600">Tydliga resonemang och långsiktiga perspektiv för bättre beslut.</p></div></div></div>
       </main>
 
