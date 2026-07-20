@@ -23,13 +23,15 @@ export default function About() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-24 md:py-32 space-y-32">
+    <div className="min-h-screen bg-white text-slate-900">
       {/* Hero Section */}
-      <div className="max-w-4xl space-y-12">
+      <div className="relative overflow-hidden bg-[radial-gradient(circle_at_75%_15%,rgba(16,185,129,0.08),transparent_28%),linear-gradient(180deg,#ffffff_0%,#fbfdfc_100%)]">
+      <div className="mx-auto max-w-[1180px] px-5 pb-12 pt-12 md:px-8 md:pb-16 md:pt-14">
+      <div className="max-w-4xl space-y-6">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-[11px] font-black uppercase tracking-[0.4em] text-primary"
+          className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-700"
         >
           Om Börsanalys.se
         </motion.div>
@@ -37,7 +39,7 @@ export default function About() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.8 }}
-          className="text-6xl md:text-9xl font-black tracking-tighter leading-[0.85]"
+          className="font-serif text-[48px] leading-[.98] tracking-[-0.045em] md:text-[72px]"
         >
           Vi gör analys <br /> <span className="text-primary">tillgängligt.</span>
         </motion.h1>
@@ -45,14 +47,16 @@ export default function About() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-2xl text-muted-foreground leading-relaxed font-medium max-w-3xl"
+          className="max-w-[620px] text-base leading-7 text-slate-600 md:text-[18px]"
         >
           Börsanalys.se startades med en enkel idé: att erbjuda djupgående aktieanalys som faktiskt hjälper dig fatta bättre investeringsbeslut — utan krångel, utan dolda agendor.
         </motion.p>
       </div>
+      </div>
+      </div>
 
       {/* Values Section */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+      <div className="mx-auto grid max-w-[1180px] grid-cols-1 gap-3 px-5 py-10 md:grid-cols-3 md:px-8 md:py-14">
         {values.map((value, index) => (
           <motion.div 
             key={index}
@@ -60,27 +64,27 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1, duration: 0.6 }}
-            className="space-y-8 p-10 bg-card border border-border rounded-[2.5rem] hover:border-primary/50 transition-all duration-500 shadow-xl shadow-black/5 group"
+            className="group space-y-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition-all duration-500 hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md md:p-6"
           >
-            <div className="w-16 h-16 bg-primary/10 text-primary rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500 shadow-lg shadow-primary/5">
-              <value.icon size={32} />
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-50 text-emerald-700 transition-transform duration-500 group-hover:scale-105">
+              <value.icon size={22} />
             </div>
-            <div className="space-y-4">
-              <h3 className="text-3xl font-black tracking-tighter">{value.title}</h3>
-              <p className="text-lg text-muted-foreground leading-relaxed font-medium">{value.description}</p>
+            <div className="space-y-2">
+              <h3 className="text-xl font-bold tracking-tight">{value.title}</h3>
+              <p className="text-sm leading-6 text-slate-500">{value.description}</p>
             </div>
           </motion.div>
         ))}
       </div>
 
       {/* Team Section */}
-      <div className="space-y-20">
-        <div className="space-y-6">
-          <h2 className="text-4xl md:text-7xl font-black tracking-tighter leading-tight">Carl Fredrik Thor</h2>
-          <p className="text-[10px] font-black text-primary uppercase tracking-[0.3em]">Grundare & Analytiker</p>
+      <div className="mx-auto max-w-[1180px] space-y-8 px-5 pb-14 md:px-8 md:pb-20">
+        <div className="space-y-2">
+          <h2 className="font-serif text-3xl leading-tight tracking-tight md:text-5xl">Carl Fredrik Thor</h2>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-emerald-700">Grundare & analytiker</p>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid min-w-0 grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-14">
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -88,7 +92,7 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="group"
           >
-            <div className="aspect-[4/5] bg-muted rounded-[3rem] overflow-hidden relative shadow-2xl shadow-black/10">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-slate-100 shadow-lg">
               <img 
                 src="https://picsum.photos/seed/carlfredrik/800/1000" 
                 alt="Carl Fredrik Thor" 
@@ -98,23 +102,23 @@ export default function About() {
             </div>
           </motion.div>
           
-          <div className="space-y-8">
-            <p className="text-xl text-muted-foreground font-medium leading-relaxed">
+          <div className="space-y-5">
+            <p className="text-base leading-7 text-slate-600 md:text-lg">
               Jag arbetar inom rättsväsendet och har parallellt byggt upp ett stort intresse för fundamental aktieanalys. Börsanalys.se är mitt sätt att kombinera analytiskt och systematiskt tänkande — egenskaper från mitt yrkesliv — med ett genuint intresse för börsen och investeringar.
             </p>
-            <p className="text-xl text-muted-foreground font-medium leading-relaxed">
+            <p className="text-base leading-7 text-slate-600 md:text-lg">
               Jag äger själv aktier i flera av de bolag jag analyserar, vilket innebär att jag har skin in the game. Mina rekommendationer är mina egna och baseras på samma analysmodell som presenteras på sajten.
             </p>
-            <div className="flex gap-4 pt-4">
+            <div className="flex gap-3 pt-2">
               <a 
                 href="https://x.com/borsanalys" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="w-14 h-14 bg-card border border-border rounded-2xl flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-500 shadow-xl shadow-black/5"
+                className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:border-emerald-700 hover:bg-emerald-700 hover:text-white"
               >
                 <Twitter size={24} />
               </a>
-              <a href="#" className="w-14 h-14 bg-card border border-border rounded-2xl flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-500 shadow-xl shadow-black/5">
+              <a href="#" className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:border-emerald-700 hover:bg-emerald-700 hover:text-white">
                 <Linkedin size={24} />
               </a>
             </div>
@@ -123,19 +127,19 @@ export default function About() {
       </div>
 
       {/* Contact Section */}
-      <div className="bg-foreground text-background rounded-[4rem] p-16 md:p-32 text-center space-y-12 relative overflow-hidden shadow-2xl shadow-black/20">
+      <div className="mx-5 mb-12 overflow-hidden rounded-2xl bg-slate-950 p-8 text-center text-white shadow-xl md:mx-auto md:max-w-[1120px] md:p-14">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2" />
         
         <div className="relative z-10 space-y-8">
-          <h2 className="text-5xl md:text-8xl font-black tracking-tighter leading-[0.85]">Vill du komma <br /> <span className="text-primary">i kontakt?</span></h2>
-          <p className="text-xl md:text-2xl text-background/70 max-w-2xl mx-auto font-medium leading-relaxed">Har du frågor, feedback eller vill diskutera en analys?</p>
-          <div className="flex flex-wrap justify-center gap-6 pt-8">
+          <h2 className="font-serif text-4xl leading-tight tracking-tight md:text-6xl">Vill du komma <br /> <span className="text-emerald-400">i kontakt?</span></h2>
+          <p className="mx-auto max-w-2xl text-base leading-7 text-white/70 md:text-lg">Har du frågor, feedback eller vill diskutera en analys?</p>
+          <div className="flex flex-wrap justify-center gap-4 pt-4">
             <motion.a 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               href="mailto:carl@borsanalys.se" 
-              className="inline-flex items-center gap-4 px-12 py-6 bg-primary text-primary-foreground rounded-full font-black uppercase tracking-widest text-sm shadow-2xl shadow-primary/30"
+              className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-6 py-3 text-sm font-bold text-white shadow-md shadow-emerald-900/30"
             >
               <Mail size={24} /> carl@borsanalys.se
             </motion.a>
@@ -144,20 +148,20 @@ export default function About() {
       </div>
 
       {/* Final CTA Section */}
-      <div className="text-center py-12">
+      <div className="px-5 py-10 text-center md:py-14">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="space-y-8"
         >
-          <h3 className="text-3xl md:text-5xl font-black tracking-tighter">Redo att se vår metodik i praktiken?</h3>
+          <h3 className="font-serif text-2xl tracking-tight md:text-4xl">Redo att se vår metodik i praktiken?</h3>
           <Link 
             to="/analys" 
-            className="inline-flex items-center gap-3 text-2xl md:text-4xl font-black text-primary hover:gap-6 transition-all duration-500 group"
+            className="group inline-flex items-center gap-2 text-lg font-semibold text-emerald-700 transition-all duration-500 hover:gap-4 md:text-2xl"
           >
             Se våra senaste analyser
-            <ArrowRight size={40} className="group-hover:scale-110 transition-transform" />
+            <ArrowRight size={24} className="transition-transform group-hover:scale-110" />
           </Link>
         </motion.div>
       </div>
