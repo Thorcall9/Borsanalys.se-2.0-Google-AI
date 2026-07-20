@@ -97,3 +97,33 @@ html {
     @apply bg-background text-foreground font-sans;
   }
 }
+
+@layer components {
+  .homepage-section {
+    @apply py-20 md:py-28;
+  }
+
+  .homepage-container {
+    @apply container mx-auto max-w-6xl px-6;
+  }
+
+  .surface-card {
+    @apply rounded-2xl border border-border bg-card shadow-sm;
+  }
+
+  .surface-card-hover {
+    @apply transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg hover:shadow-black/5;
+  }
+
+  .section-kicker {
+    @apply mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-primary;
+  }
+
+  .primary-action {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+  }
+
+  .secondary-action {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-6 py-3 text-sm font-bold text-foreground transition-colors hover:border-primary/40 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2;
+  }
+}
