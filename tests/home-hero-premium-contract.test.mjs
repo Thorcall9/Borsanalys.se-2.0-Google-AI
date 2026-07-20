@@ -19,6 +19,8 @@ test("homepage hero uses free optical typography and a dominant search interacti
   assert.match(hero, /secondary-action[^\n]*hero-secondary-action|hero-secondary-action[^\n]*secondary-action/);
   assert.match(styles, /\.homepage-hero/);
   assert.match(styles, /\.hero-title-line-accent[\s\S]*text-\[0\.8em\]/);
+  assert.match(styles, /\.hero-title-line-accent[\s\S]*md:translate-x-1/);
+  assert.doesNotMatch(styles, /\.hero-title-line-accent[\s\S]*md:translate-x-3/);
   assert.doesNotMatch(hero, /bg-muted[^\n]*<h1|<h1[^>]*bg-muted/);
 });
 
