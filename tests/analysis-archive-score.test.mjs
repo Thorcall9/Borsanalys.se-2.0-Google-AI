@@ -5,6 +5,7 @@ import {
   getScorePercent,
   sortAnalysesByScore,
 } from '../src/lib/score.ts';
+import { analyses } from '../src/data/analyses/index.ts';
 
 const item = (slug, totalScore, date, extra = {}) => ({
   slug,
@@ -82,4 +83,17 @@ test('rejects invalid or unsupported score data', () => {
   assert.equal(getAnalysisScore({ score: 30, maxScore: 0 }), null);
   assert.equal(getAnalysisScore({ score: 31, maxScore: 30 }), null);
   assert.equal(getScorePercent({ score: 1, maxScore: 0 }), null);
+});
+
+test('shows the explicit legacy score scales for RVRC and ABB in the archive', () => {
+  assert.deepEqual(getAnalysisScore(analyses['revolutionrace-2026']), {
+    score: 25,
+    maxScore: 35,
+    percent: (25 / 35) * 100,
+  });
+  assert.deepEqual(getAnalysisScore(analyses['abb-q1-2026']), {
+    score: 25.5,
+    maxScore: 35,
+    percent: (25.5 / 35) * 100,
+  });
 });

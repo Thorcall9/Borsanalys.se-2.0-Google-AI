@@ -38,6 +38,8 @@ export const revolutionRace2026: AnalysisData = {
     "Returer, frakt och digitala kundanskaffningskostnader",
   ],
   totalScore: "25",
+  score: 25,
+  maxScore: 35,
   rating: "Hög bolagskvalitet, men värderingen drar ned helhetsbetyget",
   targetPrice: "12-månadersankare ~58 kr; 5-årigt Base-värde ~74 kr",
   buyZone: "Under ~50 kr på 12 månader enligt modellen",

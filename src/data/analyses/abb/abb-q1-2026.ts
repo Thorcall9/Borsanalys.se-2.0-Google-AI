@@ -104,6 +104,8 @@ export const abb2026: AnalysisData = {
   ],
 
   totalScore: "25.5",
+  score: 25.5,
+  maxScore: 35,
   rating: "73",
   targetPrice: "878",
   buyZone: "800-850 SEK",
