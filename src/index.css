@@ -112,7 +112,7 @@ html {
   }
 
   .hero-title {
-    @apply mx-auto max-w-6xl;
+    @apply mx-auto max-w-[62rem];
   }
 
   .hero-title-line {
@@ -124,11 +124,11 @@ html {
   }
 
   .hero-search {
-    @apply min-h-[4.25rem] bg-card/95;
+    @apply min-h-[4.5rem] bg-card/95;
   }
 
   .hero-primary-action {
-    @apply px-7 py-3.5 shadow-xl shadow-primary/25;
+    @apply px-7 py-3.5;
   }
 
   .hero-secondary-action {

@@ -16,15 +16,15 @@ export const Hero: React.FC = () => {
             <span className="hero-title-line hero-title-line-primary">Börsanalys som gör dig</span>
             <span className="hero-title-line hero-title-line-accent text-primary">till en bättre investerare</span>
           </h1>
-          <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground md:mt-10 md:text-xl">
-            Djupgående analyser av affärsmodell, värdering och risk.
+          <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground md:mt-11 md:text-xl">
+            Förstå affärsmodell, värdering och risk innan ditt nästa investeringsbeslut.
           </p>
 
           <div className="mx-auto mt-11 max-w-2xl md:mt-12">
             <button 
               onClick={() => openSearch("hero")}
               aria-label="Sök efter bolag, analyser eller guider..."
-              className="hero-search surface-card flex w-full items-center gap-4 rounded-2xl px-6 py-5 text-left text-muted-foreground transition-all hover:border-primary/50 hover:shadow-md hover:shadow-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="hero-search surface-card flex w-full items-center gap-4 rounded-2xl px-6 py-4 text-left text-muted-foreground transition-all hover:border-primary/50 hover:shadow-md hover:shadow-black/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <Search size={22} className="text-primary" />
               <span className="flex-1 text-base font-medium">Sök efter bolag, analyser eller guider...</span>
@@ -35,19 +35,19 @@ export const Hero: React.FC = () => {
             </button>
           </div>
           
-          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:mt-7 sm:flex-row">
+          <div className="mt-4 flex flex-col items-center justify-center gap-3 sm:mt-5 sm:flex-row">
             <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.95 }}
-              className="primary-action hero-primary-action w-full sm:w-auto"
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.98 }}
+              className="primary-action hero-primary-action w-full shadow-md shadow-black/10 sm:w-auto"
               onClick={() => window.location.href = '/analys'}
             >
               Utforska analyser
               <ArrowRight className="h-4 w-4" />
             </motion.button>
             <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.98 }}
               className="secondary-action hero-secondary-action w-full sm:w-auto"
               onClick={openLoginModal}
             >

@@ -18,6 +18,7 @@ test("homepage hero uses free optical typography and a dominant search interacti
   assert.match(hero, /primary-action[^\n]*hero-primary-action|hero-primary-action[^\n]*primary-action/);
   assert.match(hero, /secondary-action[^\n]*hero-secondary-action|hero-secondary-action[^\n]*secondary-action/);
   assert.match(styles, /\.homepage-hero/);
+  assert.match(styles, /\.hero-title[\s\S]*max-w-\[62rem\]/);
   assert.match(styles, /\.hero-title-line-accent[\s\S]*text-\[0\.82em\]/);
   assert.doesNotMatch(styles, /\.hero-title-line-accent[\s\S]*translate-x/);
   assert.doesNotMatch(hero, /bg-muted[^\n]*<h1|<h1[^>]*bg-muted/);
@@ -28,6 +29,7 @@ test("homepage hero keeps the Swedish value proposition and both actions", async
 
   assert.match(hero, /Börsanalys som gör dig/);
   assert.match(hero, /till en bättre investerare/);
+  assert.match(hero, /Förstå affärsmodell, värdering och risk innan ditt nästa investeringsbeslut/);
   assert.match(hero, /Utforska analyser/);
   assert.match(hero, /Bli medlem gratis/);
   assert.match(hero, /openSearch\("hero"\)/);
