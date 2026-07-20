@@ -113,8 +113,10 @@ export default function ComprehensiveAnalysisV10({ data, isInWatchlist, isWatchl
         </div>
         <div className="grid md:grid-cols-2 gap-8">
           <Card title="Företagsöversikt"><TextBlock text={data.managementOverview || data.marketOverview} /></Card>
-          <Card title="Ledning & ägarstruktur"><TextBlock text={[data.management, data.ownershipStructure].filter(Boolean).join("\n\n")} /></Card>
+          <Card title="Ledning & ägarstruktur"><TextBlock text={[data.management, data.ownershipStructure, data.managementAnalysis].filter(Boolean).join("\n\n")} /></Card>
         </div>
+        {data.managementTables?.length ? <div className="grid gap-8 mt-8">{data.managementTables.map((table) => <TableBlock key={table.title} table={table} />)}</div> : null}
+        {data.managementMotivation && <Card title="Ledningsbedömning" className="mt-8"><TextBlock text={data.managementMotivation} /></Card>}
       </section>
 
       <section id="business-model" className="scroll-mt-8 mb-20">
@@ -133,6 +135,8 @@ export default function ComprehensiveAnalysisV10({ data, isInWatchlist, isWatchl
         <SectionHeader number="IV" title="Finansiell kvalitet" accentColor={accentColor} />
         <Card title="Historik, lönsamhet och balansräkning"><TextBlock text={data.financialAnalysis} /></Card>
         {data.financialQualityWhyNot5 && <Card title="Vad hindrar full poäng?" className="mt-8"><TextBlock text={data.financialQualityWhyNot5} /></Card>}
+        {data.financialMotivation && <Card title="Finansiell bedömning" className="mt-8"><TextBlock text={data.financialMotivation} /></Card>}
+        {data.financialTimeline?.length ? <div className="mt-8"><h3 className="mb-4 text-lg font-black">Historisk utveckling</h3><div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">{data.financialTimeline.map((item) => <Card key={item.year} title={item.year}><p className="font-black text-primary">{item.highlight}</p><p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.description}</p></Card>)}</div></div> : null}
         {data.financialTables?.length ? <div className="grid gap-8 mt-8">{data.financialTables.map((table) => <TableBlock key={table.title} table={table} />)}</div> : null}
       </section>
 
@@ -156,11 +160,14 @@ export default function ComprehensiveAnalysisV10({ data, isInWatchlist, isWatchl
         <SectionHeader number="VII" title="Kursdrivare" accentColor={accentColor} />
         <Card title="Tillväxt och kommande drivkrafter"><TextBlock text={data.growth} /></Card>
         {data.growthPoints?.length ? <div className="grid md:grid-cols-2 gap-8 mt-8">{data.growthPoints.map((point) => <Card key={point.title} title={point.title}><TextBlock text={point.body} /></Card>)}</div> : null}
+        {data.growthTables?.length ? <div className="grid gap-8 mt-8">{data.growthTables.map((table) => <TableBlock key={table.title} table={table} />)}</div> : null}
+        {data.growthMotivation && <Card title="Tillväxtbedömning" className="mt-8"><TextBlock text={data.growthMotivation} /></Card>}
       </section>
 
       <section id="risks" className="scroll-mt-8 mb-20">
         <SectionHeader number="VIII" title="Risker" accentColor={accentColor} />
         <Card title="Riskbild och stresstest"><TextBlock text={data.riskAnalysis || data.risks?.join("\n\n") || "Riskanalys saknas i analysunderlaget."} /></Card>
+        {data.riskMotivation && <Card title="Riskbedömning" className="mt-8"><TextBlock text={data.riskMotivation} /></Card>}
         {data.riskTables?.length ? <div className="grid gap-8 mt-8">{data.riskTables.map((table) => <TableBlock key={table.title} table={table} />)}</div> : null}
         {data.devilsAdvocateTables?.length ? <div className="grid gap-8 mt-8">{data.devilsAdvocateTables.map((table) => <TableBlock key={table.title} table={table} />)}</div> : null}
       </section>
@@ -170,6 +177,10 @@ export default function ComprehensiveAnalysisV10({ data, isInWatchlist, isWatchl
         <Card title="Vad ska följas framåt"><TextBlock text={data.watchItems?.join("\n\n") || data.aiSummary || data.conclusion} /></Card>
         {data.watchTable?.length ? <div className="grid gap-8 mt-8">{data.watchTable.map((table) => <TableBlock key={table.title} table={table} />)}</div> : null}
         {data.summaryQnA?.length ? <div className="grid gap-4 mt-8">{data.summaryQnA.map((item) => <Card key={item.question} title={item.question}><TextBlock text={item.answer} /></Card>)}</div> : null}
+        {data.esg && <Card title="Hållbarhet & makro" className="mt-8"><TextBlock text={data.esg} /></Card>}
+        {data.aiSummary && <Card title="AI-observationer" className="mt-8"><TextBlock text={data.aiSummary} /></Card>}
+        {data.aiTables?.length ? <div className="grid gap-8 mt-8">{data.aiTables.map((table) => <TableBlock key={table.title} table={table} />)}</div> : null}
+        {data.aiMotivation && <Card title="Signalbedömning" className="mt-8"><TextBlock text={data.aiMotivation} /></Card>}
       </section>
 
       <section id="investment-decision" className="scroll-mt-8 mb-20">
