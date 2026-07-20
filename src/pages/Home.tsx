@@ -6,16 +6,10 @@ import SEO from "../components/SEO";
 import { ArrowRight, CheckCircle2, ChevronRight, Loader2, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import RecentPublications from "../components/community/RecentPublications";
-
-const revolutionRaceCategories = [
-  { label: "Företagsöversikt", score: 4.0 },
-  { label: "Affärsmodell", score: 4.0 },
-  { label: "Konkurrensfördelar", score: 4.0 },
-  { label: "Finansiell utveckling", score: 4.0 },
-  { label: "Fundamental värdering", score: 2.0 },
-  { label: "Potentiella kursdrivare", score: 3.0 },
-  { label: "Risker", score: 4.0 },
-];
+import TrustStrip from "../components/home/TrustStrip";
+import FeaturedAnalysisCard from "../components/home/FeaturedAnalysisCard";
+import FreeMembershipCard from "../components/home/FreeMembershipCard";
+import { getAnalysisPresentation, getFeaturedAnalysis } from "../components/home/analysisPresentation";
 
 const memberBenefits = [
   "Spara analyser och checklistor",
@@ -36,7 +30,6 @@ const scenarioStyles = {
   caution: "border-red-200 text-red-700 dark:border-red-900 dark:text-red-400",
 } as const;
 
-const ScoreCard = React.lazy(() => import("../components/ScoreCard").then((module) => ({ default: module.ScoreCard })));
 const Newsletter = React.lazy(() => import("../components/Newsletter").then((module) => ({ default: module.Newsletter })));
 const MethodologySection = React.lazy(() => import("../components/MethodologySection"));
 
@@ -48,6 +41,7 @@ const SectionLoader = () => (
 
 export default function Home() {
   const { openLoginModal } = useAuth();
+  const featuredAnalysis = getAnalysisPresentation(getFeaturedAnalysis());
 
   return (
     <div className="min-h-screen bg-background">
@@ -57,45 +51,39 @@ export default function Home() {
       />
       <Hero />
 
-      <section className="homepage-section pt-12 md:pt-20" aria-labelledby="featured-analysis-title">
+      <section className="homepage-section homepage-trust-section" aria-label="Börsanalys.se i korthet">
         <div className="homepage-container">
-          <div className="mb-10 flex flex-col items-start justify-between gap-6 md:flex-row md:items-end">
+          <TrustStrip />
+        </div>
+      </section>
+
+      <section className="homepage-section homepage-featured-section" aria-labelledby="featured-analysis-title">
+        <div className="homepage-container">
+          <div className="featured-section-heading">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="max-w-2xl"
+              className="featured-section-intro"
             >
               <p className="section-kicker">Se hur en analys ser ut</p>
-              <h2 id="featured-analysis-title" className="text-3xl font-bold tracking-tight md:text-4xl">
-                RevolutionRace: Friluftskläder med direktförsäljning och stark lönsamhet
-              </h2>
-              <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
-                Nya förklaringsmodellen visar 25/35 poäng: hög bolagskvalitet, nettokassa och stark ställning på de tyskspråkiga marknaderna, men värderingen kräver att tillväxten tar fart igen.
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <Link to="/analys/revolutionrace-2026" className="secondary-action">
-                Läs hela analysen <ArrowRight className="h-4 w-4" />
-              </Link>
+              <h2 id="featured-analysis-title">Ett tydligare underlag för dina egna beslut</h2>
+              <p>Jämför bolagskvalitet, värdering och risk i ett konsekvent ramverk.</p>
             </motion.div>
           </div>
-
-          <React.Suspense fallback={<SectionLoader />}>
-            <ScoreCard
-              companyName="RevolutionRace"
-              ticker="RVRC.ST"
-              totalScore={3.6}
-              categories={revolutionRaceCategories}
-              linkTo="/analys/revolutionrace-2026"
-            />
-          </React.Suspense>
+          <FeaturedAnalysisCard analysis={featuredAnalysis} />
+          <div className="mobile-membership-only">
+            <FreeMembershipCard compact onSignup={openLoginModal} />
+          </div>
+          <div className="homepage-value-card">
+            <div>
+              <p className="section-kicker">För medlemmar</p>
+              <h3>Bygg din egen bevakning</h3>
+              <p>Samla bolagen du följer och hitta snabbt tillbaka när nya analyser eller rapportkommentarer publiceras.</p>
+            </div>
+            <button type="button" className="text-link" onClick={openLoginModal}>Se medlemsfördelarna <ArrowRight size={16} aria-hidden="true" /></button>
+          </div>
         </div>
       </section>
 
