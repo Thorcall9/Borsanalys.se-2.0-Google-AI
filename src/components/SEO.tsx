@@ -1,5 +1,6 @@
 import React from "react";
 import { Helmet } from "react-helmet-async";
+import { serializeJsonLd } from "../lib/seo/structuredData";
 
 interface SEOProps {
   title?: string;
@@ -10,6 +11,9 @@ interface SEOProps {
   twitterHandle?: string;
   noindex?: boolean;
   nofollow?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  publishedTime?: string;
+  modifiedTime?: string;
 }
 
 export const SITE_ORIGIN = "https://www.borsanalys.se";
@@ -36,6 +40,9 @@ const SEO: React.FC<SEOProps> = ({
   twitterHandle = "@borsanalys",
   noindex = false,
   nofollow = false,
+  jsonLd,
+  publishedTime,
+  modifiedTime,
 }) => {
   const siteName = "Börsanalys.se";
   const fullTitle = title ? `${title} | ${siteName}` : siteName;
@@ -43,6 +50,7 @@ const SEO: React.FC<SEOProps> = ({
   const metaDescription = description || defaultDescription;
   const url = normalizeCanonical(canonical);
   const robots = noindex ? (nofollow ? "noindex, nofollow" : "noindex, follow") : undefined;
+  const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
   return (
     <Helmet>
@@ -59,6 +67,16 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="og:image" content={ogImage} />
       {!noindex && <meta property="og:url" content={url} />}
       <meta property="og:site_name" content={siteName} />
+      {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+      {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+
+      {jsonLdItems.map((item, index) => (
+        <script
+          key={`json-ld-${index}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(item) }}
+        />
+      ))}
 
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />

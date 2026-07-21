@@ -33,6 +33,26 @@ test('SEO normalizes the production canonical and supports noindex', async () =>
   assert.match(seo, /og:url/);
 });
 
+test('SEO imports shared structured-data helpers and exposes article metadata', async () => {
+  const seo = await source('src/components/SEO.tsx');
+  assert.match(seo, /from ["']\.\.\/lib\/seo\/structuredData["']/);
+  assert.match(seo, /jsonLd\?: Record<string, unknown> \| Record<string, unknown>\[\]/);
+  assert.match(seo, /publishedTime\?: string/);
+  assert.match(seo, /modifiedTime\?: string/);
+  assert.match(seo, /application\/ld\+json/);
+});
+
+test('structured-data helpers define the required JSON-LD contracts', async () => {
+  const structuredData = await source('src/lib/seo/structuredData.ts');
+  assert.match(structuredData, /buildBreadcrumbJsonLd/);
+  assert.match(structuredData, /buildArticleJsonLd/);
+  assert.match(structuredData, /buildWebsiteJsonLd/);
+  assert.match(structuredData, /serializeJsonLd/);
+  assert.match(structuredData, /https:\/\/schema\.org/);
+  assert.match(structuredData, /JSON\.stringify/);
+  assert.match(structuredData, /\\u003c/);
+});
+
 test('sitemap imports the shared analysis registry and excludes legacy routes', async () => {
   const sitemap = await source('api/sitemap.ts');
   assert.match(sitemap, /data\/analyses/);
