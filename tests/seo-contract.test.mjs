@@ -53,6 +53,16 @@ test('structured-data helpers define the required JSON-LD contracts', async () =
   assert.match(structuredData, /\\u003c/);
 });
 
+test('SEO defaults to the local OG image and structured URLs pin the production origin', async () => {
+  const seo = await source('src/components/SEO.tsx');
+  const structuredData = await source('src/lib/seo/structuredData.ts');
+
+  assert.doesNotMatch(seo, /picsum\.photos/);
+  assert.match(seo, /ogImage = "\/og-default\.svg"/);
+  assert.match(structuredData, /const url = new URL\(SITE_ORIGIN\)/);
+  assert.match(structuredData, /const input = new URL\(path, SITE_ORIGIN\)/);
+});
+
 test('sitemap imports the shared analysis registry and excludes legacy routes', async () => {
   const sitemap = await source('api/sitemap.ts');
   assert.match(sitemap, /data\/analyses/);

@@ -1,10 +1,9 @@
 export const SITE_ORIGIN = "https://www.borsanalys.se";
 
 function absoluteUrl(path: string): string {
-  const url = new URL(path, SITE_ORIGIN);
-  url.search = "";
-  url.hash = "";
-  url.pathname = url.pathname.replace(/\/+$/, "") || "/";
+  const input = new URL(path, SITE_ORIGIN);
+  const url = new URL(SITE_ORIGIN);
+  url.pathname = input.pathname.replace(/\/+$/, "") || "/";
   return url.toString();
 }
 
