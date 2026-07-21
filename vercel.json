@@ -76,10 +76,10 @@
   ],
   "functions": {
     "api/rss.ts": {
-      "includeFiles": "src/data/analyses/**"
+      "includeFiles": "src/data/**"
     },
     "api/sitemap.ts": {
-      "includeFiles": ["src/data/analyses/**", "src/data/guides.ts", "src/data/stocks.ts"]
+      "includeFiles": "src/data/analyses/**"
     },
     "api/newsletter/signup.ts": {
       "maxDuration": 10
