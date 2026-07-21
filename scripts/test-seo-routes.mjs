@@ -1,5 +1,13 @@
 #!/usr/bin/env node
 import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+
+const root = new URL('../', import.meta.url);
+const vercel = JSON.parse(await readFile(new URL('vercel.json', root), 'utf8'));
+const robotsRewrite = vercel.rewrites.find((rewrite) => rewrite.source === '/robots.txt');
+
+assert.deepEqual(robotsRewrite, { source: '/robots.txt', destination: '/robots.txt' });
+const expectedRobots = await readFile(new URL(`public${robotsRewrite.destination}`, root), 'utf8');
 
 const baseUrl = (process.argv[2] || 'http://127.0.0.1:4173').replace(/\/$/, '');
 const routes = [
@@ -21,7 +29,7 @@ const routes = [
   { path: '/en-helt-pahittad-sida-12345', status: 404, html: false },
   { path: '/sitemap.xml', status: 200, xml: true },
   {
-    path: '/robots.txt',
+    path: robotsRewrite.source,
     status: 200,
     robots: [
       'User-agent: *',
@@ -56,6 +64,7 @@ for (const expected of routes) {
   }
   if (expected.robots) {
     assert.match(contentType, /text\/plain/, `${expected.path}: expected robots text`);
+    assert.equal(body, expectedRobots, `${expected.path}: response must match ${robotsRewrite.destination}`);
     for (const directive of expected.robots) {
       assert.match(body, new RegExp(`^${directive.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'm'), `${expected.path}: missing ${directive}`);
     }

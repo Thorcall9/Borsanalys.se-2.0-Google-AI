@@ -6,7 +6,12 @@ import { extname, join, normalize } from 'node:path';
 const root = process.cwd();
 const port = Number(process.env.PORT || 4176);
 const indexHtml = await readFile(join(root, 'dist/index.html'), 'utf8');
-const robots = await readFile(join(root, 'public/robots.txt'), 'utf8');
+const vercel = JSON.parse(await readFile(join(root, 'vercel.json'), 'utf8'));
+const robotsRewrite = vercel.rewrites?.find((rewrite) => rewrite.source === '/robots.txt');
+if (robotsRewrite?.destination !== '/robots.txt') {
+  throw new Error('vercel.json must explicitly rewrite /robots.txt to /robots.txt');
+}
+const robots = await readFile(join(root, 'public', robotsRewrite.destination.slice(1)), 'utf8');
 const analysesSource = await readFile(join(root, 'src/data/analyses/index.ts'), 'utf8');
 const analysisSlugs = [...analysesSource.matchAll(/^\s*"([^"]+)":\s*\w+/gm)].map((match) => match[1]);
 
@@ -44,7 +49,7 @@ const server = createServer(async (request, response) => {
     response.end();
     return;
   }
-  if (pathname === '/robots.txt') {
+  if (pathname === robotsRewrite.source) {
     response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
     response.end(robots);
     return;

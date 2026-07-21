@@ -61,20 +61,24 @@ test('SEO defaults to the local OG image and structured URLs pin the production 
   const seo = await source('src/components/SEO.tsx');
   const structuredData = await source('src/lib/seo/structuredData.ts');
   const ogImage = new URL('public/og-image.png', root);
+  const pngSignature = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
 
   assert.doesNotMatch(seo, /picsum\.photos/);
-  await assert.doesNotReject(() => readFile(ogImage));
+  const ogImageBytes = await readFile(ogImage);
+  assert.deepEqual(ogImageBytes.subarray(0, pngSignature.length), pngSignature);
   assert.match(seo, /ogImage = "\/og-image\.png"/);
   assert.match(structuredData, /const url = new URL\(SITE_ORIGIN\)/);
   assert.match(structuredData, /const input = new URL\(path, SITE_ORIGIN\)/);
 });
 
 test('fallback metadata and crawler policy use the approved public OG asset', async () => {
-  const [index, robots, vercel] = await Promise.all([
+  const [index, robots, vercelSource, previewServer] = await Promise.all([
     source('index.html'),
     source('public/robots.txt'),
     source('vercel.json'),
+    source('scripts/serve-vercel-preview.mjs'),
   ]);
+  const vercel = JSON.parse(vercelSource);
   const ogImage = new URL('public/og-image.png', root);
 
   await assert.doesNotReject(() => readFile(ogImage));
@@ -105,7 +109,12 @@ test('fallback metadata and crawler policy use the approved public OG asset', as
     assert.match(robots, new RegExp(`^${directive.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'm'));
   }
 
-  assert.match(vercel, /"source":\s*"\/robots\.txt",\s*"destination":\s*"\/robots\.txt"/);
+  assert.deepEqual(
+    vercel.rewrites.find((rewrite) => rewrite.source === '/robots.txt'),
+    { source: '/robots.txt', destination: '/robots.txt' },
+  );
+  assert.match(previewServer, /vercel\.json/);
+  assert.match(previewServer, /robotsRewrite/);
 });
 
 test('sitemap imports the shared analysis registry and excludes legacy routes', async () => {
