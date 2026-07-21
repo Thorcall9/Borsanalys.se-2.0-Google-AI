@@ -347,11 +347,11 @@ html {
   .trust-item p { font-size: 0.63rem; }
   .homepage-featured-section { padding-top: 1.3rem; }
   .featured-section-intro h2 { font-size: 2rem; }
-  .featured-analysis-body { grid-template-columns: 4.7rem minmax(0, 1fr); gap: 0.8rem; }
+  .featured-analysis-body { grid-template-columns: 4.7rem minmax(0, 1fr); gap: 0.45rem 0.8rem; }
   .featured-analysis-logo { min-height: 4.7rem; }
   .featured-analysis-copy h2 { font-size: 1.35rem; }
   .featured-analysis-copy > p:last-child { font-size: 0.7rem; }
-  .score-ring { grid-column: 1 / -1; justify-self: start; width: 3.6rem; height: 3.6rem; }
+  .score-ring { grid-column: 1 / -1; justify-self: start; width: 3.6rem; height: 3.6rem; margin-top: -0.2rem; }
   .score-ring strong { font-size: 1rem; }
   .featured-analysis-footer { align-items: flex-start; flex-direction: column; gap: 0.7rem; }
   .homepage-value-card { align-items: flex-start; flex-direction: column; gap: 1rem; }
