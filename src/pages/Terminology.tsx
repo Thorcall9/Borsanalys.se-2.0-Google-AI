@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Book, Info, ChevronRight, TrendingUp, DollarSign, BarChart3, ShieldCheck, Zap, Activity, Waves, ArrowRight, Search, X, Filter, ChevronDown } from "lucide-react";
 import { terminology } from "../data/terminology";
 import { guides } from "../data/guides";
+import SEO from "../components/SEO";
 
 
 
@@ -57,6 +58,12 @@ export default function Terminology() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
+      <SEO
+        title="Börsskolan - Lär dig aktieanalys"
+        description="Lär dig de viktigaste begreppen inom aktieanalys, värdering och bolagskvalitet."
+        canonical="/skola"
+        ogImage="/og-image.png"
+      />
       {/* Header */}
       <header className="relative overflow-hidden bg-[radial-gradient(circle_at_75%_15%,rgba(16,185,129,0.08),transparent_28%),linear-gradient(180deg,#ffffff_0%,#fbfdfc_100%)]">
         <div className="mx-auto max-w-[1180px] px-5 pb-9 pt-12 md:px-8 md:pb-12 md:pt-14">

@@ -7,10 +7,10 @@ import { guides } from "../data/guides";
 import SEO from "../components/SEO";
 import AnalysisDisclaimer from "../components/analysis/AnalysisDisclaimer";
 import MobileReadingProgress from "../components/MobileReadingProgress";
-import { Helmet } from "react-helmet-async";
 import SparaInvesteraGuide from "../components/guides/SparaInvesteraGuide";
 import AdUnit from "../components/analysis/AdUnit";
 import NotFound from "./NotFound";
+import { buildArticleJsonLd, buildBreadcrumbJsonLd } from "../lib/seo/structuredData";
 
 const GUIDE_COMPONENTS = {
   SparaInvesteraGuide: SparaInvesteraGuide
@@ -47,21 +47,35 @@ export default function GuideDetail() {
   const relatedGuides = guideList
     .filter(g => g.category === guide.category && g.slug !== guide.slug)
     .slice(0, 2);
+  const guidePath = `/guider/${guide.slug}`;
+  const guideJsonLd = [
+    buildArticleJsonLd({
+      title: guide.title,
+      description: guide.metaDescription || guide.excerpt,
+      path: guidePath,
+      publishedTime: guide.publishedDate,
+      image: "/og-image.png",
+    }),
+    buildBreadcrumbJsonLd([
+      { name: "Hem", path: "/" },
+      { name: "Guider", path: "/guider" },
+      { name: guide.title, path: guidePath },
+    ]),
+    ...(guide.faqSchema ? [guide.faqSchema] : []),
+  ];
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-24 space-y-16">
       <SEO 
         title={guide.seoTitle || guide.title}
         description={guide.metaDescription || guide.excerpt}
+        canonical={guidePath}
+        ogType="article"
+        ogImage="/og-image.png"
+        publishedTime={guide.publishedDate}
+        jsonLd={guideJsonLd}
       />
-      
-      {guide.faqSchema && (
-        <Helmet>
-          <script type="application/ld+json">
-            {JSON.stringify(guide.faqSchema)}
-          </script>
-        </Helmet>
-      )}
+
       {/* Breadcrumbs */}
       <div className="flex items-center gap-3 text-[10px] font-black text-muted-foreground/40 uppercase tracking-[0.3em]">
         <Link to="/" className="hover:text-primary transition-colors">Hem</Link>

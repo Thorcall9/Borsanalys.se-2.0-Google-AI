@@ -19,9 +19,13 @@ test('React app has an explicit catch-all NotFound route', async () => {
 });
 
 test('unknown analysis slugs preserve their URL and render noindex 404', async () => {
-  const analysis = await source('src/pages/Analysis.tsx');
+  const [analysis, notFound] = await Promise.all([
+    source('src/pages/Analysis.tsx'),
+    source('src/pages/NotFound.tsx'),
+  ]);
   assert.doesNotMatch(analysis, /<Navigate to="\/analys" replace \/>/);
   assert.match(analysis, /<NotFound/);
+  assert.match(notFound, /<SEO title="Sidan hittades inte" noindex nofollow \/>/);
 });
 
 test('SEO normalizes the production canonical and supports noindex', async () => {
@@ -71,4 +75,68 @@ test('sitemap imports the shared analysis registry and excludes legacy routes', 
   assert.match(sitemap, /analyses/);
   assert.doesNotMatch(sitemap, /\/analyser\/nvidia/);
   assert.doesNotMatch(sitemap, /\/makro/);
+});
+
+test('public routes derive metadata and structured data from their registries', async () => {
+  const [home, analysis, guideDetail, stockHub] = await Promise.all([
+    source('src/pages/Home.tsx'),
+    source('src/pages/Analysis.tsx'),
+    source('src/pages/GuideDetail.tsx'),
+    source('src/components/StockHub.tsx'),
+  ]);
+
+  assert.match(home, /buildWebsiteJsonLd/);
+  assert.match(home, /canonical="\/"/);
+  assert.match(analysis, /buildArticleJsonLd/);
+  assert.match(analysis, /buildBreadcrumbJsonLd/);
+  assert.match(analysis, /title=\{analysis\.title\}/);
+  assert.match(analysis, /description=\{analysis\.summary\}/);
+  assert.match(analysis, /const analysisPath = `\/analys\/\$\{analysis\.slug\}`/);
+  assert.match(analysis, /canonical=\{analysisPath\}/);
+  assert.match(analysis, /publishedTime=\{analysis\.date\}/);
+  const v10Branch = analysis
+    .split('if (analysis.templateVersion === "v10") {')[1]
+    .split('// Use the new comprehensive analysis template')[0];
+  assert.match(v10Branch, /<ComprehensiveAnalysisV10/);
+  assert.match(v10Branch, /\{analysisMeta\}/);
+  assert.match(guideDetail, /buildArticleJsonLd/);
+  assert.match(guideDetail, /buildBreadcrumbJsonLd/);
+  assert.match(guideDetail, /title=\{guide\.seoTitle \|\| guide\.title\}/);
+  assert.match(guideDetail, /description=\{guide\.metaDescription \|\| guide\.excerpt\}/);
+  assert.match(guideDetail, /const guidePath = `\/guider\/\$\{guide\.slug\}`/);
+  assert.match(guideDetail, /canonical=\{guidePath\}/);
+  assert.match(guideDetail, /publishedTime=\{guide\.publishedDate\}/);
+  assert.match(stockHub, /buildBreadcrumbJsonLd/);
+  assert.match(stockHub, /title=\{stock\.name\}/);
+  assert.match(stockHub, /description=\{stock\.description\}/);
+  assert.match(stockHub, /const stockPath = `\/aktier\/\$\{stock\.slug\}`/);
+  assert.match(stockHub, /canonical=\{stockPath\}/);
+});
+
+test('public index pages declare stable canonical metadata while private pages remain noindex', async () => {
+  const [guides, terminology, macro, tools, about, contact, app, checklists] = await Promise.all([
+    source('src/pages/Guides.tsx'),
+    source('src/pages/Terminology.tsx'),
+    source('src/pages/MacroDashboard.tsx'),
+    source('src/pages/Tools.tsx'),
+    source('src/pages/About.tsx'),
+    source('src/pages/Contact.tsx'),
+    source('src/App.tsx'),
+    source('src/pages/MyChecklists.tsx'),
+  ]);
+
+  for (const page of [guides, terminology, macro, tools, about, contact]) {
+    assert.match(page, /import SEO from ["']\.\.\/components\/SEO["']/);
+    assert.match(page, /<SEO/);
+    assert.match(page, /ogImage="\/og-image\.png"/);
+  }
+
+  assert.match(guides, /canonical="\/guider"/);
+  assert.match(terminology, /canonical="\/skola"/);
+  assert.match(macro, /canonical="\/marknad"/);
+  assert.match(tools, /canonical=\{location\.pathname\}/);
+  assert.match(about, /canonical="\/om-oss"/);
+  assert.match(contact, /canonical="\/kontakt"/);
+  assert.match(app, /<SEO title=\{title\} noindex nofollow \/>/);
+  assert.match(checklists, /<SEO title="Mina checklistor" noindex nofollow \/>/);
 });

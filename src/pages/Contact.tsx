@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Mail, MessageSquare, Clock, ChevronRight } from "lucide-react";
+import SEO from "../components/SEO";
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -22,6 +23,12 @@ export default function Contact() {
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-24 md:py-32 space-y-32">
+      <SEO
+        title="Kontakt"
+        description="Kontakta Börsanalys.se med frågor, feedback eller förslag på bolag och guider."
+        canonical="/kontakt"
+        ogImage="/og-image.png"
+      />
       {/* Header */}
       <div className="max-w-4xl space-y-12">
         <motion.div 

@@ -51,6 +51,7 @@ import NotFound from "./NotFound";
 import ComprehensiveAnalysisV10 from "../components/analysis/ComprehensiveAnalysisV10";
 import AnalysisArchive from "../components/analysis/AnalysisArchive";
 import { getDeepDiveLoader } from "./analysisDeepDiveRegistry";
+import { buildArticleJsonLd, buildBreadcrumbJsonLd } from "../lib/seo/structuredData";
 
 const lazyDeepDive = (key: string) => lazy(() => {
   const loader = getDeepDiveLoader(key);
@@ -376,12 +377,32 @@ export default function Analysis() {
     }
   }
 
+  const analysisPath = `/analys/${analysis.slug}`;
   const analysisMeta = (
     <SEO
-      title={`${analysis.title} (${analysis.ticker}) - Analys`}
+      title={analysis.title}
       description={analysis.summary}
-      canonical={`/analys/${slug}`}
+      canonical={analysisPath}
       ogType="article"
+      ogImage="/og-image.png"
+      publishedTime={analysis.date}
+      modifiedTime={analysis.updatedAt}
+      jsonLd={[
+        buildArticleJsonLd({
+          title: analysis.title,
+          description: analysis.summary,
+          path: analysisPath,
+          publishedTime: analysis.date,
+          modifiedTime: analysis.updatedAt,
+          author: analysis.author,
+          image: "/og-image.png",
+        }),
+        buildBreadcrumbJsonLd([
+          { name: "Hem", path: "/" },
+          { name: "Analyser", path: "/analys" },
+          { name: analysis.title, path: analysisPath },
+        ]),
+      ]}
     />
   );
 
@@ -394,7 +415,6 @@ export default function Analysis() {
   if (slug === "axfood-q2-2026") {
     return (
       <>
-        {analysisMeta}
         <ReportComment data={analysis} markdown={axfoodQ2Markdown} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
         <MobileReadingProgress 
           label="analys" 
@@ -437,6 +457,7 @@ export default function Analysis() {
             </button>
           </div>
         )}
+        {analysisMeta}
       </>
     );
   }
@@ -446,7 +467,6 @@ export default function Analysis() {
     const Component = DEEP_DIVE_COMPONENTS[analysis.deepDiveComponent as keyof typeof DEEP_DIVE_COMPONENTS];
     return (
       <>
-        {analysisMeta}
         <Suspense fallback={<DeepDiveLoading />}>
           <Component data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
         </Suspense>
@@ -491,6 +511,7 @@ export default function Analysis() {
             </button>
           </div>
         )}
+        {analysisMeta}
       </>
     );
   }
@@ -508,6 +529,7 @@ export default function Analysis() {
           nextTitle={nextAnalysis?.title}
           nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined}
         />
+        {analysisMeta}
       </>
     );
   }
@@ -515,7 +537,6 @@ export default function Analysis() {
   // Use the new comprehensive analysis template for all other stocks
   return (
     <>
-      {analysisMeta}
       <ComprehensiveAnalysis 
         data={analysis} 
         onToggleWatchlist={toggleWatchlist} 
@@ -567,6 +588,7 @@ export default function Analysis() {
           </button>
         </div>
       )}
+      {analysisMeta}
     </>
   );
 }

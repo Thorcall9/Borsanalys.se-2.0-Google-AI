@@ -28,6 +28,8 @@ import { GoogleGenAI, Type } from "@google/genai";
 import { stocks } from '../data/stocks';
 import { analyses } from '../data/analyses';
 import { fetchWithCache, RapidAPIQuote } from '../services/stockService';
+import SEO from './SEO';
+import { buildBreadcrumbJsonLd } from '../lib/seo/structuredData';
 
 export default function StockHub() {
   const { slug } = useParams<{ slug: string }>();
@@ -59,6 +61,7 @@ export default function StockHub() {
   if (!stock) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-6">
+        <SEO title="Bolaget hittades inte" noindex nofollow />
         <div className="text-center">
           <h1 className="text-4xl font-serif font-bold text-foreground mb-4">Bolaget hittades inte</h1>
           <p className="text-muted-foreground mb-8 text-lg">Vi har ännu inte lagt till information om detta bolag.</p>
@@ -86,9 +89,20 @@ export default function StockHub() {
 
   // Process financial data
   const chartData = stock.financialData;
+  const stockPath = `/aktier/${stock.slug}`;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <SEO
+        title={stock.name}
+        description={stock.description}
+        canonical={stockPath}
+        ogImage="/og-image.png"
+        jsonLd={buildBreadcrumbJsonLd([
+          { name: "Hem", path: "/" },
+          { name: stock.name, path: stockPath },
+        ])}
+      />
       {/* Header */}
       <header className="border-b border-border bg-white/80 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">

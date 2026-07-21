@@ -7,6 +7,7 @@ import {
   Newspaper, Gauge, Target
 } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
+import SEO from "../components/SEO";
 
 
 
@@ -251,6 +252,12 @@ export default function MacroDashboard() {
 
   return (
     <div className="min-h-screen overflow-hidden bg-white text-slate-900 pb-24">
+      <SEO
+        title="Makro-dashboard - Marknadsanalys"
+        description="Följ räntor, inflation, valutor och marknadssentiment för att sätta börsen i rätt kontext."
+        canonical="/marknad"
+        ogImage="/og-image.png"
+      />
       {/* Background Decorative Gradients */}
       <div className="absolute top-[1200px] right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[180px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute top-[2500px] left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
