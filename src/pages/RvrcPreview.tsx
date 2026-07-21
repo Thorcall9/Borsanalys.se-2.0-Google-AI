@@ -3,10 +3,13 @@ import { Link, Navigate } from "react-router-dom";
 import { ArrowLeft, FileText, ShoppingBag, Star } from "lucide-react";
 import SEO from "../components/SEO";
 import MobileReadingProgress from "../components/MobileReadingProgress";
+import { analyses } from "../data/analyses";
+import { buildArticleJsonLd, buildBreadcrumbJsonLd } from "../lib/seo/structuredData";
 import rvrcMarkdown from "../../scratch/drafts/rvrc-2026-opublicerad-analys.md?raw";
 import rvrcSankeyHtml from "../../analyses/rvrc_sankey_9m_2026.html?raw";
 
 const RVRC_PREMIUM_UNLOCK_KEY = "rvrcPremiumUnlocked";
+const rvrcAnalysis = analyses["revolutionrace-2026"];
 
 type MarkdownBlock =
   | { type: "heading"; level: number; text: string }
@@ -704,7 +707,29 @@ export default function RvrcPreview() {
 
   const content = (
     <>
-      <SEO title="RevolutionRace (RVRC) – aktieanalys" description="Aktieanalys av RevolutionRace med rating, scenarioanalys, risker och värderingsmodell." />
+      <SEO
+        title={rvrcAnalysis.title}
+        description={rvrcAnalysis.summary}
+        canonical="/analys/revolutionrace-2026"
+        ogType="article"
+        ogImage="/og-image.png"
+        publishedTime={rvrcAnalysis.date}
+        jsonLd={[
+          buildArticleJsonLd({
+            title: rvrcAnalysis.title,
+            description: rvrcAnalysis.summary,
+            path: "/analys/revolutionrace-2026",
+            publishedTime: rvrcAnalysis.date,
+            author: rvrcAnalysis.author,
+            image: "/og-image.png",
+          }),
+          buildBreadcrumbJsonLd([
+            { name: "Hem", path: "/" },
+            { name: "Analyser", path: "/analys" },
+            { name: rvrcAnalysis.title, path: "/analys/revolutionrace-2026" },
+          ]),
+        ]}
+      />
       <main className="min-h-screen bg-[#f7f4ee] pt-28 pb-20 text-slate-900">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           {isPreviewRoute && (

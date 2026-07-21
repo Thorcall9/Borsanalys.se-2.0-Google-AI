@@ -28,3 +28,21 @@
 
 - Analysis templates retain their existing local SEO declarations. The route-level SEO declaration is now rendered last in every analysis detail branch so it supplies the canonical URL, article dates, and JSON-LD without changing those templates.
 - No stable public URL exists for the global search, so the home `WebSite` JSON-LD deliberately omits `SearchAction`.
+
+## Important review fixes
+
+### Changes
+
+- The explicit `/analys/revolutionrace-2026` and `/analys/rvrc-2026` routes still render `RvrcPreview` before `/analys/:slug`. Both aliases now use the shared `revolutionrace-2026` registry entry for article metadata, canonicalize to `/analys/revolutionrace-2026`, use `/og-image.png`, and emit article and breadcrumb JSON-LD.
+- SBB's shared `date` is now the ISO 8601 value `2026-04-17`. Its existing visible label remains `17 april 2026` through the display-only `displayDate` field.
+- `tests/seo-contract.test.mjs` now covers the special RevolutionRace route ordering, registry-backed metadata contract, canonical alias behavior, and SBB's ISO/display date split.
+
+### Verification
+
+- `node --test tests/seo-contract.test.mjs tests/seo-route-rewrites.test.mjs`: 13 passing, 0 failing (exit 0).
+- `npm run lint`: passed; `tsc --noEmit` exited 0.
+- `git diff --check`: passed with no output (exit 0).
+
+### Concerns
+
+- None identified. The RevolutionRace page UI and both aliases are preserved, and only date presentation consumers opt into `displayDate` when it is present.

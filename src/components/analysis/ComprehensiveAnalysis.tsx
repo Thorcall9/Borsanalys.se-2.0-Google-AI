@@ -638,7 +638,7 @@ const InwidoTemplateAnalysis = ({
       isSaveLoading={isSaveLoading}
       onToggleSave={onToggleSave}
       analysisPrice={analysisPrice}
-      date={data.date}
+      date={data.displayDate || data.date}
       nextAnalysis={nextAnalysis}
       tightContent
     >
@@ -1090,7 +1090,7 @@ export default function ComprehensiveAnalysis({
       isSaveLoading={isSaveLoading}
       onToggleSave={onToggleSave}
       analysisPrice={analysisPrice || undefined}
-      date={data.date}
+      date={data.displayDate || data.date}
       nextAnalysis={nextAnalysis}
       sidebarExtras={(data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT') ? (
         <MicrosoftSidebarExtras 
@@ -2318,7 +2318,7 @@ export default function ComprehensiveAnalysis({
                 verdict={data.recommendation || "BEVAKA"} 
                 target={data.targetPrice || (data.scenarios?.find(s => s.type === 'base')?.value || "N/A")} 
                 description={data.motivation || data.summary} 
-                date={data.date || new Date().toISOString().split('T')[0]}
+                date={data.displayDate || data.date || new Date().toISOString().split('T')[0]}
                 accentColor={ACCENT_COLOR}
                 buyZone={data.buyZone}
                 targetLabel={isInwido ? "Rimligt värdeintervall på 12 månaders sikt" : undefined}

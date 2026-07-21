@@ -155,6 +155,7 @@ export interface AnalysisData {
   isin?: string;
   author?: string;
   date: string;
+  displayDate?: string;
   market: string;
   sector: string;
   recommendation: Recommendation;

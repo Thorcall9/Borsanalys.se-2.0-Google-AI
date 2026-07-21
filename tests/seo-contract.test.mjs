@@ -113,6 +113,50 @@ test('public routes derive metadata and structured data from their registries', 
   assert.match(stockHub, /canonical=\{stockPath\}/);
 });
 
+test('RevolutionRace aliases use the shared registry entry and canonical article metadata', async () => {
+  const [app, preview, registry, revolutionRace] = await Promise.all([
+    source('src/App.tsx'),
+    source('src/pages/RvrcPreview.tsx'),
+    source('src/data/analyses/index.ts'),
+    source('src/data/analyses/revolutionrace/revolutionrace-2026.ts'),
+  ]);
+
+  const canonicalRoute = app.indexOf('<Route path="/analys/revolutionrace-2026" element={<RvrcPreview />} />');
+  const aliasRoute = app.indexOf('<Route path="/analys/rvrc-2026" element={<RvrcPreview />} />');
+  const dynamicRoute = app.indexOf('<Route path="/analys/:slug" element={<Analysis />} />');
+
+  assert.ok(canonicalRoute !== -1 && canonicalRoute < dynamicRoute);
+  assert.ok(aliasRoute !== -1 && aliasRoute < dynamicRoute);
+  assert.match(registry, /"revolutionrace-2026": revolutionRace2026/);
+  assert.match(revolutionRace, /slug: "revolutionrace-2026"/);
+  assert.match(preview, /import \{ analyses \} from ["']\.\.\/data\/analyses["']/);
+  assert.match(preview, /const rvrcAnalysis = analyses\["revolutionrace-2026"\]/);
+  assert.match(preview, /title=\{rvrcAnalysis\.title\}/);
+  assert.match(preview, /description=\{rvrcAnalysis\.summary\}/);
+  assert.match(preview, /canonical="\/analys\/revolutionrace-2026"/);
+  assert.match(preview, /ogType="article"/);
+  assert.match(preview, /ogImage="\/og-image\.png"/);
+  assert.match(preview, /publishedTime=\{rvrcAnalysis\.date\}/);
+  assert.match(preview, /buildArticleJsonLd\(/);
+  assert.match(preview, /buildBreadcrumbJsonLd\(/);
+});
+
+test('SBB keeps an ISO registry date and its existing visible date label', async () => {
+  const [analysisType, sbb, archive, comprehensiveAnalysis] = await Promise.all([
+    source('src/types/analysis.ts'),
+    source('src/data/analyses/sbb/sbb.ts'),
+    source('src/components/analysis/AnalysisArchive.tsx'),
+    source('src/components/analysis/ComprehensiveAnalysis.tsx'),
+  ]);
+
+  assert.match(analysisType, /displayDate\?: string/);
+  assert.match(sbb, /date: "2026-04-17"/);
+  assert.match(sbb, /displayDate: "17 april 2026"/);
+  assert.doesNotMatch(sbb, /date: "17 april 2026"/);
+  assert.match(archive, /analysis\.displayDate \|\| analysis\.date/);
+  assert.match(comprehensiveAnalysis, /data\.displayDate \|\| data\.date/);
+});
+
 test('public index pages declare stable canonical metadata while private pages remain noindex', async () => {
   const [guides, terminology, macro, tools, about, contact, app, checklists] = await Promise.all([
     source('src/pages/Guides.tsx'),
