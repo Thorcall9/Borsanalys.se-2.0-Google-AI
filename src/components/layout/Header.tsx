@@ -4,15 +4,7 @@ import { Menu, Search, TrendingUp, UserRound, X, LogIn, LogOut, ChevronRight } f
 import { useAuth } from "../../contexts/AuthContext";
 import { useSearch } from "../../contexts/SearchContext";
 import GlobalSearch from "../GlobalSearch";
-
-const navItems = [
-  { label: "Analyser", path: "/analys" },
-  { label: "Guider", path: "/guider" },
-  { label: "Börsskola", path: "/skola" },
-  { label: "Makro", path: "/marknad" },
-  { label: "Verktyg", path: "/verktyg" },
-  { label: "Om oss", path: "/om-oss" },
-];
+import { navItems } from "./navigation";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

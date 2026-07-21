@@ -76,7 +76,6 @@ export default function Footer() {
             <li><Link to="/analys" className="hover:text-primary transition-colors">Analyser</Link></li>
             <li><Link to="/guider" className="hover:text-primary transition-colors">Guider</Link></li>
             <li><Link to="/skola" className="hover:text-primary transition-colors">Börsskola</Link></li>
-            <li><Link to="/marknad" className="hover:text-primary transition-colors">Marknad</Link></li>
           </ul>
         </div>
 
