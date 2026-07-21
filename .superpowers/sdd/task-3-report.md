@@ -46,3 +46,27 @@ No outstanding concerns for the requested scope.
 
 - No production deployment or live deployment verification was performed. If the release process requires it, verify the deployed image bytes and `/robots.txt` response after deployment.
 - `src/components/layout/Header.tsx` and unrelated files were not modified.
+
+## Remaining spec finding fix (2026-07-21)
+
+### Changes
+
+- Added `public/og-default.svg`, a deterministic local 1200×630 social card with Börsanalys.se branding and the Swedish value proposition “Djupgående aktieanalyser – drivna av data och AI.” The SVG has no remote dependencies.
+- Changed only the global fallback image in `src/components/SEO.tsx` and the Open Graph/Twitter fallback tags in `index.html` to `/og-default.svg`.
+- Kept the intentional public-route `ogImage="/og-image.png"` values unchanged.
+- Updated `tests/seo-contract.test.mjs` and `scripts/test-seo-routes.mjs` to require the SVG file, its `viewBox="0 0 1200 630"`, and both global fallback references. The separate real-PNG signature assertion remains in place for `public/og-image.png`.
+- Left `public/robots.txt`, `vercel.json`, and the existing robots route-harness behavior unchanged.
+
+### Test-first evidence and verification
+
+- Initial `node --test tests/seo-contract.test.mjs scripts/test-seo-routes.mjs` run: expected FAIL, 13 passed and 3 failed because `public/og-default.svg` did not exist. The route-specific PNG signature assertion passed in that red run.
+- First post-implementation combined run: static contracts passed; the route script alone failed with `ECONNREFUSED 127.0.0.1:4173` because its required local preview harness was not running.
+- After starting `scripts/serve-vercel-preview.mjs` on port 4173, `node --test tests/seo-contract.test.mjs scripts/test-seo-routes.mjs` — PASS, 16 tests, 0 failures. Existing route and robots expectations remained green.
+- `npm run lint` — PASS; `tsc --noEmit` exited 0.
+- `git diff --check` — PASS; no whitespace errors.
+- `xmllint --noout public/og-default.svg` — PASS; the SVG is well-formed XML.
+
+### Scope and concerns
+
+- No production deployment or live social-crawler rendering verification was performed.
+- `src/components/layout/Header.tsx`, explicit route-specific PNG references, robots changes, and unrelated files were not modified.

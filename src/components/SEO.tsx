@@ -36,7 +36,7 @@ const SEO: React.FC<SEOProps> = ({
   description,
   canonical,
   ogType = "website",
-  ogImage = "/og-image.png",
+  ogImage = "/og-default.svg",
   twitterHandle = "@borsanalys",
   noindex = false,
   nofollow = false,

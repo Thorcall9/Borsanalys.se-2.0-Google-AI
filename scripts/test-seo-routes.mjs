@@ -3,6 +3,17 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 const root = new URL('../', import.meta.url);
+const [index, seo, ogDefault] = await Promise.all([
+  readFile(new URL('index.html', root), 'utf8'),
+  readFile(new URL('src/components/SEO.tsx', root), 'utf8'),
+  readFile(new URL('public/og-default.svg', root), 'utf8'),
+]);
+
+assert.match(ogDefault, /viewBox="0 0 1200 630"/);
+assert.match(index, /<meta property="og:image" content="\/og-default\.svg" \/>/);
+assert.match(index, /<meta name="twitter:image" content="\/og-default\.svg" \/>/);
+assert.match(seo, /ogImage = "\/og-default\.svg"/);
+
 const vercel = JSON.parse(await readFile(new URL('vercel.json', root), 'utf8'));
 const robotsRewrite = vercel.rewrites.find((rewrite) => rewrite.source === '/robots.txt');
 

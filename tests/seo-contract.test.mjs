@@ -57,18 +57,24 @@ test('structured-data helpers define the required JSON-LD contracts', async () =
   assert.match(structuredData, /\\u003c/);
 });
 
-test('SEO defaults to the local OG image and structured URLs pin the production origin', async () => {
+test('SEO defaults to the local SVG social card and structured URLs pin the production origin', async () => {
   const seo = await source('src/components/SEO.tsx');
   const structuredData = await source('src/lib/seo/structuredData.ts');
-  const ogImage = new URL('public/og-image.png', root);
-  const pngSignature = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+  const ogDefault = await source('public/og-default.svg');
 
   assert.doesNotMatch(seo, /picsum\.photos/);
-  const ogImageBytes = await readFile(ogImage);
-  assert.deepEqual(ogImageBytes.subarray(0, pngSignature.length), pngSignature);
-  assert.match(seo, /ogImage = "\/og-image\.png"/);
+  assert.match(ogDefault, /viewBox="0 0 1200 630"/);
+  assert.match(seo, /ogImage = "\/og-default\.svg"/);
   assert.match(structuredData, /const url = new URL\(SITE_ORIGIN\)/);
   assert.match(structuredData, /const input = new URL\(path, SITE_ORIGIN\)/);
+});
+
+test('the explicit route-specific social asset is a genuine PNG', async () => {
+  const ogImage = new URL('public/og-image.png', root);
+  const pngSignature = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+  const ogImageBytes = await readFile(ogImage);
+
+  assert.deepEqual(ogImageBytes.subarray(0, pngSignature.length), pngSignature);
 });
 
 test('fallback metadata and crawler policy use the approved public OG asset', async () => {
@@ -79,9 +85,9 @@ test('fallback metadata and crawler policy use the approved public OG asset', as
     source('scripts/serve-vercel-preview.mjs'),
   ]);
   const vercel = JSON.parse(vercelSource);
-  const ogImage = new URL('public/og-image.png', root);
+  const ogDefault = await source('public/og-default.svg');
 
-  await assert.doesNotReject(() => readFile(ogImage));
+  assert.match(ogDefault, /viewBox="0 0 1200 630"/);
   assert.match(index, /<html lang="sv">/);
   assert.match(index, /<title>Börsanalys\.se - Professionella aktieanalyser<\/title>/);
   assert.match(index, /<meta name="description" content="Professionella aktieanalyser drivna av data och AI\. En minimalistisk och kraftfull plattform för moderna investerare\." \/>/);
@@ -90,12 +96,11 @@ test('fallback metadata and crawler policy use the approved public OG asset', as
   assert.match(index, /<meta property="og:url" content="https:\/\/www\.borsanalys\.se\/" \/>/);
   assert.match(index, /<meta property="og:title" content="Börsanalys\.se - Professionella aktieanalyser" \/>/);
   assert.match(index, /<meta property="og:description" content="Professionella aktieanalyser drivna av data och AI\. En minimalistisk och kraftfull plattform för moderna investerare\." \/>/);
-  assert.match(index, /<meta property="og:image" content="\/og-image\.png" \/>/);
+  assert.match(index, /<meta property="og:image" content="\/og-default\.svg" \/>/);
   assert.match(index, /<meta name="twitter:card" content="summary_large_image" \/>/);
   assert.match(index, /<meta name="twitter:title" content="Börsanalys\.se - Professionella aktieanalyser" \/>/);
   assert.match(index, /<meta name="twitter:description" content="Professionella aktieanalyser drivna av data och AI\. En minimalistisk och kraftfull plattform för moderna investerare\." \/>/);
-  assert.match(index, /<meta name="twitter:image" content="\/og-image\.png" \/>/);
-  assert.doesNotMatch(index, /og-default\.svg/);
+  assert.match(index, /<meta name="twitter:image" content="\/og-default\.svg" \/>/);
 
   for (const directive of [
     'User-agent: *',
