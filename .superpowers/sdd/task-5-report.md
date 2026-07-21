@@ -56,3 +56,33 @@ Marked all twelve title, description, canonical, Open Graph, and Twitter fallbac
 ### Scope
 
 Only `index.html`, `src/components/SEO.tsx`, the existing focused SEO assertions in `tests/seo-contract.test.mjs` and `scripts/test-seo-routes.mjs`, and this report changed. Routes, sitemap, information pages, analysis child components, and `Header.tsx` were not modified.
+
+## Part B canonical routing and legal-page metadata integration
+
+### Status
+
+Added permanent Vercel redirects for every known `Analysis.tsx` alias while preserving the existing client-side aliases as fallbacks. `/innehav` and `/intressekonflikter` now permanently redirect to `/aktieinnehav-och-intressekonflikter`, which is the only holdings URL included in the sitemap. `Terms.tsx`, `Privacy.tsx`, and `Holdings.tsx` now use the shared `SEO` component with their stable canonical path and `/og-image.png`.
+
+### Changed files
+
+- `vercel.json` — adds the nine canonical analysis redirects and the two holdings redirects; retains the RVRC and legacy redirects.
+- `api/sitemap.ts` — removes the redirected `/innehav` route.
+- `src/pages/Terms.tsx`, `src/pages/Privacy.tsx`, `src/pages/Holdings.tsx` — replace raw Helmet metadata with shared SEO metadata without changing visible page UI.
+- `tests/seo-contract.test.mjs` — asserts every redirect, the sole sitemap holdings URL, and shared legal/holdings metadata.
+- `scripts/test-seo-routes.mjs` — exercises every new redirect and excludes `/innehav` from sitemap expectations.
+
+`Header.tsx`, `index.html`, `src/components/SEO.tsx`, `src/pages/Analysis.tsx`, and analysis child components were not changed for Part B.
+
+### Commands and actual results
+
+| Command | Result |
+| --- | --- |
+| `node --test tests/seo-contract.test.mjs` | Passed: 18 tests, 0 failures. |
+| `node scripts/test-seo-routes.mjs http://127.0.0.1:4176` | Every new analysis and holdings redirect returned 301 to its requested canonical destination and resolved to HTTP 200. The script then exited 1 on 11 pre-existing initial-HTML assertions for unrelated detail/private pages: the local preview serves the generic static shell, while those assertions require route-specific canonical/H1/JSON-LD or initial noindex. |
+| `npm run lint` | Passed (`tsc --noEmit`). |
+| `npm run build` | Passed; Vite transformed 2,840 modules. Existing chunk-size warnings remained. |
+| `git diff --check` | Passed. |
+
+### Concern
+
+The full preview route script remains blocked by the existing static-shell versus route-specific initial-HTML SEO mismatch. Addressing it would change static SEO ownership or rendering behavior, which Part B explicitly excludes. The new redirects and sitemap assertions completed successfully before those unrelated assertions ran.

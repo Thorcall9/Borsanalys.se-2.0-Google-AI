@@ -5,7 +5,7 @@ import test from 'node:test';
 const root = new URL('../', import.meta.url);
 const source = async (path) => readFile(new URL(path, root), 'utf8');
 
-test('Vercel config has no global SPA fallback and only verified legacy redirects', async () => {
+test('Vercel config has no global SPA fallback and redirects aliases to canonical URLs', async () => {
   const vercel = JSON.parse(await source('vercel.json'));
   const redirects = vercel.redirects || [];
 
@@ -22,6 +22,24 @@ test('Vercel config has no global SPA fallback and only verified legacy redirect
     redirects.find((redirect) => redirect.source === '/analys/rvrc-2026'),
     { source: '/analys/rvrc-2026', destination: '/analys/revolutionrace-2026', permanent: true },
   );
+  for (const [source, destination] of Object.entries({
+    '/analys/evolution': '/analys/evolution-2025',
+    '/analys/swedbank': '/analys/swedbank-2025',
+    '/analys/handelsbanken': '/analys/handelsbanken-2025',
+    '/analys/nvidia': '/analys/nvidia-fy2026',
+    '/analys/investor': '/analys/investor-ab',
+    '/analys/ericsson': '/analys/ericsson-2025',
+    '/analys/new-wave': '/analys/new-wave-group-april-2026',
+    '/analys/new-wave-group': '/analys/new-wave-group-april-2026',
+    '/analys/nordea': '/analys/nordea-bank-2026',
+    '/innehav': '/aktieinnehav-och-intressekonflikter',
+    '/intressekonflikter': '/aktieinnehav-och-intressekonflikter',
+  })) {
+    assert.deepEqual(
+      redirects.find((redirect) => redirect.source === source),
+      { source, destination, permanent: true },
+    );
+  }
   assert.equal(redirects.some((redirect) => /:\w+\*/.test(redirect.source)), false);
 });
 
@@ -183,8 +201,8 @@ test('sitemap derives canonical public URLs from all shared registries', async (
   assert.match(sitemap, /https:\/\/www\.borsanalys\.se/);
   assert.match(sitemap, /escapeXml\(new URL\(path, baseUrl\)\.toString\(\)\)/);
   assert.match(sitemap, /<lastmod>/);
-  assert.match(sitemap, /['"]\/innehav['"]/);
   assert.match(sitemap, /['"]\/aktieinnehav-och-intressekonflikter['"]/);
+  assert.doesNotMatch(sitemap, /['"]\/innehav['"]/);
   assert.match(sitemap, /uniqueEntries/);
   assert.doesNotMatch(sitemap, /\/analyser\/nvidia/);
   assert.doesNotMatch(sitemap, /\/borsskolan/);
@@ -316,4 +334,23 @@ test('public index pages declare stable canonical metadata while private pages r
   assert.match(contact, /canonical="\/kontakt"/);
   assert.match(app, /<SEO title=\{title\} noindex nofollow \/>/);
   assert.match(checklists, /<SEO title="Mina checklistor" noindex nofollow \/>/);
+});
+
+test('legal and holdings pages use shared SEO metadata with stable canonical social URLs', async () => {
+  const [terms, privacy, holdings] = await Promise.all([
+    source('src/pages/Terms.tsx'),
+    source('src/pages/Privacy.tsx'),
+    source('src/pages/Holdings.tsx'),
+  ]);
+
+  for (const page of [terms, privacy, holdings]) {
+    assert.match(page, /import SEO from ["']\.\.\/components\/SEO["']/);
+    assert.doesNotMatch(page, /react-helmet-async/);
+    assert.doesNotMatch(page, /<Helmet\b/);
+    assert.match(page, /ogImage="\/og-image\.png"/);
+  }
+
+  assert.match(terms, /canonical="\/villkor"/);
+  assert.match(privacy, /canonical="\/integritet"/);
+  assert.match(holdings, /canonical="\/aktieinnehav-och-intressekonflikter"/);
 });

@@ -45,10 +45,6 @@
     { "source": "/villkor/", "destination": "/index.html" },
     { "source": "/integritet", "destination": "/index.html" },
     { "source": "/integritet/", "destination": "/index.html" },
-    { "source": "/innehav", "destination": "/index.html" },
-    { "source": "/innehav/", "destination": "/index.html" },
-    { "source": "/intressekonflikter", "destination": "/index.html" },
-    { "source": "/intressekonflikter/", "destination": "/index.html" },
     { "source": "/aktieinnehav-och-intressekonflikter", "destination": "/index.html" },
     { "source": "/aktieinnehav-och-intressekonflikter/", "destination": "/index.html" },
     { "source": "/verktyg", "destination": "/index.html" },
@@ -65,7 +61,18 @@
   "redirects": [
     { "source": "/integritetspolicy", "destination": "/integritet", "permanent": true },
     { "source": "/analyser/investor2025q2", "destination": "/analys/investor-ab", "permanent": true },
-    { "source": "/analys/rvrc-2026", "destination": "/analys/revolutionrace-2026", "permanent": true }
+    { "source": "/analys/rvrc-2026", "destination": "/analys/revolutionrace-2026", "permanent": true },
+    { "source": "/analys/evolution", "destination": "/analys/evolution-2025", "permanent": true },
+    { "source": "/analys/swedbank", "destination": "/analys/swedbank-2025", "permanent": true },
+    { "source": "/analys/handelsbanken", "destination": "/analys/handelsbanken-2025", "permanent": true },
+    { "source": "/analys/nvidia", "destination": "/analys/nvidia-fy2026", "permanent": true },
+    { "source": "/analys/investor", "destination": "/analys/investor-ab", "permanent": true },
+    { "source": "/analys/ericsson", "destination": "/analys/ericsson-2025", "permanent": true },
+    { "source": "/analys/new-wave", "destination": "/analys/new-wave-group-april-2026", "permanent": true },
+    { "source": "/analys/new-wave-group", "destination": "/analys/new-wave-group-april-2026", "permanent": true },
+    { "source": "/analys/nordea", "destination": "/analys/nordea-bank-2026", "permanent": true },
+    { "source": "/innehav", "destination": "/aktieinnehav-och-intressekonflikter", "permanent": true },
+    { "source": "/intressekonflikter", "destination": "/aktieinnehav-och-intressekonflikter", "permanent": true }
   ],
   "functions": {
     "api/rss.ts": {

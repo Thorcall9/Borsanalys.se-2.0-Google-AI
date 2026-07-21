@@ -1,6 +1,6 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
+import SEO from "../components/SEO";
 
 const directHoldings = [
   { company: "Investor AB", instrument: "Investor A", type: "Direkt innehav" },
@@ -32,13 +32,12 @@ const fundHoldings = [
 export default function Holdings() {
   return (
     <div className="max-w-4xl mx-auto px-6 py-20 space-y-12">
-      <Helmet>
-        <title>Aktieinnehav och intressekonflikter | Börsanalys.se</title>
-        <meta 
-          name="description" 
-          content="Redovisning av författarens aktieinnehav, fondinnehav, indirekta exponeringar och relevanta intressekonflikter för analyser på Börsanalys.se." 
-        />
-      </Helmet>
+      <SEO
+        title="Aktieinnehav och intressekonflikter"
+        description="Redovisning av författarens aktieinnehav, fondinnehav, indirekta exponeringar och relevanta intressekonflikter för analyser på Börsanalys.se."
+        canonical="/aktieinnehav-och-intressekonflikter"
+        ogImage="/og-image.png"
+      />
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}

@@ -14,7 +14,6 @@ const staticRoutes = [
   '/kontakt',
   '/villkor',
   '/integritet',
-  '/innehav',
   '/aktieinnehav-och-intressekonflikter',
   '/verktyg',
   '/verktyg/rantakalkylator',

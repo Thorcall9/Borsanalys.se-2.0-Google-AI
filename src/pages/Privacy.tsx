@@ -1,14 +1,16 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
+import SEO from "../components/SEO";
 
 export default function Privacy() {
   return (
     <div className="max-w-4xl mx-auto px-6 py-20 space-y-12">
-      <Helmet>
-        <title>Integritetspolicy | Börsanalys.se</title>
-        <meta name="description" content="Integritetspolicy för Börsanalys.se" />
-      </Helmet>
+      <SEO
+        title="Integritetspolicy"
+        description="Integritetspolicy för Börsanalys.se"
+        canonical="/integritet"
+        ogImage="/og-image.png"
+      />
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
