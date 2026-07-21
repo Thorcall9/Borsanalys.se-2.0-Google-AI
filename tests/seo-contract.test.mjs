@@ -31,7 +31,7 @@ test('React app has an explicit catch-all NotFound route', async () => {
   assert.match(app, /<Route path="\*" element=\{<NotFound \/>\} \/>/);
 });
 
-test('unknown analysis slugs preserve their URL and render noindex 404', async () => {
+test('client-rendered unknown analysis slugs preserve their URL and render the noindex NotFound page', async () => {
   const [analysis, notFound] = await Promise.all([
     source('src/pages/Analysis.tsx'),
     source('src/pages/NotFound.tsx'),
@@ -39,6 +39,21 @@ test('unknown analysis slugs preserve their URL and render noindex 404', async (
   assert.doesNotMatch(analysis, /<Navigate to="\/analys" replace \/>/);
   assert.match(analysis, /<NotFound/);
   assert.match(notFound, /<SEO title="Sidan hittades inte" noindex nofollow \/>/);
+});
+
+test('local preview mirrors the unrestricted Vercel rewrite for canonical analysis routes', async () => {
+  const [vercelSource, previewServer] = await Promise.all([
+    source('vercel.json'),
+    source('scripts/serve-vercel-preview.mjs'),
+  ]);
+  const vercel = JSON.parse(vercelSource);
+
+  assert.deepEqual(
+    vercel.rewrites.find((rewrite) => rewrite.source === '/analys/:path*'),
+    { source: '/analys/:path*', destination: '/index.html' },
+  );
+  assert.match(previewServer, /pathname === '\/analys'[\s\S]*pathname\.startsWith\('\/analys\/'\)/);
+  assert.doesNotMatch(previewServer, /data\/analyses|analysisPaths|analysisAliasPaths/);
 });
 
 test('SEO normalizes the production canonical and supports noindex', async () => {

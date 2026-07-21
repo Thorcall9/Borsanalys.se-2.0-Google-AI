@@ -33,7 +33,7 @@ const routes = [
   { path: '/analys/volvo/', status: 200, html: true },
   { path: '/analys/volvo?utm_source=test', status: 200, html: true },
   { path: '/analys/evolution', status: 200, html: true },
-  { path: '/analys/helt-pahittad', status: 404, html: false, noindex: true },
+  { path: '/analys/helt-pahittad', status: 200, html: true, noindex: false },
   {
     path: '/guider/grunderna-i-aktieanalys',
     status: 200,
@@ -113,7 +113,10 @@ for (const expected of routes) {
     assert.equal(response.status, expected.status, `${expected.path}: unexpected status`);
   }
   if (expected.location) assert.equal(location, expected.location, `${expected.path}: unexpected redirect`);
-  if (expected.html) assert.match(contentType, /text\/html/, `${expected.path}: expected HTML`);
+  if (expected.html) {
+    assert.match(contentType, /text\/html/, `${expected.path}: expected HTML`);
+    assert.equal(initialHtml.shell, true, `${expected.path}: expected SPA shell`);
+  }
   if (expected.xml) {
     assert.match(contentType, /application\/xml|text\/xml/, `${expected.path}: expected XML`);
     assert.match(body, /<urlset[\s>]/, `${expected.path}: expected sitemap XML`);
@@ -135,8 +138,8 @@ for (const expected of routes) {
     if (initialHtml.h1Count !== 1) failures.push(`${expected.path}: initial HTML must contain exactly one H1, received ${initialHtml.h1Count}`);
     if (!initialHtml.jsonLd) failures.push(`${expected.path}: initial HTML is missing JSON-LD`);
   }
-  if (expected.noindex && !initialHtml.noindex && response.status !== 404) {
-    failures.push(`${expected.path}: initial HTML must declare noindex`);
+  if (expected.noindex !== undefined && initialHtml.noindex !== expected.noindex && response.status !== 404) {
+    failures.push(`${expected.path}: initial HTML noindex must be ${expected.noindex}, received ${initialHtml.noindex}`);
   }
   result.push({ path: expected.path, status: response.status, location, contentType, initialHtml });
 }

@@ -12,7 +12,7 @@ The local Vercel-style preview was started with:
 PORT=4173 node scripts/serve-vercel-preview.mjs
 ```
 
-`scripts/serve-vercel-preview.mjs` reads one `dist/index.html` at startup and returns that same file for every SPA route. `vercel.json` likewise maps the public analysis, guide, stock, market, private, and tool route families to `/index.html`. The current deployment contract has serverless functions only for APIs such as sitemap and RSS; it has no SSR entrypoint.
+`scripts/serve-vercel-preview.mjs` reads one `dist/index.html` at startup and returns that same file for every SPA route covered by the mirrored Vercel rewrites. In particular, `vercel.json` rewrites every `/analys/:path*` request to `/index.html`, regardless of whether the slug exists in the analysis registry. The current deployment contract has serverless functions only for APIs such as sitemap and RSS; it has no SSR entrypoint.
 
 `node scripts/inspect-seo-html.mjs http://127.0.0.1:4173` measured the following initial-response behavior:
 
@@ -23,9 +23,11 @@ PORT=4173 node scripts/serve-vercel-preview.mjs
 | `/aktier/saab` | 200 | empty SPA root | `/` (incorrect) | 0 | absent | absent |
 | `/marknad` | 200 | empty SPA root | `/` (incorrect) | 0 | absent | absent |
 | `/profil` | 200 | empty SPA root | `/` (incorrect) | 0 | absent | absent |
-| `/analys/helt-pahittad` | 404 | plain text, not SPA HTML | none | 0 | absent | n/a (HTTP 404) |
+| `/analys/helt-pahittad` | 200 | empty SPA root | `/` (incorrect) | 0 | absent | absent |
 
-The route smoke test records 11 initial-HTML SEO failures: the three public detail routes each lack their route canonical, an H1, and JSON-LD; `/profil` and `/admin/subscribers` lack initial `noindex`. The generic root title and description are present, but they are not route-specific content.
+The route smoke test records 11 initial-HTML SEO failures: the three public detail routes each lack their route canonical, an H1, and JSON-LD; `/profil` and `/admin/subscribers` lack initial `noindex`. The generic root title and description are present, but they are not route-specific content. The unknown canonical analysis route is separately recorded as a 200 SPA shell with no initial `noindex`; after JavaScript runs, React can render its noindex NotFound page, but that does not turn the initial response into a real HTTP 404.
+
+Real HTTP 404 status plus initial `noindex` for unknown dynamic routes is therefore a rendering/edge-routing requirement. A future solution must resolve whether a dynamic slug exists before committing the response status and HTML metadata; the current catch-all SPA rewrite cannot provide that contract by itself. The legacy `/analyser/helt-pahittad` URL remains a plain HTTP 404 because no Vercel rewrite covers it.
 
 No Vercel deployment was made for this measurement, as required. The static build duration and emitted artifact sizes above are the deploy-relevant baseline. A future rendering trial must measure its own build duration, emitted server/static artifact sizes, and Vercel preview build/deploy duration against this baseline.
 
@@ -33,7 +35,7 @@ No Vercel deployment was made for this measurement, as required. The static buil
 
 ### Option A — Static prerendering (recommended first experiment)
 
-At build time, generate one HTML document for every indexable public route from the existing analysis, guide, stock, and static-route registries. Each document must contain the route title, description, canonical URL, exactly one H1, and serialized JSON-LD before JavaScript runs. Vercel must serve those generated HTML files for public URLs, while private routes continue to use the SPA shell only if their initial response can include `noindex` (or move behind an authenticated non-indexable boundary).
+At build time, generate one HTML document for every indexable public route from the existing analysis, guide, stock, and static-route registries. Each document must contain the route title, description, canonical URL, exactly one H1, and serialized JSON-LD before JavaScript runs. Vercel must serve those generated HTML files for known public URLs, while rendering or edge routing returns a real 404 document with initial `noindex` for unknown dynamic routes. Private routes may continue to use the SPA shell only if their initial response can include `noindex` (or move behind an authenticated non-indexable boundary).
 
 Why it fits the measured system:
 
@@ -46,7 +48,8 @@ Risks and required measurements:
 - Generate all public pages deterministically and verify the total generated HTML count matches the sitemap's indexable URLs.
 - Confirm hydration uses the same route data and does not replace or duplicate `<head>` elements.
 - Measure build time and deploy artifact size versus the 2.26-second/2.79-kB-single-shell baseline.
-- Test unknown and private paths separately so generated files cannot accidentally turn them into indexable 200 responses.
+- Replace or precede the catch-all dynamic rewrites with a rendering/edge check that returns HTTP 404 and initial `noindex` when a registry-backed slug is unknown.
+- Test unknown and private paths separately so generated files cannot leave them as indexable 200 responses.
 
 ### Option B — Express/Vercel SSR
 
@@ -66,4 +69,4 @@ Required measurements before selection:
 
 ## Decision gate
 
-Start with a static-prerendering spike limited to the three public detail route families. Continue with it only if all three route responses pass `scripts/test-seo-routes.mjs`, generated routes exactly match the indexable sitemap subset, and its build/deploy measurements stay acceptable against the baseline. Escalate to SSR only if a route needs request-specific HTML that cannot be represented by an explicit static fallback and client hydration.
+Start with a static-prerendering spike limited to the three public detail route families. Continue with it only if all three known route responses pass `scripts/test-seo-routes.mjs`, generated routes exactly match the indexable sitemap subset, unknown dynamic routes receive a real HTTP 404 with initial `noindex` from the rendering/edge layer, and build/deploy measurements stay acceptable against the baseline. Escalate to SSR when request-time route resolution is needed and cannot be represented by explicit static output plus an edge fallback.
