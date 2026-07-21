@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /profil
+Disallow: /mina-checklistor
+Disallow: /api/
 
 Sitemap: https://www.borsanalys.se/sitemap.xml

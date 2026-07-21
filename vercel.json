@@ -17,6 +17,7 @@
     { "source": "/api/admin/votes", "destination": "/api/admin?type=votes" },
     { "source": "/api/admin/generate-events", "destination": "/api/admin?type=generate-events" },
     { "source": "/api/admin/update-macro", "destination": "/api/admin?type=update-macro" },
+    { "source": "/robots.txt", "destination": "/robots.txt" },
     { "source": "/", "destination": "/index.html" },
     { "source": "/analys", "destination": "/index.html" },
     { "source": "/analys/", "destination": "/index.html" },

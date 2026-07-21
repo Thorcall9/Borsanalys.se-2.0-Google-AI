@@ -69,6 +69,45 @@ test('SEO defaults to the local OG image and structured URLs pin the production 
   assert.match(structuredData, /const input = new URL\(path, SITE_ORIGIN\)/);
 });
 
+test('fallback metadata and crawler policy use the approved public OG asset', async () => {
+  const [index, robots, vercel] = await Promise.all([
+    source('index.html'),
+    source('public/robots.txt'),
+    source('vercel.json'),
+  ]);
+  const ogImage = new URL('public/og-image.png', root);
+
+  await assert.doesNotReject(() => readFile(ogImage));
+  assert.match(index, /<html lang="sv">/);
+  assert.match(index, /<title>Börsanalys\.se - Professionella aktieanalyser<\/title>/);
+  assert.match(index, /<meta name="description" content="Professionella aktieanalyser drivna av data och AI\. En minimalistisk och kraftfull plattform för moderna investerare\." \/>/);
+  assert.match(index, /<link rel="canonical" href="https:\/\/www\.borsanalys\.se\/" \/>/);
+  assert.match(index, /<meta property="og:type" content="website" \/>/);
+  assert.match(index, /<meta property="og:url" content="https:\/\/www\.borsanalys\.se\/" \/>/);
+  assert.match(index, /<meta property="og:title" content="Börsanalys\.se - Professionella aktieanalyser" \/>/);
+  assert.match(index, /<meta property="og:description" content="Professionella aktieanalyser drivna av data och AI\. En minimalistisk och kraftfull plattform för moderna investerare\." \/>/);
+  assert.match(index, /<meta property="og:image" content="\/og-image\.png" \/>/);
+  assert.match(index, /<meta name="twitter:card" content="summary_large_image" \/>/);
+  assert.match(index, /<meta name="twitter:title" content="Börsanalys\.se - Professionella aktieanalyser" \/>/);
+  assert.match(index, /<meta name="twitter:description" content="Professionella aktieanalyser drivna av data och AI\. En minimalistisk och kraftfull plattform för moderna investerare\." \/>/);
+  assert.match(index, /<meta name="twitter:image" content="\/og-image\.png" \/>/);
+  assert.doesNotMatch(index, /og-default\.svg/);
+
+  for (const directive of [
+    'User-agent: *',
+    'Allow: /',
+    'Disallow: /admin/',
+    'Disallow: /profil',
+    'Disallow: /mina-checklistor',
+    'Disallow: /api/',
+    'Sitemap: https://www.borsanalys.se/sitemap.xml',
+  ]) {
+    assert.match(robots, new RegExp(`^${directive.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'm'));
+  }
+
+  assert.match(vercel, /"source":\s*"\/robots\.txt",\s*"destination":\s*"\/robots\.txt"/);
+});
+
 test('sitemap imports the shared analysis registry and excludes legacy routes', async () => {
   const sitemap = await source('api/sitemap.ts');
   assert.match(sitemap, /data\/analyses/);

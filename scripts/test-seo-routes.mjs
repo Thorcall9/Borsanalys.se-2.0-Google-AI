@@ -20,7 +20,19 @@ const routes = [
   { path: '/services-store-test', status: 404, html: false },
   { path: '/en-helt-pahittad-sida-12345', status: 404, html: false },
   { path: '/sitemap.xml', status: 200, xml: true },
-  { path: '/robots.txt', status: 200, robots: true },
+  {
+    path: '/robots.txt',
+    status: 200,
+    robots: [
+      'User-agent: *',
+      'Allow: /',
+      'Disallow: /admin/',
+      'Disallow: /profil',
+      'Disallow: /mina-checklistor',
+      'Disallow: /api/',
+      'Sitemap: https://www.borsanalys.se/sitemap.xml',
+    ],
+  },
 ];
 
 const result = [];
@@ -42,7 +54,12 @@ for (const expected of routes) {
     assert.match(contentType, /application\/xml|text\/xml/, `${expected.path}: expected XML`);
     assert.match(body, /<urlset[\s>]/, `${expected.path}: expected sitemap XML`);
   }
-  if (expected.robots) assert.match(contentType, /text\/plain/, `${expected.path}: expected robots text`);
+  if (expected.robots) {
+    assert.match(contentType, /text\/plain/, `${expected.path}: expected robots text`);
+    for (const directive of expected.robots) {
+      assert.match(body, new RegExp(`^${directive.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'm'), `${expected.path}: missing ${directive}`);
+    }
+  }
   if (expected.html === false) assert.equal(isHtmlShell, false, `${expected.path}: must not return SPA HTML`);
   result.push({ path: expected.path, status: response.status, location, isHtmlShell, contentType });
 }
