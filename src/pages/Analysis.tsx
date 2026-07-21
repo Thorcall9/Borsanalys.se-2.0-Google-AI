@@ -41,6 +41,7 @@ import { useAnalysisFilters } from "../hooks/useAnalysisFilters";
 import AnalysisCard from "../components/analysis/AnalysisCard";
 import RecommendationInfo from "../components/analysis/RecommendationInfo";
 import axfoodQ2Markdown from "../../analyses/axfood/Q2_2026.md?raw";
+import rvrcIciwMarkdown from "../../analyses/RVRC/ICANIWILL_marknadsuppdatering_juli2026.md?raw";
 import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 import { useAuth } from "../contexts/AuthContext";
@@ -80,6 +81,24 @@ function DeepDiveLoading() {
   return (
     <div className="flex min-h-[60vh] items-center justify-center bg-background">
       <Loader2 className="h-8 w-8 animate-spin text-primary" aria-label="Laddar analys" />
+    </div>
+  );
+}
+
+function LatestRelatedUpdateCallout({ update }: { update: AnalysisData }) {
+  return (
+    <div className="mx-auto max-w-4xl px-6 pt-8">
+      <aside className="rounded-3xl border border-primary/20 bg-primary/5 p-6">
+        <div className="text-xs font-black uppercase tracking-widest text-primary mb-2">
+          Senaste uppdatering
+        </div>
+        <Link to={"/analys/" + update.slug} className="text-lg font-black text-foreground hover:text-primary transition-colors">
+          {update.title}
+        </Link>
+        <div className="mt-2 text-sm text-muted-foreground">
+          Publicerad {update.displayDate || update.date}
+        </div>
+      </aside>
     </div>
   );
 }
@@ -410,6 +429,27 @@ export default function Analysis() {
   const nextAnalysis = currentIndex !== -1 && currentIndex < allAnalysesSorted.length - 1 
     ? allAnalysesSorted[currentIndex + 1] 
     : undefined;
+  const latestRelatedUpdate = analysis.contentType === "analysis"
+    ? allAnalysesSorted
+        .filter((candidate) => candidate.contentType === "market-update" && candidate.relatedAnalysisSlug === analysis.slug)
+        .sort((a, b) => (b.date || "").localeCompare(a.date || ""))[0]
+    : undefined;
+
+  if (slug === "revolutionrace-iciw") {
+    return (
+      <>
+        <ReportComment
+          data={analysis}
+          markdown={rvrcIciwMarkdown}
+          onToggleWatchlist={toggleWatchlist}
+          isInWatchlist={isInWatchlist}
+          isWatchlistLoading={isWatchlistLoading}
+          nextAnalysis={nextAnalysis}
+        />
+        {analysisMeta}
+      </>
+    );
+  }
 
   // Custom view for Axfood Q2 2026 Report Comment
   if (slug === "axfood-q2-2026") {
@@ -467,6 +507,7 @@ export default function Analysis() {
     const Component = DEEP_DIVE_COMPONENTS[analysis.deepDiveComponent as keyof typeof DEEP_DIVE_COMPONENTS];
     return (
       <>
+        {latestRelatedUpdate && <LatestRelatedUpdateCallout update={latestRelatedUpdate} />}
         <Suspense fallback={<DeepDiveLoading />}>
           <Component data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
         </Suspense>
@@ -519,6 +560,7 @@ export default function Analysis() {
   if (analysis.templateVersion === "v10") {
     return (
       <>
+        {latestRelatedUpdate && <LatestRelatedUpdateCallout update={latestRelatedUpdate} />}
         <ComprehensiveAnalysisV10 data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
         <MobileReadingProgress
           label="analys"
@@ -537,6 +579,7 @@ export default function Analysis() {
   // Use the new comprehensive analysis template for all other stocks
   return (
     <>
+      {latestRelatedUpdate && <LatestRelatedUpdateCallout update={latestRelatedUpdate} />}
       <ComprehensiveAnalysis 
         data={analysis} 
         onToggleWatchlist={toggleWatchlist} 

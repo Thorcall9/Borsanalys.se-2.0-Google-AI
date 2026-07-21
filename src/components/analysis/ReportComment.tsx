@@ -7,6 +7,7 @@ import NextAnalysisButton from "./NextAnalysisButton";
 import RecommendationInfo from "./RecommendationInfo";
 import VerdictBadge from "./VerdictBadge";
 import { AnalysisData } from "../../types/analysis.js";
+import { analyses } from "../../data/analyses/index.js";
 
 type ReportCommentProps = {
   data: AnalysisData;
@@ -201,7 +202,7 @@ function MarkdownBlockView({ block }: { block: MarkdownBlock }) {
   if (block.type === "paragraph") {
     const text = block.lines.join(" ");
     if (!text) return null;
-    if (text.startsWith("Rapportkommentar |")) return null; // skip subheader
+    if (text.startsWith("Rapportkommentar |") || text.startsWith("Marknadsuppdatering |")) return null; // skip subheader
     
     // Format "Uppdaterad syn:" or "Slutsats:" as callouts
     if (text.startsWith("Uppdaterad syn:") || text.startsWith("**Uppdaterad syn:**") || text.startsWith("Vår bedömning:") || text.startsWith("**Vår bedömning:**")) {
@@ -263,6 +264,11 @@ export default function ReportComment({
   nextAnalysis,
 }: ReportCommentProps) {
   const blocks = useMemo(() => parseMarkdown(markdown), [markdown]);
+  const isMarketUpdate = data.contentType === "market-update";
+  const contentTypeLabel = isMarketUpdate ? "Marknadsuppdatering" : "Rapportkommentar";
+  const relatedAnalysis = data.relatedAnalysisSlug
+    ? analyses[data.relatedAnalysisSlug]
+    : undefined;
 
   return (
     <div className="min-h-screen bg-background text-foreground pt-32 pb-24">
@@ -275,7 +281,7 @@ export default function ReportComment({
         <header className="space-y-6 mb-12">
           <div className="flex flex-wrap items-center gap-3 text-[11px] font-black uppercase tracking-wider text-muted-foreground">
             <span className="inline-flex items-center gap-1.5 bg-primary/10 text-primary px-2.5 py-1 rounded-md border border-primary/20">
-              <FileText size={12} /> Rapportkommentar
+              <FileText size={12} /> {contentTypeLabel}
             </span>
             <span>{data.ticker}</span>
             <span className="opacity-45">•</span>
@@ -315,6 +321,23 @@ export default function ReportComment({
           )}
           <RecommendationInfo />
         </header>
+
+        {relatedAnalysis && (
+          <aside className="mb-10 rounded-3xl border border-primary/20 bg-primary/5 p-6">
+            <div className="text-xs font-black uppercase tracking-widest text-primary mb-2">
+              Relaterad grundanalys
+            </div>
+            <p className="text-sm leading-relaxed text-muted-foreground mb-4">
+              Detta är en marknadsuppdatering till vår fullständiga analys av {relatedAnalysis.title}.
+            </p>
+            <Link
+              to={"/analys/" + relatedAnalysis.slug}
+              className="inline-flex items-center rounded-xl bg-primary px-4 py-2 text-xs font-black uppercase tracking-widest text-primary-foreground transition hover:opacity-90"
+            >
+              Läs grundanalysen
+            </Link>
+          </aside>
+        )}
 
         {/* Main Content */}
         <article className="prose prose-slate max-w-none">

@@ -88,6 +88,7 @@ export default function AnalysisArchive({ analyses, featured, searchTerm, onSear
             <FilterButton active={contentType === "all"} onClick={() => onContentTypeChange("all")} icon={<Grid2X2 size={16} />}>Alla</FilterButton>
             <FilterButton active={contentType === "analysis"} onClick={() => onContentTypeChange("analysis")} icon={<BarChart3 size={16} />}>Analyser</FilterButton>
             <FilterButton active={contentType === "report-commentary"} onClick={() => onContentTypeChange("report-commentary")} icon={<FileText size={16} />}>Rapportkommentarer</FilterButton>
+            <FilterButton active={contentType === "market-update"} onClick={() => onContentTypeChange("market-update")} icon={<Bell size={16} />}>Marknadsuppdateringar</FilterButton>
             <FilterButton active={selectedRecommendation === "KÖP"} onClick={() => onRecommendationChange(selectedRecommendation === "KÖP" ? "Alla" : "KÖP")}>KÖP</FilterButton>
             <FilterButton active={selectedRecommendation === "BEVAKA"} onClick={() => onRecommendationChange(selectedRecommendation === "BEVAKA" ? "Alla" : "BEVAKA")}>BEVAKA</FilterButton>
             <FilterButton active={selectedRecommendation === "AVSTÅ"} onClick={() => onRecommendationChange(selectedRecommendation === "AVSTÅ" ? "Alla" : "AVSTÅ")}>AVSTÅ</FilterButton>

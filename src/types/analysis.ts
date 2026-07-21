@@ -170,6 +170,7 @@ export interface AnalysisData {
 
   // Content type and filtering metadata
   contentType: ContentType;
+  relatedAnalysisSlug?: string;
   tags?: string[];
   reportPeriod?: string;
   reportSummary?: string;
@@ -304,4 +305,4 @@ export interface AnalysisData {
   };
 }
 
-export type ContentType = "analysis" | "report-commentary" | "guide" | "other";
+export type ContentType = "analysis" | "report-commentary" | "market-update" | "guide" | "other";

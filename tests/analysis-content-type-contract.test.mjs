@@ -36,6 +36,7 @@ const dataSources = await Promise.all(
     "nvidia/nvidia-fy2026.ts",
     "plejd/plejd-q1-2026.ts",
     "revolutionrace/revolutionrace-2026.ts",
+    "revolutionrace/revolutionrace-iciw.ts",
     "saab/saab-2026.ts",
     "sbb/sbb.ts",
     "swedbank/swedbank-2025.ts",
@@ -63,17 +64,19 @@ const vercelSource = await readFile(
   "utf8"
 );
 
-test("the shared model requires the two explicit publication content types", () => {
-  assert.match(typeSource, /type ContentType = ['"]analysis['"] \| ['"]report-commentary['"] \| ['"]guide['"] \| ['"]other['"]/);
+test("the shared model requires the explicit publication content types", () => {
+  assert.match(typeSource, /type ContentType = ['"]analysis['"] \| ['"]report-commentary['"] \| ['"]market-update['"] \| ['"]guide['"] \| ['"]other['"]/);
   assert.match(typeSource, /contentType: ContentType/);
   assert.doesNotMatch(typeSource, /contentType\?:/);
 });
 
-test("exactly the latest Willys publication is a report comment", () => {
+test("report comments and market updates are explicitly classified", () => {
   const reportComments = dataSources.filter((source) => /contentType: ['"]report-commentary['"]/.test(source));
+  const marketUpdates = dataSources.filter((source) => /contentType: ['"]market-update['"]/.test(source));
   const analyses = dataSources.filter((source) => /contentType: ['"]analysis['"]/.test(source));
   assert.equal(reportComments.length, 1);
-  assert.equal(analyses.length, dataSources.length - 1);
+  assert.equal(marketUpdates.length, 1);
+  assert.equal(analyses.length, dataSources.length - 2);
   assert.match(axfoodQ2Source, /slug: ['"]axfood-q2-2026['"]/);
   assert.match(axfoodQ2Source, /contentType: ['"]report-commentary['"]/);
   assert.match(axfoodQ1Source, /slug: ['"]axfood-q1-2026['"]/);
