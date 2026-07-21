@@ -46,3 +46,20 @@
 ### Concerns
 
 - None identified. The RevolutionRace page UI and both aliases are preserved, and only date presentation consumers opt into `displayDate` when it is present.
+
+## Fix: SBB disclosure date fallback
+
+### Changes
+
+- Updated `AnalysisDisclaimer` to pass `analysisData.displayDate || analysisData.date` to the visible disclosure, preserving the Swedish label while retaining the ISO registry date for SEO metadata.
+- Added a focused SEO contract assertion covering the disclosure fallback.
+
+### Verification
+
+- `node --test tests/seo-contract.test.mjs tests/seo-route-rewrites.test.mjs`: 13 passing, 0 failing (exit 0).
+- `npm run lint`: passed; `tsc --noEmit` exited 0.
+- `git diff --check`: passed with no output (exit 0).
+
+### Concerns
+
+- None identified. `Header.tsx` and unrelated files were not touched.

@@ -142,11 +142,12 @@ test('RevolutionRace aliases use the shared registry entry and canonical article
 });
 
 test('SBB keeps an ISO registry date and its existing visible date label', async () => {
-  const [analysisType, sbb, archive, comprehensiveAnalysis] = await Promise.all([
+  const [analysisType, sbb, archive, comprehensiveAnalysis, disclaimer] = await Promise.all([
     source('src/types/analysis.ts'),
     source('src/data/analyses/sbb/sbb.ts'),
     source('src/components/analysis/AnalysisArchive.tsx'),
     source('src/components/analysis/ComprehensiveAnalysis.tsx'),
+    source('src/components/analysis/AnalysisDisclaimer.tsx'),
   ]);
 
   assert.match(analysisType, /displayDate\?: string/);
@@ -155,6 +156,7 @@ test('SBB keeps an ISO registry date and its existing visible date label', async
   assert.doesNotMatch(sbb, /date: "17 april 2026"/);
   assert.match(archive, /analysis\.displayDate \|\| analysis\.date/);
   assert.match(comprehensiveAnalysis, /data\.displayDate \|\| data\.date/);
+  assert.match(disclaimer, /analysisDate=\{analysisData\.displayDate \|\| analysisData\.date\}/);
 });
 
 test('public index pages declare stable canonical metadata while private pages remain noindex', async () => {
