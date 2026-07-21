@@ -44,3 +44,25 @@ The focused contract tests were first run against the missing implementation and
 
 - `src/components/layout/Header.tsx` and unrelated files were not modified.
 - No outstanding concerns found for the requested fixes.
+
+## Task 1 remaining OG asset fix — 2026-07-21
+
+### Changed files
+
+- `src/components/SEO.tsx` — Changed the default OG/Twitter image from the nonexistent `/og-default.svg` to `/og-image.png`.
+- `tests/seo-contract.test.mjs` — Added an existence assertion for `public/og-image.png` and updated the SEO default assertion.
+- `.superpowers/sdd/task-1-report.md` — Appended this report entry.
+
+### Commit
+
+`fix: use existing OG image asset`
+
+### Tests and commands
+
+- `node --test tests/seo-contract.test.mjs` — PASS, 8/8 tests.
+- `npm run lint` — PASS; `tsc --noEmit` exited 0.
+- `git diff --check` — PASS; no whitespace errors.
+
+### Concerns
+
+No outstanding concerns for the requested scope. Production-origin URL hardening was left unchanged, and `Header.tsx` was not modified.

@@ -56,9 +56,11 @@ test('structured-data helpers define the required JSON-LD contracts', async () =
 test('SEO defaults to the local OG image and structured URLs pin the production origin', async () => {
   const seo = await source('src/components/SEO.tsx');
   const structuredData = await source('src/lib/seo/structuredData.ts');
+  const ogImage = new URL('public/og-image.png', root);
 
   assert.doesNotMatch(seo, /picsum\.photos/);
-  assert.match(seo, /ogImage = "\/og-default\.svg"/);
+  await assert.doesNotReject(() => readFile(ogImage));
+  assert.match(seo, /ogImage = "\/og-image\.png"/);
   assert.match(structuredData, /const url = new URL\(SITE_ORIGIN\)/);
   assert.match(structuredData, /const input = new URL\(path, SITE_ORIGIN\)/);
 });
