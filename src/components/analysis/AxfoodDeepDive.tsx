@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import AdUnit from "./AdUnit";
 import NordnetCTA from "./NordnetCTA";
-import SEO from "../SEO";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import { AnalysisData } from "../../data/analyses";
 
@@ -607,11 +606,6 @@ export default function AxfoodDeepDive({
           }
         }
       ` }} />
-      <SEO
-        title={`Axfood AB (AXFO) Aktieanalys – Börsanalys.se`}
-        description="Djupanalys av Axfood AB (AXFO): P/E 24,7x, direktavkastning 3,4 %, scorecard 27/40. BEVAKA vid kurs 267,90 kr (juni 2026)."
-      />
-
       {/* ═══════════════════════════════════════════════════════
           HERO SECTION — large editorial typography + key metrics
       ═══════════════════════════════════════════════════════ */}

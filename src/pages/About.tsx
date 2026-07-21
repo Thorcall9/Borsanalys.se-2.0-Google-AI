@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Users, Target, Shield, Zap, Mail, Twitter, Linkedin, ArrowRight } from "lucide-react";
+import SEO from "../components/SEO";
 
 export default function About() {
   const values = [
@@ -24,6 +25,12 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
+      <SEO
+        title="Om Börsanalys.se"
+        description="Läs om Börsanalys.se, vår metodik och hur vi gör strukturerad aktieanalys mer tillgänglig."
+        canonical="/om-oss"
+        ogImage="/og-image.png"
+      />
       {/* Hero Section */}
       <div className="relative overflow-hidden bg-[radial-gradient(circle_at_75%_15%,rgba(16,185,129,0.08),transparent_28%),linear-gradient(180deg,#ffffff_0%,#fbfdfc_100%)]">
       <div className="mx-auto max-w-[1180px] px-5 pb-12 pt-12 md:px-8 md:pb-16 md:pt-14">

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, AlertTriangle, BarChart3, CheckCircle2, Shield, Star, Target, Zap } from "lucide-react";
-import SEO from "../SEO";
 import { AnalysisData } from "../../data/analyses";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import NordnetCTA from "./NordnetCTA";
@@ -115,8 +114,6 @@ export default function ABBDeepDive({
       className="min-h-screen bg-background font-sans text-foreground pt-16"
       style={ABB_READING_THEME}
     >
-      <SEO title="Analys: ABB Ltd (ABB.ST) - Q1 2026" description={data.summary} />
-
       <div className="w-full text-white py-8 md:py-10 px-6 md:px-10" style={{ background: `linear-gradient(135deg, #991400 0%, ${ACCENT} 100%)` }}>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="flex items-center gap-6 w-full md:w-auto">

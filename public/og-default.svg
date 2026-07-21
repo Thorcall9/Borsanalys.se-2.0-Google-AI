@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Börsanalys.se</title>
+  <desc id="description">Djupgående aktieanalyser, drivna av data och AI.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#101d1a" />
+      <stop offset="1" stop-color="#07100e" />
+    </linearGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#ffffff" stroke-opacity="0.035" />
+    </pattern>
+    <linearGradient id="chart" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#34d399" stop-opacity="0.12" />
+      <stop offset="1" stop-color="#34d399" stop-opacity="0.72" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#background)" />
+  <rect width="1200" height="630" fill="url(#grid)" />
+  <circle cx="1060" cy="92" r="245" fill="#0f766e" opacity="0.16" />
+  <circle cx="1100" cy="50" r="150" fill="#34d399" opacity="0.08" />
+
+  <g transform="translate(72 66)">
+    <rect width="52" height="52" rx="14" fill="#0f766e" />
+    <path d="M14 36L23 27L30 32L40 17" fill="none" stroke="#ecfdf5" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+    <circle cx="40" cy="17" r="3" fill="#ecfdf5" />
+    <text x="70" y="38" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="700" letter-spacing="-1">Börsanalys.se</text>
+  </g>
+
+  <g transform="translate(72 205)" font-family="Arial, Helvetica, sans-serif">
+    <text fill="#f8fafc" font-size="66" font-weight="700" letter-spacing="-2.2">
+      <tspan x="0" y="0">Analysera bättre.</tspan>
+      <tspan x="0" y="80">Investera smartare.</tspan>
+    </text>
+    <text x="2" y="184" fill="#a7f3d0" font-size="28" font-weight="400" letter-spacing="0.2">Djupgående aktieanalyser – drivna av data och AI.</text>
+  </g>
+
+  <g transform="translate(760 240)">
+    <path d="M0 205L70 158L137 178L208 100L276 126L360 28" fill="none" stroke="url(#chart)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M0 205L70 158L137 178L208 100L276 126L360 28V255H0Z" fill="url(#chart)" opacity="0.12" />
+    <g fill="#34d399">
+      <circle cx="70" cy="158" r="7" />
+      <circle cx="208" cy="100" r="7" />
+      <circle cx="360" cy="28" r="9" />
+    </g>
+  </g>
+
+  <rect x="72" y="559" width="1056" height="1" fill="#ffffff" opacity="0.12" />
+  <text x="72" y="594" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="18" letter-spacing="2.2">OBEROENDE ANALYS • TYDLIGA BESLUTSUNDERLAG</text>
+</svg>

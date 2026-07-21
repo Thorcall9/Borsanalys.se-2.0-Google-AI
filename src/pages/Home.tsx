@@ -10,6 +10,7 @@ import TrustStrip from "../components/home/TrustStrip";
 import FeaturedAnalysisCard from "../components/home/FeaturedAnalysisCard";
 import FreeMembershipCard from "../components/home/FreeMembershipCard";
 import { getAnalysisPresentation, getFeaturedAnalysis } from "../components/home/analysisPresentation";
+import { buildWebsiteJsonLd } from "../lib/seo/structuredData";
 
 const memberBenefits = [
   "Spara analyser och checklistor",
@@ -48,6 +49,9 @@ export default function Home() {
       <SEO
         title="Hem - Professionella Aktieanalyser & AI-insikter"
         description="Börsanalys.se erbjuder professionella aktieanalyser drivna av data och AI. Hitta nästa vinnare på börsen med våra djupgående investment cases."
+        canonical="/"
+        ogImage="/og-image.png"
+        jsonLd={buildWebsiteJsonLd()}
       />
       <Hero />
 

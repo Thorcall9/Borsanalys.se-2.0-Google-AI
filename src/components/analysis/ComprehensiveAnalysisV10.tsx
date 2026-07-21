@@ -94,7 +94,7 @@ export default function ComprehensiveAnalysisV10({ data, isInWatchlist, isWatchl
       isWatchlistLoading={isWatchlistLoading}
       onToggleWatchlist={onToggleWatchlist}
       analysisPrice={analysisPrice || undefined}
-      date={data.date}
+      date={data.displayDate || data.date}
       nextAnalysis={nextAnalysis}
     >
       <div className="mb-16 space-y-8">

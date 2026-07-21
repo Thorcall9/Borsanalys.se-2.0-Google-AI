@@ -1,11 +1,78 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore, getDocFromServer, doc } from 'firebase/firestore';
 import firebaseConfig from '../firebase-applet-config.json';
 
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
-export const auth = getAuth(app);
+export const app = initializeApp(firebaseConfig);
+
+type FirebaseAuthClient = Pick<typeof import('firebase/auth'),
+  | 'onAuthStateChanged'
+  | 'signInWithPopup'
+  | 'GoogleAuthProvider'
+  | 'FacebookAuthProvider'
+  | 'OAuthProvider'
+  | 'signInWithEmailAndPassword'
+  | 'createUserWithEmailAndPassword'
+  | 'updateProfile'
+  | 'signOut'
+> & { auth: import('firebase/auth').Auth };
+
+type FirebaseFirestoreClient = Pick<typeof import('firebase/firestore'),
+  | 'doc'
+  | 'getDoc'
+  | 'setDoc'
+  | 'serverTimestamp'
+  | 'collection'
+  | 'query'
+  | 'where'
+  | 'orderBy'
+  | 'onSnapshot'
+  | 'addDoc'
+  | 'deleteDoc'
+  | 'increment'
+  | 'updateDoc'
+> & { db: import('firebase/firestore').Firestore };
+
+let authPromise: Promise<FirebaseAuthClient> | null = null;
+let firestorePromise: Promise<FirebaseFirestoreClient> | null = null;
+
+export function loadFirebaseAuth() {
+  if (!authPromise) {
+    authPromise = import('firebase/auth').then((firebaseAuth) => ({
+      auth: firebaseAuth.getAuth(app),
+      onAuthStateChanged: firebaseAuth.onAuthStateChanged,
+      signInWithPopup: firebaseAuth.signInWithPopup,
+      GoogleAuthProvider: firebaseAuth.GoogleAuthProvider,
+      FacebookAuthProvider: firebaseAuth.FacebookAuthProvider,
+      OAuthProvider: firebaseAuth.OAuthProvider,
+      signInWithEmailAndPassword: firebaseAuth.signInWithEmailAndPassword,
+      createUserWithEmailAndPassword: firebaseAuth.createUserWithEmailAndPassword,
+      updateProfile: firebaseAuth.updateProfile,
+      signOut: firebaseAuth.signOut,
+    }));
+  }
+  return authPromise;
+}
+
+export function loadFirebaseFirestore() {
+  if (!firestorePromise) {
+    firestorePromise = import('firebase/firestore').then((firestore) => ({
+      db: firestore.getFirestore(app, firebaseConfig.firestoreDatabaseId),
+      doc: firestore.doc,
+      getDoc: firestore.getDoc,
+      setDoc: firestore.setDoc,
+      serverTimestamp: firestore.serverTimestamp,
+      collection: firestore.collection,
+      query: firestore.query,
+      where: firestore.where,
+      orderBy: firestore.orderBy,
+      onSnapshot: firestore.onSnapshot,
+      addDoc: firestore.addDoc,
+      deleteDoc: firestore.deleteDoc,
+      increment: firestore.increment,
+      updateDoc: firestore.updateDoc,
+    }));
+  }
+  return firestorePromise;
+}
 
 // --- Error Handling ---
 export enum OperationType {
@@ -40,17 +107,12 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
   const errInfo: FirestoreErrorInfo = {
     error: error instanceof Error ? error.message : String(error),
     authInfo: {
-      userId: auth.currentUser?.uid,
-      email: auth.currentUser?.email,
-      emailVerified: auth.currentUser?.emailVerified,
-      isAnonymous: auth.currentUser?.isAnonymous,
-      tenantId: auth.currentUser?.tenantId,
-      providerInfo: auth.currentUser?.providerData.map(provider => ({
-        providerId: provider.providerId,
-        displayName: provider.displayName,
-        email: provider.email,
-        photoUrl: provider.photoURL
-      })) || []
+      userId: undefined,
+      email: undefined,
+      emailVerified: undefined,
+      isAnonymous: undefined,
+      tenantId: undefined,
+      providerInfo: []
     },
     operationType,
     path
@@ -58,6 +120,5 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
   console.error('Firestore Error: ', JSON.stringify(errInfo));
   throw new Error(JSON.stringify(errInfo));
 }
-
 
 export default app;

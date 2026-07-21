@@ -6,18 +6,20 @@ import { RECOMMENDATION_FILTER_OPTIONS } from '../lib/recommendation';
 
 // ─── Content type definitions ───────────────────────────────────────────────
 
-export type FilterContentType = 'all' | Extract<ContentType, 'analysis' | 'report-commentary'>;
+export type FilterContentType = 'all' | Extract<ContentType, 'analysis' | 'report-commentary' | 'market-update'>;
 export type SortOption = 'latest' | 'updated' | 'score';
 
 export const CONTENT_TYPE_LABELS: Record<FilterContentType, string> = {
   all: 'Alla',
   analysis: 'Analyser',
   'report-commentary': 'Rapportkommentarer',
+  'market-update': 'Marknadsuppdateringar',
 };
 
 export const CONTENT_TYPE_BADGE_LABELS: Record<ContentType, string> = {
   analysis: 'ANALYS',
   'report-commentary': 'RAPPORTKOMMENTAR',
+  'market-update': 'MARKNADSUPPDATERING',
   guide: 'GUIDE',
   other: 'ÖVRIGT',
 };
@@ -64,10 +66,12 @@ const PARAM_SEARCH = 'q';
 const URL_TYPE_TO_CONTENT_TYPE: Record<string, FilterContentType> = {
   analys: 'analysis',
   rapportkommentar: 'report-commentary',
+  marknadsuppdatering: 'market-update',
 };
 const CONTENT_TYPE_TO_URL_TYPE: Partial<Record<FilterContentType, string>> = {
   analysis: 'analys',
   'report-commentary': 'rapportkommentar',
+  'market-update': 'marknadsuppdatering',
 };
 const VALID_SORT_OPTIONS: SortOption[] = ['latest', 'updated', 'score'];
 const VALID_RECOMMENDATIONS = RECOMMENDATION_FILTER_OPTIONS;

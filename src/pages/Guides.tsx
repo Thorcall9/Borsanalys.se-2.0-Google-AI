@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Search, Calculator, TrendingUp, ChevronRight, ArrowRight, BookOpen, DollarSign, Zap, Shield, PiggyBank, ShieldCheck } from "lucide-react";
 import { guides } from "../data/guides";
 import AdUnit from "../components/analysis/AdUnit";
+import SEO from "../components/SEO";
 
 
 
@@ -24,6 +25,12 @@ export default function Guides() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
+      <SEO
+        title="Börsguider - Lär dig aktieanalys"
+        description="Lär dig grunderna i aktieanalys, värdering och hur du bygger en vinnande portfölj."
+        canonical="/guider"
+        ogImage="/og-image.png"
+      />
       {/* Header */}
       <header className="relative overflow-hidden bg-[radial-gradient(circle_at_75%_15%,rgba(16,185,129,0.08),transparent_28%),linear-gradient(180deg,#ffffff_0%,#fbfdfc_100%)]">
         <div className="mx-auto max-w-[1180px] px-5 pb-10 pt-12 md:px-8 md:pb-14 md:pt-14">

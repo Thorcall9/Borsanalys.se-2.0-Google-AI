@@ -2,18 +2,20 @@
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
+import { tsImport } from 'tsx/esm/api';
 
 const root = process.cwd();
 const port = Number(process.env.PORT || 4176);
 const indexHtml = await readFile(join(root, 'dist/index.html'), 'utf8');
-const robots = await readFile(join(root, 'public/robots.txt'), 'utf8');
-const analysesSource = await readFile(join(root, 'src/data/analyses/index.ts'), 'utf8');
-const analysisSlugs = [...analysesSource.matchAll(/^\s*"([^"]+)":\s*\w+/gm)].map((match) => match[1]);
+const vercel = JSON.parse(await readFile(join(root, 'vercel.json'), 'utf8'));
+const robotsRewrite = vercel.rewrites?.find((rewrite) => rewrite.source === '/robots.txt');
+if (robotsRewrite?.destination !== '/robots.txt') {
+  throw new Error('vercel.json must explicitly rewrite /robots.txt to /robots.txt');
+}
+const robots = await readFile(join(root, 'public', robotsRewrite.destination.slice(1)), 'utf8');
+const { default: sitemapHandler } = await tsImport('../api/sitemap.ts', import.meta.url);
 
-const redirects = new Map([
-  ['/integritetspolicy', '/integritet'],
-  ['/analyser/investor2025q2', '/analys/investor-ab'],
-]);
+const redirects = new Map((vercel.redirects || []).map(({ source, destination }) => [source, destination]));
 
 function isSpaRoute(pathname) {
   return pathname === '/'
@@ -27,14 +29,6 @@ function isSpaRoute(pathname) {
     || pathname.startsWith('/verktyg/');
 }
 
-function sitemapXml() {
-  const urls = [
-    '/', '/analys', '/guider', '/skola', '/marknad', '/kontakt', '/villkor', '/integritet', '/innehav', '/verktyg', '/om-oss',
-    ...analysisSlugs.map((slug) => `/analys/${slug}`),
-  ];
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls.map((url) => `<url><loc>https://www.borsanalys.se${url}</loc></url>`).join('')}</urlset>`;
-}
-
 const server = createServer(async (request, response) => {
   const url = new URL(request.url || '/', `http://${request.headers.host}`);
   const pathname = url.pathname;
@@ -44,14 +38,21 @@ const server = createServer(async (request, response) => {
     response.end();
     return;
   }
-  if (pathname === '/robots.txt') {
+  if (pathname === robotsRewrite.source) {
     response.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
     response.end(robots);
     return;
   }
   if (pathname === '/sitemap.xml') {
-    response.writeHead(200, { 'Content-Type': 'application/xml; charset=utf-8' });
-    response.end(sitemapXml());
+    const sitemapResponse = {
+      setHeader: (name, value) => response.setHeader(name, value),
+      status: (status) => {
+        response.statusCode = status;
+        return sitemapResponse;
+      },
+      send: (body) => response.end(body),
+    };
+    sitemapHandler(request, sitemapResponse);
     return;
   }
   if (pathname === '/api/newsletter/signup') {

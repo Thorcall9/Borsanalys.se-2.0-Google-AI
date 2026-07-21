@@ -52,7 +52,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           key: d.key,
           value: d.value,
           trend: d.trend,
-          updatedAt: d.updatedAt
+          updatedAt: d.updatedAt,
+          source: d.source
         }));
 
       res.setHeader('Cache-Control', 's-maxage=300, stale-while-revalidate');

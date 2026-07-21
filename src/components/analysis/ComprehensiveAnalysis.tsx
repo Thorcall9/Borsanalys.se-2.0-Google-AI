@@ -31,7 +31,6 @@ import ChartCard from './ChartCard';
 import NextStepsModule from './NextStepsModule';
 import EditorialReadNext from './EditorialReadNext';
 import inwidoSankeyHtml from '../../../analyses/inwido_sankey_2026.html?raw';
-import SEO from '../SEO';
 import { fetchWithCache, RapidAPIQuote } from '../../services/stockService';
 import { AnalysisData } from '../../data/analyses';
 import NordnetCTA from './NordnetCTA';
@@ -638,12 +637,10 @@ const InwidoTemplateAnalysis = ({
       isSaveLoading={isSaveLoading}
       onToggleSave={onToggleSave}
       analysisPrice={analysisPrice}
-      date={data.date}
+      date={data.displayDate || data.date}
       nextAnalysis={nextAnalysis}
       tightContent
     >
-      <SEO title={`${data.title} (${data.ticker}) - Analys`} description={data.summary} ogType="article" />
-
       <div className="mb-20 space-y-12">
         <div className="space-y-4">
           <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.15em] sm:tracking-[0.4em] flex flex-wrap items-center gap-x-2 gap-y-1 leading-relaxed">
@@ -1090,7 +1087,7 @@ export default function ComprehensiveAnalysis({
       isSaveLoading={isSaveLoading}
       onToggleSave={onToggleSave}
       analysisPrice={analysisPrice || undefined}
-      date={data.date}
+      date={data.displayDate || data.date}
       nextAnalysis={nextAnalysis}
       sidebarExtras={(data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT') ? (
         <MicrosoftSidebarExtras 
@@ -1105,12 +1102,6 @@ export default function ComprehensiveAnalysis({
       hideSidebar={data.slug === 'nordea-bank-2026'}
       tightContent={isInwido}
     >
-      <SEO 
-        title={`${data.title} (${data.ticker}) - Analys`} 
-        description={data.summary}
-        ogType="article"
-      />
-
       {/* Main Title Header */}
       <div className="mb-20 space-y-12">
         <div className="space-y-4">
@@ -2318,7 +2309,7 @@ export default function ComprehensiveAnalysis({
                 verdict={data.recommendation || "BEVAKA"} 
                 target={data.targetPrice || (data.scenarios?.find(s => s.type === 'base')?.value || "N/A")} 
                 description={data.motivation || data.summary} 
-                date={data.date || new Date().toISOString().split('T')[0]}
+                date={data.displayDate || data.date || new Date().toISOString().split('T')[0]}
                 accentColor={ACCENT_COLOR}
                 buyZone={data.buyZone}
                 targetLabel={isInwido ? "Rimligt värdeintervall på 12 månaders sikt" : undefined}

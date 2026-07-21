@@ -60,7 +60,7 @@ export default function AnalysisDisclaimer({ className = "", theme = "dark" }: A
       <div className={className}>
         <AnalysisDisclosure
           disclosureKey={disclosureKey}
-          analysisDate={analysisData.date}
+          analysisDate={analysisData.displayDate || analysisData.date}
           analysisPrice={analysisData.price}
           recommendation={analysisData.recommendation}
           fairValue={analysisData.targetPrice || analysisData.scenarios?.find(s => s.type === "base")?.value}

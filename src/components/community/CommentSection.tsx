@@ -1,17 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { MessageSquare, Send, Trash2, User as UserIcon, Clock } from "lucide-react";
-import { db, handleFirestoreError, OperationType } from "../../firebase";
-import { 
-  collection, 
-  query, 
-  where, 
-  orderBy, 
-  onSnapshot, 
-  addDoc, 
-  deleteDoc, 
-  doc, 
-  serverTimestamp 
-} from "firebase/firestore";
+import { handleFirestoreError, loadFirebaseFirestore, OperationType } from "../../firebase";
 import { useAuth } from "../../contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -39,25 +28,38 @@ export default function CommentSection({ stockSlug }: CommentSectionProps) {
     if (!stockSlug) return;
 
     const path = "comments";
-    const q = query(
-      collection(db, path),
-      where("stockSlug", "==", stockSlug),
-      orderBy("createdAt", "desc")
-    );
+    let cancelled = false;
+    let unsubscribe = () => {};
 
-    const unsub = onSnapshot(q, (snapshot) => {
-      const items = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      })) as Comment[];
-      setComments(items);
-      setLoading(false);
-    }, (error) => {
+    void loadFirebaseFirestore().then(({ db, collection, query, where, orderBy, onSnapshot }) => {
+      if (cancelled) return;
+
+      const q = query(
+        collection(db, path),
+        where("stockSlug", "==", stockSlug),
+        orderBy("createdAt", "desc")
+      );
+
+      unsubscribe = onSnapshot(q, (snapshot) => {
+        const items = snapshot.docs.map(snapshotDoc => ({
+          id: snapshotDoc.id,
+          ...snapshotDoc.data()
+        })) as Comment[];
+        setComments(items);
+        setLoading(false);
+      }, (error) => {
+        handleFirestoreError(error, OperationType.LIST, path);
+        setLoading(false);
+      });
+    }).catch((error) => {
       handleFirestoreError(error, OperationType.LIST, path);
-      setLoading(false);
+      if (!cancelled) setLoading(false);
     });
 
-    return () => unsub();
+    return () => {
+      cancelled = true;
+      unsubscribe();
+    };
   }, [stockSlug]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -72,6 +74,7 @@ export default function CommentSection({ stockSlug }: CommentSectionProps) {
     setIsSubmitting(true);
     const path = "comments";
     try {
+      const { db, addDoc, collection, serverTimestamp } = await loadFirebaseFirestore();
       await addDoc(collection(db, path), {
         userId: user.uid,
         userName: user.displayName || "Anonym användare",
@@ -93,6 +96,7 @@ export default function CommentSection({ stockSlug }: CommentSectionProps) {
     
     const path = `comments/${commentId}`;
     try {
+      const { db, deleteDoc, doc } = await loadFirebaseFirestore();
       await deleteDoc(doc(db, "comments", commentId));
     } catch (error) {
       handleFirestoreError(error, OperationType.DELETE, path);

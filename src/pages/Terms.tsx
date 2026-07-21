@@ -1,15 +1,17 @@
 import React from "react";
-import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import SEO from "../components/SEO";
 
 export default function Terms() {
   return (
     <div className="max-w-4xl mx-auto px-6 py-20 space-y-12">
-      <Helmet>
-        <title>Användarvillkor | Börsanalys.se</title>
-        <meta name="description" content="Användarvillkor för Börsanalys.se" />
-      </Helmet>
+      <SEO
+        title="Användarvillkor"
+        description="Användarvillkor för Börsanalys.se"
+        canonical="/villkor"
+        ogImage="/og-image.png"
+      />
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}

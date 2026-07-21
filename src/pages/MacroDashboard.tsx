@@ -7,25 +7,9 @@ import {
   Newspaper, Gauge, Target
 } from "lucide-react";
 import { useAuth } from "../contexts/AuthContext";
+import SEO from "../components/SEO";
 
 
-
-interface MacroData {
-  value: number;
-  trend: "up" | "down" | "flat";
-  updatedAt: string;
-  source?: string;
-  isStale?: boolean;
-}
-
-const FALLBACK_DATA: Record<string, MacroData> = {
-  Inflation: { value: 1.6, trend: "down", updatedAt: new Date().toISOString() },
-  US10Y: { value: 4.29, trend: "flat", updatedAt: new Date().toISOString() },
-  SE10Y: { value: 2.25, trend: "flat", updatedAt: new Date().toISOString() },
-  USDSEK: { value: 10.45, trend: "flat", updatedAt: new Date().toISOString() },
-  EURSEK: { value: 11.25, trend: "flat", updatedAt: new Date().toISOString() },
-  OMX30: { value: 2600, trend: "flat", updatedAt: new Date().toISOString() }
-};
 
 const MACRO_METRICS = ["Inflation", "US10Y", "SE10Y", "USDSEK", "EURSEK", "OMX30"];
 
@@ -69,6 +53,7 @@ const MACRO_METADATA: Record<string, { category: string, title: string, descript
 };
 
 import FearAndGreedGauge from "../components/FearAndGreedGauge";
+import { normalizeMacroResponse, type NormalizedMacroData } from "../lib/macroData";
 
 interface MarketEvent {
   id: string;
@@ -81,39 +66,6 @@ interface MarketEvent {
   winners: string;
   aiInsight?: string;
 }
-
-const INITIAL_EVENTS: MarketEvent[] = [
-  {
-    id: "1",
-    title: "Starkare Krona Utmanar Export, Gynnar Import",
-    impact: "neutral",
-    description: "En USDSEK-kurs på 9.22 representerar en signifikant förstärkning av den svenska kronan jämfört med tidigare år. Detta kan dels tolkas som ett tecken på förbättrad global riskaptit, där investerare söker sig bort från säkra hamnar som USD, dels som en indikation på en stabilare svensk ekonomi. Förändringen påverkar lönsamheten för svenska företag beroende på deras exponering mot utländska marknader och valutarörelser.",
-    whyItMatters: "En starkare krona minskar värdet på utländska intäkter vid omräkning till SEK, vilket pressar marginalerna för Sveriges stora exportbolag. Samtidigt dämpar det inflationen genom billigare importvaror, vilket ger Riksbanken mer utrymme för räntesänkningar.",
-    swedishCompanies: "Exportjättar som Volvo, Atlas Copco och Sandvik påverkas negativt vid omräkning, medan konsumentbolag och importörer som H&M och ICA kan få lägre inköpskostnader.",
-    usCompanies: "Amerikanska bolag med stor försäljning i Sverige ser sina intäkter öka i USD-termer, men påverkan är generellt marginell för de största S&P 500-bolagen.",
-    winners: "Importberoende bolag, svenska konsumenter och bolag med stora skulder i utländsk valuta som nu blir billigare att serva."
-  },
-  {
-    id: "2",
-    title: "Navigering mot en 'Mjuklandning' för Ekonomin",
-    impact: "positive",
-    description: "Att inflationen (KPIF) nu fallit till 1,6% stärker förhoppningarna om en 'mjuklandning'. Detta indikerar att centralbankernas åtstramning har haft önskad effekt, vilket minskar risken för en kraftig ekonomisk nedgång och banar väg för en mer expansiv räntepolitik.",
-    whyItMatters: "En mjuklandning är det ideala scenariot för börsen då det innebär att räntetoppen är passerad utan att bolagsvinsterna kollapsar. Med inflationen under målet skiftar fokus från prisstabilitet till att stödja ekonomisk tillväxt.",
-    swedishCompanies: "Hela börsen gynnas generellt, men särskilt investmentbolag som Investor och Kinnevik samt de stora industrivardagarna som drar nytta av en stabil global efterfrågan.",
-    usCompanies: "Tekniksektorn och tillväxtbolag (t.ex. Microsoft, Apple, NVIDIA) är de stora vinnarna då lägre inflationsrisk minskar trycket på diskonteringsräntorna.",
-    winners: "Tillväxtaktier, småbolag och cykliska sektorer som tidigare pressats av recessionsoro."
-  },
-  {
-    id: "3",
-    title: "Ihållande Höga Räntor och Kapitalets Pris",
-    impact: "negative",
-    description: "Trots att inflationen (KPIF) fallit till 1,6% signalerar US10Y-räntan på 4.29% att kostnaden för kapital förblir betydande globalt. Skillnaden mellan snabbt fallande svensk inflation och ihållande höga amerikanska räntor skapar en komplex miljö för kapitalallokering.",
-    whyItMatters: "Higher for longer i USA innebär att den riskfria räntan sätter en hög ribba globalt. För svenska bolag innebär detta en balansgång mellan lägre inhemska lånekostnader och ett högt internationellt avkastningskrav.",
-    swedishCompanies: "Fastighetsbolag (ex. Castellum, Balder) gynnas av den lägre svenska inflationen, men pressas av de globala räntenivåerna. De svenska storbankerna ser sitt räntenetto påverkas när styrräntan sänks.",
-    usCompanies: "Regionala banker och småbolag i Russell 2000 drabbas hårdast då de ofta har rörliga lån eller behov av frekvent refinansiering.",
-    winners: "Banker, bolag med stora nettokassor (t.ex. Evolution, Fortnox) och försäkringsbolag som kan placera sina reserver till högre avkastning."
-  }
-];
 
 const PHASES = [
   {
@@ -180,11 +132,13 @@ const PHASES = [
 
 export default function MacroDashboard() {
   const { user, openLoginModal } = useAuth();
-  const [events, setEvents] = useState<MarketEvent[]>(INITIAL_EVENTS);
+  const [events, setEvents] = useState<MarketEvent[]>([]);
+  const [eventsError, setEventsError] = useState<string | null>(null);
   const [loadingAI, setLoadingAI] = useState<string | null>(null);
   const currentPhase = PHASES.find(p => p.isCurrent) || PHASES[0];
   const [activePhase, setActivePhase] = useState(currentPhase);
-  const [macroData, setMacroData] = useState<Record<string, MacroData>>(FALLBACK_DATA);
+  const [macroData, setMacroData] = useState<Record<string, NormalizedMacroData>>({});
+  const [macroError, setMacroError] = useState<string | null>(null);
   const [loadingMacro, setLoadingMacro] = useState(true);
   const [lastUpdated] = useState<string>(new Date().toLocaleDateString('sv-SE'));
   const [upcomingDates] = useState<{date: string, title: string}[]>([
@@ -200,25 +154,15 @@ export default function MacroDashboard() {
     const fetchMacroData = async () => {
       try {
         const response = await fetch("/api/macro-data");
-        if (response.ok) {
-          const data = await response.json();
-          if (Array.isArray(data)) {
-            const formatted: Record<string, MacroData> = {};
-            data.forEach((item: any) => {
-              formatted[item.key] = {
-                value: item.value,
-                trend: item.trend,
-                updatedAt: item.updatedAt,
-                source: item.source
-              };
-            });
-            setMacroData(formatted);
-          } else if (data && typeof data === 'object') {
-            setMacroData(data);
-          }
-        }
+        if (!response.ok) throw new Error("Makrodata kunde inte hämtas från databasen.");
+        const formatted = normalizeMacroResponse(await response.json());
+        if (Object.keys(formatted).length === 0) throw new Error("Ingen aktuell makrodata finns i databasen.");
+        setMacroData(formatted);
+        setMacroError(null);
       } catch (error) {
         console.error("Macro Data Fetch Error:", error);
+        setMacroData({});
+        setMacroError(error instanceof Error ? error.message : "Makrodata kunde inte hämtas.");
       } finally {
         setLoadingMacro(false);
       }
@@ -227,14 +171,15 @@ export default function MacroDashboard() {
     const fetchEvents = async () => {
       try {
         const response = await fetch("/api/market-events");
-        if (response.ok) {
-          const data = await response.json();
-          if (Array.isArray(data) && data.length > 0) {
-            setEvents(data);
-          }
-        }
+        if (!response.ok) throw new Error("Marknadshändelser kunde inte hämtas från databasen.");
+        const data = await response.json();
+        if (!Array.isArray(data)) throw new Error("Ogiltigt svar från händelse-API:t.");
+        setEvents(data);
+        setEventsError(null);
       } catch (error) {
         console.error("Market Events Fetch Error:", error);
+        setEvents([]);
+        setEventsError(error instanceof Error ? error.message : "Marknadshändelser kunde inte hämtas.");
       }
     };
 
@@ -246,25 +191,15 @@ export default function MacroDashboard() {
     setLoadingMacro(true);
     try {
       const response = await fetch("/api/macro-data");
-      if (response.ok) {
-        const data = await response.json();
-        if (Array.isArray(data)) {
-          const formatted: Record<string, MacroData> = {};
-          data.forEach((item: any) => {
-            formatted[item.key] = {
-              value: item.value,
-              trend: item.trend,
-              updatedAt: item.updatedAt,
-              source: item.source
-            };
-          });
-          setMacroData(formatted);
-        } else if (data && typeof data === 'object') {
-          setMacroData(data);
-        }
-      }
+      if (!response.ok) throw new Error("Makrodata kunde inte hämtas från databasen.");
+      const formatted = normalizeMacroResponse(await response.json());
+      if (Object.keys(formatted).length === 0) throw new Error("Ingen aktuell makrodata finns i databasen.");
+      setMacroData(formatted);
+      setMacroError(null);
     } catch (error) {
       console.error("Manual Refresh Error:", error);
+      setMacroData({});
+      setMacroError(error instanceof Error ? error.message : "Makrodata kunde inte hämtas.");
     } finally {
       setTimeout(() => setLoadingMacro(false), 500);
     }
@@ -317,6 +252,12 @@ export default function MacroDashboard() {
 
   return (
     <div className="min-h-screen overflow-hidden bg-white text-slate-900 pb-24">
+      <SEO
+        title="Makro-dashboard - Marknadsanalys"
+        description="Följ räntor, inflation, valutor och marknadssentiment för att sätta börsen i rätt kontext."
+        canonical="/marknad"
+        ogImage="/og-image.png"
+      />
       {/* Background Decorative Gradients */}
       <div className="absolute top-[1200px] right-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[180px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
       <div className="absolute top-[2500px] left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[150px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
@@ -497,7 +438,7 @@ export default function MacroDashboard() {
                   </motion.div>
                 ))) : (
                   <div className="p-12 text-center bg-card border border-border rounded-[2rem]">
-                    <p className="text-muted-foreground">Inga makrohändelser hittades för tillfället.</p>
+                    <p className="text-muted-foreground">{eventsError || "Inga aktuella makrohändelser hittades för tillfället."}</p>
                   </div>
                 )}
               </div>
@@ -546,7 +487,13 @@ export default function MacroDashboard() {
                 {loadingMacro ? (
                   MACRO_METRICS.map((key) => <SkeletonIndicator key={key} />)
                 ) : (
-                  MACRO_METRICS.map((key) => {
+                  <>
+                    {macroError && (
+                      <div className="md:col-span-2 lg:col-span-3 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-900">
+                        <strong>Makrodata saknas:</strong> {macroError} Kontrollera DATABASE_URL och kör den skyddade uppdateringen innan värden visas.
+                      </div>
+                    )}
+                    {MACRO_METRICS.map((key) => {
                     const item = macroData[key];
                     const meta = MACRO_METADATA[key];
                     
@@ -568,7 +515,8 @@ export default function MacroDashboard() {
                         isStale={item.isStale}
                       />
                     );
-                  })
+                    })}
+                  </>
                 )}
               </div>
             </section>

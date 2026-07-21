@@ -6,6 +6,7 @@ import CompoundInterestCalculator from "../components/CompoundInterestCalculator
 import GoalSavingsCalculator from "../components/GoalSavingsCalculator";
 import DCFCalculator from "../components/DCFCalculator";
 import DividendCalculator from "../components/DividendCalculator";
+import SEO from "../components/SEO";
 
 export default function Tools() {
   const location = useLocation();
@@ -40,6 +41,12 @@ export default function Tools() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
+      <SEO
+        title="Finansiella kalkylatorer"
+        description="Beräkna ränta-på-ränta, målsparande, kassaflöden och utdelningar med våra kostnadsfria verktyg."
+        canonical={location.pathname}
+        ogImage="/og-image.png"
+      />
       <div className="relative overflow-hidden bg-[radial-gradient(circle_at_75%_15%,rgba(16,185,129,0.08),transparent_28%),linear-gradient(180deg,#ffffff_0%,#fbfdfc_100%)]">
       <div className="mx-auto max-w-[1180px] px-5 pb-10 pt-12 md:px-8 md:pb-14 md:pt-14">
       <div className="relative max-w-[680px] space-y-4">

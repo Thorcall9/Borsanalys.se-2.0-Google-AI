@@ -1,18 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { 
-  onAuthStateChanged, 
-  signInWithPopup, 
-  GoogleAuthProvider, 
-  FacebookAuthProvider,
-  OAuthProvider,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  updateProfile,
-  signOut, 
-  User 
-} from 'firebase/auth';
-import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
-import { auth, db } from '../firebase';
+import type { User } from 'firebase/auth';
+import { loadFirebaseAuth, loadFirebaseFirestore } from '../firebase';
 
 interface AuthContextType {
   user: User | null;
@@ -42,28 +30,61 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [, setProfileVersion] = useState(0);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
-        // Ensure user document exists in Firestore
-        const userRef = doc(db, 'users', currentUser.uid);
-        const userSnap = await getDoc(userRef);
-        
-        if (!userSnap.exists()) {
-          await setDoc(userRef, {
-            uid: currentUser.uid,
-            email: currentUser.email,
-            displayName: currentUser.displayName,
-            photoURL: currentUser.photoURL,
-            createdAt: serverTimestamp(),
-            role: 'user'
-          });
-        }
-      }
-      setUser(currentUser);
-      setLoading(false);
-    });
+    let unsubscribe = () => {};
+    let cancelled = false;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    let idleId: number | undefined;
 
-    return () => unsubscribe();
+    const initializeAuth = async () => {
+      try {
+        const { auth, onAuthStateChanged } = await loadFirebaseAuth();
+        if (cancelled) return;
+
+        unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+          if (currentUser) {
+            const { db, doc, getDoc, setDoc, serverTimestamp } = await loadFirebaseFirestore();
+            const userRef = doc(db, 'users', currentUser.uid);
+            const userSnap = await getDoc(userRef);
+
+            if (!userSnap.exists()) {
+              await setDoc(userRef, {
+                uid: currentUser.uid,
+                email: currentUser.email,
+                displayName: currentUser.displayName,
+                photoURL: currentUser.photoURL,
+                createdAt: serverTimestamp(),
+                role: 'user'
+              });
+            }
+          }
+          if (!cancelled) {
+            setUser(currentUser);
+            setLoading(false);
+          }
+        });
+      } catch (error) {
+        console.error('Firebase auth initialization failed:', error);
+        if (!cancelled) setLoading(false);
+      }
+    };
+
+    const idleWindow = window as Window & {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+
+    if (idleWindow.requestIdleCallback) {
+      idleId = idleWindow.requestIdleCallback(initializeAuth, { timeout: 2000 });
+    } else {
+      timeoutId = setTimeout(initializeAuth, 1000);
+    }
+
+    return () => {
+      cancelled = true;
+      unsubscribe();
+      if (idleId !== undefined) idleWindow.cancelIdleCallback?.(idleId);
+      if (timeoutId !== undefined) clearTimeout(timeoutId);
+    };
   }, []);
 
   const openLoginModal = () => { setLoginModalMode('login'); setIsLoginModalOpen(true); };
@@ -71,6 +92,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const closeLoginModal = () => setIsLoginModalOpen(false);
 
   const loginWithGoogle = async () => {
+    const { auth, signInWithPopup, GoogleAuthProvider } = await loadFirebaseAuth();
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
@@ -81,6 +103,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const loginWithFacebook = async () => {
+    const { auth, signInWithPopup, FacebookAuthProvider } = await loadFirebaseAuth();
     const provider = new FacebookAuthProvider();
     try {
       await signInWithPopup(auth, provider);
@@ -91,6 +114,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const loginWithApple = async () => {
+    const { auth, signInWithPopup, OAuthProvider } = await loadFirebaseAuth();
     const provider = new OAuthProvider('apple.com');
     try {
       await signInWithPopup(auth, provider);
@@ -101,6 +125,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const loginWithMicrosoft = async () => {
+    const { auth, signInWithPopup, OAuthProvider } = await loadFirebaseAuth();
     const provider = new OAuthProvider('microsoft.com');
     try {
       await signInWithPopup(auth, provider);
@@ -112,6 +137,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const loginWithEmail = async (email: string, password: string) => {
     try {
+      const { auth, signInWithEmailAndPassword } = await loadFirebaseAuth();
       await signInWithEmailAndPassword(auth, email, password);
       closeLoginModal();
     } catch (error) {
@@ -122,15 +148,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signUpWithEmail = async (email: string, password: string, displayName: string) => {
     try {
+      const { auth, createUserWithEmailAndPassword, updateProfile } = await loadFirebaseAuth();
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCredential.user, { displayName });
-      
-      // Manually create user document since onAuthStateChanged might be slow
+
+      const { db, doc, setDoc, serverTimestamp } = await loadFirebaseFirestore();
       const userRef = doc(db, 'users', userCredential.user.uid);
       await setDoc(userRef, {
         uid: userCredential.user.uid,
         email: userCredential.user.email,
-        displayName: displayName,
+        displayName,
         photoURL: null,
         createdAt: serverTimestamp(),
         role: 'user'
@@ -144,10 +171,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const updateUserProfile = async ({ displayName, photoURL }: { displayName: string; photoURL: string }) => {
+    const { auth, updateProfile } = await loadFirebaseAuth();
     const currentUser = auth.currentUser;
     if (!currentUser) throw new Error('Du måste vara inloggad för att ändra profilen.');
 
     await updateProfile(currentUser, { displayName, photoURL: photoURL || null });
+    const { db, doc, setDoc } = await loadFirebaseFirestore();
     await setDoc(doc(db, 'users', currentUser.uid), {
       displayName,
       photoURL: photoURL || null,
@@ -157,6 +186,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     try {
+      const { auth, signOut } = await loadFirebaseAuth();
       await signOut(auth);
     } catch (error) {
       console.error('Logout failed:', error);

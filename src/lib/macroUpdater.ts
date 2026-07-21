@@ -45,7 +45,7 @@ Indikatorer som behövs:
 3. USDSEK (Växelkurs USD till SEK)
 4. EURSEK (Växelkurs EUR till SEK)
 5. OMX30 (Aktuellt indexvärde för OMX Stockholm 30)
-6. Inflation (Senaste KPI-inflationstakten i USA i %)
+6. Inflation (senaste svenska KPIF-inflationstakten i %)
 
 Svara EXAKT i detta JSON-format:
 {

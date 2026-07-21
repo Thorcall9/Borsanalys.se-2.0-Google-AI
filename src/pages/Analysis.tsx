@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { lazy, Suspense, useState, useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { 
@@ -41,20 +41,7 @@ import { useAnalysisFilters } from "../hooks/useAnalysisFilters";
 import AnalysisCard from "../components/analysis/AnalysisCard";
 import RecommendationInfo from "../components/analysis/RecommendationInfo";
 import axfoodQ2Markdown from "../../analyses/axfood/Q2_2026.md?raw";
-import NvidiaDeepDive from "../components/NvidiaDeepDive";
-import NovoNordiskDeepDive from "../components/NovoNordiskDeepDive/NovoNordiskDeepDive";
-import EvolutionDeepDive from "../components/analysis/EvolutionDeepDive";
-import InvestorDeepDive from "../components/analysis/InvestorDeepDive";
-import VolvoDeepDive from "../components/analysis/VolvoDeepDive";
-import SwedbankDeepDive from "../components/analysis/SwedbankDeepDive";
-import NewWaveDeepDive from "../components/analysis/NewWaveDeepDive";
-import EricssonDeepDive from "../components/analysis/EricssonDeepDive";
-import HandelsbankenDeepDive from "../components/analysis/HandelsbankenDeepDive";
-import AQGroupAnalysis from "../components/analysis/AQGroupAnalysis";
-import NibeDeepDive from "../components/analysis/NibeDeepDive";
-import AxfoodDeepDive from "../components/analysis/AxfoodDeepDive";
-import ABBDeepDive from "../components/analysis/ABBDeepDive";
-import PlejdDeepDive from "../components/analysis/PlejdDeepDive";
+import rvrcIciwMarkdown from "../../analyses/RVRC/ICANIWILL_marknadsuppdatering_juli2026.md?raw";
 import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 import { useAuth } from "../contexts/AuthContext";
@@ -64,23 +51,57 @@ import AdUnit from "../components/analysis/AdUnit";
 import NotFound from "./NotFound";
 import ComprehensiveAnalysisV10 from "../components/analysis/ComprehensiveAnalysisV10";
 import AnalysisArchive from "../components/analysis/AnalysisArchive";
+import { getDeepDiveLoader } from "./analysisDeepDiveRegistry";
+import { buildArticleJsonLd, buildBreadcrumbJsonLd } from "../lib/seo/structuredData";
+
+const lazyDeepDive = (key: string) => lazy(() => {
+  const loader = getDeepDiveLoader(key);
+  if (!loader) throw new Error(`Unknown deep dive: ${key}`);
+  return loader();
+});
 
 const DEEP_DIVE_COMPONENTS = {
-  Nvidia: NvidiaDeepDive,
-  NovoNordisk: NovoNordiskDeepDive,
-  Evolution: EvolutionDeepDive,
-  Investor: InvestorDeepDive,
-  Volvo: VolvoDeepDive,
-  Swedbank: SwedbankDeepDive,
-  NewWave: NewWaveDeepDive,
-  Ericsson: EricssonDeepDive,
-  Handelsbanken: HandelsbankenDeepDive,
-  AQGroup: AQGroupAnalysis,
-  Nibe: NibeDeepDive,
-  Axfood: AxfoodDeepDive,
-  ABB: ABBDeepDive,
-  Plejd: PlejdDeepDive,
+  Nvidia: lazyDeepDive("Nvidia"),
+  NovoNordisk: lazyDeepDive("NovoNordisk"),
+  Evolution: lazyDeepDive("Evolution"),
+  Investor: lazyDeepDive("Investor"),
+  Volvo: lazyDeepDive("Volvo"),
+  Swedbank: lazyDeepDive("Swedbank"),
+  NewWave: lazyDeepDive("NewWave"),
+  Ericsson: lazyDeepDive("Ericsson"),
+  Handelsbanken: lazyDeepDive("Handelsbanken"),
+  AQGroup: lazyDeepDive("AQGroup"),
+  Nibe: lazyDeepDive("Nibe"),
+  Axfood: lazyDeepDive("Axfood"),
+  ABB: lazyDeepDive("ABB"),
+  Plejd: lazyDeepDive("Plejd"),
 };
+
+function DeepDiveLoading() {
+  return (
+    <div className="flex min-h-[60vh] items-center justify-center bg-background">
+      <Loader2 className="h-8 w-8 animate-spin text-primary" aria-label="Laddar analys" />
+    </div>
+  );
+}
+
+function LatestRelatedUpdateCallout({ update }: { update: AnalysisData }) {
+  return (
+    <div className="mx-auto max-w-4xl px-6 pt-8">
+      <aside className="rounded-3xl border border-primary/20 bg-primary/5 p-6">
+        <div className="text-xs font-black uppercase tracking-widest text-primary mb-2">
+          Senaste uppdatering
+        </div>
+        <Link to={"/analys/" + update.slug} className="text-lg font-black text-foreground hover:text-primary transition-colors">
+          {update.title}
+        </Link>
+        <div className="mt-2 text-sm text-muted-foreground">
+          Publicerad {update.displayDate || update.date}
+        </div>
+      </aside>
+    </div>
+  );
+}
 
 export default function Analysis() {
   const { slug: rawSlug } = useParams();
@@ -375,12 +396,32 @@ export default function Analysis() {
     }
   }
 
+  const analysisPath = `/analys/${analysis.slug}`;
   const analysisMeta = (
     <SEO
-      title={`${analysis.title} (${analysis.ticker}) - Analys`}
+      title={analysis.title}
       description={analysis.summary}
-      canonical={`/analys/${slug}`}
+      canonical={analysisPath}
       ogType="article"
+      ogImage="/og-image.png"
+      publishedTime={analysis.date}
+      modifiedTime={analysis.updatedAt}
+      jsonLd={[
+        buildArticleJsonLd({
+          title: analysis.title,
+          description: analysis.summary,
+          path: analysisPath,
+          publishedTime: analysis.date,
+          modifiedTime: analysis.updatedAt,
+          author: analysis.author,
+          image: "/og-image.png",
+        }),
+        buildBreadcrumbJsonLd([
+          { name: "Hem", path: "/" },
+          { name: "Analyser", path: "/analys" },
+          { name: analysis.title, path: analysisPath },
+        ]),
+      ]}
     />
   );
 
@@ -388,12 +429,32 @@ export default function Analysis() {
   const nextAnalysis = currentIndex !== -1 && currentIndex < allAnalysesSorted.length - 1 
     ? allAnalysesSorted[currentIndex + 1] 
     : undefined;
+  const latestRelatedUpdate = analysis.contentType === "analysis"
+    ? allAnalysesSorted
+        .filter((candidate) => candidate.contentType === "market-update" && candidate.relatedAnalysisSlug === analysis.slug)
+        .sort((a, b) => (b.date || "").localeCompare(a.date || ""))[0]
+    : undefined;
+
+  if (slug === "revolutionrace-iciw") {
+    return (
+      <>
+        <ReportComment
+          data={analysis}
+          markdown={rvrcIciwMarkdown}
+          onToggleWatchlist={toggleWatchlist}
+          isInWatchlist={isInWatchlist}
+          isWatchlistLoading={isWatchlistLoading}
+          nextAnalysis={nextAnalysis}
+        />
+        {analysisMeta}
+      </>
+    );
+  }
 
   // Custom view for Axfood Q2 2026 Report Comment
   if (slug === "axfood-q2-2026") {
     return (
       <>
-        {analysisMeta}
         <ReportComment data={analysis} markdown={axfoodQ2Markdown} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
         <MobileReadingProgress 
           label="analys" 
@@ -436,6 +497,7 @@ export default function Analysis() {
             </button>
           </div>
         )}
+        {analysisMeta}
       </>
     );
   }
@@ -445,8 +507,10 @@ export default function Analysis() {
     const Component = DEEP_DIVE_COMPONENTS[analysis.deepDiveComponent as keyof typeof DEEP_DIVE_COMPONENTS];
     return (
       <>
-        {analysisMeta}
-        <Component data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
+        {latestRelatedUpdate && <LatestRelatedUpdateCallout update={latestRelatedUpdate} />}
+        <Suspense fallback={<DeepDiveLoading />}>
+          <Component data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
+        </Suspense>
         <MobileReadingProgress 
           label="analys"
           analysisSlug={analysis.slug}
@@ -488,6 +552,7 @@ export default function Analysis() {
             </button>
           </div>
         )}
+        {analysisMeta}
       </>
     );
   }
@@ -495,6 +560,7 @@ export default function Analysis() {
   if (analysis.templateVersion === "v10") {
     return (
       <>
+        {latestRelatedUpdate && <LatestRelatedUpdateCallout update={latestRelatedUpdate} />}
         <ComprehensiveAnalysisV10 data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
         <MobileReadingProgress
           label="analys"
@@ -505,6 +571,7 @@ export default function Analysis() {
           nextTitle={nextAnalysis?.title}
           nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined}
         />
+        {analysisMeta}
       </>
     );
   }
@@ -512,7 +579,7 @@ export default function Analysis() {
   // Use the new comprehensive analysis template for all other stocks
   return (
     <>
-      {analysisMeta}
+      {latestRelatedUpdate && <LatestRelatedUpdateCallout update={latestRelatedUpdate} />}
       <ComprehensiveAnalysis 
         data={analysis} 
         onToggleWatchlist={toggleWatchlist} 
@@ -564,6 +631,7 @@ export default function Analysis() {
           </button>
         </div>
       )}
+      {analysisMeta}
     </>
   );
 }

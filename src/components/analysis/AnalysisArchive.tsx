@@ -56,7 +56,7 @@ function Recommendation({ value }: { value: Recommendation }) {
 function Meta({ analysis }: { analysis: AnalysisData }) {
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500">
-      <span className="inline-flex items-center gap-1.5"><CalendarDays size={13} />{analysis.date}</span>
+      <span className="inline-flex items-center gap-1.5"><CalendarDays size={13} />{analysis.displayDate || analysis.date}</span>
       <span className="inline-flex items-center gap-1.5"><Clock3 size={13} />{analysis.contentType === "report-commentary" ? "12 min" : "20 min läsning"}</span>
       <span className="hidden items-center gap-1.5 sm:inline-flex">✧ {analysis.sector}</span>
     </div>
@@ -88,6 +88,7 @@ export default function AnalysisArchive({ analyses, featured, searchTerm, onSear
             <FilterButton active={contentType === "all"} onClick={() => onContentTypeChange("all")} icon={<Grid2X2 size={16} />}>Alla</FilterButton>
             <FilterButton active={contentType === "analysis"} onClick={() => onContentTypeChange("analysis")} icon={<BarChart3 size={16} />}>Analyser</FilterButton>
             <FilterButton active={contentType === "report-commentary"} onClick={() => onContentTypeChange("report-commentary")} icon={<FileText size={16} />}>Rapportkommentarer</FilterButton>
+            <FilterButton active={contentType === "market-update"} onClick={() => onContentTypeChange("market-update")} icon={<Bell size={16} />}>Marknadsuppdateringar</FilterButton>
             <FilterButton active={selectedRecommendation === "KÖP"} onClick={() => onRecommendationChange(selectedRecommendation === "KÖP" ? "Alla" : "KÖP")}>KÖP</FilterButton>
             <FilterButton active={selectedRecommendation === "BEVAKA"} onClick={() => onRecommendationChange(selectedRecommendation === "BEVAKA" ? "Alla" : "BEVAKA")}>BEVAKA</FilterButton>
             <FilterButton active={selectedRecommendation === "AVSTÅ"} onClick={() => onRecommendationChange(selectedRecommendation === "AVSTÅ" ? "Alla" : "AVSTÅ")}>AVSTÅ</FilterButton>

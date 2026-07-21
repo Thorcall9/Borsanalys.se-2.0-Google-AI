@@ -11,7 +11,7 @@ export interface ProgressSection {
   title: string;
 }
 
-export type AnalysisContentType = "analysis" | "report-commentary" | "guide" | "other";
+export type AnalysisContentType = "analysis" | "report-commentary" | "market-update" | "guide" | "other";
 
 export interface ProgressOptions {
   sections?: ProgressSection[];

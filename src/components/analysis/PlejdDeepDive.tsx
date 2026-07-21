@@ -13,7 +13,6 @@ import {
   Zap
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import SEO from "../SEO";
 import plejdMarkdown from "../../../analyses/Plejd_aktieanalys_superanalys.md?raw";
 import plejdSankeyHtml from "../../../analyses/plejd_sankey_Q1_2026.html?raw";
 import { AnalysisData } from "../../types/analysis.js";
@@ -348,8 +347,6 @@ export default function PlejdDeepDive({ data, nextAnalysis }: PlejdDeepDiveProps
 
   return (
     <div className="min-h-screen bg-[#f4ead8] text-[#223027]">
-      <SEO title="Analys: Plejd AB (PLEJD)" description={data.summary} />
-
       <header className="relative overflow-hidden border-b border-emerald-900/12 bg-[radial-gradient(circle_at_top_left,rgba(184,134,11,0.22),transparent_34%),linear-gradient(135deg,#fbf4e8_0%,#f1e3cc_58%,#e7d6ba_100%)] pt-24">
         <div className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
           <Link to="/analys" className="mb-8 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.16em] text-amber-800 transition-colors hover:text-emerald-900">
