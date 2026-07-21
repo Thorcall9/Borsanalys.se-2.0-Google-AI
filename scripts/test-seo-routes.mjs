@@ -24,19 +24,37 @@ const baseUrl = (process.argv[2] || 'http://127.0.0.1:4173').replace(/\/$/, '');
 const routes = [
   { path: '/', status: 200, html: true },
   { path: '/analys', status: 200, html: true },
-  { path: '/analys/volvo', status: 200, html: true },
+  {
+    path: '/analys/volvo',
+    status: 200,
+    html: true,
+    initialSeo: { canonical: 'https://www.borsanalys.se/analys/volvo' },
+  },
   { path: '/analys/volvo/', status: 200, html: true },
   { path: '/analys/volvo?utm_source=test', status: 200, html: true },
   { path: '/analys/evolution', status: 200, html: true },
-  { path: '/analys/helt-pahittad', status: 404, html: false },
+  { path: '/analys/helt-pahittad', status: 404, html: false, noindex: true },
+  {
+    path: '/guider/grunderna-i-aktieanalys',
+    status: 200,
+    html: true,
+    initialSeo: { canonical: 'https://www.borsanalys.se/guider/grunderna-i-aktieanalys' },
+  },
+  {
+    path: '/aktier/saab',
+    status: 200,
+    html: true,
+    initialSeo: { canonical: 'https://www.borsanalys.se/aktier/saab' },
+  },
+  { path: '/marknad', status: 200, html: true },
+  { path: '/profil', status: 200, html: true, noindex: true },
+  { path: '/admin/subscribers', status: 200, html: true, noindex: true },
   { path: '/aktieinnehav-och-intressekonflikter', status: 200, html: true },
   { path: '/integritet', status: 200, html: true },
   { path: '/integritetspolicy', status: 301, location: '/integritet' },
   { path: '/analyser/investor2025q2', status: 301, location: '/analys/investor-ab' },
   { path: '/analys/rvrc-2026', status: 301, location: '/analys/revolutionrace-2026' },
   { path: '/analyser/helt-pahittad', status: 404, html: false },
-  { path: '/guider/grunderna-i-aktieanalys', status: 200, html: true },
-  { path: '/aktier/saab', status: 200, html: true },
   { path: '/verktyg/rantakalkylator', status: 200, html: true },
   { path: '/api/newsletter', status: 404, html: false },
   { path: '/api/newsletter/signup', status: 405, html: false },
@@ -59,13 +77,35 @@ const routes = [
   },
 ];
 
+function hasTagWithAttribute(html, tag, attribute, value) {
+  return new RegExp(`<${tag}\\b(?=[^>]*\\b${attribute}=["']${value}["'])[^>]*>`, 'i').test(html);
+}
+
+function initialHtmlSignals(body) {
+  const title = body.match(/<title\b[^>]*>([\s\S]*?)<\/title>/i)?.[1].trim() || null;
+  const canonical = body.match(/<link\b(?=[^>]*\brel=["']canonical["'])[^>]*\bhref=["']([^"']+)["'][^>]*>/i)?.[1] || null;
+  const h1Count = (body.match(/<h1\b[^>]*>/gi) || []).length;
+  const robots = body.match(/<meta\b(?=[^>]*\bname=["']robots["'])[^>]*\bcontent=["']([^"']+)["'][^>]*>/i)?.[1] || null;
+
+  return {
+    shell: /<div\s+id=["']root["']>\s*<\/div>/i.test(body),
+    title,
+    description: hasTagWithAttribute(body, 'meta', 'name', 'description'),
+    canonical,
+    h1Count,
+    jsonLd: hasTagWithAttribute(body, 'script', 'type', 'application/ld\\+json'),
+    noindex: /\bnoindex\b/i.test(robots || ''),
+  };
+}
+
 const result = [];
+const failures = [];
 for (const expected of routes) {
   const response = await fetch(`${baseUrl}${expected.path}`, { redirect: 'manual' });
   const body = await response.text();
   const location = response.headers.get('location');
   const contentType = response.headers.get('content-type') || '';
-  const isHtmlShell = body.includes('<div id="root"></div>');
+  const initialHtml = initialHtmlSignals(body);
 
   if (expected.location) {
     assert.ok([301, 308].includes(response.status), `${expected.path}: unexpected redirect status ${response.status}`);
@@ -85,8 +125,20 @@ for (const expected of routes) {
       assert.match(body, new RegExp(`^${directive.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`, 'm'), `${expected.path}: missing ${directive}`);
     }
   }
-  if (expected.html === false) assert.equal(isHtmlShell, false, `${expected.path}: must not return SPA HTML`);
-  result.push({ path: expected.path, status: response.status, location, isHtmlShell, contentType });
+  if (expected.html === false) assert.equal(initialHtml.shell, false, `${expected.path}: must not return SPA HTML`);
+  if (expected.initialSeo) {
+    if (!initialHtml.title) failures.push(`${expected.path}: initial HTML is missing <title>`);
+    if (!initialHtml.description) failures.push(`${expected.path}: initial HTML is missing meta[name="description"]`);
+    if (initialHtml.canonical !== expected.initialSeo.canonical) {
+      failures.push(`${expected.path}: initial canonical must be ${expected.initialSeo.canonical}, received ${initialHtml.canonical || 'none'}`);
+    }
+    if (initialHtml.h1Count !== 1) failures.push(`${expected.path}: initial HTML must contain exactly one H1, received ${initialHtml.h1Count}`);
+    if (!initialHtml.jsonLd) failures.push(`${expected.path}: initial HTML is missing JSON-LD`);
+  }
+  if (expected.noindex && !initialHtml.noindex && response.status !== 404) {
+    failures.push(`${expected.path}: initial HTML must declare noindex`);
+  }
+  result.push({ path: expected.path, status: response.status, location, contentType, initialHtml });
 }
 
 for (const redirect of routes.filter((route) => route.location)) {
@@ -125,3 +177,4 @@ assert.match(sitemap, /<lastmod>2026-03-31<\/lastmod>/, 'sitemap must include st
 assert.match(sitemap, /<lastmod>2026-03-15<\/lastmod>/, 'sitemap must include stable guide dates when available');
 
 console.log(JSON.stringify({ baseUrl, routes: result }, null, 2));
+assert.equal(failures.length, 0, `Initial HTML SEO failures:\n${failures.join('\n')}`);
