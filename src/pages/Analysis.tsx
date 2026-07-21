@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { lazy, Suspense, useState, useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { 
@@ -41,20 +41,6 @@ import { useAnalysisFilters } from "../hooks/useAnalysisFilters";
 import AnalysisCard from "../components/analysis/AnalysisCard";
 import RecommendationInfo from "../components/analysis/RecommendationInfo";
 import axfoodQ2Markdown from "../../analyses/axfood/Q2_2026.md?raw";
-import NvidiaDeepDive from "../components/NvidiaDeepDive";
-import NovoNordiskDeepDive from "../components/NovoNordiskDeepDive/NovoNordiskDeepDive";
-import EvolutionDeepDive from "../components/analysis/EvolutionDeepDive";
-import InvestorDeepDive from "../components/analysis/InvestorDeepDive";
-import VolvoDeepDive from "../components/analysis/VolvoDeepDive";
-import SwedbankDeepDive from "../components/analysis/SwedbankDeepDive";
-import NewWaveDeepDive from "../components/analysis/NewWaveDeepDive";
-import EricssonDeepDive from "../components/analysis/EricssonDeepDive";
-import HandelsbankenDeepDive from "../components/analysis/HandelsbankenDeepDive";
-import AQGroupAnalysis from "../components/analysis/AQGroupAnalysis";
-import NibeDeepDive from "../components/analysis/NibeDeepDive";
-import AxfoodDeepDive from "../components/analysis/AxfoodDeepDive";
-import ABBDeepDive from "../components/analysis/ABBDeepDive";
-import PlejdDeepDive from "../components/analysis/PlejdDeepDive";
 import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 import { useAuth } from "../contexts/AuthContext";
@@ -64,23 +50,38 @@ import AdUnit from "../components/analysis/AdUnit";
 import NotFound from "./NotFound";
 import ComprehensiveAnalysisV10 from "../components/analysis/ComprehensiveAnalysisV10";
 import AnalysisArchive from "../components/analysis/AnalysisArchive";
+import { getDeepDiveLoader } from "./analysisDeepDiveRegistry";
+
+const lazyDeepDive = (key: string) => lazy(() => {
+  const loader = getDeepDiveLoader(key);
+  if (!loader) throw new Error(`Unknown deep dive: ${key}`);
+  return loader();
+});
 
 const DEEP_DIVE_COMPONENTS = {
-  Nvidia: NvidiaDeepDive,
-  NovoNordisk: NovoNordiskDeepDive,
-  Evolution: EvolutionDeepDive,
-  Investor: InvestorDeepDive,
-  Volvo: VolvoDeepDive,
-  Swedbank: SwedbankDeepDive,
-  NewWave: NewWaveDeepDive,
-  Ericsson: EricssonDeepDive,
-  Handelsbanken: HandelsbankenDeepDive,
-  AQGroup: AQGroupAnalysis,
-  Nibe: NibeDeepDive,
-  Axfood: AxfoodDeepDive,
-  ABB: ABBDeepDive,
-  Plejd: PlejdDeepDive,
+  Nvidia: lazyDeepDive("Nvidia"),
+  NovoNordisk: lazyDeepDive("NovoNordisk"),
+  Evolution: lazyDeepDive("Evolution"),
+  Investor: lazyDeepDive("Investor"),
+  Volvo: lazyDeepDive("Volvo"),
+  Swedbank: lazyDeepDive("Swedbank"),
+  NewWave: lazyDeepDive("NewWave"),
+  Ericsson: lazyDeepDive("Ericsson"),
+  Handelsbanken: lazyDeepDive("Handelsbanken"),
+  AQGroup: lazyDeepDive("AQGroup"),
+  Nibe: lazyDeepDive("Nibe"),
+  Axfood: lazyDeepDive("Axfood"),
+  ABB: lazyDeepDive("ABB"),
+  Plejd: lazyDeepDive("Plejd"),
 };
+
+function DeepDiveLoading() {
+  return (
+    <div className="flex min-h-[60vh] items-center justify-center bg-background">
+      <Loader2 className="h-8 w-8 animate-spin text-primary" aria-label="Laddar analys" />
+    </div>
+  );
+}
 
 export default function Analysis() {
   const { slug: rawSlug } = useParams();
@@ -446,7 +447,9 @@ export default function Analysis() {
     return (
       <>
         {analysisMeta}
-        <Component data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
+        <Suspense fallback={<DeepDiveLoading />}>
+          <Component data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
+        </Suspense>
         <MobileReadingProgress 
           label="analys"
           analysisSlug={analysis.slug}

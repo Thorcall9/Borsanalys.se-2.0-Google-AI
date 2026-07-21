@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TrendingUp, TrendingDown, Users } from "lucide-react";
-import { db, handleFirestoreError, OperationType } from "../../firebase";
-import { doc, onSnapshot, setDoc, updateDoc, increment, getDoc } from "firebase/firestore";
+import { handleFirestoreError, loadFirebaseFirestore, OperationType } from "../../firebase";
 import { useAuth } from "../../contexts/AuthContext";
 
 interface StockSentimentProps {
@@ -23,37 +22,42 @@ export default function StockSentiment({ symbol }: StockSentimentProps) {
   useEffect(() => {
     if (!symbol) return;
 
-    // Listen to sentiment data
     const sentimentPath = `stock_sentiment/${symbol}`;
-    const sentimentRef = doc(db, "stock_sentiment", symbol);
-    const unsubSentiment = onSnapshot(sentimentRef, (doc) => {
-      if (doc.exists()) {
-        setSentiment(doc.data() as SentimentData);
-      } else {
-        setSentiment({ bullCount: 0, bearCount: 0, lastUpdated: null });
+    let cancelled = false;
+    let unsubSentiment = () => {};
+    let unsubVote = () => {};
+
+    void loadFirebaseFirestore().then(({ db, doc, onSnapshot }) => {
+      if (cancelled) return;
+
+      const sentimentRef = doc(db, "stock_sentiment", symbol);
+      unsubSentiment = onSnapshot(sentimentRef, (snapshot) => {
+        if (snapshot.exists()) {
+          setSentiment(snapshot.data() as SentimentData);
+        } else {
+          setSentiment({ bullCount: 0, bearCount: 0, lastUpdated: null });
+        }
+        setLoading(false);
+      }, (error) => {
+        handleFirestoreError(error, OperationType.GET, sentimentPath);
+      });
+
+      if (user) {
+        const votePath = `user_votes/${user.uid}_${symbol}`;
+        const voteRef = doc(db, "user_votes", `${user.uid}_${symbol}`);
+        unsubVote = onSnapshot(voteRef, (snapshot) => {
+          setUserVote(snapshot.exists() ? snapshot.data().vote : null);
+        }, (error) => {
+          handleFirestoreError(error, OperationType.GET, votePath);
+        });
       }
-      setLoading(false);
-    }, (error) => {
+    }).catch((error) => {
       handleFirestoreError(error, OperationType.GET, sentimentPath);
+      if (!cancelled) setLoading(false);
     });
 
-    // Listen to user's vote if logged in
-    let unsubVote = () => {};
-    if (user) {
-      const votePath = `user_votes/${user.uid}_${symbol}`;
-      const voteRef = doc(db, "user_votes", `${user.uid}_${symbol}`);
-      unsubVote = onSnapshot(voteRef, (doc) => {
-        if (doc.exists()) {
-          setUserVote(doc.data().vote);
-        } else {
-          setUserVote(null);
-        }
-      }, (error) => {
-        handleFirestoreError(error, OperationType.GET, votePath);
-      });
-    }
-
     return () => {
+      cancelled = true;
       unsubSentiment();
       unsubVote();
     };
@@ -68,10 +72,12 @@ export default function StockSentiment({ symbol }: StockSentimentProps) {
     const voteId = `${user.uid}_${symbol}`;
     const votePath = `user_votes/${voteId}`;
     const sentimentPath = `stock_sentiment/${symbol}`;
-    const voteRef = doc(db, "user_votes", voteId);
-    const sentimentRef = doc(db, "stock_sentiment", symbol);
 
     try {
+      const { db, doc, setDoc, updateDoc, increment, getDoc } = await loadFirebaseFirestore();
+      const voteRef = doc(db, "user_votes", voteId);
+      const sentimentRef = doc(db, "stock_sentiment", symbol);
+
       // Check if user already voted
       const voteDoc = await getDoc(voteRef);
       const existingVote = voteDoc.exists() ? voteDoc.data().vote : null;
