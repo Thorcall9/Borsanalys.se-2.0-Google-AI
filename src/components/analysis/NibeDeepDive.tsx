@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { ArrowLeft, Star, Info, TrendingUp, AlertTriangle } from "lucide-react";
 import NordnetCTA from "./NordnetCTA";
 import AdUnit from "./AdUnit";
-import SEO from "../SEO";
 import { AnalysisData } from "../../data/analyses";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
 
@@ -41,10 +40,6 @@ export default function NibeDeepDive({
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pt-16">
-      <SEO 
-        title={`Analys: ${data.title} (${data.ticker}) - Börsanalys.se`}
-        description={data.summary}
-      />
       {/* 1. HERO BAND */}
       <div className="w-full bg-[#0F766E] text-white py-8 md:py-10 px-6 md:px-10">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">

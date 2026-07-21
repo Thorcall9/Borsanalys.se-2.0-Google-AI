@@ -113,6 +113,18 @@ test('public routes derive metadata and structured data from their registries', 
   assert.match(stockHub, /canonical=\{stockPath\}/);
 });
 
+test('delayed deep-dive components leave SEO ownership to the analysis route', async () => {
+  const deepDives = await Promise.all([
+    source('src/components/analysis/NibeDeepDive.tsx'),
+    source('src/components/analysis/ABBDeepDive.tsx'),
+  ]);
+
+  for (const deepDive of deepDives) {
+    assert.doesNotMatch(deepDive, /import SEO from ["']\.\.\/SEO["']/);
+    assert.doesNotMatch(deepDive, /<SEO\b/);
+  }
+});
+
 test('RevolutionRace aliases use the shared registry entry and canonical article metadata', async () => {
   const [app, preview, registry, revolutionRace] = await Promise.all([
     source('src/App.tsx'),

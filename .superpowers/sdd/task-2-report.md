@@ -63,3 +63,21 @@
 ### Concerns
 
 - None identified. `Header.tsx` and unrelated files were not touched.
+
+## Fix: delayed deep-dive SEO ownership
+
+### Changes
+
+- Removed the local `SEO` imports and declarations from `NibeDeepDive` and `ABBDeepDive`, leaving `Analysis.tsx` as the only metadata owner for those routes.
+- Added an SEO contract test asserting that neither delayed deep-dive component imports or renders local SEO.
+- Preserved both components' existing 50 ms delayed mounting behavior and UI.
+
+### Verification
+
+- `node --test tests/seo-contract.test.mjs tests/seo-route-rewrites.test.mjs`: 14 passing, 0 failing (exit 0).
+- `npm run lint`: passed; `tsc --noEmit` exited 0.
+- `git diff --check`: passed with no output (exit 0).
+
+### Concerns
+
+- None identified. `Header.tsx` and unrelated files were not touched.
