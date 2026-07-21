@@ -27,7 +27,9 @@ const routes = [
   { path: '/analys/volvo', status: 200, html: true },
   { path: '/analys/volvo/', status: 200, html: true },
   { path: '/analys/volvo?utm_source=test', status: 200, html: true },
-  { path: '/analys/helt-pahittad', status: 200, html: true },
+  { path: '/analys/evolution', status: 200, html: true },
+  { path: '/analys/helt-pahittad', status: 404, html: false },
+  { path: '/aktieinnehav-och-intressekonflikter', status: 200, html: true },
   { path: '/integritet', status: 200, html: true },
   { path: '/integritetspolicy', status: 301, location: '/integritet' },
   { path: '/analyser/investor2025q2', status: 301, location: '/analys/investor-ab' },
@@ -117,6 +119,8 @@ assert.equal(sitemap.includes('/analys/volvo'), true, 'sitemap must include Volv
 assert.equal(sitemap.includes('/analys/investor-ab'), true, 'sitemap must include Investor analysis');
 assert.equal(sitemap.includes('/guider/grunderna-i-aktieanalys'), true, 'sitemap must include a guide route');
 assert.equal(sitemap.includes('/aktier/saab'), true, 'sitemap must include a stock route');
+assert.equal(sitemapUrls.includes('https://www.borsanalys.se/innehav'), true, 'sitemap must retain the public holdings route');
+assert.equal(sitemapUrls.includes('https://www.borsanalys.se/aktieinnehav-och-intressekonflikter'), true, 'sitemap must include the public holdings and conflicts route');
 assert.match(sitemap, /<lastmod>2026-03-31<\/lastmod>/, 'sitemap must include stable analysis dates when available');
 assert.match(sitemap, /<lastmod>2026-03-15<\/lastmod>/, 'sitemap must include stable guide dates when available');
 

@@ -14,13 +14,36 @@ if (robotsRewrite?.destination !== '/robots.txt') {
 }
 const robots = await readFile(join(root, 'public', robotsRewrite.destination.slice(1)), 'utf8');
 const { default: sitemapHandler } = await tsImport('../api/sitemap.ts', import.meta.url);
+const { analyses } = await tsImport('../src/data/analyses/index.ts', import.meta.url);
 
 const redirects = new Map((vercel.redirects || []).map(({ source, destination }) => [source, destination]));
+const analysisPaths = new Set(Object.values(analyses).map((analysis) => `/analys/${analysis.slug}`));
+const analysisAliasPaths = new Set([
+  '/analys/evolution',
+  '/analys/swedbank',
+  '/analys/handelsbanken',
+  '/analys/nvidia',
+  '/analys/investor',
+  '/analys/ericsson',
+  '/analys/new-wave',
+  '/analys/new-wave-group',
+  '/analys/nordea',
+]);
+
+function withoutTrailingSlash(pathname) {
+  return pathname.length > 1 && pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+}
+
+function isAnalysisRoute(pathname) {
+  const normalizedPath = withoutTrailingSlash(pathname);
+  return normalizedPath === '/analys'
+    || analysisPaths.has(normalizedPath)
+    || analysisAliasPaths.has(normalizedPath);
+}
 
 function isSpaRoute(pathname) {
   return pathname === '/'
-    || pathname === '/analys'
-    || pathname.startsWith('/analys/')
+    || isAnalysisRoute(pathname)
     || pathname.startsWith('/aktier/')
     || pathname === '/guider'
     || pathname.startsWith('/guider/')

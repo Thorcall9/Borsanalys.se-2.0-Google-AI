@@ -149,6 +149,9 @@ test('sitemap derives canonical public URLs from all shared registries', async (
   assert.match(sitemap, /https:\/\/www\.borsanalys\.se/);
   assert.match(sitemap, /escapeXml\(new URL\(path, baseUrl\)\.toString\(\)\)/);
   assert.match(sitemap, /<lastmod>/);
+  assert.match(sitemap, /['"]\/innehav['"]/);
+  assert.match(sitemap, /['"]\/aktieinnehav-och-intressekonflikter['"]/);
+  assert.match(sitemap, /uniqueEntries/);
   assert.doesNotMatch(sitemap, /\/analyser\/nvidia/);
   assert.doesNotMatch(sitemap, /\/borsskolan/);
   assert.doesNotMatch(sitemap, /\/admin/);
