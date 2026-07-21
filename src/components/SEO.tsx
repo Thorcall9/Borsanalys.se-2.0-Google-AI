@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { serializeJsonLd } from "../lib/seo/structuredData";
 
@@ -49,8 +49,13 @@ const SEO: React.FC<SEOProps> = ({
   const defaultDescription = "Professionella aktieanalyser drivna av data och AI. En minimalistisk och kraftfull plattform för moderna investerare.";
   const metaDescription = description || defaultDescription;
   const url = normalizeCanonical(canonical);
+  const imageUrl = new URL(ogImage, SITE_ORIGIN).toString();
   const robots = noindex ? (nofollow ? "noindex, nofollow" : "noindex, follow") : undefined;
   const jsonLdItems = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+
+  useLayoutEffect(() => {
+    document.head.querySelectorAll('[data-static-seo]').forEach((node) => node.remove());
+  }, []);
 
   return (
     <Helmet>
@@ -64,7 +69,7 @@ const SEO: React.FC<SEOProps> = ({
       <meta property="og:type" content={ogType} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={metaDescription} />
-      <meta property="og:image" content={ogImage} />
+      <meta property="og:image" content={imageUrl} />
       {!noindex && <meta property="og:url" content={url} />}
       <meta property="og:site_name" content={siteName} />
       {publishedTime && <meta property="article:published_time" content={publishedTime} />}
@@ -82,7 +87,7 @@ const SEO: React.FC<SEOProps> = ({
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={metaDescription} />
-      <meta name="twitter:image" content={ogImage} />
+      <meta name="twitter:image" content={imageUrl} />
       {twitterHandle && <meta name="twitter:site" content={twitterHandle} />}
     </Helmet>
   );

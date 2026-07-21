@@ -10,8 +10,8 @@ const [index, seo, ogDefault] = await Promise.all([
 ]);
 
 assert.match(ogDefault, /viewBox="0 0 1200 630"/);
-assert.match(index, /<meta property="og:image" content="\/og-default\.svg" \/>/);
-assert.match(index, /<meta name="twitter:image" content="\/og-default\.svg" \/>/);
+assert.match(index, /<meta property="og:image" content="https:\/\/www\.borsanalys\.se\/og-default\.svg" data-static-seo \/>/);
+assert.match(index, /<meta name="twitter:image" content="https:\/\/www\.borsanalys\.se\/og-default\.svg" data-static-seo \/>/);
 assert.match(seo, /ogImage = "\/og-default\.svg"/);
 
 const vercel = JSON.parse(await readFile(new URL('vercel.json', root), 'utf8'));

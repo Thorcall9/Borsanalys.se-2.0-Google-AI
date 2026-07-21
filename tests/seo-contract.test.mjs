@@ -97,6 +97,25 @@ test('SEO defaults to the local SVG social card and structured URLs pin the prod
   assert.match(structuredData, /const input = new URL\(path, SITE_ORIGIN\)/);
 });
 
+test('static fallback metadata is marked, removed on SEO mount, and uses absolute social URLs', async () => {
+  const [index, seo] = await Promise.all([
+    source('index.html'),
+    source('src/components/SEO.tsx'),
+  ]);
+  const staticSeoNodes = index.match(/<(?:title|meta|link)\b[^>]*\bdata-static-seo\b[^>]*>/g) || [];
+
+  assert.equal(staticSeoNodes.length, 12, 'every fallback title, description, canonical, OG, and Twitter node must be marked');
+  assert.match(index, /<link\b(?=[^>]*\brel="canonical")(?=[^>]*\bdata-static-seo\b)[^>]*>/);
+  assert.match(index, /<meta property="og:image" content="https:\/\/www\.borsanalys\.se\/og-default\.svg" data-static-seo \/>/);
+  assert.match(index, /<meta name="twitter:image" content="https:\/\/www\.borsanalys\.se\/og-default\.svg" data-static-seo \/>/);
+  assert.match(seo, /useLayoutEffect\(\(\) => \{/);
+  assert.match(seo, /document\.head\.querySelectorAll\(["']\[data-static-seo\]["']\)/);
+  assert.match(seo, /node\.remove\(\)/);
+  assert.match(seo, /const imageUrl = new URL\(ogImage, SITE_ORIGIN\)\.toString\(\)/);
+  assert.match(seo, /<meta property="og:image" content=\{imageUrl\} \/>/);
+  assert.match(seo, /<meta name="twitter:image" content=\{imageUrl\} \/>/);
+});
+
 test('the explicit route-specific social asset is a genuine PNG', async () => {
   const ogImage = new URL('public/og-image.png', root);
   const pngSignature = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
@@ -117,18 +136,18 @@ test('fallback metadata and crawler policy use the approved public OG asset', as
 
   assert.match(ogDefault, /viewBox="0 0 1200 630"/);
   assert.match(index, /<html lang="sv">/);
-  assert.match(index, /<title>Börsanalys\.se - Professionella aktieanalyser<\/title>/);
-  assert.match(index, /<meta name="description" content="Professionella aktieanalyser drivna av data och AI\. En minimalistisk och kraftfull plattform för moderna investerare\." \/>/);
-  assert.match(index, /<link rel="canonical" href="https:\/\/www\.borsanalys\.se\/" \/>/);
-  assert.match(index, /<meta property="og:type" content="website" \/>/);
-  assert.match(index, /<meta property="og:url" content="https:\/\/www\.borsanalys\.se\/" \/>/);
-  assert.match(index, /<meta property="og:title" content="Börsanalys\.se - Professionella aktieanalyser" \/>/);
-  assert.match(index, /<meta property="og:description" content="Professionella aktieanalyser drivna av data och AI\. En minimalistisk och kraftfull plattform för moderna investerare\." \/>/);
-  assert.match(index, /<meta property="og:image" content="\/og-default\.svg" \/>/);
-  assert.match(index, /<meta name="twitter:card" content="summary_large_image" \/>/);
-  assert.match(index, /<meta name="twitter:title" content="Börsanalys\.se - Professionella aktieanalyser" \/>/);
-  assert.match(index, /<meta name="twitter:description" content="Professionella aktieanalyser drivna av data och AI\. En minimalistisk och kraftfull plattform för moderna investerare\." \/>/);
-  assert.match(index, /<meta name="twitter:image" content="\/og-default\.svg" \/>/);
+  assert.match(index, /<title data-static-seo>Börsanalys\.se - Professionella aktieanalyser<\/title>/);
+  assert.match(index, /<meta name="description" content="Professionella aktieanalyser drivna av data och AI\. En minimalistisk och kraftfull plattform för moderna investerare\." data-static-seo \/>/);
+  assert.match(index, /<link rel="canonical" href="https:\/\/www\.borsanalys\.se\/" data-static-seo \/>/);
+  assert.match(index, /<meta property="og:type" content="website" data-static-seo \/>/);
+  assert.match(index, /<meta property="og:url" content="https:\/\/www\.borsanalys\.se\/" data-static-seo \/>/);
+  assert.match(index, /<meta property="og:title" content="Börsanalys\.se - Professionella aktieanalyser" data-static-seo \/>/);
+  assert.match(index, /<meta property="og:description" content="Professionella aktieanalyser drivna av data och AI\. En minimalistisk och kraftfull plattform för moderna investerare\." data-static-seo \/>/);
+  assert.match(index, /<meta property="og:image" content="https:\/\/www\.borsanalys\.se\/og-default\.svg" data-static-seo \/>/);
+  assert.match(index, /<meta name="twitter:card" content="summary_large_image" data-static-seo \/>/);
+  assert.match(index, /<meta name="twitter:title" content="Börsanalys\.se - Professionella aktieanalyser" data-static-seo \/>/);
+  assert.match(index, /<meta name="twitter:description" content="Professionella aktieanalyser drivna av data och AI\. En minimalistisk och kraftfull plattform för moderna investerare\." data-static-seo \/>/);
+  assert.match(index, /<meta name="twitter:image" content="https:\/\/www\.borsanalys\.se\/og-default\.svg" data-static-seo \/>/);
 
   for (const directive of [
     'User-agent: *',

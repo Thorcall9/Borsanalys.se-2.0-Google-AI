@@ -40,3 +40,19 @@ The follow-up records a 2.26-second Vite baseline build (3.1 seconds including P
 ## Self-review
 
 Reviewed the preview matcher, route matrix, and rendering follow-up against the actual Vercel rewrite. The canonical unknown analysis route is no longer mislabeled as a real 404/noindex response. The report preserves the distinction between the initial HTTP response and the client-rendered NotFound state, and no deployment or rendering dependency changed.
+
+## Part A static fallback metadata integration
+
+Marked all twelve title, description, canonical, Open Graph, and Twitter fallback nodes in `index.html` with `data-static-seo`. The static Open Graph and Twitter image URLs now use the production absolute URL. `SEO.tsx` removes the tagged fallback layer in `useLayoutEffect` and converts every Helmet Open Graph/Twitter image URL through `new URL(ogImage, SITE_ORIGIN).toString()`, preserving route-specific images.
+
+### Commands and actual results
+
+| Command | Result |
+| --- | --- |
+| `node --test tests/seo-contract.test.mjs` | Passed: 17 tests, 0 failures. The new static-fallback ownership and absolute-image assertions passed. |
+| `npm run lint` | Passed (`tsc --noEmit`). |
+| `git diff --check` | Passed. |
+
+### Scope
+
+Only `index.html`, `src/components/SEO.tsx`, the existing focused SEO assertions in `tests/seo-contract.test.mjs` and `scripts/test-seo-routes.mjs`, and this report changed. Routes, sitemap, information pages, analysis child components, and `Header.tsx` were not modified.
