@@ -31,7 +31,10 @@ const routes = [
   { path: '/integritet', status: 200, html: true },
   { path: '/integritetspolicy', status: 301, location: '/integritet' },
   { path: '/analyser/investor2025q2', status: 301, location: '/analys/investor-ab' },
+  { path: '/analys/rvrc-2026', status: 301, location: '/analys/revolutionrace-2026' },
   { path: '/analyser/helt-pahittad', status: 404, html: false },
+  { path: '/guider/grunderna-i-aktieanalys', status: 200, html: true },
+  { path: '/aktier/saab', status: 200, html: true },
   { path: '/verktyg/rantakalkylator', status: 200, html: true },
   { path: '/api/newsletter', status: 404, html: false },
   { path: '/api/newsletter/signup', status: 405, html: false },
@@ -91,10 +94,30 @@ for (const redirect of routes.filter((route) => route.location)) {
 }
 
 const sitemap = await (await fetch(`${baseUrl}/sitemap.xml`)).text();
-for (const forbidden of ['/analyser/', '/api/', '/preview/', '/admin/', '/services-store-']) {
+const sitemapUrls = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]);
+
+assert.ok(sitemapUrls.length > 0, 'sitemap must contain public URLs');
+assert.equal(new Set(sitemapUrls).size, sitemapUrls.length, 'sitemap must not contain duplicate URLs');
+for (const sitemapUrl of sitemapUrls) {
+  assert.match(sitemapUrl, /^https:\/\/www\.borsanalys\.se\//, 'sitemap URLs must use the canonical origin');
+}
+for (const forbidden of [
+  '/analyser/',
+  '/borsskolan/',
+  '/api/',
+  '/preview/',
+  '/admin/',
+  '/profil',
+  '/mina-checklistor',
+  '/services-store-',
+]) {
   assert.equal(sitemap.includes(forbidden), false, `sitemap contains forbidden prefix ${forbidden}`);
 }
 assert.equal(sitemap.includes('/analys/volvo'), true, 'sitemap must include Volvo analysis');
 assert.equal(sitemap.includes('/analys/investor-ab'), true, 'sitemap must include Investor analysis');
+assert.equal(sitemap.includes('/guider/grunderna-i-aktieanalys'), true, 'sitemap must include a guide route');
+assert.equal(sitemap.includes('/aktier/saab'), true, 'sitemap must include a stock route');
+assert.match(sitemap, /<lastmod>2026-03-31<\/lastmod>/, 'sitemap must include stable analysis dates when available');
+assert.match(sitemap, /<lastmod>2026-03-15<\/lastmod>/, 'sitemap must include stable guide dates when available');
 
 console.log(JSON.stringify({ baseUrl, routes: result }, null, 2));

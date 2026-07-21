@@ -5,11 +5,24 @@ import test from 'node:test';
 const root = new URL('../', import.meta.url);
 const source = async (path) => readFile(new URL(path, root), 'utf8');
 
-test('Vercel config has no global SPA fallback and has verified legacy redirects', async () => {
-  const vercel = await source('vercel.json');
-  assert.doesNotMatch(vercel, /"source":\s*"\/\(\.\*\)"/);
-  assert.match(vercel, /"source":\s*"\/integritetspolicy"/);
-  assert.match(vercel, /"source":\s*"\/analyser\/investor2025q2"/);
+test('Vercel config has no global SPA fallback and only verified legacy redirects', async () => {
+  const vercel = JSON.parse(await source('vercel.json'));
+  const redirects = vercel.redirects || [];
+
+  assert.doesNotMatch(JSON.stringify(vercel), /"source":\s*"\/\(\.\*\)"/);
+  assert.deepEqual(
+    redirects.find((redirect) => redirect.source === '/integritetspolicy'),
+    { source: '/integritetspolicy', destination: '/integritet', permanent: true },
+  );
+  assert.deepEqual(
+    redirects.find((redirect) => redirect.source === '/analyser/investor2025q2'),
+    { source: '/analyser/investor2025q2', destination: '/analys/investor-ab', permanent: true },
+  );
+  assert.deepEqual(
+    redirects.find((redirect) => redirect.source === '/analys/rvrc-2026'),
+    { source: '/analys/rvrc-2026', destination: '/analys/revolutionrace-2026', permanent: true },
+  );
+  assert.equal(redirects.some((redirect) => /:\w+\*/.test(redirect.source)), false);
 });
 
 test('React app has an explicit catch-all NotFound route', async () => {
@@ -122,11 +135,27 @@ test('fallback metadata and crawler policy use the approved public OG asset', as
   assert.match(previewServer, /robotsRewrite/);
 });
 
-test('sitemap imports the shared analysis registry and excludes legacy routes', async () => {
+test('sitemap derives canonical public URLs from all shared registries', async () => {
   const sitemap = await source('api/sitemap.ts');
   assert.match(sitemap, /data\/analyses/);
+  assert.match(sitemap, /data\/guides/);
+  assert.match(sitemap, /data\/stocks/);
   assert.match(sitemap, /analyses/);
+  assert.match(sitemap, /guides/);
+  assert.match(sitemap, /stocks/);
+  assert.match(sitemap, /Object\.values\(analyses\)/);
+  assert.match(sitemap, /Object\.values\(guides\)/);
+  assert.match(sitemap, /Object\.values\(stocks\)/);
+  assert.match(sitemap, /https:\/\/www\.borsanalys\.se/);
+  assert.match(sitemap, /escapeXml\(new URL\(path, baseUrl\)\.toString\(\)\)/);
+  assert.match(sitemap, /<lastmod>/);
   assert.doesNotMatch(sitemap, /\/analyser\/nvidia/);
+  assert.doesNotMatch(sitemap, /\/borsskolan/);
+  assert.doesNotMatch(sitemap, /\/admin/);
+  assert.doesNotMatch(sitemap, /\/api/);
+  assert.doesNotMatch(sitemap, /\/profil/);
+  assert.doesNotMatch(sitemap, /\/mina-checklistor/);
+  assert.doesNotMatch(sitemap, /\/preview/);
   assert.doesNotMatch(sitemap, /\/makro/);
 });
 

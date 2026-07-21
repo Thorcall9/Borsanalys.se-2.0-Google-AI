@@ -64,14 +64,15 @@
   ],
   "redirects": [
     { "source": "/integritetspolicy", "destination": "/integritet", "permanent": true },
-    { "source": "/analyser/investor2025q2", "destination": "/analys/investor-ab", "permanent": true }
+    { "source": "/analyser/investor2025q2", "destination": "/analys/investor-ab", "permanent": true },
+    { "source": "/analys/rvrc-2026", "destination": "/analys/revolutionrace-2026", "permanent": true }
   ],
   "functions": {
     "api/rss.ts": {
       "includeFiles": "src/data/analyses/**"
     },
     "api/sitemap.ts": {
-      "includeFiles": "src/data/analyses/**"
+      "includeFiles": ["src/data/analyses/**", "src/data/guides.ts", "src/data/stocks.ts"]
     },
     "api/newsletter/signup.ts": {
       "maxDuration": 10
