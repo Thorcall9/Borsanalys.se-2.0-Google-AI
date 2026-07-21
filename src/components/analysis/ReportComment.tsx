@@ -1,7 +1,6 @@
 import React, { ReactNode, useMemo, useState } from "react";
 import { ArrowLeft, Clock, Calendar, BookOpen, AlertCircle, FileText, Star } from "lucide-react";
 import { Link } from "react-router-dom";
-import SEO from "../SEO";
 import AdUnit from "./AdUnit";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
 import NextAnalysisButton from "./NextAnalysisButton";
@@ -267,8 +266,6 @@ export default function ReportComment({
 
   return (
     <div className="min-h-screen bg-background text-foreground pt-32 pb-24">
-      <SEO title={`${data.title} - Rapportkommentar`} description={data.summary} />
-
       <div className="max-w-4xl mx-auto px-6">
         <Link to="/analys" className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest text-primary hover:text-primary/80 transition-colors mb-8">
           <ArrowLeft size={14} /> Till Analysarkivet

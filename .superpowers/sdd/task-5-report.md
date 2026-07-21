@@ -86,3 +86,34 @@ Added permanent Vercel redirects for every known `Analysis.tsx` alias while pres
 ### Concern
 
 The full preview route script remains blocked by the existing static-shell versus route-specific initial-HTML SEO mismatch. Addressing it would change static SEO ownership or rendering behavior, which Part B explicitly excludes. The new redirects and sitemap assertions completed successfully before those unrelated assertions ran.
+
+## Part C analysis-child SEO ownership integration
+
+### Status
+
+Removed local `SEO` imports and rendering from the analysis-route child components. `Analysis.tsx` remains the only metadata owner for these views through its centralized `analysisMeta` element, so lazy child components can no longer override the route-level canonical, social, or structured metadata. Visible UI and behavior are unchanged.
+
+### Changed files
+
+- `src/components/analysis/PlejdDeepDive.tsx`
+- `src/components/analysis/AxfoodDeepDive.tsx`
+- `src/components/analysis/ComprehensiveAnalysis.tsx`
+- `src/components/analysis/InwidoDeepDive.tsx`
+- `src/components/analysis/ReportComment.tsx`
+- `tests/seo-contract.test.mjs` — expands the existing route-ownership contract to cover all five components (and retains the prior Nibe/ABB coverage).
+- `.superpowers/sdd/task-5-report.md` — records Part C results.
+
+`Header.tsx`, static metadata, redirects, and the sitemap were not changed.
+
+### Commands and actual results
+
+| Command | Result |
+| --- | --- |
+| `node --test tests/seo-contract.test.mjs` | Passed: 18 tests, 0 failures. The expanded analysis-child SEO ownership contract passed. |
+| `npm run lint` | Passed (`tsc --noEmit`). |
+| `npm run build` | Passed; Prisma Client generated, Vite transformed 2,840 modules, and built in 2.45 seconds. The existing warning about chunks larger than 500 kB remained. |
+| `git diff --check` | Passed. |
+
+### Concern
+
+No Part C blockers. The production build still emits the pre-existing large-chunk warning; resolving it would be unrelated to this scoped SEO ownership change.

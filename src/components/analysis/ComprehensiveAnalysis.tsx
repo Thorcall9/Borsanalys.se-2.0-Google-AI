@@ -31,7 +31,6 @@ import ChartCard from './ChartCard';
 import NextStepsModule from './NextStepsModule';
 import EditorialReadNext from './EditorialReadNext';
 import inwidoSankeyHtml from '../../../analyses/inwido_sankey_2026.html?raw';
-import SEO from '../SEO';
 import { fetchWithCache, RapidAPIQuote } from '../../services/stockService';
 import { AnalysisData } from '../../data/analyses';
 import NordnetCTA from './NordnetCTA';
@@ -642,8 +641,6 @@ const InwidoTemplateAnalysis = ({
       nextAnalysis={nextAnalysis}
       tightContent
     >
-      <SEO title={`${data.title} (${data.ticker}) - Analys`} description={data.summary} ogType="article" />
-
       <div className="mb-20 space-y-12">
         <div className="space-y-4">
           <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.15em] sm:tracking-[0.4em] flex flex-wrap items-center gap-x-2 gap-y-1 leading-relaxed">
@@ -1105,12 +1102,6 @@ export default function ComprehensiveAnalysis({
       hideSidebar={data.slug === 'nordea-bank-2026'}
       tightContent={isInwido}
     >
-      <SEO 
-        title={`${data.title} (${data.ticker}) - Analys`} 
-        description={data.summary}
-        ogType="article"
-      />
-
       {/* Main Title Header */}
       <div className="mb-20 space-y-12">
         <div className="space-y-4">

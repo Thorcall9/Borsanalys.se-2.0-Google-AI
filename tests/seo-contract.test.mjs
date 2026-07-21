@@ -250,15 +250,20 @@ test('public routes derive metadata and structured data from their registries', 
   assert.match(stockHub, /canonical=\{stockPath\}/);
 });
 
-test('delayed deep-dive components leave SEO ownership to the analysis route', async () => {
-  const deepDives = await Promise.all([
+test('analysis route child components leave SEO ownership to the analysis route', async () => {
+  const children = await Promise.all([
     source('src/components/analysis/NibeDeepDive.tsx'),
     source('src/components/analysis/ABBDeepDive.tsx'),
+    source('src/components/analysis/PlejdDeepDive.tsx'),
+    source('src/components/analysis/AxfoodDeepDive.tsx'),
+    source('src/components/analysis/ComprehensiveAnalysis.tsx'),
+    source('src/components/analysis/InwidoDeepDive.tsx'),
+    source('src/components/analysis/ReportComment.tsx'),
   ]);
 
-  for (const deepDive of deepDives) {
-    assert.doesNotMatch(deepDive, /import SEO from ["']\.\.\/SEO["']/);
-    assert.doesNotMatch(deepDive, /<SEO\b/);
+  for (const child of children) {
+    assert.doesNotMatch(child, /\bimport\s+SEO\b/);
+    assert.doesNotMatch(child, /<SEO\b/);
   }
 });
 
