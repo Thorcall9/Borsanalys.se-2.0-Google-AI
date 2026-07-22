@@ -162,6 +162,7 @@ export interface AnalysisData {
   recommendationReason?: string;
   price: string;
   pe: string;
+  dividend?: string;
   yield: string;
   marketCap?: string;
   discount?: string;

@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo, useState } from "react";
-import { ArrowLeft, Clock, Calendar, BookOpen, AlertCircle, FileText, Star } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, BookOpen, AlertCircle, FileText, Star, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import AdUnit from "./AdUnit";
 import AnalysisDisclaimer from "./AnalysisDisclaimer";
@@ -151,29 +151,58 @@ function parseMarkdown(markdown: string): MarkdownBlock[] {
 function TableBlock({ rows }: { rows: string[][] }) {
   const headers = rows[0] || [];
   const bodyRows = rows.slice(1);
+  const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
   return (
     <div className="my-8 overflow-hidden rounded-2xl border border-border bg-card shadow-lg shadow-black/5">
       <div className="overflow-x-auto">
-        <table className="w-full border-collapse text-left text-sm text-foreground">
+        <table className="w-full min-w-[560px] border-collapse text-left text-sm text-foreground">
           <thead>
             <tr className="bg-muted/50 border-b border-border">
               {headers.map((h, i) => (
-                <th key={i} className="px-6 py-4 font-black uppercase tracking-wider text-xs text-muted-foreground">
+                <th key={i} className="px-5 py-4 font-black uppercase tracking-wider text-[10px] text-muted-foreground">
                   {stripMarkdown(h)}
                 </th>
               ))}
+              <th aria-label="Radalternativ" className="w-12 px-3 py-4" />
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
             {bodyRows.map((row, rIndex) => (
-              <tr key={rIndex} className="hover:bg-muted/30 transition-colors">
+              <React.Fragment key={rIndex}>
+              <tr className={`group transition-colors ${expandedRow === rIndex ? "bg-primary/5" : "hover:bg-muted/30"}`}>
                 {row.map((cell, cIndex) => (
-                  <td key={cIndex} className={`px-6 py-4 font-medium ${cIndex > 0 ? "font-mono text-right" : ""}`}>
+                  <td key={cIndex} className={`px-5 py-4 font-medium ${cIndex > 0 ? "font-mono text-right" : ""}`}>
                     {parseInline(cell)}
                   </td>
                 ))}
+                <td className="px-3 py-3 text-right">
+                  <button
+                    type="button"
+                    aria-label={`${expandedRow === rIndex ? "Dölj" : "Visa"} rad ${rIndex + 1}`}
+                    aria-expanded={expandedRow === rIndex}
+                    onClick={() => setExpandedRow(expandedRow === rIndex ? null : rIndex)}
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-primary/10 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  >
+                    <ChevronDown size={16} className={`transition-transform ${expandedRow === rIndex ? "rotate-180 text-primary" : ""}`} />
+                  </button>
+                </td>
               </tr>
+              {expandedRow === rIndex && (
+                <tr className="bg-primary/5">
+                  <td colSpan={headers.length + 1} className="px-5 pb-5 pt-1">
+                    <div className="grid gap-2 rounded-xl border border-primary/15 bg-background/70 p-4 sm:grid-cols-2">
+                      {row.map((cell, cIndex) => (
+                        <div key={cIndex} className="flex min-w-0 items-baseline justify-between gap-4 text-sm">
+                          <span className="shrink-0 text-[10px] font-black uppercase tracking-wider text-muted-foreground">{stripMarkdown(headers[cIndex] || "")}</span>
+                          <span className="text-right font-medium text-foreground">{parseInline(cell)}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </td>
+                </tr>
+              )}
+              </React.Fragment>
             ))}
           </tbody>
         </table>
@@ -297,7 +326,7 @@ export default function ReportComment({
           </h1>
 
           {/* Quick Metrics Bar */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-3xl border border-border bg-card/60 backdrop-blur shadow-sm">
+          <div className={`grid grid-cols-2 ${data.dividend ? "md:grid-cols-5" : "md:grid-cols-4"} gap-4 p-5 rounded-3xl border border-border bg-card/60 backdrop-blur shadow-sm`}>
             <div>
               <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Syn</div>
               <VerdictBadge verdict={data.recommendation} />
@@ -309,6 +338,10 @@ export default function ReportComment({
             <div>
               <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">P/E (R12)</div>
               <div className="text-lg font-black text-foreground">{data.pe}</div>
+            </div>
+            <div>
+              <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Senast beslutad utdelning</div>
+              <div className="text-lg font-black text-foreground">{data.dividend}</div>
             </div>
             <div>
               <div className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1">Direktavkastning</div>
