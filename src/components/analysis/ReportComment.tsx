@@ -151,12 +151,13 @@ function parseMarkdown(markdown: string): MarkdownBlock[] {
 function TableBlock({ rows }: { rows: string[][] }) {
   const headers = rows[0] || [];
   const bodyRows = rows.slice(1);
+  const canExpand = headers.length >= 3;
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
   return (
     <div className="my-8 overflow-hidden rounded-2xl border border-border bg-card shadow-lg shadow-black/5">
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[560px] border-collapse text-left text-sm text-foreground">
+        <table className={`w-full border-collapse text-left text-sm text-foreground ${canExpand ? "min-w-[560px]" : "min-w-0"}`}>
           <thead>
             <tr className="bg-muted/50 border-b border-border">
               {headers.map((h, i) => (
@@ -164,7 +165,7 @@ function TableBlock({ rows }: { rows: string[][] }) {
                   {stripMarkdown(h)}
                 </th>
               ))}
-              <th aria-label="Radalternativ" className="w-12 px-3 py-4" />
+              {canExpand && <th aria-label="Radalternativ" className="w-12 px-3 py-4" />}
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
@@ -172,11 +173,11 @@ function TableBlock({ rows }: { rows: string[][] }) {
               <React.Fragment key={rIndex}>
               <tr className={`group transition-colors ${expandedRow === rIndex ? "bg-primary/5" : "hover:bg-muted/30"}`}>
                 {row.map((cell, cIndex) => (
-                  <td key={cIndex} className={`px-5 py-4 font-medium ${cIndex > 0 ? "font-mono text-right" : ""}`}>
+                  <td key={cIndex} className={`break-words px-4 py-3 font-medium md:px-5 md:py-4 ${cIndex > 0 ? "font-mono text-right" : ""}`}>
                     {parseInline(cell)}
                   </td>
                 ))}
-                <td className="px-3 py-3 text-right">
+                {canExpand && <td className="px-3 py-3 text-right">
                   <button
                     type="button"
                     aria-label={`${expandedRow === rIndex ? "Dölj" : "Visa"} rad ${rIndex + 1}`}
@@ -186,7 +187,7 @@ function TableBlock({ rows }: { rows: string[][] }) {
                   >
                     <ChevronDown size={16} className={`transition-transform ${expandedRow === rIndex ? "rotate-180 text-primary" : ""}`} />
                   </button>
-                </td>
+                </td>}
               </tr>
               {expandedRow === rIndex && (
                 <tr className="bg-primary/5">
