@@ -25,6 +25,13 @@ service cloud.firestore {
       allow read: if isOwner(userId) || isAdmin();
       allow create: if isOwner(userId) && request.resource.data.keys().hasAll(['uid', 'email']);
       allow update: if isOwner(userId) && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['uid', 'email']);
+
+      match /savingsGoals/{goalId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && request.resource.data.uid == userId;
+        allow update: if isOwner(userId) && resource.data.uid == userId && request.resource.data.uid == userId;
+        allow delete: if isOwner(userId) && resource.data.uid == userId;
+      }
     }
 
     // Watchlists

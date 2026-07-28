@@ -7,6 +7,7 @@ import SavedAnalyses from "../components/community/SavedAnalyses";
 import ChecklistOverview from "../components/community/ChecklistOverview";
 import RecentPublications from "../components/community/RecentPublications";
 import { normalizeProfileInput } from "../lib/profile";
+import { SavingsGoalDashboard } from "../components/house/SavingsGoalDashboard";
 
 export default function Profile() {
   const { user, loading, logout, updateUserProfile } = useAuth();
@@ -158,6 +159,7 @@ export default function Profile() {
           </div>
 
           <ChecklistOverview />
+          <SavingsGoalDashboard uid={user.uid} />
 
           <section className="space-y-6">
             <div className="flex items-center justify-between">

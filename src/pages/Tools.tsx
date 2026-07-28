@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useLocation, useNavigate } from "react-router-dom";
-import { Calculator, TrendingUp, Target, ArrowRight, DollarSign } from "lucide-react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import { Calculator, TrendingUp, Target, ArrowRight, DollarSign, House } from "lucide-react";
 import CompoundInterestCalculator from "../components/CompoundInterestCalculator";
 import GoalSavingsCalculator from "../components/GoalSavingsCalculator";
 import DCFCalculator from "../components/DCFCalculator";
 import DividendCalculator from "../components/DividendCalculator";
 import SEO from "../components/SEO";
+
+type ToolTab = "compound" | "goal" | "dcf" | "dividend";
 
 export default function Tools() {
   const location = useLocation();
@@ -21,14 +23,14 @@ export default function Tools() {
     return "compound"; // fallback
   };
 
-  const [activeTab, setActiveTabState] = useState<"compound" | "goal" | "dcf" | "dividend">(() => getTabFromPath(location.pathname));
+  const [activeTab, setActiveTabState] = useState<ToolTab>(() => getTabFromPath(location.pathname));
 
   // Sync tab state if pathname changes externally (e.g. back button)
   useEffect(() => {
     setActiveTabState(getTabFromPath(location.pathname));
   }, [location.pathname]);
 
-  const setActiveTab = (tab: "compound" | "goal" | "dcf" | "dividend") => {
+  const setActiveTab = (tab: ToolTab) => {
     setActiveTabState(tab);
     const pathMap = {
       compound: "/verktyg/rantakalkylator",
@@ -59,6 +61,7 @@ export default function Tools() {
       </div>
       </div>
 
+      <div className="mx-auto grid min-w-0 max-w-[1180px] grid-cols-1 gap-3 px-5 py-8 md:grid-cols-2 md:px-8 md:py-10 lg:grid-cols-4">
       <div className="mx-auto grid min-w-0 max-w-[1180px] grid-cols-1 gap-3 px-5 py-8 md:grid-cols-2 md:px-8 md:py-10 lg:grid-cols-4">
         <div 
           onClick={() => setActiveTab("compound")}
@@ -131,6 +134,24 @@ export default function Tools() {
             {activeTab === "dividend" ? "Aktiv" : "Välj"} <ArrowRight size={14} />
           </div>
         </div>
+
+        <Link
+          to="/verktyg/huskalkylator"
+          className="bg-card border border-border rounded-2xl p-8 flex flex-col justify-between transition-all group hover:border-primary/50"
+        >
+          <div className="space-y-6">
+            <div className="w-16 h-16 rounded-2xl flex items-center justify-center transition-colors bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white">
+              <House size={32} />
+            </div>
+            <h3 className="text-2xl font-serif font-bold">Huskalkylator</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Planera vägen till ditt bostadsmål med kontantinsats, sparande och investeringsprognos.
+            </p>
+          </div>
+          <div className="mt-8 flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-widest">
+            Öppna <ArrowRight size={14} />
+          </div>
+        </Link>
       </div>
 
       <motion.section 
