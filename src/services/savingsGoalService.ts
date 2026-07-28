@@ -1,18 +1,9 @@
 import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  orderBy,
-  query,
-  serverTimestamp,
-  updateDoc,
   type QueryDocumentSnapshot,
   type Timestamp,
 } from 'firebase/firestore';
 
-import { db, handleFirestoreError, OperationType } from '../firebase';
+import { handleFirestoreError, loadFirebaseFirestore, OperationType } from '../firebase';
 import type { HouseCalculatorInput } from '../lib/savingsGoalMath';
 
 export interface SavingsGoal extends HouseCalculatorInput {
@@ -35,14 +26,6 @@ function assertGoalId(goalId: string) {
   if (!goalId || !goalId.trim()) {
     throw new Error('A goalId is required for savings goal operations.');
   }
-}
-
-function getSavingsGoalsCollection(uid: string) {
-  return collection(db, 'users', uid, 'savingsGoals');
-}
-
-function getSavingsGoalDocument(uid: string, goalId: string) {
-  return doc(db, 'users', uid, 'savingsGoals', goalId);
 }
 
 function normalizeTimestamp(value: Timestamp | Date | null | undefined) {
@@ -90,7 +73,9 @@ export async function listSavingsGoals(uid: string): Promise<SavingsGoal[]> {
   const path = `users/${uid}/savingsGoals`;
 
   try {
-    const snapshot = await getDocs(query(getSavingsGoalsCollection(uid), orderBy('updatedAt', 'desc')));
+    const firestore = await loadFirebaseFirestore();
+    const goalsCollection = firestore.collection(firestore.db, 'users', uid, 'savingsGoals');
+    const snapshot = await firestore.getDocs(firestore.query(goalsCollection, firestore.orderBy('updatedAt', 'desc')));
     return snapshot.docs.map(mapSavingsGoal);
   } catch (error) {
     handleFirestoreError(error, OperationType.LIST, path);
@@ -103,11 +88,13 @@ export async function createSavingsGoal(uid: string, goal: SavingsGoalWrite): Pr
   const path = `users/${uid}/savingsGoals`;
 
   try {
-    const documentReference = await addDoc(getSavingsGoalsCollection(uid), {
+    const firestore = await loadFirebaseFirestore();
+    const goalsCollection = firestore.collection(firestore.db, 'users', uid, 'savingsGoals');
+    const documentReference = await firestore.addDoc(goalsCollection, {
       ...goal,
       uid,
-      createdAt: serverTimestamp(),
-      updatedAt: serverTimestamp(),
+      createdAt: firestore.serverTimestamp(),
+      updatedAt: firestore.serverTimestamp(),
     });
 
     return documentReference.id;
@@ -123,10 +110,12 @@ export async function updateSavingsGoal(uid: string, goalId: string, goal: Savin
   const path = `users/${uid}/savingsGoals/${goalId}`;
 
   try {
-    await updateDoc(getSavingsGoalDocument(uid, goalId), {
+    const firestore = await loadFirebaseFirestore();
+    const goalDocument = firestore.doc(firestore.db, 'users', uid, 'savingsGoals', goalId);
+    await firestore.updateDoc(goalDocument, {
       ...goal,
       uid,
-      updatedAt: serverTimestamp(),
+      updatedAt: firestore.serverTimestamp(),
     });
   } catch (error) {
     handleFirestoreError(error, OperationType.UPDATE, path);
@@ -140,7 +129,9 @@ export async function deleteSavingsGoal(uid: string, goalId: string): Promise<vo
   const path = `users/${uid}/savingsGoals/${goalId}`;
 
   try {
-    await deleteDoc(getSavingsGoalDocument(uid, goalId));
+    const firestore = await loadFirebaseFirestore();
+    const goalDocument = firestore.doc(firestore.db, 'users', uid, 'savingsGoals', goalId);
+    await firestore.deleteDoc(goalDocument);
   } catch (error) {
     handleFirestoreError(error, OperationType.DELETE, path);
   }

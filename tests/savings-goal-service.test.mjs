@@ -7,8 +7,9 @@ const serviceFileUrl = new URL('../src/services/savingsGoalService.ts', import.m
 test('savings goal service builds the member subcollection path under users/{uid}/savingsGoals', async () => {
   const source = await readFile(serviceFileUrl, 'utf8');
 
-  assert.match(source, /collection\(db,\s*['"]users['"],\s*uid,\s*['"]savingsGoals['"]\)/);
-  assert.match(source, /doc\(db,\s*['"]users['"],\s*uid,\s*['"]savingsGoals['"],\s*goalId\)/);
+  assert.match(source, /loadFirebaseFirestore\(\)/);
+  assert.match(source, /firestore\.collection\(firestore\.db,\s*['"]users['"],\s*uid,\s*['"]savingsGoals['"]\)/);
+  assert.match(source, /firestore\.doc\(firestore\.db,\s*['"]users['"],\s*uid,\s*['"]savingsGoals['"],\s*goalId\)/);
 });
 
 test('savings goal service requires a uid before any Firestore operation', async () => {

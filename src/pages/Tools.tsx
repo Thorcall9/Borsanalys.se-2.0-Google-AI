@@ -61,8 +61,7 @@ export default function Tools() {
       </div>
       </div>
 
-      <div className="mx-auto grid min-w-0 max-w-[1180px] grid-cols-1 gap-3 px-5 py-8 md:grid-cols-2 md:px-8 md:py-10 lg:grid-cols-4">
-      <div className="mx-auto grid min-w-0 max-w-[1180px] grid-cols-1 gap-3 px-5 py-8 md:grid-cols-2 md:px-8 md:py-10 lg:grid-cols-4">
+      <div className="mx-auto grid min-w-0 max-w-[1180px] grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-3 px-5 py-8 md:px-8 md:py-10">
         <div 
           onClick={() => setActiveTab("compound")}
           className={`group flex min-w-0 cursor-pointer flex-col justify-between rounded-2xl border bg-white p-5 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition-all md:p-6 ${activeTab === "compound" ? "border-emerald-700 ring-1 ring-emerald-700" : "border-slate-200 hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md"}`}
