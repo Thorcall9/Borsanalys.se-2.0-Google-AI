@@ -65,9 +65,27 @@ function mapSavingsGoal(snapshot: QueryDocumentSnapshot) {
     currentHomeValue: data.currentHomeValue ?? 0,
     remainingMortgageDebt: data.remainingMortgageDebt ?? 0,
     brokerFeePercent: data.brokerFeePercent ?? 0,
+    housingType: data.housingType ?? 'HOUSE',
+    existingMortgageDeeds: data.existingMortgageDeeds ?? 0,
+    assessedValue: data.assessedValue,
+    extraBuffer: data.extraBuffer ?? 0,
     createdAt: normalizeTimestamp(data.createdAt),
     updatedAt: normalizeTimestamp(data.updatedAt),
   } satisfies SavingsGoal;
+}
+
+export async function updateSavingsGoalCapital(uid: string, goalId: string, currentSavings: number): Promise<void> {
+  assertUid(uid);
+  assertGoalId(goalId);
+  const path = `users/${uid}/savingsGoals/${goalId}`;
+
+  try {
+    const firestore = await loadFirebaseFirestore();
+    const goalDocument = firestore.doc(firestore.db, 'users', uid, 'savingsGoals', goalId);
+    await firestore.updateDoc(goalDocument, { currentSavings, updatedAt: firestore.serverTimestamp() });
+  } catch (error) {
+    handleFirestoreError(error, OperationType.UPDATE, path);
+  }
 }
 
 export async function listSavingsGoals(uid: string): Promise<SavingsGoal[]> {
