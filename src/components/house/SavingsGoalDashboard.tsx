@@ -368,7 +368,7 @@ export function SavingsGoalDashboard({ uid, onGoalsChanged }: SavingsGoalDashboa
             <div className="rounded-2xl bg-[#fffaf0] p-5 text-[#123f31] sm:p-6">
               <div className="flex flex-wrap items-end justify-between gap-4">
                 <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#52705f]">Ert huskapital</p>
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#52705f]">Ditt huskapital</p>
                   <p className="mt-2 font-serif text-3xl font-bold sm:text-4xl">{formatCurrency(activeGoal.currentSavings)}</p>
                   <p className="mt-1 text-sm text-[#627168]">av {formatCurrency(activePreview.downPayment)} till kontantinsatsen</p>
                 </div>
@@ -395,7 +395,7 @@ export function SavingsGoalDashboard({ uid, onGoalsChanged }: SavingsGoalDashboa
               </div>
 
               <p className="mt-5 border-t border-[#ded3c0] pt-4 text-sm font-semibold text-[#23694f]">
-                {activeProgress >= 100 ? 'Målet är nått – nu börjar nästa kapitel.' : activeProgress >= 50 ? 'Ni är på god väg. Fortsätt så!' : 'Varje månadsinsättning tar er närmare nästa hem.'}
+                {activeProgress >= 100 ? 'Målet är nått – nu börjar nästa kapitel.' : activeProgress >= 50 ? 'Du är på god väg. Fortsätt så!' : 'Varje månadsinsättning tar dig närmare nästa hem.'}
               </p>
             </div>
 
