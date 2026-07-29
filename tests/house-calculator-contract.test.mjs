@@ -121,9 +121,11 @@ test('house calculator keeps invalid values out of calculations and provides an 
   assert.match(calculatorSource, /useAuth/);
   assert.match(calculatorSource, /openLoginModal/);
   assert.match(calculatorSource, /onSave/);
-  assert.match(calculatorSource, /hasValidationErrors\s*\?\s*null\s*:\s*calculateHousePreview/);
-  assert.match(calculatorSource, /hasValidationErrors\s*\?\s*\[\]\s*:\s*calculateSavingsProjection/);
-  assert.match(calculatorSource, /isAuthenticated\s*&&\s*!hasValidationErrors/);
+  assert.match(calculatorSource, /hasSavingsValidationErrors\s*\?\s*null\s*:\s*calculateHousePreview/);
+  assert.match(calculatorSource, /hasSavingsValidationErrors\s*\?\s*\[\]\s*:\s*calculateSavingsProjection/);
+  assert.match(calculatorSource, /hasSaleValidationErrors\s*\?\s*null\s*:\s*calculateSaleEquity/);
+  assert.match(calculatorSource, /isAuthenticated\s*&&\s*!hasSavingsValidationErrors/);
+  assert.match(calculatorSource, /SALE_EQUITY_FIELDS/);
   assert.match(calculatorSource, /ResponsiveContainer/);
   assert.match(calculatorSource, /AreaChart|LineChart|ComposedChart/);
   assert.match(calculatorSource, /<table/);

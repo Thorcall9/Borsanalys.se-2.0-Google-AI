@@ -45,6 +45,12 @@ const currencyFormatter = new Intl.NumberFormat('sv-SE', {
   maximumFractionDigits: 0,
 });
 
+const SALE_EQUITY_FIELDS = new Set<keyof HouseCalculatorInput>([
+  'currentHomeValue',
+  'remainingMortgageDebt',
+  'brokerFeePercent',
+]);
+
 function formatCurrency(value: number) {
   return currencyFormatter.format(value);
 }
@@ -56,17 +62,19 @@ export function HouseCalculator({ onSave }: HouseCalculatorProps) {
 
   const errors = useMemo(() => validateHouseInput(input), [input]);
   const hasValidationErrors = Object.keys(errors).length > 0;
+  const hasSaleValidationErrors = Object.keys(errors).some((field) => SALE_EQUITY_FIELDS.has(field as keyof HouseCalculatorInput));
+  const hasSavingsValidationErrors = Object.keys(errors).some((field) => !SALE_EQUITY_FIELDS.has(field as keyof HouseCalculatorInput));
   const preview = useMemo(
-    () => (hasValidationErrors ? null : calculateHousePreview(input)),
-    [hasValidationErrors, input],
+    () => (hasSavingsValidationErrors ? null : calculateHousePreview(input)),
+    [hasSavingsValidationErrors, input],
   );
   const projection = useMemo(
-    () => (hasValidationErrors ? [] : calculateSavingsProjection(input)),
-    [hasValidationErrors, input],
+    () => (hasSavingsValidationErrors ? [] : calculateSavingsProjection(input)),
+    [hasSavingsValidationErrors, input],
   );
   const saleEquityPreview = useMemo(
-    () => (hasValidationErrors ? null : calculateSaleEquity(input)),
-    [hasValidationErrors, input],
+    () => (hasSaleValidationErrors ? null : calculateSaleEquity(input)),
+    [hasSaleValidationErrors, input],
   );
   const isAuthenticated = Boolean(user);
 
@@ -101,11 +109,11 @@ export function HouseCalculator({ onSave }: HouseCalculatorProps) {
         <div className="space-y-8 p-6 sm:p-8 lg:col-span-7">
           {!isAuthenticated ? (
             <div className="space-y-6">
-              <HouseCalculatorPreview preview={preview} hasValidationErrors={hasValidationErrors} />
+              <HouseCalculatorPreview preview={preview} hasValidationErrors={hasSavingsValidationErrors} />
               <div className="grid gap-6 lg:grid-cols-2">
                 <HouseSaleEquityPreview
                   preview={saleEquityPreview}
-                  hasValidationErrors={hasValidationErrors}
+                  hasValidationErrors={hasSaleValidationErrors}
                   currentHomeValue={input.currentHomeValue}
                   remainingMortgageDebt={input.remainingMortgageDebt}
                 />
@@ -114,17 +122,17 @@ export function HouseCalculator({ onSave }: HouseCalculatorProps) {
             </div>
           ) : (
             <div className="space-y-6">
-              <HouseCalculatorPreview preview={preview} hasValidationErrors={hasValidationErrors} />
+              <HouseCalculatorPreview preview={preview} hasValidationErrors={hasSavingsValidationErrors} />
               <HouseSaleEquityPreview
                 preview={saleEquityPreview}
-                hasValidationErrors={hasValidationErrors}
+                hasValidationErrors={hasSaleValidationErrors}
                 currentHomeValue={input.currentHomeValue}
                 remainingMortgageDebt={input.remainingMortgageDebt}
               />
             </div>
           )}
 
-          {isAuthenticated && !hasValidationErrors ? (
+          {isAuthenticated && !hasSavingsValidationErrors ? (
             <section className="space-y-4" aria-labelledby="full-projection-heading">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
