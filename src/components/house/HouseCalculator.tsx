@@ -11,6 +11,7 @@ import {
 } from '../../lib/savingsGoalMath';
 import { HouseCalculatorInputs } from './HouseCalculatorInputs';
 import { HouseCalculatorPreview } from './HouseCalculatorPreview';
+import { MemberPlanPreview } from './MemberPlanPreview';
 import { MemberUnlockPanel } from './MemberUnlockPanel';
 
 export interface HouseCalculatorProps {
@@ -84,12 +85,19 @@ export function HouseCalculator({ onSave }: HouseCalculatorProps) {
       className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm"
     >
       <div className="grid lg:grid-cols-12">
-        <div className="border-b border-border bg-section-alt/30 p-6 sm:p-8 lg:col-span-5 lg:border-b-0 lg:border-r">
+        <div className="border-b border-[#e4dac8] bg-[#f2ecdf] p-6 sm:p-8 lg:col-span-5 lg:border-b-0 lg:border-r [&_legend]:text-[#123f2d]">
           <HouseCalculatorInputs input={input} errors={errors} onChange={handleInputChange} />
         </div>
 
         <div className="space-y-8 p-6 sm:p-8 lg:col-span-7">
-          <HouseCalculatorPreview preview={preview} hasValidationErrors={hasValidationErrors} />
+          {!isAuthenticated ? (
+            <div className="grid gap-6 lg:grid-cols-2">
+              <HouseCalculatorPreview preview={preview} hasValidationErrors={hasValidationErrors} />
+              <MemberPlanPreview onUnlock={openLoginModal} />
+            </div>
+          ) : (
+            <HouseCalculatorPreview preview={preview} hasValidationErrors={hasValidationErrors} />
+          )}
 
           {isAuthenticated && !hasValidationErrors ? (
             <section className="space-y-4" aria-labelledby="full-projection-heading">
@@ -190,15 +198,6 @@ export function HouseCalculator({ onSave }: HouseCalculatorProps) {
                 </div>
               </details>
             </section>
-          ) : null}
-
-          {!isAuthenticated ? (
-            <MemberUnlockPanel
-              isAuthenticated={false}
-              onUnlock={openLoginModal}
-              onSave={handleSave}
-              isSaving={isSaving}
-            />
           ) : null}
 
           {isAuthenticated && !hasValidationErrors ? (

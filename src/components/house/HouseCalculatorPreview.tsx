@@ -49,6 +49,9 @@ export function HouseCalculatorPreview({ preview, hasValidationErrors }: HouseCa
   }
 
   const { downPayment, remainingToSave, monthsToGoal, monthlyHousingCost } = preview;
+  const progressPercent = downPayment === 0
+    ? 0
+    : Math.min(100, Math.max(0, ((downPayment - remainingToSave) / downPayment) * 100));
 
   const metrics = [
     { label: 'Kontantinsats', value: formatCurrency(downPayment), icon: Landmark },
@@ -66,10 +69,35 @@ export function HouseCalculatorPreview({ preview, hasValidationErrors }: HouseCa
       className="space-y-5"
     >
       <div>
-        <h3 className="text-2xl font-serif font-bold tracking-tight">Din första översikt</h3>
+        <p className="text-xs font-bold uppercase tracking-widest text-[#123f2d]">Vägen till kontantinsatsen</p>
+        <h3 className="mt-2 text-3xl font-serif font-bold tracking-tight text-[#123f2d]">Din första översikt</h3>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
           Boendekostnaden omfattar ränta och amortering, men inte drift, avgift eller skatt.
         </p>
+      </div>
+
+      <div className="rounded-2xl border border-[#123f2d]/10 bg-[#fffaf0] p-5">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Beräknad kontantinsats</p>
+            <p className="mt-2 text-3xl font-serif font-bold text-[#123f2d]">{formatCurrency(downPayment)}</p>
+          </div>
+          <p className="text-sm font-bold text-[#123f2d]">{Math.round(progressPercent)} % sparat</p>
+        </div>
+        <div
+          className="mt-4 h-3 overflow-hidden rounded-full bg-[#dbe7d6]"
+          role="progressbar"
+          aria-label="Sparad andel av kontantinsatsen"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(progressPercent)}
+        >
+          <span className="block h-full rounded-full bg-[#123f2d]" style={{ width: `${progressPercent}%` }} />
+        </div>
+        <div className="mt-2 flex justify-between gap-3 text-xs text-muted-foreground">
+          <span>Idag</span>
+          <span>{formatCurrency(remainingToSave)} kvar att spara</span>
+        </div>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">

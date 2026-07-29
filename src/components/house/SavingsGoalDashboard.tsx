@@ -307,57 +307,102 @@ export function SavingsGoalDashboard({ uid, onGoalsChanged }: SavingsGoalDashboa
     <section className="space-y-6" aria-labelledby="savings-goal-dashboard-heading">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-xs font-bold uppercase tracking-widest text-primary">Huskalkylator</p>
-          <h2 id="savings-goal-dashboard-heading" className="mt-1 font-serif text-3xl font-bold tracking-tight">Mina husmål</h2>
-          <p className="mt-2 max-w-2xl text-sm text-muted-foreground">Följ kontantinsatsen och dina egna antaganden. Avkastning är ett antagande, inte ett löfte.</p>
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#b85f3d]">Din plan</p>
+          <h2 id="savings-goal-dashboard-heading" className="mt-2 font-serif text-3xl font-bold tracking-tight text-[#123f31] sm:text-4xl">
+            Din väg till nästa hem
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            Planen uppdateras med dina egna antaganden och hjälper dig att se nästa steg. Avkastning är ett antagande, inte ett löfte.
+          </p>
         </div>
-        <button ref={createGoalButtonRef} type="button" onClick={openCreate} className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground transition-opacity hover:opacity-90">
-          <CirclePlus size={17} aria-hidden="true" /> Skapa husmål
+        <button ref={createGoalButtonRef} type="button" onClick={openCreate} className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#123f31] px-4 py-3 text-sm font-bold text-[#fffaf0] transition-colors hover:bg-[#1b5542]">
+          <CirclePlus size={17} aria-hidden="true" /> Skapa ny plan
         </button>
       </div>
 
       {isLoading ? (
         <div className="grid gap-4 lg:grid-cols-2" aria-label="Laddar husmål">
-          {[0, 1].map((index) => <div key={index} className="h-64 animate-pulse rounded-3xl border border-border bg-section-alt/50" />)}
+          {[0, 1].map((index) => <div key={index} className="h-64 animate-pulse rounded-3xl border border-[#ded3c0] bg-[#f4eee2]" />)}
         </div>
       ) : null}
 
       {!isLoading && loadError ? (
-        <div role="alert" className="rounded-3xl border border-destructive/30 bg-destructive/5 p-6">
-          <p className="font-bold text-destructive">Dina husmål kunde inte laddas.</p>
+        <div role="alert" className="rounded-3xl border border-[#dec5b6] bg-[#f7eee6] p-6 sm:p-7">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#b85f3d]/10 text-[#9b4c30]">
+            <AlertTriangle size={20} aria-hidden="true" />
+          </div>
+          <p className="mt-4 font-serif text-xl font-bold text-[#123f31]">Din plan kunde inte laddas.</p>
           <p className="mt-1 text-sm text-muted-foreground">{loadError}</p>
-          <button type="button" onClick={() => void refreshGoals()} className="mt-4 inline-flex items-center gap-2 rounded-xl border border-border px-4 py-2.5 text-sm font-bold text-foreground hover:bg-section-alt">
+          <button type="button" onClick={() => void refreshGoals()} className="mt-4 inline-flex items-center gap-2 rounded-xl border border-[#cbbca6] bg-[#fffaf0] px-4 py-2.5 text-sm font-bold text-[#123f31] hover:bg-white">
             <RefreshCw size={15} aria-hidden="true" /> Försök igen
           </button>
         </div>
       ) : null}
 
       {!isLoading && !loadError && goals.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-border bg-section-alt/30 p-8 text-center sm:p-10">
-          <Target size={28} className="mx-auto text-primary" aria-hidden="true" />
-          <h3 className="mt-4 font-serif text-2xl font-bold">Inga husmål ännu</h3>
-          <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">Skapa ett mål för att samla bostadspris, kontantinsats och din sparplan på ett ställe.</p>
-          <button type="button" onClick={openCreate} className="mt-5 rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground hover:opacity-90">Skapa ditt första husmål</button>
+        <div className="rounded-3xl border border-dashed border-[#cbbca6] bg-[#f4eee2] p-8 text-center sm:p-10">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#dfe8d7] text-[#23694f]">
+            <Target size={27} aria-hidden="true" />
+          </div>
+          <p className="mt-5 text-xs font-bold uppercase tracking-[0.2em] text-[#b85f3d]">Ett mål som lever</p>
+          <h3 className="mt-2 font-serif text-2xl font-bold text-[#123f31]">Börja med drömmen</h3>
+          <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">Skapa din första plan för att få en personlig prognos.</p>
+          <button type="button" onClick={openCreate} className="mt-5 rounded-xl bg-[#123f31] px-4 py-3 text-sm font-bold text-[#fffaf0] hover:bg-[#1b5542]">Skapa din första plan</button>
         </div>
       ) : null}
 
       {!isLoading && !loadError && activeGoal && activePreview ? (
-        <div id="active-savings-goal-summary" className="overflow-hidden rounded-3xl border border-primary/20 bg-primary/5">
-          <div className="flex flex-col gap-5 p-6 sm:p-7">
+        <div id="active-savings-goal-summary" className="overflow-hidden rounded-3xl border border-[#123f31] bg-[#123f31] text-[#fffaf0] shadow-[0_24px_70px_-42px_rgba(18,63,49,0.8)]">
+          <div className="flex flex-col gap-6 p-6 sm:p-8">
             <div className="flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-primary">Aktivt mål</p>
-                <h3 className="mt-1 font-serif text-2xl font-bold tracking-tight">{activeGoal.name}</h3>
+              <div className="max-w-2xl">
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#e5a17f]">Ett mål som lever</p>
+                <h3 className="mt-2 font-serif text-3xl font-bold tracking-tight sm:text-4xl">{activeGoal.name}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-[#d9e4dc]">Din personliga plan följer kapitalet, tiden och stegen mot kontantinsatsen.</p>
               </div>
-              <button type="button" onClick={() => openEdit(activeGoal)} className="inline-flex items-center gap-2 rounded-xl border border-primary/20 bg-card px-3 py-2 text-sm font-bold text-foreground hover:bg-section-alt">
-                <Pencil size={15} aria-hidden="true" /> Redigera
+              <button type="button" onClick={() => openEdit(activeGoal)} className="inline-flex items-center gap-2 rounded-xl border border-white/25 bg-white/10 px-3 py-2 text-sm font-bold text-white transition-colors hover:bg-white/20">
+                <Pencil size={15} aria-hidden="true" /> Redigera planen
               </button>
             </div>
-            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              <div className="rounded-2xl border border-border bg-card p-4"><p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Mot kontantinsats</p><p className="mt-2 font-serif text-2xl font-bold">{activeProgress}%</p><p className="mt-1 text-sm text-muted-foreground">{formatCurrency(activeGoal.currentSavings)} av {formatCurrency(activePreview.downPayment)}</p></div>
-              <div className="rounded-2xl border border-border bg-card p-4"><p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Kvar att spara</p><p className="mt-2 font-serif text-2xl font-bold">{formatCurrency(activePreview.remainingToSave)}</p><p className="mt-1 text-sm text-muted-foreground">Mot din kontantinsats</p></div>
-              <div className="rounded-2xl border border-border bg-card p-4"><p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Månadssparande</p><p className="mt-2 font-serif text-2xl font-bold">{formatCurrency(activeGoal.monthlySaving)}</p><p className="mt-1 text-sm text-muted-foreground">Enligt din sparplan</p></div>
-              <div className="rounded-2xl border border-border bg-card p-4"><p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Boendekostnad</p><p className="mt-2 font-serif text-2xl font-bold">{formatCurrency(activePreview.monthlyHousingCost)}</p><p className="mt-1 text-sm text-muted-foreground">Ränta och amortering</p></div>
+
+            <div className="rounded-2xl bg-[#fffaf0] p-5 text-[#123f31] sm:p-6">
+              <div className="flex flex-wrap items-end justify-between gap-4">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#52705f]">Ditt huskapital</p>
+                  <p className="mt-2 font-serif text-3xl font-bold sm:text-4xl">{formatCurrency(activeGoal.currentSavings)}</p>
+                  <p className="mt-1 text-sm text-[#627168]">av {formatCurrency(activePreview.downPayment)} till kontantinsatsen</p>
+                </div>
+                <div className="text-left sm:text-right">
+                  <p className="font-serif text-4xl font-bold text-[#23694f]">{activeProgress}%</p>
+                  <p className="text-sm text-[#627168]">mot målet</p>
+                </div>
+              </div>
+
+              <div
+                role="progressbar"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={activeProgress}
+                aria-label={`Sparprogress för ${activeGoal.name}`}
+                className="mt-5 h-3 overflow-hidden rounded-full bg-[#dfe5d9]"
+              >
+                <div className="h-full rounded-full bg-[#23694f] transition-[width] duration-500" style={{ width: `${activeProgress}%` }} />
+              </div>
+
+              <div className="mt-3 flex flex-wrap justify-between gap-2 text-xs font-medium text-[#52705f]">
+                <span>Idag</span>
+                <span>{formatCurrency(activePreview.remainingToSave)} kvar</span>
+              </div>
+
+              <p className="mt-5 border-t border-[#ded3c0] pt-4 text-sm font-semibold text-[#23694f]">
+                {activeProgress >= 100 ? 'Målet är nått – nu börjar nästa kapitel.' : activeProgress >= 50 ? 'Du är på god väg. Fortsätt så!' : 'Varje månadsinsättning tar dig närmare nästa hem.'}
+              </p>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-3">
+              <div className="rounded-2xl border border-white/15 bg-white/10 p-4"><p className="text-xs font-bold uppercase tracking-wider text-[#bcd0c3]">Kvar att spara</p><p className="mt-2 font-serif text-2xl font-bold">{formatCurrency(activePreview.remainingToSave)}</p><p className="mt-1 text-sm text-[#d9e4dc]">Mot kontantinsatsen</p></div>
+              <div className="rounded-2xl border border-white/15 bg-white/10 p-4"><p className="text-xs font-bold uppercase tracking-wider text-[#bcd0c3]">Månadssparande</p><p className="mt-2 font-serif text-2xl font-bold">{formatCurrency(activeGoal.monthlySaving)}</p><p className="mt-1 text-sm text-[#d9e4dc]">Enligt din sparplan</p></div>
+              <div className="rounded-2xl border border-white/15 bg-white/10 p-4"><p className="text-xs font-bold uppercase tracking-wider text-[#bcd0c3]">Boendekostnad</p><p className="mt-2 font-serif text-2xl font-bold">{formatCurrency(activePreview.monthlyHousingCost)}</p><p className="mt-1 text-sm text-[#d9e4dc]">Ränta och amortering</p></div>
             </div>
           </div>
         </div>
@@ -365,7 +410,7 @@ export function SavingsGoalDashboard({ uid, onGoalsChanged }: SavingsGoalDashboa
 
       {!isLoading && !loadError && goals.length > 0 ? (
         <div className="space-y-4">
-          <div className="flex items-center gap-2"><Home size={18} className="text-primary" aria-hidden="true" /><h3 className="font-serif text-xl font-bold">Alla husmål</h3></div>
+          <div className="flex items-center gap-2"><Home size={18} className="text-[#23694f]" aria-hidden="true" /><h3 className="font-serif text-xl font-bold text-[#123f31]">Alla planer</h3></div>
           <div className="grid gap-4 xl:grid-cols-2">
             {goals.map((goal) => (
               <SavingsGoalCard

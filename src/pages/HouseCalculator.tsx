@@ -47,19 +47,20 @@ export default function HouseCalculatorPage() {
   }, [openLoginModal, user]);
 
   return (
-    <div className="mx-auto max-w-7xl space-y-10 px-6 py-12 sm:space-y-12">
-      <SEO
-        title="Huskalkylator – planera vägen till ditt bostadsmål"
-        description="Planera vägen till ditt bostadsmål med en huskalkylator för kontantinsats, sparande och uppskattad boendekostnad."
-      />
+    <div className="min-h-screen bg-[#f7f4ed]">
+      <div className="mx-auto max-w-7xl space-y-10 px-6 py-12 sm:space-y-12">
+        <SEO
+          title="Huskalkylator – planera vägen till ditt bostadsmål"
+          description="Planera vägen till ditt bostadsmål med en huskalkylator för kontantinsats, sparande och uppskattad boendekostnad."
+        />
 
       <header className="max-w-3xl space-y-4">
-        <p className="text-[11px] font-mono font-bold uppercase tracking-widest text-primary">Huskalkylator</p>
+        <p className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#123f2d]">BÖRSANALYS VERKTYG</p>
         <h1 className="font-serif text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-          Planera vägen till ditt bostadsmål
+          Din väg till nästa hem
         </h1>
         <p className="text-lg leading-relaxed text-muted-foreground sm:text-xl">
-          Börja med kontantinsatsen, ditt sparande och en uppskattad månadskostnad. Logga in när du vill spara målet och följa prognosen över tid.
+          Börja med kontantinsatsen, ditt sparande och en uppskattad månadskostnad. Logga in för att spara din plan och följa vägen mot nästa hem.
         </p>
         <p className="text-sm leading-relaxed text-muted-foreground">
           Beräkningen bygger på dina egna antaganden och är inte personlig ekonomisk rådgivning.
@@ -78,6 +79,7 @@ export default function HouseCalculatorPage() {
           {saveError}
         </p>
       ) : null}
+      </div>
     </div>
   );
 }

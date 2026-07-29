@@ -48,7 +48,7 @@ export function MemberUnlockPanel({ isAuthenticated, onUnlock, onSave, isSaving 
         <div>
           <h3 className="text-xl font-serif font-bold">Se din fulla årsprognos</h3>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            Som medlem får du ett år-för-år-diagram och kan spara ditt husmål för att följa det senare.
+            Som medlem får du din personliga prognos, sparmål och årsöversikt samt kan spara ditt husmål för att följa det senare.
           </p>
         </div>
         <button
