@@ -21,6 +21,7 @@ type FirebaseFirestoreClient = Pick<typeof import('firebase/firestore'),
   | 'setDoc'
   | 'serverTimestamp'
   | 'collection'
+  | 'getDocs'
   | 'query'
   | 'where'
   | 'orderBy'
@@ -61,6 +62,7 @@ export function loadFirebaseFirestore() {
       setDoc: firestore.setDoc,
       serverTimestamp: firestore.serverTimestamp,
       collection: firestore.collection,
+      getDocs: firestore.getDocs,
       query: firestore.query,
       where: firestore.where,
       orderBy: firestore.orderBy,

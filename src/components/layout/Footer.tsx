@@ -84,6 +84,7 @@ export default function Footer() {
           <ul className="space-y-4 text-sm font-bold text-muted-foreground">
             <li><Link to="/verktyg/rantakalkylator" className="hover:text-primary transition-colors">Ränta-på-ränta</Link></li>
             <li><Link to="/verktyg/malsparandekalkylator" className="hover:text-primary transition-colors">Målsparande</Link></li>
+            <li><Link to="/verktyg/huskalkylator" className="hover:text-primary transition-colors">Huskalkylator</Link></li>
             <li><Link to="/om-oss" className="hover:text-primary transition-colors">Om oss</Link></li>
             <li><Link to="/kontakt" className="hover:text-primary transition-colors">Kontakt</Link></li>
           </ul>

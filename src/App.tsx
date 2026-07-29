@@ -17,6 +17,7 @@ import NotFound from "./pages/NotFound";
 const Home = lazy(() => import("./pages/Home"));
 const Analysis = lazy(() => import("./pages/Analysis"));
 const Tools = lazy(() => import("./pages/Tools"));
+const HouseCalculatorPage = lazy(() => import("./pages/HouseCalculator"));
 const About = lazy(() => import("./pages/About"));
 const StockHub = lazy(() => import("./components/StockHub"));
 const Guides = lazy(() => import("./pages/Guides"));
@@ -83,6 +84,7 @@ export default function App() {
                       <Route path="/intressekonflikter" element={<Holdings />} />
                       <Route path="/aktieinnehav-och-intressekonflikter" element={<Holdings />} />
                       <Route path="/verktyg" element={<Tools />} />
+                      <Route path="/verktyg/huskalkylator" element={<HouseCalculatorPage />} />
                       <Route path="/verktyg/rantakalkylator" element={<Tools />} />
                       <Route path="/verktyg/malsparandekalkylator" element={<Tools />} />
                       <Route path="/verktyg/dcf-kalkylator" element={<Tools />} />
