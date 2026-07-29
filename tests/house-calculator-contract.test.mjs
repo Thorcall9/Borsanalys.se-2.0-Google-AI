@@ -117,6 +117,16 @@ test('house calculator rejects non-finite edits before state updates', async () 
   assert.doesNotMatch(inputSource, /onChange\(field, Number\(event\.target\.value\)\)/);
 });
 
+test('house calculator keeps a temporary empty value while a member rewrites a number', async () => {
+  const inputSource = await source('inputs');
+
+  assert.match(inputSource, /const \[displayValue, setDisplayValue\] = useState\(String\(input\[field\]\)\)/);
+  assert.match(inputSource, /const isEditingRef = useRef\(false\)/);
+  assert.match(inputSource, /if \(!isEditingRef\.current\)\s*\{\s*setDisplayValue\(String\(input\[field\]\)\)/);
+  assert.match(inputSource, /if \(event\.target\.value === ''\)\s*\{\s*return;\s*\}/);
+  assert.match(inputSource, /onBlur=\{\(\) => \{[\s\S]*setDisplayValue\(String\(input\[field\]\)\)/);
+});
+
 test('shared validation enforces the four UI upper limits', async () => {
   const { validateHouseInput } = await import(math.href);
   const errors = validateHouseInput({
