@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
+  calculateSaleEquity,
   calculateHousePreview,
   calculateSavingsProjection,
   validateHouseInput,
@@ -16,7 +17,31 @@ const baseInput = {
   mortgageRate: 4.5,
   amortizationRate: 2,
   horizonYears: 5,
+  currentHomeValue: 4_000_000,
+  remainingMortgageDebt: 2_400_000,
+  brokerFeePercent: 2,
 };
+
+test('calculateSaleEquity estimates proceeds after mortgage debt and broker fee', () => {
+  const preview = calculateSaleEquity(baseInput);
+
+  assert.equal(preview.brokerFee, 80_000);
+  assert.equal(preview.netSaleProceeds, 1_520_000);
+  assert.equal(preview.negativeEquity, false);
+});
+
+test('calculateSaleEquity never shows a negative amount available for the next home', () => {
+  const preview = calculateSaleEquity({
+    ...baseInput,
+    currentHomeValue: 2_000_000,
+    remainingMortgageDebt: 2_100_000,
+    brokerFeePercent: 2,
+  });
+
+  assert.equal(preview.brokerFee, 40_000);
+  assert.equal(preview.netSaleProceeds, 0);
+  assert.equal(preview.negativeEquity, true);
+});
 
 test('calculateHousePreview derives the down payment and zero-return months to goal', () => {
   const preview = calculateHousePreview({
@@ -100,6 +125,9 @@ test('validateHouseInput returns field errors instead of throwing', () => {
     mortgageRate: -1,
     amortizationRate: -1,
     horizonYears: 0,
+    currentHomeValue: -1,
+    remainingMortgageDebt: -1,
+    brokerFeePercent: -1,
   });
 
   assert.deepEqual(errors, {
@@ -111,5 +139,8 @@ test('validateHouseInput returns field errors instead of throwing', () => {
     mortgageRate: 'Bolåneränta måste vara mellan 0 och 30 procent.',
     amortizationRate: 'Amorteringstakt måste vara mellan 0 och 30 procent.',
     horizonYears: 'Sparhorisont måste vara mellan 1 och 50 år.',
+    currentHomeValue: 'Nuvarande bostadsvärde måste vara mellan 0 och 100 000 000 kr.',
+    remainingMortgageDebt: 'Kvarvarande bolån måste vara mellan 0 och 100 000 000 kr.',
+    brokerFeePercent: 'Mäklararvode måste vara mellan 0 och 20 procent.',
   });
 });

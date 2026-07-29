@@ -7,6 +7,9 @@ export interface HouseCalculatorInput {
   mortgageRate: number;
   amortizationRate: number;
   horizonYears: number;
+  currentHomeValue: number;
+  remainingMortgageDebt: number;
+  brokerFeePercent: number;
 }
 
 export interface HousePreview {
@@ -26,6 +29,12 @@ export interface SavingsProjectionPoint {
   goal: number;
 }
 
+export interface SaleEquityPreview {
+  brokerFee: number;
+  netSaleProceeds: number;
+  negativeEquity: boolean;
+}
+
 const MAX_PROJECTION_YEARS = 100;
 const MONTHS_PER_YEAR = 12;
 
@@ -38,6 +47,9 @@ export const HOUSE_INPUT_LIMITS = {
   mortgageRate: { min: 0, max: 30 },
   amortizationRate: { min: 0, max: 30 },
   horizonYears: { min: 1, max: 50 },
+  currentHomeValue: { min: 0, max: 100_000_000 },
+  remainingMortgageDebt: { min: 0, max: 100_000_000 },
+  brokerFeePercent: { min: 0, max: 20 },
 } as const;
 
 function isFiniteNumber(value: number) {
@@ -75,6 +87,30 @@ export function validateHouseInput(input: HouseCalculatorInput): Record<string, 
     input.homePrice > HOUSE_INPUT_LIMITS.homePrice.max
   ) {
     errors.homePrice = 'Bostadspris måste vara mellan 100 000 och 100 000 000 kr.';
+  }
+
+  if (
+    !isFiniteNumber(input.currentHomeValue) ||
+    input.currentHomeValue < HOUSE_INPUT_LIMITS.currentHomeValue.min ||
+    input.currentHomeValue > HOUSE_INPUT_LIMITS.currentHomeValue.max
+  ) {
+    errors.currentHomeValue = 'Nuvarande bostadsvärde måste vara mellan 0 och 100 000 000 kr.';
+  }
+
+  if (
+    !isFiniteNumber(input.remainingMortgageDebt) ||
+    input.remainingMortgageDebt < HOUSE_INPUT_LIMITS.remainingMortgageDebt.min ||
+    input.remainingMortgageDebt > HOUSE_INPUT_LIMITS.remainingMortgageDebt.max
+  ) {
+    errors.remainingMortgageDebt = 'Kvarvarande bolån måste vara mellan 0 och 100 000 000 kr.';
+  }
+
+  if (
+    !isFiniteNumber(input.brokerFeePercent) ||
+    input.brokerFeePercent < HOUSE_INPUT_LIMITS.brokerFeePercent.min ||
+    input.brokerFeePercent > HOUSE_INPUT_LIMITS.brokerFeePercent.max
+  ) {
+    errors.brokerFeePercent = 'Mäklararvode måste vara mellan 0 och 20 procent.';
   }
 
   if (
@@ -172,6 +208,17 @@ export function calculateHousePreview(input: HouseCalculatorInput): HousePreview
     monthlyInterest,
     monthlyAmortization,
     monthlyHousingCost,
+  };
+}
+
+export function calculateSaleEquity(input: HouseCalculatorInput): SaleEquityPreview {
+  const brokerFee = input.currentHomeValue * (input.brokerFeePercent / 100);
+  const rawNetSaleProceeds = input.currentHomeValue - input.remainingMortgageDebt - brokerFee;
+
+  return {
+    brokerFee,
+    netSaleProceeds: Math.max(0, rawNetSaleProceeds),
+    negativeEquity: rawNetSaleProceeds < 0,
   };
 }
 

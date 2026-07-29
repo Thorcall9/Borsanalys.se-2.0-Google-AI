@@ -8,6 +8,7 @@ const files = {
   preview: new URL('../src/components/house/HouseCalculatorPreview.tsx', import.meta.url),
   unlock: new URL('../src/components/house/MemberUnlockPanel.tsx', import.meta.url),
   memberPlanPreview: new URL('../src/components/house/MemberPlanPreview.tsx', import.meta.url),
+  salePreview: new URL('../src/components/house/HouseSaleEquityPreview.tsx', import.meta.url),
   routePage: new URL('../src/pages/HouseCalculator.tsx', import.meta.url),
   app: new URL('../src/App.tsx', import.meta.url),
   footer: new URL('../src/components/layout/Footer.tsx', import.meta.url),
@@ -32,6 +33,9 @@ test('house calculator inputs expose the Swedish labels for the public MVP field
     'Bolåneränta (%)',
     'Amorteringstakt (%)',
     'Sparhorisont (år)',
+    'Nuvarande bostadsvärde',
+    'Kvarvarande bolån',
+    'Mäklararvode (%)',
   ]) {
     assert.match(inputSource, new RegExp(label.replace(/[()]/g, '\\$&')));
   }
@@ -82,6 +86,23 @@ test('guest calculator shows a clearly labelled member-plan preview with an exam
   assert.match(memberPreview, /onClick=\{onUnlock\}/);
 });
 
+test('house calculator presents a clearly scoped estimate for capital after a sale', async () => {
+  const [calculatorSource, salePreviewSource, memberPreviewSource] = await Promise.all([
+    source('calculator'), source('salePreview'), source('memberPlanPreview'),
+  ]);
+
+  assert.match(calculatorSource, /calculateSaleEquity/);
+  assert.match(calculatorSource, /<HouseSaleEquityPreview/);
+  assert.match(salePreviewSource, /Om du säljer idag/);
+  assert.match(salePreviewSource, /Ungefär kvar efter försäljning/);
+  assert.match(salePreviewSource, /Bostadsvärde/);
+  assert.match(salePreviewSource, /Kvarvarande bolån/);
+  assert.match(salePreviewSource, /Mäklararvode/);
+  assert.match(salePreviewSource, /Vinstskatt, flyttkostnader, bankavgifter, pantbrev och andra eventuella lån ingår inte/);
+  assert.match(salePreviewSource, /house-sale-editorial\.png/);
+  assert.match(memberPreviewSource, /kapital från nuvarande hem/);
+});
+
 test('house calculator uses editorial public copy and keeps the member preview beside the guest result', async () => {
   const [pageSource, calculatorSource, previewSource, unlockSource] = await Promise.all([
     source('routePage'), source('calculator'), source('preview'), source('unlock'),
@@ -100,9 +121,11 @@ test('house calculator keeps invalid values out of calculations and provides an 
   assert.match(calculatorSource, /useAuth/);
   assert.match(calculatorSource, /openLoginModal/);
   assert.match(calculatorSource, /onSave/);
-  assert.match(calculatorSource, /hasValidationErrors\s*\?\s*null\s*:\s*calculateHousePreview/);
-  assert.match(calculatorSource, /hasValidationErrors\s*\?\s*\[\]\s*:\s*calculateSavingsProjection/);
-  assert.match(calculatorSource, /isAuthenticated\s*&&\s*!hasValidationErrors/);
+  assert.match(calculatorSource, /hasSavingsValidationErrors\s*\?\s*null\s*:\s*calculateHousePreview/);
+  assert.match(calculatorSource, /hasSavingsValidationErrors\s*\?\s*\[\]\s*:\s*calculateSavingsProjection/);
+  assert.match(calculatorSource, /hasSaleValidationErrors\s*\?\s*null\s*:\s*calculateSaleEquity/);
+  assert.match(calculatorSource, /isAuthenticated\s*&&\s*!hasSavingsValidationErrors/);
+  assert.match(calculatorSource, /SALE_EQUITY_FIELDS/);
   assert.match(calculatorSource, /ResponsiveContainer/);
   assert.match(calculatorSource, /AreaChart|LineChart|ComposedChart/);
   assert.match(calculatorSource, /<table/);
@@ -138,13 +161,19 @@ test('shared validation enforces the four UI upper limits', async () => {
     mortgageRate: 30.1,
     amortizationRate: 30.1,
     horizonYears: 51,
+    currentHomeValue: 100_000_001,
+    remainingMortgageDebt: 100_000_001,
+    brokerFeePercent: 20.1,
   });
 
   assert.deepEqual(Object.keys(errors).sort(), [
     'amortizationRate',
     'annualReturn',
+    'brokerFeePercent',
+    'currentHomeValue',
     'horizonYears',
     'mortgageRate',
+    'remainingMortgageDebt',
   ]);
 });
 

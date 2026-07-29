@@ -31,6 +31,9 @@ const DEFAULT_INPUT: HouseCalculatorInput = {
   mortgageRate: 3.5,
   amortizationRate: 2,
   horizonYears: 10,
+  currentHomeValue: 0,
+  remainingMortgageDebt: 0,
+  brokerFeePercent: 0,
 };
 
 const currencyFormatter = new Intl.NumberFormat('sv-SE', {
