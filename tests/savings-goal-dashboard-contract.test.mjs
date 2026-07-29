@@ -49,6 +49,18 @@ test('savings dashboard restores dialog focus to a stable control after refresh 
   assert.match(dialogFocus, /if \(trigger\?\.isConnected\) \{\s*trigger\.focus\(\);\s*\} else if \(fallbackFocusRef\?\.current\?\.isConnected\) \{\s*fallbackFocusRef\.current\.focus\(\);\s*\}/);
 });
 
+test('savings dashboard presents the active goal as a personal housing plan without weakening CRUD access', async () => {
+  const dashboard = await readFile(dashboardFileUrl, 'utf8');
+
+  assert.match(dashboard, /Din väg till nästa hem/);
+  assert.match(dashboard, /Ett mål som lever/);
+  assert.match(dashboard, /role="progressbar"/);
+  assert.match(dashboard, /listSavingsGoals\(uid\)/);
+  assert.match(dashboard, /createSavingsGoal\(uid,/);
+  assert.match(dashboard, /updateSavingsGoal\(uid,/);
+  assert.match(dashboard, /deleteSavingsGoal\(uid,/);
+});
+
 test('savings goal card exposes labelled progress and goal-specific actions', async () => {
   const card = await readFile(cardFileUrl, 'utf8');
 
