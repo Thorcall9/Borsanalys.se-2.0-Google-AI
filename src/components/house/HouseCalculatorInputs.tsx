@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { HOUSE_INPUT_LIMITS, type HouseCalculatorInput } from '../../lib/savingsGoalMath';
 
 export interface HouseCalculatorInputsProps {
@@ -31,6 +32,14 @@ function NumberField({
 }: NumberFieldProps) {
   const error = errors[field];
   const errorId = `${field}-error`;
+  const [displayValue, setDisplayValue] = useState(String(input[field]));
+  const isEditingRef = useRef(false);
+
+  useEffect(() => {
+    if (!isEditingRef.current) {
+      setDisplayValue(String(input[field]));
+    }
+  }, [field, input]);
 
   return (
     <div className="space-y-2">
@@ -48,13 +57,26 @@ function NumberField({
         min={min}
         max={max}
         step={step}
-        value={input[field]}
+        value={displayValue}
+        onFocus={() => {
+          isEditingRef.current = true;
+        }}
         onChange={(event) => {
+          setDisplayValue(event.target.value);
+
+          if (event.target.value === '') {
+            return;
+          }
+
           const parsedValue = Number.parseFloat(event.target.value);
 
           if (Number.isFinite(parsedValue)) {
             onChange(field, parsedValue);
           }
+        }}
+        onBlur={() => {
+          isEditingRef.current = false;
+          setDisplayValue(String(input[field]));
         }}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? errorId : undefined}
