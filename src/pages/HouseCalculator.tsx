@@ -49,10 +49,10 @@ export default function HouseCalculatorPage() {
   return (
     <div className="min-h-screen bg-[#f7f4ed]">
       <div className="mx-auto max-w-7xl space-y-10 px-6 py-12 sm:space-y-12">
-      <SEO
-        title="Huskalkylator – planera vägen till ditt bostadsmål"
-        description="Planera vägen till ditt bostadsmål med en huskalkylator för kontantinsats, sparande och uppskattad boendekostnad."
-      />
+        <SEO
+          title="Huskalkylator – planera vägen till ditt bostadsmål"
+          description="Planera vägen till ditt bostadsmål med en huskalkylator för kontantinsats, sparande och uppskattad boendekostnad."
+        />
 
       <header className="max-w-3xl space-y-4">
         <p className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#123f2d]">BÖRSANALYS VERKTYG</p>
