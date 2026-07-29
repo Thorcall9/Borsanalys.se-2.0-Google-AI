@@ -38,7 +38,7 @@ export function HouseSaleEquityPreview({
       aria-labelledby="sale-equity-heading"
       className="overflow-hidden rounded-3xl border border-[#d9cfbd] bg-[#fffaf0] shadow-sm"
     >
-      <div className="grid sm:grid-cols-[minmax(0,1fr)_9rem]">
+      <div className="grid sm:grid-cols-[minmax(0,1fr)_12rem]">
         <div className="p-5 sm:p-6">
           <div className="flex items-start justify-between gap-4">
             <div>

@@ -66,6 +66,24 @@ test('calculateHousePreview returns zero months when the down payment goal is al
   assert.equal(preview.monthsToGoal, 0);
 });
 
+test('calculateHousePreview can use opted-in sale capital as a one-off starting amount', () => {
+  const withoutSaleCapital = calculateHousePreview({
+    ...baseInput,
+    currentSavings: 150_000,
+    monthlySaving: 0,
+    annualReturn: 0,
+  });
+  const withSaleCapital = calculateHousePreview({
+    ...baseInput,
+    currentSavings: 1_670_000,
+    monthlySaving: 0,
+    annualReturn: 0,
+  });
+
+  assert.equal(withoutSaleCapital.remainingToSave, 450_000);
+  assert.equal(withSaleCapital.remainingToSave, 0);
+});
+
 test('calculateHousePreview marks the goal as impossible without savings or growth', () => {
   const preview = calculateHousePreview({
     ...baseInput,
