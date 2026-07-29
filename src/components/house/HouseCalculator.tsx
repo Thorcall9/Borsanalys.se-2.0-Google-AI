@@ -11,6 +11,7 @@ import {
 } from '../../lib/savingsGoalMath';
 import { HouseCalculatorInputs } from './HouseCalculatorInputs';
 import { HouseCalculatorPreview } from './HouseCalculatorPreview';
+import { MemberPlanPreview } from './MemberPlanPreview';
 import { MemberUnlockPanel } from './MemberUnlockPanel';
 
 export interface HouseCalculatorProps {
@@ -193,12 +194,7 @@ export function HouseCalculator({ onSave }: HouseCalculatorProps) {
           ) : null}
 
           {!isAuthenticated ? (
-            <MemberUnlockPanel
-              isAuthenticated={false}
-              onUnlock={openLoginModal}
-              onSave={handleSave}
-              isSaving={isSaving}
-            />
+            <MemberPlanPreview onUnlock={openLoginModal} />
           ) : null}
 
           {isAuthenticated && !hasValidationErrors ? (

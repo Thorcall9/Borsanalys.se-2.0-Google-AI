@@ -7,6 +7,7 @@ const files = {
   inputs: new URL('../src/components/house/HouseCalculatorInputs.tsx', import.meta.url),
   preview: new URL('../src/components/house/HouseCalculatorPreview.tsx', import.meta.url),
   unlock: new URL('../src/components/house/MemberUnlockPanel.tsx', import.meta.url),
+  memberPlanPreview: new URL('../src/components/house/MemberPlanPreview.tsx', import.meta.url),
   routePage: new URL('../src/pages/HouseCalculator.tsx', import.meta.url),
   app: new URL('../src/App.tsx', import.meta.url),
   footer: new URL('../src/components/layout/Footer.tsx', import.meta.url),
@@ -66,6 +67,19 @@ test('member unlock panel keeps the locked CTA copy for guests', async () => {
 
   assert.match(unlockSource, /Logga in för att se hela prognosen/);
   assert.match(unlockSource, /Spara mitt husmål/);
+});
+
+test('guest calculator shows a clearly labelled member-plan preview with an example state', async () => {
+  const [calculator, memberPreview] = await Promise.all([
+    source('calculator'),
+    source('memberPlanPreview'),
+  ]);
+
+  assert.match(calculator, /<MemberPlanPreview onUnlock=\{openLoginModal\} \/>/);
+  assert.match(memberPreview, /Så här ser din plan ut som medlem/);
+  assert.match(memberPreview, /Exempel/);
+  assert.match(memberPreview, /personliga prognos, sparmål och årsöversikt/);
+  assert.match(memberPreview, /onClick=\{onUnlock\}/);
 });
 
 test('house calculator keeps invalid values out of calculations and provides an authenticated projection table', async () => {
