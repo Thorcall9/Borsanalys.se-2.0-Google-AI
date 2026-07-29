@@ -8,6 +8,7 @@ const files = {
   preview: new URL('../src/components/house/HouseCalculatorPreview.tsx', import.meta.url),
   unlock: new URL('../src/components/house/MemberUnlockPanel.tsx', import.meta.url),
   memberPlanPreview: new URL('../src/components/house/MemberPlanPreview.tsx', import.meta.url),
+  salePreview: new URL('../src/components/house/HouseSaleEquityPreview.tsx', import.meta.url),
   routePage: new URL('../src/pages/HouseCalculator.tsx', import.meta.url),
   app: new URL('../src/App.tsx', import.meta.url),
   footer: new URL('../src/components/layout/Footer.tsx', import.meta.url),
@@ -32,6 +33,9 @@ test('house calculator inputs expose the Swedish labels for the public MVP field
     'Bolåneränta (%)',
     'Amorteringstakt (%)',
     'Sparhorisont (år)',
+    'Nuvarande bostadsvärde',
+    'Kvarvarande bolån',
+    'Mäklararvode (%)',
   ]) {
     assert.match(inputSource, new RegExp(label.replace(/[()]/g, '\\$&')));
   }
@@ -80,6 +84,23 @@ test('guest calculator shows a clearly labelled member-plan preview with an exam
   assert.match(memberPreview, /Exempel/);
   assert.match(memberPreview, /personliga prognos, sparmål och årsöversikt/);
   assert.match(memberPreview, /onClick=\{onUnlock\}/);
+});
+
+test('house calculator presents a clearly scoped estimate for capital after a sale', async () => {
+  const [calculatorSource, salePreviewSource, memberPreviewSource] = await Promise.all([
+    source('calculator'), source('salePreview'), source('memberPlanPreview'),
+  ]);
+
+  assert.match(calculatorSource, /calculateSaleEquity/);
+  assert.match(calculatorSource, /<HouseSaleEquityPreview/);
+  assert.match(salePreviewSource, /Om du säljer idag/);
+  assert.match(salePreviewSource, /Ungefär kvar efter försäljning/);
+  assert.match(salePreviewSource, /Bostadsvärde/);
+  assert.match(salePreviewSource, /Kvarvarande bolån/);
+  assert.match(salePreviewSource, /Mäklararvode/);
+  assert.match(salePreviewSource, /Vinstskatt, flyttkostnader, bankavgifter, pantbrev och andra eventuella lån ingår inte/);
+  assert.match(salePreviewSource, /house-sale-editorial\.png/);
+  assert.match(memberPreviewSource, /kapital från nuvarande hem/);
 });
 
 test('house calculator uses editorial public copy and keeps the member preview beside the guest result', async () => {
@@ -138,13 +159,19 @@ test('shared validation enforces the four UI upper limits', async () => {
     mortgageRate: 30.1,
     amortizationRate: 30.1,
     horizonYears: 51,
+    currentHomeValue: 100_000_001,
+    remainingMortgageDebt: 100_000_001,
+    brokerFeePercent: 20.1,
   });
 
   assert.deepEqual(Object.keys(errors).sort(), [
     'amortizationRate',
     'annualReturn',
+    'brokerFeePercent',
+    'currentHomeValue',
     'horizonYears',
     'mortgageRate',
+    'remainingMortgageDebt',
   ]);
 });
 

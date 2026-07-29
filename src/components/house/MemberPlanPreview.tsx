@@ -29,7 +29,7 @@ export function MemberPlanPreview({ onUnlock }: MemberPlanPreviewProps) {
             Så här ser din plan ut som medlem
           </h3>
           <p className="mt-3 text-sm leading-relaxed text-[#dbe7d6]">
-            Exempel på en personlig plan – dina siffror visas först efter inloggning.
+            Exempel på en personlig plan – dina siffror och ett möjligt kapital från nuvarande hem visas först efter inloggning.
           </p>
         </div>
 

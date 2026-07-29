@@ -62,6 +62,9 @@ function mapSavingsGoal(snapshot: QueryDocumentSnapshot) {
     mortgageRate: data.mortgageRate,
     amortizationRate: data.amortizationRate,
     horizonYears: data.horizonYears,
+    currentHomeValue: data.currentHomeValue ?? 0,
+    remainingMortgageDebt: data.remainingMortgageDebt ?? 0,
+    brokerFeePercent: data.brokerFeePercent ?? 0,
     createdAt: normalizeTimestamp(data.createdAt),
     updatedAt: normalizeTimestamp(data.updatedAt),
   } satisfies SavingsGoal;

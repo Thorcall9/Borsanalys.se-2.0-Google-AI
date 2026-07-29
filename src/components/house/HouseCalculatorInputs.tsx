@@ -5,6 +5,7 @@ export interface HouseCalculatorInputsProps {
   input: HouseCalculatorInput;
   errors: Record<string, string>;
   onChange: (field: keyof HouseCalculatorInput, value: number) => void;
+  showSaleEstimateFields?: boolean;
 }
 
 interface NumberFieldProps {
@@ -91,7 +92,7 @@ function NumberField({
   );
 }
 
-export function HouseCalculatorInputs({ input, errors, onChange }: HouseCalculatorInputsProps) {
+export function HouseCalculatorInputs({ input, errors, onChange, showSaleEstimateFields = false }: HouseCalculatorInputsProps) {
   return (
     <fieldset className="space-y-5" aria-describedby="house-calculator-assumption">
       <legend className="text-2xl font-serif font-bold tracking-tight">Dina förutsättningar</legend>
@@ -100,6 +101,51 @@ export function HouseCalculatorInputs({ input, errors, onChange }: HouseCalculat
       </p>
 
       <div className="grid gap-5 sm:grid-cols-2">
+        {showSaleEstimateFields ? (
+          <>
+            <div className="sm:col-span-2">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#456654]">Om du säljer ditt nuvarande hem</p>
+              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">En enkel uppskattning av vad som kan bli kvar efter bolån och mäklararvode.</p>
+            </div>
+            <NumberField
+              field="currentHomeValue"
+              label="Nuvarande bostadsvärde"
+              min={HOUSE_INPUT_LIMITS.currentHomeValue.min}
+              max={HOUSE_INPUT_LIMITS.currentHomeValue.max}
+              step={50000}
+              suffix="kr"
+              input={input}
+              errors={errors}
+              onChange={onChange}
+            />
+            <NumberField
+              field="remainingMortgageDebt"
+              label="Kvarvarande bolån"
+              min={HOUSE_INPUT_LIMITS.remainingMortgageDebt.min}
+              max={HOUSE_INPUT_LIMITS.remainingMortgageDebt.max}
+              step={50000}
+              suffix="kr"
+              input={input}
+              errors={errors}
+              onChange={onChange}
+            />
+            <NumberField
+              field="brokerFeePercent"
+              label="Mäklararvode (%)"
+              min={HOUSE_INPUT_LIMITS.brokerFeePercent.min}
+              max={HOUSE_INPUT_LIMITS.brokerFeePercent.max}
+              step={0.1}
+              suffix="%"
+              input={input}
+              errors={errors}
+              onChange={onChange}
+            />
+            <div className="hidden sm:block" aria-hidden="true" />
+            <div className="sm:col-span-2 border-t border-[#d9cfbd] pt-5">
+              <p className="text-xs font-bold uppercase tracking-widest text-[#456654]">Nästa bostad</p>
+            </div>
+          </>
+        ) : null}
         <NumberField
           field="homePrice"
           label="Bostadspris"

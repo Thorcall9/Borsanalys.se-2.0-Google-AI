@@ -5,12 +5,14 @@ import { BarChart3, Info } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import {
   calculateHousePreview,
+  calculateSaleEquity,
   calculateSavingsProjection,
   validateHouseInput,
   type HouseCalculatorInput,
 } from '../../lib/savingsGoalMath';
 import { HouseCalculatorInputs } from './HouseCalculatorInputs';
 import { HouseCalculatorPreview } from './HouseCalculatorPreview';
+import { HouseSaleEquityPreview } from './HouseSaleEquityPreview';
 import { MemberPlanPreview } from './MemberPlanPreview';
 import { MemberUnlockPanel } from './MemberUnlockPanel';
 
@@ -27,6 +29,9 @@ const DEFAULT_INPUT: HouseCalculatorInput = {
   mortgageRate: 3.5,
   amortizationRate: 2,
   horizonYears: 10,
+  currentHomeValue: 4_000_000,
+  remainingMortgageDebt: 2_400_000,
+  brokerFeePercent: 2,
 };
 
 const compactNumberFormatter = new Intl.NumberFormat('sv-SE', {
@@ -59,6 +64,10 @@ export function HouseCalculator({ onSave }: HouseCalculatorProps) {
     () => (hasValidationErrors ? [] : calculateSavingsProjection(input)),
     [hasValidationErrors, input],
   );
+  const saleEquityPreview = useMemo(
+    () => (hasValidationErrors ? null : calculateSaleEquity(input)),
+    [hasValidationErrors, input],
+  );
   const isAuthenticated = Boolean(user);
 
   const handleInputChange = useCallback((field: keyof HouseCalculatorInput, value: number) => {
@@ -86,17 +95,33 @@ export function HouseCalculator({ onSave }: HouseCalculatorProps) {
     >
       <div className="grid lg:grid-cols-12">
         <div className="border-b border-[#e4dac8] bg-[#f2ecdf] p-6 sm:p-8 lg:col-span-5 lg:border-b-0 lg:border-r [&_legend]:text-[#123f2d]">
-          <HouseCalculatorInputs input={input} errors={errors} onChange={handleInputChange} />
+          <HouseCalculatorInputs input={input} errors={errors} onChange={handleInputChange} showSaleEstimateFields />
         </div>
 
         <div className="space-y-8 p-6 sm:p-8 lg:col-span-7">
           {!isAuthenticated ? (
-            <div className="grid gap-6 lg:grid-cols-2">
+            <div className="space-y-6">
               <HouseCalculatorPreview preview={preview} hasValidationErrors={hasValidationErrors} />
-              <MemberPlanPreview onUnlock={openLoginModal} />
+              <div className="grid gap-6 lg:grid-cols-2">
+                <HouseSaleEquityPreview
+                  preview={saleEquityPreview}
+                  hasValidationErrors={hasValidationErrors}
+                  currentHomeValue={input.currentHomeValue}
+                  remainingMortgageDebt={input.remainingMortgageDebt}
+                />
+                <MemberPlanPreview onUnlock={openLoginModal} />
+              </div>
             </div>
           ) : (
-            <HouseCalculatorPreview preview={preview} hasValidationErrors={hasValidationErrors} />
+            <div className="space-y-6">
+              <HouseCalculatorPreview preview={preview} hasValidationErrors={hasValidationErrors} />
+              <HouseSaleEquityPreview
+                preview={saleEquityPreview}
+                hasValidationErrors={hasValidationErrors}
+                currentHomeValue={input.currentHomeValue}
+                remainingMortgageDebt={input.remainingMortgageDebt}
+              />
+            </div>
           )}
 
           {isAuthenticated && !hasValidationErrors ? (
