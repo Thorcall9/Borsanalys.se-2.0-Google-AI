@@ -90,7 +90,14 @@ export function HouseCalculator({ onSave }: HouseCalculatorProps) {
         </div>
 
         <div className="space-y-8 p-6 sm:p-8 lg:col-span-7">
-          <HouseCalculatorPreview preview={preview} hasValidationErrors={hasValidationErrors} />
+          {!isAuthenticated ? (
+            <div className="grid gap-6 lg:grid-cols-2">
+              <HouseCalculatorPreview preview={preview} hasValidationErrors={hasValidationErrors} />
+              <MemberPlanPreview onUnlock={openLoginModal} />
+            </div>
+          ) : (
+            <HouseCalculatorPreview preview={preview} hasValidationErrors={hasValidationErrors} />
+          )}
 
           {isAuthenticated && !hasValidationErrors ? (
             <section className="space-y-4" aria-labelledby="full-projection-heading">
@@ -191,10 +198,6 @@ export function HouseCalculator({ onSave }: HouseCalculatorProps) {
                 </div>
               </details>
             </section>
-          ) : null}
-
-          {!isAuthenticated ? (
-            <MemberPlanPreview onUnlock={openLoginModal} />
           ) : null}
 
           {isAuthenticated && !hasValidationErrors ? (

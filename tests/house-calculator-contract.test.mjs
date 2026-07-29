@@ -82,6 +82,18 @@ test('guest calculator shows a clearly labelled member-plan preview with an exam
   assert.match(memberPreview, /onClick=\{onUnlock\}/);
 });
 
+test('house calculator uses editorial public copy and keeps the member preview beside the guest result', async () => {
+  const [pageSource, calculatorSource, previewSource, unlockSource] = await Promise.all([
+    source('routePage'), source('calculator'), source('preview'), source('unlock'),
+  ]);
+
+  assert.match(pageSource, /Din väg till nästa hem/);
+  assert.match(pageSource, /bg-\[#f7f4ed\]/);
+  assert.match(calculatorSource, /lg:grid-cols-2/);
+  assert.match(previewSource, /Vägen till kontantinsatsen/);
+  assert.match(unlockSource, /personliga prognos, sparmål och årsöversikt/);
+});
+
 test('house calculator keeps invalid values out of calculations and provides an authenticated projection table', async () => {
   const calculatorSource = await source('calculator');
 
