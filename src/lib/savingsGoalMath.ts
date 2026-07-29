@@ -10,6 +10,10 @@ export interface HouseCalculatorInput {
   currentHomeValue: number;
   remainingMortgageDebt: number;
   brokerFeePercent: number;
+  housingType?: 'HOUSE' | 'CONDOMINIUM' | 'OWNER_APARTMENT';
+  existingMortgageDeeds?: number;
+  assessedValue?: number;
+  extraBuffer?: number;
 }
 
 export interface HousePreview {

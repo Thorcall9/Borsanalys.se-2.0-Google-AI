@@ -30,6 +30,7 @@ type FirebaseFirestoreClient = Pick<typeof import('firebase/firestore'),
   | 'deleteDoc'
   | 'increment'
   | 'updateDoc'
+  | 'writeBatch'
 > & { db: import('firebase/firestore').Firestore };
 
 let authPromise: Promise<FirebaseAuthClient> | null = null;
@@ -71,6 +72,7 @@ export function loadFirebaseFirestore() {
       deleteDoc: firestore.deleteDoc,
       increment: firestore.increment,
       updateDoc: firestore.updateDoc,
+      writeBatch: firestore.writeBatch,
     }));
   }
   return firestorePromise;
