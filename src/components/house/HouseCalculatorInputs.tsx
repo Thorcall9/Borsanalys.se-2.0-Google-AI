@@ -5,7 +5,9 @@ export interface HouseCalculatorInputsProps {
   input: HouseCalculatorInput;
   errors: Record<string, string>;
   onChange: (field: keyof HouseCalculatorInput, value: number) => void;
-  showSaleEstimateFields?: boolean;
+  mode?: 'next-home' | 'sale-today';
+  includeSaleCapital?: boolean;
+  onIncludeSaleCapitalChange?: (checked: boolean) => void;
 }
 
 interface NumberFieldProps {
@@ -92,13 +94,39 @@ function NumberField({
   );
 }
 
-export function HouseCalculatorInputs({ input, errors, onChange, showSaleEstimateFields = false }: HouseCalculatorInputsProps) {
+export function HouseCalculatorInputs({
+  input,
+  errors,
+  onChange,
+  mode = 'next-home',
+  includeSaleCapital = false,
+  onIncludeSaleCapitalChange,
+}: HouseCalculatorInputsProps) {
+  const showSaleEstimateFields = mode === 'sale-today' || includeSaleCapital;
+
   return (
     <fieldset className="space-y-5" aria-describedby="house-calculator-assumption">
-      <legend className="text-2xl font-serif font-bold tracking-tight">Dina förutsättningar</legend>
+      <legend className="text-2xl font-serif font-bold tracking-tight">
+        {mode === 'sale-today' ? 'Din bostad idag' : 'Dina förutsättningar'}
+      </legend>
       <p id="house-calculator-assumption" className="text-sm leading-relaxed text-muted-foreground">
         Justera siffrorna för att få en översikt. Avkastning är ett antagande, inte ett löfte.
       </p>
+
+      {mode === 'next-home' ? (
+        <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-[#cfd9c8] bg-[#fffaf0] p-4 text-sm text-[#123f2d]">
+          <input
+            type="checkbox"
+            checked={includeSaleCapital}
+            onChange={(event) => onIncludeSaleCapitalChange?.(event.target.checked)}
+            className="mt-0.5 h-4 w-4 accent-[#123f2d]"
+          />
+          <span>
+            <span className="block font-bold">Jag vill räkna med pengar från min nuvarande bostad</span>
+            <span className="mt-1 block leading-relaxed text-muted-foreground">Vi visar en uppskattning och räknar in den i kapitalet till nästa bostad.</span>
+          </span>
+        </label>
+      ) : null}
 
       <div className="grid gap-5 sm:grid-cols-2">
         {showSaleEstimateFields ? (
@@ -141,11 +169,10 @@ export function HouseCalculatorInputs({ input, errors, onChange, showSaleEstimat
               onChange={onChange}
             />
             <div className="hidden sm:block" aria-hidden="true" />
-            <div className="sm:col-span-2 border-t border-[#d9cfbd] pt-5">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#456654]">Nästa bostad</p>
-            </div>
+            {mode === 'next-home' ? <div className="sm:col-span-2 border-t border-[#d9cfbd] pt-5"><p className="text-xs font-bold uppercase tracking-widest text-[#456654]">Nästa bostad</p></div> : null}
           </>
         ) : null}
+        {mode === 'next-home' ? <>
         <NumberField
           field="homePrice"
           label="Bostadspris"
@@ -234,6 +261,7 @@ export function HouseCalculatorInputs({ input, errors, onChange, showSaleEstimat
           errors={errors}
           onChange={onChange}
         />
+        </> : null}
       </div>
     </fieldset>
   );

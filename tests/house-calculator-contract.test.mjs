@@ -103,14 +103,16 @@ test('house calculator presents a clearly scoped estimate for capital after a sa
   assert.match(memberPreviewSource, /kapital från nuvarande hem/);
 });
 
-test('house calculator uses editorial public copy and keeps the member preview beside the guest result', async () => {
+test('house calculator uses editorial public copy and guides visitors between the two calculation modes', async () => {
   const [pageSource, calculatorSource, previewSource, unlockSource] = await Promise.all([
     source('routePage'), source('calculator'), source('preview'), source('unlock'),
   ]);
 
   assert.match(pageSource, /Din väg till nästa hem/);
   assert.match(pageSource, /bg-\[#f7f4ed\]/);
-  assert.match(calculatorSource, /lg:grid-cols-2/);
+  assert.match(calculatorSource, /Nästa bostad/);
+  assert.match(calculatorSource, /Om du säljer idag/);
+  assert.match(calculatorSource, /includeSaleCapital/);
   assert.match(previewSource, /Vägen till kontantinsatsen/);
   assert.match(unlockSource, /personliga prognos, sparmål och årsöversikt/);
 });
@@ -124,12 +126,24 @@ test('house calculator keeps invalid values out of calculations and provides an 
   assert.match(calculatorSource, /hasSavingsValidationErrors\s*\?\s*null\s*:\s*calculateHousePreview/);
   assert.match(calculatorSource, /hasSavingsValidationErrors\s*\?\s*\[\]\s*:\s*calculateSavingsProjection/);
   assert.match(calculatorSource, /hasSaleValidationErrors\s*\?\s*null\s*:\s*calculateSaleEquity/);
-  assert.match(calculatorSource, /isAuthenticated\s*&&\s*!hasSavingsValidationErrors/);
+  assert.match(calculatorSource, /isAuthenticated\s*&&\s*activeTab === 'next-home'\s*&&\s*!hasSavingsValidationErrors/);
   assert.match(calculatorSource, /SALE_EQUITY_FIELDS/);
   assert.match(calculatorSource, /ResponsiveContainer/);
   assert.match(calculatorSource, /AreaChart|LineChart|ComposedChart/);
   assert.match(calculatorSource, /<table/);
   assert.match(calculatorSource, /<caption/);
+  assert.match(calculatorSource, /totalCapital/);
+  const previewSource = await source('preview');
+  assert.match(previewSource, /Totalt kapital till nästa bostad/);
+  assert.match(previewSource, /Kapital från nuvarande hem/);
+});
+
+test('next-home inputs make sale capital an explicit optional choice', async () => {
+  const inputSource = await source('inputs');
+
+  assert.match(inputSource, /Jag vill räkna med pengar från min nuvarande bostad/);
+  assert.match(inputSource, /onIncludeSaleCapitalChange/);
+  assert.match(inputSource, /mode === 'sale-today'/);
 });
 
 test('house calculator rejects non-finite edits before state updates', async () => {

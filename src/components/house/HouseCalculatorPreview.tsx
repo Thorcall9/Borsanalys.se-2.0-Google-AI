@@ -5,6 +5,12 @@ import type { HousePreview } from '../../lib/savingsGoalMath';
 interface HouseCalculatorPreviewProps {
   preview: HousePreview | null;
   hasValidationErrors: boolean;
+  capitalSummary?: {
+    currentSavings: number;
+    saleCapital: number;
+    totalCapital: number;
+    includesSaleCapital: boolean;
+  };
 }
 
 const currencyFormatter = new Intl.NumberFormat('sv-SE', {
@@ -35,7 +41,7 @@ function formatTimeline(monthsToGoal: number | null) {
   return `Om cirka ${parts}`;
 }
 
-export function HouseCalculatorPreview({ preview, hasValidationErrors }: HouseCalculatorPreviewProps) {
+export function HouseCalculatorPreview({ preview, hasValidationErrors, capitalSummary }: HouseCalculatorPreviewProps) {
   if (hasValidationErrors) {
     return (
       <div className="rounded-2xl border border-destructive/30 bg-destructive/5 p-6 text-sm text-muted-foreground">
@@ -99,6 +105,24 @@ export function HouseCalculatorPreview({ preview, hasValidationErrors }: HouseCa
           <span>{formatCurrency(remainingToSave)} kvar att spara</span>
         </div>
       </div>
+
+      {capitalSummary ? (
+        <div className="overflow-hidden rounded-2xl border border-[#d9cfbd] bg-[#f2ecdf]">
+          <div className="grid gap-4 p-5 sm:grid-cols-[minmax(0,1fr)_8rem] sm:p-6">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#456654]">Kapital till nästa bostad</p>
+              <h4 className="mt-2 font-serif text-2xl font-bold text-[#123f2d]">Din helhetsbild</h4>
+              <dl className="mt-4 space-y-2 text-sm">
+                <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Ditt sparande idag</dt><dd className="font-mono font-bold text-[#123f2d]">{formatCurrency(capitalSummary.currentSavings)}</dd></div>
+                {capitalSummary.includesSaleCapital ? <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Kapital från nuvarande hem</dt><dd className="font-mono font-bold text-[#123f2d]">{formatCurrency(capitalSummary.saleCapital)}</dd></div> : null}
+              </dl>
+              <div className="mt-4 rounded-xl bg-[#123f2d] px-4 py-3 text-[#fffaf0]"><p className="text-xs font-bold uppercase tracking-wider text-[#cfe0c7]">Totalt kapital till nästa bostad</p><p className="mt-1 font-serif text-2xl font-bold">{formatCurrency(capitalSummary.totalCapital)}</p></div>
+              {capitalSummary.includesSaleCapital ? <p className="mt-3 text-xs leading-relaxed text-muted-foreground">Kapitalet från nuvarande hem är en uppskattad engångssumma och ingår inte i avkastningsprognosen.</p> : null}
+            </div>
+            <img src="/images/house-sale-editorial.png" alt="Illustration av ett vitt svenskt trähus" className="hidden h-40 w-full rounded-2xl object-cover sm:block" />
+          </div>
+        </div>
+      ) : null}
 
       <div className="grid gap-4 sm:grid-cols-2">
         {metrics.map(({ label, value, icon: Icon }) => (

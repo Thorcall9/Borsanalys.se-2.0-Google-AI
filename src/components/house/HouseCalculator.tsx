@@ -59,15 +59,13 @@ export function HouseCalculator({ onSave }: HouseCalculatorProps) {
   const { user, openLoginModal } = useAuth();
   const [input, setInput] = useState<HouseCalculatorInput>(DEFAULT_INPUT);
   const [isSaving, setIsSaving] = useState(false);
+  const [activeTab, setActiveTab] = useState<'next-home' | 'sale-today'>('next-home');
+  const [includeSaleCapital, setIncludeSaleCapital] = useState(false);
 
   const errors = useMemo(() => validateHouseInput(input), [input]);
   const hasValidationErrors = Object.keys(errors).length > 0;
   const hasSaleValidationErrors = Object.keys(errors).some((field) => SALE_EQUITY_FIELDS.has(field as keyof HouseCalculatorInput));
   const hasSavingsValidationErrors = Object.keys(errors).some((field) => !SALE_EQUITY_FIELDS.has(field as keyof HouseCalculatorInput));
-  const preview = useMemo(
-    () => (hasSavingsValidationErrors ? null : calculateHousePreview(input)),
-    [hasSavingsValidationErrors, input],
-  );
   const projection = useMemo(
     () => (hasSavingsValidationErrors ? [] : calculateSavingsProjection(input)),
     [hasSavingsValidationErrors, input],
@@ -75,6 +73,13 @@ export function HouseCalculator({ onSave }: HouseCalculatorProps) {
   const saleEquityPreview = useMemo(
     () => (hasSaleValidationErrors ? null : calculateSaleEquity(input)),
     [hasSaleValidationErrors, input],
+  );
+  const saleCapital = includeSaleCapital && saleEquityPreview ? saleEquityPreview.netSaleProceeds : 0;
+  const totalCapital = input.currentSavings + saleCapital;
+  const nextHomeInput = useMemo(() => ({ ...input, currentSavings: totalCapital }), [input, totalCapital]);
+  const nextHomePreview = useMemo(
+    () => (hasSavingsValidationErrors ? null : calculateHousePreview(nextHomeInput)),
+    [hasSavingsValidationErrors, nextHomeInput],
   );
   const isAuthenticated = Boolean(user);
 
@@ -103,36 +108,45 @@ export function HouseCalculator({ onSave }: HouseCalculatorProps) {
     >
       <div className="grid lg:grid-cols-12">
         <div className="border-b border-[#e4dac8] bg-[#f2ecdf] p-6 sm:p-8 lg:col-span-5 lg:border-b-0 lg:border-r [&_legend]:text-[#123f2d]">
-          <HouseCalculatorInputs input={input} errors={errors} onChange={handleInputChange} showSaleEstimateFields />
+          <div className="mb-6 grid grid-cols-2 rounded-2xl border border-[#d9cfbd] bg-[#fffaf0] p-1">
+            <button type="button" onClick={() => setActiveTab('next-home')} aria-selected={activeTab === 'next-home'} className={`rounded-xl px-3 py-2 text-sm font-bold ${activeTab === 'next-home' ? 'bg-[#123f2d] text-[#fffaf0]' : 'text-[#456654]'}`}>Nästa bostad</button>
+            <button type="button" onClick={() => setActiveTab('sale-today')} aria-selected={activeTab === 'sale-today'} className={`rounded-xl px-3 py-2 text-sm font-bold ${activeTab === 'sale-today' ? 'bg-[#123f2d] text-[#fffaf0]' : 'text-[#456654]'}`}>Om du säljer idag</button>
+          </div>
+          <HouseCalculatorInputs
+            input={input}
+            errors={errors}
+            onChange={handleInputChange}
+            mode={activeTab}
+            includeSaleCapital={includeSaleCapital}
+            onIncludeSaleCapitalChange={setIncludeSaleCapital}
+          />
         </div>
 
         <div className="space-y-8 p-6 sm:p-8 lg:col-span-7">
-          {!isAuthenticated ? (
-            <div className="space-y-6">
-              <HouseCalculatorPreview preview={preview} hasValidationErrors={hasSavingsValidationErrors} />
-              <div className="grid gap-6 lg:grid-cols-2">
-                <HouseSaleEquityPreview
-                  preview={saleEquityPreview}
-                  hasValidationErrors={hasSaleValidationErrors}
-                  currentHomeValue={input.currentHomeValue}
-                  remainingMortgageDebt={input.remainingMortgageDebt}
-                />
-                <MemberPlanPreview onUnlock={openLoginModal} />
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              <HouseCalculatorPreview preview={preview} hasValidationErrors={hasSavingsValidationErrors} />
+          <div className="space-y-6">
+            {activeTab === 'next-home' ? (
+              <HouseCalculatorPreview
+                preview={nextHomePreview}
+                hasValidationErrors={hasSavingsValidationErrors}
+                capitalSummary={{
+                  currentSavings: input.currentSavings,
+                  saleCapital,
+                  totalCapital,
+                  includesSaleCapital: includeSaleCapital,
+                }}
+              />
+            ) : (
               <HouseSaleEquityPreview
                 preview={saleEquityPreview}
                 hasValidationErrors={hasSaleValidationErrors}
                 currentHomeValue={input.currentHomeValue}
                 remainingMortgageDebt={input.remainingMortgageDebt}
               />
-            </div>
-          )}
+            )}
+            {!isAuthenticated ? <MemberPlanPreview onUnlock={openLoginModal} /> : null}
+          </div>
 
-          {isAuthenticated && !hasSavingsValidationErrors ? (
+          {isAuthenticated && activeTab === 'next-home' && !hasSavingsValidationErrors ? (
             <section className="space-y-4" aria-labelledby="full-projection-heading">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
