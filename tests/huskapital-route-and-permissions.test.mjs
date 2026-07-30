@@ -34,6 +34,14 @@ test('public calculator remains public and offers a continuation to Huskapital',
   assert.match(calculator, /Följ utvecklingen i Huskapital/);
 });
 
+test('Vercel serves the Huskapital SPA route on direct loads', async () => {
+  const vercel = JSON.parse(await read('../vercel.json'));
+  const rewrites = vercel.rewrites.map(({ source, destination }) => `${source} -> ${destination}`);
+
+  assert.ok(rewrites.includes('/huskapital -> /index.html'));
+  assert.ok(rewrites.includes('/huskapital/ -> /index.html'));
+});
+
 test('Firestore rules keep goals and history private to their owning user', async () => {
   const rules = await read('../firestore.rules');
 

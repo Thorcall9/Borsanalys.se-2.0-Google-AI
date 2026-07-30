@@ -55,6 +55,8 @@
     { "source": "/om-oss/", "destination": "/index.html" },
     { "source": "/profil", "destination": "/index.html" },
     { "source": "/profil/", "destination": "/index.html" },
+    { "source": "/huskapital", "destination": "/index.html" },
+    { "source": "/huskapital/", "destination": "/index.html" },
     { "source": "/admin/subscribers", "destination": "/index.html" },
     { "source": "/admin/subscribers/", "destination": "/index.html" }
   ],
