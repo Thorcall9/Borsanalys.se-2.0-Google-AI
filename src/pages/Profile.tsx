@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { Navigate } from "react-router-dom";
-import { User as UserIcon, Settings, LogOut, Shield, Mail, Calendar } from "lucide-react";
+import { Link, Navigate } from "react-router-dom";
+import { User as UserIcon, Settings, LogOut, Shield, Mail, Calendar, Home } from "lucide-react";
 import Watchlist from "../components/community/Watchlist";
 import SavedAnalyses from "../components/community/SavedAnalyses";
 import ChecklistOverview from "../components/community/ChecklistOverview";
 import RecentPublications from "../components/community/RecentPublications";
 import { normalizeProfileInput } from "../lib/profile";
-import { SavingsGoalDashboard } from "../components/house/SavingsGoalDashboard";
 
 export default function Profile() {
   const { user, loading, logout, updateUserProfile } = useAuth();
@@ -159,7 +158,14 @@ export default function Profile() {
           </div>
 
           <ChecklistOverview />
-          <SavingsGoalDashboard uid={user.uid} />
+
+          <Link to="/huskapital" className="group flex items-center justify-between gap-4 rounded-2xl border border-border bg-card px-5 py-4 shadow-sm transition-colors hover:border-primary/40 hover:bg-primary/[0.03]">
+            <span className="flex min-w-0 items-center gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary"><Home size={18} aria-hidden="true" /></span>
+              <span className="min-w-0"><strong className="block font-serif text-lg text-foreground">Huskapital</strong><span className="block text-sm text-muted-foreground">Följ kapitalet och planera nästa bostad.</span></span>
+            </span>
+            <span className="shrink-0 text-sm font-bold text-primary group-hover:underline">Öppna Huskapital →</span>
+          </Link>
 
           <section className="space-y-6">
             <div className="flex items-center justify-between">

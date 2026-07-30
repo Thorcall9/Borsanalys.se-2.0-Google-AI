@@ -122,7 +122,11 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
     path
   }
   console.error('Firestore Error: ', JSON.stringify(errInfo));
-  throw new Error(JSON.stringify(errInfo));
+  throw new Error(
+    operationType === OperationType.LIST || operationType === OperationType.GET
+      ? 'Informationen kunde inte laddas just nu. Försök igen.'
+      : 'Ändringen kunde inte sparas just nu. Försök igen.'
+  );
 }
 
 export default app;

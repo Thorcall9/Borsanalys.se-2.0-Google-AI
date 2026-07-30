@@ -47,8 +47,8 @@ export const LoginModal: React.FC = () => {
         }
         await signUpWithEmail(email, password, displayName);
       }
-    } catch (err: any) {
-      setError(err.message || 'Ett fel uppstod');
+    } catch {
+      setError('Inloggningen kunde inte slutföras just nu. Försök igen.');
     } finally {
       setLoading(false);
     }

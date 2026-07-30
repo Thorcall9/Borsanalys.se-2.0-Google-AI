@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
 import { HouseCalculator } from '../components/house/HouseCalculator';
 import { useAuth } from '../contexts/AuthContext';
@@ -69,9 +70,14 @@ export default function HouseCalculatorPage() {
 
       <HouseCalculator onSave={handleSave} />
 
+      <aside className="flex flex-col gap-4 rounded-2xl border border-[#ded3c0] bg-[#fffaf0] px-5 py-4 sm:flex-row sm:items-center sm:justify-between" aria-label="Fortsätt med Huskapital">
+        <div><p className="font-serif text-lg font-bold text-[#123f31]">Vill du följa planen över tid?</p><p className="mt-1 text-sm text-[#627168]">Spara planen, uppdatera kapitalet och se hur vägen till nästa bostad förändras.</p></div>
+        <Link to="/huskapital" className="shrink-0 rounded-xl bg-[#123f31] px-4 py-3 text-center text-sm font-bold text-[#fffaf0] hover:bg-[#1b5542]">Följ utvecklingen i Huskapital</Link>
+      </aside>
+
       {saveSuccess ? (
         <p role="status" className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-sm font-medium text-foreground">
-          Ditt husmål är sparat och syns på din profilsida.
+          Ditt husmål är sparat i Huskapital.
         </p>
       ) : null}
       {saveError ? (

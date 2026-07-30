@@ -54,8 +54,8 @@ function formatTimeline(months: number | null) {
   return `Om cirka ${[years ? `${years} år` : '', remainder ? `${remainder} mån` : ''].filter(Boolean).join(' och ')}`;
 }
 
-function errorMessage(error: unknown) {
-  return error instanceof Error ? error.message : 'Något gick fel. Försök igen.';
+function errorMessage(_error: unknown) {
+  return 'Din bostadsplan kunde inte laddas just nu. Försök igen.';
 }
 
 function toGoalDraft(plan: HousingPlan, previous?: SavingsGoal): SavingsGoalDraft {
