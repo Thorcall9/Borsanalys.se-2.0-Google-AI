@@ -29,21 +29,6 @@ class ErrorBoundary extends React.Component<Props, State> {
 
   public render() {
     if (this.state.hasError) {
-      let errorMessage = "Ett oväntat fel har inträffat.";
-      let isFirestoreError = false;
-
-      try {
-        if (this.state.error?.message) {
-          const parsed = JSON.parse(this.state.error.message);
-          if (parsed.error && parsed.operationType) {
-            errorMessage = `Firestore-fel (${parsed.operationType}): ${parsed.error}`;
-            isFirestoreError = true;
-          }
-        }
-      } catch (e) {
-        // Not a JSON error message, use default
-      }
-
       return (
         <div className="min-h-[400px] flex items-center justify-center p-6">
           <div className="max-w-md w-full bg-card border border-border rounded-3xl p-8 text-center shadow-xl space-y-6">
@@ -53,7 +38,7 @@ class ErrorBoundary extends React.Component<Props, State> {
             <div className="space-y-2">
               <h2 className="text-2xl font-serif font-bold tracking-tight">Hoppsan! Något gick fel</h2>
               <p className="text-muted text-sm leading-relaxed">
-                {isFirestoreError ? errorMessage : "Vi kunde inte ladda den här delen av appen. Försök att ladda om sidan."}
+                Vi kunde inte ladda den här delen av appen. Försök att ladda om sidan.
               </p>
             </div>
             <button
@@ -62,7 +47,7 @@ class ErrorBoundary extends React.Component<Props, State> {
             >
               <RefreshCcw size={18} /> Ladda om sidan
             </button>
-            {process.env.NODE_ENV === 'development' && !isFirestoreError && (
+            {process.env.NODE_ENV === 'development' && (
               <pre className="mt-4 p-4 bg-background border border-border rounded-lg text-left text-[10px] overflow-auto max-h-40 text-muted">
                 {this.state.error?.stack}
               </pre>

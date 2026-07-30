@@ -80,14 +80,10 @@ test('savings goal card exposes labelled progress and goal-specific actions', as
   assert.match(card, /Visa mål/);
 });
 
-test('Profile places the savings dashboard before watchlist and saved analyses', async () => {
+test('Profile links to the dedicated Huskapital product without embedding its dashboard', async () => {
   const profile = await readFile(profileFileUrl, 'utf8');
-  const dashboardIndex = profile.indexOf('<SavingsGoalDashboard');
-  const watchlistIndex = profile.indexOf('<Watchlist');
-  const savedAnalysesIndex = profile.indexOf('<SavedAnalyses');
 
-  assert.match(profile, /import \{ SavingsGoalDashboard \} from ['"]\.\.\/components\/house\/SavingsGoalDashboard['"];/);
-  assert.notEqual(dashboardIndex, -1);
-  assert.ok(dashboardIndex < watchlistIndex);
-  assert.ok(dashboardIndex < savedAnalysesIndex);
+  assert.doesNotMatch(profile, /SavingsGoalDashboard/);
+  assert.match(profile, /to="\/huskapital"/);
+  assert.match(profile, /Öppna Huskapital/);
 });

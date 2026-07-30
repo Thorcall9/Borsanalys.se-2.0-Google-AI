@@ -29,8 +29,15 @@ service cloud.firestore {
       match /savingsGoals/{goalId} {
         allow read: if isOwner(userId);
         allow create: if isOwner(userId) && request.resource.data.uid == userId;
-        allow update: if isOwner(userId) && resource.data.uid == userId && request.resource.data.uid == userId;
-        allow delete: if isOwner(userId) && resource.data.uid == userId;
+        allow update: if isOwner(userId) &&
+          (!resource.data.keys().hasAny(['uid']) || resource.data.uid == userId) &&
+          (!request.resource.data.keys().hasAny(['uid']) || request.resource.data.uid == userId);
+        allow delete: if isOwner(userId) &&
+          (!resource.data.keys().hasAny(['uid']) || resource.data.uid == userId);
+
+        match /capitalHistory/{entryId} {
+          allow read, create: if isOwner(userId);
+        }
       }
     }
 
