@@ -29,6 +29,7 @@
 | `src/components/house/HouseSaleEquityPreview.tsx` | Keep the sale estimate explanatory and clearly subordinate to the combined result. |
 | `src/pages/HouseCalculator.tsx` | Remove Auth/Firestore save wiring and render the public product page only. |
 | `src/pages/Huskapital.tsx` | Redirect the legacy Huskapital URL to the public calculator without an auth gate. |
+| `src/App.tsx` | Register `/huskapital` as a standard public route rather than wrapping it in `InternalRoute`. |
 | `tests/huskapital-route-and-permissions.test.mjs` | Replace protected-route/Firestore assertions with public-route and no-persistence assertions. |
 | `tests/public-huskapital-ui-contract.test.mjs` | Add source-level contract checks for the open flow and removal of member-only UI. |
 
@@ -194,6 +195,7 @@
 **Files:**
 - Modify: `src/pages/HouseCalculator.tsx`
 - Modify: `src/pages/Huskapital.tsx`
+- Modify: `src/App.tsx`
 - Modify: `tests/huskapital-route-and-permissions.test.mjs`
 
 - [ ] **Step 1: Rewrite route/page tests before changing route code.**
@@ -204,6 +206,7 @@
   - `/verktyg/huskalkylator` is rendered without an `onSave` callback;
   - `Huskapital.tsx` uses React Router `Navigate` to `/verktyg/huskalkylator` with `replace`;
   - `Huskapital.tsx` has no auth hook, login modal or `SavingsGoalDashboard` reference;
+  - `App.tsx` registers `/huskapital` outside `InternalRoute` so the alias is accessible before authentication;
   - no test expects Firestore access for the public calculator.
 
 - [ ] **Step 2: Run the route test and confirm it fails.**
@@ -230,6 +233,10 @@
 
   This preserves existing links while ensuring the same, open product appears at either URL. Retain the existing `vercel.json` rewrites from the earlier direct-load fix; do not modify unrelated rewrites.
 
+- [ ] **Step 4b: Remove the app-level auth wrapper.**
+
+  In `App.tsx`, move the `/huskapital` route out of `InternalRoute` and register it as a normal public route. Do not alter any other protected routes.
+
 - [ ] **Step 5: Run the route test.**
 
   Run: `node --test tests/huskapital-route-and-permissions.test.mjs`
@@ -239,7 +246,7 @@
 - [ ] **Step 6: Commit public-route cleanup.**
 
   ```bash
-  git add src/pages/HouseCalculator.tsx src/pages/Huskapital.tsx tests/huskapital-route-and-permissions.test.mjs
+  git add src/App.tsx src/pages/HouseCalculator.tsx src/pages/Huskapital.tsx tests/huskapital-route-and-permissions.test.mjs
   git commit -m "refactor: expose Huskapital as a public tool"
   ```
 
