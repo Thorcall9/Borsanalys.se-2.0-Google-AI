@@ -10,6 +10,11 @@ interface HouseCalculatorPreviewProps {
     saleCapital: number;
     totalCapital: number;
     includesSaleCapital: boolean;
+    capitalGoal?: number;
+    progressPercent?: number;
+    includesPropertyFees?: boolean;
+    titleDeedFee?: number;
+    mortgageDeedFee?: number;
   };
 }
 
@@ -55,9 +60,9 @@ export function HouseCalculatorPreview({ preview, hasValidationErrors, capitalSu
   }
 
   const { downPayment, remainingToSave, monthsToGoal, monthlyHousingCost } = preview;
-  const progressPercent = downPayment === 0
+  const progressPercent = capitalSummary?.progressPercent ?? (downPayment === 0
     ? 0
-    : Math.min(100, Math.max(0, ((downPayment - remainingToSave) / downPayment) * 100));
+    : Math.min(100, Math.max(0, ((downPayment - remainingToSave) / downPayment) * 100)));
 
   const metrics = [
     { label: 'Kontantinsats', value: formatCurrency(downPayment), icon: Landmark },
@@ -85,8 +90,8 @@ export function HouseCalculatorPreview({ preview, hasValidationErrors, capitalSu
       <div className="rounded-2xl border border-[#123f2d]/10 bg-[#fffaf0] p-5">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Beräknad kontantinsats</p>
-            <p className="mt-2 text-3xl font-serif font-bold text-[#123f2d]">{formatCurrency(downPayment)}</p>
+            <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Kapitalmål till nästa bostad</p>
+            <p className="mt-2 text-3xl font-serif font-bold text-[#123f2d]">{formatCurrency(capitalSummary?.capitalGoal ?? downPayment)}</p>
           </div>
           <p className="text-sm font-bold text-[#123f2d]">{Math.round(progressPercent)} % sparat</p>
         </div>
@@ -117,6 +122,7 @@ export function HouseCalculatorPreview({ preview, hasValidationErrors, capitalSu
                 {capitalSummary.includesSaleCapital ? <div className="flex justify-between gap-4"><dt className="text-muted-foreground">Kapital från nuvarande hem</dt><dd className="font-mono font-bold text-[#123f2d]">{formatCurrency(capitalSummary.saleCapital)}</dd></div> : null}
               </dl>
               <div className="mt-4 rounded-xl bg-[#123f2d] px-4 py-3 text-[#fffaf0]"><p className="text-xs font-bold uppercase tracking-wider text-[#cfe0c7]">Totalt kapital till nästa bostad</p><p className="mt-1 font-serif text-2xl font-bold">{formatCurrency(capitalSummary.totalCapital)}</p></div>
+              {capitalSummary.includesPropertyFees ? <p className="mt-3 text-xs leading-relaxed text-muted-foreground">I målet ingår lagfart {formatCurrency(capitalSummary.titleDeedFee ?? 0)} och pantbrev {formatCurrency(capitalSummary.mortgageDeedFee ?? 0)}.</p> : null}
               {capitalSummary.includesSaleCapital ? <p className="mt-3 text-xs leading-relaxed text-muted-foreground">Kapitalet från nuvarande hem är en uppskattad engångssumma och ingår inte i avkastningsprognosen.</p> : null}
             </div>
             <img src="/images/house-sale-editorial.png" alt="Illustration av ett vitt svenskt trähus" className="hidden h-40 w-full rounded-2xl object-cover sm:block" />

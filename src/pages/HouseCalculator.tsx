@@ -1,91 +1,12 @@
-import { useCallback, useState } from 'react';
-import { Link } from 'react-router-dom';
-import SEO from '../components/SEO';
 import { HouseCalculator } from '../components/house/HouseCalculator';
-import { useAuth } from '../contexts/AuthContext';
-import type { HouseCalculatorInput } from '../lib/savingsGoalMath';
-import { createSavingsGoal } from '../services/savingsGoalService';
-import { notifySavingsGoalRefresh } from '../services/savingsGoalRefresh';
-
-const priceFormatter = new Intl.NumberFormat('sv-SE', {
-  style: 'currency',
-  currency: 'SEK',
-  maximumFractionDigits: 0,
-});
-
-function goalNameFor(input: HouseCalculatorInput) {
-  return `Bostadsmål ${priceFormatter.format(input.homePrice)}`;
-}
-
-function errorMessage(error: unknown) {
-  return error instanceof Error ? error.message : 'Ditt husmål kunde inte sparas. Försök igen.';
-}
 
 export default function HouseCalculatorPage() {
-  const { user, openLoginModal } = useAuth();
-  const [saveSuccess, setSaveSuccess] = useState(false);
-  const [saveError, setSaveError] = useState<string | null>(null);
-
-  const handleSave = useCallback(async (input: HouseCalculatorInput) => {
-    if (!user) {
-      openLoginModal();
-      return;
-    }
-
-    setSaveSuccess(false);
-    setSaveError(null);
-
-    try {
-      await createSavingsGoal(user.uid, {
-        name: goalNameFor(input),
-        ...input,
-      });
-      await notifySavingsGoalRefresh(user.uid);
-      setSaveSuccess(true);
-    } catch (error) {
-      setSaveError(errorMessage(error));
-    }
-  }, [openLoginModal, user]);
-
-  return (
-    <div className="min-h-screen bg-[#f7f4ed]">
-      <div className="mx-auto max-w-7xl space-y-10 px-6 py-12 sm:space-y-12">
-        <SEO
-          title="Huskalkylator – planera vägen till ditt bostadsmål"
-          description="Planera vägen till ditt bostadsmål med en huskalkylator för kontantinsats, sparande och uppskattad boendekostnad."
-        />
-
-      <header className="max-w-3xl space-y-4">
-        <p className="text-[11px] font-mono font-bold uppercase tracking-widest text-[#123f2d]">BÖRSANALYS VERKTYG</p>
-        <h1 className="font-serif text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-          Din väg till nästa hem
-        </h1>
-        <p className="text-lg leading-relaxed text-muted-foreground sm:text-xl">
-          Börja med kontantinsatsen, ditt sparande och en uppskattad månadskostnad. Logga in för att spara din plan och följa vägen mot nästa hem.
-        </p>
-        <p className="text-sm leading-relaxed text-muted-foreground">
-          Beräkningen bygger på dina egna antaganden och är inte personlig ekonomisk rådgivning.
-        </p>
-      </header>
-
-      <HouseCalculator onSave={handleSave} />
-
-      <aside className="flex flex-col gap-4 rounded-2xl border border-[#ded3c0] bg-[#fffaf0] px-5 py-4 sm:flex-row sm:items-center sm:justify-between" aria-label="Fortsätt med Huskapital">
-        <div><p className="font-serif text-lg font-bold text-[#123f31]">Vill du följa planen över tid?</p><p className="mt-1 text-sm text-[#627168]">Spara planen, uppdatera kapitalet och se hur vägen till nästa bostad förändras.</p></div>
-        <Link to="/huskapital" className="shrink-0 rounded-xl bg-[#123f31] px-4 py-3 text-center text-sm font-bold text-[#fffaf0] hover:bg-[#1b5542]">Följ utvecklingen i Huskapital</Link>
-      </aside>
-
-      {saveSuccess ? (
-        <p role="status" className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-4 text-sm font-medium text-foreground">
-          Ditt husmål är sparat i Huskapital.
-        </p>
-      ) : null}
-      {saveError ? (
-        <p role="alert" className="rounded-2xl border border-destructive/30 bg-destructive/5 px-5 py-4 text-sm font-medium text-destructive">
-          {saveError}
-        </p>
-      ) : null}
-      </div>
+  return <main className="bg-[#f7f5ef] py-12 sm:py-16">
+    <div className="container mx-auto max-w-6xl px-4">
+      <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#c96f45]">Huskapital</p>
+      <h1 className="mt-3 font-serif text-4xl font-bold tracking-tight text-[#123f2d] sm:text-5xl">Din väg till nästa hem</h1>
+      <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground">Planera nästa hem med ditt sparande – och, om du vill, en uppskattning av vad som kan bli kvar efter en försäljning. Ingen inloggning krävs och beräkningen sparas inte.</p>
+      <div className="mt-9"><HouseCalculator /></div>
     </div>
-  );
+  </main>;
 }

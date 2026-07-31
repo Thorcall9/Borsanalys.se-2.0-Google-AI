@@ -1,3 +1,11 @@
+import {
+  calculateForecastMonths,
+  calculateHousingPlan,
+  calculateProgress,
+  type HousingPlanCalculation,
+  type HousingType,
+} from './housingPlanMath';
+
 export interface HouseCalculatorInput {
   homePrice: number;
   downPaymentPercent: number;
@@ -10,7 +18,7 @@ export interface HouseCalculatorInput {
   currentHomeValue: number;
   remainingMortgageDebt: number;
   brokerFeePercent: number;
-  housingType?: 'HOUSE' | 'CONDOMINIUM' | 'OWNER_APARTMENT';
+  housingType?: HousingType;
   existingMortgageDeeds?: number;
   assessedValue?: number;
   extraBuffer?: number;
@@ -37,6 +45,22 @@ export interface SaleEquityPreview {
   brokerFee: number;
   netSaleProceeds: number;
   negativeEquity: boolean;
+}
+
+export interface PublicHousingScenarioInput extends HouseCalculatorInput {
+  housingType: HousingType;
+  includeSaleCapital: boolean;
+}
+
+export interface PublicHousingScenario {
+  plan: HousingPlanCalculation;
+  sale: SaleEquityPreview | null;
+  saleCapital: number;
+  totalAvailableCapital: number;
+  remainingCapital: number;
+  progressPercent: number;
+  forecastMonths: number | null;
+  monthlyHousingCost: number;
 }
 
 const MAX_PROJECTION_YEARS = 100;
@@ -223,6 +247,34 @@ export function calculateSaleEquity(input: HouseCalculatorInput): SaleEquityPrev
     brokerFee,
     netSaleProceeds: Math.max(0, rawNetSaleProceeds),
     negativeEquity: rawNetSaleProceeds < 0,
+  };
+}
+
+export function calculatePublicHousingScenario(input: PublicHousingScenarioInput): PublicHousingScenario {
+  const plan = calculateHousingPlan({
+    housingType: input.housingType,
+    purchasePrice: input.homePrice,
+    downPaymentRate: input.downPaymentPercent,
+    monthlySavings: input.monthlySaving,
+    existingMortgageDeeds: input.existingMortgageDeeds,
+    assessedValue: input.assessedValue,
+    extraBuffer: input.extraBuffer,
+  });
+  const sale = input.includeSaleCapital ? calculateSaleEquity(input) : null;
+  const saleCapital = Math.max(0, sale?.netSaleProceeds ?? 0);
+  const totalAvailableCapital = Math.max(0, input.currentSavings) + saleCapital;
+  const remainingCapital = Math.max(0, plan.totalCapitalNeed - totalAvailableCapital);
+  const monthlyHousingCost = plan.loanAmount * ((input.mortgageRate + input.amortizationRate) / 100 / MONTHS_PER_YEAR);
+
+  return {
+    plan,
+    sale,
+    saleCapital,
+    totalAvailableCapital,
+    remainingCapital,
+    progressPercent: calculateProgress(totalAvailableCapital, plan.totalCapitalNeed),
+    forecastMonths: calculateForecastMonths(totalAvailableCapital, plan.totalCapitalNeed, input.monthlySaving),
+    monthlyHousingCost,
   };
 }
 

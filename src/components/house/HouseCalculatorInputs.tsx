@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { HOUSE_INPUT_LIMITS, type HouseCalculatorInput } from '../../lib/savingsGoalMath';
+import type { HousingType } from '../../lib/housingPlanMath';
 
 export interface HouseCalculatorInputsProps {
   input: HouseCalculatorInput;
   errors: Record<string, string>;
-  onChange: (field: keyof HouseCalculatorInput, value: number) => void;
-  mode?: 'next-home' | 'sale-today';
+  onChange: (field: keyof HouseCalculatorInput, value: number | HousingType | undefined) => void;
   includeSaleCapital?: boolean;
   onIncludeSaleCapitalChange?: (checked: boolean) => void;
 }
@@ -98,23 +98,21 @@ export function HouseCalculatorInputs({
   input,
   errors,
   onChange,
-  mode = 'next-home',
   includeSaleCapital = false,
   onIncludeSaleCapitalChange,
 }: HouseCalculatorInputsProps) {
-  const showSaleEstimateFields = mode === 'sale-today' || includeSaleCapital;
+  const showSaleEstimateFields = includeSaleCapital;
 
   return (
     <fieldset className="space-y-5" aria-describedby="house-calculator-assumption">
       <legend className="text-2xl font-serif font-bold tracking-tight">
-        {mode === 'sale-today' ? 'Din bostad idag' : 'Dina förutsättningar'}
+        Dina förutsättningar
       </legend>
       <p id="house-calculator-assumption" className="text-sm leading-relaxed text-muted-foreground">
-        Justera siffrorna för att få en översikt. Avkastning är ett antagande, inte ett löfte.
+        Börja med nästa bostad. Du kan sedan välja att räkna med ett uppskattat kapital från din nuvarande bostad.
       </p>
 
-      {mode === 'next-home' ? (
-        <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-[#cfd9c8] bg-[#fffaf0] p-4 text-sm text-[#123f2d]">
+      <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-[#cfd9c8] bg-[#fffaf0] p-4 text-sm text-[#123f2d]">
           <input
             type="checkbox"
             checked={includeSaleCapital}
@@ -125,8 +123,7 @@ export function HouseCalculatorInputs({
             <span className="block font-bold">Jag vill räkna med pengar från min nuvarande bostad</span>
             <span className="mt-1 block leading-relaxed text-muted-foreground">Vi visar en uppskattning och räknar in den i kapitalet till nästa bostad.</span>
           </span>
-        </label>
-      ) : null}
+      </label>
 
       <div className="grid gap-5 sm:grid-cols-2">
         {showSaleEstimateFields ? (
@@ -169,10 +166,11 @@ export function HouseCalculatorInputs({
               onChange={onChange}
             />
             <div className="hidden sm:block" aria-hidden="true" />
-            {mode === 'next-home' ? <div className="sm:col-span-2 border-t border-[#d9cfbd] pt-5"><p className="text-xs font-bold uppercase tracking-widest text-[#456654]">Nästa bostad</p></div> : null}
+            <div className="sm:col-span-2 border-t border-[#d9cfbd] pt-5"><p className="text-xs font-bold uppercase tracking-widest text-[#456654]">Nästa bostad</p></div>
           </>
         ) : null}
-        {mode === 'next-home' ? <>
+        <>
+        <div className="space-y-2 sm:col-span-2"><label className="text-xs font-bold uppercase tracking-wider text-muted-foreground" htmlFor="housingType">Bostadstyp</label><select id="housingType" value={input.housingType ?? 'HOUSE'} onChange={(event) => onChange('housingType', event.target.value as HousingType)} className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm"><option value="HOUSE">Villa</option><option value="CONDOMINIUM">Bostadsrätt</option><option value="OWNER_APARTMENT">Ägarlägenhet</option></select></div>
         <NumberField
           field="homePrice"
           label="Bostadspris"
@@ -217,17 +215,7 @@ export function HouseCalculatorInputs({
           errors={errors}
           onChange={onChange}
         />
-        <NumberField
-          field="annualReturn"
-          label="Årlig avkastning (%)"
-          min={HOUSE_INPUT_LIMITS.annualReturn.min}
-          max={HOUSE_INPUT_LIMITS.annualReturn.max}
-          step={0.1}
-          suffix="%"
-          input={input}
-          errors={errors}
-          onChange={onChange}
-        />
+        <details className="sm:col-span-2"><summary className="cursor-pointer text-sm font-bold text-[#123f2d]">Fler val</summary><div className="mt-5 grid gap-5 sm:grid-cols-2">
         <NumberField
           field="mortgageRate"
           label="Bolåneränta (%)"
@@ -261,7 +249,8 @@ export function HouseCalculatorInputs({
           errors={errors}
           onChange={onChange}
         />
-        </> : null}
+        </div></details>
+        </>
       </div>
     </fieldset>
   );
