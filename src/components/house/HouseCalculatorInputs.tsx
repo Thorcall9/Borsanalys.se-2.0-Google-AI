@@ -238,17 +238,6 @@ export function HouseCalculatorInputs({
           errors={errors}
           onChange={onChange}
         />
-        <NumberField
-          field="horizonYears"
-          label="Sparhorisont (år)"
-          min={HOUSE_INPUT_LIMITS.horizonYears.min}
-          max={HOUSE_INPUT_LIMITS.horizonYears.max}
-          step={1}
-          suffix="år"
-          input={input}
-          errors={errors}
-          onChange={onChange}
-        />
         </div></details>
         </>
       </div>
