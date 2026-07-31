@@ -8,14 +8,14 @@ datasource db {
 }
 
 model Analysis {
-  id            String   @id @default(cuid())
-  ticker        String
-  version       Int      @default(1)
-  isCurrent     Boolean  @default(true)
-  companyName   String
-  totalRating   Int      
-  verdict       String   
-  
+  id          String  @id @default(cuid())
+  ticker      String
+  version     Int     @default(1)
+  isCurrent   Boolean @default(true)
+  companyName String
+  totalRating Int
+  verdict     String
+
   moat          Int
   management    Int
   valuation     Int
@@ -25,8 +25,8 @@ model Analysis {
   risk          Int
   trend         Int
 
-  analysisText  String
-  createdAt     DateTime @default(now())
+  analysisText String
+  createdAt    DateTime @default(now())
 
   @@unique([ticker, version])
 }
@@ -44,31 +44,31 @@ model MacroMarketData {
   key       String   @unique
   value     Float
   source    String
-  trend     String?  // "up", "down", "flat"
+  trend     String? // "up", "down", "flat"
   updatedAt DateTime @updatedAt
 }
 
 model MarketEvent {
-  id                String   @id @default(cuid())
-  title             String
-  impact            String   // "positive", "negative", "neutral"
-  description       String
-  whyItMatters      String
-  swedishCompanies  String
-  usCompanies       String
-  winners           String
-  createdAt         DateTime @default(now())
+  id               String   @id @default(cuid())
+  title            String
+  impact           String // "positive", "negative", "neutral"
+  description      String
+  whyItMatters     String
+  swedishCompanies String
+  usCompanies      String
+  winners          String
+  createdAt        DateTime @default(now())
 }
 
 model User {
-  id            Int            @id @default(autoincrement())
-  email         String         @unique
-  name          String?
-  firebaseUid   String?        @unique
-  createdAt     DateTime       @default(now())
-  watchlists    Watchlist[]
-  notifications Notification[]
-  savedAnalyses SavedAnalysis[]
+  id              Int              @id @default(autoincrement())
+  email           String           @unique
+  name            String?
+  firebaseUid     String?          @unique
+  createdAt       DateTime         @default(now())
+  watchlists      Watchlist[]
+  notifications   Notification[]
+  savedAnalyses   SavedAnalysis[]
   stockChecklists StockChecklist[]
 }
 
@@ -92,7 +92,7 @@ model Notification {
   message   String
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
-  user User @relation(fields: [userId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model SavedAnalysis {
@@ -100,7 +100,7 @@ model SavedAnalysis {
   userId    Int
   slug      String
   title     String
-  ticker     String
+  ticker    String
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -134,4 +134,150 @@ model Vote {
   @@map("votes")
 }
 
+model V11Analysis {
+  id              String              @id @default(cuid())
+  companyId       String
+  format          String
+  createdAt       DateTime            @default(now())
+  revisions       V11ObjectRevision[]
+  sources         V11Source[]
+  documents       V11Document[]
+  snapshots       V11Snapshot[]
+  decisionRecords V11DecisionRecord[]
+  events          V11ReportEvent[]
+  drafts          V11EditorialDraft[]
 
+  @@index([companyId, format])
+}
+
+model V11ObjectRevision {
+  id                String              @id @default(cuid())
+  analysisId        String
+  objectId          String
+  objectType        String
+  revision          Int
+  approvalStatus    String
+  payload           Json
+  createdAt         DateTime            @default(now())
+  approvedAt        DateTime?
+  approvedBy        String?
+  approvalReason    String?
+  supersedesId      String?
+  analysis          V11Analysis         @relation(fields: [analysisId], references: [id], onDelete: Restrict)
+  approvals         V11Approval[]
+  previousDecisions V11DecisionRecord[] @relation("V11DecisionPreviousRevision")
+  newDecisions      V11DecisionRecord[] @relation("V11DecisionNewRevision")
+
+  @@unique([analysisId, objectId, revision])
+  @@index([analysisId, approvalStatus])
+}
+
+model V11Approval {
+  id         String            @id @default(cuid())
+  revisionId String
+  editorId   String
+  reason     String
+  createdAt  DateTime          @default(now())
+  revision   V11ObjectRevision @relation(fields: [revisionId], references: [id], onDelete: Restrict)
+
+  @@index([revisionId])
+}
+
+model V11Source {
+  id                 String      @id @default(cuid())
+  analysisId         String
+  sourceId           String
+  documentHash       String
+  verificationStatus String
+  payload            Json
+  createdAt          DateTime    @default(now())
+  analysis           V11Analysis @relation(fields: [analysisId], references: [id], onDelete: Restrict)
+
+  @@unique([analysisId, sourceId])
+  @@index([documentHash])
+}
+
+model V11Document {
+  id           String      @id @default(cuid())
+  analysisId   String
+  documentHash String
+  eventType    String?
+  reportPeriod String?
+  metadata     Json
+  createdAt    DateTime    @default(now())
+  analysis     V11Analysis @relation(fields: [analysisId], references: [id], onDelete: Restrict)
+
+  @@unique([analysisId, documentHash])
+}
+
+model V11Snapshot {
+  id                   String        @id @default(cuid())
+  analysisId           String
+  payloadHash          String        @unique
+  canonicalPayload     String
+  modelVersion         String
+  schemaVersion        String?
+  analysisModelVersion String?
+  parentSnapshotId     String?
+  approvedBy           String
+  approvedAt           DateTime
+  createdAt            DateTime      @default(now())
+  analysis             V11Analysis   @relation(fields: [analysisId], references: [id], onDelete: Restrict)
+  parentSnapshot       V11Snapshot?  @relation("V11SnapshotChain", fields: [parentSnapshotId], references: [id], onDelete: Restrict)
+  childSnapshots       V11Snapshot[] @relation("V11SnapshotChain")
+
+  @@index([analysisId, approvedAt])
+}
+
+model V11DecisionRecord {
+  id                 String            @id @default(cuid())
+  analysisId         String
+  /// Stable logical object identity across revisions. The service validates it against both referenced revisions.
+  objectId           String
+  previousRevisionId String
+  newRevisionId      String
+  decisionType       String
+  reason             String
+  evidenceIds        Json
+  /// External Firebase editor identity. The authenticated editor actor is validated by the service layer.
+  editorId           String
+  createdAt          DateTime          @default(now())
+  analysis           V11Analysis       @relation(fields: [analysisId], references: [id], onDelete: Restrict)
+  previousRevision   V11ObjectRevision @relation("V11DecisionPreviousRevision", fields: [previousRevisionId], references: [id], onDelete: Restrict)
+  newRevision        V11ObjectRevision @relation("V11DecisionNewRevision", fields: [newRevisionId], references: [id], onDelete: Restrict)
+
+  @@index([analysisId, createdAt])
+  @@index([objectId, createdAt])
+  @@index([previousRevisionId])
+  @@index([newRevisionId])
+}
+
+model V11ReportEvent {
+  id              String      @id @default(cuid())
+  analysisId      String
+  documentId      String
+  snapshotId      String?
+  eventType       String
+  editorialAction String?
+  status          String
+  payload         Json
+  createdAt       DateTime    @default(now())
+  analysis        V11Analysis @relation(fields: [analysisId], references: [id], onDelete: Restrict)
+
+  @@index([analysisId, createdAt])
+}
+
+model V11EditorialDraft {
+  id            String      @id @default(cuid())
+  analysisId    String
+  reportEventId String?
+  snapshotId    String?
+  status        String
+  payload       Json
+  createdAt     DateTime    @default(now())
+  approvedAt    DateTime?
+  approvedBy    String?
+  analysis      V11Analysis @relation(fields: [analysisId], references: [id], onDelete: Restrict)
+
+  @@index([analysisId, status])
+}
