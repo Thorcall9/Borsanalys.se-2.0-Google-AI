@@ -2,7 +2,12 @@ import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
 import test from 'node:test';
 
-import { FinancialDataPointSchema, SnapshotMetadataSchema } from '../../src/lib/v11/schemas.ts';
+import {
+  AssumptionSchema,
+  EstimateSchema,
+  FinancialDataPointSchema,
+  SnapshotMetadataSchema,
+} from '../../src/lib/v11/schemas.ts';
 
 const proposedMetadata = {
   id: randomUUID(),
@@ -60,4 +65,39 @@ test('requires snapshot schema and analysis-model versions', () => {
     parentSnapshotId: null,
     schemaVersion: '11.0',
   }).success, false);
+});
+
+test('requires estimates to depend on a structured assumption', () => {
+  const assumptionId = randomUUID();
+  const assumption = {
+    assumptionId,
+    name: 'Tax rate',
+    description: 'Normalised tax rate for the 2027 estimate.',
+    metric: 'tax_rate',
+    scenario: 'base',
+    value: 0.16,
+    unit: 'percent',
+    currency: null,
+    period: reportedFact.period,
+    rationaleSourceIds: [reportedFact.sourceId],
+    uncertaintyNote: 'Tax law may change.',
+    metadata: proposedMetadata,
+  };
+  const estimate = {
+    estimateId: randomUUID(),
+    metric: 'net_income',
+    scenario: 'base',
+    value: 70,
+    unit: 'BUSD',
+    currency: 'USD',
+    period: reportedFact.period,
+    assumptionIds: [assumptionId],
+    sourceSupportIds: [reportedFact.sourceId],
+    estimateOrigin: 'editor-proposed',
+    metadata: { ...proposedMetadata, id: randomUUID() },
+  };
+
+  assert.equal(AssumptionSchema.safeParse(assumption).success, true);
+  assert.equal(EstimateSchema.safeParse(estimate).success, true);
+  assert.equal(EstimateSchema.safeParse({ ...estimate, assumptionIds: [] }).success, false);
 });

@@ -136,7 +136,40 @@ export const SnapshotMetadataSchema = z.object({
   analysisModelVersion: z.literal('11.0.0'),
 });
 
+export const ScenarioSchema = z.enum(['bear', 'base', 'bull']);
+
+export const AssumptionSchema = z.object({
+  assumptionId: IdSchema,
+  name: z.string().min(1),
+  description: z.string().min(1),
+  metric: z.string().min(1),
+  scenario: ScenarioSchema.nullable(),
+  value: z.number().finite(),
+  unit: z.string().min(1),
+  currency: CurrencySchema.nullable(),
+  period: PeriodSchema.nullable(),
+  rationaleSourceIds: z.array(IdSchema).min(1),
+  uncertaintyNote: z.string().min(1),
+  metadata: AuditMetadataSchema,
+});
+
+export const EstimateSchema = z.object({
+  estimateId: IdSchema,
+  metric: z.string().min(1),
+  scenario: ScenarioSchema,
+  value: z.number().finite(),
+  unit: z.string().min(1),
+  currency: CurrencySchema.nullable(),
+  period: PeriodSchema,
+  assumptionIds: z.array(IdSchema).min(1),
+  sourceSupportIds: z.array(IdSchema),
+  estimateOrigin: z.enum(['ai-proposed', 'editor-proposed', 'borsanalys-approved-estimate']),
+  metadata: AuditMetadataSchema,
+});
+
 export type AuditMetadata = z.infer<typeof AuditMetadataSchema>;
 export type FinancialDataPoint = z.infer<typeof FinancialDataPointSchema>;
 export type Source = z.infer<typeof SourceSchema>;
 export type SnapshotMetadata = z.infer<typeof SnapshotMetadataSchema>;
+export type Assumption = z.infer<typeof AssumptionSchema>;
+export type Estimate = z.infer<typeof EstimateSchema>;
