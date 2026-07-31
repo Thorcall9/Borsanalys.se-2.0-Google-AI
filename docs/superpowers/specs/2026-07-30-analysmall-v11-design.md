@@ -8,25 +8,27 @@ Build an internal, versioned analysis system for Börsanalys.se. It keeps report
 
 ## Governing rules
 
+- Every persistent object must have a direct role in analysis quality, automation reliability, editorial efficiency or auditability. If an object cannot justify its long-term value, it should not exist.
 - Facts precede conclusions; all decision-bearing objects have explicit dependency IDs.
 - Reported, calculated, company guidance, consensus, AI proposals, and approved Börsanalys.se estimates are separate value origins.
 - AI may extract, structure, compare, classify, and draft. It cannot approve, change a recommendation, target price, thesis status, snapshot, or publication.
 - Approval creates a revision. Approved revisions are never mutated.
-- Snapshots are server-created, create-only, RFC 8785 canonical JSON payloads hashed with SHA-256.
+- Snapshots are server-created, create-only, RFC 8785 canonical JSON payloads hashed with SHA-256, and include the semantic `analysisModelVersion` that governed their definitions and calculations.
 - Snapshots contain approved objects only, and no referenced source may be conflicting.
 - Only KÖP, BEVAKA, and AVSTÅ are allowed recommendations.
 - DCF, WACC, and terminal value are out of scope for the ordinary engine and must be rejected as valuation methods.
 
 ## Architecture
 
-The implementation has six bounded areas:
+The implementation has seven bounded areas:
 
 1. **Domain schemas:** Zod schemas and TypeScript types for sources, facts, periods, assumptions, estimates, bridges, theses, decisions, documents, and events.
-2. **Revision and approval service:** dependency validation, immutable revisions, and human-only approval transitions.
-3. **Valuation service:** allowed methods, dilution safeguards, bridge roles, scenario target prices, and non-mechanical recommendation evidence.
-4. **Snapshot service:** approved-object assembly, canonical serialization, hashing, immutable persistence, and verification.
-5. **Report pipeline:** document registration, paginated extraction boundary, mathematical validation, snapshot comparison, classification, AI drafting, review, and preview.
-6. **Editorial API/UI:** authenticated internal workflows; no public release path in the first delivery.
+2. **Investment Thesis Engine:** the analytical hub connecting calculated observations, KPI profiles, assumptions, financial-model dependencies, valuation evidence, risks and triggers.
+3. **Revision and approval service:** dependency validation, immutable revisions, and human-only approval transitions.
+4. **Valuation service:** allowed methods, dilution safeguards, bridge roles, scenario target prices, and non-mechanical recommendation evidence.
+5. **Snapshot service:** approved-object assembly, canonical serialization, hashing, immutable persistence, and verification.
+6. **Report pipeline:** document registration, paginated extraction boundary, mathematical validation, snapshot comparison, classification, AI drafting, review, and preview.
+7. **Editorial API/UI:** authenticated internal workflows; no public release path in the first delivery.
 
 ## Formats
 
@@ -124,14 +126,64 @@ Every forecast assumption is an immutable versioned object with the following re
 
 Thresholds are directional and unit-aware. Example: `capex_to_revenue` may have `baseEstimate: 0.31`, `warningThreshold: { operator: '>', value: 0.33 }` and `materialChangeThreshold: { operator: '>', value: 0.36 }`. A threshold creates a proposed classification input; it never itself changes a conclusion.
 
+### Investment Thesis Engine
+
+The Investment Thesis Engine is the central analytical component. It connects facts and calculated observations to the financial model, valuation and later report automation. It prevents a claim such as “AI improves ad relevance” from being treated as either a reported fact or an unexplained valuation assumption.
+
+The required dependency chain is:
+
+`reported facts → calculated observations → approved investment thesis → assumptions and estimates → financial model → valuation → recommendation → immutable snapshot`
+
+An investment thesis is an immutable, versioned object with these required fields:
+
+| Field | Purpose |
+|---|---|
+| `thesisId`, `title`, `hypothesis` | Stable identifier and precise, testable claim |
+| `observationIds` and `evidenceIds` | Reported and calculated evidence supporting or challenging the claim |
+| `assumptionIds`, `estimateIds`, `valuationDependencyIds` | The financial-model and valuation items the thesis affects |
+| `confirmationTriggerIds`, `weakeningTriggerIds`, `breakTriggerIds` | Measurable conditions that can confirm, weaken or break the thesis |
+| `suggestedStatus` | AI may propose `proposed`, `confirmed`, `weakened` or `broken` |
+| `approvedStatus` | A human editor alone may approve the current thesis status |
+| `confidence` | Editorial confidence in the thesis's durability: `high`, `medium` or `low` |
+| `confidenceRationale` | Required explanation for the editorial confidence assessment |
+
+`confidence` on a thesis is distinct from AI confidence. A thesis may be manually approved as `confirmed` while retaining `medium` confidence if the observed effect is real but its durability is uncertain. A thesis status or confidence change is a new revision and cannot be made by AI.
+
+### Minimal KPI layer
+
+The KPI layer exists to make a thesis measurable without creating a generic hierarchy that does not improve the analysis. It uses exactly four persistent object types:
+
+| Object | Purpose |
+|---|---|
+| `MetricDefinition` | Stable meaning, formula, unit, currency, valid period type and permitted value origins for a metric |
+| `MetricObservation` | One reported or calculated value with period, provenance, source locator and verification status |
+| `KPIProfile` | Company-specific selection of relevant metrics, grouping label, analytical purpose and linked thesis IDs |
+| `TriggerRule` | Approved comparison rule linking a KPI to a threshold, a thesis, an affected model dependency and a suggested editorial action |
+
+A grouping label is an attribute of `KPIProfile`; it is not a separate persistent `MetricGroup` object. For Meta, a profile may include Family DAP, ARPU, ad impressions, average ad price, Threads users and WhatsApp Business metrics only when they have a defined analytical purpose and a verifiable source.
+
+### Confidence semantics
+
+Confidence must never be used to blur factual verification or editorial authority:
+
+| Attribute | Answers | Applies to |
+|---|---|---|
+| `verificationStatus` | Is the reported source fact located, validated, approved or conflicting? | Sources and facts |
+| `approvalStatus` | Has the editor accepted this version as Börsanalys.se's position? | Decision-bearing objects |
+| `aiConfidence` | How certain is the model about its extraction, classification or proposed estimate? | AI proposals only |
+| `confidence` | How durable or reliable does the editor judge the estimate or thesis to be? | Approved estimates and investment theses |
+
+Reported facts do not receive editorial `confidence`; their reliability is represented only by source verification and any documented conflict. Approved estimates require `confidence` and `confidenceRationale` in addition to the ordinary rationale.
+
 ### Model sequence
 
 1. **Shared definitions:** approve reported versus adjusted EBIT, capex/lease treatment, FCF, financial result, tax and share-count definitions.
-2. **Quarterly NTM model:** model Q3 2026 to Q2 2027 by quarter, then sum revenue, EBIT, financial result, tax, net income, diluted shares, EPS, operating cash flow, capex, FCF and FCF per share.
-3. **12-month valuation:** show current implicit P/E, NTM EPS, approved forward P/E, dividend, and separate value contribution from earnings, multiple and dividend.
-4. **Annual five-year model:** model 2027–2031 by year using the same definition layer, including revenue, EBIT, financial result, tax, net income, diluted shares, EPS, operating cash flow, capex, FCF and FCF per share.
-5. **Scenario and sensitivity engine:** apply bear/base/bull revenue, margin, capital-intensity, share-count, period-end allowed-multiple and probability assumptions. Show multiple sensitivity as a range rather than a single unqualified value.
-6. **Snapshot:** persist approved estimates, definitions, thresholds, trigger rules and classification evidence.
+2. **Investment thesis:** approve testable hypotheses, linked KPI profiles and trigger rules before approving the financial assumptions that depend on them.
+3. **Quarterly NTM model:** model Q3 2026 to Q2 2027 by quarter, then sum revenue, EBIT, financial result, tax, net income, diluted shares, EPS, operating cash flow, capex, FCF and FCF per share.
+4. **12-month valuation:** show current implicit P/E, NTM EPS, approved forward P/E, dividend, and separate value contribution from earnings, multiple and dividend.
+5. **Annual five-year model:** model 2027–2031 by year using the same definition layer, including revenue, EBIT, financial result, tax, net income, diluted shares, EPS, operating cash flow, capex, FCF and FCF per share.
+6. **Scenario and sensitivity engine:** apply bear/base/bull revenue, margin, capital-intensity, share-count, period-end allowed-multiple and probability assumptions. Show multiple sensitivity as a range rather than a single unqualified value.
+7. **Snapshot:** persist approved theses, KPI profiles, definitions, estimates, thresholds, trigger rules and classification evidence.
 
 P/E remains the primary valuation bridge for Meta when approved. FCF per share and FCF conversion are parallel mandatory control metrics; a positive P/E case cannot be approved without their explicit treatment.
 
@@ -139,17 +191,37 @@ P/E remains the primary valuation bridge for Meta when approved. FCF per share a
 
 An approved base-analysis snapshot must include the structured data needed to reproduce the report and automate the next-event comparison:
 
+- `schemaVersion` and semantic `analysisModelVersion`; both are part of the canonical payload and SHA-256 hash;
 - approved source register, hashes, locators and verification statuses;
 - reported facts, calculated observations and company guidance as distinct origins;
 - approved own estimates and separately labelled consensus estimates by period;
 - assumptions and their dependency IDs;
+- approved investment theses with confidence, evidence, confirmation/weaken/break triggers and model dependencies;
+- metric definitions, KPI profiles, metric observations and trigger rules used by those theses;
 - 12-month primary bridge, control bridges, price zones and valuation observations;
 - five-year bear/base/bull scenarios, probability weights, dividends and total-return calculation;
 - seven approved score dimensions and their reasons;
-- approved theses, risks, catalysts, positive/negative triggers and monitoring points;
+- approved risks, catalysts, positive/negative triggers and monitoring points;
 - approved recommendation/range decisions if and only if their valuation dependencies are approved;
-- company-specific materiality rules;
+- company-specific materiality-assessment configuration and its explainable component weights;
 - sector-specific KPIs and data-quality flags.
+
+`analysisModelVersion` follows semantic versioning. It changes whenever an approved calculation method, financial definition, interpretation rule or model policy changes in a way that can affect reproduced output. It does not change merely because a new company fact or estimate revision is approved. A later version can compare an older snapshot, but must display the version difference to the editor.
+
+### Analysis Health
+
+`AnalysisHealth` is an internal, non-valuation object. It shows whether an analysis is sufficiently complete and trustworthy for its intended editorial use. It is not reader-facing by default, does not affect a scorecard or recommendation, and cannot substitute for the editor's approval.
+
+| Field | Meaning |
+|---|---|
+| `dataCompleteness` | Share of required source facts and periods present for the chosen analysis format |
+| `estimateCoverage` | Share of required forecast periods and scenario inputs covered by approved estimates |
+| `kpiCoverage` | Share of KPIProfile metrics with current, valid observations and trigger rules where required |
+| `sourceVerification` | Share of central sources/facts meeting their required verification state |
+| `thesisConfidence` | Roll-up display of the editor-approved thesis confidences; never a replacement for individual thesis review |
+| `automationReadiness` | `low`, `medium` or `high`, determined from configured completeness gates and unresolved conflicts |
+
+The stored health result must include its calculation inputs and the `analysisModelVersion`. A conflicting source, an unapproved central dependency or missing required comparison baseline prevents `automationReadiness: high`.
 
 ### Event-to-editorial-action rules
 
@@ -174,9 +246,22 @@ The classifier uses this escalation sequence after applying the approved thresho
 | Several material model deviations that require explanation but leave the long-term thesis intact | `market-update` |
 | A changed or broken principal thesis, or a material break in the long-term model/valuation basis | `full-reanalysis-recommended` |
 
-### Materiality evaluation
+### Materiality Assessment
 
-Materiality combines deterministic thresholds and human context. A single variance does not automatically create a reanalysis. The classifier must record each impacted object and why the aggregate impact is material.
+`MaterialityAssessment` is an explainable 0–100 structured assessment, not an objective score or autonomous decision. It combines approved deterministic threshold results with documented qualitative context. A single variance does not automatically create a reanalysis. The classifier must record each impacted object and why the aggregate impact is material.
+
+The assessment stores a versioned configuration, each component's raw evidence and contribution, the total, and the AI-proposed editorial action. At minimum it contains:
+
+| Component | Required stored output |
+|---|---|
+| Revenue impact | relevant revenue, operating-KPI and guidance deviations, plus contribution 0–100 |
+| Margin impact | EBIT, margin, EPS and earnings-quality deviations, plus contribution 0–100 |
+| Cash-flow impact | operating cash flow, FCF and capex deviations, plus contribution 0–100 |
+| Balance-sheet impact | liquidity, debt, leasing, dilution and financial-flexibility deviations, plus contribution 0–100 |
+| Thesis impact | affected thesis statuses, triggers, new risks and qualitative context, plus contribution 0–100 |
+| Total | calculated 0–100 total, inputs, weights, rationale and model/configuration version |
+
+The total is a review aid. It cannot independently set `editorialAction`, change a thesis, initiate a new base analysis, alter a valuation or authorize publication. The editor receives the component breakdown and decides the approved action.
 
 | Comparison family | Indicative evaluation | Escalation examples |
 |---|---|---|
