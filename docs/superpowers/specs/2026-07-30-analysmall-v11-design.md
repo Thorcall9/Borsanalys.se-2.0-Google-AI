@@ -98,6 +98,43 @@ V11 keeps distinct 12-month and five-year assessments. They are linked to the sa
 
 For P/E, P/B, EPRA NAV per share, P/FFO per share and NAV per share, values are already per share and may not be divided by share count again. EV/EBIT and EV/Sales use a clearly labelled diluted-share conversion only when EV is converted to value per share.
 
+### Shared financial-definition layer
+
+The quarterly NTM model and annual five-year model must consume the same approved financial-definition object. A metric cannot have one definition in the 12-month bridge and another in the five-year scenario model.
+
+| Definition | Required treatment |
+|---|---|
+| Reported EBIT | Exact reported period value with source locator; never mixed with adjusted EBIT |
+| Adjusted EBIT | A calculated observation with explicit adjustment IDs and a manual judgement on recurrence |
+| Capex | Explicitly state whether finance-lease principal payments are included; use the same choice in FCF and capex/revenue series |
+| FCF | Operating cash flow less the approved capex definition; no acquisition cash flow is silently included or excluded |
+| Financial result | Reported or estimated net interest/other financial income or expense, separately from EBIT |
+| Tax | Reported tax kept separate from normalized tax-rate assumption; one-off tax effects must have adjustment IDs |
+| Share count | Weighted-average diluted shares for EPS; point-in-time diluted shares for market capitalization/EV when available; proxies must be flagged |
+
+Every forecast assumption is an immutable versioned object with the following required fields:
+
+| Attribute | Purpose |
+|---|---|
+| `value` | Numeric or categorical assumption value |
+| `status` | `reported`, `ai-proposed`, `editor-proposed`, or `borsanalys-approved-estimate` |
+| `rationale` | Human-readable reason and linked source/observation IDs |
+| `warningThreshold` | Deviation at which the next report requires visible editorial attention |
+| `materialChangeThreshold` | Deviation at which the classifier must consider escalation |
+
+Thresholds are directional and unit-aware. Example: `capex_to_revenue` may have `baseEstimate: 0.31`, `warningThreshold: { operator: '>', value: 0.33 }` and `materialChangeThreshold: { operator: '>', value: 0.36 }`. A threshold creates a proposed classification input; it never itself changes a conclusion.
+
+### Model sequence
+
+1. **Shared definitions:** approve reported versus adjusted EBIT, capex/lease treatment, FCF, financial result, tax and share-count definitions.
+2. **Quarterly NTM model:** model Q3 2026 to Q2 2027 by quarter, then sum revenue, EBIT, financial result, tax, net income, diluted shares, EPS, operating cash flow, capex, FCF and FCF per share.
+3. **12-month valuation:** show current implicit P/E, NTM EPS, approved forward P/E, dividend, and separate value contribution from earnings, multiple and dividend.
+4. **Annual five-year model:** model 2027–2031 by year using the same definition layer, including revenue, EBIT, financial result, tax, net income, diluted shares, EPS, operating cash flow, capex, FCF and FCF per share.
+5. **Scenario and sensitivity engine:** apply bear/base/bull revenue, margin, capital-intensity, share-count, period-end allowed-multiple and probability assumptions. Show multiple sensitivity as a range rather than a single unqualified value.
+6. **Snapshot:** persist approved estimates, definitions, thresholds, trigger rules and classification evidence.
+
+P/E remains the primary valuation bridge for Meta when approved. FCF per share and FCF conversion are parallel mandatory control metrics; a positive P/E case cannot be approved without their explicit treatment.
+
 ### Snapshot baseline
 
 An approved base-analysis snapshot must include the structured data needed to reproduce the report and automate the next-event comparison:
@@ -127,6 +164,15 @@ Incoming documents are compared only with the latest manually approved snapshot 
 | No material, editorially useful difference | `no-publication` | Cannot silently discard the document; audit trail remains |
 
 `full-reanalysis-recommended` is never an automatic "new analysis". It is an explicit editor task with the comparison evidence and affected dependencies attached.
+
+The classifier uses this escalation sequence after applying the approved thresholds:
+
+| Comparison outcome | Suggested action |
+|---|---|
+| Within normal variation | `no-publication` |
+| One limited KPI deviation with no affected core dependency | `report-commentary` |
+| Several material model deviations that require explanation but leave the long-term thesis intact | `market-update` |
+| A changed or broken principal thesis, or a material break in the long-term model/valuation basis | `full-reanalysis-recommended` |
 
 ### Materiality evaluation
 
