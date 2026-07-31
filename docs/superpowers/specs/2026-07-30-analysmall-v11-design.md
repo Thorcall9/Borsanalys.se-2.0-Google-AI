@@ -6,6 +6,8 @@
 
 Build an internal, versioned analysis system for Börsanalys.se. It keeps reported facts, assumptions, estimates, valuation, theses, recommendation, editorial approval, and immutable snapshots distinct and traceable. It also provides a safe report-automation pipeline that compares incoming events only to the latest approved snapshot.
 
+This specification defines the target architecture. Implementation is incremental: each subsystem must be independently deployable and useful without completion of the full architecture. No release may depend on an all-or-nothing rewrite of the analysis workflow.
+
 ## Governing rules
 
 - Every persistent object must have a direct role in analysis quality, automation reliability, editorial efficiency or auditability. If an object cannot justify its long-term value, it should not exist.
@@ -20,15 +22,16 @@ Build an internal, versioned analysis system for Börsanalys.se. It keeps report
 
 ## Architecture
 
-The implementation has seven bounded areas:
+The implementation has eight bounded areas:
 
 1. **Domain schemas:** Zod schemas and TypeScript types for sources, facts, periods, assumptions, estimates, bridges, theses, decisions, documents, and events.
 2. **Investment Thesis Engine:** the analytical hub connecting calculated observations, KPI profiles, assumptions, financial-model dependencies, valuation evidence, risks and triggers.
-3. **Revision and approval service:** dependency validation, immutable revisions, and human-only approval transitions.
-4. **Valuation service:** allowed methods, dilution safeguards, bridge roles, scenario target prices, and non-mechanical recommendation evidence.
-5. **Snapshot service:** approved-object assembly, canonical serialization, hashing, immutable persistence, and verification.
-6. **Report pipeline:** document registration, paginated extraction boundary, mathematical validation, snapshot comparison, classification, AI drafting, review, and preview.
-7. **Editorial API/UI:** authenticated internal workflows; no public release path in the first delivery.
+3. **Financial Model Engine:** shared-definition NTM and five-year model bridges, scenario calculations, sensitivity, cash-flow modelling and valuation inputs.
+4. **Revision and approval service:** dependency validation, immutable revisions, human-only approval transitions and decision history.
+5. **Valuation service:** allowed methods, dilution safeguards, bridge roles, scenario target prices, and non-mechanical recommendation evidence.
+6. **Snapshot service:** approved-object assembly, canonical serialization, hashing, immutable persistence, revision-chain links and verification.
+7. **Report pipeline:** document registration, paginated extraction boundary, mathematical validation, snapshot comparison, classification, AI drafting, review, and preview.
+8. **Editorial API/UI:** authenticated internal workflows; no public release path in the first delivery.
 
 ## Formats
 
@@ -175,6 +178,12 @@ Confidence must never be used to blur factual verification or editorial authorit
 
 Reported facts do not receive editorial `confidence`; their reliability is represented only by source verification and any documented conflict. Approved estimates require `confidence` and `confidenceRationale` in addition to the ordinary rationale.
 
+### Financial Model Engine
+
+The Financial Model Engine is the only component that calculates the NTM bridge, five-year bridge, scenario outputs and sensitivity outputs. It consumes approved definitions, assumptions, estimates, investment-thesis dependencies and share-count policies; it does not approve or edit any of them.
+
+Its stable outputs are revenue, EBIT, financial result, tax, net income, diluted shares, EPS, operating cash flow, capex, FCF, FCF per share, scenario total values and valuation-bridge inputs. It must expose every formula input and calculation version so the 12-month and five-year outputs can be reproduced from the same definitions.
+
 ### Model sequence
 
 1. **Shared definitions:** approve reported versus adjusted EBIT, capex/lease treatment, FCF, financial result, tax and share-count definitions.
@@ -187,16 +196,33 @@ Reported facts do not receive editorial `confidence`; their reliability is repre
 
 P/E remains the primary valuation bridge for Meta when approved. FCF per share and FCF conversion are parallel mandatory control metrics; a positive P/E case cannot be approved without their explicit treatment.
 
+### Decision history
+
+`DecisionRecord` is an immutable audit object that explains a decision-bearing change over time. It supplements snapshots; it does not replace their canonical payloads.
+
+| Field | Purpose |
+|---|---|
+| `changedObjectId` and `objectType` | Identifies the revised thesis, estimate, bridge, score or other decision-bearing object |
+| `previousState` and `newState` | Canonical before/after states or revision IDs |
+| `reason` | Editor's concise reason for the change |
+| `evidenceIds` | Supporting source facts, observations, comparison results or approved triggers |
+| `editorId` and `timestamp` | Records the accountable editor and time |
+| `triggeringEventId` | Links the decision to a report or company event when applicable |
+
+AI may propose a reason and evidence set, but only the editor can create an approved `DecisionRecord`. It is immutable once created and is retained with the related snapshot chain.
+
 ### Snapshot baseline
 
 An approved base-analysis snapshot must include the structured data needed to reproduce the report and automate the next-event comparison:
 
 - `schemaVersion` and semantic `analysisModelVersion`; both are part of the canonical payload and SHA-256 hash;
+- server-issued `snapshotId` and nullable `parentSnapshotId`, forming an explicit per-company snapshot revision chain;
 - approved source register, hashes, locators and verification statuses;
 - reported facts, calculated observations and company guidance as distinct origins;
 - approved own estimates and separately labelled consensus estimates by period;
 - assumptions and their dependency IDs;
 - approved investment theses with confidence, evidence, confirmation/weaken/break triggers and model dependencies;
+- IDs for related approved decision-history records;
 - metric definitions, KPI profiles, metric observations and trigger rules used by those theses;
 - 12-month primary bridge, control bridges, price zones and valuation observations;
 - five-year bear/base/bull scenarios, probability weights, dividends and total-return calculation;
@@ -210,7 +236,7 @@ An approved base-analysis snapshot must include the structured data needed to re
 
 ### Analysis Health
 
-`AnalysisHealth` is an internal, non-valuation object. It shows whether an analysis is sufficiently complete and trustworthy for its intended editorial use. It is not reader-facing by default, does not affect a scorecard or recommendation, and cannot substitute for the editor's approval.
+`AnalysisHealth` is derived operational data generated from approved snapshot data and approved health configuration. It is not independently editable and can never become a source of truth. It shows whether an analysis is sufficiently complete and trustworthy for its intended editorial use. It is not reader-facing by default, does not affect a scorecard or recommendation, and cannot substitute for the editor's approval.
 
 | Field | Meaning |
 |---|---|
@@ -248,7 +274,7 @@ The classifier uses this escalation sequence after applying the approved thresho
 
 ### Materiality Assessment
 
-`MaterialityAssessment` is an explainable 0–100 structured assessment, not an objective score or autonomous decision. It combines approved deterministic threshold results with documented qualitative context. A single variance does not automatically create a reanalysis. The classifier must record each impacted object and why the aggregate impact is material.
+`MaterialityAssessment` is reproducible derived data from its stored, versioned configuration, validated comparison inputs and stored component results. It is an explainable 0–100 structured assessment, not an objective score or autonomous decision. It combines approved deterministic threshold results with documented qualitative context. A single variance does not automatically create a reanalysis. The classifier must record each impacted object and why the aggregate impact is material.
 
 The assessment stores a versioned configuration, each component's raw evidence and contribution, the total, and the AI-proposed editorial action. At minimum it contains:
 
@@ -284,6 +310,19 @@ Raw PDF text is available only to the extraction step. The editorial drafting mo
 4. A new report is extracted, validated and compared to that snapshot.
 5. The system proposes event type and editorial action, with evidence.
 6. The editor chooses whether to publish a report commentary, market update, start a manual base-analysis revision, or take no publication action.
+
+## Incremental delivery sequence
+
+The target architecture must be delivered in independently deployable stages. A later stage may consume earlier interfaces but may not require an unfinished later stage.
+
+| Stage | Deliverable boundary | Included subsystems |
+|---|---|---|
+| 1. Core | A versioned, approvable base analysis can create and verify an immutable snapshot chain | Domain schemas, revisions, approval, `DecisionRecord`, snapshot service |
+| 2. Analysis engine | The editor can create a traceable NTM and five-year model connected to testable theses | Investment Thesis Engine, minimal KPI layer, Financial Model Engine, valuation service |
+| 3. Automation | A validated new document can be compared to an approved snapshot and receive a reviewable proposal | Report pipeline, `MaterialityAssessment`, `AnalysisHealth`, classifier |
+| 4. Editorial delivery | The sole editor can operate the workflow safely through the admin UI and separately approved publication path | Editorial UI/workflows, previews, release/version presentation |
+
+Every stage defines its own acceptance tests and can be deployed without the next stage. A stage cannot grant AI additional editorial authority beyond the governing rules.
 
 ## Resolved product decisions
 
