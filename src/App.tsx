@@ -86,7 +86,7 @@ export default function App() {
                       <Route path="/aktieinnehav-och-intressekonflikter" element={<Holdings />} />
                       <Route path="/verktyg" element={<Tools />} />
                       <Route path="/verktyg/huskalkylator" element={<HouseCalculatorPage />} />
-                      <Route path="/huskapital" element={<InternalRoute title="Huskapital"><Huskapital /></InternalRoute>} />
+                      <Route path="/huskapital" element={<Huskapital />} />
                       <Route path="/verktyg/rantakalkylator" element={<Tools />} />
                       <Route path="/verktyg/malsparandekalkylator" element={<Tools />} />
                       <Route path="/verktyg/dcf-kalkylator" element={<Tools />} />
