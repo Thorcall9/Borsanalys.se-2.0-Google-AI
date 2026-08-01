@@ -141,6 +141,10 @@ test('rejects multiple definitions for one metric without a selection for the re
 
 test('exposes only the context-selected definition as the primary FCF value', () => {
   const result = calculateFinancialPeriodResult(calculationInput());
+  assert.deepEqual(result.primaryValuesByMetric.revenue, {
+    definitionId: 'revenue-reported',
+    value: { value: 61_000, ...usdMillions },
+  });
   assert.deepEqual(result.primaryValuesByMetric.free_cash_flow, {
     definitionId: 'fcf-primary',
     value: { value: 780, ...usdMillions },
