@@ -65,7 +65,7 @@ function periodKey(period: FinancialInput['period']): string {
   return JSON.stringify(period);
 }
 
-function normalizeScale(value: FinancialValue, output: FinancialValueSpec): FinancialValue {
+export function normalizeFinancialValue(value: FinancialValue, output: FinancialValueSpec): FinancialValue {
   if (value.unit !== output.unit) throw new FinancialCalculationError('UNIT_MISMATCH');
   const outputCurrency = output.currency ?? null;
   if (value.currency !== outputCurrency) throw new FinancialCalculationError('CURRENCY_MISMATCH');
@@ -80,18 +80,18 @@ function normalizeScale(value: FinancialValue, output: FinancialValueSpec): Fina
 function sum(values: FinancialValue[], output: FinancialValueSpec): FinancialValue {
   return {
     ...output,
-    value: values.map(value => normalizeScale(value, output).value).reduce((total, value) => total + value, 0),
+    value: values.map(value => normalizeFinancialValue(value, output).value).reduce((total, value) => total + value, 0),
   };
 }
 
 function subtract(left: FinancialValue, right: FinancialValue, output: FinancialValueSpec): FinancialValue {
   return {
     ...output,
-    value: normalizeScale(left, output).value - normalizeScale(right, output).value,
+    value: normalizeFinancialValue(left, output).value - normalizeFinancialValue(right, output).value,
   };
 }
 
-function divide(numerator: FinancialValue, denominator: FinancialValue, output: FinancialValueSpec): FinancialValue {
+export function divideFinancialValues(numerator: FinancialValue, denominator: FinancialValue, output: FinancialValueSpec): FinancialValue {
   if (numerator.unit !== 'currency' || denominator.unit !== 'shares' || output.unit !== 'currency-per-share') {
     throw new FinancialCalculationError('DIVIDE_UNIT_MISMATCH');
   }
@@ -110,8 +110,8 @@ function divide(numerator: FinancialValue, denominator: FinancialValue, output: 
 }
 
 function adjustedEbit(base: FinancialValue, adjustments: EbitAdjustmentComponent[], output: FinancialValueSpec): FinancialValue {
-  const normalizedBase = normalizeScale(base, output);
-  const normalizedAdjustments = adjustments.map(component => normalizeScale(component.amount, output));
+  const normalizedBase = normalizeFinancialValue(base, output);
+  const normalizedAdjustments = adjustments.map(component => normalizeFinancialValue(component.amount, output));
   return {
     ...output,
     value: normalizedBase.value + normalizedAdjustments.reduce((total, value) => total + value.value, 0),
@@ -181,7 +181,7 @@ export function calculateFinancialPeriodResult(input: {
     if (definition.calculationRule === 'reported-input') {
       const financialInput = inputsByDefinitionId.get(definitionId);
       if (!financialInput) throw new FinancialCalculationError('MISSING_FINANCIAL_INPUT');
-      const output = normalizeScale(financialInput.value, definition.output);
+      const output = normalizeFinancialValue(financialInput.value, definition.output);
       valuesByDefinitionId[definitionId] = output;
       calculationTrace.push({
         definitionId,
@@ -205,7 +205,7 @@ export function calculateFinancialPeriodResult(input: {
     } else if (definition.calculationRule === 'subtract') {
       output = subtract(definitionInputs[0].value, definitionInputs[1].value, definition.output);
     } else if (definition.calculationRule === 'divide') {
-      output = divide(definitionInputs[0].value, definitionInputs[1].value, definition.output);
+      output = divideFinancialValues(definitionInputs[0].value, definitionInputs[1].value, definition.output);
     } else {
       output = adjustedEbit(definitionInputs[0].value, definition.adjustmentComponents, definition.output);
     }
@@ -220,7 +220,7 @@ export function calculateFinancialPeriodResult(input: {
       ...(definition.calculationRule === 'adjusted-ebit' ? {
         adjustments: definition.adjustmentComponents.map(component => ({
           adjustmentId: component.adjustmentId,
-          value: normalizeScale(component.amount, definition.output),
+          value: normalizeFinancialValue(component.amount, definition.output),
           evidenceIds: [...component.evidenceIds].sort(),
         })),
       } : {}),
@@ -228,12 +228,20 @@ export function calculateFinancialPeriodResult(input: {
   }
 
   const primaryValuesByMetric: FinancialPeriodResult['primaryValuesByMetric'] = {};
-  for (const selection of resolvedSelections.selectionsByContextMetric.values()) {
-    if (selection.context !== input.context) continue;
-    const value = valuesByDefinitionId[selection.primaryDefinitionId];
+  const definitionsByMetric = new Map<string, FinancialDefinition[]>();
+  for (const definition of input.definitions) {
+    definitionsByMetric.set(definition.metric, [
+      ...(definitionsByMetric.get(definition.metric) ?? []),
+      definition,
+    ]);
+  }
+  for (const [metric, definitionsForMetric] of [...definitionsByMetric.entries()].sort(([left], [right]) => left.localeCompare(right))) {
+    const selection = resolvedSelections.selectionsByContextMetric.get(`${input.context}:${metric}`);
+    const primaryDefinitionId = selection?.primaryDefinitionId ?? definitionsForMetric[0].definitionId;
+    const value = valuesByDefinitionId[primaryDefinitionId];
     if (!value) throw new FinancialCalculationError('MISSING_FINANCIAL_INPUT');
-    primaryValuesByMetric[selection.metric] = {
-      definitionId: selection.primaryDefinitionId,
+    primaryValuesByMetric[metric] = {
+      definitionId: primaryDefinitionId,
       value,
     };
   }
