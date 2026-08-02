@@ -100,25 +100,23 @@ function inline(value: string): ReactNode[] {
 }
 
 function MetaRevenueFlow() {
-  const nodes = [
-    { x: 28, y: 112, w: 155, title: "Annonsörer", value: "Efterfrågan på digital annonsering" },
-    { x: 244, y: 42, w: 186, title: "Family of Apps", value: "60,370 md USD revenue" },
-    { x: 244, y: 214, w: 186, title: "Reality Labs", value: "0,431 md USD revenue" },
-    { x: 500, y: 42, w: 184, title: "FoA operating profit", value: "23,394 md USD" },
-    { x: 500, y: 214, w: 184, title: "RL-förlust", value: "−4,619 md USD" },
-    { x: 756, y: 112, w: 164, title: "Koncernens EBIT", value: "18,775 md USD" },
-    { x: 976, y: 112, w: 164, title: "Nettoresultat", value: "15,848 md USD" },
-  ];
-  return <figure className="my-8 overflow-x-auto rounded-xl border border-border bg-card p-5"><figcaption className="mb-5 text-sm font-bold uppercase tracking-wider text-muted-foreground">Meta-intäktsflöde Q2 2026</figcaption><svg aria-label="Meta-intäktsflöde Q2 2026" className="min-w-[1140px]" viewBox="0 0 1168 328" role="img">
-    <defs><marker id="meta-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#64748b" /></marker></defs>
-    <path d="M183 146 C210 146 216 104 244 104" fill="none" stroke="#2563eb" strokeWidth="14" markerEnd="url(#meta-arrow)" />
-    <path d="M430 104 L500 104" fill="none" stroke="#2563eb" strokeWidth="18" markerEnd="url(#meta-arrow)" />
-    <path d="M430 236 L500 236" fill="none" stroke="#a855f7" strokeWidth="5" markerEnd="url(#meta-arrow)" />
-    <path d="M684 104 C720 104 724 146 756 146" fill="none" stroke="#16a34a" strokeWidth="16" markerEnd="url(#meta-arrow)" />
-    <path d="M684 236 C720 236 724 178 756 178" fill="none" stroke="#dc2626" strokeWidth="5" markerEnd="url(#meta-arrow)" />
-    <path d="M920 146 L976 146" fill="none" stroke="#16a34a" strokeWidth="13" markerEnd="url(#meta-arrow)" />
-    {nodes.map((node) => <g key={node.title}><rect x={node.x} y={node.y} width={node.w} height="68" rx="10" fill="#ffffff" stroke="#cbd5e1" /><text x={node.x + node.w / 2} y={node.y + 29} textAnchor="middle" fill="#0f172a" fontSize="14" fontWeight="700">{node.title}</text><text x={node.x + node.w / 2} y={node.y + 50} textAnchor="middle" fill="#64748b" fontSize="11">{node.value}</text></g>)}
-  </svg><p className="mt-4 text-sm text-muted-foreground">Resultatbryggan visualiserar den rapporterade Q2 2026-mixen utan egna modellantaganden.</p></figure>;
+  const node = (x: number, y: number, title: string, value: string, tone: string) => <g key={title}><rect x={x} y={y} width="170" height="64" rx="10" fill="#fff" stroke={tone} strokeWidth="2" /><text x={x + 85} y={y + 27} textAnchor="middle" fill="#172033" fontSize="14" fontWeight="700">{title}</text><text x={x + 85} y={y + 47} textAnchor="middle" fill="#667085" fontSize="12">{value}</text></g>;
+  return <figure className="my-8 overflow-hidden rounded-xl border border-border bg-card p-4 md:p-6"><figcaption className="mb-1 text-sm font-bold uppercase tracking-wider text-muted-foreground">Meta-intäktsflöde Q2 2026</figcaption><p className="mb-5 text-sm text-muted-foreground">Från annonsefterfrågan till rapporterat nettoresultat — bandens bredd visar relativa belopp.</p><svg data-testid="meta-mobile-sankey" aria-label="Meta-intäktsflöde Q2 2026 mobil" className="h-auto w-full md:hidden" viewBox="0 0 360 590" role="img"><defs><linearGradient id="mobile-blue" x1="0" x2="0" y2="1"><stop stopColor="#2563eb" stopOpacity=".75"/><stop offset="1" stopColor="#38bdf8" stopOpacity=".35"/></linearGradient></defs><path d="M90 100 C90 135 180 135 180 170 L180 205 C180 170 270 135 270 100" fill="none" stroke="url(#mobile-blue)" strokeWidth="28"/><path d="M180 265 L180 330" stroke="#22c55e" strokeWidth="22"/><path d="M270 400 C270 430 180 430 180 465" fill="none" stroke="#ef4444" strokeWidth="9"/><path d="M180 515 L180 540" stroke="#16a34a" strokeWidth="18"/>{node(5, 36, "Advertising", "59,363 md USD", "#2563eb")}{node(185, 36, "FoA other revenue", "1,007 md USD", "#38bdf8")}{node(95, 205, "Family of Apps", "60,370 md USD", "#2563eb")}{node(95, 330, "FoA operating profit", "23,394 md USD", "#16a34a")}{node(185, 390, "Reality Labs", "−4,619 md USD", "#ef4444")}{node(95, 465, "Koncernens EBIT", "18,775 md USD", "#16a34a")}{node(95, 540, "Nettoresultat", "15,848 md USD", "#16a34a")}</svg><svg data-testid="meta-desktop-sankey" aria-label="Meta-intäktsflöde Q2 2026" className="hidden h-auto w-full md:block" viewBox="0 0 720 590" role="img">
+    <defs><linearGradient id="foa-flow" x1="0" x2="1"><stop stopColor="#2563eb" stopOpacity=".75" /><stop offset="1" stopColor="#0ea5e9" stopOpacity=".45" /></linearGradient><linearGradient id="profit-flow" x1="0" x2="1"><stop stopColor="#16a34a" stopOpacity=".75" /><stop offset="1" stopColor="#22c55e" stopOpacity=".45" /></linearGradient></defs>
+    <text x="85" y="24" textAnchor="middle" fill="#667085" fontSize="11" fontWeight="700">INTÄKTSKÄLLOR</text><text x="360" y="24" textAnchor="middle" fill="#667085" fontSize="11" fontWeight="700">SEGMENT OCH RESULTAT</text><text x="635" y="24" textAnchor="middle" fill="#667085" fontSize="11" fontWeight="700">KONCERN</text>
+    <path d="M170 126 C210 126 225 118 275 118 L275 152 C225 152 210 160 170 160 Z" fill="url(#foa-flow)" />
+    <path d="M170 226 C215 226 225 152 275 152 L275 158 C225 158 215 232 170 232 Z" fill="#7dd3fc" opacity=".75" />
+    <path d="M445 136 C500 136 510 260 550 260 L550 284 C510 284 500 160 445 160 Z" fill="url(#profit-flow)" />
+    <path d="M445 386 C500 386 510 300 550 300 L550 312 C510 312 500 398 445 398 Z" fill="#ef4444" opacity=".72" />
+    <path d="M550 282 C590 282 600 282 635 282 L635 304 C600 304 590 304 550 304 Z" fill="url(#profit-flow)" />
+    {node(0, 96, "Advertising", "59,363 md USD", "#2563eb")}
+    {node(0, 196, "FoA other revenue", "1,007 md USD", "#38bdf8")}
+    {node(275, 108, "Family of Apps", "60,370 md USD revenue", "#2563eb")}
+    {node(275, 248, "FoA operating profit", "23,394 md USD", "#16a34a")}
+    {node(275, 358, "Reality Labs", "−4,619 md USD resultat", "#ef4444")}
+    {node(550, 256, "Koncernens EBIT", "18,775 md USD", "#16a34a")}
+    {node(550, 396, "Nettoresultat", "15,848 md USD", "#16a34a")}
+  </svg><p className="mt-4 text-sm text-muted-foreground">Källa: Meta Q2 2026. Resultatbryggan använder endast rapporterade Q2-värden och inga egna modellantaganden.</p></figure>;
 }
 
 function ContentBlock({ block }: { block: Block }) {

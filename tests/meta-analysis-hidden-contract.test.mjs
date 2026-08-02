@@ -22,6 +22,8 @@ assert.match(component, /Meta Platforms/);
 assert.match(component, /metaMarkdown/);
 assert.match(component, /Meta-intäktsflöde Q2 2026/);
 assert.match(component, /<svg/);
+assert.match(component, /data-testid="meta-mobile-sankey"/);
+assert.match(component, /data-testid="meta-desktop-sankey"/);
 for (const heading of [
   "Snabböversikt",
   "Investeringstes på 30 sekunder",
