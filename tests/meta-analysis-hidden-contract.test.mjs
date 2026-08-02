@@ -1,13 +1,14 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 
-const [index, page, app, search, rss, component] = await Promise.all([
+const [index, page, app, search, rss, component, canonical] = await Promise.all([
   readFile(new URL("../src/data/analyses/index.ts", import.meta.url), "utf8"),
   readFile(new URL("../src/pages/Analysis.tsx", import.meta.url), "utf8"),
   readFile(new URL("../src/App.tsx", import.meta.url), "utf8"),
   readFile(new URL("../src/components/GlobalSearch.tsx", import.meta.url), "utf8"),
   readFile(new URL("../api/rss.ts", import.meta.url), "utf8"),
   readFile(new URL("../src/components/analysis/MetaDeepDive.tsx", import.meta.url), "utf8"),
+  readFile(new URL("../src/data/analyses/meta/meta-analysis-content.md", import.meta.url), "utf8"),
 ]);
 
 assert.match(index, /"meta": meta2026/);
@@ -18,4 +19,21 @@ assert.match(app, /<Route path="\/analyser\/:slug" element={<Analysis \/>} \/>/)
 assert.match(search, /filter\(isPublishedAnalysis\)/);
 assert.match(rss, /filter\(isPublishedAnalysis\)/);
 assert.match(component, /Meta Platforms/);
-assert.match(component, /1 066,05/);
+assert.match(component, /metaMarkdown/);
+for (const heading of [
+  "Snabböversikt",
+  "Investeringstes på 30 sekunder",
+  "Företagsöversikt och ledning",
+  "Affärsmodell och intäktsflöde",
+  "Konkurrensfördelar, bransch och peers",
+  "Finansiell utveckling och vinstkvalitet",
+  "Scorecard",
+  "Fundamental värdering",
+  "Kurszoner: 12 månader och fem år",
+  "Potentiella kursdrivare",
+  "Riskprofil, stresstest och tesbrytare",
+  "Bevakningsplan",
+  "Slutsats och investeringsbeslut",
+  "Normaliseringsbrygga Q2 2026",
+]) assert.match(canonical, new RegExp(heading));
+for (const value of ["16/20", "9/15", "25/35", "612,50 USD", "1 066,05 USD", "12,73 %", "BEVAKA", "Advertising", "FoA other revenue", "Nettoresultat", "Capex", "FCF", "OCF"]) assert.match(canonical, new RegExp(value));
