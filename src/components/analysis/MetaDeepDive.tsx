@@ -99,6 +99,28 @@ function inline(value: string): ReactNode[] {
   return nodes;
 }
 
+function MetaRevenueFlow() {
+  const nodes = [
+    { x: 28, y: 112, w: 155, title: "Annonsörer", value: "Efterfrågan på digital annonsering" },
+    { x: 244, y: 42, w: 186, title: "Family of Apps", value: "60,370 md USD revenue" },
+    { x: 244, y: 214, w: 186, title: "Reality Labs", value: "0,431 md USD revenue" },
+    { x: 500, y: 42, w: 184, title: "FoA operating profit", value: "23,394 md USD" },
+    { x: 500, y: 214, w: 184, title: "RL-förlust", value: "−4,619 md USD" },
+    { x: 756, y: 112, w: 164, title: "Koncernens EBIT", value: "18,775 md USD" },
+    { x: 976, y: 112, w: 164, title: "Nettoresultat", value: "15,848 md USD" },
+  ];
+  return <figure className="my-8 overflow-x-auto rounded-xl border border-border bg-card p-5"><figcaption className="mb-5 text-sm font-bold uppercase tracking-wider text-muted-foreground">Meta-intäktsflöde Q2 2026</figcaption><svg aria-label="Meta-intäktsflöde Q2 2026" className="min-w-[1140px]" viewBox="0 0 1168 328" role="img">
+    <defs><marker id="meta-arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="#64748b" /></marker></defs>
+    <path d="M183 146 C210 146 216 104 244 104" fill="none" stroke="#2563eb" strokeWidth="14" markerEnd="url(#meta-arrow)" />
+    <path d="M430 104 L500 104" fill="none" stroke="#2563eb" strokeWidth="18" markerEnd="url(#meta-arrow)" />
+    <path d="M430 236 L500 236" fill="none" stroke="#a855f7" strokeWidth="5" markerEnd="url(#meta-arrow)" />
+    <path d="M684 104 C720 104 724 146 756 146" fill="none" stroke="#16a34a" strokeWidth="16" markerEnd="url(#meta-arrow)" />
+    <path d="M684 236 C720 236 724 178 756 178" fill="none" stroke="#dc2626" strokeWidth="5" markerEnd="url(#meta-arrow)" />
+    <path d="M920 146 L976 146" fill="none" stroke="#16a34a" strokeWidth="13" markerEnd="url(#meta-arrow)" />
+    {nodes.map((node) => <g key={node.title}><rect x={node.x} y={node.y} width={node.w} height="68" rx="10" fill="#ffffff" stroke="#cbd5e1" /><text x={node.x + node.w / 2} y={node.y + 29} textAnchor="middle" fill="#0f172a" fontSize="14" fontWeight="700">{node.title}</text><text x={node.x + node.w / 2} y={node.y + 50} textAnchor="middle" fill="#64748b" fontSize="11">{node.value}</text></g>)}
+  </svg><p className="mt-4 text-sm text-muted-foreground">Resultatbryggan visualiserar den rapporterade Q2 2026-mixen utan egna modellantaganden.</p></figure>;
+}
+
 function ContentBlock({ block }: { block: Block }) {
   if (block.type === "heading") {
     const className = block.level === 1 ? "mt-10 text-3xl font-serif font-bold" : "mt-9 text-xl font-serif font-bold";
@@ -106,7 +128,7 @@ function ContentBlock({ block }: { block: Block }) {
   }
   if (block.type === "quote") return <blockquote className="my-8 border-l-4 border-primary/60 bg-muted/40 px-5 py-4 text-muted-foreground italic leading-7">{inline(block.text)}</blockquote>;
   if (block.type === "list") return <ul className="my-5 space-y-2 pl-5 text-muted-foreground">{block.items.map((item) => <li key={item} className="list-disc leading-7">{inline(item)}</li>)}</ul>;
-  if (block.type === "code") return <pre className="my-6 overflow-x-auto rounded-xl border border-border bg-muted/50 p-5 text-sm leading-7"><code>{block.text}</code></pre>;
+  if (block.type === "code") return <MetaRevenueFlow />;
   if (block.type === "table") return <div className="my-6 overflow-x-auto rounded-xl border border-border"><table className="min-w-full text-sm"><thead className="bg-muted/60 text-left text-xs uppercase tracking-wider text-muted-foreground"><tr>{block.rows[0]?.map((cell) => <th className="whitespace-nowrap p-3 font-semibold" key={cell}>{inline(cell)}</th>)}</tr></thead><tbody>{block.rows.slice(1).map((row, rowIndex) => <tr className="border-t border-border/70" key={`${rowIndex}-${row.join("-")}`}>{row.map((cell, cellIndex) => <td className="whitespace-nowrap p-3 align-top" key={`${cellIndex}-${cell}`}>{inline(cell)}</td>)}</tr>)}</tbody></table></div>;
   return <p className="my-5 max-w-4xl leading-8 text-muted-foreground">{inline(block.text)}</p>;
 }

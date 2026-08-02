@@ -20,6 +20,8 @@ assert.match(search, /filter\(isPublishedAnalysis\)/);
 assert.match(rss, /filter\(isPublishedAnalysis\)/);
 assert.match(component, /Meta Platforms/);
 assert.match(component, /metaMarkdown/);
+assert.match(component, /Meta-intäktsflöde Q2 2026/);
+assert.match(component, /<svg/);
 for (const heading of [
   "Snabböversikt",
   "Investeringstes på 30 sekunder",
