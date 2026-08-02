@@ -64,6 +64,35 @@ All text och alla siffror hämtas från den befintliga låsta Meta-analysen och 
 - Juridiska kostnader återläggs inte i base; avgångskostnaden återläggs.
 - Aktieantalet beskrivs som ökande i samtliga scenarier, eftersom SBC-utspädningen överstiger återköpta aktier.
 
+## V11-spårbarhet
+
+Inwido-nivån är artikelns läsarformat. V11-spårbarheten byggs som ett separat, strukturerat lager under samma `MetaDeepDive`-implementation och ersätter inte den publika strukturen.
+
+### Källspår
+
+Varje faktablock och varje historisk sifferserie ska ha ett maskinläsbart käll-ID som refererar till en intern källförteckning. Varje post innehåller minst dokumentnamn, dokumenttyp, publiceringsdatum, utgivare, URL och användningsområde. Officiella Meta-/SEC-källor prioriteras.
+
+I artikeln visas en kort, läsbar käll- och metodnot vid relevanta tabeller och en samlad källförteckning längst ned. Den kompletta interna källregistret ska kunna användas vid senare uppdatering utan ny faktasökning.
+
+### Modell- och antagandespår
+
+Det låsta modellunderlaget får ett explicit versions-ID och datum. Varje estimatserie markeras som `Börsanalys.se-estimat` och länkas till sin antagandegrupp:
+
+- normalisering: avgångskostnaden återläggs; juridiska kostnader ligger kvar i base,
+- skatt: base 17 %, med scenario-känsligheter,
+- kassaflöde: FCF enligt Meta-definitionen och låst OCF-/capex-policy,
+- aktieantal: SBC-utspädning och återköp redovisas separat; nettoeffekten är stigande antal aktier,
+- scenarier: bear/base/bull, sannolikheter och terminalmultiplar,
+- värderingshorisont: 31 december 2031, 5,42 år.
+
+Varje läsarvänligt estimatblock visar en kort metodnot. Det strukturerade lagret innehåller dessutom beräknings-ID och källa/antagande-ID för ingående värden, så att modellen kan revideras utan att artikelns text skrivs om från grunden.
+
+### Versionshistorik och rapportjämförelse
+
+Meta får en intern versionslogg med analysdatum, modellversion, förändrade datapunkter, ändrade antaganden och oförändrade beslut. Den första publiceringsversionen blir baslinjen.
+
+En strukturerad rapportjämförelse reserveras för framtida kvartalsuppdateringar: rapporterat utfall jämförs med respektive NTM-estimat för revenue, EBIT-marginal, EPS, OCF, capex, FCF och relevanta Meta-KPI:er. Varje avvikelse får en markering som bekräftande, försvagande eller tesbrytande enligt den låsta bevakningsplanen. Inga framtida utfall fylls i före rapportdatum.
+
 ## Felhantering och publicering
 
 En okänd analys-slug ska fortsatt hanteras av den befintliga `Analysis`-sidan. Meta är åtkomlig direkt på `/analyser/meta`, men osynlig på alla publika upptäcktsytor så länge `published: false`. Den enda publiceringsåtgärden efter godkännande ska vara att ändra denna flagga till `true`.
@@ -71,6 +100,8 @@ En okänd analys-slug ska fortsatt hanteras av den befintliga `Analysis`-sidan. 
 ## Verifiering
 
 - Utöka det riktade Meta-testet med krav på den kompletta strukturens nyckelsektioner och den låsta modelldatan.
+- Testa att v11-källregistret, modellversionen, antagande-ID:n och versionsloggen går att läsa från Metas strukturerade data utan att ändra den publika artikeln.
+- Testa rapportjämförelsens tomma baslinjeläge, så att framtida utfall inte kan förväxlas med estimat.
 - Säkerställ fortsatt route-stöd för `/analyser/meta`, `noindex, nofollow` och filtrering från listor/sök/RSS.
 - Kör typkontroll och produktionsbygge.
 - Granska den renderade artikeln på desktop och mobil för navigering, tabellscrollning, hierarki och konsistenta värden.
