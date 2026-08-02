@@ -17,6 +17,7 @@ const deepDiveLoaders: Record<string, DeepDiveLoader> = {
   Axfood: () => import("../components/analysis/AxfoodDeepDive"),
   ABB: () => import("../components/analysis/ABBDeepDive"),
   Plejd: () => import("../components/analysis/PlejdDeepDive"),
+  Meta: () => import("../components/analysis/MetaDeepDive"),
 };
 
 export function getDeepDiveLoader(key: string): DeepDiveLoader | undefined {

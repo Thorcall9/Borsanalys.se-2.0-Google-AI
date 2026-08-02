@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, X, TrendingUp, BookOpen, ArrowRight, Calculator } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { analyses, AnalysisData } from "../data/analyses";
+import { analyses, AnalysisData, isPublishedAnalysis } from "../data/analyses";
 import { guides, Guide } from "../data/guides";
 import { useSearch } from "../contexts/SearchContext";
 import { RECOMMENDATION_BADGE_CLASSES } from "../lib/recommendation";
@@ -42,6 +42,7 @@ export default function GlobalSearch({ isOpen, onClose }: GlobalSearchProps) {
     const lowerQuery = query.toLowerCase();
     
     const filteredAnalyses = Object.values(analyses)
+      .filter(isPublishedAnalysis)
       .filter(
         (a) => 
           a.title.toLowerCase().includes(lowerQuery) || 

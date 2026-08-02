@@ -180,9 +180,11 @@ export interface AnalysisData {
   updatedAt?: string;
   score?: number;
   maxScore?: number;
+  /** Hidden analyses can be directly reviewed without appearing in discovery surfaces. */
+  published?: boolean;
   
   // Custom View Logic
-  deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea" | "Axfood" | "ABB" | "Plejd";
+  deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea" | "Axfood" | "ABB" | "Plejd" | "Meta";
   disclosureKey?: string;
 
   // Standardized structure from roadmap

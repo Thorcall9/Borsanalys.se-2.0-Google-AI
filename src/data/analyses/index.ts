@@ -23,6 +23,7 @@ import { plejdQ12026 } from "./plejd/plejd-q1-2026.js";
 import { revolutionRace2026 } from "./revolutionrace/revolutionrace-2026.js";
 import { inwido2026 } from "./inwido/inwido-2026.js";
 import { revolutionRaceIciw2026 } from "./revolutionrace/revolutionrace-iciw.js";
+import { meta2026 } from "./meta/meta-2026.js";
 
 export const analyses: Record<string, AnalysisData> = {
   "investor-ab": investorAb,
@@ -49,6 +50,7 @@ export const analyses: Record<string, AnalysisData> = {
   "revolutionrace-2026": revolutionRace2026,
   "revolutionrace-iciw": revolutionRaceIciw2026,
   "inwido-2026": inwido2026,
+  "meta": meta2026,
 };
 
 export function validateAnalysisRelations(registry: Record<string, AnalysisData>): void {
@@ -69,5 +71,8 @@ export function validateAnalysisRelations(registry: Record<string, AnalysisData>
 }
 
 validateAnalysisRelations(analyses);
+
+/** Hidden analyses can be directly reviewed without appearing in discovery surfaces. */
+export const isPublishedAnalysis = (analysis: AnalysisData) => analysis.published !== false;
 
 export type { AnalysisData, AIDrivenAnalysis } from "../../types/analysis.js";

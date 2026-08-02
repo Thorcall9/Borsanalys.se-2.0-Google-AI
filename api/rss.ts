@@ -1,12 +1,12 @@
 import type { Request, Response } from 'express';
-import { analyses } from '../src/data/analyses/index.js';
+import { analyses, isPublishedAnalysis } from '../src/data/analyses/index.js';
 
 export default async function handler(req: Request, res: Response) {
   const baseUrl = 'https://www.borsanalys.se';
   const defaultImage = `${baseUrl}/og-image.png`;
 
   // Get all analyses and sort by date (newest first)
-  const allAnalyses = Object.values(analyses).sort((a, b) => {
+  const allAnalyses = Object.values(analyses).filter(isPublishedAnalysis).sort((a, b) => {
     const dateA = a.date || '2000-01-01';
     const dateB = b.date || '2000-01-01';
     return dateB.localeCompare(dateA);

@@ -26,7 +26,7 @@ import {
 // @ts-ignore
 import { GoogleGenAI, Type } from "@google/genai";
 import { stocks } from '../data/stocks';
-import { analyses } from '../data/analyses';
+import { analyses, isPublishedAnalysis } from '../data/analyses';
 import { fetchWithCache, RapidAPIQuote } from '../services/stockService';
 import SEO from './SEO';
 import { buildBreadcrumbJsonLd } from '../lib/seo/structuredData';
@@ -51,6 +51,7 @@ export default function StockHub() {
 
   // Find analyses related to this stock
   const relatedAnalyses = Object.values(analyses)
+    .filter(isPublishedAnalysis)
     .filter(a => a.slug.includes(slug || '') || a.ticker === stock?.ticker)
     .sort((a, b) => {
       const dateA = a.date || "0000-00-00";
