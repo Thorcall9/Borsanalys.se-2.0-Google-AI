@@ -14,7 +14,7 @@ const [index, page, app, search, rss, component, canonical, meta] = await Promis
 
 assert.match(index, /"meta": meta2026/);
 assert.match(index, /published !== false/);
-assert.match(page, /Meta: MetaDeepDive/);
+assert.match(page, /Meta: lazyDeepDive\("Meta"\)/);
 assert.match(meta, /published: true/);
 assert.match(app, /<Route path="\/analyser\/:slug" element={<Analysis \/>} \/>/);
 assert.match(search, /filter\(isPublishedAnalysis\)/);

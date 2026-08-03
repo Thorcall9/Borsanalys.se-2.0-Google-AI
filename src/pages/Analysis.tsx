@@ -75,6 +75,7 @@ const DEEP_DIVE_COMPONENTS = {
   Axfood: lazyDeepDive("Axfood"),
   ABB: lazyDeepDive("ABB"),
   Plejd: lazyDeepDive("Plejd"),
+  Meta: lazyDeepDive("Meta"),
 };
 
 function DeepDiveLoading() {

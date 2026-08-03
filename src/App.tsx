@@ -69,6 +69,7 @@ export default function App() {
                       <Route path="/analys/revolutionrace-2026" element={<RvrcPreview />} />
                       <Route path="/analys/rvrc-2026" element={<RvrcPreview />} />
                       <Route path="/analys/:slug" element={<Analysis />} />
+                      <Route path="/analyser/:slug" element={<Analysis />} />
                       <Route path="/aktiechecklista" element={<StockChecklist />} />
                       <Route path="/mina-checklistor" element={<InternalRoute title="Mina checklistor"><MyChecklists /></InternalRoute>} />
                       <Route path="/profil" element={<InternalRoute title="Profil"><Profile /></InternalRoute>} />
