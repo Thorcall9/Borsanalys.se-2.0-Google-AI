@@ -1,6 +1,9 @@
 import React, { type ReactNode, useMemo } from "react";
+import { BarChart3, Globe2, Info, ShieldCheck } from "lucide-react";
 import SEO from "../SEO";
+import AnalysisLayout from "./AnalysisLayout";
 import metaMarkdown from "../../data/analyses/meta/meta-analysis-content.md?raw";
+import { META_V11_TRACEABILITY } from "../../data/analyses/meta/meta-v11-traceability";
 import type { AnalysisData } from "../../types/analysis";
 
 type Block =
@@ -14,28 +17,24 @@ type Block =
 type Section = { title: string; id: string; blocks: Block[] };
 
 const REQUIRED_SECTION_TITLES = [
-  "Snabböversikt",
-  "Investeringstes på 30 sekunder",
-  "Företagsöversikt och ledning",
-  "Affärsmodell och intäktsflöde",
-  "Konkurrensfördelar, bransch och peers",
-  "Finansiell utveckling och vinstkvalitet",
-  "Scorecard",
-  "Fundamental värdering",
-  "Kurszoner: 12 månader och fem år",
-  "Potentiella kursdrivare",
-  "Riskprofil, stresstest och tesbrytare",
-  "Bevakningsplan",
-  "Slutsats och investeringsbeslut",
+  "Snabböversikt", "Investeringstes på 30 sekunder", "Företagsöversikt och ledning",
+  "Affärsmodell och intäktsflöde", "Konkurrensfördelar, bransch och peers",
+  "Finansiell utveckling och vinstkvalitet", "Scorecard", "Fundamental värdering",
+  "Kurszoner: 12 månader och fem år", "Potentiella kursdrivare",
+  "Riskprofil, stresstest och tesbrytare", "Bevakningsplan", "Slutsats och investeringsbeslut",
 ] as const;
+
+const NAVIGATION_LABELS = [
+  "Snabböversikt", "Investeringstes", "Företag & ledning", "Affärsmodell", "Bransch & moat",
+  "Finansiell kvalitet", "Scorecard", "Fundamental värdering", "Kurszoner", "Kursdrivare",
+  "Risker & stresstest", "Bevakningsplan", "Investeringsbeslut",
+];
 
 const slugify = (text: string) => text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 const headingText = (text: string) => text.replace(/^\d+\.\s*/, "").trim();
 
 function parseMarkdown(source: string): Block[] {
-  const lines = source.split(/\r?\n/);
-  const blocks: Block[] = [];
-  let index = 0;
+  const lines = source.split(/\r?\n/); const blocks: Block[] = []; let index = 0;
   while (index < lines.length) {
     const line = lines[index].trim();
     if (!line) { index += 1; continue; }
@@ -100,42 +99,62 @@ function inline(value: string): ReactNode[] {
 }
 
 function MetaRevenueFlow() {
-  const node = (x: number, y: number, title: string, value: string, tone: string) => <g key={title}><rect x={x} y={y} width="170" height="64" rx="10" fill="#fff" stroke={tone} strokeWidth="2" /><text x={x + 85} y={y + 27} textAnchor="middle" fill="#172033" fontSize="14" fontWeight="700">{title}</text><text x={x + 85} y={y + 47} textAnchor="middle" fill="#667085" fontSize="12">{value}</text></g>;
-  return <figure className="my-8 overflow-hidden rounded-xl border border-border bg-card p-4 md:p-6"><figcaption className="mb-1 text-sm font-bold uppercase tracking-wider text-muted-foreground">Meta-intäktsflöde Q2 2026</figcaption><p className="mb-5 text-sm text-muted-foreground">Från annonsefterfrågan till rapporterat nettoresultat — bandens bredd visar relativa belopp.</p><svg data-testid="meta-mobile-sankey" aria-label="Meta-intäktsflöde Q2 2026 mobil" className="h-auto w-full md:hidden" viewBox="0 0 360 590" role="img"><defs><linearGradient id="mobile-blue" x1="0" x2="0" y2="1"><stop stopColor="#2563eb" stopOpacity=".75"/><stop offset="1" stopColor="#38bdf8" stopOpacity=".35"/></linearGradient></defs><path d="M90 100 C90 135 180 135 180 170 L180 205 C180 170 270 135 270 100" fill="none" stroke="url(#mobile-blue)" strokeWidth="28"/><path d="M180 265 L180 330" stroke="#22c55e" strokeWidth="22"/><path d="M270 400 C270 430 180 430 180 465" fill="none" stroke="#ef4444" strokeWidth="9"/><path d="M180 515 L180 540" stroke="#16a34a" strokeWidth="18"/>{node(5, 36, "Advertising", "59,363 md USD", "#2563eb")}{node(185, 36, "FoA other revenue", "1,007 md USD", "#38bdf8")}{node(95, 205, "Family of Apps", "60,370 md USD", "#2563eb")}{node(95, 330, "FoA operating profit", "23,394 md USD", "#16a34a")}{node(185, 390, "Reality Labs", "−4,619 md USD", "#ef4444")}{node(95, 465, "Koncernens EBIT", "18,775 md USD", "#16a34a")}{node(95, 540, "Nettoresultat", "15,848 md USD", "#16a34a")}</svg><svg data-testid="meta-desktop-sankey" aria-label="Meta-intäktsflöde Q2 2026" className="hidden h-auto w-full md:block" viewBox="0 0 720 590" role="img">
-    <defs><linearGradient id="foa-flow" x1="0" x2="1"><stop stopColor="#2563eb" stopOpacity=".75" /><stop offset="1" stopColor="#0ea5e9" stopOpacity=".45" /></linearGradient><linearGradient id="profit-flow" x1="0" x2="1"><stop stopColor="#16a34a" stopOpacity=".75" /><stop offset="1" stopColor="#22c55e" stopOpacity=".45" /></linearGradient></defs>
-    <text x="85" y="24" textAnchor="middle" fill="#667085" fontSize="11" fontWeight="700">INTÄKTSKÄLLOR</text><text x="360" y="24" textAnchor="middle" fill="#667085" fontSize="11" fontWeight="700">SEGMENT OCH RESULTAT</text><text x="635" y="24" textAnchor="middle" fill="#667085" fontSize="11" fontWeight="700">KONCERN</text>
-    <path d="M170 126 C210 126 225 118 275 118 L275 152 C225 152 210 160 170 160 Z" fill="url(#foa-flow)" />
-    <path d="M170 226 C215 226 225 152 275 152 L275 158 C225 158 215 232 170 232 Z" fill="#7dd3fc" opacity=".75" />
-    <path d="M445 136 C500 136 510 260 550 260 L550 284 C510 284 500 160 445 160 Z" fill="url(#profit-flow)" />
-    <path d="M445 386 C500 386 510 300 550 300 L550 312 C510 312 500 398 445 398 Z" fill="#ef4444" opacity=".72" />
-    <path d="M550 282 C590 282 600 282 635 282 L635 304 C600 304 590 304 550 304 Z" fill="url(#profit-flow)" />
-    {node(0, 96, "Advertising", "59,363 md USD", "#2563eb")}
-    {node(0, 196, "FoA other revenue", "1,007 md USD", "#38bdf8")}
-    {node(275, 108, "Family of Apps", "60,370 md USD revenue", "#2563eb")}
-    {node(275, 248, "FoA operating profit", "23,394 md USD", "#16a34a")}
-    {node(275, 358, "Reality Labs", "−4,619 md USD resultat", "#ef4444")}
-    {node(550, 256, "Koncernens EBIT", "18,775 md USD", "#16a34a")}
-    {node(550, 396, "Nettoresultat", "15,848 md USD", "#16a34a")}
-  </svg><p className="mt-4 text-sm text-muted-foreground">Källa: Meta Q2 2026. Resultatbryggan använder endast rapporterade Q2-värden och inga egna modellantaganden.</p></figure>;
+  const node = (x: number, y: number, title: string, value: string, tone: string, key: string) => <g key={key}><rect x={x} y={y} width="178" height="68" rx="14" fill="#fff" stroke={tone} strokeWidth="2"/><text x={x + 18} y={y + 29} fill="#111827" fontSize="14" fontWeight="700">{title}</text><text x={x + 18} y={y + 49} fill="#6b7280" fontSize="12">{value}</text></g>;
+  return <figure className="mb-10 overflow-hidden rounded-[2rem] border border-border/60 bg-card shadow-xl shadow-black/5">
+    <div className="border-b border-border/60 px-5 py-5 md:px-7"><p className="text-[10px] font-black uppercase tracking-[.18em] text-primary">Sankey-diagram</p><h3 className="mt-2 text-xl font-black tracking-tight text-foreground">Så rör sig Metas intäkter genom verksamheten</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">Rapporterade Q2 2026-värden. Svep i sidled på mobil för hela flödet.</p></div>
+    <div className="overflow-x-auto premium-scrollbar bg-white"><svg data-testid="meta-revenue-sankey" aria-label="Meta-intäktsflöde Q2 2026" className="min-w-[1220px] p-5 md:p-8" viewBox="0 0 1220 510" role="img">
+      <defs><linearGradient id="meta-revenue-flow" x1="0" x2="1"><stop stopColor="#10b981" stopOpacity=".72"/><stop offset="1" stopColor="#6ee7b7" stopOpacity=".35"/></linearGradient><linearGradient id="meta-profit-flow" x1="0" x2="1"><stop stopColor="#059669" stopOpacity=".78"/><stop offset="1" stopColor="#6ee7b7" stopOpacity=".42"/></linearGradient><linearGradient id="meta-cost-flow" x1="0" x2="1"><stop stopColor="#fb7185" stopOpacity=".76"/><stop offset="1" stopColor="#fca5a5" stopOpacity=".4"/></linearGradient></defs>
+      <text x="100" y="28" textAnchor="middle" fill="#6b7280" fontSize="11" fontWeight="800">INTÄKTSKÄLLOR</text><text x="310" y="28" textAnchor="middle" fill="#6b7280" fontSize="11" fontWeight="800">SEGMENTINTÄKT</text><text x="530" y="28" textAnchor="middle" fill="#6b7280" fontSize="11" fontWeight="800">FOA-RESULTAT</text><text x="760" y="28" textAnchor="middle" fill="#6b7280" fontSize="11" fontWeight="800">KONCERNENS EBIT</text><text x="970" y="28" textAnchor="middle" fill="#6b7280" fontSize="11" fontWeight="800">NETTORESULTAT</text>
+      <path d="M188 134 C220 134 235 130 270 130 L270 175 C235 175 220 179 188 179 Z" fill="url(#meta-revenue-flow)"/><path d="M188 281 C220 281 235 175 270 175 L270 184 C235 184 220 290 188 290 Z" fill="#6ee7b7" opacity=".8"/>
+      <path d="M448 143 C485 143 495 140 530 140 L530 192 C495 192 485 195 448 195 Z" fill="url(#meta-profit-flow)"/><path d="M448 195 C485 195 495 283 530 283 L530 366 C495 366 485 278 448 278 Z" fill="url(#meta-cost-flow)"/>
+      <path d="M708 166 C745 166 755 180 790 180 L790 224 C755 224 745 210 708 210 Z" fill="url(#meta-profit-flow)"/><path d="M708 210 C745 210 755 321 790 321 L790 371 C755 371 745 260 708 260 Z" fill="url(#meta-cost-flow)"/>
+      <path d="M968 202 C995 202 1005 202 1032 202 L1032 244 C1005 244 995 244 968 244 Z" fill="url(#meta-profit-flow)"/><path d="M968 244 C995 244 1005 335 1032 335 L1032 357 C1005 357 995 266 968 266 Z" fill="url(#meta-cost-flow)"/>
+      {node(10, 100, "Advertising", "59,363 md USD", "#10b981", "advertising")}{node(10, 250, "FoA other revenue", "1,007 md USD", "#34d399", "foa-other")}{node(270, 130, "Family of Apps revenue", "60,370 md USD", "#10b981", "foa-revenue")}{node(530, 140, "FoA operating profit", "23,394 md USD", "#059669", "foa-profit")}{node(530, 298, "FoA costs", "36,976 md USD", "#fb7185", "foa-costs")}{node(790, 180, "Koncernens EBIT", "18,775 md USD", "#059669", "ebit")}{node(790, 321, "Reality Labs loss", "4,619 md USD", "#ef4444", "rl-loss")}{node(1032, 202, "Nettoresultat", "15,848 md USD", "#10b981", "net-income")}{node(1032, 321, "Finansnetto & skatt", "2,927 md USD", "#fb7185", "finance-tax")}
+    </svg></div><figcaption className="border-t border-border/60 px-5 py-4 text-xs leading-relaxed text-muted-foreground md:px-7">Källa: Meta Q2 2026. Alla flöden är balanserade: FoA revenue = FoA operating profit + FoA costs; FoA operating profit = koncernens EBIT + Reality Labs-förlust; EBIT = nettoresultat + finansnetto och skatt.</figcaption>
+  </figure>;
+}
+
+function AnalysisTable({ rows }: { rows: string[][] }) {
+  return <div className="my-7 overflow-x-auto rounded-[1.5rem] border border-border/60 bg-card shadow-sm premium-scrollbar"><table className="w-full min-w-max border-collapse text-sm"><thead><tr className="border-b border-border/60 bg-muted/35">{rows[0]?.map((cell, i) => <th className={`whitespace-nowrap px-5 py-4 text-[10px] font-black uppercase tracking-[.13em] text-muted-foreground ${i === 0 ? "text-left" : "text-left md:text-right"}`} key={`${cell}-${i}`}>{inline(cell)}</th>)}</tr></thead><tbody className="divide-y divide-border/40">{rows.slice(1).map((row, ri) => <tr className="transition-colors hover:bg-primary/[.025]" key={`${ri}-${row.join("-")}`}>{row.map((cell, ci) => <td className={`whitespace-nowrap px-5 py-4 align-top text-sm leading-relaxed ${ci === 0 ? "font-bold text-foreground" : "text-muted-foreground md:text-right"}`} key={`${ci}-${cell}`}>{inline(cell)}</td>)}</tr>)}</tbody></table></div>;
 }
 
 function ContentBlock({ block }: { block: Block }) {
-  if (block.type === "heading") {
-    const className = block.level === 1 ? "mt-10 text-3xl font-serif font-black text-emerald-950" : "mt-9 text-xl font-serif font-bold text-emerald-950";
-    return <h3 className={className}>{inline(block.text)}</h3>;
-  }
-  if (block.type === "quote") return <blockquote className="my-8 border-l-4 border-amber-700 bg-amber-700/10 px-5 py-4 text-emerald-950/75 italic leading-7">{inline(block.text)}</blockquote>;
-  if (block.type === "list") return <ul className="my-5 space-y-2 pl-5 text-emerald-950/75">{block.items.map((item) => <li key={item} className="list-disc leading-7">{inline(item)}</li>)}</ul>;
+  if (block.type === "heading") return <h3 className={block.level === 1 ? "mt-12 text-3xl font-black tracking-tight text-foreground" : "mt-10 text-xl font-black tracking-tight text-foreground"}>{inline(block.text)}</h3>;
+  if (block.type === "quote") return <blockquote className="my-8 rounded-[1.5rem] border border-primary/20 bg-primary/[.055] px-6 py-5 text-base font-medium leading-8 text-foreground/85">{inline(block.text)}</blockquote>;
+  if (block.type === "list") return <ul className="my-6 space-y-3 pl-5 text-muted-foreground">{block.items.map((item) => <li key={item} className="list-disc pl-1 leading-7">{inline(item)}</li>)}</ul>;
   if (block.type === "code") return <MetaRevenueFlow />;
-  if (block.type === "table") return <div className="my-6 overflow-x-auto rounded border border-amber-700/25 bg-white/35"><table className="min-w-full text-sm"><thead className="bg-emerald-950 text-left text-xs uppercase tracking-wider text-white"><tr>{block.rows[0]?.map((cell) => <th className="whitespace-nowrap p-3 font-semibold" key={cell}>{inline(cell)}</th>)}</tr></thead><tbody>{block.rows.slice(1).map((row, rowIndex) => <tr className="border-t border-emerald-900/10" key={`${rowIndex}-${row.join("-")}`}>{row.map((cell, cellIndex) => <td className="whitespace-nowrap p-3 align-top text-emerald-950/80" key={`${cellIndex}-${cell}`}>{inline(cell)}</td>)}</tr>)}</tbody></table></div>;
-  return <p className="my-5 max-w-4xl leading-8 text-emerald-950/75">{inline(block.text)}</p>;
+  if (block.type === "table") return <AnalysisTable rows={block.rows}/>;
+  return <p className="my-6 max-w-4xl text-[15px] leading-8 text-muted-foreground">{inline(block.text)}</p>;
 }
 
-export default function MetaDeepDive({ data }: { data: AnalysisData }) {
-  const { intro, sections } = useMemo(() => sectionsFrom(parseMarkdown(metaMarkdown)), []);
+function QuickOverview({ section }: { section: Section }) {
+  const tables = section.blocks.filter((block): block is Extract<Block, { type: "table" }> => block.type === "table");
+  const metrics = tables[0]?.rows.slice(1) ?? []; const signals = tables[1]?.rows.slice(1) ?? [];
+  return <section id={section.id} className="scroll-mt-24 overflow-hidden rounded-[2.4rem] border border-border/60 bg-card shadow-xl shadow-black/[.045]">
+    <div className="border-b border-border/60 bg-primary/[.045] px-6 py-8 md:px-9 md:py-10"><div className="flex flex-col justify-between gap-6 md:flex-row md:items-end"><div><p className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[.22em] text-primary"><BarChart3 size={13}/> Snabböversikt</p><h2 className="mt-4 max-w-3xl text-3xl font-black tracking-tight text-foreground md:text-5xl">Meta Platforms – stark annonsmotor, men hög kapitalintensitet</h2></div><div className="rounded-2xl border border-primary/20 bg-primary/[.08] px-6 py-4 text-center"><p className="text-[9px] font-black uppercase tracking-[.18em] text-primary">Rekommendation</p><p className="mt-1 text-2xl font-black text-primary">BEVAKA</p></div></div></div>
+    <div className="grid lg:grid-cols-[.9fr_1.25fr]"><dl className="divide-y divide-border/50 border-b border-border/50 lg:border-b-0 lg:border-r">{metrics.map(([label, value]) => <div className="grid grid-cols-[minmax(0,1fr)_auto] gap-5 px-6 py-4 md:px-7" key={label}><dt className="text-[10px] font-black uppercase tracking-[.12em] text-muted-foreground">{inline(label)}</dt><dd className="text-right text-sm font-black text-foreground">{inline(value)}</dd></div>)}</dl><div className="p-6 md:p-7"><div className="grid gap-4 md:grid-cols-3">{signals.map(([label, value]) => <div className="rounded-[1.35rem] border border-border/60 bg-card p-5" key={label}><p className="text-[9px] font-black uppercase tracking-[.14em] text-primary">{inline(label)}</p><p className="mt-3 text-sm font-semibold leading-6 text-foreground/85">{inline(value)}</p></div>)}</div><div className="mt-6 flex gap-3 rounded-[1.4rem] border border-primary/20 bg-primary/[.05] p-5"><Info size={17} className="mt-0.5 shrink-0 text-primary"/><p className="text-sm leading-7 text-foreground/80">{META_V11_TRACEABILITY.overviewFact}</p></div></div></div>
+  </section>;
+}
+
+function SectionHeader({ index, title }: { index: number; title: string }) {
+  return <div className="mb-9 flex flex-wrap items-center justify-between gap-4"><h2 className="flex items-center gap-4 text-2xl font-black tracking-tight text-foreground md:text-3xl"><span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-[11px] font-black text-primary">{index + 1}</span>{title}</h2></div>;
+}
+
+interface MetaDeepDiveProps { data: AnalysisData; onToggleWatchlist?: () => void; isInWatchlist?: boolean; isWatchlistLoading?: boolean; onToggleSave?: () => void; isSaved?: boolean; isSaveLoading?: boolean; }
+
+export default function MetaDeepDive(props: MetaDeepDiveProps) {
+  const { data } = props; const { intro, sections } = useMemo(() => sectionsFrom(parseMarkdown(metaMarkdown)), []);
   const navigation = sections.filter((section) => REQUIRED_SECTION_TITLES.includes(section.title as typeof REQUIRED_SECTION_TITLES[number]));
-  return <main className="min-h-screen bg-[#f4ead8] pt-24 pb-24 text-[#223027]"><SEO title="Meta Platforms – analys" description={data.summary} canonical="https://www.borsanalys.se/analyser/meta" />
-    <header className="border-b border-emerald-900/12 bg-[radial-gradient(circle_at_top_left,rgba(184,134,11,0.22),transparent_34%),linear-gradient(135deg,#fbf4e8_0%,#f1e3cc_58%,#e7d6ba_100%)]"><div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:px-8 lg:grid-cols-[1.15fr_.85fr] lg:items-end"><div><p className="text-sm font-black uppercase tracking-[.16em] text-amber-800">Spotlight · Nasdaq · META · 31 juli 2026</p><h1 className="mt-3 text-5xl font-black tracking-tight text-emerald-950 md:text-7xl">Meta Platforms</h1><p className="mt-5 max-w-3xl text-xl leading-8 text-emerald-950/75">{data.summary}</p></div><div className="grid grid-cols-2 gap-3"><div className="rounded border border-amber-700/20 bg-white/45 p-4"><b className="text-emerald-950">BEVAKA</b><span className="block text-sm text-emerald-900/60">Rekommendation</span></div><div className="rounded border border-amber-700/20 bg-white/45 p-4"><b className="text-emerald-950">25/35</b><span className="block text-sm text-emerald-900/60">Totalrating</span></div><div className="rounded border border-amber-700/20 bg-white/45 p-4"><b className="text-emerald-950">612,50 USD</b><span className="block text-sm text-emerald-900/60">12 mån. värde</span></div><div className="rounded border border-amber-700/20 bg-white/45 p-4"><b className="text-emerald-950">1 066,05 USD</b><span className="block text-sm text-emerald-900/60">5 år, viktat</span></div></div></div></header>
-    <nav aria-label="Läsnavigation" className="sticky top-16 z-30 border-b border-emerald-900/12 bg-[#f7efe1]/95 backdrop-blur"><div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto px-5 py-3 md:px-8">{navigation.map((section) => <a className="shrink-0 rounded border border-emerald-900/12 bg-white/35 px-3 py-2 text-xs font-black uppercase tracking-[.08em] text-emerald-950/70 hover:border-amber-700/40 hover:bg-amber-700/10" href={`#${section.id}`} key={section.id}>{section.title}</a>)}</div></nav>
-    <div className="mx-auto grid max-w-7xl gap-10 px-5 py-12 md:px-8 lg:grid-cols-[minmax(0,1fr)_250px]"><article className="min-w-0">{intro.map((block, index) => <ContentBlock key={index} block={block} />)}{sections.map((section) => <section className="scroll-mt-32 border-t border-emerald-900/12 py-12" id={section.id} key={section.id}><h2 className="mb-7 text-3xl font-black tracking-tight text-emerald-950 md:text-4xl">{section.title}</h2>{section.blocks.map((block, index) => <ContentBlock key={index} block={block} />)}</section>)}<div className="border-t border-emerald-900/12 pt-10 text-center text-sm font-semibold text-emerald-950/55">Slut på analys</div></article><aside className="hidden lg:block"><div className="sticky top-36 rounded border border-amber-700/20 bg-white/45 p-5 text-sm"><p className="font-black uppercase tracking-[.14em] text-emerald-950">Analysinformation</p><dl className="mt-4 space-y-3 text-emerald-900/70"><div><dt className="text-xs uppercase">Ticker</dt><dd className="font-semibold text-emerald-950">META</dd></div><div><dt className="text-xs uppercase">Risknivå</dt><dd className="font-semibold text-emerald-950">Hög</dd></div><div><dt className="text-xs uppercase">Status</dt><dd className="font-semibold text-emerald-950">Dold före publicering</dd></div></dl></div></aside></div></main>;
+  const quickOverview = navigation[0];
+  return <AnalysisLayout companyName="Meta Platforms" stockSlug="meta" ticker="META" subtitle="Finansiell analys" livePrice="556,71 USD" date="Dold före publicering · analysdatum 2 augusti 2026" dataSources="Källa: Börsanalys.se · v11" accentColor="#10B981" theme="light" sections={navigation.map((section, index) => ({ id: section.id, title: NAVIGATION_LABELS[index], number: index < 9 ? ["I", "II", "III", "IV", "V", "VI", "VI.C", "VII", "VIII"][index] : ["IX", "X", "XI", "XII"][index - 9] }))} isInWatchlist={props.isInWatchlist} isWatchlistLoading={props.isWatchlistLoading} onToggleWatchlist={props.onToggleWatchlist} isSaved={props.isSaved} isSaveLoading={props.isSaveLoading} onToggleSave={props.onToggleSave} tightContent>
+    <SEO title="Meta Platforms – analys" description={data.summary} canonical="https://www.borsanalys.se/analyser/meta" />
+    <article className="pb-12"><header className="mb-16 space-y-4"><div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[10px] font-black uppercase tracking-[.18em] text-muted-foreground"><Globe2 size={12} className="text-primary"/><span>Nasdaq</span><span className="opacity-40">·</span><span>META</span><span className="opacity-40">·</span><span>Kommunikation</span></div><h1 className="text-5xl font-black tracking-tighter text-foreground md:text-7xl">Meta Platforms<span className="mt-3 block text-[.74em] text-primary">Strategisk analys</span></h1></header>
+      {quickOverview && <QuickOverview section={quickOverview}/>}
+      {intro.filter((block) => block.type !== "heading").map((block, index) => <ContentBlock key={index} block={block}/>)}
+      {navigation.slice(1).map((section, index) => <section className="scroll-mt-24 mt-24" id={section.id} key={section.id}><SectionHeader index={index + 1} title={section.title}/>{section.blocks.map((block, blockIndex) => <ContentBlock key={blockIndex} block={block}/>)}</section>)}
+      {sections.filter((section) => !navigation.includes(section)).map((section) => <section className="scroll-mt-24 mt-24" id={section.id} key={section.id}><SectionHeader index={13} title={section.title}/>{section.blocks.map((block, index) => <ContentBlock key={index} block={block}/>)}</section>)}
+      <section className="mt-20 rounded-[1.5rem] border border-primary/20 bg-primary/[.04] p-6"><div className="flex gap-3"><ShieldCheck className="mt-0.5 shrink-0 text-primary" size={18}/><div><h2 className="text-sm font-black uppercase tracking-[.14em] text-foreground">V11-spårbarhet</h2><p className="mt-2 text-sm leading-7 text-muted-foreground">{META_V11_TRACEABILITY.publicNote}</p></div></div></section>
+      <div className="mt-20 border-t border-border pt-10 text-center text-sm font-semibold text-muted-foreground">Slut på analys</div>
+    </article>
+  </AnalysisLayout>;
 }
