@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import { updateAllMacroData } from '../src/lib/macroUpdater.ts';
 
 type RateLimitEntry = {
   count: number;
@@ -154,7 +155,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // 3. Update Macro Logic
     if (type === 'update-macro') {
-      const { updateAllMacroData } = await import('../src/lib/macroUpdater.ts');
       const result = await updateAllMacroData();
       return res.status(200).json(result);
     }
