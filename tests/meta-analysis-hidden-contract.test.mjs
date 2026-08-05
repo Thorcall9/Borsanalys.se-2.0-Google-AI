@@ -24,9 +24,12 @@ assert.match(component, /metaMarkdown/);
 assert.match(component, /Meta-intäktsflöde Q2 2026/);
 assert.match(component, /<svg/);
 assert.match(component, /data-testid="meta-revenue-sankey"/);
-assert.match(component, /min-w-\[1220px\]/);
-assert.match(component, /FoA costs/);
-assert.match(component, /Finansnetto & skatt/);
+assert.match(component, /min-w-\[1280px\]/);
+assert.match(component, /Reality Labs revenue/);
+assert.match(component, /Härledd FoA-kostnad/);
+assert.match(component, /Härledd finansnetto, skatt & övrigt/);
+assert.match(component, /INTÄKTSKÄLLOR/);
+assert.match(component, /SEGMENTRESULTAT/);
 assert.match(component, /AnalysisLayout/);
 assert.match(component, /META_V11_TRACEABILITY/);
 for (const heading of [
