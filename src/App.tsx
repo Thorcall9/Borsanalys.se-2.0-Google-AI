@@ -32,6 +32,7 @@ const Privacy = lazy(() => import("./pages/Privacy"));
 const Holdings = lazy(() => import("./pages/Holdings"));
 const AdminSubscribers = lazy(() => import("./components/AdminSubscribers").then(module => ({ default: module.AdminSubscribers })));
 const RvrcPreview = lazy(() => import("./pages/RvrcPreview"));
+const AlphabetV11Preview = lazy(() => import("./pages/AlphabetV11Preview"));
 const StockChecklist = lazy(() => import("./pages/StockChecklist"));
 const MyChecklists = lazy(() => import("./pages/MyChecklists"));
 
@@ -68,6 +69,7 @@ export default function App() {
                       <Route path="/analys" element={<Analysis />} />
                       <Route path="/analys/revolutionrace-2026" element={<RvrcPreview />} />
                       <Route path="/analys/rvrc-2026" element={<RvrcPreview />} />
+                      <Route path="/analys/alphabet-v11" element={<AlphabetV11Preview />} />
                       <Route path="/analys/:slug" element={<Analysis />} />
                       <Route path="/analyser/:slug" element={<Analysis />} />
                       <Route path="/aktiechecklista" element={<StockChecklist />} />
