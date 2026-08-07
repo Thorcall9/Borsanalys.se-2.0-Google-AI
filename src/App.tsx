@@ -31,6 +31,7 @@ const PreviewHeaderPage = lazy(() => import("./pages/PreviewHeader"));
 const AbbQ12026Preview = lazy(() => import("./pages/AbbQ12026Preview"));
 const RvrcPreview = lazy(() => import("./pages/RvrcPreview"));
 const MindmapBlueprint = lazy(() => import("./components/Mindmap"));
+const AlphabetV11Preview = lazy(() => import("./pages/AlphabetV11Preview"));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -56,6 +57,7 @@ export default function App() {
                       <Route path="/analys" element={<Analysis />} />
                       <Route path="/analys/revolutionrace-2026" element={<RvrcPreview />} />
                       <Route path="/analys/rvrc-2026" element={<RvrcPreview />} />
+                      <Route path="/analys/alphabet-v11" element={<AlphabetV11Preview />} />
                       <Route path="/analys/:slug" element={<Analysis />} />
                       <Route path="/profil" element={<Profile />} />
                       <Route path="/aktier/:slug" element={<StockHub />} />
