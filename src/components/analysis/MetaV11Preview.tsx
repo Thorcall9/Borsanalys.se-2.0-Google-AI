@@ -143,6 +143,7 @@ function SectionNav({
     </nav>
   );
 }
+
 function ReasonRows({
   rows,
   tone,
@@ -171,7 +172,6 @@ function ReasonRows({
               {body}
             </span>
           </span>
-          <ArrowRight className={`${accent} mt-2 shrink-0`} size={18} />
         </div>
       ))}
     </div>
@@ -263,7 +263,9 @@ function ValuationChain({
   );
 }
 
-export default function MetaV11Preview({ data }: Props) {
+// This renderer is intentionally data-led: no company copy belongs in the
+// presentation layer. A v11.1 analysis must supply its canonical projection.
+export default function V11Analysis({ data }: Props) {
   const [activeTab, setActiveTab] = useState<TabId>("overview");
   const [showMethod, setShowMethod] = useState(false);
   const [risksOpen, setRisksOpen] = useState(false);
@@ -297,17 +299,14 @@ export default function MetaV11Preview({ data }: Props) {
   const annualGrowth =
     activeScenario?.operatingLadder?.revenueGrowthFromLatestAnnualPct;
   const marginRange = history?.derived?.operatingMarginRange2019To2025Pct;
-  const preview = data.v11Preview;
+  const preview = data.v11;
+  if (!preview) return null;
   const reasonIcons: LucideIcon[] = [LineChart, Sparkles, Gauge];
   const cautionIcons: LucideIcon[] = [WalletCards, Landmark, ShieldAlert];
-  const positiveRows = preview
-    ? preview.positiveReasons.map((row, index) => ({ ...row, icon: reasonIcons[index] ?? LineChart }))
-    : positives;
-  const cautionRows = preview
-    ? preview.cautionReasons.map((row, index) => ({ ...row, icon: cautionIcons[index] ?? ShieldAlert }))
-    : cautions;
-  const displayedTheses = preview?.theses ?? theses;
-  const displayedMonitors = preview?.monitors ?? monitors;
+  const positiveRows = preview.positiveReasons.map((row, index) => ({ ...row, icon: reasonIcons[index] ?? LineChart }));
+  const cautionRows = preview.cautionReasons.map((row, index) => ({ ...row, icon: cautionIcons[index] ?? ShieldAlert }));
+  const displayedTheses = preview.theses;
+  const displayedMonitors = preview.monitors;
 
   return (
     <>
@@ -315,7 +314,7 @@ export default function MetaV11Preview({ data }: Props) {
         title={`${data.title} (${data.ticker}) — analys`}
         description={data.summary}
         ogType="article"
-        noindex
+        noIndex
       />
       <article className="bg-white text-slate-950">
         <header
@@ -346,17 +345,17 @@ export default function MetaV11Preview({ data }: Props) {
               </button>
             </div>
             <h1 className="mt-7 max-w-5xl font-serif text-[2.25rem] font-bold leading-[0.98] tracking-[-0.052em] sm:text-6xl lg:text-7xl">
-              {preview?.headline ?? "Meta: stark annonsmotor – men AI-investeringarna måste betala sig"}
+              {preview.headline}
             </h1>
             <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600 sm:text-xl">
-              {preview?.dek ?? "Annonser växer i både volym och pris. Nästa prövning är om AI-kapaciteten ger avkastning utan att kapitalbindningen blir permanent."}
+              {preview.dek}
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-4">
               <span className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-emerald-600 bg-emerald-50 px-4 text-sm font-black tracking-wide text-emerald-700">
                 <Eye size={18} /> {data.recommendation}
               </span>
               <span className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
-                <span className="h-2.5 w-2.5 rounded-full bg-amber-500" /> {preview?.riskLabel ?? "Hög risk"}
+                <span className="h-2.5 w-2.5 rounded-full bg-amber-500" /> {preview.riskLabel}
               </span>
             </div>
             <section className="mt-8 rounded-2xl border border-emerald-100 bg-emerald-50/75 p-5 sm:p-7">
@@ -370,7 +369,7 @@ export default function MetaV11Preview({ data }: Props) {
                   </p>
                   <div className="mt-1 flex items-end gap-3">
                     <p className="font-serif text-6xl font-bold leading-none tracking-[-0.055em] text-emerald-700 sm:text-7xl">
-                      {preview?.weightedFairValue ?? "764"}
+                      {preview.weightedFairValue}
                     </p>
                     <p className="mb-1.5 text-xl font-bold text-emerald-700">
                       USD
@@ -382,16 +381,16 @@ export default function MetaV11Preview({ data }: Props) {
                 </div>
                 <div className="border-t border-emerald-200 pt-5 sm:border-l sm:border-t-0 sm:pl-8 sm:pt-0">
                   <p className="text-sm text-slate-600">
-                    Dagens kurs: {preview?.currentPrice ?? "592,10 USD"}
+                    Dagens kurs: {preview.currentPrice}
                   </p>
                   <p className="mt-2 font-serif text-4xl font-bold leading-none tracking-[-0.045em] text-emerald-700">
-                    {preview?.upside ?? "+29 %"}
+                    {preview.upside}
                   </p>
                   <p className="mt-2 text-base text-slate-600">
                     Möjlig total uppsida före utdelning
                   </p>
                   <p className="mt-1 text-sm font-semibold text-slate-700">
-                    {preview?.annualPotential ?? "Årlig potential: cirka 20 %"}
+                    {preview.annualPotential}
                   </p>
                 </div>
               </div>
@@ -459,8 +458,7 @@ export default function MetaV11Preview({ data }: Props) {
                           Varför denna multipel?
                         </p>
                         <p className="mt-1">
-                          {activeScenario.description ??
-                            "Modellmotivering saknas i det kanoniska underlaget."}
+                          {activeScenario.description ?? "Modellmotivering saknas i det kanoniska underlaget."}
                         </p>
                       </div>
                     </div>
@@ -499,10 +497,10 @@ export default function MetaV11Preview({ data }: Props) {
               Börsanalys.se:s insikt
             </p>
             <h2 className="mt-3 max-w-3xl font-serif text-4xl font-bold leading-tight tracking-[-0.045em] sm:text-5xl">
-              {preview?.insightHeadline ?? "AI-caset är en kapitalavkastningsfråga"}
+              {preview.insightHeadline}
             </h2>
             <p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">
-              {preview?.insightBody ?? "Efterfrågan är inte huvudfrågan: både annonsvolym och pris växer. Frågan är om annonsmotorn kan finansiera ett större infrastrukturnät utan ett varaktigt tapp i marginal, FCF och kapitalallokering."}
+              {preview.insightBody}
             </p>
           </section>
           {history && <HistoricalFundament data={history} />}
@@ -586,6 +584,11 @@ export default function MetaV11Preview({ data }: Props) {
                   <p className="mt-1 text-sm font-bold text-emerald-700">
                     {scenario.probability} sannolikhet
                   </p>
+                  {scenario.cagr && (
+                    <p className="mt-1 text-sm font-black text-slate-700">
+                      {scenario.cagr} CAGR till {targetYear}
+                    </p>
+                  )}
                   <p className="mt-4 text-sm leading-6 text-slate-600">
                     {scenario.description}
                   </p>
@@ -595,11 +598,11 @@ export default function MetaV11Preview({ data }: Props) {
             <div className="mt-5 grid gap-4 border-l-2 border-emerald-500 pl-5 text-sm leading-6 text-slate-600 md:grid-cols-2">
               <p>
                 <strong className="text-slate-950">Kontroll:</strong>{" "}
-                {preview?.valuationCheck ?? "TTM justerad P/E är cirka 20x; TTM FCF-avkastning cirka 2,5 %."}
+                {preview.valuationCheck}
               </p>
               <p>
                 <strong className="text-slate-950">Begränsning:</strong>{" "}
-                {preview?.valuationLimitation ?? "FCF är pressat av AI-capex och ska inte tolkas som ett normaliserat kassaflöde."}
+                {preview.valuationLimitation}
               </p>
             </div>
           </section>
@@ -666,7 +669,7 @@ export default function MetaV11Preview({ data }: Props) {
             {risksOpen && (
               <div className="mt-6 grid gap-5 border-l-2 border-amber-400 pl-5 text-sm leading-7 text-slate-600 md:grid-cols-2">
                 <p>
-                  {preview?.riskAndMethod ?? "Huvudriskerna är kapitalintensitet, annonskonjunktur och betydande juridiska/regulatoriska förfaranden. Meta har stora framtida moln- och leasingåtaganden."}
+                  {preview.riskAndMethod}
                 </p>
                 <p>
                   Rapportdata är FACT; TTM-tal är DERIVED; 2027-scenarier är
@@ -679,7 +682,7 @@ export default function MetaV11Preview({ data }: Props) {
           <footer className="border-t border-slate-200 py-9 text-sm leading-6 text-slate-500">
             <p>
               <strong className="text-slate-700">Källor:</strong>{" "}
-              {preview?.sourceSummary ?? "Metas årsrapporter FY2019–FY2025, Q2 2026 Form 10-Q, kvartalsrapporter och earnings call-transkript samt META-stängningskurs 7 augusti 2026."}
+              {preview.sourceSummary}
             </p>
           </footer>
         </div>

@@ -1,19 +1,15 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 export const alphabet: AnalysisData = {
-  contentType: "analysis",
-  templateVersion: "v11",
   slug: "alphabet",
   title: "Alphabet Inc.",
-  listTitle: "Alphabet: stark AI-tillväxt – men begränsad säkerhetsmarginal",
   disclosureKey: "alphabet",
-  ticker: "GOOG",
+  ticker: "GOOGL",
   market: "NASDAQ",
   sector: "Internet / AI",
   recommendation: "BEVAKA",
   price: "$353,47",
-  upside: 9,
-  pe: "Se v11.1-värdering",
+  pe: "~28.00x",
   yield: "0,45%",
   relatedAnalysis: {
     slug: "microsoft",
@@ -38,10 +34,43 @@ export const alphabet: AnalysisData = {
       reason: "Sätt Alphabets mjukvaruövertag i perspektiv genom att analysera bolaget som levererar den nödvändiga beräkningskraften bakom Gemini."
     }
   ],
-  summary: "Google Cloud växer snabbt och Search håller emot, men AI-investeringarna är stora. V11.1-analysen landar i BEVAKA med begränsad säkerhetsmarginal.",
+  summary: "Med ett ohotat monopol inom sök och en snabbväxande molnaffär transformeras Alphabet nu till ett 'compute-first' AI-bolag. Bolagets vertikala integration – från egna chip till världens största dataset – ger dem en strukturell fördel i den pågående AI-kapplöpningen.",
   date: "2026-08-08",
-  displayDate: "8 augusti 2026",
-  updatedAt: "2026-08-08",
+  v11: {
+    headline: "Alphabet: stark AI-tillväxt – men begränsad säkerhetsmarginal",
+    dek: "Google Cloud växer snabbt och Search håller emot. Men AI-investeringarna är redan stora.",
+    weightedFairValue: "387",
+    currentPrice: "353,47 USD",
+    upside: "+9 %",
+    annualPotential: "Årlig potential: cirka 4 %",
+    riskLabel: "Medel–hög risk",
+    positiveReasons: [
+      { title: "Google Cloud har blivit en vinstmotor", body: "Cloud omsatte 24,8 md USD och rörelsevinsten steg till 8,8 md USD i senaste kvartalet." },
+      { title: "Search fortsätter växa", body: "Search & other växte 17 %, trots att AI förändrar hur människor söker information." },
+      { title: "AI-efterfrågan syns i orderstocken", body: "Cloud-backloggen på 514 md USD ger stöd för att efterfrågan är bred och långsiktig." }
+    ],
+    cautionReasons: [
+      { title: "AI-investeringarna är mycket stora", body: "TTM-capex på 132,4 md USD har pressat fritt kassaflöde till 53,3 md USD." },
+      { title: "Rapporterad vinst behöver normaliseras", body: "Stora värdeförändringar i aktieinnehav kan göra enskilda EPS-siffror missvisande." },
+      { title: "Aktien kräver fortsatt stark leverans", body: "Dagens värdering lämnar begränsad säkerhetsmarginal om Cloud eller Search bromsar." }
+    ],
+    insightHeadline: "AI-caset är en kapitalavkastningsfråga",
+    insightBody: "Cloud och Search visar operativ styrka. Avgörande för värdet är om den högre investeringsnivån kan omvandlas till uthållig vinst och fritt kassaflöde.",
+    theses: [
+      { status: "Stärkt", title: "AI blir varaktig Cloud-omsättning", signal: "Cloud växte 82 % och rörelsevinsten steg kraftigt.", next: "Cloud växer över 30 % med fortsatt bättre lönsamhet." },
+      { status: "Stärkt", title: "Search försvarar sin relevans", signal: "Search & other växte 17 % i senaste kvartalet.", next: "Tvåsiffrig tillväxt samtidigt som AI-svaren tar större plats." },
+      { status: "Ej bekräftad", title: "Investeringarna skapar ekonomisk avkastning", signal: "Capex är hög och FCF är ännu pressat.", next: "Rörelsevinsten och FCF behöver utvecklas bättre än investeringarna." }
+    ],
+    monitors: [
+      { focus: "Google Cloud", latest: "Stark tillväxt", next: "Över 30 % med högre rörelsevinst", why: "Visar att AI-investeringarna börjar ge avkastning." },
+      { focus: "Search & other", latest: "+17 %", next: "Fortsatt tvåsiffrig tillväxt", why: "Bekräftar att kärnaffären står emot AI-skiftet." },
+      { focus: "Capex och FCF", latest: "$132,4 md / $53,3 md", next: "Rörelsevinst växer snabbare än capex", why: "Avgör hur kapitalintensivt caset blir." }
+    ],
+    valuationCheck: "Värdet bygger på normaliserad EPS och tre scenarier, inte på en exakt riktkurs.",
+    valuationLimitation: "Hög capex och värdeförändringar i aktieinnehav gör FCF och rapporterad EPS svårare att normalisera.",
+    riskAndMethod: "Huvudriskerna är AI-capex, Search och Cloud. Scenarierna är redaktionella antaganden och inte bolagets prognoser.",
+    sourceSummary: "Senaste rapporterade kvartalsdata och GOOG-stängningskurs den 7 augusti 2026."
+  },
   
   marketOverview: "Alphabet är moderbolaget till Google och YouTube, två av internets mest centrala noder. Google Search har en global marknadsandel på över 90%, vilket genererar ett massivt och stabilt kassaflöde som finansierar morgondagens teknologier. YouTube har vuxit till världens största videoplattform med över 270 miljoner prenumeranter, vilket skapar en kraftfull mix av annonsintäkter och prenumerationsmodeller.\n\nDen mest spännande transformationen sker dock inom Google Cloud (GCP). Genom att nå en kritisk massa med stigande rörelsemarginaler (över 20%) har GCP blivit bolagets andra stora vinstmotor. Alphabets förmåga att integrera Gemini-modeller direkt i sina sökresultat och arbetsverktyg (Workspace) har bevisat att bolaget inte bara kan försvara sin position mot nya AI-utmanare, utan även expandera sin monetarisering kraftfullt.",
   
@@ -111,9 +140,9 @@ export const alphabet: AnalysisData = {
   ],
 
   scenarios: [
-    { label: "Bull Case", value: "$420", change: "+37%", type: "bull", description: "Waymo når massmarknad, Cloud-vinsterna accelererar och AI-sök ökar annonsmarginalerna." },
-    { label: "Base Case", value: "$340", change: "+11%", type: "base", description: "Fortsatt sökdominans, stabil 15-20% tillväxt i molntjänster, balanserat risk/reward." },
-    { label: "Bear Case", value: "$250", change: "-18%", type: "bear", description: "Regulatoriska böter, AI-disruption minskar sökvolymer, avtagande global konjunktur." },
+    { label: "Bull", value: "$553", change: "+56%", cagr: "+56,5%", type: "bull", probability: "20%", description: "AI och Cloud skalar med hög vinsthävstång." },
+    { label: "Base", value: "$392", change: "+11%", cagr: "+10,9%", type: "base", probability: "55%", description: "Cloud växer vidare, Search håller och investeringarna ger resultat." },
+    { label: "Bear", value: "$242", change: "−32%", cagr: "−31,5%", type: "bear", probability: "25%", description: "Cloud avtar, capex belastar och multipeln normaliseras." },
   ],
   
   scores: {

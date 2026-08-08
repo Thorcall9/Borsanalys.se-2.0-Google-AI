@@ -2,9 +2,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 
 export const microsoft: AnalysisData = {
   slug: "microsoft",
-  templateVersion: "v11",
   title: "Microsoft Corporation",
-  contentType: "analysis",
   disclosureKey: "microsoft",
   ticker: "MSFT",
   market: "NASDAQ",
@@ -16,8 +14,7 @@ export const microsoft: AnalysisData = {
   marketCap: "$3,7T",
   date: "2026-08-09",
   published: true,
-  deepDiveComponent: "Microsoft",
-  v11Preview: {
+  v11: {
     headline: "Microsoft: AI-efterfrågan är stark – avkastningen på kapaciteten avgör nästa steg",
     dek: "Azure och den kommersiella orderboken stödjer tillväxten. Nästa prövning är om den stora datacenterinvesteringen kan ge uthållig marginal och fritt kassaflöde.",
     weightedFairValue: "683",
@@ -114,9 +111,9 @@ export const microsoft: AnalysisData = {
     ]
   }],
   scenarios: [
-    { label: "Bull", value: "$897", change: "+79%", type: "bull", probability: "25%", description: "AI-kapacitet och Copilot skalar med stark marginal.", operatingLadder: { revenueUsdBn: 475, operatingMarginPct: 47, operatingIncomeUsdBn: 223.25, normalizedFinanceAndOtherUsdBn: 1.5, taxRatePct: 17, dilutedSharesBn: 7.28, normalizedEpsUsd: 25.62, revenueGrowthFromLatestAnnualPct: 19.7 } },
-    { label: "Base", value: "$678", change: "+36%", type: "base", probability: "50%", description: "Azure-tillväxt och kommersiell AI monetiseras med stabil marginal.", operatingLadder: { revenueUsdBn: 440, operatingMarginPct: 45.5, operatingIncomeUsdBn: 200.2, normalizedFinanceAndOtherUsdBn: 1, taxRatePct: 18, dilutedSharesBn: 7.30, normalizedEpsUsd: 22.60, revenueGrowthFromLatestAnnualPct: 15.1 } },
-    { label: "Bear", value: "$479", change: "−4%", type: "bear", probability: "25%", description: "Azure avtar och AI-capex håller nere marginalen.", operatingLadder: { revenueUsdBn: 400, operatingMarginPct: 43, operatingIncomeUsdBn: 172, normalizedFinanceAndOtherUsdBn: 1, taxRatePct: 19, dilutedSharesBn: 7.32, normalizedEpsUsd: 19.14, revenueGrowthFromLatestAnnualPct: 9.8 } }
+    { label: "Bull", value: "$897", change: "+79%", cagr: "+34,0%", type: "bull", probability: "25%", description: "AI-kapacitet och Copilot skalar med stark marginal.", operatingLadder: { revenueUsdBn: 475, operatingMarginPct: 47, operatingIncomeUsdBn: 223.25, normalizedFinanceAndOtherUsdBn: 1.5, taxRatePct: 17, dilutedSharesBn: 7.28, normalizedEpsUsd: 25.62, revenueGrowthFromLatestAnnualPct: 19.7 } },
+    { label: "Base", value: "$678", change: "+36%", cagr: "+16,5%", type: "base", probability: "50%", description: "Azure-tillväxt och kommersiell AI monetiseras med stabil marginal.", operatingLadder: { revenueUsdBn: 440, operatingMarginPct: 45.5, operatingIncomeUsdBn: 200.2, normalizedFinanceAndOtherUsdBn: 1, taxRatePct: 18, dilutedSharesBn: 7.30, normalizedEpsUsd: 22.60, revenueGrowthFromLatestAnnualPct: 15.1 } },
+    { label: "Bear", value: "$479", change: "−4%", cagr: "−1,1%", type: "bear", probability: "25%", description: "Azure avtar och AI-capex håller nere marginalen.", operatingLadder: { revenueUsdBn: 400, operatingMarginPct: 43, operatingIncomeUsdBn: 172, normalizedFinanceAndOtherUsdBn: 1, taxRatePct: 19, dilutedSharesBn: 7.32, normalizedEpsUsd: 19.14, revenueGrowthFromLatestAnnualPct: 9.8 } }
   ],
   scores: { affarsmodell: 5, strategiskMoat: 5, finansiellKvalitet: 4, vardering: 3, tillvaxtutsikter: 4, riskprofil: 3, esgMakro: 3, aiObservationer: 4 }
 };

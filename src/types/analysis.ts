@@ -1,5 +1,3 @@
-import type { Recommendation } from "../lib/recommendation.js";
-
 export interface Scenario {
   type: 'bull' | 'base' | 'bear';
   label: string;
@@ -148,27 +146,24 @@ export interface AIDrivenAnalysis {
 
 export interface AnalysisData {
   slug: string;
-  templateVersion?: "legacy" | "v10" | "v11";
   title: string;
   listTitle?: string;
   ticker: string;
   isin?: string;
   author?: string;
   date: string;
-  displayDate?: string;
+  published?: boolean;
   market: string;
   sector: string;
-  recommendation: Recommendation;
-  recommendationReason?: string;
+  recommendation: "KÖP" | "AVVAKTA" | "SÄLJ" | "BEVAKA";
   price: string;
   pe: string;
-  dividend?: string;
   yield: string;
   marketCap?: string;
   discount?: string;
   summary: string;
   image?: string; // URL to analysis image
-  v11Preview?: {
+  v11?: {
     headline: string;
     dek: string;
     weightedFairValue: string;
@@ -187,23 +182,9 @@ export interface AnalysisData {
     riskAndMethod: string;
     sourceSummary: string;
   };
-
-  // Content type and filtering metadata
-  contentType: ContentType;
-  relatedAnalysisSlug?: string;
-  tags?: string[];
-  reportPeriod?: string;
-  reportSummary?: string;
-  viewChange?: 'unchanged' | 'upgraded' | 'downgraded' | 'new';
-  upside?: number;
-  updatedAt?: string;
-  score?: number;
-  maxScore?: number;
-  /** Hidden analyses can be directly reviewed without appearing in discovery surfaces. */
-  published?: boolean;
   
   // Custom View Logic
-  deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea" | "Axfood" | "ABB" | "Plejd" | "Meta" | "Microsoft";
+  deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea" | "Axfood" | "ABB" | "Plejd" | "MetaV11";
   disclosureKey?: string;
 
   // Standardized structure from roadmap
@@ -255,7 +236,11 @@ export interface AnalysisData {
       revenueUsdBn: number;
       operatingMarginPct: number;
       freeCashFlowUsdBn: number;
-      yearOnYear?: { revenueGrowthPct: number; operatingMarginChangePp: number; freeCashFlowGrowthPct: number };
+      yearOnYear?: {
+        revenueGrowthPct: number;
+        operatingMarginChangePp: number;
+        freeCashFlowGrowthPct: number;
+      };
       classification: "FACT" | "DERIVED";
       source: { document: string; locator: string };
     }[];
@@ -281,7 +266,13 @@ export interface AnalysisData {
     derived?: {
       revenueCagr2019To2025Pct: number;
       operatingMarginRange2019To2025Pct: [number, number];
-      latestAnnualYearOnYear?: { period: string; comparedWithPeriod: string; revenueGrowthPct: number; operatingMarginChangePp: number; freeCashFlowGrowthPct: number };
+      latestAnnualYearOnYear?: {
+        period: string;
+        comparedWithPeriod: string;
+        revenueGrowthPct: number;
+        operatingMarginChangePp: number;
+        freeCashFlowGrowthPct: number;
+      };
       formula: string;
     };
   };
@@ -299,7 +290,7 @@ export interface AnalysisData {
   weaknesses?: string[];
   opportunities?: string[];
   threats?: string[];
-  scenarios: { label: string; value: string; change: string; type: "bull" | "base" | "bear"; description?: string; probability?: string; operatingLadder?: { revenueUsdBn: number; operatingMarginPct: number; operatingIncomeUsdBn: number; normalizedFinanceAndOtherUsdBn: number; taxRatePct: number; dilutedSharesBn: number; normalizedEpsUsd: number; revenueGrowthFromLatestAnnualPct?: number } }[];
+  scenarios: { label: string; value: string; change: string; cagr?: string; type: "bull" | "base" | "bear"; description?: string; probability?: string; operatingLadder?: { revenueUsdBn: number; operatingMarginPct: number; operatingIncomeUsdBn: number; normalizedFinanceAndOtherUsdBn: number; taxRatePct: number; dilutedSharesBn: number; normalizedEpsUsd: number; revenueGrowthFromLatestAnnualPct?: number } }[];
   valuationTargetYear?: number;
   businessModel?: string;
   affarsmodell?: {
@@ -363,5 +354,3 @@ export interface AnalysisData {
     vdAnalys?: number;
   };
 }
-
-export type ContentType = "analysis" | "report-commentary" | "market-update" | "guide" | "other";

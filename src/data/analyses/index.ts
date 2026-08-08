@@ -22,8 +22,8 @@ import { abb2026 } from "./abb/abb-q1-2026.js";
 import { plejdQ12026 } from "./plejd/plejd-q1-2026.js";
 import { revolutionRace2026 } from "./revolutionrace/revolutionrace-2026.js";
 import { inwido2026 } from "./inwido/inwido-2026.js";
-import { revolutionRaceIciw2026 } from "./revolutionrace/revolutionrace-iciw.js";
 import { meta2026 } from "./meta/meta-2026.js";
+import { visa } from "./visa/visa.js";
 
 export const analyses: Record<string, AnalysisData> = {
   "investor-ab": investorAb,
@@ -48,31 +48,9 @@ export const analyses: Record<string, AnalysisData> = {
   "abb-q1-2026": abb2026,
   "plejd-q1-2026": plejdQ12026,
   "revolutionrace-2026": revolutionRace2026,
-  "revolutionrace-iciw": revolutionRaceIciw2026,
   "inwido-2026": inwido2026,
-  "meta": meta2026,
+  "meta-q2-2026": meta2026,
+  "visa": visa,
 };
-
-export function validateAnalysisRelations(registry: Record<string, AnalysisData>): void {
-  for (const analysis of Object.values(registry)) {
-    if (!analysis.relatedAnalysisSlug) continue;
-    if (analysis.relatedAnalysisSlug === analysis.slug) {
-      throw new Error("Analysis cannot relate to itself: " + analysis.slug);
-    }
-
-    const target = registry[analysis.relatedAnalysisSlug];
-    if (!target) {
-      throw new Error("Related analysis does not exist: " + analysis.relatedAnalysisSlug);
-    }
-    if (target.contentType !== "analysis") {
-      throw new Error("Related analysis must be a stock analysis: " + analysis.relatedAnalysisSlug);
-    }
-  }
-}
-
-validateAnalysisRelations(analyses);
-
-/** Hidden analyses can be directly reviewed without appearing in discovery surfaces. */
-export const isPublishedAnalysis = (analysis: AnalysisData) => analysis.published !== false;
 
 export type { AnalysisData, AIDrivenAnalysis } from "../../types/analysis.js";

@@ -780,7 +780,7 @@ const InwidoTemplateAnalysis = ({
             ["Normaliserad EPS 2027*", "Cirka 10,7 kr"],
           ]} footer="Startnivån är försiktig eftersom flera förvärv ännu inte ingår med tolv månaders resultat. Samtidigt inkluderas inte heller full finansieringskostnad eller eventuella integrationsproblem i ett enkelt proformaantagande." />
           <InwidoTable title="Femårsmodell" headers={["Scenario", "Sannolikhet", "EPS-tillväxt", "Totalvärde", "CAGR"]} rows={modelRows} />
-          <ScenarioCards scenarios={data.scenarios.map(s => ({ type: s.type, title: s.label.toUpperCase(), probability: s.probability || '25%', price: s.value, change: s.change, valueLabel: "5-årigt totalvärde inkl. utdelningar", changeLabel: "Total avkastning", description: s.description || "" }))} />
+          <ScenarioCards scenarios={data.scenarios.map(s => ({ type: s.type, title: s.label.toUpperCase(), probability: s.probability || '25%', price: s.value, change: s.change, cagr: s.cagr, valueLabel: "5-årigt totalvärde inkl. utdelningar", changeLabel: "Total avkastning", description: s.description || "" }))} />
           <InwidoTable title="Scenarioantaganden" headers={["Scenario", "Vad krävs eller antas?"]} rows={scenarioAssumptionRows} />
           <InwidoTable title="Värderingssammanfattning" headers={["Värderingsmått", "Värde"]} rows={valuationSummaryRows} />
           <InwidoTable title="Vad kan marknaden ha fel om?" headers={["Marknadens sannolika antagande", "Analysens bedömning", "Vad avgör vem som har rätt?"]} rows={marketWrongRows} footer="Den rekordstora Sidey-ordern ger en stabil produktionsgrund under flera år, men projektordern bör inte extrapoleras som en normal återkommande tillväxttakt." />
@@ -2346,6 +2346,7 @@ export default function ComprehensiveAnalysis({
             probability: s.probability || (s.type === 'base' ? '50%' : '25%'),
             price: s.value,
             change: s.change,
+            cagr: s.cagr,
             valueLabel: isInwido ? "5-årigt totalvärde inkl. utdelningar" : undefined,
             changeLabel: isInwido ? "Total avkastning" : undefined,
             description: s.description || (s.type === 'bull' ? "Optimistiskt scenario där tillväxten accelererar och multiplar expanderar." : s.type === 'base' ? "Mest troliga utvecklingen baserat på nuvarande trender och estimat." : "Defensivt scenario vid sämre konjunktur eller specifika bakslag.")
