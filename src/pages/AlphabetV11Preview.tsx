@@ -176,7 +176,7 @@ export default function AlphabetV11Preview() {
             </Link>
 
             <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 text-sm text-slate-500">
-              <p>Alphabet Inc. <span className="mx-1 text-slate-300">/</span> GOOG <span className="mx-1 text-slate-300">/</span> Uppdaterad 7 augusti 2026</p>
+              <p>Alphabet Inc. <span className="mx-1 text-slate-300">/</span> GOOG <span className="mx-1 text-slate-300">/</span> Uppdaterad 8 augusti 2026</p>
               <button
                 type="button"
                 onClick={() => setSaved((value) => !value)}
@@ -233,7 +233,7 @@ export default function AlphabetV11Preview() {
               {showMethod && (
                 <div className="mt-4 border-t border-emerald-200 pt-4 text-sm leading-6 text-slate-700">
                   <p>Värdet bygger på en förenklad P/E-modell med normaliserad EPS för 2028. Bear, bas och bull vägs med 25 %, 55 % respektive 20 %.</p>
-                  <p className="mt-2 text-slate-500">Scenarioantaganden är redaktionella modellantaganden – inte bolagets prognoser.</p>
+                  <p className="mt-2 text-slate-500">Referenskurs: 353,47 USD, GOOG-stängning den 7 augusti 2026. Scenarioantaganden är redaktionella modellantaganden – inte bolagets prognoser.</p>
                 </div>
               )}
             </section>
@@ -309,12 +309,12 @@ export default function AlphabetV11Preview() {
               <span><span className="text-sm font-black uppercase tracking-[0.18em] text-amber-700">Risker och metod</span><span className="mt-2 block font-serif text-3xl font-bold tracking-[-0.035em] text-slate-950">Läs det viktiga innan du fattar ett beslut</span></span>
               {risksOpen ? <ChevronUp className="shrink-0 text-amber-600" size={24} /> : <ChevronDown className="shrink-0 text-amber-600" size={24} />}
             </button>
-            {risksOpen && <div className="mt-6 grid gap-5 border-l-2 border-amber-400 pl-5 text-sm leading-7 text-slate-600 md:grid-cols-2"><p>Analyser, scenarier och värderingar är utbildande bedömningar och inte personlig investeringsrådgivning. Aktier kan både öka och minska i värde.</p><p>Värderingen bygger på antaganden som kan visa sig felaktiga. Referenskursen är 353,77 USD per GOOG-aktie den 7 augusti 2026.</p></div>}
+            {risksOpen && <div className="mt-6 grid gap-5 border-l-2 border-amber-400 pl-5 text-sm leading-7 text-slate-600 md:grid-cols-2"><p>Analyser, scenarier och värderingar är utbildande bedömningar och inte personlig investeringsrådgivning. Aktier kan både öka och minska i värde.</p><p>Värderingen bygger på antaganden som kan visa sig felaktiga. Referenskursen är 353,47 USD per GOOG-aktie vid stängning den 7 augusti 2026.</p></div>}
           </section>
 
           <footer className="border-t border-slate-200 py-9 text-sm leading-6 text-slate-500">
-            <p><strong className="text-slate-700">Källor:</strong> Alphabets kvartalsrapporter och presentationsmaterial för Q1–Q2 2026 samt historiska kvartalsrapporter. Scenarioantaganden och multiplar är redaktionella modellantaganden.</p>
-            <p className="mt-3">Den här sidan är den nya v11-strukturen för grundanalyser. Den befintliga, äldre Alphabet-analysen ligger kvar oförändrad.</p>
+            <p><strong className="text-slate-700">Källor:</strong> Alphabets kvartalsrapporter för Q3 2025–Q2 2026, Q2 2026-presentationen och Google Finance för GOOG-stängningen. Scenarioantaganden och multiplar är redaktionella modellantaganden.</p>
+            <p className="mt-3">Den här sidan är den verifierade v11.1-strukturen för grundanalyser. Den befintliga, äldre Alphabet-analysen ligger kvar oförändrad.</p>
           </footer>
         </div>
       </article>
