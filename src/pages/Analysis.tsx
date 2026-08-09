@@ -46,7 +46,6 @@ import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 import { useAuth } from "../contexts/AuthContext";
 
-import MobileReadingProgress from "../components/MobileReadingProgress";
 import AdUnit from "../components/analysis/AdUnit";
 import NotFound from "./NotFound";
 import ComprehensiveAnalysisV10 from "../components/analysis/ComprehensiveAnalysisV10";
@@ -457,15 +456,6 @@ export default function Analysis() {
     return (
       <>
         <ReportComment data={analysis} markdown={axfoodQ2Markdown} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
-        <MobileReadingProgress 
-          label="analys" 
-          analysisSlug={analysis.slug}
-          contentType={analysis.contentType || "analysis"}
-          companyName={analysis.title}
-          ticker={analysis.ticker}
-          nextTitle={nextAnalysis?.title} 
-          nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
-        />
         
         {/* Floating Save Button */}
         <div className="fixed bottom-24 right-6 z-40">
@@ -512,15 +502,6 @@ export default function Analysis() {
         <Suspense fallback={<DeepDiveLoading />}>
           <Component data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
         </Suspense>
-        <MobileReadingProgress 
-          label="analys"
-          analysisSlug={analysis.slug}
-          contentType={analysis.contentType || "analysis"}
-          companyName={analysis.title}
-          ticker={analysis.ticker}
-          nextTitle={nextAnalysis?.title}
-          nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
-        />
 
         {/* Floating Save Button */}
         <div className="fixed bottom-24 right-6 z-40">
@@ -563,15 +544,6 @@ export default function Analysis() {
       <>
         {latestRelatedUpdate && <LatestRelatedUpdateCallout update={latestRelatedUpdate} />}
         <ComprehensiveAnalysisV10 data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
-        <MobileReadingProgress
-          label="analys"
-          analysisSlug={analysis.slug}
-          contentType={analysis.contentType || "analysis"}
-          companyName={analysis.title}
-          ticker={analysis.ticker}
-          nextTitle={nextAnalysis?.title}
-          nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined}
-        />
         {analysisMeta}
       </>
     );
@@ -591,16 +563,6 @@ export default function Analysis() {
         onToggleSave={toggleSave}
         nextAnalysis={nextAnalysis} 
       />
-      <MobileReadingProgress 
-        label="analys" 
-        analysisSlug={analysis.slug}
-        contentType={analysis.contentType || "analysis"}
-        companyName={analysis.title}
-        ticker={analysis.ticker}
-        nextTitle={nextAnalysis?.title} 
-        nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
-      />
-
       {/* Floating Save Button */}
       <div className="fixed bottom-24 right-6 z-40 lg:hidden">
         <button
