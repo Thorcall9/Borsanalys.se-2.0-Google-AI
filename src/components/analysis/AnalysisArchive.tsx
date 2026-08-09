@@ -5,6 +5,7 @@ import type { AnalysisData } from "../../types/analysis";
 import { CONTENT_TYPE_BADGE_LABELS, type FilterContentType } from "../../hooks/useAnalysisFilters";
 import type { Recommendation } from "../../lib/recommendation";
 import AdUnit from "./AdUnit";
+import CompanyVisual from "../company/CompanyVisual";
 
 interface AnalysisArchiveProps {
   analyses: AnalysisData[];
@@ -19,14 +20,9 @@ interface AnalysisArchiveProps {
 }
 
 function CompanyMark({ analysis }: { analysis: AnalysisData }) {
-  const isNovo = analysis.ticker.toUpperCase().startsWith("NOVO");
-  const mark = isNovo ? "novo nordisk" : analysis.ticker.toLowerCase().replace(".st", "");
   return (
-    <div className="flex h-16 w-28 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white text-slate-900 shadow-sm md:h-20 md:w-32">
-      <span className={`px-2 text-center font-black tracking-tight ${isNovo ? "text-[13px] text-[#153c97]" : "text-lg"}`}>
-        {isNovo && <span className="mb-1 block text-[8px] uppercase tracking-[0.2em] text-[#153c97]">✦ novo</span>}
-        {mark}
-      </span>
+    <div className="flex h-16 w-28 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm md:h-20 md:w-32">
+      <CompanyVisual ticker={analysis.ticker} className="company-visual--archive" />
     </div>
   );
 }

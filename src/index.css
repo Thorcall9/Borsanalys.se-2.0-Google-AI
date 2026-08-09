@@ -273,6 +273,15 @@ html {
 .featured-analysis-body { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr) 4.6rem; gap: 0.9rem; align-items: center; margin-top: 1.25rem; }
 .featured-analysis-logo { display: grid; place-items: center; min-height: 6rem; border: 1px solid var(--border); border-radius: 0.75rem; color: var(--primary); background: var(--background); }
 .featured-analysis-logo img { max-width: 90%; max-height: 4.2rem; object-fit: contain; }
+.company-visual { display: inline-grid; width: 3.35rem; height: 3.35rem; place-items: center; border: 1px solid currentColor; border-radius: 1rem; box-shadow: 0 8px 18px rgb(15 23 42 / 0.07); }
+.company-visual svg { width: 1.5rem; height: 1.5rem; }
+.company-visual--microsoft { color: #1769aa; background: linear-gradient(135deg, #eaf5ff, #f7fbff); }
+.company-visual--alphabet { color: #b65c00; background: linear-gradient(135deg, #fff4e1, #fffaf2); }
+.company-visual--meta { color: #7054b8; background: linear-gradient(135deg, #f4efff, #fbf9ff); }
+.company-visual--fallback { color: #157b58; background: #f2fbf7; font-size: 0.82rem; font-weight: 850; letter-spacing: -0.03em; }
+.company-visual--featured { width: 3.65rem; height: 3.65rem; border-radius: 1.05rem; }
+.company-visual--featured svg { width: 1.7rem; height: 1.7rem; }
+.company-visual--archive { width: 3.25rem; height: 3.25rem; }
 .featured-analysis-company { color: var(--muted-foreground); font-size: 0.72rem; font-weight: 700; }
 .featured-analysis-copy h2 { margin-top: 0.35rem; color: var(--foreground); font-family: var(--font-serif); font-size: clamp(1.3rem, 2.2vw, 1.75rem); line-height: 1.15; letter-spacing: -0.03em; }
 .featured-analysis-copy > p:last-child { display: -webkit-box; overflow: hidden; margin-top: 0.5rem; color: var(--muted-foreground); font-size: 0.78rem; line-height: 1.5; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
@@ -345,6 +354,8 @@ html {
   .featured-section-intro h2 { font-size: 2rem; }
   .featured-analysis-body { grid-template-columns: 4.7rem minmax(0, 1fr); gap: 0.45rem 0.8rem; }
   .featured-analysis-logo { min-height: 4.7rem; }
+  .company-visual--featured { width: 3rem; height: 3rem; border-radius: 0.9rem; }
+  .company-visual--featured svg { width: 1.4rem; height: 1.4rem; }
   .featured-analysis-copy h2 { font-size: 1.35rem; }
   .featured-analysis-copy > p:last-child { font-size: 0.7rem; }
   .featured-analysis-potential { grid-column: 1 / -1; align-items: flex-start; margin-top: -0.1rem; }

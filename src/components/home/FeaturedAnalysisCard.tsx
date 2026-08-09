@@ -1,7 +1,8 @@
 import React from "react";
-import { ArrowRight, Eye, ImageOff } from "lucide-react";
+import { ArrowRight, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { AnalysisPresentation } from "./analysisPresentation";
+import CompanyVisual from "../company/CompanyVisual";
 
 export default function FeaturedAnalysisCard({ analysis }: { analysis: AnalysisPresentation }) {
   return (
@@ -12,7 +13,7 @@ export default function FeaturedAnalysisCard({ analysis }: { analysis: AnalysisP
       </div>
       <div className="featured-analysis-body">
         <div className="featured-analysis-logo" aria-hidden="true">
-          {analysis.image ? <img src={analysis.image} alt="" /> : <ImageOff size={28} />}
+          <CompanyVisual ticker={analysis.ticker} className="company-visual--featured" />
         </div>
         <div className="featured-analysis-copy">
           <p className="featured-analysis-company">{analysis.companyName} · {analysis.ticker}</p>
