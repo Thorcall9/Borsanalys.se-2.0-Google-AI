@@ -4,13 +4,14 @@ export const alphabet: AnalysisData = {
   contentType: "analysis",
   slug: "alphabet",
   title: "Alphabet Inc.",
+  listTitle: "Alphabet: stark AI-tillväxt – men begränsad säkerhetsmarginal",
   disclosureKey: "alphabet",
-  ticker: "GOOGL",
+  ticker: "GOOG",
   market: "NASDAQ",
   sector: "Internet / AI",
-  recommendation: "KÖP",
-  price: "$307",
-  pe: "~28.00x",
+  recommendation: "BEVAKA",
+  price: "$353,47",
+  pe: "Se v11.1-värdering",
   yield: "0,45%",
   relatedAnalysis: {
     slug: "microsoft",
@@ -35,8 +36,10 @@ export const alphabet: AnalysisData = {
       reason: "Sätt Alphabets mjukvaruövertag i perspektiv genom att analysera bolaget som levererar den nödvändiga beräkningskraften bakom Gemini."
     }
   ],
-  summary: "Med ett ohotat monopol inom sök och en snabbväxande molnaffär transformeras Alphabet nu till ett 'compute-first' AI-bolag. Bolagets vertikala integration – från egna chip till världens största dataset – ger dem en strukturell fördel i den pågående AI-kapplöpningen.",
-  date: "2026-03-15",
+  summary: "Google Cloud växer snabbt och Search håller emot, men AI-investeringarna är stora. V11.1-analysen landar i BEVAKA med begränsad säkerhetsmarginal.",
+  date: "2026-08-08",
+  displayDate: "8 augusti 2026",
+  updatedAt: "2026-08-08",
   
   marketOverview: "Alphabet är moderbolaget till Google och YouTube, två av internets mest centrala noder. Google Search har en global marknadsandel på över 90%, vilket genererar ett massivt och stabilt kassaflöde som finansierar morgondagens teknologier. YouTube har vuxit till världens största videoplattform med över 270 miljoner prenumeranter, vilket skapar en kraftfull mix av annonsintäkter och prenumerationsmodeller.\n\nDen mest spännande transformationen sker dock inom Google Cloud (GCP). Genom att nå en kritisk massa med stigande rörelsemarginaler (över 20%) har GCP blivit bolagets andra stora vinstmotor. Alphabets förmåga att integrera Gemini-modeller direkt i sina sökresultat och arbetsverktyg (Workspace) har bevisat att bolaget inte bara kan försvara sin position mot nya AI-utmanare, utan även expandera sin monetarisering kraftfullt.",
   
