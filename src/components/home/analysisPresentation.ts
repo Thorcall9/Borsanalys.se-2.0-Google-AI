@@ -1,6 +1,5 @@
 import type { AnalysisData } from "../../types/analysis";
 import { analyses } from "../../data/analyses";
-import { getAnalysisScore } from "../../lib/score";
 
 export interface AnalysisPresentation {
   companyName: string;
@@ -8,7 +7,7 @@ export interface AnalysisPresentation {
   title: string;
   summary: string;
   recommendation: AnalysisData["recommendation"];
-  score: { value: number; max: number } | null;
+  potential: string | null;
   href: string;
   image?: string;
 }
@@ -25,7 +24,10 @@ export function getFeaturedAnalysis(): AnalysisData {
 }
 
 export function getAnalysisPresentation(analysis: AnalysisData): AnalysisPresentation {
-  const score = getAnalysisScore(analysis);
+  const potential = analysis.templateVersion === "v11"
+    ? analysis.v11Preview?.upside
+      ?? (analysis.upside != null ? `${analysis.upside > 0 ? "+" : ""}${analysis.upside.toLocaleString("sv-SE")}%` : null)
+    : null;
 
   return {
     companyName: analysis.title,
@@ -33,7 +35,7 @@ export function getAnalysisPresentation(analysis: AnalysisData): AnalysisPresent
     title: analysis.listTitle ?? analysis.title,
     summary: analysis.summary,
     recommendation: analysis.recommendation,
-    score: score ? { value: score.score, max: score.maxScore } : null,
+    potential,
     href: `/analys/${analysis.slug}`,
     image: analysis.image,
   };

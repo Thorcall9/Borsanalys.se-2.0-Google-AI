@@ -4,9 +4,6 @@ import { Link } from "react-router-dom";
 import type { AnalysisPresentation } from "./analysisPresentation";
 
 export default function FeaturedAnalysisCard({ analysis }: { analysis: AnalysisPresentation }) {
-  const scorePercent = analysis.score ? (analysis.score.value / analysis.score.max) * 100 : 0;
-  const circumference = 2 * Math.PI * 29;
-
   return (
     <article className="featured-analysis-card">
       <div className="featured-analysis-label-row">
@@ -22,14 +19,10 @@ export default function FeaturedAnalysisCard({ analysis }: { analysis: AnalysisP
           <h2>{analysis.title}</h2>
           <p>{analysis.summary}</p>
         </div>
-        {analysis.score && (
-          <div className="score-ring" aria-label={`Totalpoäng ${analysis.score.value} av ${analysis.score.max}`}>
-            <svg viewBox="0 0 72 72" aria-hidden="true">
-              <circle className="score-ring-track" cx="36" cy="36" r="29" />
-              <circle className="score-ring-progress" cx="36" cy="36" r="29" strokeDasharray={circumference} strokeDashoffset={circumference * (1 - scorePercent / 100)} />
-            </svg>
-            <strong>{analysis.score.value}</strong>
-            <span>av {analysis.score.max}</span>
+        {analysis.potential && (
+          <div className="featured-analysis-potential" aria-label={`Beräknad potential ${analysis.potential}`}>
+            <span>Potential</span>
+            <strong>{analysis.potential}</strong>
           </div>
         )}
       </div>

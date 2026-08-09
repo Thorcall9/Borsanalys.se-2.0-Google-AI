@@ -458,7 +458,7 @@ export default function Analysis() {
         <ReportComment data={analysis} markdown={axfoodQ2Markdown} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
         
         {/* Floating Save Button */}
-        <div className="fixed bottom-24 right-6 z-40">
+        <div className="fixed bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] right-4 z-40 md:bottom-6 md:right-6">
           <button
             onClick={toggleSave}
             disabled={isSaveLoading}
@@ -504,7 +504,7 @@ export default function Analysis() {
         </Suspense>
 
         {/* Floating Save Button */}
-        <div className="fixed bottom-24 right-6 z-40">
+        <div className="fixed bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] right-4 z-40 md:bottom-6 md:right-6">
           <button
             onClick={toggleSave}
             disabled={isSaveLoading}
@@ -564,7 +564,7 @@ export default function Analysis() {
         nextAnalysis={nextAnalysis} 
       />
       {/* Floating Save Button */}
-      <div className="fixed bottom-24 right-6 z-40 lg:hidden">
+      <div className="fixed bottom-[calc(env(safe-area-inset-bottom)+0.75rem)] right-4 z-40 md:bottom-6 md:right-6 lg:hidden">
         <button
           onClick={toggleSave}
           disabled={isSaveLoading}
