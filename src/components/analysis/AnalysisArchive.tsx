@@ -1,4 +1,4 @@
-import { ArrowRight, BarChart3, Bell, CalendarDays, ChevronDown, FileText, Grid2X2, LockKeyhole, Search, ShieldCheck, SlidersHorizontal, Sparkles, Star, Quote, Clock3 } from "lucide-react";
+import { ArrowRight, BarChart3, Bell, CalendarDays, ChevronDown, FileText, Grid2X2, LockKeyhole, Search, ShieldCheck, SlidersHorizontal, Sparkles, Star, Quote } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import type { AnalysisData } from "../../types/analysis";
@@ -58,7 +58,6 @@ function Meta({ analysis }: { analysis: AnalysisData }) {
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-500">
       <span className="inline-flex items-center gap-1.5"><CalendarDays size={13} />{analysis.displayDate || analysis.date}</span>
-      <span className="inline-flex items-center gap-1.5"><Clock3 size={13} />{analysis.contentType === "report-commentary" ? "12 min" : "20 min läsning"}</span>
       <span className="hidden items-center gap-1.5 sm:inline-flex">✧ {analysis.sector}</span>
     </div>
   );

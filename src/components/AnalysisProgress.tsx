@@ -1,9 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronDown, ChevronUp, Check, X } from "lucide-react";
+import { ChevronDown, ChevronUp, Check } from "lucide-react";
 import { track } from "@vercel/analytics/react";
 import { useAuth } from "../contexts/AuthContext";
-import { Link } from "react-router-dom";
-import { CHECKLIST_TEASER_QUESTIONS } from "../data/stockChecklist";
 
 export interface ProgressSection {
   id: string;
@@ -176,35 +174,6 @@ export function DesktopAnalysisProgress({ snapshot }: { snapshot: ProgressSnapsh
   return <div className="mb-6 border-b border-border px-8 pb-6"><div className="mb-3 flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-muted-foreground"><span>Läsprogression</span><span className="text-foreground">{snapshot.percent}%</span></div><ProgressBar percent={snapshot.percent} /><div className="mt-3 text-[10px] font-bold leading-relaxed text-muted-foreground">{active && snapshot.sections.length ? `Del ${snapshot.activeIndex + 1} av ${snapshot.sections.length} · ${active.title}` : "Läsprogression"}</div><p className="mt-1 text-[10px] text-muted-foreground/70">{progressStatus(snapshot.activeIndex, snapshot.percent, active?.title)}</p></div>;
 }
 
-function ChecklistLeadMagnet({ analysisSlug, contentType, percent, companyName, ticker }: { analysisSlug?: string; contentType: AnalysisContentType; percent: number; companyName?: string; ticker?: string }) {
-  const { user, loading } = useAuth();
-  const [visible, setVisible] = useState(false);
-  const [closed, setClosed] = useState(false);
-  const storageKey = `checklist-popup-seen:${analysisSlug || window.location.pathname}`;
-
-  useEffect(() => {
-    if (loading || percent < 80 || contentType !== "analysis") return;
-    try {
-      if (!window.sessionStorage.getItem(storageKey)) { window.sessionStorage.setItem(storageKey, "1"); setVisible(true); }
-    } catch { setVisible(true); }
-  }, [loading, percent, contentType, storageKey]);
-
-  useEffect(() => {
-    if (visible) trackOnce(`${analysisSlug || window.location.pathname}:checklist_popup_viewed`, "checklist_popup_viewed", { analysis_slug: analysisSlug || null, content_type: contentType, progress_percentage: percent, logged_in: Boolean(user), viewport_category: viewportCategory() });
-  }, [visible, analysisSlug, contentType, percent, user]);
-  useEffect(() => {
-    if (!visible) return;
-    const onKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape") setClosed(true); };
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [visible]);
-
-  if (!visible || closed || loading) return null;
-  const href = `/aktiechecklista?bolag=${encodeURIComponent(companyName || "")}&ticker=${encodeURIComponent(ticker || "")}&analys=${encodeURIComponent(analysisSlug || "")}`;
-  const close = () => { setClosed(true); trackOnce(`${analysisSlug || window.location.pathname}:checklist_popup_closed`, "checklist_popup_closed", { analysis_slug: analysisSlug || null, content_type: contentType, progress_percentage: percent, logged_in: Boolean(user), viewport_category: viewportCategory() }); };
-  return <div className="fixed bottom-4 left-4 right-4 z-[110] md:left-auto md:max-w-md"><div className="relative rounded-2xl border border-primary/20 bg-card p-5 shadow-2xl shadow-black/20"><button onClick={close} aria-label="Stäng aktiechecklistan" className="absolute right-3 top-3 rounded-lg p-1.5 text-muted-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"><X size={16} /></button><h3 className="pr-6 text-lg font-black tracking-tight">Innan du köper nästa aktie</h3><p className="mt-2 text-sm font-bold leading-relaxed">Har du svar på de här frågorna?</p><ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted-foreground">{CHECKLIST_TEASER_QUESTIONS.map((question) => <li key={question}>• {question}</li>)}</ul><p className="mt-3 text-xs leading-relaxed text-muted-foreground">En kort checklista för att testa om du förstår investeringen, värderingen och riskerna.</p><div className="mt-4 flex flex-wrap gap-2"><Link to={href} onClick={() => trackOnce(`${analysisSlug || window.location.pathname}:checklist_popup_cta_clicked`, "checklist_popup_cta_clicked", { analysis_slug: analysisSlug || null, content_type: contentType, progress_percentage: percent, logged_in: Boolean(user), viewport_category: viewportCategory() })} className="rounded-xl bg-primary px-4 py-2.5 text-xs font-black uppercase tracking-wider text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">FÅ HELA CHECKLISTAN GRATIS</Link><button onClick={close} className="rounded-xl border border-border px-4 py-2.5 text-xs font-black uppercase tracking-wider text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">Inte nu</button></div><p className="mt-3 text-[11px] text-muted-foreground">Gratis konto · tar mindre än en minut</p></div></div>;
-}
-
 export default function AnalysisProgressExperience({ analysisSlug, contentType = "analysis", nextTitle, nextHref, label = "analys", companyName, ticker }: ProgressOptions) {
   const { user } = useAuth();
   const snapshot = useAnalysisProgress({ analysisSlug, contentType });
@@ -215,5 +184,5 @@ export default function AnalysisProgressExperience({ analysisSlug, contentType =
   useEffect(() => {
     (window as any).__analysisLoggedIn = Boolean(user);
   }, [user]);
-  return <><div className="fixed bottom-0 left-0 right-0 z-[90] border-t border-border bg-card/95 p-3 shadow-[0_-8px_24px_rgba(0,0,0,0.08)] backdrop-blur md:hidden"><div className="mx-auto max-w-xl"><div className="mb-1 flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-muted-foreground"><span>{snapshot.percent}% läst</span><span>Del {snapshot.sections.length ? snapshot.activeIndex + 1 : "—"} av {snapshot.sections.length || "—"}</span></div><ProgressBar percent={snapshot.percent} /><div className="mt-2 flex items-center justify-between gap-3"><span className="truncate text-xs font-bold text-foreground">{active?.title || progressStatus(snapshot.activeIndex, snapshot.percent)}</span><button onClick={toggle} aria-expanded={expanded} aria-controls="analysis-progress-sections" className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border px-3 py-2 text-[10px] font-black uppercase tracking-wider focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{expanded ? "Dölj delar" : "Visa analysens delar"}{expanded ? <ChevronDown size={14} /> : <ChevronUp size={14} />}</button></div>{nextHref && <a href={nextHref} className="mt-2 block truncate text-right text-[10px] font-black uppercase tracking-widest text-primary">Nästa {label}: {nextTitle}</a>}{expanded && <div id="analysis-progress-sections" className="mt-3 max-h-[45vh] overflow-y-auto border-t border-border pt-2"><SectionList snapshot={snapshot} onNavigate={navigate} /></div>}</div></div><ChecklistLeadMagnet analysisSlug={analysisSlug} contentType={contentType} percent={snapshot.percent} companyName={companyName} ticker={ticker} /></>;
+  return <div className="fixed bottom-0 left-0 right-0 z-[90] border-t border-border bg-card/95 p-3 shadow-[0_-8px_24px_rgba(0,0,0,0.08)] backdrop-blur md:hidden"><div className="mx-auto max-w-xl"><div className="mb-1 flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-muted-foreground"><span>{snapshot.percent}% läst</span><span>Del {snapshot.sections.length ? snapshot.activeIndex + 1 : "—"} av {snapshot.sections.length || "—"}</span></div><ProgressBar percent={snapshot.percent} /><div className="mt-2 flex items-center justify-between gap-3"><span className="truncate text-xs font-bold text-foreground">{active?.title || progressStatus(snapshot.activeIndex, snapshot.percent)}</span><button onClick={toggle} aria-expanded={expanded} aria-controls="analysis-progress-sections" className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border px-3 py-2 text-[10px] font-black uppercase tracking-wider focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">{expanded ? "Dölj delar" : "Visa analysens delar"}{expanded ? <ChevronDown size={14} /> : <ChevronUp size={14} />}</button></div>{nextHref && <a href={nextHref} className="mt-2 block truncate text-right text-[10px] font-black uppercase tracking-widest text-primary">Nästa {label}: {nextTitle}</a>}{expanded && <div id="analysis-progress-sections" className="mt-3 max-h-[45vh] overflow-y-auto border-t border-border pt-2"><SectionList snapshot={snapshot} onNavigate={navigate} /></div>}</div></div>;
 }
