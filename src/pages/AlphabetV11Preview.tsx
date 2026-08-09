@@ -163,8 +163,12 @@ export default function AlphabetV11Preview() {
   return (
     <>
       <SEO
-        title="Alphabet: stark AI-tillväxt – men begränsad säkerhetsmarginal"
-        description="En mobiloptimerad v11-preview av Börsanalys.se:s grundanalys av Alphabet."
+        title="Alphabet aktie analys 2026 (GOOG) – värdering, AI och risker"
+        description="Alphabet-analys 2026: Börsanalys.se:s v11.1-bedömning av GOOG, AI-tillväxt, värdering, scenarier och centrala risker."
+        canonical="/analys/alphabet"
+        ogType="article"
+        publishedTime="2026-08-08T00:00:00+02:00"
+        modifiedTime="2026-08-08T00:00:00+02:00"
       />
 
       <article className="bg-white text-slate-950">

@@ -69,7 +69,9 @@ export default function App() {
                       <Route path="/analys" element={<Analysis />} />
                       <Route path="/analys/revolutionrace-2026" element={<RvrcPreview />} />
                       <Route path="/analys/rvrc-2026" element={<RvrcPreview />} />
+                      <Route path="/analys/alphabet" element={<AlphabetV11Preview />} />
                       <Route path="/analys/alphabet-v11" element={<AlphabetV11Preview />} />
+                      <Route path="/analyser/alphabet" element={<AlphabetV11Preview />} />
                       <Route path="/analys/:slug" element={<Analysis />} />
                       <Route path="/analyser/:slug" element={<Analysis />} />
                       <Route path="/aktiechecklista" element={<StockChecklist />} />
