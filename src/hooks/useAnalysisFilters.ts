@@ -1,13 +1,12 @@
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { AnalysisData, ContentType } from '../types/analysis';
-import { sortAnalysesByScore } from '../lib/score';
 import { RECOMMENDATION_FILTER_OPTIONS } from '../lib/recommendation';
 
 // ─── Content type definitions ───────────────────────────────────────────────
 
 export type FilterContentType = 'all' | Extract<ContentType, 'analysis' | 'report-commentary' | 'market-update'>;
-export type SortOption = 'latest' | 'updated' | 'score';
+export type SortOption = 'latest' | 'updated';
 
 export const CONTENT_TYPE_LABELS: Record<FilterContentType, string> = {
   all: 'Alla',
@@ -27,14 +26,11 @@ export const CONTENT_TYPE_BADGE_LABELS: Record<ContentType, string> = {
 export const SORT_LABELS: Record<SortOption, string> = {
   latest: 'Senast publicerad',
   updated: 'Senast uppdaterad',
-  score: 'Högst poäng',
 };
 
 // ─── Sorting ────────────────────────────────────────────────────────────────
 
 function sortAnalyses(list: AnalysisData[], sort: SortOption): AnalysisData[] {
-  if (sort === 'score') return sortAnalysesByScore(list);
-
   return [...list].sort((a, b) => {
     switch (sort) {
       case 'latest':
@@ -73,7 +69,7 @@ const CONTENT_TYPE_TO_URL_TYPE: Partial<Record<FilterContentType, string>> = {
   'report-commentary': 'rapportkommentar',
   'market-update': 'marknadsuppdatering',
 };
-const VALID_SORT_OPTIONS: SortOption[] = ['latest', 'updated', 'score'];
+const VALID_SORT_OPTIONS: SortOption[] = ['latest', 'updated'];
 const VALID_RECOMMENDATIONS = RECOMMENDATION_FILTER_OPTIONS;
 
 // ─── Hook ───────────────────────────────────────────────────────────────────
