@@ -35,7 +35,10 @@ function Potential({ analysis }: { analysis: AnalysisData }) {
   // Potential belongs to the v11.1 preview's canonical valuation data. Legacy
   // analyses intentionally stay neutral, while future v11.1 analyses work
   // without adding company-specific archive logic.
-  const formatted = analysis.v11Preview?.upside;
+  if (analysis.templateVersion !== "v11") return null;
+
+  const formatted = analysis.v11Preview?.upside
+    ?? (analysis.upside != null ? `${analysis.upside > 0 ? "+" : ""}${analysis.upside.toLocaleString("sv-SE")}%` : undefined);
   if (!formatted) return null;
 
   const value = Number(formatted.replace(",", ".").replace(/[^0-9.-]/g, ""));

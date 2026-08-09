@@ -2,6 +2,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 
 export const alphabet: AnalysisData = {
   contentType: "analysis",
+  templateVersion: "v11",
   slug: "alphabet",
   title: "Alphabet Inc.",
   listTitle: "Alphabet: stark AI-tillväxt – men begränsad säkerhetsmarginal",
@@ -11,6 +12,7 @@ export const alphabet: AnalysisData = {
   sector: "Internet / AI",
   recommendation: "BEVAKA",
   price: "$353,47",
+  upside: 9,
   pe: "Se v11.1-värdering",
   yield: "0,45%",
   relatedAnalysis: {
