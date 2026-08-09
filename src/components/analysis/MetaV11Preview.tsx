@@ -315,7 +315,7 @@ export default function MetaV11Preview({ data }: Props) {
         title={`${data.title} (${data.ticker}) — analys`}
         description={data.summary}
         ogType="article"
-        noIndex
+        noindex
       />
       <article className="bg-white text-slate-950">
         <header

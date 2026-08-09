@@ -3,6 +3,7 @@ import { AnalysisData } from "../../../types/analysis.js";
 export const microsoft: AnalysisData = {
   slug: "microsoft",
   title: "Microsoft Corporation",
+  contentType: "analysis",
   disclosureKey: "microsoft",
   ticker: "MSFT",
   market: "NASDAQ",

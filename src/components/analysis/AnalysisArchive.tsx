@@ -18,10 +18,6 @@ interface AnalysisArchiveProps {
   resultCount: number;
 }
 
-// Potential is only published where the current v11.1 valuation has been
-// completed and verified. Older analysis cards intentionally remain neutral.
-const V11_POTENTIAL_SLUGS = new Set(["meta-q2-2026", "alphabet", "microsoft"]);
-
 function CompanyMark({ analysis }: { analysis: AnalysisData }) {
   const isNovo = analysis.ticker.toUpperCase().startsWith("NOVO");
   const mark = isNovo ? "novo nordisk" : analysis.ticker.toLowerCase().replace(".st", "");
@@ -36,9 +32,13 @@ function CompanyMark({ analysis }: { analysis: AnalysisData }) {
 }
 
 function Potential({ analysis }: { analysis: AnalysisData }) {
-  if (!V11_POTENTIAL_SLUGS.has(analysis.slug) || analysis.upside == null) return null;
-  const value = analysis.upside;
-  const formatted = `${value > 0 ? "+" : ""}${value.toLocaleString("sv-SE")}%`;
+  // Potential belongs to the v11.1 preview's canonical valuation data. Legacy
+  // analyses intentionally stay neutral, while future v11.1 analyses work
+  // without adding company-specific archive logic.
+  const formatted = analysis.v11Preview?.upside;
+  if (!formatted) return null;
+
+  const value = Number(formatted.replace(",", ".").replace(/[^0-9.-]/g, ""));
   const color = value > 0 ? "text-emerald-700" : value < 0 ? "text-red-600" : "text-slate-700";
 
   return (
@@ -107,8 +107,10 @@ export default function AnalysisArchive({ analyses, searchTerm, onSearchChange, 
               <p className="mt-2 text-sm text-slate-500">Prova att ändra sökningen eller justera filtren.</p>
             </div>
           ) : analyses.map((analysis, index) => {
-            const isComment = analysis.contentType === "report-commentary";
-            return <motion.div key={analysis.slug} className="min-w-0" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: Math.min(index * .04, .2) }}><Link to={`/analys/${analysis.slug}`} className="group flex w-full min-w-0 min-h-[214px] flex-col gap-3 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md md:block md:min-h-[212px] md:p-5"><div className="flex min-w-0 items-start gap-4 md:block"><CompanyMark analysis={analysis} /><div className="min-w-0 flex-1 md:mt-4"><span className={`inline-flex rounded-full px-2 py-1 text-[9px] font-bold uppercase tracking-[0.06em] ${isComment ? "bg-blue-50 text-blue-700" : "bg-emerald-50 text-emerald-700"}`}>{CONTENT_TYPE_BADGE_LABELS[analysis.contentType]}</span><h3 className="mt-2 line-clamp-2 text-sm font-semibold leading-5 text-slate-800">{analysis.listTitle || analysis.title}</h3></div></div><div className="mt-auto flex min-w-0 items-center justify-between gap-3 border-t border-slate-100 pt-3"><div className="min-w-0"><div className="text-sm font-semibold"><Recommendation value={analysis.recommendation} /></div><Meta analysis={analysis} /></div><div className="flex shrink-0 items-center gap-3"><Potential analysis={analysis} /><ArrowRight className="text-slate-400 transition group-hover:translate-x-1" size={18} /></div></div></Link></motion.div>;
+            const cardContentType = analysis.contentType || "analysis";
+            const isComment = cardContentType === "report-commentary";
+            const cardTitle = analysis.v11Preview?.headline || analysis.listTitle || analysis.title;
+            return <motion.div key={analysis.slug} className="min-w-0" initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: Math.min(index * .04, .2) }}><Link to={`/analys/${analysis.slug}`} className="group flex w-full min-w-0 min-h-[214px] flex-col gap-3 overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_5px_18px_rgba(15,23,42,0.035)] transition hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-md md:block md:min-h-[212px] md:p-5"><div className="flex min-w-0 items-start gap-4 md:block"><CompanyMark analysis={analysis} /><div className="min-w-0 flex-1 md:mt-4"><span className={`inline-flex rounded-full px-2 py-1 text-[9px] font-bold uppercase tracking-[0.06em] ${isComment ? "bg-blue-50 text-blue-700" : "bg-emerald-50 text-emerald-700"}`}>{CONTENT_TYPE_BADGE_LABELS[cardContentType]}</span><h3 className="mt-2 line-clamp-2 text-sm font-semibold leading-5 text-slate-800">{cardTitle}</h3></div></div><div className="mt-auto flex min-w-0 items-center justify-between gap-3 border-t border-slate-100 pt-3"><div className="min-w-0"><div className="text-sm font-semibold"><Recommendation value={analysis.recommendation} /></div><Meta analysis={analysis} /></div><div className="flex shrink-0 items-center gap-3"><Potential analysis={analysis} /><ArrowRight className="text-slate-400 transition group-hover:translate-x-1" size={18} /></div></div></Link></motion.div>;
           })}
         </div>
         <AdUnit variant="sidebar-display" className="mx-auto mt-3 max-w-[420px]" />
