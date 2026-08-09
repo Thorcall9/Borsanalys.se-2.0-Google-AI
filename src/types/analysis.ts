@@ -168,6 +168,25 @@ export interface AnalysisData {
   discount?: string;
   summary: string;
   image?: string; // URL to analysis image
+  v11Preview?: {
+    headline: string;
+    dek: string;
+    weightedFairValue: string;
+    currentPrice: string;
+    upside: string;
+    annualPotential: string;
+    riskLabel: string;
+    positiveReasons: { title: string; body: string }[];
+    cautionReasons: { title: string; body: string }[];
+    insightHeadline: string;
+    insightBody: string;
+    theses: { status: string; title: string; signal: string; next: string }[];
+    monitors: { focus: string; latest: string; next: string; why: string }[];
+    valuationCheck: string;
+    valuationLimitation: string;
+    riskAndMethod: string;
+    sourceSummary: string;
+  };
 
   // Content type and filtering metadata
   contentType: ContentType;
@@ -184,7 +203,7 @@ export interface AnalysisData {
   published?: boolean;
   
   // Custom View Logic
-  deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea" | "Axfood" | "ABB" | "Plejd" | "Meta";
+  deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea" | "Axfood" | "ABB" | "Plejd" | "Meta" | "Microsoft";
   disclosureKey?: string;
 
   // Standardized structure from roadmap
@@ -230,6 +249,42 @@ export interface AnalysisData {
   targetPrice?: string;
   buyZone?: string;
   devilsAdvocateTables?: { title: string; headers: string[]; rows: (string | number)[][]; footer?: string }[];
+  historicalFundament?: {
+    recentQuarters?: {
+      period: string;
+      revenueUsdBn: number;
+      operatingMarginPct: number;
+      freeCashFlowUsdBn: number;
+      yearOnYear?: { revenueGrowthPct: number; operatingMarginChangePp: number; freeCashFlowGrowthPct: number };
+      classification: "FACT" | "DERIVED";
+      source: { document: string; locator: string };
+    }[];
+    annual: {
+      period: string;
+      revenueUsdBn: number;
+      operatingIncomeUsdBn: number;
+      operatingMarginPct: number;
+      operatingCashFlowUsdBn: number;
+      freeCashFlowUsdBn: number;
+      classification: "FACT" | "DERIVED";
+      source: { document: string; locator: string };
+    }[];
+    latest?: {
+      period: string;
+      revenueUsdBn: number;
+      operatingIncomeUsdBn: number;
+      operatingMarginPct: number;
+      freeCashFlowUsdBn: number;
+      classification: "FACT" | "DERIVED";
+      source: { document: string; locator: string };
+    };
+    derived?: {
+      revenueCagr2019To2025Pct: number;
+      operatingMarginRange2019To2025Pct: [number, number];
+      latestAnnualYearOnYear?: { period: string; comparedWithPeriod: string; revenueGrowthPct: number; operatingMarginChangePp: number; freeCashFlowGrowthPct: number };
+      formula: string;
+    };
+  };
 
   // Detailed Analysis Sections
   riskRewardMatrix?: string;
@@ -244,7 +299,8 @@ export interface AnalysisData {
   weaknesses?: string[];
   opportunities?: string[];
   threats?: string[];
-  scenarios: { label: string; value: string; change: string; type: "bull" | "base" | "bear"; description?: string; probability?: string }[];
+  scenarios: { label: string; value: string; change: string; type: "bull" | "base" | "bear"; description?: string; probability?: string; operatingLadder?: { revenueUsdBn: number; operatingMarginPct: number; operatingIncomeUsdBn: number; normalizedFinanceAndOtherUsdBn: number; taxRatePct: number; dilutedSharesBn: number; normalizedEpsUsd: number; revenueGrowthFromLatestAnnualPct?: number } }[];
+  valuationTargetYear?: number;
   businessModel?: string;
   affarsmodell?: {
     sankey?: {

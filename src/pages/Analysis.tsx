@@ -76,6 +76,7 @@ const DEEP_DIVE_COMPONENTS = {
   ABB: lazyDeepDive("ABB"),
   Plejd: lazyDeepDive("Plejd"),
   Meta: lazyDeepDive("Meta"),
+  Microsoft: lazyDeepDive("Microsoft"),
 };
 
 function DeepDiveLoading() {
