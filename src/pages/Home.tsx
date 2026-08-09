@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { motion } from "framer-motion";
 import { Hero } from "../components/Hero";
 import SEO from "../components/SEO";
-import { ArrowRight, CheckCircle2, ChevronRight, Loader2, Star } from "lucide-react";
+import { ArrowRight, CheckCircle2, ChevronRight, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import RecentPublications from "../components/community/RecentPublications";
 import TrustStrip from "../components/home/TrustStrip";
@@ -18,18 +18,6 @@ const memberBenefits = [
   "Få tillgång till rapportkommentarer",
   "Rösta fram nästa analys",
 ];
-
-const scenarios = [
-  { label: "Bull", price: "74 kr", note: "Högre tillväxt och bättre värdering", tone: "positive" },
-  { label: "Base", price: "58 kr", note: "Försiktig återhämtning enligt grundcaset", tone: "neutral" },
-  { label: "Bear", price: "48 kr", note: "Lägre tillväxt och pressad multipel", tone: "caution" },
-] as const;
-
-const scenarioStyles = {
-  positive: "border-emerald-200 text-emerald-700 dark:border-emerald-900 dark:text-emerald-400",
-  neutral: "border-border text-foreground",
-  caution: "border-red-200 text-red-700 dark:border-red-900 dark:text-red-400",
-} as const;
 
 const Newsletter = React.lazy(() => import("../components/Newsletter").then((module) => ({ default: module.Newsletter })));
 const MethodologySection = React.lazy(() => import("../components/MethodologySection"));
@@ -120,45 +108,26 @@ export default function Home() {
       <section className="homepage-section" aria-labelledby="analysis-example-title">
         <div className="homepage-container">
           <div className="max-w-2xl">
-            <p className="section-kicker">Exempel</p>
-            <h2 id="analysis-example-title" className="text-3xl font-bold tracking-tight md:text-4xl">Så kan en sammanvägd bedömning se ut</h2>
-            <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">En analys gör kvalitet, värdering och möjliga utfall konkreta utan att dölja osäkerheten i caset.</p>
+            <p className="section-kicker">V11.1 i praktiken</p>
+            <h2 id="analysis-example-title" className="text-3xl font-bold tracking-tight md:text-4xl">Ett beslut som går att följa upp</h2>
+            <p className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">I stället för ett samlat poängbetyg visar vi vad som avgör caset och vad som behöver hända härnäst.</p>
           </div>
           <div className="surface-card mt-10 p-6 md:p-8">
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-              <div>
-                <p className="text-sm font-semibold text-muted-foreground">RevolutionRace · RVRC.ST</p>
-                <h3 className="mt-2 text-2xl font-bold tracking-tight">Samlad bedömning</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Bolagskvalitet och balansräkning är styrkor, medan värderingen kräver en tydligare återhämtning i tillväxten.</p>
-              </div>
-              <div className="shrink-0 rounded-xl bg-primary/10 px-4 py-3 text-center text-primary">
-                <span className="block text-2xl font-bold">25 / 35</span>
-                <span className="text-xs font-semibold">BEVAKA</span>
-              </div>
+            <p className="section-kicker">Från analys till uppföljning</p>
+            <h3 className="mt-3 text-2xl font-bold tracking-tight">Det viktiga i ett sammanhang</h3>
+            <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">V11.1 håller fokus på beslutet och på de signaler som kan förändra det över tid.</p>
+            <div className="mt-8 grid gap-5 border-t border-border pt-6 md:grid-cols-3">
+              {[
+                ["Vår syn", "Rekommendation, värde och risk i ett sammanhang."],
+                ["Investeringsinsikt", "Den viktigaste frågan som driver värdet framåt."],
+                ["Nästa bevis", "Konkreta signaler att följa i kommande rapporter."],
+              ].map(([title, description]) => (
+                <article key={title}>
+                  <h4 className="text-base font-bold tracking-tight text-primary">{title}</h4>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{description}</p>
+                </article>
+              ))}
             </div>
-            <div className="mt-8 grid gap-5 border-t border-border pt-6 sm:grid-cols-2">
-              <div>
-                <p className="text-sm font-semibold">Kvalitet</p>
-                <div className="mt-2 flex text-primary" aria-label="Kvalitet: fem av fem stjärnor">
-                  {Array.from({ length: 5 }, (_, index) => <Star key={index} className="h-5 w-5 fill-current" />)}
-                </div>
-              </div>
-              <div>
-                <p className="text-sm font-semibold">Värdering</p>
-                <div className="mt-2 flex" aria-label="Värdering: två av fem stjärnor">
-                  {Array.from({ length: 5 }, (_, index) => <Star key={index} className={`h-5 w-5 ${index < 2 ? "fill-current text-primary" : "fill-muted text-muted-foreground/30"}`} />)}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {scenarios.map((scenario) => (
-              <article key={scenario.label} className={`surface-card p-6 ${scenarioStyles[scenario.tone]}`}>
-                <p className="text-sm font-semibold">{scenario.label}</p>
-                <p className="mt-3 text-3xl font-bold tracking-tight">{scenario.price}</p>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{scenario.note}</p>
-              </article>
-            ))}
           </div>
         </div>
       </section>
