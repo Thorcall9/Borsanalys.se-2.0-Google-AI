@@ -56,7 +56,6 @@ import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 import { useAuth } from "../contexts/AuthContext";
 
-import MobileReadingProgress from "../components/MobileReadingProgress";
 import AdUnit from "../components/analysis/AdUnit";
 
 const DEEP_DIVE_COMPONENTS = {
@@ -527,12 +526,6 @@ export default function Analysis() {
     return (
       <>
         <ReportComment data={analysis} markdown={axfoodQ2Markdown} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
-        <MobileReadingProgress 
-          label="analys" 
-          nextTitle={nextAnalysis?.title} 
-          nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
-        />
-        
         {/* Floating Save Button */}
         <div className="fixed bottom-24 right-6 z-40">
           <button
@@ -575,11 +568,6 @@ export default function Analysis() {
     return (
       <>
         <V11Analysis data={analysis} />
-        <MobileReadingProgress
-          label="analys"
-          nextTitle={nextAnalysis?.title}
-          nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined}
-        />
       </>
     );
   }
@@ -590,12 +578,6 @@ export default function Analysis() {
     return (
       <>
         <Component data={analysis} onToggleWatchlist={toggleWatchlist} isInWatchlist={isInWatchlist} isWatchlistLoading={isWatchlistLoading} nextAnalysis={nextAnalysis} />
-        <MobileReadingProgress 
-          label="analys" 
-          nextTitle={nextAnalysis?.title} 
-          nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
-        />
-
         {/* Floating Save Button */}
         <div className="fixed bottom-24 right-6 z-40">
           <button
@@ -644,12 +626,6 @@ export default function Analysis() {
         onToggleSave={toggleSave}
         nextAnalysis={nextAnalysis} 
       />
-      <MobileReadingProgress 
-        label="analys" 
-        nextTitle={nextAnalysis?.title} 
-        nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined} 
-      />
-
       {/* Floating Save Button */}
       <div className="fixed bottom-24 right-6 z-40 lg:hidden">
         <button

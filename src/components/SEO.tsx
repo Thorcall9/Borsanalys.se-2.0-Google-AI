@@ -9,6 +9,14 @@ interface SEOProps {
   ogImage?: string;
   twitterHandle?: string;
   noIndex?: boolean;
+  /** Legacy spelling accepted without changing current metadata rendering. */
+  noindex?: boolean;
+  /** Accepted alongside `noindex` for existing private-page call sites. */
+  nofollow?: boolean;
+  /** Structured data supplied by callers; rendering remains intentionally unchanged here. */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** Article publication metadata supplied by callers; rendering remains intentionally unchanged here. */
+  publishedTime?: string;
 }
 
 const SEO: React.FC<SEOProps> = ({
