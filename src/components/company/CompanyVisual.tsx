@@ -51,6 +51,7 @@ const companyByTicker: Record<string, CompanyIdentity> = {
   "SHB A": { domain: "handelsbanken.com", name: "Handelsbanken" },
   "SWED A": { domain: "swedbank.com", name: "Swedbank" },
   "VOLV-B.ST": { domain: "volvogroup.com", name: "Volvo" },
+  "V": { domain: "visa.com", name: "Visa" },
 };
 
 function logoUrl({ domain, ticker, officialLogoUrl, variant = "icon", theme }: CompanyIdentity) {
