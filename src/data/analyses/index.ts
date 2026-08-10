@@ -53,4 +53,7 @@ export const analyses: Record<string, AnalysisData> = {
   "visa": visa,
 };
 
+/** Hidden analyses can be directly reviewed without appearing in discovery surfaces. */
+export const isPublishedAnalysis = (analysis: AnalysisData) => analysis.published !== false;
+
 export type { AnalysisData, AIDrivenAnalysis } from "../../types/analysis.js";
