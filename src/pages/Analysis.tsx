@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useParams, Link, Navigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { 
@@ -55,8 +55,11 @@ import V11Analysis from "../components/analysis/V11Analysis";
 import { analyses, AnalysisData } from "../data/analyses";
 import { fetchWithCache } from "../services/stockService";
 import { useAuth } from "../contexts/AuthContext";
+import { useAnalysisFilters } from "../hooks/useAnalysisFilters";
 
 import AdUnit from "../components/analysis/AdUnit";
+import AnalysisArchive from "../components/analysis/AnalysisArchive";
+import MobileFilterDrawer from "../components/analysis/MobileFilterDrawer";
 
 const DEEP_DIVE_COMPONENTS = {
   Nvidia: NvidiaDeepDive,
@@ -102,6 +105,31 @@ export default function Analysis() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSector, setSelectedSector] = useState("Alla");
   const [selectedRecommendation, setSelectedRecommendation] = useState("Alla");
+  const [isArchiveMobileFilterOpen, setIsArchiveMobileFilterOpen] = useState(false);
+
+  const archiveAnalyses = useMemo(
+    () => Object.values(analyses)
+      .filter((item) => item.published !== false)
+      .sort((a, b) => (b.date || "").localeCompare(a.date || "")),
+    []
+  );
+  const {
+    contentType: archiveContentType,
+    searchTerm: archiveSearchTerm,
+    selectedSector: archiveSelectedSector,
+    selectedRecommendation: archiveSelectedRecommendation,
+    sortOption: archiveSortOption,
+    setContentType: setArchiveContentType,
+    setSearchTerm: setArchiveSearchTerm,
+    setSelectedSector: setArchiveSelectedSector,
+    setSelectedRecommendation: setArchiveSelectedRecommendation,
+    setSortOption: setArchiveSortOption,
+    sectors: archiveSectors,
+    filteredAnalyses: archiveFilteredAnalyses,
+    resultCount: archiveResultCount,
+    activeFilterCount: archiveActiveFilterCount,
+    clearAll: clearArchiveFilters,
+  } = useAnalysisFilters(archiveAnalyses);
 
   const analysis = slug ? analyses[slug as keyof typeof analyses] : undefined;
 
@@ -316,6 +344,49 @@ export default function Analysis() {
 
   // List view if no slug is provided
   if (!slug) {
+    return (
+      <div className="min-h-screen bg-background">
+        <SEO
+          title="Analysarkiv - Aktieanalyser & Investment Cases"
+          description="Fördjupade aktieanalyser och kortare kommentarer till bolagens senaste rapporter."
+          canonical="/analys"
+        />
+        <AnalysisArchive
+          analyses={archiveFilteredAnalyses}
+          searchTerm={archiveSearchTerm}
+          onSearchChange={setArchiveSearchTerm}
+          contentType={archiveContentType}
+          onContentTypeChange={setArchiveContentType}
+          selectedRecommendation={archiveSelectedRecommendation}
+          onRecommendationChange={setArchiveSelectedRecommendation}
+          onMoreFilters={() => setIsArchiveMobileFilterOpen(true)}
+          resultCount={archiveResultCount}
+        />
+        <MobileFilterDrawer
+          isOpen={isArchiveMobileFilterOpen}
+          onToggle={() => setIsArchiveMobileFilterOpen((open) => !open)}
+          onClose={() => setIsArchiveMobileFilterOpen(false)}
+          activeFilterCount={archiveActiveFilterCount}
+          searchTerm={archiveSearchTerm}
+          onSearchChange={setArchiveSearchTerm}
+          contentType={archiveContentType}
+          onContentTypeChange={setArchiveContentType}
+          selectedSector={archiveSelectedSector}
+          onSectorChange={setArchiveSelectedSector}
+          sectors={archiveSectors}
+          selectedRecommendation={archiveSelectedRecommendation}
+          onRecommendationChange={setArchiveSelectedRecommendation}
+          sortOption={archiveSortOption}
+          onSortChange={setArchiveSortOption}
+          onClearAll={clearArchiveFilters}
+        />
+      </div>
+    );
+  }
+
+  // Legacy archive markup is retained below temporarily while individual
+  // analysis rendering is migrated; the active archive is returned above.
+  if (false) {
     return (
       <div className="bg-background min-h-screen pt-32 pb-24">
         <SEO 

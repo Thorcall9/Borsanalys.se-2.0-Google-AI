@@ -1,3 +1,5 @@
+import type { Recommendation } from "../lib/recommendation.js";
+
 export interface Scenario {
   type: 'bull' | 'base' | 'bear';
   label: string;
@@ -146,18 +148,22 @@ export interface AIDrivenAnalysis {
 
 export interface AnalysisData {
   slug: string;
+  templateVersion?: "legacy" | "v10" | "v11";
   title: string;
   listTitle?: string;
   ticker: string;
   isin?: string;
   author?: string;
   date: string;
+  displayDate?: string;
   published?: boolean;
   market: string;
   sector: string;
-  recommendation: "KÖP" | "AVVAKTA" | "SÄLJ" | "BEVAKA";
+  recommendation: Recommendation;
+  recommendationReason?: string;
   price: string;
   pe: string;
+  dividend?: string;
   yield: string;
   marketCap?: string;
   discount?: string;
@@ -182,9 +188,38 @@ export interface AnalysisData {
     riskAndMethod: string;
     sourceSummary: string;
   };
+  v11Preview?: {
+    headline: string;
+    dek: string;
+    weightedFairValue: string;
+    currentPrice: string;
+    upside: string;
+    annualPotential: string;
+    riskLabel: string;
+    positiveReasons: { title: string; body: string }[];
+    cautionReasons: { title: string; body: string }[];
+    insightHeadline: string;
+    insightBody: string;
+    theses: { status: string; title: string; signal: string; next: string }[];
+    monitors: { focus: string; latest: string; next: string; why: string }[];
+    valuationCheck: string;
+    valuationLimitation: string;
+    riskAndMethod: string;
+    sourceSummary: string;
+  };
+  contentType?: ContentType;
+  relatedAnalysisSlug?: string;
+  tags?: string[];
+  reportPeriod?: string;
+  reportSummary?: string;
+  viewChange?: "unchanged" | "upgraded" | "downgraded" | "new";
+  upside?: number;
+  updatedAt?: string;
+  score?: number;
+  maxScore?: number;
   
   // Custom View Logic
-  deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea" | "Axfood" | "ABB" | "Plejd" | "MetaV11";
+  deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea" | "Axfood" | "ABB" | "Plejd" | "Meta" | "Microsoft" | "MetaV11";
   disclosureKey?: string;
 
   // Standardized structure from roadmap
@@ -354,3 +389,5 @@ export interface AnalysisData {
     vdAnalys?: number;
   };
 }
+
+export type ContentType = "analysis" | "report-commentary" | "market-update" | "guide" | "other";
