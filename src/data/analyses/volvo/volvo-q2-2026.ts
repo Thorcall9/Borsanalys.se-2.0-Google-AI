@@ -15,10 +15,10 @@ export const volvoQ22026: AnalysisData & { contentType: "analysis" } = {
   yield: "3,7 %",
   marketCap: "721 mdkr",
   date: "2026-08-10",
-  published: false,
+  published: true,
   v11: {
     analysisId: "volvo-b-2026-08-10-v11-2",
-    versionId: "volvo-q2-2026-v3",
+    versionId: "volvo-q2-2026-v4",
     sourceCutoffDate: "2026-08-10",
     valuationDate: "2028-12-31",
     valuationYearLabel: "2028E",
@@ -32,6 +32,16 @@ export const volvoQ22026: AnalysisData & { contentType: "analysis" } = {
     annualPotential: "Annualiserad kursvärdepotential exkl. utdelningar: −5,6 %/år",
     valuePotentialLabel: "Kursvärdepotential exkl. utdelningar",
     epsBridgeEnabled: true,
+    illustrativeTotalReturn: {
+      title: "Illustrativ totalavkastning inkl. utdelningar",
+      rows: [
+        { scenario: "Försiktigt", courseValue: "192 kr", dividends: "14,50 kr", endingValue: "207 kr", totalReturn: "−41,7 %" },
+        { scenario: "Huvudscenario", courseValue: "332 kr", dividends: "23,00 kr", endingValue: "355 kr", totalReturn: "+0,1 %" },
+        { scenario: "Positivt", courseValue: "390 kr", dividends: "29,00 kr", endingValue: "419 kr", totalReturn: "+18,1 %" },
+      ],
+      weightedOutcome: "Sannolikhetsvägt slutvärde inkl. illustrativa utdelningar: cirka 331 kr. Det motsvarar ungefär −6,8 % totalavkastning över perioden, eller cirka −2,9 % per år, utan återinvestering av utdelningarna.",
+      disclaimer: "Utdelningarna är scenarioantaganden baserade på kassaflöde och kapitalbuffert, inte bolagets guidning. Extrautdelningar är särskilt osäkra.",
+    },
     riskLabel: "Medel risk",
     positiveReasons: [
       { title: "Orderbilden förbättras", body: "Lastbilsorder steg 33 % i Q2; Nordamerika ökade 122 %, men leveranserna där föll fortfarande 6 %." },

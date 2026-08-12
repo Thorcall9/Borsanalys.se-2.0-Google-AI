@@ -647,6 +647,43 @@ export default function V11Analysis({ data }: Props) {
                 {preview.valuationLimitation}
               </p>
             </div>
+            {preview.illustrativeTotalReturn && (
+              <aside className="mt-8 border-t border-slate-200 pt-8" aria-labelledby="illustrative-total-return-title">
+                <h3 id="illustrative-total-return-title" className="font-serif text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-3xl">
+                  {preview.illustrativeTotalReturn.title}
+                </h3>
+                <div className="mt-5 overflow-x-auto rounded-xl border border-slate-200">
+                  <table className="min-w-[640px] w-full border-collapse text-left text-sm">
+                    <thead className="bg-emerald-50 text-xs font-black uppercase tracking-[0.12em] text-emerald-900">
+                      <tr>
+                        <th className="px-4 py-3">Scenario</th>
+                        <th className="px-4 py-3">Kursvärde 2028E</th>
+                        <th className="px-4 py-3">Illustrativa utdelningar</th>
+                        <th className="px-4 py-3">Slutvärde</th>
+                        <th className="px-4 py-3">Totalavkastning</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-200 bg-white">
+                      {preview.illustrativeTotalReturn.rows.map((row) => (
+                        <tr key={row.scenario}>
+                          <th scope="row" className="whitespace-nowrap px-4 py-3.5 font-bold text-slate-950">{row.scenario}</th>
+                          <td className="whitespace-nowrap px-4 py-3.5 text-slate-700">{row.courseValue}</td>
+                          <td className="whitespace-nowrap px-4 py-3.5 text-slate-700">{row.dividends}</td>
+                          <td className="whitespace-nowrap px-4 py-3.5 font-semibold text-slate-950">{row.endingValue}</td>
+                          <td className="whitespace-nowrap px-4 py-3.5 font-black text-emerald-700">{row.totalReturn}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                <p className="mt-4 border-l-2 border-emerald-500 pl-4 text-sm font-semibold leading-6 text-slate-800">
+                  {preview.illustrativeTotalReturn.weightedOutcome}
+                </p>
+                <p className="mt-3 text-xs leading-5 text-slate-500">
+                  {preview.illustrativeTotalReturn.disclaimer}
+                </p>
+              </aside>
+            )}
           </section>
           <section
             id="next-report"

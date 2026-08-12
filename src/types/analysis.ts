@@ -185,6 +185,18 @@ export interface AnalysisData {
     annualPotential: string;
     valuePotentialLabel?: string;
     epsBridgeEnabled?: boolean;
+    illustrativeTotalReturn?: {
+      title: string;
+      rows: {
+        scenario: string;
+        courseValue: string;
+        dividends: string;
+        endingValue: string;
+        totalReturn: string;
+      }[];
+      weightedOutcome: string;
+      disclaimer: string;
+    };
     riskLabel: string;
     positiveReasons: { title: string; body: string }[];
     cautionReasons: { title: string; body: string }[];
