@@ -573,14 +573,7 @@ export default function Analysis() {
   // renderer until their data is migrated.
   if (analysis.v11) {
     return (
-      <>
-        <V11Analysis data={analysis} />
-        <MobileReadingProgress
-          label="analys"
-          nextTitle={nextAnalysis?.title}
-          nextHref={nextAnalysis ? `/analys/${nextAnalysis.slug}` : undefined}
-        />
-      </>
+      <V11Analysis data={analysis} />
     );
   }
 

@@ -164,12 +164,21 @@ export interface AnalysisData {
   summary: string;
   image?: string; // URL to analysis image
   v11?: {
+    analysisId?: string;
+    versionId?: string;
+    sourceCutoffDate?: string;
+    valuationDate?: string;
+    valuationYearLabel?: string;
+    currency?: string;
+    valueSuffix?: string;
     headline: string;
     dek: string;
     weightedFairValue: string;
     currentPrice: string;
     upside: string;
     annualPotential: string;
+    valuePotentialLabel?: string;
+    epsBridgeEnabled?: boolean;
     riskLabel: string;
     positiveReasons: { title: string; body: string }[];
     cautionReasons: { title: string; body: string }[];
@@ -179,6 +188,10 @@ export interface AnalysisData {
     monitors: { focus: string; latest: string; next: string; why: string }[];
     valuationCheck: string;
     valuationLimitation: string;
+    valuationSummary?: string;
+    historyMarginLabel?: string;
+    classificationSummary?: string;
+    nextReportWindow?: string;
     riskAndMethod: string;
     sourceSummary: string;
   };
@@ -231,11 +244,26 @@ export interface AnalysisData {
   buyZone?: string;
   devilsAdvocateTables?: { title: string; headers: string[]; rows: (string | number)[][]; footer?: string }[];
   historicalFundament?: {
+    currency?: string;
+    moneySuffix?: string;
+    marginLabel?: string;
+    adjustedOperatingMargin?: {
+      label: string;
+      rangePct: [number, number];
+      annual: { period: string; marginPct: number }[];
+      latest: { period: string; marginPct: number };
+      comparisonNote: string;
+      reportedHistoryNote?: string;
+    };
+    cashFlowLabel?: string;
+    cashFlowDescription?: string;
     recentQuarters?: {
       period: string;
-      revenueUsdBn: number;
+      revenueUsdBn?: number;
+      revenueBn?: number;
       operatingMarginPct: number;
-      freeCashFlowUsdBn: number;
+      freeCashFlowUsdBn?: number;
+      cashFlowBn?: number;
       yearOnYear?: {
         revenueGrowthPct: number;
         operatingMarginChangePp: number;
@@ -246,20 +274,26 @@ export interface AnalysisData {
     }[];
     annual: {
       period: string;
-      revenueUsdBn: number;
-      operatingIncomeUsdBn: number;
+      revenueUsdBn?: number;
+      revenueBn?: number;
+      operatingIncomeUsdBn?: number;
+      operatingIncomeBn?: number;
       operatingMarginPct: number;
-      operatingCashFlowUsdBn: number;
-      freeCashFlowUsdBn: number;
+      operatingCashFlowUsdBn?: number;
+      freeCashFlowUsdBn?: number;
+      cashFlowBn?: number;
       classification: "FACT" | "DERIVED";
       source: { document: string; locator: string };
     }[];
     latest?: {
       period: string;
-      revenueUsdBn: number;
-      operatingIncomeUsdBn: number;
+      revenueUsdBn?: number;
+      revenueBn?: number;
+      operatingIncomeUsdBn?: number;
+      operatingIncomeBn?: number;
       operatingMarginPct: number;
-      freeCashFlowUsdBn: number;
+      freeCashFlowUsdBn?: number;
+      cashFlowBn?: number;
       classification: "FACT" | "DERIVED";
       source: { document: string; locator: string };
     };
@@ -290,7 +324,7 @@ export interface AnalysisData {
   weaknesses?: string[];
   opportunities?: string[];
   threats?: string[];
-  scenarios: { label: string; value: string; change: string; cagr?: string; type: "bull" | "base" | "bear"; description?: string; probability?: string; operatingLadder?: { revenueUsdBn: number; operatingMarginPct: number; operatingIncomeUsdBn: number; normalizedFinanceAndOtherUsdBn: number; taxRatePct: number; dilutedSharesBn: number; normalizedEpsUsd: number; revenueGrowthFromLatestAnnualPct?: number } }[];
+  scenarios: { label: string; value: string; change: string; cagr?: string; type: "bull" | "base" | "bear"; description?: string; probability?: string; operatingLadder?: { revenueUsdBn?: number; revenueBn?: number; operatingMarginPct: number; operatingIncomeUsdBn?: number; operatingIncomeBn?: number; normalizedFinanceAndOtherUsdBn?: number; normalizedFinanceAndOtherBn?: number; taxRatePct: number; minorityInterestUsdBn?: number; minorityInterestBn?: number; dilutedSharesBn: number; normalizedEpsUsd?: number; normalizedEps?: number; revenueGrowthFromLatestAnnualPct?: number } }[];
   valuationTargetYear?: number;
   businessModel?: string;
   affarsmodell?: {

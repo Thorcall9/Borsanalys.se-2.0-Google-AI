@@ -6,6 +6,7 @@ import { apple } from "./apple/apple.js";
 import { microsoft } from "./microsoft/microsoft.js";
 import { novoNordisk } from "./novo-nordisk/novo-nordisk.js";
 import { volvo } from "./volvo/volvo.js";
+import { volvoQ22026 } from "./volvo/volvo-q2-2026.js";
 import { alphabet } from "./alphabet/alphabet.js";
 import { evolution2025 } from "./evolution/evolution-2025.js";
 import { swedbank2025 } from "./swedbank/swedbank-2025.js";
@@ -33,6 +34,7 @@ export const analyses: Record<string, AnalysisData> = {
   "microsoft": microsoft,
   "novo-nordisk": novoNordisk,
   "volvo": volvo,
+  "volvo-q2-2026": volvoQ22026,
   "alphabet": alphabet,
   "evolution-2025": evolution2025,
   "swedbank-2025": swedbank2025,
