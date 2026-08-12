@@ -1,12 +1,12 @@
 import React from "react";
 import { ArrowRight, BarChart3, CalendarDays, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
-import { analyses } from "../../data/analyses";
+import { analyses, isPublishedAnalysis } from "../../data/analyses";
 import { getLatestPublications } from "../../lib/profileOverview";
 import { CONTENT_TYPE_LABELS } from "../../hooks/useAnalysisFilters";
 
 export default function RecentPublications() {
-  const publications = getLatestPublications(Object.values(analyses), 3);
+  const publications = getLatestPublications(Object.values(analyses).filter(isPublishedAnalysis), 3);
 
   return (
     <section className="space-y-4" aria-labelledby="recent-publications-title">

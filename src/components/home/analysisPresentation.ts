@@ -1,5 +1,5 @@
 import type { AnalysisData } from "../../types/analysis";
-import { analyses } from "../../data/analyses";
+import { analyses, isPublishedAnalysis } from "../../data/analyses";
 
 export interface AnalysisPresentation {
   companyName: string;
@@ -13,7 +13,7 @@ export interface AnalysisPresentation {
 }
 
 export function getFeaturedAnalysis(): AnalysisData {
-  const candidates = Object.values(analyses).filter((analysis) => analysis.contentType === "analysis");
+  const candidates = Object.values(analyses).filter((analysis) => analysis.contentType === "analysis" && isPublishedAnalysis(analysis));
   const sorted = [...candidates].sort((left, right) => {
     const leftDate = left.updatedAt ?? left.date;
     const rightDate = right.updatedAt ?? right.date;

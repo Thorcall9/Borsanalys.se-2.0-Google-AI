@@ -9,6 +9,7 @@ import {
   ChevronUp,
   Eye,
   Gauge,
+  Info,
   Landmark,
   LineChart,
   ShieldAlert,
@@ -187,12 +188,28 @@ function ValuationChain({
   targetYear,
   multiple,
   value,
+  currency,
+  showEpsBridge,
+  normalizedEpsBridge,
 }: {
   ladder: OperatingLadder;
   targetYear: number;
   multiple?: string;
   value: string;
+  currency: string;
+  showEpsBridge: boolean;
+  normalizedEpsBridge: boolean;
 }) {
+  const revenue = ladder.revenueBn ?? ladder.revenueUsdBn ?? 0;
+  const operatingIncome = ladder.operatingIncomeBn ?? ladder.operatingIncomeUsdBn ?? 0;
+  const normalizedFinance = ladder.normalizedFinanceAndOtherBn ?? ladder.normalizedFinanceAndOtherUsdBn ?? 0;
+  const minorityInterest = ladder.minorityInterestBn ?? ladder.minorityInterestUsdBn ?? 0;
+  const profitBeforeTax = operatingIncome + normalizedFinance;
+  const tax = profitBeforeTax * (ladder.taxRatePct / 100);
+  const attributableProfit = profitBeforeTax - tax - minorityInterest;
+  const normalizedEps = ladder.normalizedEps ?? ladder.normalizedEpsUsd ?? 0;
+  const amount = (number: number) => currency === "USD" ? `$${number}` : `${number} md ${currency}`;
+  const eps = (number: number) => currency === "USD" ? `$${number.toFixed(2)}` : `${number.toFixed(2).replace(".", ",")} ${currency}`;
   const metric = (label: string, amount: string, accent = false) => (
     <div>
       <p className="text-slate-500">{label}</p>
@@ -201,6 +218,12 @@ function ValuationChain({
       >
         {amount}
       </p>
+    </div>
+  );
+  const epsMetric = () => (
+    <div>
+      <p className="flex items-center gap-1 text-slate-500">{normalizedEpsBridge ? "Normaliserad EPS" : "EPS"} {normalizedEpsBridge && <span title="Normaliserad EPS är vår uppskattning av Volvos uthålliga vinst per aktie i respektive scenario vid värderingshorisonten. Beräkningen använder normaliserad rörelsemarginal, finansnetto, skatt och minoritet och ska inte tolkas som en prognos för exakt rapporterad EPS 2028."><Info size={13} aria-label="Förklaring av normaliserad EPS" /></span>}</p>
+      <p className="mt-1 text-xl font-black">{eps(normalizedEps)}</p>
     </div>
   );
   const operator = (symbol: string) => (
@@ -213,52 +236,60 @@ function ValuationChain({
       <p className="text-sm font-bold text-slate-700">Så blir värdet</p>
       <div className="mt-3 space-y-4 text-sm sm:hidden">
         <div className="grid grid-cols-[1fr_auto_1fr] items-end gap-x-3">
-          {metric(`Omsättning ${targetYear}E`, `$${ladder.revenueUsdBn} md`)}
+          {metric(`Omsättning ${targetYear}E`, amount(revenue))}
           {operator("×")}
-          {metric("Rörelsemarginal", `${ladder.operatingMarginPct} %`)}
+          {metric(normalizedEpsBridge ? "Justerad rörelsemarginal" : "Rörelsemarginal", `${ladder.operatingMarginPct} %`)}
         </div>
         <div className="flex items-end gap-3 border-t border-slate-100 pt-3">
           {operator("=")}
           {metric(
-            "Rörelseresultat",
-            `$${ladder.operatingIncomeUsdBn.toFixed(2)} md`,
+            normalizedEpsBridge ? "Normaliserad justerad EBIT" : "Rörelseresultat",
+            amount(Number(operatingIncome.toFixed(2))),
           )}
         </div>
         <div className="border-t border-slate-100 pt-3">
-          <p className="text-xs text-slate-500">Efter skatt och antal aktier</p>
           <div className="mt-2 grid grid-cols-[1fr_auto_auto_auto_1fr] items-end gap-x-2">
-            {metric(
-              "Normaliserad EPS",
-              `$${ladder.normalizedEpsUsd.toFixed(2)}`,
-            )}
+            {epsMetric()}
             {operator("×")}
             {metric("P/E", multiple ?? "—")}
             {operator("=")}
             {metric("Rimligt värde", value, true)}
           </div>
         </div>
+        {showEpsBridge && <div className="mt-4 grid grid-cols-2 gap-x-3 gap-y-2 border-t border-slate-100 pt-3 text-xs text-slate-500">
+          <span>Finansnetto: {amount(normalizedFinance)}</span>
+          <span>Resultat före skatt: {amount(Number(profitBeforeTax.toFixed(2)))}</span>
+          <span>Skatt ({ladder.taxRatePct} %): {amount(-Number(tax.toFixed(2)))}</span>
+          <span>Minoritet: {amount(-Number(minorityInterest.toFixed(2)))}</span>
+          <span>Till aktieägarna: {amount(Number(attributableProfit.toFixed(2)))}</span>
+          <span>Antal aktier: {ladder.dilutedSharesBn.toFixed(3)} md</span>
+        </div>}
       </div>
       <div className="mt-3 hidden flex-wrap items-center gap-x-3 gap-y-4 text-sm sm:flex">
-        {metric(`Omsättning ${targetYear}E`, `$${ladder.revenueUsdBn} md`)}
+        {metric(`Omsättning ${targetYear}E`, amount(revenue))}
         {operator("×")}
-        {metric("Rörelsemarginal", `${ladder.operatingMarginPct} %`)}
+        {metric(normalizedEpsBridge ? "Justerad rörelsemarginal" : "Rörelsemarginal", `${ladder.operatingMarginPct} %`)}
         {operator("=")}
-        {metric(
-          "Rörelseresultat",
-          `$${ladder.operatingIncomeUsdBn.toFixed(2)} md`,
+          {metric(
+            normalizedEpsBridge ? "Normaliserad justerad EBIT" : "Rörelseresultat",
+          amount(Number(operatingIncome.toFixed(2))),
         )}
         {operator("→")}
-        <div>
-          {metric("Normaliserad EPS", `$${ladder.normalizedEpsUsd.toFixed(2)}`)}
-          <p className="mt-1 text-xs text-slate-500">
-            efter skatt och antal aktier
-          </p>
-        </div>
+        {epsMetric()}
         {operator("×")}
         {metric("P/E", multiple ?? "—")}
         {operator("=")}
         {metric("Rimligt värde", value, true)}
       </div>
+      {showEpsBridge && <div className="mt-4 hidden grid-cols-3 gap-x-3 gap-y-3 border-t border-slate-100 pt-3 text-xs text-slate-500 sm:grid lg:grid-cols-6">
+        <span>Finansnetto<br /><strong className="text-slate-700">{amount(normalizedFinance)}</strong></span>
+        <span>Resultat före skatt<br /><strong className="text-slate-700">{amount(Number(profitBeforeTax.toFixed(2)))}</strong></span>
+        <span>Skatt ({ladder.taxRatePct} %)<br /><strong className="text-slate-700">{amount(-Number(tax.toFixed(2)))}</strong></span>
+        <span>Minoritet<br /><strong className="text-slate-700">{amount(-Number(minorityInterest.toFixed(2)))}</strong></span>
+        <span>Till aktieägarna<br /><strong className="text-slate-700">{amount(Number(attributableProfit.toFixed(2)))}</strong></span>
+        <span>Antal aktier<br /><strong className="text-slate-700">{ladder.dilutedSharesBn.toFixed(3)} md</strong></span>
+      </div>
+      }
     </div>
   );
 }
@@ -268,12 +299,15 @@ function ValuationChain({
 export default function V11Analysis({ data }: Props) {
   const [activeTab, setActiveTab] = useState<TabId>("overview");
   const [showMethod, setShowMethod] = useState(false);
+  const [showEpsBridge, setShowEpsBridge] = useState(false);
   const [risksOpen, setRisksOpen] = useState(false);
   const [saved, setSaved] = useState(false);
   const [selectedScenario, setSelectedScenario] = useState<
     "bear" | "base" | "bull"
   >("base");
   const targetYear = data.valuationTargetYear ?? 2027;
+  const currency = data.v11?.currency ?? "USD";
+  const valueSuffix = data.v11?.valueSuffix ?? currency;
   const valuationRows = data.valuationTables?.[0]?.rows ?? [];
   const scenarioPresentation = data.scenarios.map((scenario) => {
     const row = valuationRows.find(
@@ -298,7 +332,8 @@ export default function V11Analysis({ data }: Props) {
   const history = data.historicalFundament;
   const annualGrowth =
     activeScenario?.operatingLadder?.revenueGrowthFromLatestAnnualPct;
-  const marginRange = history?.derived?.operatingMarginRange2019To2025Pct;
+  const marginRange = history?.adjustedOperatingMargin?.rangePct;
+  const comparableLtmMargin = history?.adjustedOperatingMargin?.latest.marginPct;
   const preview = data.v11;
   if (!preview) return null;
   const reasonIcons: LucideIcon[] = [LineChart, Sparkles, Gauge];
@@ -307,6 +342,7 @@ export default function V11Analysis({ data }: Props) {
   const cautionRows = preview.cautionReasons.map((row, index) => ({ ...row, icon: cautionIcons[index] ?? ShieldAlert }));
   const displayedTheses = preview.theses;
   const displayedMonitors = preview.monitors;
+  const formatDate = (date: string) => new Intl.DateTimeFormat("sv-SE", { day: "numeric", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00`));
 
   return (
     <>
@@ -333,7 +369,8 @@ export default function V11Analysis({ data }: Props) {
               <p>
                 {data.title} <span className="mx-1 text-slate-300">/</span>{" "}
                 {data.ticker} <span className="mx-1 text-slate-300">/</span>{" "}
-                Uppdaterad {new Intl.DateTimeFormat("sv-SE", { day: "numeric", month: "long", year: "numeric" }).format(new Date(`${data.date}T12:00:00`))}
+                Uppdaterad {formatDate(data.date)}
+                {preview.sourceCutoffDate && <><span className="mx-1 text-slate-300">/</span> Källor t.o.m. {formatDate(preview.sourceCutoffDate)}</>}
               </p>
               <button
                 type="button"
@@ -372,12 +409,13 @@ export default function V11Analysis({ data }: Props) {
                       {preview.weightedFairValue}
                     </p>
                     <p className="mb-1.5 text-xl font-bold text-emerald-700">
-                      USD
+                      {valueSuffix}
                     </p>
                   </div>
                   <p className="mt-2 text-base text-slate-600">
                     Sannolikhetsvägt scenariovärde
                   </p>
+                  {preview.valuationDate && <p className="mt-1 text-xs font-semibold text-slate-500">Värderingsdatum: {formatDate(preview.valuationDate)}</p>}
                 </div>
                 <div className="border-t border-emerald-200 pt-5 sm:border-l sm:border-t-0 sm:pl-8 sm:pt-0">
                   <p className="text-sm text-slate-600">
@@ -387,7 +425,7 @@ export default function V11Analysis({ data }: Props) {
                     {preview.upside}
                   </p>
                   <p className="mt-2 text-base text-slate-600">
-                    Möjlig total uppsida före utdelning
+                    {preview.valuePotentialLabel ?? "Total värdepotential"}
                   </p>
                   <p className="mt-1 text-sm font-semibold text-slate-700">
                     {preview.annualPotential}
@@ -430,8 +468,15 @@ export default function V11Analysis({ data }: Props) {
                         targetYear={targetYear}
                         multiple={activeScenario.multiple}
                         value={activeScenario.value}
+                        currency={currency}
+                        showEpsBridge={showEpsBridge}
+                        normalizedEpsBridge={preview.epsBridgeEnabled ?? false}
                       />
                     )}
+                    {preview.epsBridgeEnabled && <button type="button" onClick={() => setShowEpsBridge((value) => !value)} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-emerald-700 hover:text-emerald-900" aria-expanded={showEpsBridge}>
+                      {showEpsBridge ? "Dölj EPS-bryggan" : "Visa EPS-bryggan"}
+                      {showEpsBridge ? <ChevronUp size={17} /> : <ChevronDown size={17} />}
+                    </button>}
                     <div className="mt-5 grid gap-4 border-t border-slate-100 pt-4 text-sm leading-6 text-slate-600 md:grid-cols-2">
                       <div>
                         <p className="font-bold text-slate-950">
@@ -448,9 +493,7 @@ export default function V11Analysis({ data }: Props) {
                         <p className="mt-1">
                           Marginalantagandet{" "}
                           {activeScenario.operatingLadder?.operatingMarginPct} %
-                          ligger inom det historiska intervallet{" "}
-                          {marginRange?.join("–")} % och jämförs med LTM{" "}
-                          {history?.latest?.operatingMarginPct.toFixed(1)} %.
+                          jämförs med det verifierade intervallet {marginRange?.join("–")} % justerad EBIT-marginal och LTM {comparableLtmMargin?.toFixed(1)} % justerad EBIT-marginal.
                         </p>
                       </div>
                       <div>
@@ -565,8 +608,7 @@ export default function V11Analysis({ data }: Props) {
                 </h2>
               </div>
               <p className="max-w-sm text-sm leading-6 text-slate-500">
-                Modellen använder normaliserad EPS. FCF-kontrollen visar att den
-                höga AI-capexen fortfarande är den centrala osäkerheten.
+                {preview.valuationSummary ?? "Modellen använder normaliserad EPS och en scenarioanpassad värderingsmultipel. Antagandena prövas mot rapporterad historik."}
               </p>
             </div>
             <div className="mt-7 grid gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200 md:grid-cols-3">
@@ -617,6 +659,11 @@ export default function V11Analysis({ data }: Props) {
               <h2 className="mt-3 font-serif text-4xl font-bold tracking-[-0.045em] sm:text-5xl">
                 Det här följer vi först
               </h2>
+              {preview.nextReportWindow && (
+                <p className="mt-3 text-sm font-semibold text-slate-600">
+                  {preview.nextReportWindow}
+                </p>
+              )}
             </div>
             <div className="mt-7 overflow-hidden rounded-2xl border border-slate-200">
               <div className="hidden grid-cols-[1fr_.7fr_1.1fr_1.35fr] gap-5 bg-emerald-50 px-5 py-3 text-xs font-black uppercase tracking-[0.14em] text-emerald-800 md:grid">
@@ -672,9 +719,7 @@ export default function V11Analysis({ data }: Props) {
                   {preview.riskAndMethod}
                 </p>
                 <p>
-                  Rapportdata är FACT; TTM-tal är DERIVED; 2027-scenarier är
-                  ASSUMPTION; investeringsinsikten är ANALYSIS. Analyser är
-                  utbildande bedömningar, inte personlig investeringsrådgivning.
+                  {preview.classificationSummary ?? `Rapportdata är FACT; LTM-tal är DERIVED; ${targetYear}-scenarier är ASSUMPTION; investeringsinsikten är ANALYSIS.`} Analyser är utbildande bedömningar, inte personlig investeringsrådgivning.
                 </p>
               </div>
             )}
@@ -683,6 +728,9 @@ export default function V11Analysis({ data }: Props) {
             <p>
               <strong className="text-slate-700">Källor:</strong>{" "}
               {preview.sourceSummary}
+            </p>
+            <p className="mt-4">
+              Informationen är allmän information, inte personlig investeringsrådgivning. Investeringar innebär risk och du kan förlora hela eller delar av ditt kapital. Historisk avkastning är ingen garanti för framtida avkastning. <Link to="/villkor" className="font-bold text-emerald-700 underline decoration-emerald-300 underline-offset-4 hover:text-emerald-900">Läs fullständig information och villkor.</Link>
             </p>
           </footer>
         </div>

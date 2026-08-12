@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { analyses } from '../src/data/analyses/index.js';
+import { analyses, isPublishedAnalysis } from '../src/data/analyses/index.js';
 import { guides } from '../src/data/guides.js';
 import { stocks } from '../src/data/stocks.js';
 
@@ -54,7 +54,7 @@ function uniqueEntries(entries: SitemapEntry[]) {
 export default function handler(_req: VercelRequest, res: VercelResponse) {
   const urls = uniqueEntries([
     ...staticRoutes.map((path) => ({ path })),
-    ...Object.values(analyses).map((analysis) => ({
+    ...Object.values(analyses).filter(isPublishedAnalysis).map((analysis) => ({
       path: `/analys/${analysis.slug}`,
       lastmod: toLastmod(analysis.date),
     })),
