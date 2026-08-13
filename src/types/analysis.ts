@@ -207,6 +207,7 @@ export interface AnalysisData {
     valuationCheck: string;
     valuationLimitation: string;
     valuationSummary?: string;
+    valuationGrowthContext?: string;
     historyMarginLabel?: string;
     classificationSummary?: string;
     nextReportWindow?: string;

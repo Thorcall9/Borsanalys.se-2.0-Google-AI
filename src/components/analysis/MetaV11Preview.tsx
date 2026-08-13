@@ -554,12 +554,11 @@ export default function V11Analysis({ data }: Props) {
                           Historisk kontext
                         </p>
                         <p className="mt-1">
-                          {annualGrowth?.toFixed(1)} % årlig omsättningstillväxt
-                          från FY2025 till {targetYear}E, jämfört med{" "}
-                          {history?.derived?.revenueCagr2019To2025Pct.toFixed(
-                            1,
-                          )}{" "}
-                          % historisk CAGR.
+                          {preview.valuationGrowthContext ?? (
+                            annualGrowth !== undefined
+                              ? `${annualGrowth.toFixed(1)} % årlig omsättningstillväxt från ${history?.latest?.period ?? "senaste rapporterade helår"} till ${targetYear}E.`
+                              : "Jämförbar tillväxtkontext SAKNAS i det kanoniska underlaget."
+                          )}
                         </p>
                         <p className="mt-1">
                           Marginalantagandet{" "}
