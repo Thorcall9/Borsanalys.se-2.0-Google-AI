@@ -458,7 +458,7 @@ export default function V11Analysis({ data }: Props) {
                   onClick={() => setShowMethod((value) => !value)}
                   className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-emerald-700 hover:text-emerald-900"
                 >
-                  {showMethod ? "Dölj värderingsbrygga" : "Så har vi räknat"}
+                  {showMethod ? "Dölj värderingsbrygga" : "Se hur vi har räknat"}
                   {showMethod ? (
                     <ChevronUp size={17} />
                   ) : (
@@ -475,9 +475,9 @@ export default function V11Analysis({ data }: Props) {
                       </span>
                       <h3 className="mt-4 font-serif text-2xl font-bold tracking-[-0.035em] text-slate-950">Se hur vi har räknat</h3>
                       <p className="mt-2 text-sm leading-6 text-slate-600">
-                        Som gratis medlem ser du scenarioantaganden, EPS-bryggan och vägen från omsättning till rimligt värde.
+                        Som gratis medlem ser du scenarioantaganden, EPS-bryggan och vägen från betalningsvolym till rimligt värde.
                       </p>
-                      <p className="mt-3 text-xs font-bold uppercase tracking-[0.13em] text-emerald-700">Omsättning → marginal → normaliserad EPS → P/E</p>
+                      <p className="mt-3 text-xs font-bold uppercase tracking-[0.13em] text-emerald-700">Betalningsvolym → intäkter → normaliserad EPS → P/E</p>
                     </div>
                     <div className="flex shrink-0 flex-col gap-2 sm:items-end">
                       <button type="button" onClick={openSignupModal} className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-700 px-4 text-sm font-bold text-white transition-colors hover:bg-emerald-800">
@@ -523,12 +523,30 @@ export default function V11Analysis({ data }: Props) {
                       {showEpsBridge ? "Dölj EPS-bryggan" : "Visa EPS-bryggan"}
                       {showEpsBridge ? <ChevronUp size={17} /> : <ChevronDown size={17} />}
                     </button>}
-                    {activeScenario.valuationBridge ? (
+                  {activeScenario.valuationBridge ? (
+                      <>
+                      <p className="mt-5 border-t border-slate-100 pt-4 text-xs font-black uppercase tracking-[0.13em] text-emerald-700">Betalningsvolym → intäkter → normaliserad EPS → P/E</p>
+                      <div className="mt-4 grid gap-3 border-b border-slate-100 pb-5 sm:grid-cols-2 lg:grid-cols-5">
+                        {[
+                          ["Betalningsvolym", activeScenario.valuationBridge.paymentVolume, "Hur mycket som spenderas i Visas nätverk."],
+                          ["Intäkter", activeScenario.valuationBridge.revenues, "Hur Visa omvandlar volym och tjänster till omsättning."],
+                          ["Normaliserad EPS", activeScenario.valuationBridge.normalizedEps, "Vinst per aktie efter en försiktig behandling av återkommande juridiska kostnader."],
+                          ["P/E", activeScenario.valuationBridge.pe, "Vilken värdering marknaden kan acceptera i scenariot."],
+                          ["Rimligt värde", activeScenario.valuationBridge.fairValue, "Normaliserad EPS × P/E = rimligt värde per aktie."],
+                        ].filter((step): step is [string, string, string] => Boolean(step[1])).map(([label, value, explanation]) => (
+                          <div key={label} className="rounded-lg bg-slate-50 p-3" title={explanation}>
+                            <p className="text-xs font-bold text-slate-500">{label}</p>
+                            <p className="mt-1 text-sm font-black text-slate-950">{value}</p>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="mt-3 text-xs leading-5 text-slate-500">Normaliserad EPS är ett redaktionellt antagande om uthållig vinst per aktie, inte bolagets prognos. Beräkningen behandlar återkommande litigation försiktigt.</p>
                       <div className="mt-5 grid gap-4 border-t border-slate-100 pt-4 text-sm leading-6 text-slate-600 md:grid-cols-3">
                         <div><p className="font-bold text-slate-950">Vad antar vi?</p><p className="mt-1">{activeScenario.valuationBridge.whatWeAssume}</p></div>
                         <div><p className="font-bold text-slate-950">Varför denna värdering?</p><p className="mt-1">{activeScenario.valuationBridge.whyThisValuation}</p></div>
                         <div><p className="font-bold text-slate-950">{activeScenario.valuationBridge.whatBreaksThesis ? "Det som bryter tesen" : "Det som måste bevisas"}</p><p className="mt-1">{activeScenario.valuationBridge.whatBreaksThesis ?? activeScenario.valuationBridge.whatMustBeProven}</p></div>
                       </div>
+                      </>
                     ) : (
                     <div className="mt-5 grid gap-4 border-t border-slate-100 pt-4 text-sm leading-6 text-slate-600 md:grid-cols-2">
                       <div>
