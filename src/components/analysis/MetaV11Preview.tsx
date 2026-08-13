@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import SEO from "../SEO";
+import AdUnit from "./AdUnit";
 import HistoricalFundament from "./HistoricalFundament";
 import { AnalysisData } from "../../types/analysis";
 import { useAuth } from "../../contexts/AuthContext";
@@ -541,6 +542,7 @@ export default function V11Analysis({ data }: Props) {
                   </p>
                 </div>
               )}
+              <AdUnit variant="top-display" collapseWhenUnfilled className="mt-5 border-t border-emerald-200/80" />
             </section>
           </div>
         </header>
