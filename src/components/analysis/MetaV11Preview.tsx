@@ -304,6 +304,7 @@ export default function V11Analysis({ data }: Props) {
   const [activeTab, setActiveTab] = useState<TabId>("overview");
   const [showMethod, setShowMethod] = useState(false);
   const [showEpsBridge, setShowEpsBridge] = useState(false);
+  const [showWeightedValueInfo, setShowWeightedValueInfo] = useState(false);
   const [risksOpen, setRisksOpen] = useState(false);
   const [saved, setSaved] = useState(false);
   const [selectedScenario, setSelectedScenario] = useState<
@@ -416,9 +417,24 @@ export default function V11Analysis({ data }: Props) {
                       {valueSuffix}
                     </p>
                   </div>
-                  <p className="mt-2 text-base text-slate-600">
-                    Sannolikhetsvägt scenariovärde
-                  </p>
+                  <div className="relative mt-2 inline-flex items-center gap-1.5">
+                    <p className="text-base text-slate-600">Sannolikhetsvägt scenariovärde</p>
+                    <button
+                      type="button"
+                      aria-label="Vad betyder sannolikhetsvägt värde?"
+                      aria-expanded={showWeightedValueInfo}
+                      onClick={() => setShowWeightedValueInfo((value) => !value)}
+                      className="inline-flex h-6 w-6 items-center justify-center rounded-full text-slate-500 transition-colors hover:bg-emerald-100 hover:text-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700"
+                    >
+                      <Info size={16} aria-hidden="true" />
+                    </button>
+                    {showWeightedValueInfo && (
+                      <div role="tooltip" className="absolute left-0 top-full z-20 mt-2 w-[min(21rem,calc(100vw-3rem))] rounded-xl border border-emerald-200 bg-white p-4 text-left shadow-lg">
+                        <p className="text-sm font-bold text-slate-950">Vad betyder sannolikhetsvägt värde?</p>
+                        <p className="mt-1.5 text-sm leading-6 text-slate-600">Vi räknar på flera möjliga utfall och väger deras värden efter hur sannolika vi bedömer dem vara. Det ger ett sammanvägt värde som tar hänsyn till både uppsida och nedsida – inte bara vårt huvudscenario.</p>
+                      </div>
+                    )}
+                  </div>
                   {preview.valuationDate && <p className="mt-1 text-xs font-semibold text-slate-500">Värderingsdatum: {formatDate(preview.valuationDate)}</p>}
                 </div>
                 <div className="border-t border-emerald-200 pt-5 sm:border-l sm:border-t-0 sm:pl-8 sm:pt-0">
