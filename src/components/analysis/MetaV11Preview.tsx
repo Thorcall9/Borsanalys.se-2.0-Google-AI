@@ -12,6 +12,7 @@ import {
   Info,
   Landmark,
   LineChart,
+  LockKeyhole,
   ShieldAlert,
   Sparkles,
   WalletCards,
@@ -20,6 +21,7 @@ import type { LucideIcon } from "lucide-react";
 import SEO from "../SEO";
 import HistoricalFundament from "./HistoricalFundament";
 import { AnalysisData } from "../../types/analysis";
+import { useAuth } from "../../contexts/AuthContext";
 
 type Props = { data: AnalysisData };
 type TabId = "overview" | "theses" | "valuation" | "next";
@@ -297,6 +299,7 @@ function ValuationChain({
 // This renderer is intentionally data-led: no company copy belongs in the
 // presentation layer. A v11.1 analysis must supply its canonical projection.
 export default function V11Analysis({ data }: Props) {
+  const { user, openLoginModal, openSignupModal } = useAuth();
   const [activeTab, setActiveTab] = useState<TabId>("overview");
   const [showMethod, setShowMethod] = useState(false);
   const [showEpsBridge, setShowEpsBridge] = useState(false);
@@ -432,19 +435,45 @@ export default function V11Analysis({ data }: Props) {
                   </p>
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={() => setShowMethod((value) => !value)}
-                className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-emerald-700 hover:text-emerald-900"
-              >
-                {showMethod ? "Dölj värderingsbrygga" : "Så har vi räknat"}
-                {showMethod ? (
-                  <ChevronUp size={17} />
-                ) : (
-                  <ArrowRight size={17} />
-                )}
-              </button>
-              {showMethod && activeScenario && (
+              {user ? (
+                <button
+                  type="button"
+                  onClick={() => setShowMethod((value) => !value)}
+                  className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-emerald-700 hover:text-emerald-900"
+                >
+                  {showMethod ? "Dölj värderingsbrygga" : "Så har vi räknat"}
+                  {showMethod ? (
+                    <ChevronUp size={17} />
+                  ) : (
+                    <ArrowRight size={17} />
+                  )}
+                </button>
+              ) : (
+                <section className="relative mt-6 overflow-hidden rounded-2xl border border-emerald-200 bg-white p-5 shadow-sm sm:p-6" aria-label="Låst värderingsmetod">
+                  <div className="pointer-events-none absolute -right-8 -top-10 h-36 w-36 rounded-full bg-emerald-100/70 blur-2xl" aria-hidden="true" />
+                  <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="max-w-xl">
+                      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700">
+                        <LockKeyhole size={19} aria-hidden="true" />
+                      </span>
+                      <h3 className="mt-4 font-serif text-2xl font-bold tracking-[-0.035em] text-slate-950">Se hur vi har räknat</h3>
+                      <p className="mt-2 text-sm leading-6 text-slate-600">
+                        Som gratis medlem ser du scenarioantaganden, EPS-bryggan och vägen från omsättning till rimligt värde.
+                      </p>
+                      <p className="mt-3 text-xs font-bold uppercase tracking-[0.13em] text-emerald-700">Omsättning → marginal → normaliserad EPS → P/E</p>
+                    </div>
+                    <div className="flex shrink-0 flex-col gap-2 sm:items-end">
+                      <button type="button" onClick={openSignupModal} className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-700 px-4 text-sm font-bold text-white transition-colors hover:bg-emerald-800">
+                        Bli medlem gratis
+                      </button>
+                      <button type="button" onClick={openLoginModal} className="min-h-9 text-sm font-bold text-emerald-700 hover:text-emerald-900">
+                        Har du redan konto? Logga in
+                      </button>
+                    </div>
+                  </div>
+                </section>
+              )}
+              {user && showMethod && activeScenario && (
                 <div className="mt-4 border-t border-emerald-200 pt-5">
                   <div className="flex flex-wrap gap-2">
                     {scenarioPresentation.map((scenario) => (
