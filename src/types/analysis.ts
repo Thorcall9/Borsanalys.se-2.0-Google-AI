@@ -371,7 +371,7 @@ export interface AnalysisData {
   weaknesses?: string[];
   opportunities?: string[];
   threats?: string[];
-  scenarios: { label: string; value: string; change: string; cagr?: string; type: "bull" | "base" | "bear"; description?: string; probability?: string; operatingLadder?: { revenueUsdBn?: number; revenueBn?: number; operatingMarginPct: number; operatingIncomeUsdBn?: number; operatingIncomeBn?: number; normalizedFinanceAndOtherUsdBn?: number; normalizedFinanceAndOtherBn?: number; taxRatePct: number; minorityInterestUsdBn?: number; minorityInterestBn?: number; dilutedSharesBn: number; normalizedEpsUsd?: number; normalizedEps?: number; revenueGrowthFromLatestAnnualPct?: number } }[];
+  scenarios: { label: string; value: string; change: string; cagr?: string; type: "bull" | "base" | "bear"; description?: string; probability?: string; valuationBridge?: { whatWeAssume: string; whyThisValuation: string; whatMustBeProven: string; whatBreaksThesis?: string }; operatingLadder?: { revenueUsdBn?: number; revenueBn?: number; operatingMarginPct: number; operatingIncomeUsdBn?: number; operatingIncomeBn?: number; normalizedFinanceAndOtherUsdBn?: number; normalizedFinanceAndOtherBn?: number; taxRatePct: number; minorityInterestUsdBn?: number; minorityInterestBn?: number; dilutedSharesBn: number; normalizedEpsUsd?: number; normalizedEps?: number; revenueGrowthFromLatestAnnualPct?: number } }[];
   valuationTargetYear?: number;
   businessModel?: string;
   affarsmodell?: {

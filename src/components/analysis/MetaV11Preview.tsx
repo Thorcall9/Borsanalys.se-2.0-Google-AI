@@ -507,6 +507,13 @@ export default function V11Analysis({ data }: Props) {
                       {showEpsBridge ? "Dölj EPS-bryggan" : "Visa EPS-bryggan"}
                       {showEpsBridge ? <ChevronUp size={17} /> : <ChevronDown size={17} />}
                     </button>}
+                    {activeScenario.valuationBridge ? (
+                      <div className="mt-5 grid gap-4 border-t border-slate-100 pt-4 text-sm leading-6 text-slate-600 md:grid-cols-3">
+                        <div><p className="font-bold text-slate-950">Vad antar vi?</p><p className="mt-1">{activeScenario.valuationBridge.whatWeAssume}</p></div>
+                        <div><p className="font-bold text-slate-950">Varför denna värdering?</p><p className="mt-1">{activeScenario.valuationBridge.whyThisValuation}</p></div>
+                        <div><p className="font-bold text-slate-950">{activeScenario.valuationBridge.whatBreaksThesis ? "Det som bryter tesen" : "Det som måste bevisas"}</p><p className="mt-1">{activeScenario.valuationBridge.whatBreaksThesis ?? activeScenario.valuationBridge.whatMustBeProven}</p></div>
+                      </div>
+                    ) : (
                     <div className="mt-5 grid gap-4 border-t border-slate-100 pt-4 text-sm leading-6 text-slate-600 md:grid-cols-2">
                       <div>
                         <p className="font-bold text-slate-950">
@@ -535,6 +542,7 @@ export default function V11Analysis({ data }: Props) {
                         </p>
                       </div>
                     </div>
+                    )}
                   </div>
                   <p className="mt-3 text-xs leading-5 text-slate-500">
                     Värderingsbryggan visar scenarioantaganden; historik och
