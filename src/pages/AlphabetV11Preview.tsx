@@ -222,7 +222,7 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
             </Link>
 
             <div className="mt-6 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 text-sm text-slate-500">
-              <p>{company} <span className="mx-1 text-slate-300">/</span> {ticker} <span className="mx-1 text-slate-300">/</span> {isNetflix ? "Analysdatum 14 augusti 2026 · NOT_PUBLISH_READY" : "Uppdaterad 8 augusti 2026"}</p>
+              <p>{company} <span className="mx-1 text-slate-300">/</span> {ticker} <span className="mx-1 text-slate-300">/</span> {isNetflix ? "Uppdaterad 14 augusti 2026" : "Uppdaterad 8 augusti 2026"}</p>
               <button
                 type="button"
                 onClick={() => setSaved((value) => !value)}
@@ -461,8 +461,8 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
 
           <footer className="border-t border-slate-200 py-9 text-sm leading-6 text-slate-500">
             <p><strong className="text-slate-700">Källor:</strong> {isNetflix ? "Netflix Q2 2026 Form 10-Q och shareholder letter (16–17 juli 2026), tidigare kvartalsrapporter och låst NFLX-stängning den 13 augusti 2026." : "Alphabets Q2 2026 earnings release och earnings slides (22 juli 2026), års-/kvartalsrapporter för historik samt GOOG-stängningen den 7 augusti 2026."} Rapporterade tal är FACT, härledda värden DERIVED, scenarier {isNetflix ? "ANTAGANDE" : "ASSUMPTION"} och slutsatser ANALYSIS.</p>
-            <p className="mt-3">Informationen är allmän information, inte personlig investeringsrådgivning. Investeringar innebär risk och du kan förlora hela eller delar av ditt kapital. Historisk avkastning är ingen garanti för framtida avkastning. <Link className="font-semibold text-emerald-700 hover:text-emerald-900" to="/villkor">Läs fullständig information och villkor.</Link></p>
-            <p className="mt-3">Dossier: {dossier.version.versionId} · {dossier.version.status}. {isNetflix ? "Ägar- och ersättningsupplysning ska bekräftas före publicering." : "Full resultattrappa, claims och ändringslogg är bevarade i v11.2-dossiern."}</p>
+            <p className="mt-3">Informationen är allmän information, inte personlig investeringsrådgivning. Investeringar innebär risk och du kan förlora hela eller delar av ditt kapital. Historisk avkastning är ingen garanti för framtida avkastning. <Link className="font-semibold text-emerald-700 hover:text-emerald-900" to={isNetflix ? netflixV112Dossier.disclaimer.fullDisclaimerUrl : "/villkor"}>Läs fullständig information och villkor.</Link></p>
+            <p className="mt-3">Dossier: {dossier.version.versionId} · {dossier.version.status}. {isNetflix ? `Intresseupplysning (${netflixV112Dossier.disclosures.confirmedAt}): ${netflixV112Dossier.disclosures.directHolding} ${netflixV112Dossier.disclosures.indirectExposure} ${netflixV112Dossier.disclosures.compensationOrEngagement}` : "Full resultattrappa, claims och ändringslogg är bevarade i v11.2-dossiern."}</p>
           </footer>
         </div>
       </article>

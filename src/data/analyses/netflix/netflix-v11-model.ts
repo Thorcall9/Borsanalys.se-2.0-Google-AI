@@ -77,7 +77,7 @@ export const netflixStressTest = (() => {
 })();
 
 export const netflixV112Dossier = {
-  version: { versionId: "netflix-v11.2-2026-08-14-r2", parentVersionId: "netflix-v11.2-2026-08-14", status: "NOT_PUBLISH_READY" as const, immutable: true },
+  version: { versionId: "netflix-v11.2-2026-08-14-r3", parentVersionId: "netflix-v11.2-2026-08-14-r2", status: "PUBLISH_READY" as const, immutable: true },
   identity: { analysisId: NETFLIX_ANALYSIS_ID, companyId: NETFLIX_COMPANY_ID, analysisDate: NETFLIX_ANALYSIS_DATE, sourceCutoffDate: NETFLIX_SOURCE_CUTOFF_DATE, valuationDate: NETFLIX_VALUATION_DATE, valuationYearLabel: "2028E", marketReference: { price: NETFLIX_REFERENCE_PRICE, currency: "USD", asOf: "2026-08-13", sourceRef: "NFLX-close-2026-08-13" } },
   recommendation: "BEVAKA" as const,
   risk: { label: "MEDEL–HÖG" as const, rationale: "Finansiell risk begränsas av FCF och likviditet, men affärs-, prognos-, kassaflödes- och multipelrisken är väsentlig när pris, reklam, innehållsbetalningar och marginal ska leverera samtidigt." },
@@ -96,9 +96,20 @@ export const netflixV112Dossier = {
     { id: "NFLX-Q2-2026-10Q", document: "Netflix Q2 2026 Form 10-Q", date: "2026-07-17", primarySourceDetail: "Note 3 Earnings per Share; Note 6 Acquisitions (terminated WBD transaction and termination fee)" },
     { id: "NFLX-Q2-2026-letter", document: "Netflix Q2 2026 shareholder letter", date: "2026-07-16" },
   ],
+  disclaimer: {
+    centralDisclaimerVersion: "v11.2-2026-08",
+    shortDisclaimerId: "standard-short-v11.2",
+    fullDisclaimerUrl: "/villkor",
+  },
+  disclosures: {
+    confirmedAt: "2026-08-14",
+    directHolding: "Inget direkt innehav i Netflix.",
+    indirectExposure: "Indirekt exponering kan förekomma via breda globala fonder.",
+    compensationOrEngagement: "Ingen ersättning, inget uppdrag och ingen annan kommersiell relation till Netflix har erhållits.",
+  },
   scenarios: netflixScenarios.map((scenario) => ({ ...scenario, valuationDate: NETFLIX_VALUATION_DATE })),
   valuation: { weightedFairValue, totalPotentialPct: weightedFairValue / NETFLIX_REFERENCE_PRICE - 1, annualizedPotentialPct: Math.pow(weightedFairValue / NETFLIX_REFERENCE_PRICE, 1 / NETFLIX_VALUATION_YEARS) - 1, yearsToValuation: NETFLIX_VALUATION_YEARS },
-  publicationBlockers: ["Ansvarig analytiker måste före publicering bekräfta NFLX-innehav, relevant indirekt exponering, eventuell ersättning/uppdrag från Netflix och bekräftelsedatum.", "central_disclaimer_version, short_disclaimer_id och full_disclaimer_url saknas."],
+  publicationBlockers: [],
 } as const;
 
 export function validateNetflixValuation() {
