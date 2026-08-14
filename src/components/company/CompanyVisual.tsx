@@ -43,6 +43,7 @@ const companyByTicker: Record<string, CompanyIdentity> = {
   "NIBE B": { domain: "nibe.com", name: "Nibe" },
   "NOVO-B.CO": { domain: "novonordisk.com", name: "Novo Nordisk" },
   "NVDA": { domain: "nvidia.com", name: "NVIDIA" },
+  "NFLX": { domain: "netflix.com", name: "Netflix" },
   "NWG B": { domain: "newwavegroup.com", name: "New Wave Group" },
   "PLEJD": { domain: "plejd.com", name: "Plejd" },
   "RVRC": { domain: "revolutionrace.com", name: "RevolutionRace" },
