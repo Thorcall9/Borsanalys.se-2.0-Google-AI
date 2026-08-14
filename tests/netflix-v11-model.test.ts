@@ -1,0 +1,120 @@
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import test from "node:test";
+import { alphabetV112Dossier } from "../src/data/analyses/alphabet/alphabet-v11-model";
+import {
+  NETFLIX_ANALYSIS_DATE,
+  NETFLIX_REFERENCE_PRICE,
+  NETFLIX_VALUATION_DATE,
+  netflixFacts,
+  netflixCapitalAllocationCheck,
+  netflixScenarios,
+  netflixStressTest,
+  netflixV112Dossier,
+  netflixWbdNormalization,
+  validateNetflixValuation,
+} from "../src/data/analyses/netflix/netflix-v11-model";
+
+test("Netflix v11.2 valuation bridge is arithmetically consistent", () => {
+  const result = validateNetflixValuation();
+  assert.equal(NETFLIX_ANALYSIS_DATE, "2026-08-14");
+  assert.equal(NETFLIX_VALUATION_DATE, "2028-12-31");
+  assert.equal(result.probability, 1);
+  assert.equal(result.scenariosMatchRevenue, true);
+  assert.equal(result.scenariosMatchEbit, true);
+  assert.equal(result.scenariosMatchEps, true);
+  assert.equal(result.scenariosMatchValue, true);
+  assert.equal(result.weightedMatches, true);
+  assert.ok(netflixV112Dossier.valuation.totalPotentialPct > 0);
+  assert.ok(netflixV112Dossier.valuation.annualizedPotentialPct > 0);
+});
+
+test("Netflix keeps WBD outside EBIT and non-recurring FCF out of recurring capacity", () => {
+  const claim = netflixV112Dossier.claims.find((item) => item.id === "nflx-wbd");
+  assert.match(claim?.text ?? "", /Paramount Skydance/);
+  assert.match(claim?.text ?? "", /utanför EBIT/);
+  assert.match(claim?.text ?? "", /exkluderats ur normaliserat resultat/);
+  assert.equal(netflixWbdNormalization.status, "NOT_DECISION_GRADE");
+  assert.ok(netflixWbdNormalization.normalizedFcfGuideRange[0] < netflixWbdNormalization.reportedFcfGuide);
+  assert.equal(netflixFacts.wbdTerminationFee, 2.8);
+});
+
+test("Netflix share-repurchase bridge is internally feasible against scenario FCF", () => {
+  const result = validateNetflixValuation();
+  assert.equal(result.scenarioShareBridgesMatch, true);
+  assert.equal(result.repurchasesAreFcfFeasible, true);
+  assert.equal(result.positiveSharesUseVerifiedAuthorization, true);
+  for (const scenario of netflixScenarios) {
+    assert.ok(scenario.repurchasesToFcf > 0);
+    assert.ok(scenario.repurchasesToFcf <= 0.8);
+    assert.ok(scenario.normalizedFcf > 0);
+  }
+});
+
+test("Netflix stress test is separate from probability-weighted scenarios", () => {
+  assert.equal(netflixStressTest.revenue, 55);
+  assert.ok(Math.abs(netflixStressTest.ebit - 15.4) < 1e-9);
+  assert.equal(netflixStressTest.peMultiple, 16);
+  assert.ok(netflixStressTest.fairValue < NETFLIX_REFERENCE_PRICE);
+  assert.ok(netflixStressTest.totalPotentialPct < -0.3);
+});
+
+test("Netflix public bridge exposes EPS, not scenario FCF or buyback mechanics", () => {
+  const preview = readFileSync(new URL("../src/pages/AlphabetV11Preview.tsx", import.meta.url), "utf8");
+  assert.match(preview, /Visa EPS-bryggan/);
+  assert.match(preview, /Dölj EPS-bryggan/);
+  assert.doesNotMatch(preview, /showFcfDetail|showShareDetail/);
+  assert.doesNotMatch(preview, /Visa\/Dölj FCF och innehåll|Visa\/Dölj aktieantal och återköp/);
+  assert.match(preview, /\{formatNumber\(activeScenario\.revenue\)\} md USD/);
+  assert.match(preview, /Utspädda aktier 2028E/);
+  assert.match(preview, /netflixWbdExplanation/);
+  assert.doesNotMatch(preview, /P\/FCF/);
+});
+
+test("Netflix public copy uses Swedish scenario terms and separates the stress test", () => {
+  const preview = readFileSync(new URL("../src/pages/AlphabetV11Preview.tsx", import.meta.url), "utf8");
+  assert.match(preview, /Multipelantagande:/);
+  assert.match(preview, /operationell hävstång/);
+  assert.match(preview, /Omsättning \/ medlems- och planmixsignaler/);
+  assert.match(preview, /Ej sannolikhetsvägd känslighetsanalys vid ett tesbrott/);
+  assert.match(preview, /Marginalerna har förbättrats kraftigt/);
+  assert.match(preview, /Reklam blir en materiell intäktsmotor och kan utvecklas till en betydande vinstdrivare/);
+  assert.match(preview, /Pris, planmix och reklam lyfter monetiseringen snabbare än tittandet/);
+  assert.match(preview, /känslighetsanalysen ingår inte i sannolikhetsvärdet/);
+});
+
+test("Netflix uses the verified Q2 weighted-average diluted-share comparison and caps the positive case", () => {
+  assert.equal(netflixFacts.q2WeightedAverageDilutedShares, 4.2613);
+  const reductions = netflixScenarios.map((scenario) => Math.round((1 - scenario.dilutedShares / netflixFacts.q2WeightedAverageDilutedShares) * 100));
+  assert.deepEqual(reductions, [5, 7, 6]);
+  const positiveScenario = netflixScenarios.find((scenario) => scenario.id === "bull");
+  assert.ok(positiveScenario);
+  assert.equal(positiveScenario?.repurchases, netflixFacts.q2RepurchaseAuthorizationRemaining);
+  assert.equal(netflixCapitalAllocationCheck.positiveScenarioUsesVerifiedAuthorization, true);
+});
+
+test("Netflix scenario outputs use exact revenue mix and complete EPS arithmetic", () => {
+  for (const scenario of netflixScenarios) {
+    assert.equal(scenario.revenue, scenario.revenueMix.subscription + scenario.revenueMix.advertising + scenario.revenueMix.other);
+    assert.equal(scenario.ebit, scenario.revenue * scenario.ebitMargin);
+    assert.equal(scenario.preTaxIncome, scenario.ebit + scenario.normalizedOtherIncome + scenario.netFinance);
+    assert.equal(scenario.taxExpense, scenario.preTaxIncome * scenario.taxRate);
+    assert.equal(scenario.normalizedNetIncome, scenario.preTaxIncome - scenario.taxExpense);
+    assert.equal(scenario.normalizedEps, scenario.normalizedNetIncome / scenario.dilutedShares);
+    assert.equal(scenario.fairValue, scenario.normalizedEps * scenario.peMultiple);
+  }
+});
+
+test("Netflix cannot be publish-ready without the required compliance confirmation", () => {
+  assert.equal(netflixV112Dossier.version.status, "NOT_PUBLISH_READY");
+  assert.ok(netflixV112Dossier.publicationBlockers.some((blocker) => blocker.includes("NFLX-innehav")));
+});
+
+test("company dossiers do not leak company-specific scenario fields or WBD notes", () => {
+  const alphabet = JSON.stringify(alphabetV112Dossier);
+  const netflix = JSON.stringify(netflixV112Dossier);
+  assert.doesNotMatch(alphabet, /NFLX|Netflix|WBD|78\.24|4\.005/);
+  assert.doesNotMatch(netflix, /GOOG|Alphabet|Google Cloud|Search & other/);
+  assert.equal(netflixV112Dossier.identity.companyId, "netflix-inc");
+  assert.equal(alphabetV112Dossier.identity.companyId, "alphabet-inc");
+});

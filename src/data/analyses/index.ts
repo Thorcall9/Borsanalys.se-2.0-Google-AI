@@ -25,6 +25,7 @@ import { revolutionRace2026 } from "./revolutionrace/revolutionrace-2026.js";
 import { inwido2026 } from "./inwido/inwido-2026.js";
 import { meta2026 } from "./meta/meta-2026.js";
 import { visa } from "./visa/visa.js";
+import { netflix2026 } from "./netflix/netflix-2026.js";
 
 export const analyses: Record<string, AnalysisData> = {
   "investor-ab": investorAb,
@@ -53,6 +54,7 @@ export const analyses: Record<string, AnalysisData> = {
   "inwido-2026": inwido2026,
   "meta-q2-2026": meta2026,
   "visa": visa,
+  "netflix-2026": netflix2026,
 };
 
 /** Hidden analyses can be directly reviewed without appearing in discovery surfaces. */

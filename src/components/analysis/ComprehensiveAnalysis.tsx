@@ -984,6 +984,7 @@ export default function ComprehensiveAnalysis({
 }: ComprehensiveAnalysisProps) {
   const ACCENT_COLOR = "#10B981"; // Emerald Green
   const isInwido = data.slug === "inwido-2026";
+  const usesMicrosoftSidebar = data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT';
 
   const analysisPrice = useMemo(() => {
     if (!data.price) return null;
@@ -1089,16 +1090,16 @@ export default function ComprehensiveAnalysis({
       analysisPrice={analysisPrice || undefined}
       date={data.displayDate || data.date}
       nextAnalysis={nextAnalysis}
-      sidebarExtras={(data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT') ? (
+      sidebarExtras={usesMicrosoftSidebar ? (
         <MicrosoftSidebarExtras 
           isInWatchlist={isInWatchlist} 
           isWatchlistLoading={isWatchlistLoading} 
           onToggleWatchlist={onToggleWatchlist} 
         />
       ) : undefined}
-      hideDefaultWatchlist={data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT'}
-      compactSections={data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT'}
-      wideSidebar={data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT'}
+      hideDefaultWatchlist={usesMicrosoftSidebar}
+      compactSections={usesMicrosoftSidebar}
+      wideSidebar={usesMicrosoftSidebar}
       hideSidebar={data.slug === 'nordea-bank-2026'}
       tightContent={isInwido}
     >
@@ -2360,7 +2361,7 @@ export default function ComprehensiveAnalysis({
 
       {/* Mobile-only Extras (Relocated from sidebar) */}
       <div className="lg:hidden">
-        {(data.slug?.toLowerCase() === 'microsoft' || data.ticker === 'MSFT') && (
+        {usesMicrosoftSidebar && (
           <MicrosoftSidebarExtras 
             isInWatchlist={isInWatchlist} 
             isWatchlistLoading={isWatchlistLoading} 
