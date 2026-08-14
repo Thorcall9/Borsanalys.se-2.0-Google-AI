@@ -105,9 +105,16 @@ test("Netflix scenario outputs use exact revenue mix and complete EPS arithmetic
   }
 });
 
-test("Netflix cannot be publish-ready without the required compliance confirmation", () => {
-  assert.equal(netflixV112Dossier.version.status, "NOT_PUBLISH_READY");
-  assert.ok(netflixV112Dossier.publicationBlockers.some((blocker) => blocker.includes("NFLX-innehav")));
+test("Netflix is publish-ready with the required compliance confirmation", () => {
+  assert.equal(netflixV112Dossier.version.status, "PUBLISH_READY");
+  assert.deepEqual(netflixV112Dossier.publicationBlockers, []);
+  assert.equal(netflixV112Dossier.disclaimer.centralDisclaimerVersion, "v11.2-2026-08");
+  assert.equal(netflixV112Dossier.disclaimer.shortDisclaimerId, "standard-short-v11.2");
+  assert.equal(netflixV112Dossier.disclaimer.fullDisclaimerUrl, "/villkor");
+  assert.equal(netflixV112Dossier.disclosures.confirmedAt, "2026-08-14");
+  assert.match(netflixV112Dossier.disclosures.directHolding, /Inget direkt innehav/);
+  assert.match(netflixV112Dossier.disclosures.indirectExposure, /globala fonder/);
+  assert.match(netflixV112Dossier.disclosures.compensationOrEngagement, /Ingen ersättning/);
 });
 
 test("company dossiers do not leak company-specific scenario fields or WBD notes", () => {

@@ -1,9 +1,8 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
 /**
- * Editorial preview. All values are in USD and use the 13 August 2026 close
- * unless another date is stated. It is intentionally unpublished until the
- * publication disclosure has been completed.
+ * Public archive metadata. All values are in USD and use the 13 August 2026
+ * close unless another date is stated.
  */
 export const netflix2026: AnalysisData = {
   contentType: "analysis",
@@ -13,18 +12,18 @@ export const netflix2026: AnalysisData = {
   ticker: "NFLX",
   isin: "US64110L1061",
   date: "2026-08-14",
-  displayDate: "14 augusti 2026 · Preview",
+  displayDate: "14 augusti 2026",
   market: "NASDAQ",
   sector: "Streaming / Media",
   recommendation: "BEVAKA",
-  recommendationReason: "Värdet bygger på 2028E och ett sannolikhetsvägt utfall. Förhandsvisningen är inte publiceringsklar förrän ägar- och ersättningsupplysning har bekräftats.",
+  recommendationReason: "Värdet bygger på 2028E och ett sannolikhetsvägt utfall. Direkta innehav, indirekt exponering och kommersiella relationer är redovisade i analysens metoddel.",
   price: "$78,24",
   pe: "24,7x",
   yield: "0,0%",
   marketCap: "$326 md",
   sharesCount: "4,221 md (Q2 2026)",
   employees: "≈14 000",
-  published: false,
+  published: true,
   summary: "Netflix visar stark vinst- och kassaflödesutveckling, men aktien kräver att monetiseringen fortsätter växa snabbare än tittandet utan att marginalen tappar fart.",
   investmentCase: `Vår bedömning: Monetisering före tittartid är hela caset
 • Rekommendation: BEVAKA · Medel–hög risk
@@ -42,7 +41,7 @@ Netflix har strukturellt förbättrat ekonomin: 2025 ökade omsättningen 16 % o
   marketOverview: "Netflix säljer global underhållning genom abonnemang, reklam och tilläggstjänster. Bolagets ekonomiska motor är inte längre nettoantalet abonnenter som ensamt KPI, utan pris/planmix, annonsmonetisering, engagemang och kostnaden för innehåll per intäktsdollar.",
   geography: "Global · UCAN · EMEA · LATAM · APAC",
   managementOverview: "Ted Sarandos och Greg Peters leder en modell där innehållsinvesteringar, produktutveckling och distribution ska ge högre intäkt per hushåll. Kapitalallokeringen är allt mer aktieägarorienterad: cirka $6,0 md i återköp under H1 2026.",
-  ownershipStructure: "Börsnoterad amerikansk aktie. Ägar- och intresseupplysning för Börsanalys.se ska fastställas före publicering.",
+  ownershipStructure: "Börsnoterad amerikansk aktie. Börsanalys.se har inget direkt innehav i Netflix; indirekt exponering kan förekomma via breda globala fonder. Ingen ersättning eller annat kommersiellt uppdrag från Netflix har erhållits (bekräftat 14 augusti 2026).",
   analystVerdict: "Den centrala avvägningen är enkel: marginal- och FCF-profilen har blivit klart bättre, men den historiska multipelpremien kan inte användas mekaniskt när tittandet planar ut och reklammodellen fortfarande ska skala.",
   strategyMoat: "Netflix har global skala, direkt kundrelation, produktdistribution och en väldokumenterad förmåga att omsätta engagemang i intäkt. Vallgraven är stark men inte absolut: innehåll är inte exklusivt för evigt och konkurrenterna kan acceptera lägre streaminglönsamhet av strategiska skäl.",
   competitiveAdvantages: [
@@ -94,7 +93,7 @@ Netflix har strukturellt förbättrat ekonomin: 2025 ökade omsättningen 16 % o
     { question: "Vad är starkaste positiva datapunkten?", answer: "H1 2026 växte intäkterna 15 % trots endast 2 % tillväxt i tittartid — monetiseringen fungerar." },
     { question: "Starkaste argumentet mot synen?", answer: "Om reklam och pris/mix fortsätter skala samtidigt som innehållseffektiviteten förbättras kan Bull bli mer sannolikt än vår 20 %-vikt." }
   ],
-  watchTable: [{ title: "Publiceringsgrind", headers: ["Kontroll", "Status", "Åtgärd"], rows: [["Faktakällor", "Klar", "Primära rapporter och extern marknadsreferens dokumenterade."], ["Värderingsmodell", "Klar", "Samma valuation date och 100 % sannolikheter."], ["Ägar-/ersättningsupplysning", "Ej klar", "Bekräfta redaktionens innehav och kommersiella relation före publicering."]], footer: "Preview-läget är avsiktligt. Analysen ska inte läggas i publika discovery-ytor förrän disclosure-grinden har klarats." }],
+  watchTable: [{ title: "Publiceringskontroll", headers: ["Kontroll", "Status", "Underlag"], rows: [["Faktakällor", "Klar", "Primära rapporter och extern marknadsreferens dokumenterade."], ["Värderingsmodell", "Klar", "Samma valuation date och 100 % sannolikheter."], ["Ägar-/ersättningsupplysning", "Klar", "Inget direkt innehav; möjlig indirekt exponering via globala fonder; ingen ersättning eller kommersiell relation till Netflix (14 augusti 2026)."]], footer: "Analysen är publiceringsklar enligt dossierns v11.2-kontroller." }],
   targetPrice: "$96",
   buyZone: "Ej fastställd · invänta större säkerhetsmarginal eller starkare bevis",
   totalScore: "28/40",
