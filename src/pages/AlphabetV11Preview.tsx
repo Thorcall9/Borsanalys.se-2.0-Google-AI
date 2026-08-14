@@ -105,7 +105,7 @@ const netflixCautiousReasons = [
 const netflixTheses = [
   { status: "På väg", title: "Monetiseringen på bolagsnivå fortsätter förbättras", signal: "H1 2026: intäkt +15 % medan aggregerad tittartid ökade 2 %; medlems-, pris-, region- och planmix kan förklara skillnaden.", next: "Medlemsutveckling, prissättning, planbyten, retention, engagemang och annonsutveckling i nästa rapport." },
   { status: "På väg", title: "Reklam blir en materiell vinstdrivare", signal: "Reklamintäkter översteg 1,5 md USD 2025; 2026-guidningen är cirka 3 md USD.", next: "Tydlig utveckling mot helårsambitionen utan att kundvärdet försämras." },
-  { status: "Obekräftad", title: "34 % EBIT-marginal är uthållig", signal: "2025 nådde marginalen 29,5 % och 2026-guidningen är 31,5 %.", next: "Marginal nära/över guidning med fortsatt stark FCF-konvertering." },
+  { status: "Obekräftad", title: "34 % EBIT-marginal är uthållig", signal: "2025 nådde marginalen 29,5 % och 2026-guidningen är 31,5 %.", next: "Marginal nära/över guidning som också stöds av rapporterat kassaflöde." },
 ];
 const netflixReportFocus = [
   ["Omsättning / medlems-KPI", "Q3-guidning: +11,7 %", "I eller över guidning samt relevant medlems-/planmix-kommentar", "Testar monetisering utan att felaktigt likställa total tittartid med värde per medlem."],
@@ -115,6 +115,7 @@ const netflixReportFocus = [
 
 const formatUsd = (value: number, decimals = 0) => `${value.toFixed(decimals).replace(".", ",")} USD`;
 const formatPct = (value: number, decimals = 1) => `${value >= 0 ? "+" : ""}${(value * 100).toFixed(decimals).replace(".", ",")} %`;
+const formatNumber = (value: number, decimals = 1) => value.toFixed(decimals).replace(".", ",");
 
 type PreviewVariant = "alphabet" | "netflix";
 
@@ -189,12 +190,17 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
   const historyCards = isNetflix ? [["Omsättning", "2022: 31,6 → 2025: 45,2 md USD", "+6,5 % → +15,9 % tillväxt"], ["EBIT-marginal", "2022: 17,8 % → 2025: 29,5 %", "2026-guidning: 31,5 %; Base 2028E: 34 %"]] : [["Omsättning", "2023: 307,4 → LTM: 445,9 md USD", "+8,7 % → cirka +20 % tillväxt"], ["EBIT-marginal", "2023: 27,4 % → LTM: 33,1 %", "Lönsamheten har förstärkts före capexens fulla följdeffekt"]];
   const [activeTab, setActiveTab] = useState<TabId>("overview");
   const [showMethod, setShowMethod] = useState(false);
-  const [showFcfDetail, setShowFcfDetail] = useState(false);
-  const [showShareDetail, setShowShareDetail] = useState(false);
+  const [showEpsBridge, setShowEpsBridge] = useState(false);
   const [risksOpen, setRisksOpen] = useState(false);
   const [saved, setSaved] = useState(false);
   const [selectedScenario, setSelectedScenario] = useState<"bear" | "base" | "bull">("base");
   const activeScenario = scenarios.find((scenario) => scenario.id === selectedScenario) ?? scenarios[1];
+  const netflixShareChangePct = isNetflix && "dilutedShares" in activeScenario
+    ? 1 - activeScenario.dilutedShares / netflixFacts.startingDilutedShares
+    : 0;
+  const netflixShareComment = activeScenario.id === "bull"
+    ? `Aktieantagandet innebär cirka ${Math.round(netflixShareChangePct * 100)} % nettominskning jämfört med Q2 2026 och är offensivt; det kräver omfattande återköp efter aktiebaserad ersättning.`
+    : `Aktieantagandet motsvarar cirka ${Math.round(netflixShareChangePct * 100)} % färre utspädda aktier än Q2 2026 och förutsätter att återköpen mer än kompenserar för aktiebaserad ersättning.`;
 
   return (
     <>
@@ -281,24 +287,36 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
                     <p className="text-xs font-black uppercase tracking-[0.16em] text-emerald-700">{activeScenario.label} · värderingsbrygga</p>
                     {isNetflix ? <>
                       <p className="mt-4 text-sm font-bold text-slate-700">Det som styr scenariovärdet</p>
-                      <div className="mt-3 grid gap-3 text-sm sm:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr] sm:items-end">
-                        <div><p className="text-slate-500">Omsättning 2028E</p><p className="mt-1 text-xl font-black">{activeScenario.revenue.toFixed(0)} md USD</p></div>
+                      <div className="mt-3 grid gap-3 text-sm sm:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr] sm:items-end">
+                        <div><p className="text-slate-500">Omsättning 2028E</p><p className="mt-1 whitespace-nowrap text-xl font-black">≈{formatNumber(activeScenario.revenue, 0)} md USD</p></div>
                         <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">→</span>
-                        <div><p className="text-slate-500">EBIT-marginal</p><p className="mt-1 text-xl font-black">{formatPct(activeScenario.ebitMargin)}</p></div>
-                        <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">→</span>
-                        <div><p className="text-slate-500">Normaliserad EPS</p><p className="mt-1 text-xl font-black">{formatUsd(activeScenario.normalizedEps, 2)}</p></div>
-                        <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">×</span>
-                        <div><p className="text-slate-500">P/E</p><p className="mt-1 text-xl font-black">{activeScenario.peMultiple.toFixed(0)}×</p></div>
+                        <div><p className="text-slate-500">EBIT-marginal</p><p className="mt-1 whitespace-nowrap text-xl font-black">{formatPct(activeScenario.ebitMargin)}</p></div>
                         <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">=</span>
-                        <div><p className="text-slate-500">Rimligt värde</p><p className="mt-1 text-xl font-black text-emerald-700">{formatUsd(activeScenario.fairValue)}</p></div>
+                        <div><p className="text-slate-500">Normaliserad EBIT</p><p className="mt-1 whitespace-nowrap text-xl font-black">{formatNumber(activeScenario.ebit, 2)} md USD</p></div>
+                        <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">→</span>
+                        <div><p className="text-slate-500">Normaliserad EPS</p><p className="mt-1 whitespace-nowrap text-xl font-black">{formatUsd(activeScenario.normalizedEps, 2)}</p></div>
+                        <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">×</span>
+                        <div><p className="text-slate-500">P/E</p><p className="mt-1 whitespace-nowrap text-xl font-black">{activeScenario.peMultiple.toFixed(0)}×</p></div>
+                        <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">=</span>
+                        <div><p className="text-slate-500">Rimligt värde</p><p className="mt-1 whitespace-nowrap text-xl font-black text-emerald-700">{formatUsd(activeScenario.fairValue)}</p></div>
                       </div>
-                      {"revenueMix" in activeScenario && <p className="mt-4 text-xs leading-5 text-slate-500">Intäktsmix 2028E: abonnemang {activeScenario.revenueMix.subscription.toFixed(1)}, reklam {activeScenario.revenueMix.advertising.toFixed(1)} och övrigt {activeScenario.revenueMix.other.toFixed(1)} md USD.</p>}
-                      {"normalizedFcf" in activeScenario && <div className="mt-4 flex flex-wrap gap-2 border-t border-slate-100 pt-4">
-                        <button type="button" onClick={() => setShowFcfDetail((value) => !value)} className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-slate-200 px-3 text-xs font-bold text-slate-700 transition-colors hover:border-emerald-300 hover:text-emerald-800" aria-expanded={showFcfDetail}>{showFcfDetail ? "Dölj FCF och innehåll" : "FCF och innehåll"}{showFcfDetail ? <ChevronUp size={15} /> : <ChevronDown size={15} />}</button>
-                        <button type="button" onClick={() => setShowShareDetail((value) => !value)} className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-slate-200 px-3 text-xs font-bold text-slate-700 transition-colors hover:border-emerald-300 hover:text-emerald-800" aria-expanded={showShareDetail}>{showShareDetail ? "Dölj aktieantal och återköp" : "Aktieantal och återköp"}{showShareDetail ? <ChevronUp size={15} /> : <ChevronDown size={15} />}</button>
+                      {"revenueMix" in activeScenario && <p className="mt-4 text-xs leading-5 text-slate-500">Intäktsmix 2028E <span className="font-black uppercase tracking-[0.1em] text-slate-400">· Assumption</span>: abonnemang {formatNumber(activeScenario.revenueMix.subscription)}, reklam {formatNumber(activeScenario.revenueMix.advertising)} och övrigt {formatNumber(activeScenario.revenueMix.other)} md USD.</p>}
+                      <button type="button" onClick={() => setShowEpsBridge((value) => !value)} className="mt-4 inline-flex min-h-10 items-center gap-2 border-t border-slate-100 pt-4 text-xs font-bold text-emerald-700 transition-colors hover:text-emerald-900" aria-expanded={showEpsBridge}>{showEpsBridge ? "Dölj EPS-bryggan" : "Visa EPS-bryggan"}{showEpsBridge ? <ChevronUp size={15} /> : <ChevronDown size={15} />}</button>
+                      {showEpsBridge && <div className="mt-3 rounded-lg bg-slate-50 p-4 text-xs leading-5 text-slate-600">
+                        <p className="font-black uppercase tracking-[0.12em] text-slate-500">Normaliserad EPS · Assumption</p>
+                        <div className="mt-3 grid gap-x-6 gap-y-1 sm:grid-cols-2">
+                          <p>Normaliserad EBIT <strong className="float-right text-slate-950">{formatNumber(activeScenario.ebit, 2)} md USD</strong></p>
+                          <p>Normaliserat övrigt resultat <strong className="float-right text-slate-950">{formatNumber(activeScenario.normalizedOtherIncome, 2)} md USD</strong></p>
+                          <p>Finansnetto <strong className="float-right text-slate-950">{"netFinance" in activeScenario ? `−${formatNumber(Math.abs(activeScenario.netFinance), 2)} md USD` : `${formatNumber(activeScenario.normalizedNetFinancialResult, 2)} md USD`}</strong></p>
+                          <p>Resultat före skatt <strong className="float-right text-slate-950">{formatNumber(activeScenario.preTaxIncome, 2)} md USD</strong></p>
+                          <p>Skatt ({formatNumber(activeScenario.taxRate * 100, 1)} %) <strong className="float-right text-slate-950">−{formatNumber(activeScenario.taxExpense, 2)} md USD</strong></p>
+                          <p>Minoritet <strong className="float-right text-slate-950">0,00 md USD</strong></p>
+                          <p>Normaliserat resultat till aktieägarna <strong className="float-right text-slate-950">{formatNumber(activeScenario.normalizedNetIncome, 2)} md USD</strong></p>
+                          <p>Utspädda aktier 2028E <strong className="float-right text-slate-950">{formatNumber(activeScenario.dilutedShares, 3)} md</strong></p>
+                          <p>Normaliserad EPS <strong className="float-right text-emerald-700">{formatUsd(activeScenario.normalizedEps, 2)}</strong></p>
+                        </div>
+                        <p className="mt-3 border-t border-slate-200 pt-3 text-slate-500">{netflixShareComment}</p>
                       </div>}
-                      {showFcfDetail && "normalizedFcf" in activeScenario && <div className="mt-3 rounded-lg bg-slate-50 p-3 text-xs leading-5 text-slate-600"><strong className="text-slate-950">EBIT → normaliserad FCF:</strong> EBIT {activeScenario.ebit.toFixed(2)} − kontantskatt {activeScenario.cashTax.toFixed(2)} + finansnetto {activeScenario.netFinance.toFixed(2)} + amortering {activeScenario.contentAmortization.toFixed(1)} − innehållsbetalningar {activeScenario.contentPayments.toFixed(1)} + innehållsskulder {activeScenario.contentLiabilityChange.toFixed(1)} − capex/WC {(activeScenario.capex + activeScenario.workingCapital).toFixed(1)} = <strong>{activeScenario.normalizedFcf.toFixed(2)} md USD</strong>. FCF-marginal {(activeScenario.fcfMargin * 100).toFixed(1)} %.</div>}
-                      {showShareDetail && "normalizedFcf" in activeScenario && <div className="mt-3 rounded-lg bg-slate-50 p-3 text-xs leading-5 text-slate-600"><strong className="text-slate-950">Aktieantal och återköp:</strong> Start 4,221 md − återköpta {activeScenario.repurchasedShares.toFixed(3)} md + SBC {activeScenario.sbcShares.toFixed(3)} md = {activeScenario.dilutedShares.toFixed(3)} md aktier. Återköp {activeScenario.repurchases.toFixed(2)} md USD vid antaget snittpris {activeScenario.repurchasePrice.toFixed(0)} USD.</div>}
                     </> : <>
                       <p className="mt-4 text-sm font-bold text-slate-700">Så blir värdet</p>
                       <div className="mt-3 grid gap-4 text-sm sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-end">
@@ -334,8 +352,8 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
                         <div><p className="font-black uppercase tracking-[0.12em] text-slate-500">Aktieantal och återköp · ASSUMPTION</p><p className="mt-2">Start 4,221 md − återköpta {activeScenario.repurchasedShares.toFixed(3)} md + SBC {activeScenario.sbcShares.toFixed(3)} md = {activeScenario.dilutedShares.toFixed(3)} md aktier.</p><p className="mt-1 text-slate-500">Återköp {activeScenario.repurchases.toFixed(2)} md USD vid antaget snittpris {activeScenario.repurchasePrice.toFixed(0)} USD; {(activeScenario.repurchasesToFcf * 100).toFixed(0)} % av tre års normaliserad FCF.</p></div>
                       </div>
                     )}
-                    {isNetflix && "multipleRationale" in activeScenario && <p className="mt-3 text-xs leading-5 text-slate-600"><strong className="text-slate-950">Varför {activeScenario.peMultiple.toFixed(0)}× P/E?</strong> {activeScenario.multipleRationale}</p>}
-                    <p className="mt-4 border-t border-slate-100 pt-3 text-xs leading-5 text-slate-500">{isNetflix ? "Q1 2026 innehöll en mottagen uppsägningsersättning från WBD på 2,8 md USD, redovisad utanför EBIT i Interest and other income. Värderingen använder därför en normaliserad EPS-bridge med explicita antaganden för finansnetto, skatt och aktieantal." : "Rapporterad EPS används inte eftersom stora orealiserade värdeförändringar i Alphabets aktieinnehav förvränger nettoresultatet. Modellens finansnetto, skatt och utspädning är explicita scenarioantaganden."}</p>
+                    {isNetflix && "multipleRationale" in activeScenario && <p className="mt-3 text-xs leading-5 text-slate-600"><strong className="text-slate-950">Varför denna multipel?</strong> {activeScenario.multipleRationale}</p>}
+                    {!isNetflix && <p className="mt-4 border-t border-slate-100 pt-3 text-xs leading-5 text-slate-500">Rapporterad EPS används inte eftersom stora orealiserade värdeförändringar i Alphabets aktieinnehav förvränger nettoresultatet. Modellens finansnetto, skatt och utspädning är explicita scenarioantaganden.</p>}
                   </div>
                   <p className="mt-3 text-xs leading-5 text-slate-500">Värderingsdatum: {identity.valuationDate}. Referenskurs: {formatUsd(identity.marketReference.price, 2)}, {ticker}-stängning den {identity.marketReference.asOf}. Annualiserad värdepotential räknas över {valuation.yearsToValuation.toFixed(2).replace(".", ",")} år.</p>
                 </div>
@@ -410,6 +428,7 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
                 </div>
               ))}
             </div>
+            {isNetflix && <p className="mt-5 border-l-2 border-emerald-500 pl-5 text-sm leading-6 text-slate-600">Q1 2026 innehöll en mottagen uppsägningsersättning från WBD på 2,8 md USD, redovisad utanför EBIT inom Interest and other income. Värderingen använder därför normaliserat resultat med explicita antaganden för finansnetto, skatt och aktieantal.</p>}
             <div className="mt-5 grid gap-4 border-l-2 border-emerald-500 pl-5 text-sm leading-6 text-slate-600 md:grid-cols-2">
               <p><strong className="text-slate-950">Historisk kontext:</strong> {isNetflix ? "Omsättningen växte 6,5 % 2022 och 15,9 % 2025, samtidigt som EBIT-marginalen steg från 17,8 % till 29,5 %. Scenarierna antar fortsatt men gradvis normaliserad förbättring." : "Omsättningstillväxten har accelererat från 8,7 % 2023 till cirka 20 % LTM, samtidigt som EBIT-marginalen stigit från 27,4 % till cirka 33 %. Scenarierna antar därför en normalisering från dagens ovanligt starka tillväxt."}</p>
               <p><strong className="text-slate-950">Kapitalavkastning:</strong> {isNetflix ? "Bolagets rapporterade 2026 FCF-guidning på cirka 12,5 md USD innehåller WBD-engångseffekten. Den är inte återkommande FCF-kapacitet. Q2:s OCF föll 28 % när innehållsbetalningarna steg; 11,9 md USD av kända innehållsåtaganden förfaller inom 12 månader. Återköp stärker EPS, men ersätter inte organisk vinsttillväxt." : "Capex → PP&E → avskrivningar → EBIT → FCF. Q2-operativt kassaflöde var 39,1 md USD och capex 44,9 md USD, vilket gav FCF på −5,9 md USD; FCF är alltså inte normaliserat."}</p>

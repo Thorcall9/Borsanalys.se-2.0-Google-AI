@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import test from "node:test";
 import { alphabetV112Dossier } from "../src/data/analyses/alphabet/alphabet-v11-model";
 import {
@@ -53,6 +54,17 @@ test("Netflix stress test is separate from probability-weighted scenarios", () =
   assert.equal(netflixStressTest.peMultiple, 16);
   assert.ok(netflixStressTest.fairValue < NETFLIX_REFERENCE_PRICE);
   assert.ok(netflixStressTest.totalPotentialPct < -0.3);
+});
+
+test("Netflix public bridge exposes EPS, not scenario FCF or buyback mechanics", () => {
+  const preview = readFileSync(new URL("../src/pages/AlphabetV11Preview.tsx", import.meta.url), "utf8");
+  assert.match(preview, /Visa EPS-bryggan/);
+  assert.match(preview, /Dölj EPS-bryggan/);
+  assert.doesNotMatch(preview, /showFcfDetail|showShareDetail/);
+  assert.doesNotMatch(preview, /Visa\/Dölj FCF och innehåll|Visa\/Dölj aktieantal och återköp/);
+  assert.match(preview, /≈\{formatNumber\(activeScenario\.revenue, 0\)\} md USD/);
+  assert.match(preview, /Utspädda aktier 2028E/);
+  assert.equal((preview.match(/mottagen uppsägningsersättning från WBD/g) ?? []).length, 1);
 });
 
 test("company dossiers do not leak company-specific scenario fields or WBD notes", () => {
