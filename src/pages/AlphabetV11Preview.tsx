@@ -189,6 +189,8 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
   const historyCards = isNetflix ? [["Omsättning", "2022: 31,6 → 2025: 45,2 md USD", "+6,5 % → +15,9 % tillväxt"], ["EBIT-marginal", "2022: 17,8 % → 2025: 29,5 %", "2026-guidning: 31,5 %; Base 2028E: 34 %"]] : [["Omsättning", "2023: 307,4 → LTM: 445,9 md USD", "+8,7 % → cirka +20 % tillväxt"], ["EBIT-marginal", "2023: 27,4 % → LTM: 33,1 %", "Lönsamheten har förstärkts före capexens fulla följdeffekt"]];
   const [activeTab, setActiveTab] = useState<TabId>("overview");
   const [showMethod, setShowMethod] = useState(false);
+  const [showFcfDetail, setShowFcfDetail] = useState(false);
+  const [showShareDetail, setShowShareDetail] = useState(false);
   const [risksOpen, setRisksOpen] = useState(false);
   const [saved, setSaved] = useState(false);
   const [selectedScenario, setSelectedScenario] = useState<"bear" | "base" | "bull">("base");
@@ -277,33 +279,55 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
                   </div>
                   <div className="mt-5 rounded-xl border border-emerald-200 bg-white/80 p-5">
                     <p className="text-xs font-black uppercase tracking-[0.16em] text-emerald-700">{activeScenario.label} · värderingsbrygga</p>
-                    <p className="mt-4 text-sm font-bold text-slate-700">Så blir värdet</p>
-                    <div className="mt-3 grid gap-4 text-sm sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-end">
-                      <div><p className="text-slate-500">Omsättning 2028E</p><p className="mt-1 text-xl font-black">{activeScenario.revenue.toFixed(0)} md USD</p></div>
-                      <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">×</span>
-                      <div><p className="text-slate-500">EBIT-marginal</p><p className="mt-1 text-xl font-black">{formatPct(activeScenario.ebitMargin)}</p></div>
-                      <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">=</span>
-                      <div><p className="text-slate-500">EBIT</p><p className="mt-1 text-xl font-black">{activeScenario.ebit.toFixed(1)} md USD</p></div>
-                    </div>
-                    <div className="mt-4 rounded-lg border border-slate-100 bg-slate-50 p-3">
-                      <p className="text-xs font-black uppercase tracking-[0.12em] text-slate-500">Normalisering till resultat per aktie</p>
-                      <div className="mt-2 grid gap-x-6 gap-y-1 text-xs sm:grid-cols-2">
-                        <p>Normaliserat övrigt resultat <strong className="float-right text-slate-950">{activeScenario.normalizedOtherIncome.toFixed(1)} md</strong></p>
-                        <p>Finansnetto <strong className="float-right text-slate-950">{"netFinance" in activeScenario ? activeScenario.netFinance.toFixed(1) : `+${activeScenario.netInterest.toFixed(1)}`} md</strong></p>
-                        <p>Resultat före skatt <strong className="float-right text-slate-950">{activeScenario.preTaxIncome.toFixed(1)} md</strong></p>
-                        <p>Skatt ({formatPct(activeScenario.taxRate)}) <strong className="float-right text-slate-950">−{activeScenario.taxExpense.toFixed(1)} md</strong></p>
-                        <p>Normaliserat nettoresultat <strong className="float-right text-slate-950">{activeScenario.normalizedNetIncome.toFixed(1)} md</strong></p>
-                        <p>Utspädda aktier <strong className="float-right text-slate-950">{activeScenario.dilutedShares.toFixed(2)} md</strong></p>
+                    {isNetflix ? <>
+                      <p className="mt-4 text-sm font-bold text-slate-700">Det som styr scenariovärdet</p>
+                      <div className="mt-3 grid gap-3 text-sm sm:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr] sm:items-end">
+                        <div><p className="text-slate-500">Omsättning 2028E</p><p className="mt-1 text-xl font-black">{activeScenario.revenue.toFixed(0)} md USD</p></div>
+                        <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">→</span>
+                        <div><p className="text-slate-500">EBIT-marginal</p><p className="mt-1 text-xl font-black">{formatPct(activeScenario.ebitMargin)}</p></div>
+                        <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">→</span>
+                        <div><p className="text-slate-500">Normaliserad EPS</p><p className="mt-1 text-xl font-black">{formatUsd(activeScenario.normalizedEps, 2)}</p></div>
+                        <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">×</span>
+                        <div><p className="text-slate-500">P/E</p><p className="mt-1 text-xl font-black">{activeScenario.peMultiple.toFixed(0)}×</p></div>
+                        <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">=</span>
+                        <div><p className="text-slate-500">Rimligt värde</p><p className="mt-1 text-xl font-black text-emerald-700">{formatUsd(activeScenario.fairValue)}</p></div>
                       </div>
-                    </div>
-                    <div className="mt-4 grid gap-4 border-t border-slate-100 pt-4 text-sm sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-end">
-                      <div><p className="text-slate-500">Normaliserad EPS</p><p className="mt-1 text-xl font-black">{formatUsd(activeScenario.normalizedEps, 2)}</p></div>
-                      <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">×</span>
-                      <div><p className="text-slate-500">P/E</p><p className="mt-1 text-xl font-black">{activeScenario.peMultiple.toFixed(1)}x</p></div>
-                      <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">=</span>
-                      <div><p className="text-slate-500">Rimligt värde</p><p className="mt-1 text-xl font-black text-emerald-700">{formatUsd(activeScenario.fairValue)}</p></div>
-                    </div>
-                    {"normalizedFcf" in activeScenario && (
+                      {"revenueMix" in activeScenario && <p className="mt-4 text-xs leading-5 text-slate-500">Intäktsmix 2028E: abonnemang {activeScenario.revenueMix.subscription.toFixed(1)}, reklam {activeScenario.revenueMix.advertising.toFixed(1)} och övrigt {activeScenario.revenueMix.other.toFixed(1)} md USD.</p>}
+                      {"normalizedFcf" in activeScenario && <div className="mt-4 flex flex-wrap gap-2 border-t border-slate-100 pt-4">
+                        <button type="button" onClick={() => setShowFcfDetail((value) => !value)} className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-slate-200 px-3 text-xs font-bold text-slate-700 transition-colors hover:border-emerald-300 hover:text-emerald-800" aria-expanded={showFcfDetail}>{showFcfDetail ? "Dölj FCF och innehåll" : "FCF och innehåll"}{showFcfDetail ? <ChevronUp size={15} /> : <ChevronDown size={15} />}</button>
+                        <button type="button" onClick={() => setShowShareDetail((value) => !value)} className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-slate-200 px-3 text-xs font-bold text-slate-700 transition-colors hover:border-emerald-300 hover:text-emerald-800" aria-expanded={showShareDetail}>{showShareDetail ? "Dölj aktieantal och återköp" : "Aktieantal och återköp"}{showShareDetail ? <ChevronUp size={15} /> : <ChevronDown size={15} />}</button>
+                      </div>}
+                      {showFcfDetail && "normalizedFcf" in activeScenario && <div className="mt-3 rounded-lg bg-slate-50 p-3 text-xs leading-5 text-slate-600"><strong className="text-slate-950">EBIT → normaliserad FCF:</strong> EBIT {activeScenario.ebit.toFixed(2)} − kontantskatt {activeScenario.cashTax.toFixed(2)} + finansnetto {activeScenario.netFinance.toFixed(2)} + amortering {activeScenario.contentAmortization.toFixed(1)} − innehållsbetalningar {activeScenario.contentPayments.toFixed(1)} + innehållsskulder {activeScenario.contentLiabilityChange.toFixed(1)} − capex/WC {(activeScenario.capex + activeScenario.workingCapital).toFixed(1)} = <strong>{activeScenario.normalizedFcf.toFixed(2)} md USD</strong>. FCF-marginal {(activeScenario.fcfMargin * 100).toFixed(1)} %.</div>}
+                      {showShareDetail && "normalizedFcf" in activeScenario && <div className="mt-3 rounded-lg bg-slate-50 p-3 text-xs leading-5 text-slate-600"><strong className="text-slate-950">Aktieantal och återköp:</strong> Start 4,221 md − återköpta {activeScenario.repurchasedShares.toFixed(3)} md + SBC {activeScenario.sbcShares.toFixed(3)} md = {activeScenario.dilutedShares.toFixed(3)} md aktier. Återköp {activeScenario.repurchases.toFixed(2)} md USD vid antaget snittpris {activeScenario.repurchasePrice.toFixed(0)} USD.</div>}
+                    </> : <>
+                      <p className="mt-4 text-sm font-bold text-slate-700">Så blir värdet</p>
+                      <div className="mt-3 grid gap-4 text-sm sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-end">
+                        <div><p className="text-slate-500">Omsättning 2028E</p><p className="mt-1 text-xl font-black">{activeScenario.revenue.toFixed(0)} md USD</p></div>
+                        <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">×</span>
+                        <div><p className="text-slate-500">EBIT-marginal</p><p className="mt-1 text-xl font-black">{formatPct(activeScenario.ebitMargin)}</p></div>
+                        <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">=</span>
+                        <div><p className="text-slate-500">EBIT</p><p className="mt-1 text-xl font-black">{activeScenario.ebit.toFixed(1)} md USD</p></div>
+                      </div>
+                      <div className="mt-4 rounded-lg border border-slate-100 bg-slate-50 p-3">
+                        <p className="text-xs font-black uppercase tracking-[0.12em] text-slate-500">Normalisering till resultat per aktie</p>
+                        <div className="mt-2 grid gap-x-6 gap-y-1 text-xs sm:grid-cols-2">
+                          <p>Normaliserat övrigt resultat <strong className="float-right text-slate-950">{activeScenario.normalizedOtherIncome.toFixed(1)} md</strong></p>
+                          <p>Finansnetto <strong className="float-right text-slate-950">{"netFinance" in activeScenario ? activeScenario.netFinance.toFixed(1) : `+${activeScenario.netInterest.toFixed(1)}`} md</strong></p>
+                          <p>Resultat före skatt <strong className="float-right text-slate-950">{activeScenario.preTaxIncome.toFixed(1)} md</strong></p>
+                          <p>Skatt ({formatPct(activeScenario.taxRate)}) <strong className="float-right text-slate-950">−{activeScenario.taxExpense.toFixed(1)} md</strong></p>
+                          <p>Normaliserat nettoresultat <strong className="float-right text-slate-950">{activeScenario.normalizedNetIncome.toFixed(1)} md</strong></p>
+                          <p>Utspädda aktier <strong className="float-right text-slate-950">{activeScenario.dilutedShares.toFixed(2)} md</strong></p>
+                        </div>
+                      </div>
+                      <div className="mt-4 grid gap-4 border-t border-slate-100 pt-4 text-sm sm:grid-cols-[1fr_auto_1fr_auto_1fr] sm:items-end">
+                        <div><p className="text-slate-500">Normaliserad EPS</p><p className="mt-1 text-xl font-black">{formatUsd(activeScenario.normalizedEps, 2)}</p></div>
+                        <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">×</span>
+                        <div><p className="text-slate-500">P/E</p><p className="mt-1 text-xl font-black">{activeScenario.peMultiple.toFixed(1)}x</p></div>
+                        <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">=</span>
+                        <div><p className="text-slate-500">Rimligt värde</p><p className="mt-1 text-xl font-black text-emerald-700">{formatUsd(activeScenario.fairValue)}</p></div>
+                      </div>
+                    </>}
+                    {"normalizedFcf" in activeScenario && !isNetflix && (
                       <div className="mt-4 grid gap-4 border-t border-slate-100 pt-4 text-xs leading-5 text-slate-600 md:grid-cols-3">
                         <div><p className="font-black uppercase tracking-[0.12em] text-slate-500">Intäktsmix 2028E · ASSUMPTION</p><p className="mt-2">Abonnemang {activeScenario.revenueMix.subscription.toFixed(1)} · reklam {activeScenario.revenueMix.advertising.toFixed(1)} · övrigt {activeScenario.revenueMix.other.toFixed(1)} md USD.</p><p className="mt-1 text-slate-500">Medlems-, pris-, region- och planmix är inte separat prognostiserade; ingen falsk ARPU-precision visas.</p></div>
                         <div><p className="font-black uppercase tracking-[0.12em] text-slate-500">EBIT → normaliserad FCF · ASSUMPTION</p><p className="mt-2">EBIT {activeScenario.ebit.toFixed(2)} − kontantskatt {activeScenario.cashTax.toFixed(2)} + finansnetto {activeScenario.netFinance.toFixed(2)} + amortering {activeScenario.contentAmortization.toFixed(1)} − innehållsbetalningar {activeScenario.contentPayments.toFixed(1)} + innehållsskulder {activeScenario.contentLiabilityChange.toFixed(1)} − capex/WC {(activeScenario.capex + activeScenario.workingCapital).toFixed(1)} = <strong>{activeScenario.normalizedFcf.toFixed(2)} md USD</strong>.</p><p className="mt-1 text-slate-500">FCF-marginal {(activeScenario.fcfMargin * 100).toFixed(1)} % · FCF/EBIT {(activeScenario.fcfToEbit * 100).toFixed(0)} %.</p></div>
