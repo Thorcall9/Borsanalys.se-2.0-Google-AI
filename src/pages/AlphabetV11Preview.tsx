@@ -10,6 +10,7 @@ import {
   Cloud,
   Eye,
   Gauge,
+  LockKeyhole,
   Search,
   ShieldAlert,
   Sparkles,
@@ -17,6 +18,7 @@ import {
   WalletCards,
 } from "lucide-react";
 import SEO from "../components/SEO";
+import { useAuth } from "../contexts/AuthContext";
 import { alphabetV112Dossier } from "../data/analyses/alphabet/alphabet-v11-model";
 import { netflixDerived, netflixFacts, netflixScenarios, netflixStressTest, netflixV112Dossier, netflixWbdNormalization } from "../data/analyses/netflix/netflix-v11-model";
 
@@ -172,6 +174,7 @@ function ReasonRows({ rows, tone }: { rows: typeof positiveReasons; tone: "posit
 }
 
 export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?: PreviewVariant }) {
+  const { user, openLoginModal } = useAuth();
   const isNetflix = variant === "netflix";
   const dossier = isNetflix ? netflixV112Dossier : alphabetV112Dossier;
   const identity = dossier.identity;
@@ -266,14 +269,15 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
               </div>
               <button
                 type="button"
-                onClick={() => setShowMethod((value) => !value)}
+                onClick={() => user ? setShowMethod((value) => !value) : openLoginModal()}
                 className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-emerald-700 transition-colors hover:text-emerald-900"
-                aria-expanded={showMethod}
+                aria-expanded={Boolean(user && showMethod)}
               >
-                {showMethod ? "Dölj värderingsbrygga" : "Så har vi räknat"}
-                {showMethod ? <ChevronUp size={17} aria-hidden="true" /> : <ArrowRight size={17} aria-hidden="true" />}
+                {user ? (showMethod ? "Dölj värderingsbrygga" : "Så har vi räknat") : "Logga in för att se hur vi räknat"}
+                {user && showMethod ? <ChevronUp size={17} aria-hidden="true" /> : user ? <ArrowRight size={17} aria-hidden="true" /> : <LockKeyhole size={17} aria-hidden="true" />}
               </button>
-              {showMethod && (
+              {!user && <p className="mt-1 text-sm leading-6 text-slate-600">Värderingsbryggan, scenarioantaganden och EPS-detaljer visas för inloggade medlemmar.</p>}
+              {user && showMethod && (
                 <div className="mt-4 border-t border-emerald-200 pt-5 text-sm leading-6 text-slate-700">
                   <div className="flex flex-wrap gap-2">
                     {scenarios.map((scenario) => (

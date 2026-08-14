@@ -61,6 +61,9 @@ test("Netflix stress test is separate from probability-weighted scenarios", () =
 
 test("Netflix public bridge exposes EPS, not scenario FCF or buyback mechanics", () => {
   const preview = readFileSync(new URL("../src/pages/AlphabetV11Preview.tsx", import.meta.url), "utf8");
+  assert.match(preview, /Logga in för att se hur vi räknat/);
+  assert.match(preview, /user && showMethod/);
+  assert.match(preview, /openLoginModal/);
   assert.match(preview, /Visa EPS-bryggan/);
   assert.match(preview, /Dölj EPS-bryggan/);
   assert.doesNotMatch(preview, /showFcfDetail|showShareDetail/);
