@@ -24,6 +24,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import helmet from "helmet";
 import cors from "cors";
 import { z } from "zod";
+import { getCorsOptions } from "./src/lib/corsConfig.ts";
 
 // Explicitly load .env.local for development
 dotenv.config({ path: ".env.local" });
@@ -75,34 +76,8 @@ async function startServer() {
     crossOriginEmbedderPolicy: false // Disabled for cross-origin resources
   }));
 
-  // CORS Policy: Restrict API usage to the site's domains and localhost instances
-  const allowedOrigins = [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    'http://localhost:5173',
-    'http://127.0.0.1:3000',
-    'http://127.0.0.1:3001',
-    'http://127.0.0.1:5173',
-    /^https:\/\/borsanalys(-[a-zA-Z0-9-]+)?\.vercel\.app$/, // Tillåt enbart Vercel preview-miljöer som börjar på borsanalys
-    'https://borsanalys.se',
-    'https://www.borsanalys.se'
-  ];
-
-  app.use(cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests if desired, or server-to-server)
-      if (!origin) return callback(null, true);
-      
-      const isAllowed = allowedOrigins.some(allowed => {
-        if (allowed instanceof RegExp) return allowed.test(origin);
-        return allowed === origin;
-      });
-      
-      if (isAllowed) return callback(null, true);
-      callback(new Error('Blocked by CORS policy'));
-    },
-    credentials: true,
-  }));
+  // CORS Policy: production stays strict; localhost origins are development-only.
+  app.use(cors(getCorsOptions()));
 
   // API routes FIRST
   app.use("/api", (req, res, next) => {

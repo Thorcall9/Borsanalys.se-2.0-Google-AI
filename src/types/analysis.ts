@@ -148,7 +148,7 @@ export interface AIDrivenAnalysis {
 
 export interface AnalysisData {
   slug: string;
-  templateVersion?: "legacy" | "v10";
+  templateVersion?: "legacy" | "v10" | "v11";
   title: string;
   listTitle?: string;
   ticker: string;
@@ -156,6 +156,7 @@ export interface AnalysisData {
   author?: string;
   date: string;
   displayDate?: string;
+  published?: boolean;
   market: string;
   sector: string;
   recommendation: Recommendation;
@@ -168,23 +169,83 @@ export interface AnalysisData {
   discount?: string;
   summary: string;
   image?: string; // URL to analysis image
-
-  // Content type and filtering metadata
-  contentType: ContentType;
+  v11?: {
+    analysisId?: string;
+    versionId?: string;
+    sourceCutoffDate?: string;
+    valuationDate?: string;
+    valuationYearLabel?: string;
+    currency?: string;
+    valueSuffix?: string;
+    headline: string;
+    dek: string;
+    weightedFairValue: string;
+    currentPrice: string;
+    upside: string;
+    annualPotential: string;
+    valuePotentialLabel?: string;
+    epsBridgeEnabled?: boolean;
+    illustrativeTotalReturn?: {
+      title: string;
+      rows: {
+        scenario: string;
+        courseValue: string;
+        dividends: string;
+        endingValue: string;
+        totalReturn: string;
+      }[];
+      weightedOutcome: string;
+      disclaimer: string;
+    };
+    riskLabel: string;
+    positiveReasons: { title: string; body: string }[];
+    cautionReasons: { title: string; body: string }[];
+    insightHeadline: string;
+    insightBody: string;
+    theses: { status: string; title: string; signal: string; next: string }[];
+    monitors: { focus: string; latest: string; next: string; why: string }[];
+    valuationCheck: string;
+    valuationLimitation: string;
+    valuationSummary?: string;
+    valuationGrowthContext?: string;
+    historyMarginLabel?: string;
+    classificationSummary?: string;
+    nextReportWindow?: string;
+    riskAndMethod: string;
+    sourceSummary: string;
+  };
+  v11Preview?: {
+    headline: string;
+    dek: string;
+    weightedFairValue: string;
+    currentPrice: string;
+    upside: string;
+    annualPotential: string;
+    riskLabel: string;
+    positiveReasons: { title: string; body: string }[];
+    cautionReasons: { title: string; body: string }[];
+    insightHeadline: string;
+    insightBody: string;
+    theses: { status: string; title: string; signal: string; next: string }[];
+    monitors: { focus: string; latest: string; next: string; why: string }[];
+    valuationCheck: string;
+    valuationLimitation: string;
+    riskAndMethod: string;
+    sourceSummary: string;
+  };
+  contentType?: ContentType;
   relatedAnalysisSlug?: string;
   tags?: string[];
   reportPeriod?: string;
   reportSummary?: string;
-  viewChange?: 'unchanged' | 'upgraded' | 'downgraded' | 'new';
+  viewChange?: "unchanged" | "upgraded" | "downgraded" | "new";
   upside?: number;
   updatedAt?: string;
   score?: number;
   maxScore?: number;
-  /** Hidden analyses can be directly reviewed without appearing in discovery surfaces. */
-  published?: boolean;
   
   // Custom View Logic
-  deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea" | "Axfood" | "ABB" | "Plejd" | "Meta";
+  deepDiveComponent?: "Nvidia" | "NovoNordisk" | "Evolution" | "Investor" | "Volvo" | "Swedbank" | "NewWave" | "Handelsbanken" | "Ericsson" | "AQGroup" | "Nibe" | "Nordea" | "Axfood" | "ABB" | "Plejd" | "Meta" | "Microsoft" | "MetaV11";
   disclosureKey?: string;
 
   // Standardized structure from roadmap
@@ -230,6 +291,73 @@ export interface AnalysisData {
   targetPrice?: string;
   buyZone?: string;
   devilsAdvocateTables?: { title: string; headers: string[]; rows: (string | number)[][]; footer?: string }[];
+  historicalFundament?: {
+    currency?: string;
+    moneySuffix?: string;
+    marginLabel?: string;
+    adjustedOperatingMargin?: {
+      label: string;
+      rangePct: [number, number];
+      annual: { period: string; marginPct: number }[];
+      latest: { period: string; marginPct: number };
+      comparisonNote: string;
+      reportedHistoryNote?: string;
+    };
+    cashFlowLabel?: string;
+    cashFlowDescription?: string;
+    recentQuarters?: {
+      period: string;
+      revenueUsdBn?: number;
+      revenueBn?: number;
+      operatingMarginPct: number;
+      freeCashFlowUsdBn?: number;
+      cashFlowBn?: number;
+      yearOnYear?: {
+        revenueGrowthPct: number;
+        operatingMarginChangePp: number;
+        freeCashFlowGrowthPct: number;
+      };
+      classification: "FACT" | "DERIVED";
+      source: { document: string; locator: string };
+    }[];
+    annual: {
+      period: string;
+      revenueUsdBn?: number;
+      revenueBn?: number;
+      operatingIncomeUsdBn?: number;
+      operatingIncomeBn?: number;
+      operatingMarginPct: number;
+      operatingCashFlowUsdBn?: number;
+      freeCashFlowUsdBn?: number;
+      cashFlowBn?: number;
+      classification: "FACT" | "DERIVED";
+      source: { document: string; locator: string };
+    }[];
+    latest?: {
+      period: string;
+      revenueUsdBn?: number;
+      revenueBn?: number;
+      operatingIncomeUsdBn?: number;
+      operatingIncomeBn?: number;
+      operatingMarginPct: number;
+      freeCashFlowUsdBn?: number;
+      cashFlowBn?: number;
+      classification: "FACT" | "DERIVED";
+      source: { document: string; locator: string };
+    };
+    derived?: {
+      revenueCagr2019To2025Pct: number;
+      operatingMarginRange2019To2025Pct: [number, number];
+      latestAnnualYearOnYear?: {
+        period: string;
+        comparedWithPeriod: string;
+        revenueGrowthPct: number;
+        operatingMarginChangePp: number;
+        freeCashFlowGrowthPct: number;
+      };
+      formula: string;
+    };
+  };
 
   // Detailed Analysis Sections
   riskRewardMatrix?: string;
@@ -244,7 +372,8 @@ export interface AnalysisData {
   weaknesses?: string[];
   opportunities?: string[];
   threats?: string[];
-  scenarios: { label: string; value: string; change: string; type: "bull" | "base" | "bear"; description?: string; probability?: string }[];
+  scenarios: { label: string; value: string; change: string; cagr?: string; type: "bull" | "base" | "bear"; description?: string; probability?: string; valuationBridge?: { whatWeAssume: string; whyThisValuation: string; whatMustBeProven: string; whatBreaksThesis?: string; paymentVolume?: string; revenues?: string; normalizedEps?: string; pe?: string; fairValue?: string }; operatingLadder?: { revenueUsdBn?: number; revenueBn?: number; operatingMarginPct: number; operatingIncomeUsdBn?: number; operatingIncomeBn?: number; normalizedFinanceAndOtherUsdBn?: number; normalizedFinanceAndOtherBn?: number; taxRatePct: number; minorityInterestUsdBn?: number; minorityInterestBn?: number; dilutedSharesBn: number; normalizedEpsUsd?: number; normalizedEps?: number; revenueGrowthFromLatestAnnualPct?: number } }[];
+  valuationTargetYear?: number;
   businessModel?: string;
   affarsmodell?: {
     sankey?: {

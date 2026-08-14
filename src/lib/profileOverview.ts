@@ -59,6 +59,7 @@ export function getLatestPublications(items: AnalysisData[], limit = 3) {
 export function getLatestContent(items: AnalysisData[], ticker: string): WatchlistContent | null {
   const normalizedTicker = normalizeTicker(ticker);
   const match = items
+    .filter((item) => item.published !== false)
     .filter((item) => normalizeTicker(item.ticker) === normalizedTicker)
     .sort((a, b) => timestamp(editorialDate(b)) - timestamp(editorialDate(a)))[0];
 

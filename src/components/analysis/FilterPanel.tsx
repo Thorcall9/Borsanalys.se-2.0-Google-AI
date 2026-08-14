@@ -59,7 +59,7 @@ export default function FilterPanel({
       <div
         role="group"
         aria-label="Innehållstyp"
-        className="flex bg-muted/30 border border-border rounded-2xl p-1.5 gap-1"
+        className="grid grid-cols-2 gap-1 rounded-2xl border border-border bg-muted/30 p-1.5 sm:grid-cols-4"
       >
         {CONTENT_TYPES.map((type) => (
           <button
@@ -67,7 +67,7 @@ export default function FilterPanel({
             type="button"
             aria-pressed={contentType === type}
             onClick={() => onContentTypeChange(type)}
-            className={`flex-1 px-4 py-3 rounded-xl text-[11px] font-black uppercase tracking-widest transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50 ${
+            className={`min-w-0 break-words rounded-xl px-3 py-3 text-[9px] font-black uppercase leading-tight tracking-[0.06em] transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50 sm:text-[11px] sm:leading-normal sm:tracking-widest ${
               contentType === type
                 ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20'
                 : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'

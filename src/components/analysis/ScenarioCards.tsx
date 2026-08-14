@@ -8,6 +8,8 @@ export interface Scenario {
   probability: string;
   price: string;
   change: string;
+  /** Annualized return to the scenario horizon, supplied by canonical analysis data. */
+  cagr?: string;
   valueLabel?: string;
   changeLabel?: string;
   description: string;
@@ -55,6 +57,11 @@ export default function ScenarioCards({ scenarios }: ScenarioCardsProps) {
           <div className="text-sm font-black opacity-50 mb-8">
             {s.changeLabel ? `${s.changeLabel}: ${s.change}` : s.change}
           </div>
+          {s.cagr && (
+            <div className="mb-8 border-t border-current/15 pt-4 text-sm font-black">
+              <span className="opacity-60">CAGR:</span> {s.cagr}
+            </div>
+          )}
           <p className="text-sm leading-relaxed opacity-80 font-medium italic">{s.description}</p>
         </div>
       ))}

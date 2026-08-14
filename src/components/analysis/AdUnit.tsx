@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 /**
  * AdUnit – Börsanalys.se
@@ -35,6 +35,7 @@ type AdVariant =
 interface AdUnitProps {
   variant: AdVariant;
   className?: string;
+  collapseWhenUnfilled?: boolean;
 }
 
 interface AdConfig {
@@ -100,8 +101,9 @@ const AD_CONFIG: Record<AdVariant, AdConfig> = {
   },
 };
 
-export default function AdUnit({ variant, className = '' }: AdUnitProps) {
+export default function AdUnit({ variant, className = '', collapseWhenUnfilled = false }: AdUnitProps) {
   const insRef = useRef<HTMLModElement>(null);
+  const [isUnfilled, setIsUnfilled] = useState(false);
   const cfg = AD_CONFIG[variant];
 
   useEffect(() => {
@@ -114,6 +116,21 @@ export default function AdUnit({ variant, className = '' }: AdUnitProps) {
       // Tyst fel i dev-miljö (AdSense-scriptet ej laddat lokalt)
     }
   }, []);
+
+  useEffect(() => {
+    if (!collapseWhenUnfilled || !insRef.current) return;
+
+    const updateFillState = () => {
+      setIsUnfilled(insRef.current?.getAttribute('data-ad-status') === 'unfilled');
+    };
+    const observer = new MutationObserver(updateFillState);
+    observer.observe(insRef.current, { attributes: true, attributeFilter: ['data-ad-status'] });
+    updateFillState();
+
+    return () => observer.disconnect();
+  }, [collapseWhenUnfilled]);
+
+  if (collapseWhenUnfilled && isUnfilled) return null;
 
   return (
     <div
