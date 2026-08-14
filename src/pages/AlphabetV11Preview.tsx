@@ -94,27 +94,28 @@ const reportFocus = [
 
 const netflixPositiveReasons = [
   { title: "Monetisering växer snabbare än tittartiden", body: "H1 2026 steg omsättningen 15 % medan aggregerad tittartid steg 2 %. Det indikerar bättre monetisering på bolagsnivå, men isolerar inte ARPU, retention eller engagemang per medlem.", icon: TrendingUp },
-  { title: "Marginalerna har strukturellt förbättrats", body: "EBIT-marginalen steg från 17,8 % 2022 till 29,5 % 2025; 2026-guidningen är 31,5 %.", icon: Gauge },
+  { title: "Marginalerna har förbättrats kraftigt", body: "EBIT-marginalen steg från 17,8 % 2022 till 29,5 % 2025; 2026-guidningen är 31,5 %.", icon: Gauge },
   { title: "Reklam blir en materiell intäktsmotor", body: "Bolaget guidar för ungefär 3 md USD reklamintäkter under 2026, jämfört med över 1,5 md USD 2025.", icon: Sparkles },
 ];
 const netflixCautiousReasons = [
-  { title: "Aktien kräver fortsatt monetiseringsstyrka", body: "Base kräver 34 % EBIT-marginal och 23× P/E år 2028 för att ge rimlig potential.", icon: ShieldAlert },
+  { title: "Aktien kräver fortsatt monetiseringsstyrka", body: "Huvudscenariot kräver 34 % EBIT-marginal och 23× P/E år 2028 för att ge rimlig potential.", icon: ShieldAlert },
   { title: "Innehållsåtaganden begränsar enkelheten", body: "Innehållsåtagandena var 25,1 md USD vid Q2 2026. Högre innehållsintensitet kan pressa FCF även med god omsättning.", icon: WalletCards },
-  { title: "Vinstutveckling skyddar inte helt mot multipelrisk", body: "Bear antar fortsatt tillväxt och lönsamhet, men ett P/E på 18× ger ändå cirka 20 % nedsida från referenskurs.", icon: Gauge },
+  { title: "Vinstutveckling skyddar inte helt mot multipelrisk", body: "Det försiktiga scenariot antar fortsatt tillväxt och lönsamhet, men ett P/E på 18× ger ändå cirka 20 % nedsida från referenskurs.", icon: Gauge },
 ];
 const netflixTheses = [
   { status: "På väg", title: "Monetiseringen på bolagsnivå fortsätter förbättras", signal: "H1 2026: intäkt +15 % medan aggregerad tittartid ökade 2 %; medlems-, pris-, region- och planmix kan förklara skillnaden.", next: "Medlemsutveckling, prissättning, planbyten, retention, engagemang och annonsutveckling i nästa rapport." },
-  { status: "På väg", title: "Reklam blir en materiell vinstdrivare", signal: "Reklamintäkter översteg 1,5 md USD 2025; 2026-guidningen är cirka 3 md USD.", next: "Tydlig utveckling mot helårsambitionen utan att kundvärdet försämras." },
+  { status: "På väg", title: "Reklam blir en materiell intäktsmotor och kan utvecklas till en betydande vinstdrivare", signal: "Reklamintäkter översteg 1,5 md USD 2025; 2026-guidningen är cirka 3 md USD.", next: "Tydlig utveckling mot helårsambitionen utan att kundvärdet försämras." },
   { status: "Obekräftad", title: "34 % EBIT-marginal är uthållig", signal: "2025 nådde marginalen 29,5 % och 2026-guidningen är 31,5 %.", next: "Marginal nära/över guidning som också stöds av rapporterat kassaflöde." },
 ];
 const netflixReportFocus = [
-  ["Omsättning / medlems-KPI", "Q3-guidning: +11,7 %", "I eller över guidning samt relevant medlems-/planmix-kommentar", "Testar monetisering utan att felaktigt likställa total tittartid med värde per medlem."],
-  ["Rörelsemarginal", "Q3-guidning: 33,2 %", "Vid eller över guidning", "Visar om operating leverage är uthållig."],
-  ["Reklam / FCF", "2026 mål: ≈3 md USD / rapporterad FCF ≈12,5 md USD", "Tydliga reklamframsteg och FCF exklusive WBD-engångseffekt", "Avgör om den nya monetiseringen stärker återkommande kassaflöde."],
+  ["Omsättning / medlems- och planmixsignaler", "Q3-guidning: +11,7 %", "I eller över guidning samt relevanta medlems- och planmixsignaler, i den mån bolaget lämnar sådana uppgifter.", "Testar monetisering utan att felaktigt likställa total tittartid med värde per medlem."],
+  ["Rörelsemarginal", "Q3-guidning: 33,2 %", "Vid eller över guidning", "Visar om operationell hävstång är uthållig."],
+  ["Reklam / FCF", "2026 mål: ≈3 md USD / rapporterad FCF ≈12,5 md USD", "Tydliga reklamframsteg samt kassaflödesutveckling som kan bedömas utan att engångseffekten misstolkas som återkommande intjäning.", "Avgör om den nya monetiseringen stärker återkommande kassaflöde."],
 ];
 
 const formatUsd = (value: number, decimals = 0) => `${value.toFixed(decimals).replace(".", ",")} USD`;
 const formatPct = (value: number, decimals = 1) => `${value >= 0 ? "+" : ""}${(value * 100).toFixed(decimals).replace(".", ",")} %`;
+const formatMetricPct = (value: number, decimals = 1) => `${(value * 100).toFixed(decimals).replace(".", ",")} %`;
 const formatNumber = (value: number, decimals = 1) => value.toFixed(decimals).replace(".", ",");
 
 type PreviewVariant = "alphabet" | "netflix";
@@ -179,15 +180,15 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
   const company = isNetflix ? "Netflix" : "Alphabet Inc.";
   const ticker = isNetflix ? "NFLX" : "GOOG";
   const title = isNetflix ? "Netflix: monetisering före tittartid – men värderingen kräver fortsatt leverans" : "Alphabet: stark AI-tillväxt – men begränsad säkerhetsmarginal";
-  const subtitle = isNetflix ? "Intäkten växer snabbare än tittandet och reklamaffären skalar. Nästa fråga är om marginalen och kundvärdet kan följa med." : "Cloud accelererar kraftigt och Search fortsätter växa tvåsiffrigt. Nästa fråga är om den enorma AI-investeringen kan ge tillräcklig avkastning per aktie.";
+  const subtitle = isNetflix ? "Pris, planmix och reklam lyfter monetiseringen snabbare än tittandet. Värderingen avgörs främst av om marginalen och vinsttillväxten blir uthålliga." : "Cloud accelererar kraftigt och Search fortsätter växa tvåsiffrigt. Nästa fråga är om den enorma AI-investeringen kan ge tillräcklig avkastning per aktie.";
   const positives = isNetflix ? netflixPositiveReasons : positiveReasons;
   const cautions = isNetflix ? netflixCautiousReasons : cautiousReasons;
   const activeTheses = isNetflix ? netflixTheses : theses;
   const activeReportFocus = isNetflix ? netflixReportFocus : reportFocus;
-  const insightTitle = isNetflix ? "Monetisering före tittartid är hela caset" : "AI-caset är en kapitalavkastningsfråga";
+  const insightTitle = isNetflix ? "Uthållig marginal är viktigare än reklamtillväxten" : "AI-caset är en kapitalavkastningsfråga";
   const historyTitle = isNetflix ? "Marginalen har förbättrats, men normaliseringen återstår" : "Tillväxten accelererar, men kapitalbindningen följer med";
-  const historyBody = isNetflix ? "Omsättningen steg från 31,6 md USD 2022 till 45,2 md USD 2025, medan EBIT-marginalen lyfte från 17,8 % till 29,5 %. Base antar fortsatt förbättring till 34 % år 2028, men inte en mekanisk upprepning av toppåren." : "Omsättningstillväxten har accelererat från 8,7 % 2023 till cirka 20 % LTM, samtidigt som EBIT-marginalen stigit från 27,4 % till cirka 33 %. Det kalibrerar scenarierna mot en normalisering från dagens ovanligt starka nivå.";
-  const historyCards = isNetflix ? [["Omsättning", "2022: 31,6 → 2025: 45,2 md USD", "+6,5 % → +15,9 % tillväxt"], ["EBIT-marginal", "2022: 17,8 % → 2025: 29,5 %", "2026-guidning: 31,5 %; Base 2028E: 34 %"]] : [["Omsättning", "2023: 307,4 → LTM: 445,9 md USD", "+8,7 % → cirka +20 % tillväxt"], ["EBIT-marginal", "2023: 27,4 % → LTM: 33,1 %", "Lönsamheten har förstärkts före capexens fulla följdeffekt"]];
+  const historyBody = isNetflix ? "Omsättningen steg från 31,6 md USD 2022 till 45,2 md USD 2025, medan EBIT-marginalen lyfte från 17,8 % till 29,5 %. Huvudscenariot antar fortsatt förbättring till 34 % år 2028, men inte en mekanisk upprepning av toppåren." : "Omsättningstillväxten har accelererat från 8,7 % 2023 till cirka 20 % LTM, samtidigt som EBIT-marginalen stigit från 27,4 % till cirka 33 %. Det kalibrerar scenarierna mot en normalisering från dagens ovanligt starka nivå.";
+  const historyCards = isNetflix ? [["Omsättning", "2022: 31,6 → 2025: 45,2 md USD", "+6,5 % → +15,9 % tillväxt"], ["EBIT-marginal", "2022: 17,8 % → 2025: 29,5 %", "2026-guidning: 31,5 %; Huvudscenario 2028E: 34 %"]] : [["Omsättning", "2023: 307,4 → LTM: 445,9 md USD", "+8,7 % → cirka +20 % tillväxt"], ["EBIT-marginal", "2023: 27,4 % → LTM: 33,1 %", "Lönsamheten har förstärkts före capexens fulla följdeffekt"]];
   const [activeTab, setActiveTab] = useState<TabId>("overview");
   const [showMethod, setShowMethod] = useState(false);
   const [showEpsBridge, setShowEpsBridge] = useState(false);
@@ -196,11 +197,14 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
   const [selectedScenario, setSelectedScenario] = useState<"bear" | "base" | "bull">("base");
   const activeScenario = scenarios.find((scenario) => scenario.id === selectedScenario) ?? scenarios[1];
   const netflixShareChangePct = isNetflix && "dilutedShares" in activeScenario
-    ? 1 - activeScenario.dilutedShares / netflixFacts.startingDilutedShares
+    ? 1 - activeScenario.dilutedShares / netflixFacts.q2WeightedAverageDilutedShares
     : 0;
-  const netflixShareComment = activeScenario.id === "bull"
-    ? `Aktieantagandet innebär cirka ${Math.round(netflixShareChangePct * 100)} % nettominskning jämfört med Q2 2026 och är offensivt; det kräver omfattande återköp efter aktiebaserad ersättning.`
-    : `Aktieantagandet motsvarar cirka ${Math.round(netflixShareChangePct * 100)} % färre utspädda aktier än Q2 2026 och förutsätter att återköpen mer än kompenserar för aktiebaserad ersättning.`;
+  const netflixShareComment = activeScenario.id === "bear"
+    ? `Aktieantagandet motsvarar cirka ${Math.round(netflixShareChangePct * 100)} % färre utspädda aktier än Q2 2026:s vägda genomsnittliga utspädda aktieantal och förutsätter fortsatta nettoåterköp efter aktiebaserad ersättning.`
+    : activeScenario.id === "bull"
+      ? `Aktieantagandet motsvarar cirka ${Math.round(netflixShareChangePct * 100)} % färre utspädda aktier än Q2 2026:s vägda genomsnittliga utspädda aktieantal. Det är ett offensivt antagande som kräver omfattande återköp efter aktiebaserad ersättning.`
+      : `Aktieantagandet motsvarar cirka ${Math.round(netflixShareChangePct * 100)} % färre utspädda aktier än Q2 2026:s vägda genomsnittliga utspädda aktieantal och förutsätter att återköpen mer än kompenserar för aktiebaserad ersättning.`;
+  const netflixWbdExplanation = isNetflix ? dossier.claims.find((claim) => claim.id === "nflx-wbd")?.text : null;
 
   return (
     <>
@@ -288,9 +292,9 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
                     {isNetflix ? <>
                       <p className="mt-4 text-sm font-bold text-slate-700">Det som styr scenariovärdet</p>
                       <div className="mt-3 grid gap-3 text-sm sm:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr_auto_1fr] sm:items-end">
-                        <div><p className="text-slate-500">Omsättning 2028E</p><p className="mt-1 whitespace-nowrap text-xl font-black">≈{formatNumber(activeScenario.revenue, 0)} md USD</p></div>
+                        <div><p className="text-slate-500">Omsättning 2028E</p><p className="mt-1 whitespace-nowrap text-xl font-black">{formatNumber(activeScenario.revenue)} md USD</p></div>
                         <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">→</span>
-                        <div><p className="text-slate-500">EBIT-marginal</p><p className="mt-1 whitespace-nowrap text-xl font-black">{formatPct(activeScenario.ebitMargin)}</p></div>
+                        <div><p className="text-slate-500">EBIT-marginal</p><p className="mt-1 whitespace-nowrap text-xl font-black">{formatMetricPct(activeScenario.ebitMargin)}</p></div>
                         <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">=</span>
                         <div><p className="text-slate-500">Normaliserad EBIT</p><p className="mt-1 whitespace-nowrap text-xl font-black">{formatNumber(activeScenario.ebit, 2)} md USD</p></div>
                         <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">→</span>
@@ -300,10 +304,10 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
                         <span className="hidden font-black text-emerald-700 sm:block" aria-hidden="true">=</span>
                         <div><p className="text-slate-500">Rimligt värde</p><p className="mt-1 whitespace-nowrap text-xl font-black text-emerald-700">{formatUsd(activeScenario.fairValue)}</p></div>
                       </div>
-                      {"revenueMix" in activeScenario && <p className="mt-4 text-xs leading-5 text-slate-500">Intäktsmix 2028E <span className="font-black uppercase tracking-[0.1em] text-slate-400">· Assumption</span>: abonnemang {formatNumber(activeScenario.revenueMix.subscription)}, reklam {formatNumber(activeScenario.revenueMix.advertising)} och övrigt {formatNumber(activeScenario.revenueMix.other)} md USD.</p>}
+                      {"revenueMix" in activeScenario && <p className="mt-4 text-xs leading-5 text-slate-500">Intäktsmix 2028E <span className="font-black uppercase tracking-[0.1em] text-slate-400">· Antagande</span>: abonnemang {formatNumber(activeScenario.revenueMix.subscription)}, reklam {formatNumber(activeScenario.revenueMix.advertising)} och övrigt {formatNumber(activeScenario.revenueMix.other)} md USD.</p>}
                       <button type="button" onClick={() => setShowEpsBridge((value) => !value)} className="mt-4 inline-flex min-h-10 items-center gap-2 border-t border-slate-100 pt-4 text-xs font-bold text-emerald-700 transition-colors hover:text-emerald-900" aria-expanded={showEpsBridge}>{showEpsBridge ? "Dölj EPS-bryggan" : "Visa EPS-bryggan"}{showEpsBridge ? <ChevronUp size={15} /> : <ChevronDown size={15} />}</button>
                       {showEpsBridge && <div className="mt-3 rounded-lg bg-slate-50 p-4 text-xs leading-5 text-slate-600">
-                        <p className="font-black uppercase tracking-[0.12em] text-slate-500">Normaliserad EPS · Assumption</p>
+                        <p className="font-black uppercase tracking-[0.12em] text-slate-500">Normaliserad EPS · Antagande</p>
                         <div className="mt-3 grid gap-x-6 gap-y-1 sm:grid-cols-2">
                           <p>Normaliserad EBIT <strong className="float-right text-slate-950">{formatNumber(activeScenario.ebit, 2)} md USD</strong></p>
                           <p>Normaliserat övrigt resultat <strong className="float-right text-slate-950">{formatNumber(activeScenario.normalizedOtherIncome, 2)} md USD</strong></p>
@@ -352,7 +356,7 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
                         <div><p className="font-black uppercase tracking-[0.12em] text-slate-500">Aktieantal och återköp · ASSUMPTION</p><p className="mt-2">Start 4,221 md − återköpta {activeScenario.repurchasedShares.toFixed(3)} md + SBC {activeScenario.sbcShares.toFixed(3)} md = {activeScenario.dilutedShares.toFixed(3)} md aktier.</p><p className="mt-1 text-slate-500">Återköp {activeScenario.repurchases.toFixed(2)} md USD vid antaget snittpris {activeScenario.repurchasePrice.toFixed(0)} USD; {(activeScenario.repurchasesToFcf * 100).toFixed(0)} % av tre års normaliserad FCF.</p></div>
                       </div>
                     )}
-                    {isNetflix && "multipleRationale" in activeScenario && <p className="mt-3 text-xs leading-5 text-slate-600"><strong className="text-slate-950">Varför denna multipel?</strong> {activeScenario.multipleRationale}</p>}
+                    {isNetflix && "multipleRationale" in activeScenario && <p className="mt-3 text-xs leading-5 text-slate-600"><strong className="text-slate-950">Multipelantagande:</strong> {activeScenario.multipleRationale.replace(/^(?:ASSUMPTION|ANTAGANDE):\s*/, "")}</p>}
                     {!isNetflix && <p className="mt-4 border-t border-slate-100 pt-3 text-xs leading-5 text-slate-500">Rapporterad EPS används inte eftersom stora orealiserade värdeförändringar i Alphabets aktieinnehav förvränger nettoresultatet. Modellens finansnetto, skatt och utspädning är explicita scenarioantaganden.</p>}
                   </div>
                   <p className="mt-3 text-xs leading-5 text-slate-500">Värderingsdatum: {identity.valuationDate}. Referenskurs: {formatUsd(identity.marketReference.price, 2)}, {ticker}-stängning den {identity.marketReference.asOf}. Annualiserad värdepotential räknas över {valuation.yearsToValuation.toFixed(2).replace(".", ",")} år.</p>
@@ -422,16 +426,16 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
                   <p className="mt-2 text-sm font-semibold text-slate-700">{formatPct(scenario.totalPotentialPct)} total potential · {formatPct(scenario.annualizedCagrPct)} per år</p>
                   <p className="mt-4 text-sm leading-6 text-slate-600">{scenario.description}</p>
                   <div className="mt-4 border-t border-slate-200 pt-3 text-sm leading-6 text-slate-600">
-                    <p><strong className="text-slate-950">Nyckeldrivare:</strong> {scenario.revenue.toFixed(0)} md omsättning, {formatPct(scenario.ebitMargin)} EBIT-marginal och {formatUsd(scenario.normalizedEps, 2)} EPS.</p>
-                    {isNetflix && "multipleRationale" in scenario && <p className="mt-2"><strong className="text-slate-950">Multipel:</strong> {scenario.peMultiple.toFixed(0)}× P/E eftersom {scenario.multipleRationale}</p>}
+                    <p><strong className="text-slate-950">Nyckeldrivare:</strong> {formatNumber(scenario.revenue)} md USD omsättning, {formatMetricPct(scenario.ebitMargin)} EBIT-marginal och {formatUsd(scenario.normalizedEps, 2)} EPS.</p>
+                    {isNetflix && "multipleRationale" in scenario && <p className="mt-2"><strong className="text-slate-950">Multipelantagande:</strong> {scenario.multipleRationale.replace(/^(?:ASSUMPTION|ANTAGANDE):\s*/, "")}</p>}
                   </div>
                 </div>
               ))}
             </div>
-            {isNetflix && <p className="mt-5 border-l-2 border-emerald-500 pl-5 text-sm leading-6 text-slate-600">Q1 2026 innehöll en mottagen uppsägningsersättning från WBD på 2,8 md USD, redovisad utanför EBIT inom Interest and other income. Värderingen använder därför normaliserat resultat med explicita antaganden för finansnetto, skatt och aktieantal.</p>}
+            {isNetflix && netflixWbdExplanation && <p className="mt-5 border-l-2 border-emerald-500 pl-5 text-sm leading-6 text-slate-600">{netflixWbdExplanation} <span className="font-semibold">Källa: Netflix Q2 2026 Form 10-Q, Note 6 Acquisitions.</span></p>}
             <div className="mt-5 grid gap-4 border-l-2 border-emerald-500 pl-5 text-sm leading-6 text-slate-600 md:grid-cols-2">
               <p><strong className="text-slate-950">Historisk kontext:</strong> {isNetflix ? "Omsättningen växte 6,5 % 2022 och 15,9 % 2025, samtidigt som EBIT-marginalen steg från 17,8 % till 29,5 %. Scenarierna antar fortsatt men gradvis normaliserad förbättring." : "Omsättningstillväxten har accelererat från 8,7 % 2023 till cirka 20 % LTM, samtidigt som EBIT-marginalen stigit från 27,4 % till cirka 33 %. Scenarierna antar därför en normalisering från dagens ovanligt starka tillväxt."}</p>
-              <p><strong className="text-slate-950">Kapitalavkastning:</strong> {isNetflix ? "Bolagets rapporterade 2026 FCF-guidning på cirka 12,5 md USD innehåller WBD-engångseffekten. Den är inte återkommande FCF-kapacitet. Q2:s OCF föll 28 % när innehållsbetalningarna steg; 11,9 md USD av kända innehållsåtaganden förfaller inom 12 månader. Återköp stärker EPS, men ersätter inte organisk vinsttillväxt." : "Capex → PP&E → avskrivningar → EBIT → FCF. Q2-operativt kassaflöde var 39,1 md USD och capex 44,9 md USD, vilket gav FCF på −5,9 md USD; FCF är alltså inte normaliserat."}</p>
+              <p><strong className="text-slate-950">Kapitalavkastning:</strong> {isNetflix ? "Bolagets rapporterade 2026 FCF-guidning på cirka 12,5 md USD innehåller en engångseffekt och är inte återkommande FCF-kapacitet. Q2:s OCF föll 28 % när innehållsbetalningarna steg; 11,9 md USD av kända innehållsåtaganden förfaller inom 12 månader. Återköp stärker EPS, men ersätter inte organisk vinsttillväxt." : "Capex → PP&E → avskrivningar → EBIT → FCF. Q2-operativt kassaflöde var 39,1 md USD och capex 44,9 md USD, vilket gav FCF på −5,9 md USD; FCF är alltså inte normaliserat."}</p>
             </div>
           </section>
 
@@ -452,11 +456,11 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
               <span><span className="text-sm font-black uppercase tracking-[0.18em] text-amber-700">Risker och metod</span><span className="mt-2 block font-serif text-3xl font-bold tracking-[-0.035em] text-slate-950">Läs det viktiga innan du fattar ett beslut</span></span>
               {risksOpen ? <ChevronUp className="shrink-0 text-amber-600" size={24} /> : <ChevronDown className="shrink-0 text-amber-600" size={24} />}
             </button>
-            {risksOpen && <div className="mt-6 grid gap-5 border-l-2 border-amber-400 pl-5 text-sm leading-7 text-slate-600 md:grid-cols-2"><p><strong className="text-slate-950">Risk:</strong> {dossier.risk.rationale}</p><p><strong className="text-slate-950">Metod:</strong> Värderingen bygger på antaganden som kan visa sig felaktiga. Referenskursen är {formatUsd(identity.marketReference.price, 2)} per {ticker}-aktie vid stängning den {identity.marketReference.asOf}.</p>{isNetflix && <><p><strong className="text-slate-950">Rapporterad kontra normaliserad FCF:</strong> 2026 års rapporterade FCF-guidning är {netflixFacts.fy2026ReportedFcfGuide.toFixed(1)} md USD och inkluderar WBD-ersättningen. Med ett illustrativt skatteantagande på 18–21 % motsvarar engångseffekten {netflixWbdNormalization.afterTaxFeeRange[0].toFixed(2)}–{netflixWbdNormalization.afterTaxFeeRange[1].toFixed(2)} md USD efter skatt, eller {netflixWbdNormalization.normalizedFcfGuideRange[0].toFixed(2)}–{netflixWbdNormalization.normalizedFcfGuideRange[1].toFixed(2)} md USD normaliserad guide. Det är {netflixWbdNormalization.status} och används inte som återkommande FCF-kapacitet.</p><p><strong className="text-slate-950">Kassaflöde och stresstest:</strong> Q2-OCF var {netflixFacts.q2OperatingCashFlow.toFixed(2)} md USD ({formatPct(netflixDerived.q2OperatingCashFlowChangePct)} mot Q2 2025) och Q2-FCF {netflixFacts.q2ReportedFcf.toFixed(2)} md USD. {netflixFacts.contentDueNext12Months.toFixed(1)} md USD av innehållsåtagandena förfaller inom 12 månader. Ett ej sannolikhetsvägt stresstest med {netflixStressTest.revenue.toFixed(0)} md USD omsättning, {formatPct(netflixStressTest.ebitMargin)} EBIT-marginal, {netflixStressTest.dilutedShares.toFixed(2)} md aktier och {netflixStressTest.peMultiple}× P/E ger {formatUsd(netflixStressTest.fairValue)} ({formatPct(netflixStressTest.totalPotentialPct)}).</p></>}</div>}
+            {risksOpen && <div className="mt-6 grid gap-5 border-l-2 border-amber-400 pl-5 text-sm leading-7 text-slate-600 md:grid-cols-2"><p><strong className="text-slate-950">Risk:</strong> {dossier.risk.rationale}</p><p><strong className="text-slate-950">Metod:</strong> Värderingen bygger på antaganden som kan visa sig felaktiga. Referenskursen är {formatUsd(identity.marketReference.price, 2)} per {ticker}-aktie vid stängning den {identity.marketReference.asOf}.</p>{isNetflix && <><p><strong className="text-slate-950">Rapporterad kontra normaliserad FCF:</strong> 2026 års rapporterade FCF-guidning är {netflixFacts.fy2026ReportedFcfGuide.toFixed(1)} md USD och innehåller en ej återkommande effekt. Den använder vi inte som återkommande FCF-kapacitet; ett exakt normaliserat FCF-intervall är {netflixWbdNormalization.status}.</p><p><strong className="text-slate-950">Kassaflöde och stresstest:</strong> Q2-OCF var {netflixFacts.q2OperatingCashFlow.toFixed(2)} md USD ({formatPct(netflixDerived.q2OperatingCashFlowChangePct)} mot Q2 2025) och Q2-FCF {netflixFacts.q2ReportedFcf.toFixed(2)} md USD. {netflixFacts.contentDueNext12Months.toFixed(1)} md USD av innehållsåtagandena förfaller inom 12 månader. <strong className="text-slate-950">Ej sannolikhetsvägd känslighetsanalys vid ett tesbrott:</strong> {netflixStressTest.revenue.toFixed(0)} md USD omsättning, {formatMetricPct(netflixStressTest.ebitMargin)} EBIT-marginal, {netflixStressTest.dilutedShares.toFixed(2)} md aktier och {netflixStressTest.peMultiple}× P/E ger {formatUsd(netflixStressTest.fairValue)} ({formatPct(netflixStressTest.totalPotentialPct)}). Det sannolikhetsvägda värdet bygger på tre huvudscenarier; känslighetsanalysen ingår inte i sannolikhetsvärdet.</p></>}</div>}
           </section>
 
           <footer className="border-t border-slate-200 py-9 text-sm leading-6 text-slate-500">
-            <p><strong className="text-slate-700">Källor:</strong> {isNetflix ? "Netflix Q2 2026 Form 10-Q och shareholder letter (16–17 juli 2026), tidigare kvartalsrapporter och låst NFLX-stängning den 13 augusti 2026." : "Alphabets Q2 2026 earnings release och earnings slides (22 juli 2026), års-/kvartalsrapporter för historik samt GOOG-stängningen den 7 augusti 2026."} Rapporterade tal är FACT, härledda värden DERIVED, scenarier ASSUMPTION och slutsatser ANALYSIS.</p>
+            <p><strong className="text-slate-700">Källor:</strong> {isNetflix ? "Netflix Q2 2026 Form 10-Q och shareholder letter (16–17 juli 2026), tidigare kvartalsrapporter och låst NFLX-stängning den 13 augusti 2026." : "Alphabets Q2 2026 earnings release och earnings slides (22 juli 2026), års-/kvartalsrapporter för historik samt GOOG-stängningen den 7 augusti 2026."} Rapporterade tal är FACT, härledda värden DERIVED, scenarier {isNetflix ? "ANTAGANDE" : "ASSUMPTION"} och slutsatser ANALYSIS.</p>
             <p className="mt-3">Informationen är allmän information, inte personlig investeringsrådgivning. Investeringar innebär risk och du kan förlora hela eller delar av ditt kapital. Historisk avkastning är ingen garanti för framtida avkastning. <Link className="font-semibold text-emerald-700 hover:text-emerald-900" to="/villkor">Läs fullständig information och villkor.</Link></p>
             <p className="mt-3">Dossier: {dossier.version.versionId} · {dossier.version.status}. {isNetflix ? "Ägar- och ersättningsupplysning ska bekräftas före publicering." : "Full resultattrappa, claims och ändringslogg är bevarade i v11.2-dossiern."}</p>
           </footer>
