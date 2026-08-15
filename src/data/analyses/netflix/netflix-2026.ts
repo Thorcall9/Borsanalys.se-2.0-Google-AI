@@ -1,4 +1,5 @@
 import { AnalysisData } from "../../../types/analysis.js";
+import { netflixV112Dossier } from "./netflix-v11-model.js";
 
 /**
  * Public archive metadata. All values are in USD and use the 13 August 2026
@@ -24,6 +25,7 @@ export const netflix2026: AnalysisData = {
   sharesCount: "4,221 md (Q2 2026)",
   employees: "≈14 000",
   published: true,
+  upside: Number((netflixV112Dossier.valuation.totalPotentialPct * 100).toFixed(0)),
   summary: "Netflix visar stark vinst- och kassaflödesutveckling, men aktien kräver att monetiseringen fortsätter växa snabbare än tittandet utan att marginalen tappar fart.",
   investmentCase: `Vår bedömning: Monetisering före tittartid är hela caset
 • Rekommendation: BEVAKA · Medel–hög risk

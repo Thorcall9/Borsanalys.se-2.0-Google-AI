@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { alphabetV112Dossier } from "../src/data/analyses/alphabet/alphabet-v11-model";
+import { netflix2026 } from "../src/data/analyses/netflix/netflix-2026";
 import {
   NETFLIX_ANALYSIS_DATE,
   NETFLIX_REFERENCE_PRICE,
@@ -118,6 +119,12 @@ test("Netflix is publish-ready with the required compliance confirmation", () =>
   assert.match(netflixV112Dossier.disclosures.directHolding, /Inget direkt innehav/);
   assert.match(netflixV112Dossier.disclosures.indirectExposure, /globala fonder/);
   assert.match(netflixV112Dossier.disclosures.compensationOrEngagement, /Ingen ersättning/);
+});
+
+test("Netflix archive potential uses the canonical weighted valuation", () => {
+  assert.equal(netflix2026.published, true);
+  assert.equal(netflix2026.upside, Math.round(netflixV112Dossier.valuation.totalPotentialPct * 100));
+  assert.equal(netflix2026.upside, 21);
 });
 
 test("company dossiers do not leak company-specific scenario fields or WBD notes", () => {

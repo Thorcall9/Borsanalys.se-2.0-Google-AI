@@ -33,7 +33,7 @@ function Potential({ analysis }: { analysis: AnalysisData }) {
   // without adding company-specific archive logic.
   const formatted = analysis.v11?.upside
     ?? analysis.v11Preview?.upside
-    ?? (analysis.upside != null ? `${analysis.upside > 0 ? "+" : ""}${analysis.upside.toLocaleString("sv-SE")}%` : undefined);
+    ?? (analysis.upside != null ? `${analysis.upside > 0 ? "+" : ""}${analysis.upside.toLocaleString("sv-SE")} %` : undefined);
   if (!formatted) return null;
 
   const value = Number(formatted.replace(",", ".").replace(/[^0-9.-]/g, ""));
