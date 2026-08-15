@@ -61,7 +61,7 @@ const claims: VolvoClaim[] = [
   { claimId: "VOLVO-A-004", class: "ASSUMPTION", status: "NOT_DECISION_GRADE", text: "Illustrativa kontantutdelningar 2027E/2028E: Bear 7,00/7,50 kr, Base 10,50/12,50 kr och Bull 13,00/16,00 kr per aktie.", effectiveDate: "2026-08-12", sourceRefs: ["VOLVO-F-003", "VOLVO-F-004", "VOLVO-D-003"], notes: "Scenarioantaganden baserade på kassaflöde och kapitalbuffert, inte bolagets guidning. Extrautdelningar är särskilt osäkra." },
   { claimId: "VOLVO-D-006", class: "DERIVED", status: "NOT_DECISION_GRADE", text: "Med illustrativa kontantutdelningar blir slutvärdena Bear/Base/Bull 206,64/354,95/418,85 kr och sannolikhetsvägt slutvärde 330,65 kr.", effectiveDate: "2028-12-31", sourceRefs: ["VOLVO-D-004", "VOLVO-A-004"], formula: "Slutvärde = terminalvärde + utdelningar 2027E–2028E. Viktning: 25/55/20 %. Totalavkastning beräknas från 354,60 kr utan återinvestering av utdelningar." },
   { claimId: "VOLVO-N-001", class: "ANALYSIS", status: "DECISION_GRADE", text: "Serviceaffären och förbättrad orderbild stärker motståndskraften, men återhämtningen måste bevisas genom leveranser, marginal och kassaflöde. Den låsta EPS-bryggan och terminalvärderingen ger ett sannolikhetsvägt värde under referenskursen.", effectiveDate: "2026-08-11", sourceRefs: ["VOLVO-F-005", "VOLVO-F-006", "VOLVO-D-002", "VOLVO-D-005"] },
-  { claimId: "VOLVO-N-002", class: "ANALYSIS", status: "DECISION_GRADE", text: "Rekommendationen är BEVAKA med MEDEL risk: bolaget är intressant, men dagens kurs erbjuder inte tillräcklig säkerhetsmarginal relativt den sannolikhetsvägda värderingen.", effectiveDate: "2026-08-11", sourceRefs: ["VOLVO-F-004", "VOLVO-D-004", "VOLVO-D-005"] },
+  { claimId: "VOLVO-N-002", class: "ANALYSIS", status: "DECISION_GRADE", text: "Rekommendationen är AVSTÅ med MEDEL risk: bolaget är intressant, men dagens kurs ligger över den sannolikhetsvägda värderingen och erbjuder därför inte tillräcklig säkerhetsmarginal för ett nytt köp.", effectiveDate: "2026-08-15", sourceRefs: ["VOLVO-F-004", "VOLVO-D-004", "VOLVO-D-005"] },
 ];
 
 export const VOLVO_Q2_2026_DOSSIER = {
@@ -85,7 +85,7 @@ export const VOLVO_Q2_2026_DOSSIER = {
   weightedFairValue: 308.5775,
   weightedTotalValuePotential: -0.129787084,
   weightedAnnualizedValuePotential: -0.056439717,
-  recommendation: "BEVAKA",
+  recommendation: "AVSTÅ",
   risk: "MEDEL",
   theses: [
     { thesisId: "service-buffer", status: "progressing", thesis: "Serviceaffären ska hålla koncernens justerade marginal över 10 % genom cykeln.", latestEvidenceClaimIds: ["VOLVO-F-005", "VOLVO-D-002"], nextEvidence: "Q3 justerad marginal minst 10 % och fortsatt positiv organisk servicetillväxt.", nextReportCheckpoint: { eventType: "Q3 2026", expectedWindow: "2026-10-23" } },
@@ -96,11 +96,12 @@ export const VOLVO_Q2_2026_DOSSIER = {
   claims,
   accessLevel: "PUBLIC",
   disclaimer: { centralDisclaimerVersion: "v11.2-2026-08", shortDisclaimerId: "standard-short-v11.2", fullDisclaimerUrl: "/villkor" },
-  version: { versionId: "volvo-q2-2026-v4", parentVersionId: "volvo-q2-2026-v3", createdAt: "2026-08-12", author: "Börsanalys.se / Codex research", status: "PUBLISH_READY", immutable: true },
+  version: { versionId: "volvo-q2-2026-v5", parentVersionId: "volvo-q2-2026-v4", createdAt: "2026-08-15", author: "Börsanalys.se / Codex research", status: "PUBLISH_READY", immutable: true },
   changeTracking: [
     { fieldPath: "analysis", oldValueRef: null, newValueRef: "volvo-q2-2026-v1", reason: "Ny separat v11.2-analys; äldre Volvo-analys lämnas oförändrad.", claimIds: ["VOLVO-N-002"], changedBy: "Codex", changedAt: "2026-08-10" },
     { fieldPath: "valuation", oldValueRef: "volvo-q2-2026-v1", newValueRef: "volvo-q2-2026-v2", reason: "Låst EPS-brygga och terminalmultiplar 13x/15x/15x; scenariodefinitioner för uthållig intjäning tillagda.", claimIds: ["VOLVO-A-001", "VOLVO-A-002", "VOLVO-A-003", "VOLVO-D-004", "VOLVO-D-005"], changedBy: "Codex", changedAt: "2026-08-11" },
     { fieldPath: "valuation", oldValueRef: "volvo-q2-2026-v2", newValueRef: "volvo-q2-2026-v3", reason: "Låsta sannolikheter 25/55/20 och språk/visning för justerad marginalhistorik, EPS-brygga, utdelningsavgränsning och Nordamerika uppdaterade.", claimIds: ["VOLVO-D-004", "VOLVO-D-005", "VOLVO-N-001", "VOLVO-N-002"], changedBy: "Codex", changedAt: "2026-08-11" },
     { fieldPath: "valuation.illustrativeTotalReturn", oldValueRef: null, newValueRef: "volvo-q2-2026-v4", reason: "Illustrativ totalavkastning med kontantutdelningar visas separat från låst kursvärdering; huvudvärdet 309 kr och kursvärdepotentialen exklusive utdelningar är oförändrade.", claimIds: ["VOLVO-A-004", "VOLVO-D-006"], changedBy: "Codex", changedAt: "2026-08-12" },
+    { fieldPath: "recommendation", oldValueRef: "BEVAKA", newValueRef: "AVSTÅ", reason: "Sannolikhetsvägt värde på 309 kr ligger under referenskursen 354,60 kr. Rekommendationen tydliggör att modellen inte ger tillräcklig säkerhetsmarginal för ett nytt köp.", claimIds: ["VOLVO-N-002", "VOLVO-D-004", "VOLVO-D-005"], changedBy: "Codex", changedAt: "2026-08-15" },
   ],
 } as const;
