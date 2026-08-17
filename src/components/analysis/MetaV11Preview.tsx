@@ -347,6 +347,7 @@ export default function V11Analysis({ data }: Props) {
   const cautionRows = preview.cautionReasons.map((row, index) => ({ ...row, icon: cautionIcons[index] ?? ShieldAlert }));
   const displayedTheses = preview.theses;
   const displayedMonitors = preview.monitors;
+  const riskRewardZones = preview.riskRewardZones;
   const formatDate = (date: string) => new Intl.DateTimeFormat("sv-SE", { day: "numeric", month: "long", year: "numeric" }).format(new Date(`${date}T12:00:00`));
 
   return (
@@ -407,7 +408,7 @@ export default function V11Analysis({ data }: Props) {
                     Vår syn
                   </h2>
                   <p className="mt-3 text-sm font-bold text-slate-600">
-                    Vårt värde {targetYear}E
+                    {preview.weightedValueLabel ?? `Vårt värde ${targetYear}E`}
                   </p>
                   <div className="mt-1 flex items-end gap-3">
                     <p className="font-serif text-6xl font-bold leading-none tracking-[-0.055em] text-emerald-700 sm:text-7xl">
@@ -477,7 +478,7 @@ export default function V11Analysis({ data }: Props) {
                       <p className="mt-2 text-sm leading-6 text-slate-600">
                         Som gratis medlem ser du scenarioantaganden, EPS-bryggan och vägen från betalningsvolym till rimligt värde.
                       </p>
-                      <p className="mt-3 text-xs font-bold uppercase tracking-[0.13em] text-emerald-700">Betalningsvolym → intäkter → normaliserad EPS → P/E</p>
+                      <p className="mt-3 text-xs font-bold uppercase tracking-[0.13em] text-emerald-700">{preview.valuationChainLabel ?? "Betalningsvolym → intäkter → normaliserad EPS → P/E"}</p>
                     </div>
                     <div className="flex shrink-0 flex-col gap-2 sm:items-end">
                       <button type="button" onClick={openSignupModal} className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-700 px-4 text-sm font-bold text-white transition-colors hover:bg-emerald-800">
@@ -582,6 +583,16 @@ export default function V11Analysis({ data }: Props) {
                     beräkningar är spårbara i den expanderbara historikvyn.
                   </p>
                 </div>
+              )}
+              {riskRewardZones?.status === "APPROVED" && riskRewardZones.visibility === "MEMBER" && (
+                <button
+                  type="button"
+                  onClick={() => document.getElementById("risk-reward")?.scrollIntoView({ behavior: "smooth", block: "start" })}
+                  className="mt-4 inline-flex min-h-10 items-center gap-2 text-sm font-bold text-slate-600 transition-colors hover:text-emerald-800"
+                >
+                  När blir risk/reward mer attraktiv?
+                  <ArrowRight size={16} aria-hidden="true" />
+                </button>
               )}
               <AdUnit variant="top-display" collapseWhenUnfilled className="mt-5 border-t border-emerald-200/80" />
             </section>
@@ -719,6 +730,57 @@ export default function V11Analysis({ data }: Props) {
                 {preview.valuationLimitation}
               </p>
             </div>
+            {riskRewardZones?.status === "APPROVED" && riskRewardZones.visibility === "MEMBER" && (
+              <aside id="risk-reward" className="scroll-mt-36 mt-8 rounded-2xl border border-emerald-200 bg-emerald-50/45 p-5 sm:p-7" aria-labelledby="risk-reward-title">
+                <div className="max-w-2xl">
+                  <p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">Medlemsinsikt</p>
+                  <h3 id="risk-reward-title" className="mt-3 font-serif text-3xl font-bold tracking-[-0.04em] text-slate-950 sm:text-4xl">{riskRewardZones.title}</h3>
+                  <p className="mt-3 text-sm leading-6 text-slate-600">{riskRewardZones.introduction}</p>
+                </div>
+                {user ? (
+                  <div className="mt-6 divide-y divide-emerald-200 border-y border-emerald-200">
+                    {riskRewardZones.zones.map((zone) => {
+                      const tone = zone.id === "ATTRACTIVE"
+                        ? "text-emerald-800"
+                        : zone.id === "BALANCED"
+                          ? "text-amber-800"
+                          : "text-rose-800";
+                      return (
+                        <section key={zone.id} className="grid gap-4 py-5 sm:grid-cols-[minmax(0,1fr)_minmax(11rem,.8fr)] sm:gap-8">
+                          <div>
+                            <h4 className={`font-serif text-2xl font-bold tracking-[-0.03em] ${tone}`}>{zone.title}</h4>
+                            <p className="mt-2 text-lg font-black text-slate-950">{zone.priceLabel}</p>
+                            <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600">{zone.rationale}</p>
+                          </div>
+                          <dl className="grid content-start gap-3 text-sm">
+                            <div className="border-l-2 border-emerald-300 pl-3"><dt className="font-semibold text-slate-500">Annualiserad värdepotential</dt><dd className="mt-0.5 font-black text-slate-950">{zone.annualPotentialLabel}</dd></div>
+                            <div className="border-l-2 border-slate-300 pl-3"><dt className="font-semibold text-slate-500">Riskscenario</dt><dd className="mt-0.5 font-black text-slate-950">{zone.bearDownsideLabel}</dd></div>
+                          </dl>
+                        </section>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="mt-6 flex flex-col gap-5 rounded-xl border border-emerald-200 bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700"><LockKeyhole size={19} aria-hidden="true" /></span>
+                      <p className="mt-4 text-sm font-bold text-slate-950">Som gratis medlem ser du:</p>
+                      <ul className="mt-2 grid gap-1 text-sm leading-6 text-slate-600 sm:grid-cols-2">
+                        <li>Attraktiv risk/reward</li>
+                        <li>Balanserad risk/reward</li>
+                        <li>Svag risk/reward</li>
+                        <li>Annualiserad värdepotential</li>
+                      </ul>
+                    </div>
+                    <div className="flex shrink-0 flex-col gap-2 sm:items-end">
+                      <button type="button" onClick={openSignupModal} className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-700 px-4 text-sm font-bold text-white transition-colors hover:bg-emerald-800">Skapa gratis konto</button>
+                      <button type="button" onClick={openLoginModal} className="min-h-9 text-sm font-bold text-emerald-700 hover:text-emerald-900">Har du redan konto? Logga in</button>
+                    </div>
+                  </div>
+                )}
+                <p className="mt-5 text-xs leading-5 text-slate-500">{riskRewardZones.disclaimer}</p>
+              </aside>
+            )}
             {preview.illustrativeTotalReturn && (
               <aside className="mt-8 border-t border-slate-200 pt-8" aria-labelledby="illustrative-total-return-title">
                 <h3 id="illustrative-total-return-title" className="font-serif text-2xl font-bold tracking-[-0.03em] text-slate-950 sm:text-3xl">

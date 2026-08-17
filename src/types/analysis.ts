@@ -197,6 +197,24 @@ export interface AnalysisData {
       weightedOutcome: string;
       disclaimer: string;
     };
+    weightedValueLabel?: string;
+    valuationChainLabel?: string;
+    riskRewardZones?: {
+      status: "APPROVED" | "DRAFT" | "NOT_APPLICABLE";
+      visibility: "MEMBER";
+      title: string;
+      introduction: string;
+      valuationDate: string;
+      zones: {
+        id: "ATTRACTIVE" | "BALANCED" | "WEAK";
+        title: string;
+        priceLabel: string;
+        annualPotentialLabel: string;
+        bearDownsideLabel: string;
+        rationale: string;
+      }[];
+      disclaimer: string;
+    };
     riskLabel: string;
     positiveReasons: { title: string; body: string }[];
     cautionReasons: { title: string; body: string }[];

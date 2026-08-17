@@ -1,4 +1,5 @@
 import { AnalysisData } from "../../../types/analysis.js";
+import { VOLVO_Q2_2026_DOSSIER } from "./volvo-q2-2026-dossier.js";
 
 export const volvoQ22026: AnalysisData & { contentType: "analysis" } = {
   contentType: "analysis",
@@ -18,7 +19,7 @@ export const volvoQ22026: AnalysisData & { contentType: "analysis" } = {
   published: true,
   v11: {
     analysisId: "volvo-b-2026-08-10-v11-2",
-    versionId: "volvo-q2-2026-v5",
+    versionId: "volvo-q2-2026-v6",
     sourceCutoffDate: "2026-08-10",
     valuationDate: "2028-12-31",
     valuationYearLabel: "2028E",
@@ -27,10 +28,28 @@ export const volvoQ22026: AnalysisData & { contentType: "analysis" } = {
     headline: "Volvo: orderbilden förbättras – men marknaden ligger före",
     dek: "Serviceaffären och den nordamerikanska orderingången förbättrar bilden. Men order måste fortfarande bli leveranser, marginal och kassaflöde innan återhämtningen är bevisad – samtidigt ligger vårt sannolikhetsvägda värde under dagens kurs.",
     weightedFairValue: "309",
+    weightedValueLabel: "Sannolikhetsvägt värde 2028E",
     currentPrice: "354,60 kr · 10 aug 2026",
     upside: "−13,0 %",
     annualPotential: "Annualiserad kursvärdepotential exkl. utdelningar: −5,6 %/år",
     valuePotentialLabel: "Kursvärdepotential exkl. utdelningar",
+    valuationChainLabel: "Omsättning → justerad EBIT-marginal → normaliserad EPS → P/E",
+    riskRewardZones: {
+      status: VOLVO_Q2_2026_DOSSIER.riskRewardZones.status,
+      visibility: VOLVO_Q2_2026_DOSSIER.riskRewardZones.visibility,
+      title: "När blir risk/reward mer attraktiv?",
+      introduction: "Vi har räknat ut vid vilka kursnivåer säkerhetsmarginalen förbättras eller försämras utifrån vår värdering, Bear-scenario och Volvos risk.",
+      valuationDate: VOLVO_Q2_2026_DOSSIER.riskRewardZones.valuationDate,
+      zones: VOLVO_Q2_2026_DOSSIER.riskRewardZones.zones.map((zone) => ({
+        id: zone.zone,
+        title: zone.presentation.title,
+        priceLabel: zone.presentation.priceLabel,
+        annualPotentialLabel: zone.presentation.annualPotentialLabel,
+        bearDownsideLabel: zone.presentation.bearDownsideLabel,
+        rationale: zone.rationale,
+      })),
+      disclaimer: "Zonerna är Börsanalys.se:s fasta redaktionella bedömning, inte personlig investeringsrådgivning.",
+    },
     epsBridgeEnabled: true,
     illustrativeTotalReturn: {
       title: "Illustrativ totalavkastning inkl. utdelningar",
@@ -42,7 +61,7 @@ export const volvoQ22026: AnalysisData & { contentType: "analysis" } = {
       weightedOutcome: "Sannolikhetsvägt slutvärde inkl. illustrativa utdelningar: cirka 331 kr. Det motsvarar ungefär −6,8 % totalavkastning över perioden, eller cirka −2,9 % per år, utan återinvestering av utdelningarna.",
       disclaimer: "Utdelningarna är scenarioantaganden baserade på kassaflöde och kapitalbuffert, inte bolagets guidning. Extrautdelningar är särskilt osäkra.",
     },
-    riskLabel: "Medel risk",
+    riskLabel: "MEDEL RISK",
     positiveReasons: [
       { title: "Orderbilden förbättras", body: "Lastbilsorder steg 33 % i Q2; Nordamerika ökade 122 %, men leveranserna där föll fortfarande 6 %." },
       { title: "Service dämpar cykeln", body: "Koncernens serviceförsäljning växte 7 % organiskt och Lastbilars service växte 10 % i Q2." },
