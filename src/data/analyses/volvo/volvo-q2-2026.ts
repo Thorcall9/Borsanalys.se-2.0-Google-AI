@@ -19,7 +19,7 @@ export const volvoQ22026: AnalysisData & { contentType: "analysis" } = {
   published: true,
   v11: {
     analysisId: "volvo-b-2026-08-10-v11-2",
-    versionId: "volvo-q2-2026-v6",
+    versionId: "volvo-q2-2026-v7",
     sourceCutoffDate: "2026-08-10",
     valuationDate: "2028-12-31",
     valuationYearLabel: "2028E",
@@ -38,7 +38,7 @@ export const volvoQ22026: AnalysisData & { contentType: "analysis" } = {
       status: VOLVO_Q2_2026_DOSSIER.riskRewardZones.status,
       visibility: VOLVO_Q2_2026_DOSSIER.riskRewardZones.visibility,
       title: "När blir risk/reward mer attraktiv?",
-      introduction: "Vi har räknat ut vid vilka kursnivåer säkerhetsmarginalen förbättras eller försämras utifrån vår värdering, Bear-scenario och Volvos risk.",
+      introduction: "Vi har bedömt vid vilka kursnivåer säkerhetsmarginalen förbättras eller försämras utifrån vår värdering, Bear-scenario och Volvos risk. Zonerna avser kursvärdepotential exklusive utdelningar.",
       valuationDate: VOLVO_Q2_2026_DOSSIER.riskRewardZones.valuationDate,
       zones: VOLVO_Q2_2026_DOSSIER.riskRewardZones.zones.map((zone) => ({
         id: zone.zone,
