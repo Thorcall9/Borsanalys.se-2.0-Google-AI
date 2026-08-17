@@ -22,7 +22,9 @@ export const ALPHABET_REFERENCE_DATE = "2026-08-07";
 export const ALPHABET_ANALYSIS_DATE = "2026-08-08";
 export const ALPHABET_SOURCE_CUTOFF_DATE = "2026-08-07";
 export const ALPHABET_REFERENCE_PRICE = 353.47;
-export const ALPHABET_VALUATION_YEARS = (Date.parse(`${ALPHABET_VALUATION_DATE}T00:00:00Z`) - Date.parse(`${ALPHABET_ANALYSIS_DATE}T00:00:00Z`)) / (365.25 * 24 * 60 * 60 * 1000);
+// Annualisering ska alltid börja på datumet för den prövade referenskursen,
+// inte på det senare analysdatumet.
+export const ALPHABET_VALUATION_YEARS = (Date.parse(`${ALPHABET_VALUATION_DATE}T00:00:00Z`) - Date.parse(`${ALPHABET_REFERENCE_DATE}T00:00:00Z`)) / (365.25 * 24 * 60 * 60 * 1000);
 export const ALPHABET_LTM_REVENUE = 445.867;
 
 /**
@@ -76,6 +78,76 @@ export const alphabetProbabilityWeightedValue = alphabetScenarios.reduce((sum, s
 export const alphabetWeightedTotalPotentialPct = alphabetProbabilityWeightedValue / ALPHABET_REFERENCE_PRICE - 1;
 export const alphabetWeightedAnnualizedCagrPct = Math.pow(alphabetProbabilityWeightedValue / ALPHABET_REFERENCE_PRICE, 1 / ALPHABET_VALUATION_YEARS) - 1;
 
+const alphabetRiskRewardBoundaries = [
+  {
+    boundaryId: "attractive-to-balanced",
+    canonicalPrice: { value: 290.21784151594767, currency: "USD" },
+    annualizedValuePotential: 0.12696081465025522,
+    bearDownside: -0.1662051859526944,
+    risk: "MEDEL_HÖG" as const,
+    rationale: "Vid denna nivå är den annualiserade värdepotentialen cirka 12,7 % samtidigt som Bear-nedsidan är cirka 16,6 %. Det ger tillräcklig ersättning för Alphabets MEDEL–HÖGA risk: AI-capex, Search-monetisering, multipelberoende och tesen om kapitalavkastning kräver fortsatt bevis. Över nivån försämras både värdepotentialen och Bear-skyddet snabbt.",
+    derivedClaimIds: ["alphabet-d-risk-reward-zones"],
+  },
+  {
+    boundaryId: "balanced-to-weak",
+    canonicalPrice: { value: 332.4240880424018, currency: "USD" },
+    annualizedValuePotential: 0.06500062925891048,
+    bearDownside: -0.27206800017111166,
+    risk: "MEDEL_HÖG" as const,
+    rationale: "Vid denna nivå återstår cirka 6,5 % annualiserad värdepotential medan Bear-nedsidan är cirka 27,2 %. Den kvarvarande ersättningen är då för liten för scenario-spreaden, den fortsatt obevisade kapitalavkastningen på AI-investeringarna och beroendet av en högre framtida multipel. Svag risk/reward uppstår därför före det sannolikhetsvägda värdet.",
+    derivedClaimIds: ["alphabet-d-risk-reward-zones"],
+  },
+] as const;
+
+/** Canonical MEMBER-zoner. Frontend ska endast presentera dessa redan härledda värden. */
+export const alphabetRiskRewardZones = {
+  status: "APPROVED" as const,
+  visibility: "MEMBER" as const,
+  method: "Fasta redaktionella zoner som väger samman annualiserad värdepotential, Bear-nedsida, scenario-spridning, MEDEL–HÖG risk, tesstatus och multipel-/modellrisk. Zonerna är inte personliga råd.",
+  valuationDate: ALPHABET_VALUATION_DATE,
+  canonicalRefs: {
+    weightedFairValue: "alphabet-d-weighted-fair-value",
+    annualizedValuePotential: "alphabet-d-annualized-value-potential",
+    bearFairValue: "alphabet-d-weighted-fair-value",
+    risk: "alphabet-n-risk",
+    marketReference: "alphabet-f-market-reference",
+  },
+  boundaries: alphabetRiskRewardBoundaries,
+  zones: [
+    {
+      zone: "ATTRACTIVE" as const,
+      priceInterval: { min: null, max: 290.21784151594767, currency: "USD", minInclusive: false, maxInclusive: false },
+      boundaryRefs: ["attractive-to-balanced"],
+      rationale: "Förbättrad säkerhetsmarginal: potentialen och Bear-skyddet kompenserar tydligt för Alphabets MEDEL–HÖGA risk och för att centrala teser fortsatt måste bevisas.",
+      derivedClaimIds: ["alphabet-d-risk-reward-zones"],
+      presentation: { title: "Attraktiv risk/reward", priceLabel: "Under 290,22 USD", annualPotentialLabel: "Cirka +12,7 %/år eller högre", bearDownsideLabel: "Bear-nedsida: cirka −16,6 % eller mindre" },
+    },
+    {
+      zone: "BALANCED" as const,
+      priceInterval: { min: 290.21784151594767, max: 332.4240880424018, currency: "USD", minInclusive: true, maxInclusive: false },
+      boundaryRefs: ["attractive-to-balanced", "balanced-to-weak"],
+      rationale: "Värderingen kan fortfarande vara rimlig, men säkerhetsmarginalen är inte tillräckligt stark för ett MEDEL–HÖG-riskcase med fortsatt AI-capex, tes- och multipelosäkerhet.",
+      derivedClaimIds: ["alphabet-d-risk-reward-zones"],
+      presentation: { title: "Balanserad risk/reward", priceLabel: "290,22–332,42 USD", annualPotentialLabel: "Cirka +12,7 till +6,5 %/år", bearDownsideLabel: "Bear-nedsida: cirka −16,6 till −27,2 %" },
+    },
+    {
+      zone: "WEAK" as const,
+      priceInterval: { min: 332.4240880424018, max: null, currency: "USD", minInclusive: true, maxInclusive: false },
+      boundaryRefs: ["balanced-to-weak"],
+      rationale: "Begränsad säkerhetsmarginal: den annualiserade värdepotentialen är för liten i förhållande till Bear-nedsidan, scenario-spridningen och de fortfarande obevisade delarna av Alphabet-caset.",
+      derivedClaimIds: ["alphabet-d-risk-reward-zones"],
+      presentation: { title: "Svag risk/reward", priceLabel: "Från 332,42 USD", annualPotentialLabel: "Cirka +6,5 %/år eller lägre", bearDownsideLabel: "Bear-nedsida: minst cirka −27,2 %" },
+    },
+  ],
+  marketReferenceAssessment: {
+    zone: "WEAK" as const,
+    label: "Referenskursen vid analystillfället ligger i svag risk/reward",
+    rationale: "Vid 353,47 USD den 7 augusti 2026 var den annualiserade värdepotentialen cirka 3,8 % medan Bear-nedsidan var cirka 31,5 %, vilket gav begränsad säkerhetsmarginal för ett MEDEL–HÖG-riskcase.",
+  },
+  recalculationDependencies: ["alphabet-d-weighted-fair-value", "alphabet-d-annualized-value-potential", "alphabet-n-risk", "alphabet-f-market-reference"],
+  supportsUserScenarioRecalculation: false,
+} as const;
+
 export const alphabetHistoricalContext = {
   revenue: [
     { period: "2022", value: 282.836, growth: null },
@@ -108,7 +180,7 @@ export const alphabetCapitalFacts = {
 
 /** Canonical v11.2 dossier. Frontend consumes these fields but never recalculates value or potential. */
 export const alphabetV112Dossier = {
-  version: { versionId: "alphabet-v11.2-2026-08-08", parentVersionId: "alphabet-v11.1-2026-08-08", immutable: true, status: "PUBLISH_READY" as const },
+  version: { versionId: "alphabet-v11.2-2026-08-17", parentVersionId: "alphabet-v11.2-2026-08-08", immutable: true, status: "PUBLISH_READY" as const },
   identity: {
     analysisId: "alphabet-googl", companyId: "alphabet-inc", analysisDate: ALPHABET_ANALYSIS_DATE,
     sourceCutoffDate: ALPHABET_SOURCE_CUTOFF_DATE, valuationDate: ALPHABET_VALUATION_DATE, valuationYearLabel: "2028E",
@@ -128,6 +200,11 @@ export const alphabetV112Dossier = {
     { id: "q2-2026-other-income", class: "FACT" as EvidenceClass, sourceRefs: ["Alphabet-Q2-2026-release"], text: "Q2 2026 other income inkluderade 98,0 md USD i nettovinst, främst orealiserade vinster på aktieinnehav." },
     { id: "ltm-history", class: "DERIVED" as EvidenceClass, sourceRefs: ["Alphabet-Q2-2026-release", "Alphabet-2025-annual-report"], text: "LTM Q2 2026 omsättning var 445,867 md USD och EBIT-marginal cirka 33,1 %." },
     { id: "eps-bridge-reconstruction", class: "ASSUMPTION" as EvidenceClass, sourceRefs: [], text: "Den publicerade v11.1-modellen hade låsta scenario-EPS/P/E/slutvärden men saknade finansnetto, skatt, preferred/minoritet och utspädda aktier. Dessa mellanled dokumenteras nu uttryckligen som redaktionella scenarioantaganden." },
+    { id: "alphabet-f-market-reference", class: "FACT" as EvidenceClass, sourceRefs: ["GOOG-close-2026-08-07"], text: "GOOG:s referenskurs var 353,47 USD vid stängning den 7 augusti 2026." },
+    { id: "alphabet-d-weighted-fair-value", class: "DERIVED" as EvidenceClass, sourceRefs: ["eps-bridge-reconstruction"], text: "Bear/Base/Bull ger 241,98/392,01/552,95 USD per aktie och sannolikhetsvägt värde 386,69 USD vid 2028-12-31." },
+    { id: "alphabet-d-annualized-value-potential", class: "DERIVED" as EvidenceClass, sourceRefs: ["alphabet-f-market-reference", "alphabet-d-weighted-fair-value"], text: "Från 353,47 USD den 7 augusti 2026 till 386,69 USD den 31 december 2028 är total värdepotential 9,40 % och annualiserad värdepotential 3,812 % över 877 dagar / 365,25 = 2,40110 år." },
+    { id: "alphabet-n-risk", class: "ANALYSIS" as EvidenceClass, sourceRefs: ["q2-2026-cloud", "q2-2026-search", "q2-2026-fcf", "eps-bridge-reconstruction"], text: "Alphabet bedöms ha MEDEL–HÖG risk eftersom AI-capex, Search-monetisering, framtida kapitalavkastning och en del av multipeln fortsatt kräver bevis, trots stark Cloud-tillväxt och en mycket stark balansräkning." },
+    { id: "alphabet-d-risk-reward-zones", class: "DERIVED" as EvidenceClass, sourceRefs: ["alphabet-d-weighted-fair-value", "alphabet-d-annualized-value-potential", "alphabet-n-risk"], text: "Risk/reward-zonerna använder samma 2028-12-31-värdedatum som huvudvärderingen. Vid 290,217842 USD är annualiserad värdepotential 12,70 % och Bear-nedsidan 16,62 %; vid 332,424088 USD är motsvarande 6,50 % och 27,21 %." },
   ],
   sources: [
     { id: "Alphabet-Q2-2026-release", document: "Alphabet Q2 2026 earnings release", date: "2026-07-22" },
@@ -142,18 +219,24 @@ export const alphabetV112Dossier = {
     annualizedPotentialPct: alphabetWeightedAnnualizedCagrPct,
     yearsToValuation: ALPHABET_VALUATION_YEARS,
   },
+  riskRewardZones: alphabetRiskRewardZones,
   historicalContext: alphabetHistoricalContext,
   capitalFacts: alphabetCapitalFacts,
   changeTracking: [
     { fieldPath: "valuation_date", oldValue: "2027E label", newValue: ALPHABET_VALUATION_DATE, reason: "Modellen använde redan 2028; etiketten korrigeras till canonical datum/år." },
     { fieldPath: "valuation.scenarios", oldValue: "Hårdkodade visningsvärden", newValue: "Spårbar EPS × P/E-bridge", reason: "v11.2 kräver resultat- och värderingsdrivare för varje scenario." },
+    { fieldPath: "valuation.annualizedPotentialPct", oldValue: "3,816 % från analysdatum 2026-08-08", newValue: "3,812 % från referensdatum 2026-08-07", reason: "v11.2 kräver annualisering från market_reference.as_of. Publik avrundning är oförändrat +4 %/år." },
+    { fieldPath: "valuation.riskRewardZones", oldValue: null, newValue: "alphabet-v11.2-2026-08-17", reason: "Godkända MEMBER-zoner läggs ovanpå befintlig värdering efter en kvalitativ bedömning av annualiserad potential, Bear-nedsida, scenario-spread, tesstatus och MEDEL–HÖG risk." },
   ],
-  eventDelta: { eventId: "alphabet-q2-2026", comparedToVersion: "alphabet-v11.1-2026-08-08", factChanges: ["Q2 2026 Cloud, Search, kapitalallokering och FCF"], assumptionChanges: ["Explicit utspädningsantagande 2028"], thesisChanges: ["Cloud och Search stärks; kapitalavkastning kvarstår ej bekräftad"], valuationChanges: ["CAGR och scenariobryggor beräknas från explicit datum"], decisionChange: null },
+  eventDelta: { eventId: "alphabet-risk-reward-2026-08-17", comparedToVersion: "alphabet-v11.2-2026-08-08", factChanges: [], assumptionChanges: [], thesisChanges: [], valuationChanges: ["Annualisering korrigerad från market_reference.as_of", "APPROVED MEMBER-risk/reward-zoner lagda ovanpå oförändrad Bear/Base/Bull-värdering"], decisionChange: null },
 } as const;
 
 export function validateAlphabetValuation() {
   const probability = alphabetScenarios.reduce((sum, scenario) => sum + scenario.probability, 0);
   const weighted = alphabetScenarios.reduce((sum, scenario) => sum + scenario.fairValue * scenario.probability, 0);
+  const [attractiveBoundary, weakBoundary] = alphabetRiskRewardZones.boundaries;
+  const annualizedAt = (price: number) => Math.pow(alphabetProbabilityWeightedValue / price, 1 / ALPHABET_VALUATION_YEARS) - 1;
+  const bearDownsideAt = (price: number) => Math.min(alphabetScenarios[0].fairValue / price - 1, 0);
   return {
     probability,
     weighted,
@@ -163,5 +246,12 @@ export function validateAlphabetValuation() {
     scenariosMatchEps: alphabetScenarios.every((scenario) => Math.abs(scenario.netIncomeAvailableToCommon / scenario.dilutedShares - scenario.normalizedEps) < 1e-9),
     scenariosMatchEpsTimesPe: alphabetScenarios.every((scenario) => Math.abs(scenario.normalizedEps * scenario.peMultiple - scenario.fairValue) < 1e-9),
     weightedMatches: Math.abs(weighted - alphabetProbabilityWeightedValue) < 1e-9,
+    annualizationStartsAtReferenceDate: Math.abs(ALPHABET_VALUATION_YEARS - ((Date.parse(`${ALPHABET_VALUATION_DATE}T00:00:00Z`) - Date.parse(`${ALPHABET_REFERENCE_DATE}T00:00:00Z`)) / (365.25 * 24 * 60 * 60 * 1000))) < 1e-12,
+    riskRewardBoundariesMatch: [attractiveBoundary, weakBoundary].every((boundary) =>
+      Math.abs(annualizedAt(boundary.canonicalPrice.value) - boundary.annualizedValuePotential) < 1e-9 &&
+      Math.abs(bearDownsideAt(boundary.canonicalPrice.value) - boundary.bearDownside) < 1e-9,
+    ),
+    riskRewardZonesAreOrdered: alphabetRiskRewardZones.zones[0].priceInterval.max === alphabetRiskRewardZones.zones[1].priceInterval.min &&
+      alphabetRiskRewardZones.zones[1].priceInterval.max === alphabetRiskRewardZones.zones[2].priceInterval.min,
   };
 }

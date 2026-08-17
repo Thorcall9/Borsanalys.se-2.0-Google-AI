@@ -173,6 +173,40 @@ function ReasonRows({ rows, tone }: { rows: typeof positiveReasons; tone: "posit
   );
 }
 
+function AlphabetRiskRewardRail({ showPrices }: { showPrices: boolean }) {
+  const zones = [...alphabetV112Dossier.riskRewardZones.zones].reverse();
+  const styles = {
+    ATTRACTIVE: "border-emerald-300 bg-emerald-50 text-emerald-950",
+    BALANCED: "border-sky-300 bg-sky-50 text-slate-950",
+    WEAK: "border-amber-300 bg-amber-50 text-amber-950",
+  } as const;
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="border-b border-slate-200 bg-slate-50 px-5 py-4 sm:px-6">
+        <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">Prisstegen: högre kurs ger mindre säkerhetsmarginal</p>
+      </div>
+      <ol>
+        {zones.map((zone, index) => (
+          <li key={zone.zone} className={`grid border-b border-slate-200 last:border-b-0 md:grid-cols-[minmax(220px,0.42fr)_1fr] ${styles[zone.zone]}`}>
+            <div className="border-b border-current/15 px-5 py-5 md:border-b-0 md:border-r md:px-6">
+              <p className="text-xs font-black uppercase tracking-[0.13em] opacity-70">{index === 0 ? "Högre kurs" : index === zones.length - 1 ? "Lägre kurs" : "Mellanliggande nivå"}</p>
+              <p className="mt-2 font-serif text-3xl font-bold tracking-[-0.04em] sm:text-4xl">{showPrices ? zone.presentation.priceLabel : zone.zone === "WEAK" ? "Begränsad marginal" : zone.zone === "BALANCED" ? "Rimlig men inte stark" : "Förbättrad marginal"}</p>
+              {showPrices && zone.zone === alphabetV112Dossier.riskRewardZones.marketReferenceAssessment.zone && <p className="mt-3 inline-flex rounded-full bg-slate-950 px-3 py-1.5 text-xs font-black text-white">Referenskurs vid analys: 353,47 USD · 7 aug 2026</p>}
+            </div>
+            <div className="px-5 py-5 md:px-6">
+              <h3 className="font-serif text-2xl font-bold tracking-[-0.03em]">{zone.presentation.title}</h3>
+              <p className="mt-2 text-sm font-bold leading-6">{showPrices ? zone.presentation.annualPotentialLabel : zone.zone === "WEAK" ? "Potentialen är för låg relativt riskbilden." : zone.zone === "BALANCED" ? "Potential finns, men teserna måste fortsatt bevisas." : "Potential och Bear-skydd väger tydligt till investerarens fördel."}</p>
+              {showPrices && <p className="mt-1 text-sm leading-6 opacity-80">{zone.presentation.bearDownsideLabel}</p>}
+            </div>
+          </li>
+        ))}
+      </ol>
+      {showPrices && <div className="border-t border-slate-200 bg-slate-50 px-5 py-4 text-sm leading-6 text-slate-700 sm:px-6"><strong className="text-slate-950">{alphabetV112Dossier.riskRewardZones.marketReferenceAssessment.label}.</strong> {alphabetV112Dossier.riskRewardZones.marketReferenceAssessment.rationale}</div>}
+    </div>
+  );
+}
+
 export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?: PreviewVariant }) {
   const { user, openLoginModal } = useAuth();
   const isNetflix = variant === "netflix";
@@ -442,6 +476,42 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
               <p><strong className="text-slate-950">Kapitalavkastning:</strong> {isNetflix ? "Bolagets rapporterade 2026 FCF-guidning på cirka 12,5 md USD innehåller en engångseffekt och är inte återkommande FCF-kapacitet. Q2:s OCF föll 28 % när innehållsbetalningarna steg; 11,9 md USD av kända innehållsåtaganden förfaller inom 12 månader. Återköp stärker EPS, men ersätter inte organisk vinsttillväxt." : "Capex → PP&E → avskrivningar → EBIT → FCF. Q2-operativt kassaflöde var 39,1 md USD och capex 44,9 md USD, vilket gav FCF på −5,9 md USD; FCF är alltså inte normaliserat."}</p>
             </div>
           </section>
+
+          {!isNetflix && alphabetV112Dossier.riskRewardZones.status === "APPROVED" && (
+            <section className="border-t border-slate-200 py-11 lg:py-16" aria-labelledby="risk-reward-heading">
+              <div>
+                <div>
+                  <p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">Medlemsinsikt</p>
+                  <h2 id="risk-reward-heading" className="mt-3 font-serif text-4xl font-bold tracking-[-0.045em] text-slate-950 sm:text-5xl">När blir risk/reward mer attraktiv?</h2>
+                  <p className="mt-4 max-w-xl text-base leading-7 text-slate-600">Vi har räknat ut vid vilka kursnivåer säkerhetsmarginalen förbättras eller försämras utifrån vår värdering, Bear-scenario och Alphabets risk.</p>
+                </div>
+
+                <div className="mt-7">
+                  <AlphabetRiskRewardRail showPrices={Boolean(user)} />
+                </div>
+
+                {!user && (
+                  <div className="mt-7 rounded-2xl border border-emerald-200 bg-emerald-50/60 p-6 sm:p-7">
+                    <div className="flex items-start gap-4">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-emerald-700 shadow-sm"><LockKeyhole size={20} aria-hidden="true" /></span>
+                      <div>
+                        <p className="font-bold text-slate-950">Som gratis medlem ser du:</p>
+                        <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
+                          <li>Attraktiv risk/reward</li>
+                          <li>Balanserad risk/reward</li>
+                          <li>Svag risk/reward</li>
+                          <li>Vilken annualiserad värdepotential nivåerna motsvarar</li>
+                        </ul>
+                        <button type="button" onClick={openLoginModal} className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-emerald-700 px-5 text-sm font-bold text-white transition-colors hover:bg-emerald-800">
+                          Skapa gratis konto <ArrowRight size={16} aria-hidden="true" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
 
           <section id="next-report" className="scroll-mt-36 border-t border-slate-200 py-11 lg:py-16">
             <div className="max-w-3xl"><p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">Nästa rapport</p><h2 className="mt-3 font-serif text-4xl font-bold tracking-[-0.045em] text-slate-950 sm:text-5xl">Det här följer vi först</h2></div>

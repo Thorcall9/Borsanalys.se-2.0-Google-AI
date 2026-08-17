@@ -2,7 +2,9 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   ALPHABET_ANALYSIS_DATE,
+  ALPHABET_REFERENCE_DATE,
   ALPHABET_VALUATION_DATE,
+  alphabetRiskRewardZones,
   alphabetV112Dossier,
   validateAlphabetValuation,
 } from "../src/data/analyses/alphabet/alphabet-v11-model";
@@ -20,6 +22,21 @@ test("Alphabet v11.2 valuation has one explicit horizon and a complete bridge", 
   assert.equal(result.scenariosMatchEps, true);
   assert.equal(result.scenariosMatchEpsTimesPe, true);
   assert.equal(result.weightedMatches, true);
+  assert.equal(result.annualizationStartsAtReferenceDate, true);
+});
+
+test("Alphabet v11.2 risk/reward zones use the canonical valuation without frontend calculation", () => {
+  const result = validateAlphabetValuation();
+
+  assert.equal(ALPHABET_REFERENCE_DATE, "2026-08-07");
+  assert.equal(alphabetRiskRewardZones.status, "APPROVED");
+  assert.equal(alphabetRiskRewardZones.visibility, "MEMBER");
+  assert.equal(alphabetRiskRewardZones.valuationDate, ALPHABET_VALUATION_DATE);
+  assert.equal(alphabetRiskRewardZones.zones.length, 3);
+  assert.deepEqual(alphabetRiskRewardZones.zones.map((zone) => zone.zone), ["ATTRACTIVE", "BALANCED", "WEAK"]);
+  assert.equal(result.riskRewardBoundariesMatch, true);
+  assert.equal(result.riskRewardZonesAreOrdered, true);
+  assert.ok(Math.abs(alphabetV112Dossier.valuation.annualizedPotentialPct - 0.038117630492266574) < 1e-12);
 });
 
 test("Alphabet v11.2 keeps reported investment gains out of normalised EPS", () => {
