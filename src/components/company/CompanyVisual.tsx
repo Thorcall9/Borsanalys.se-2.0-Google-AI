@@ -51,7 +51,10 @@ const companyByTicker: Record<string, CompanyIdentity> = {
   "SBB-B.ST": { domain: "sbbnorden.se", name: "SBB" },
   "SHB A": { domain: "handelsbanken.com", name: "Handelsbanken" },
   "SWED A": { domain: "swedbank.com", name: "Swedbank" },
-  "VOLV-B.ST": { domain: "volvogroup.com", name: "Volvo" },
+  // Use Volvo Group's horizontal wordmark instead of the shared Iron Mark.
+  // The latter is also used by Volvo Cars and is therefore ambiguous in the
+  // analysis archive for the listed company AB Volvo.
+  "VOLV-B.ST": { domain: "volvogroup.com", name: "AB Volvo", variant: "logo", wordmark: true },
   "V": { domain: "visa.com", name: "Visa" },
 };
 
