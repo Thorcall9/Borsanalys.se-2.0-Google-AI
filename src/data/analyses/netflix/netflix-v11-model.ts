@@ -35,9 +35,8 @@ export const netflixScenarios = scenarios.map((input) => {
 const weightedFairValue = netflixScenarios.reduce((sum, scenario) => sum + scenario.fairValue * scenario.probability, 0);
 
 /**
- * Separat v11.2-underlag för MEMBER-modulen. Det är medvetet DRAFT och är
- * inte kopplat till publicerad frontend eller rekommendation innan redaktionellt
- * godkännande. Alla tal härleds från samma referenskurs, scenarier och
+ * Separat v11.2-lager för MEMBER-modulen. Det ändrar inte rekommendationen
+ * eller den underliggande värderingen. Alla tal härleds från samma referenskurs, scenarier och
  * värderingsdatum som den publicerade värderingen.
  */
 const NETFLIX_RISK_REWARD_REFERENCE_YEARS = (Date.parse(`${NETFLIX_VALUATION_DATE}T00:00:00Z`) - Date.parse("2026-08-13T00:00:00Z")) / (365.25 * 24 * 60 * 60 * 1000);
@@ -50,8 +49,8 @@ const netflixRiskRewardAt = (price: number) => ({
   bearDownsidePct: netflixBearFairValue / price - 1,
 });
 
-export const netflixRiskRewardZonesDraft = {
-  status: "DRAFT" as const,
+export const netflixRiskRewardZones = {
+  status: "APPROVED" as const,
   visibility: "MEMBER" as const,
   title: "När blir risk/reward mer attraktiv?",
   method: "Zonerna väger annualiserad potential till sannolikhetsvägt värde, Bear-nedsida, scenario-spridning, MEDEL–HÖG risk och tesernas bevisläge. De är inte en separat värderingsmodell och ändrar inte rekommendationen.",
@@ -166,7 +165,7 @@ export const netflixStressTest = (() => {
 })();
 
 export const netflixV112Dossier = {
-  version: { versionId: "netflix-v11.2-2026-08-14-r3", parentVersionId: "netflix-v11.2-2026-08-14-r2", status: "PUBLISH_READY" as const, immutable: true },
+  version: { versionId: "netflix-v11.2-2026-08-14-r4", parentVersionId: "netflix-v11.2-2026-08-14-r3", status: "PUBLISH_READY" as const, immutable: true },
   identity: { analysisId: NETFLIX_ANALYSIS_ID, companyId: NETFLIX_COMPANY_ID, analysisDate: NETFLIX_ANALYSIS_DATE, sourceCutoffDate: NETFLIX_SOURCE_CUTOFF_DATE, valuationDate: NETFLIX_VALUATION_DATE, valuationYearLabel: "2028E", marketReference: { price: NETFLIX_REFERENCE_PRICE, currency: "USD", asOf: "2026-08-13", sourceRef: "NFLX-close-2026-08-13" } },
   recommendation: "BEVAKA" as const,
   risk: { label: "MEDEL–HÖG" as const, rationale: "Finansiell risk begränsas av FCF och likviditet, men affärs-, prognos-, kassaflödes- och multipelrisken är väsentlig när pris, reklam, innehållsbetalningar och marginal ska leverera samtidigt." },
@@ -198,7 +197,7 @@ export const netflixV112Dossier = {
   },
   scenarios: netflixScenarios.map((scenario) => ({ ...scenario, valuationDate: NETFLIX_VALUATION_DATE })),
   valuation: { weightedFairValue, totalPotentialPct: weightedFairValue / NETFLIX_REFERENCE_PRICE - 1, annualizedPotentialPct: Math.pow(weightedFairValue / NETFLIX_REFERENCE_PRICE, 1 / NETFLIX_VALUATION_YEARS) - 1, yearsToValuation: NETFLIX_VALUATION_YEARS },
-  riskRewardZonesDraft: netflixRiskRewardZonesDraft,
+  riskRewardZones: netflixRiskRewardZones,
   publicationBlockers: [],
 } as const;
 
