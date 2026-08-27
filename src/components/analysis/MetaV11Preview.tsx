@@ -20,8 +20,9 @@ import {
 import type { LucideIcon } from "lucide-react";
 import SEO from "../SEO";
 import AdUnit from "./AdUnit";
+import CanonicalRiskRewardInsight from "./CanonicalRiskRewardInsight";
 import HistoricalFundament from "./HistoricalFundament";
-import RiskRewardModule, { UnavailableModule } from "./RiskRewardModule";
+import VolvoRiskRewardInsight from "./VolvoRiskRewardInsight";
 import { AnalysisData } from "../../types/analysis";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -725,16 +726,43 @@ export default function V11Analysis({ data }: Props) {
                 {preview.valuationLimitation}
               </p>
             </div>
-            {data.slug === "meta-q2-2026" && (
-              <RiskRewardModule
+            {data.slug === "meta-q2-2026" && riskRewardZones && riskRewardZones.memberInsight && (
+              <CanonicalRiskRewardInsight
+                user={user}
+                title={riskRewardZones.title}
+                introduction={riskRewardZones.introduction}
+                zones={riskRewardZones.zones}
+                insight={riskRewardZones.memberInsight}
+                onLogin={openLoginModal}
+              />
+            )}
+            {data.slug === "volvo-q2-2026" && (
+              <VolvoRiskRewardInsight
                 user={user}
                 zones={riskRewardZones}
                 onSignup={openSignupModal}
                 onLogin={openLoginModal}
               />
             )}
-            {data.slug === "visa" && !riskRewardZones && (
-              <UnavailableModule companyLabel={data.title} ticker={data.ticker} referenceLabel={data.price} analysisDate={formatDate(data.date)} isMember={Boolean(user)} />
+            {data.slug === "visa" && riskRewardZones && riskRewardZones.memberInsight && (
+              <CanonicalRiskRewardInsight
+                user={user}
+                title={riskRewardZones.title}
+                introduction={riskRewardZones.introduction}
+                zones={riskRewardZones.zones}
+                insight={riskRewardZones.memberInsight}
+                onLogin={openLoginModal}
+              />
+            )}
+            {data.slug === "microsoft" && riskRewardZones && riskRewardZones.memberInsight && (
+              <CanonicalRiskRewardInsight
+                user={user}
+                title={riskRewardZones.title}
+                introduction={riskRewardZones.introduction}
+                zones={riskRewardZones.zones}
+                insight={riskRewardZones.memberInsight}
+                onLogin={openLoginModal}
+              />
             )}
             {preview.illustrativeTotalReturn && (
               <aside className="mt-8 border-t border-slate-200 pt-8" aria-labelledby="illustrative-total-return-title">

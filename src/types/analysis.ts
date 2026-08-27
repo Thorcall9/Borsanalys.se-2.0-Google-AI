@@ -181,10 +181,12 @@ export interface AnalysisData {
     dek: string;
     weightedFairValue: string;
     currentPrice: string;
+    marketReferenceDate?: string;
     upside: string;
     annualPotential: string;
     valuePotentialLabel?: string;
     epsBridgeEnabled?: boolean;
+    normalizationNote?: string;
     illustrativeTotalReturn?: {
       title: string;
       rows: {
@@ -214,6 +216,50 @@ export interface AnalysisData {
         rationale: string;
       }[];
       disclaimer: string;
+      /**
+       * Godkänd MEMBER-presentation från dossiern. Alla tal och positioner
+       * är redan härledda canonical-data; renderaren ska inte beräkna dem.
+       */
+      memberInsight?: {
+        companyLabel: string;
+        ticker: string;
+        referencePriceLabel: string;
+        referenceDateLabel: string;
+        assessmentLabel: string;
+        assessmentNote: string;
+        marker?: {
+          zoneId: "ATTRACTIVE" | "BALANCED" | "WEAK";
+          positionPct: number;
+          label: string;
+          note: string;
+        };
+        /**
+         * Canonical presentation for the compact v11.2 risk/reward scale.
+         * Positions and proportions are editorial presentation inputs, never
+         * calculated by the frontend.
+         */
+        identityLabel?: string;
+        assessmentRationale?: string;
+        zoneSharesPct?: readonly number[];
+        markers?: readonly {
+          id: "reference" | "weighted-fair-value";
+          positionPct: number;
+          label: string;
+          placement: "above" | "below";
+          align: "center" | "end";
+        }[];
+        scenarioSpread?: {
+          label: string;
+          points: readonly {
+            label: string;
+            valueLabel: string;
+            annualPotentialLabel: string;
+          }[];
+          rangeSharesPct: readonly number[];
+          distanceLabel: string;
+        };
+        footerNote: string;
+      };
     };
     riskLabel: string;
     positiveReasons: { title: string; body: string }[];
@@ -390,7 +436,7 @@ export interface AnalysisData {
   weaknesses?: string[];
   opportunities?: string[];
   threats?: string[];
-  scenarios: { label: string; value: string; change: string; cagr?: string; type: "bull" | "base" | "bear"; description?: string; probability?: string; valuationBridge?: { whatWeAssume: string; whyThisValuation: string; whatMustBeProven: string; whatBreaksThesis?: string; paymentVolume?: string; revenues?: string; normalizedEps?: string; pe?: string; fairValue?: string }; operatingLadder?: { revenueUsdBn?: number; revenueBn?: number; operatingMarginPct: number; operatingIncomeUsdBn?: number; operatingIncomeBn?: number; normalizedFinanceAndOtherUsdBn?: number; normalizedFinanceAndOtherBn?: number; taxRatePct: number; minorityInterestUsdBn?: number; minorityInterestBn?: number; dilutedSharesBn: number; normalizedEpsUsd?: number; normalizedEps?: number; revenueGrowthFromLatestAnnualPct?: number } }[];
+  scenarios: { label: string; value: string; change: string; cagr?: string; type: "bull" | "base" | "bear"; description?: string; probability?: string; valuationBridge?: { whatWeAssume: string; whyThisValuation: string; whatMustBeProven: string; whatBreaksThesis?: string; paymentVolume?: string; revenues?: string; normalizedEps?: string; pe?: string; fairValue?: string }; operatingLadder?: { revenueUsdBn?: number; revenueBn?: number; operatingMarginPct: number; operatingIncomeUsdBn?: number; operatingIncomeBn?: number; normalizedFinanceAndOtherUsdBn?: number; normalizedFinanceAndOtherBn?: number; taxRatePct: number; minorityInterestUsdBn?: number; minorityInterestBn?: number; taxAndOtherUsdBn?: number; taxAndOtherBn?: number; normalizedNetIncomeUsdBn?: number; normalizedNetIncomeBn?: number; dilutedSharesBn: number; normalizedEpsUsd?: number; normalizedEps?: number; revenueGrowthFromLatestAnnualPct?: number } }[];
   valuationTargetYear?: number;
   businessModel?: string;
   affarsmodell?: {

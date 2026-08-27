@@ -1,5 +1,23 @@
 import { AnalysisData } from "../../../types/analysis.js";
 
+/**
+ * Låst v11.2-beräkningsunderlag. Fair values är härledda från den precision
+ * som lagras i normaliserad EPS och P/E; den publika analysen visar hela USD.
+ */
+export const meta2026CanonicalValuation = {
+  referencePrice: 592.10,
+  referenceDate: "2026-08-07",
+  valuationDate: "2027-12-31",
+  valuationDays: 511,
+  valuationYears: 511 / 365.25,
+  scenarios: {
+    bear: { fairValue: 500.040, probability: 0.25 },
+    base: { fairValue: 750.860, probability: 0.50 },
+    bull: { fairValue: 1055.860, probability: 0.25 },
+  },
+  weightedFairValue: 764.405,
+} as const;
+
 export const meta2026: AnalysisData = {
   slug: "meta-q2-2026",
   title: "Meta Platforms, Inc.",
@@ -15,13 +33,85 @@ export const meta2026: AnalysisData = {
   date: "2026-08-08",
   published: true,
   v11: {
+    valuationDate: meta2026CanonicalValuation.valuationDate,
     headline: "Meta: stark annonsmotor – men AI-investeringarna måste betala sig",
     dek: "Annonser växer i både volym och pris. Nästa prövning är om AI-kapaciteten ger avkastning utan att kapitalbindningen blir permanent.",
     weightedFairValue: "764",
     currentPrice: "592,10 USD",
+    marketReferenceDate: "2026-08-07",
     upside: "+29 %",
     annualPotential: "Årlig potential: cirka 20 %",
+    epsBridgeEnabled: true,
+    normalizationNote: "Normaliserad EPS är vår uppskattning av uthållig vinst per aktie. AI-investeringar, forskning och capex ligger kvar som ekonomiska kostnader i modellen.",
+    valuationChainLabel: "Omsättning → rörelsemarginal → normaliserad EPS → P/E → värde",
+    valuationGrowthContext: "Omsättningsantagandet motsvarar cirka 21,2 % CAGR från FY2025 till FY2027E, jämfört med 18,9 % historisk CAGR 2019–2025.",
     riskLabel: "Hög risk",
+    riskRewardZones: {
+      status: "APPROVED",
+      visibility: "MEMBER",
+      title: "När blir risk/reward mer attraktiv?",
+      introduction: "Tre priszoner visar hur säkerhetsmarginalen förändras. Bedömningen väger annualiserad potential, Bear-nedsida, scenario-spread och de delar av AI-caset som fortfarande måste bevisas.",
+      valuationDate: meta2026CanonicalValuation.valuationDate,
+      zones: [
+        {
+          id: "ATTRACTIVE",
+          title: "Attraktiv risk/reward",
+          priceLabel: "Under 575 USD",
+          annualPotentialLabel: "Cirka +22,6 %/år eller högre",
+          bearDownsideLabel: "Bear-nedsida: cirka −13,0 % eller mindre",
+          rationale: "Förbättrad säkerhetsmarginal: potentialen och Bear-skyddet kompenserar tydligt för Metas höga risk, AI-capex och fortsatt obevisade kapitalavkastning.",
+        },
+        {
+          id: "BALANCED",
+          title: "Balanserad risk/reward",
+          priceLabel: "575–675 USD",
+          annualPotentialLabel: "Cirka +22,6 till +9,3 %/år",
+          bearDownsideLabel: "Bear-nedsida: cirka −13,0 till −25,9 %",
+          rationale: "Potentialen är fortsatt relevant, men säkerhetsmarginalen beror på att annonsmotorn fortsätter bära hög AI-kapitalintensitet och att avkastningen faktiskt bevisas.",
+        },
+        {
+          id: "WEAK",
+          title: "Svag risk/reward",
+          priceLabel: "Från 675 USD",
+          annualPotentialLabel: "Cirka +9,3 %/år eller lägre",
+          bearDownsideLabel: "Bear-nedsida: minst cirka −25,9 %",
+          rationale: "Begränsad säkerhetsmarginal: den återstående potentialen är för liten relativt scenario-spreaden, stora AI-åtaganden, regulatorisk risk och multipelberoende.",
+        },
+      ],
+      disclaimer: "Risk/reward-zonerna är en redaktionell bedömning av säkerhetsmarginal och ändrar inte automatiskt rekommendationen KÖP.",
+      memberInsight: {
+        companyLabel: "Meta Platforms",
+        ticker: "META",
+        identityLabel: "Meta · META",
+        referencePriceLabel: "592,10 USD",
+        referenceDateLabel: "7 aug 2026",
+        assessmentLabel: "Balanserad risk/reward",
+        assessmentNote: "Referenspunkten är kursen vid analystillfället, inte en köp- eller säljsignal.",
+        assessmentRationale: "Vid referenskursen är den annualiserade potentialen relevant, men Metas höga kapitalintensitet, stora avtalsåtaganden och ännu obevisade AI-avkastning begränsar säkerhetsmarginalen.",
+        zoneSharesPct: [25, 33.33333333333333, 41.66666666666667],
+        marker: {
+          zoneId: "BALANCED",
+          positionPct: 30.7,
+          label: "Kurs vid analystillfället",
+          note: "592,10 USD · 7 aug 2026",
+        },
+        markers: [
+          { id: "reference", positionPct: 30.7, label: "▼ Kurs 592 USD", placement: "above", align: "center" },
+          { id: "weighted-fair-value", positionPct: 88.135, label: "Vårt värde 764 USD", placement: "below", align: "end" },
+        ],
+        scenarioSpread: {
+          label: "Scenariospann till 31 december 2027",
+          points: [
+            { label: "Bear", valueLabel: "500 USD", annualPotentialLabel: "−11,4 %/år" },
+            { label: "Sannolikhetsvägt", valueLabel: "764 USD", annualPotentialLabel: "+20,0 %/år" },
+            { label: "Bull", valueLabel: "1 056 USD", annualPotentialLabel: "+51,2 %/år" },
+          ],
+          rangeSharesPct: [47.56305998344787, 52.436940016552114],
+          distanceLabel: "Bear → sannolikhetsvägt: 264,37 USD · sannolikhetsvägt → Bull: 291,46 USD",
+        },
+        footerNote: "Kurs vid analystillfället, inte en live-kurs. Zonerna är fasta redaktionella bedömningar och inte personlig rådgivning.",
+      },
+    },
     positiveReasons: [
       { title: "Annonsmotorn levererar på två fronter", body: "Annonsvisningar ökade 14 % och pris per annons 12 % i Q2." },
       { title: "Global skala ger distributionskraft", body: "Family DAP uppgick till 3,60 miljarder i juni." },
@@ -29,11 +119,11 @@ export const meta2026: AnalysisData = {
     ],
     cautionReasons: [
       { title: "AI-investeringarna är mycket stora", body: "FCF var 0,784 md USD efter 31,1 md USD i Q2-capex." },
-      { title: "Åtagandena begränsar flexibiliteten", body: "349,31 md USD i icke uppsägningsbara avtal." },
+      { title: "Åtagandena begränsar flexibiliteten", body: "349,31 md USD i avtal för främst AI-kapacitet och datacenter. Det är inte skuld, men binder framtida kassaflöde." },
       { title: "Avkastningstidpunkten är okänd", body: "Ledningen har inte kvantifierat ROI för AI-infrastruktur." }
     ],
     insightHeadline: "AI-caset är en kapitalavkastningsfråga",
-    insightBody: "Efterfrågan är inte huvudfrågan: både annonsvolym och pris växer. Frågan är om annonsmotorn kan finansiera ett större infrastrukturnät utan ett varaktigt tapp i marginal, FCF och kapitalallokering.",
+    insightBody: "Efterfrågan är inte huvudfrågan: både annonsvolym och pris växer. Vägen till fortsatt tillväxt går främst via bättre AI-rekommendationer och annonsmonetisering, medan WhatsApp och nya AI-produkter är mindre men växande komplement. Frågan är om annonsmotorn kan finansiera ett större infrastrukturnät utan ett varaktigt tapp i marginal, FCF och kapitalallokering.",
     theses: [
       { status: "Stärkt", title: "Annonsmotorn bär investeringarna", signal: "Annonsvisningar ökade 14 % och pris per annons 12 % i Q2.", next: "Både pris och visningar fortsätter vara positiva." },
       { status: "Ej bekräftad", title: "AI återställer kapitalavkastningen", signal: "Begränsat justerad marginal var 36,8 %, men FCF var bara 0,784 md USD efter Q2-capex.", next: "Marginal ≥35 % och tydligt bättre FCF." },
@@ -47,7 +137,7 @@ export const meta2026: AnalysisData = {
     ],
     valuationCheck: "TTM justerad P/E är cirka 20x; TTM FCF-avkastning cirka 2,5 %.",
     valuationLimitation: "FCF är pressat av AI-capex och ska inte tolkas som ett normaliserat kassaflöde.",
-    riskAndMethod: "Huvudriskerna är kapitalintensitet, annonskonjunktur och betydande juridiska/regulatoriska förfaranden. Meta har stora framtida moln- och leasingåtaganden.",
+    riskAndMethod: "Huvudriskerna är kapitalintensitet, annonskonjunktur och betydande juridiska/regulatoriska förfaranden. De 349,31 md USD i icke uppsägningsbara avtalsåtaganden avser främst framtida AI-kapacitet och datacenter. De är inte räntebärande nettoskuld, men begränsar hur fritt Meta kan styra framtida kassaflöden.",
     sourceSummary: "Metas årsrapporter FY2019–FY2025, Q2 2026 Form 10-Q, kvartalsrapporter och earnings call-transkript samt META-stängningskurs 7 augusti 2026."
   },
   summary: "Annonsmotorn växer starkt, men AI-investeringarnas kapitalavkastning är avgörande för nästa fas i caset.",
@@ -121,9 +211,9 @@ export const meta2026: AnalysisData = {
     ]
   }],
   scenarios: [
-    { label: "Bull", value: "$1 056", change: "+78%", cagr: "+78,4%", type: "bull", probability: "25%", description: "Hög tillväxt och marginal nära tidigare nivåer.", operatingLadder: { revenueUsdBn: 315, operatingMarginPct: 39, operatingIncomeUsdBn: 122.85, normalizedFinanceAndOtherUsdBn: 0, taxRatePct: 16, dilutedSharesBn: 2.54, normalizedEpsUsd: 40.61, revenueGrowthFromLatestAnnualPct: 25.2 } },
-    { label: "Base", value: "$751", change: "+27%", cagr: "+26,8%", type: "base", probability: "50%", description: "Stark annonsmonetisering och delvis återställd marginal.", operatingLadder: { revenueUsdBn: 295, operatingMarginPct: 35, operatingIncomeUsdBn: 103.25, normalizedFinanceAndOtherUsdBn: 0, taxRatePct: 16, dilutedSharesBn: 2.54, normalizedEpsUsd: 34.13, revenueGrowthFromLatestAnnualPct: 21.2 } },
-    { label: "Bear", value: "$500", change: "−16%", cagr: "−15,5%", type: "bear", probability: "25%", description: "Hög kapitalintensitet och uthålligt lägre marginal.", operatingLadder: { revenueUsdBn: 280, operatingMarginPct: 30, operatingIncomeUsdBn: 84, normalizedFinanceAndOtherUsdBn: 0, taxRatePct: 16, dilutedSharesBn: 2.54, normalizedEpsUsd: 27.78, revenueGrowthFromLatestAnnualPct: 18.0 } }
+    { label: "Bull", value: "$1 056", change: "+78%", type: "bull", probability: "25%", description: "Hög tillväxt och marginal nära tidigare nivåer.", operatingLadder: { revenueUsdBn: 315, operatingMarginPct: 39, operatingIncomeUsdBn: 122.85, normalizedFinanceAndOtherUsdBn: 0, taxRatePct: 16, taxAndOtherUsdBn: 19.70, normalizedNetIncomeUsdBn: 103.15, dilutedSharesBn: 2.54, normalizedEpsUsd: 40.61, revenueGrowthFromLatestAnnualPct: 25.2 } },
+    { label: "Base", value: "$751", change: "+27%", type: "base", probability: "50%", description: "Stark annonsmonetisering och delvis återställd marginal.", operatingLadder: { revenueUsdBn: 295, operatingMarginPct: 35, operatingIncomeUsdBn: 103.25, normalizedFinanceAndOtherUsdBn: 0, taxRatePct: 16, taxAndOtherUsdBn: 16.56, normalizedNetIncomeUsdBn: 86.69, dilutedSharesBn: 2.54, normalizedEpsUsd: 34.13, revenueGrowthFromLatestAnnualPct: 21.2 } },
+    { label: "Bear", value: "$500", change: "−16%", type: "bear", probability: "25%", description: "Hög kapitalintensitet och uthålligt lägre marginal.", operatingLadder: { revenueUsdBn: 280, operatingMarginPct: 30, operatingIncomeUsdBn: 84, normalizedFinanceAndOtherUsdBn: 0, taxRatePct: 16, taxAndOtherUsdBn: 13.44, normalizedNetIncomeUsdBn: 70.56, dilutedSharesBn: 2.54, normalizedEpsUsd: 27.78, revenueGrowthFromLatestAnnualPct: 18.0 } }
   ],
   scores: { affarsmodell: 5, strategiskMoat: 5, finansiellKvalitet: 3, vardering: 3, tillvaxtutsikter: 4, riskprofil: 2, esgMakro: 2, aiObservationer: 3 }
 };

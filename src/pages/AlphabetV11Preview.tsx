@@ -18,6 +18,7 @@ import {
   WalletCards,
 } from "lucide-react";
 import SEO from "../components/SEO";
+import CanonicalRiskRewardScale from "../components/analysis/CanonicalRiskRewardScale";
 import { useAuth } from "../contexts/AuthContext";
 import { alphabetV112Dossier } from "../data/analyses/alphabet/alphabet-v11-model";
 import { netflixDerived, netflixFacts, netflixScenarios, netflixStressTest, netflixV112Dossier, netflixWbdNormalization } from "../data/analyses/netflix/netflix-v11-model";
@@ -176,64 +177,55 @@ function ReasonRows({ rows, tone }: { rows: typeof positiveReasons; tone: "posit
 function AlphabetRiskRewardRail({ showPrices }: { showPrices: boolean }) {
   const zones = alphabetV112Dossier.riskRewardZones.zones;
   const gauge = alphabetV112Dossier.riskRewardZones.presentation.gauge;
-  const activeZone = zones.find((zone) => zone.zone === alphabetV112Dossier.riskRewardZones.marketReferenceAssessment.zone) ?? zones[2];
-  const styles = {
-    ATTRACTIVE: { segment: "bg-[#1d9e75]", title: "text-[#27500a]" },
-    BALANCED: { segment: "bg-[#a6c9ae]", title: "text-[#5f5e5a]" },
-    WEAK: { segment: "bg-[#d8d5c9]", title: "text-[#5f5e5a]" },
-  } as const;
-  const spread = gauge.scenarioSpread;
+  const insight = alphabetV112Dossier.riskRewardZones.presentation.memberInsight;
+  if (!showPrices) return null;
+  return <CanonicalRiskRewardScale
+    identityLabel={insight.identityLabel}
+    referencePriceLabel={insight.referencePriceLabel}
+    referenceDateLabel={insight.referenceDateLabel}
+    assessmentLabel={insight.assessmentLabel}
+    assessmentRationale={insight.assessmentRationale}
+    zones={zones.map((zone, index) => ({ id: zone.zone, title: zone.presentation.title.replace(" risk/reward", ""), priceLabel: zone.presentation.priceLabel, sharePct: insight.zoneSharesPct[index] }))}
+    markers={insight.markers}
+    scenario={gauge.scenarioSpread}
+    footerNote={insight.footerNote}
+  />;
+}
 
+function NetflixRiskRewardFallback({ isMember }: { isMember: boolean }) {
   return (
-    <section className="max-w-3xl rounded-2xl border border-[#e5e3da] bg-white p-5 shadow-sm sm:p-7" aria-label="Risk/reward-skala för GOOG">
-      <div className="flex flex-wrap items-end justify-between gap-5">
-        <div>
-          <p className="text-xs font-medium uppercase tracking-[0.06em] text-slate-400">Alphabet · GOOG</p>
-          <p className="mt-1 text-3xl font-medium tracking-[-0.03em] text-slate-950">{showPrices ? <>353,47 <span className="text-lg font-normal text-slate-400">USD</span></> : "Kurs vid analys"}</p>
-          <p className="mt-1 text-xs text-slate-400">{showPrices ? `Vid analys (${gauge.referenceDateLabel})` : "Referenskurs vid analystillfället"}</p>
-        </div>
-        <div className="text-left sm:text-right">
-          <p className="text-xs font-medium uppercase tracking-[0.06em] text-slate-400">Bedömning</p>
-          <p className="mt-1 text-sm font-medium text-[#854f0b]">{activeZone.presentation.title}</p>
-        </div>
+    <section className="border-t border-slate-200 py-11 lg:py-16" aria-labelledby="netflix-risk-reward-heading">
+      <div className="max-w-3xl">
+        <p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">Medlemsinsikt</p>
+        <h2 id="netflix-risk-reward-heading" className="mt-3 font-serif text-4xl font-bold tracking-[-0.045em] text-slate-950 sm:text-5xl">När blir risk/reward mer attraktiv?</h2>
+        <p className="mt-4 text-base leading-7 text-slate-600">Risk/reward-zoner kan bara visas när de är godkända i den canonical modellen. Netflix har ännu inget sådant zonunderlag.</p>
       </div>
 
-      <div className="relative mt-8">
-        <div className="flex h-2 overflow-hidden rounded-full gap-0.5">
-          {zones.map((zone, index) => (
-            <div key={zone.zone} style={{ flex: `${gauge.segmentSharesPct[index]} 0 0` }} className={styles[zone.zone].segment} />
-          ))}
-        </div>
-        {showPrices && <span className="absolute -bottom-3 top-3 z-10 h-0 w-0 -translate-x-1/2 border-x-[5px] border-t-[6px] border-x-transparent border-t-slate-700" style={{ left: `${gauge.referenceMarkerPct}%` }} aria-label={`Referenskurs vid analys: ${gauge.referenceLabel}`} />}
-      </div>
-      <div className="mt-5 flex gap-2 text-[11px] leading-4 text-slate-400">
-        {zones.map((zone, index) => (
-          <div key={zone.zone} style={{ flex: `${gauge.segmentSharesPct[index]} 0 0` }} className={index === zones.length - 1 ? "text-right" : ""}>
-            <p className={`font-medium ${styles[zone.zone].title}`}>{zone.presentation.title.replace(" risk/reward", "")}</p>
-            {showPrices && <p>{zone.presentation.priceLabel}</p>}
+      <div className="mt-7 max-w-3xl rounded-2xl border border-slate-200 bg-slate-50/70 p-5 sm:p-7">
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-[0.06em] text-slate-400">Netflix · NFLX</p>
+            {isMember ? (
+              <>
+                <p className="mt-1 text-3xl font-medium tracking-[-0.03em] text-slate-950">{formatUsd(netflixV112Dossier.identity.marketReference.price, 2)}</p>
+                <p className="mt-1 text-xs text-slate-400">Kurs vid analys: {netflixV112Dossier.identity.marketReference.asOf}</p>
+              </>
+            ) : (
+              <p className="mt-2 text-sm leading-6 text-slate-600">Referenskurs och exakta nivåer visas för inloggade medlemmar.</p>
+            )}
           </div>
-        ))}
-      </div>
+          <div className="sm:text-right">
+            <p className="text-xs font-medium uppercase tracking-[0.06em] text-slate-400">Aktuell bedömning</p>
+            <p className="mt-1 text-sm font-medium text-slate-600">Ej tillgänglig utan godkända zoner</p>
+          </div>
+        </div>
 
-      <div className="mt-8 rounded-lg border border-[#ba7517]/20 bg-[#faeeda]/30 p-4 sm:p-5">
-        <p className="text-xs font-medium text-[#854f0b]">{spread.label}</p>
-        <div className="mt-3 grid grid-cols-3 gap-3">
-          {spread.points.map((point, index) => (
-            <div key={point.label}>
-              <p className="text-[11px] text-slate-400">{point.label}</p>
-              <p className={`mt-1 text-base font-medium ${index === 2 ? "text-[#1d9e75]" : "text-slate-950"}`}>{point.annualPotentialLabel}</p>
-              {showPrices && <p className="mt-0.5 text-[11px] text-slate-400">{point.priceLabel}</p>}
-            </div>
-          ))}
+        <div className="mt-7 rounded-xl border border-dashed border-slate-300 bg-white px-4 py-5 text-sm leading-6 text-slate-600">
+          Ingen risk/reward-skala, kursmarkör eller scenariospann visas här förrän Netflix har godkända canonical presentationsdata för zoner och scenario-spridning. Vi visar inga preliminära eller härledda nivåer i frontend.
         </div>
-        <div className="mt-4 flex h-1 overflow-hidden rounded-full bg-[#e5e3da]">
-          <span style={{ width: `${spread.rangeSharesPct[0]}%` }} className="bg-slate-400/60" />
-          <span className="w-px bg-slate-800" />
-          <span style={{ width: `${spread.rangeSharesPct[1]}%` }} className="bg-[#1d9e75]/55" />
-        </div>
+
+        <p className="mt-5 text-xs leading-5 text-slate-500">Kurs vid analystillfället, inte en live-kurs. Zonerna är fasta redaktionella bedömningar och inte personlig rådgivning.</p>
       </div>
-      {showPrices && <p className="mt-4 text-xs leading-5 text-slate-400">{gauge.footnote}</p>}
-      <p className="mt-1 text-xs leading-5 text-slate-400">Zonerna är Börsanalys.se:s fasta redaktionella bedömning, inte personlig rådgivning.</p>
     </section>
   );
 }
@@ -508,6 +500,8 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
             </div>
           </section>
 
+          {isNetflix && <NetflixRiskRewardFallback isMember={Boolean(user)} />}
+
           {!isNetflix && alphabetV112Dossier.riskRewardZones.status === "APPROVED" && (
             <section className="border-t border-slate-200 py-11 lg:py-16" aria-labelledby="risk-reward-heading">
               <div>
@@ -526,16 +520,17 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
                     <div className="flex items-start gap-4">
                       <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-emerald-700 shadow-sm"><LockKeyhole size={20} aria-hidden="true" /></span>
                       <div>
-                        <p className="font-bold text-slate-950">Som gratis medlem ser du:</p>
+                        <p className="text-base font-bold text-slate-950">Logga in gratis för hela risk/reward-insikten</p>
+                        <p className="mt-1 text-sm leading-6 text-slate-600">Du ser översikten här. Med ett kostnadsfritt konto får du se de exakta kursgränserna, referenskursen och scenario-värdena bakom bedömningen.</p>
                         <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
-                          <li>Attraktiv risk/reward</li>
-                          <li>Balanserad risk/reward</li>
-                          <li>Svag risk/reward</li>
-                          <li>Vilken annualiserad värdepotential nivåerna motsvarar</li>
+                          <li>Exakta nivåer för attraktiv, balanserad och svag risk/reward</li>
+                          <li>Referenskursen vid analystillfället</li>
+                          <li>Bear, sannolikhetsvägt värde och Bull i USD</li>
                         </ul>
                         <button type="button" onClick={openLoginModal} className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-emerald-700 px-5 text-sm font-bold text-white transition-colors hover:bg-emerald-800">
-                          Skapa gratis konto <ArrowRight size={16} aria-hidden="true" />
+                          Se full information – gratis <ArrowRight size={16} aria-hidden="true" />
                         </button>
+                        <p className="mt-2 text-xs font-medium text-emerald-800">Kostnadsfritt konto.</p>
                       </div>
                     </div>
                   </div>

@@ -1,209 +1,115 @@
-import { CalendarDays, Info, LockKeyhole, ShieldCheck, TrendingDown, TrendingUp } from "lucide-react";
+import { Info, ShieldCheck } from "lucide-react";
 import type { ReactNode } from "react";
+import type { AnalysisData } from "../../types/analysis";
 
-type ZoneId = "ATTRACTIVE" | "BALANCED" | "WEAK";
-
-type ApprovedRiskRewardZones = {
-  status: "APPROVED" | "DRAFT" | "NOT_APPLICABLE";
-  visibility: "MEMBER";
-  title: string;
-  introduction: string;
-  valuationDate: string;
-  zones: {
-    id: ZoneId;
-    title: string;
-    priceLabel: string;
-    annualPotentialLabel: string;
-    bearDownsideLabel: string;
-    rationale: string;
-  }[];
-  disclaimer: string;
-  /**
-   * MEMBER-presentationen får bara fyllas från godkänd canonical v11.2-data.
-   * Komponenten räknar aldrig fram eller interpolerar dessa värden.
-   */
-  memberPresentation?: {
-    riskLabel: string;
-    currentPriceLabel: string;
-    currentZoneLabel: string;
-    bearLabel: string;
-    weightedValueLabel: string;
-    bullLabel: string;
-    annualizedPotentialLabel: string;
-    bearDownsideLabel: string;
-    interpretation: string;
-  };
-};
+type ApprovedRiskRewardZones = NonNullable<NonNullable<AnalysisData["v11"]>["riskRewardZones"]>;
+type MemberInsight = NonNullable<ApprovedRiskRewardZones["memberInsight"]>;
+type Zone = ApprovedRiskRewardZones["zones"][number];
 
 type Props = {
   user: unknown;
   zones?: ApprovedRiskRewardZones;
+  companyLabel: string;
+  ticker: string;
+  referenceLabel: string;
+  analysisDate: string;
   onSignup: () => void;
   onLogin: () => void;
 };
 
-const DEMO = {
-  currentPrice: "135 USD",
-  currentZone: "Svag risk/reward",
-  annualizedPotential: "−3,1 %/år",
-  bearDownside: "−40 %",
-  valuationDate: "31 dec 2028",
-  points: [
-    { label: "Bear", value: "80 USD", position: "left-[8%]", tone: "bg-emerald-600" },
-    { label: "Sannolikhetsvägt värde", value: "125 USD", position: "left-1/2", tone: "bg-amber-500" },
-    { label: "Bull", value: "160 USD", position: "right-[8%]", tone: "bg-emerald-500" },
-  ],
-} as const;
+const NOTE = "Kurs vid analystillfället, inte en live-kurs. Zonerna är fasta redaktionella bedömningar och inte personlig rådgivning.";
 
-function Stat({ icon, label, value, detail }: { icon: ReactNode; label: string; value: string; detail?: string }) {
-  return (
-    <div className="flex min-w-0 items-start gap-3 px-1 py-2 sm:px-4">
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-100 text-slate-700">{icon}</span>
-      <div className="min-w-0">
-        <dt className="text-xs font-semibold text-slate-500">{label}</dt>
-        <dd className="mt-1 text-lg font-black tracking-[-0.02em] text-slate-950">{value}</dd>
-        {detail && <p className="mt-0.5 text-xs text-slate-500">{detail}</p>}
-      </div>
-    </div>
-  );
+const DEMO_ZONES: Zone[] = [
+  { id: "ATTRACTIVE", title: "Attraktiv risk/reward", priceLabel: "Under 100", annualPotentialLabel: "Illustrativ nivå", bearDownsideLabel: "Illustrativ nivå", rationale: "Förbättrad säkerhetsmarginal." },
+  { id: "BALANCED", title: "Balanserad risk/reward", priceLabel: "100–125", annualPotentialLabel: "Illustrativ nivå", bearDownsideLabel: "Illustrativ nivå", rationale: "Mer balanserad potential och risk." },
+  { id: "WEAK", title: "Svag risk/reward", priceLabel: "Över 125", annualPotentialLabel: "Illustrativ nivå", bearDownsideLabel: "Illustrativ nivå", rationale: "Begränsad säkerhetsmarginal." },
+];
+
+const DEMO_INSIGHT: MemberInsight = {
+  companyLabel: "Illustrativt bolag",
+  ticker: "EXEMPEL",
+  referencePriceLabel: "135",
+  referenceDateLabel: "exempeldatum",
+  assessmentLabel: "Svag risk/reward",
+  assessmentNote: "Bedömningen visar ersättningen för risk i ett illustrativt exempel och är ingen köp- eller säljsignal.",
+  marker: { zoneId: "WEAK", positionPct: 76, label: "Illustrativ referenskurs", note: "Markören gäller endast exemplet." },
+  scenarioSpread: {
+    label: "Illustrativt scenariospann",
+    points: [
+      { label: "Bear", valueLabel: "80", annualPotentialLabel: "−18 %/år" },
+      { label: "Sannolikhetsvägt värde", valueLabel: "125", annualPotentialLabel: "−3 %/år" },
+      { label: "Bull", valueLabel: "160", annualPotentialLabel: "+8 %/år" },
+    ],
+    rangeSharesPct: [56, 44],
+    distanceLabel: "Illustrativ spridning: 80 → 125 → 160",
+  },
+  footerNote: "Illustrativa siffror som endast visar hur verktyget fungerar.",
+};
+
+const zoneStyles: Record<Zone["id"], { rail: string; surface: string; label: string }> = {
+  ATTRACTIVE: { rail: "bg-[#3d8b68]", surface: "bg-emerald-100/75", label: "text-[#245b43]" },
+  BALANCED: { rail: "bg-[#aac6b3]", surface: "bg-[#edf4ee]", label: "text-[#496252]" },
+  WEAK: { rail: "bg-[#d8d2c6]", surface: "bg-stone-100", label: "text-[#625f58]" },
+};
+
+function Panel({ children, illustrative = false }: { children: ReactNode; illustrative?: boolean }) {
+  return <aside id="risk-reward" className="scroll-mt-36 mt-8 rounded-2xl border border-[#d8e6dc] bg-white p-5 shadow-sm sm:p-7" aria-labelledby="risk-reward-title">{illustrative && <p className="text-xs font-black uppercase tracking-[0.16em] text-emerald-700">Exempel – illustrativt bolag</p>}{children}</aside>;
 }
 
-function RiskRewardBand({ demo = false, currentPriceLabel, currentZoneLabel }: { demo?: boolean; currentPriceLabel: string; currentZoneLabel: string }) {
-  return (
-    <div className="mt-7">
-      <div className="relative overflow-visible rounded-xl border border-slate-200 bg-white pt-14">
-        <div className="absolute right-[12%] top-0 z-10 -translate-y-1/2 rounded-xl bg-slate-950 px-4 py-2 text-center text-white shadow-lg">
-          <p className="text-xs font-semibold text-white/70">{demo ? "Illustrativ dagens kurs" : "Dagens kurs"}</p>
-          <p className="mt-0.5 text-lg font-black">{currentPriceLabel}</p>
-          <span className="absolute bottom-[-8px] left-1/2 h-4 w-4 -translate-x-1/2 rotate-45 bg-slate-950" aria-hidden="true" />
-        </div>
-        <div className="grid overflow-hidden sm:grid-cols-3">
-          <section className="border-b border-emerald-950/10 bg-emerald-50 px-4 py-5 text-center sm:border-b-0 sm:border-r">
-            <h4 className="text-sm font-black text-emerald-950">ATTRAKTIV RISK/REWARD</h4>
-            <p className="mt-2 text-sm font-bold text-emerald-900">Förbättrad säkerhetsmarginal</p>
-          </section>
-          <section className="border-b border-emerald-900/10 bg-[#f1f7f2] px-4 py-5 text-center sm:border-b-0 sm:border-r">
-            <h4 className="text-sm font-black text-emerald-950">BALANSERAD RISK/REWARD</h4>
-            <p className="mt-2 text-sm font-bold text-emerald-900">Relevant potential med begränsad marginal</p>
-          </section>
-          <section className="bg-[#f4f0e9] px-4 py-5 text-center">
-            <h4 className="text-sm font-black text-stone-800">SVAG RISK/REWARD</h4>
-            <p className="mt-2 text-sm font-bold text-stone-700">Begränsad säkerhetsmarginal</p>
-          </section>
-        </div>
-        <p className="border-t border-slate-200 px-4 py-3 text-center text-xs font-semibold text-slate-600">
-          {currentZoneLabel}
-        </p>
+function Scale({ zones, insight }: { zones: Zone[]; insight: MemberInsight }) {
+  const markerZoneIndex = insight.marker ? zones.findIndex((zone) => zone.id === insight.marker?.zoneId) : -1;
+  return <div className="mt-7">
+    <div className="relative">
+      <div className="flex min-h-24 overflow-hidden rounded-xl border border-slate-200 bg-white" aria-label="Risk/reward-skala">
+        {zones.map((zone) => <section key={zone.id} className={`flex min-w-0 flex-1 flex-col items-center justify-center border-r px-1.5 py-3 text-center last:border-r-0 sm:px-3 ${zoneStyles[zone.id].surface}`}><p className={`text-[10px] font-black uppercase leading-4 sm:text-xs ${zoneStyles[zone.id].label}`}>{zone.title}</p><p className="mt-1 text-[11px] font-semibold leading-4 text-slate-600 sm:text-sm">{zone.priceLabel}</p></section>)}
       </div>
+      {insight.marker && <span className="pointer-events-none absolute inset-y-0 z-10 -translate-x-1/2 border-l-2 border-slate-800/70" style={{ left: `${insight.marker.positionPct}%` }} aria-label={`${insight.marker.label}: ${insight.referencePriceLabel}. ${insight.marker.note}`}><span className="absolute -bottom-1.5 -left-1.5 h-3 w-3 rounded-full border-2 border-white bg-slate-800 shadow-sm" /></span>}
     </div>
-  );
+    <div className="mt-3 grid gap-2 text-[11px] leading-4 text-slate-500" style={{ gridTemplateColumns: `repeat(${zones.length}, minmax(0, 1fr))` }}>
+      {zones.map((zone, index) => <div key={zone.id} className={index === zones.length - 1 ? "text-right" : index > 0 ? "text-center" : ""}>{index === markerZoneIndex && <p className="font-bold text-slate-700">Referenskurs här</p>}</div>)}
+    </div>
+    <p className="mt-2 flex items-start gap-2 text-xs leading-5 text-slate-500"><Info size={14} className="mt-0.5 shrink-0" aria-hidden="true" />{insight.marker?.note ?? "Referensmarkör saknas i godkänt presentationsunderlag."}</p>
+  </div>;
 }
 
-function DemoPoints() {
-  return (
-    <div className="mt-6 grid gap-3 sm:grid-cols-3 sm:gap-4">
-      {DEMO.points.map((point) => (
-        <div key={point.label} className="flex items-center gap-3 rounded-lg border border-emerald-100 bg-white/70 px-4 py-3 text-left sm:block sm:border-0 sm:bg-transparent sm:p-0 sm:text-center">
-          <span className={`block h-3 w-3 shrink-0 rounded-full ${point.tone} sm:mx-auto`} aria-hidden="true" />
-          <div className="sm:mt-2">
-            <p className="text-sm font-bold text-slate-950">{point.label}</p>
-            <p className="mt-0.5 text-sm text-slate-600 sm:mt-1">{point.value}</p>
-          </div>
-        </div>
-      ))}
+function ScenarioSpan({ insight }: { insight: MemberInsight }) {
+  if (!insight.scenarioSpread) return <div className="mt-7 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-600">Scenariospann saknas i godkänt presentationsunderlag.</div>;
+  return <section className="mt-7 rounded-xl border border-[#d8e6dc] bg-[#f6faf7] p-4 sm:p-5" aria-labelledby="scenario-spread-title">
+    <p id="scenario-spread-title" className="text-sm font-bold text-[#496252]">{insight.scenarioSpread.label}</p>
+    <div className="mt-4 grid gap-3 sm:grid-cols-3">{insight.scenarioSpread.points.map((point, index) => <div key={point.label} className={`rounded-lg bg-white/75 px-3 py-3 ring-1 ring-slate-200/80 ${index === insight.scenarioSpread!.points.length - 1 ? "sm:text-right" : index > 0 ? "sm:text-center" : ""}`}><p className="text-xs font-bold text-slate-500">{point.label}</p><p className="mt-1 text-lg font-black text-slate-950">{point.valueLabel}</p><p className="mt-1 text-sm font-semibold text-slate-600">{point.annualPotentialLabel}</p></div>)}</div>
+    <div className="mt-5 flex h-1.5 overflow-hidden rounded-full bg-[#e5e3da]" aria-hidden="true"><span className="bg-slate-400/55" style={{ width: `${insight.scenarioSpread.rangeSharesPct[0]}%` }} /><span className="w-px bg-slate-700" /><span className="bg-[#2f7d5a]/55" style={{ width: `${insight.scenarioSpread.rangeSharesPct[1]}%` }} /></div>
+    <p className="mt-3 text-xs leading-5 text-slate-500">{insight.scenarioSpread.distanceLabel}</p>
+  </section>;
+}
+
+function FullInsight({ zones, insight, illustrative = false, children }: { zones: Zone[]; insight: MemberInsight; illustrative?: boolean; children?: ReactNode }) {
+  return <Panel illustrative={illustrative}>
+    <div className="mt-2 flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+      <div className="max-w-3xl"><p className="text-xs font-bold uppercase tracking-[0.1em] text-slate-500">{insight.companyLabel} · {insight.ticker}</p><h3 id="risk-reward-title" className="mt-2 font-serif text-3xl font-bold tracking-[-0.04em] text-slate-950 sm:text-4xl">Medlemsinsikt: När blir risk/reward mer attraktiv?</h3><p className="mt-3 text-sm leading-6 text-slate-600">{illustrative ? "Se hur våra risk/reward-zoner fungerar. Som gratis medlem får du de faktiska nivåerna för Meta." : "Zonerna visar hur säkerhetsmarginalen förändras vid olika kursnivåer. De ändrar inte analysens rekommendation."}</p></div>
+      {illustrative && <span className="inline-flex w-fit items-center gap-2 rounded-full bg-slate-50 px-3 py-2 text-xs font-black text-slate-600 ring-1 ring-slate-200"><ShieldCheck size={16} aria-hidden="true" /> EXEMPEL</span>}
     </div>
-  );
+    <div className="mt-6 grid gap-4 rounded-xl bg-slate-50/80 p-4 sm:grid-cols-2 sm:p-5"><div><p className="text-xs font-semibold text-slate-500">Referenskurs vid analysen</p><p className="mt-1 text-2xl font-black text-slate-950">{insight.referencePriceLabel}</p><p className="mt-1 text-xs text-slate-500">{insight.referenceDateLabel}</p></div><div><p className="text-xs font-semibold text-slate-500">Aktuell bedömning</p><p className="mt-1 text-lg font-black text-[#496252]">{insight.assessmentLabel}</p><p className="mt-1 text-xs leading-5 text-slate-500">{insight.assessmentNote}</p></div></div>
+    <Scale zones={zones} insight={insight} />
+    <ScenarioSpan insight={insight} />
+    {children}
+    <p className="mt-5 text-xs leading-5 text-slate-500">{insight.footerNote}</p>
+  </Panel>;
 }
 
 function DemoModule({ onSignup, onLogin }: Pick<Props, "onSignup" | "onLogin">) {
-  return (
-    <aside id="risk-reward" className="scroll-mt-36 mt-8 rounded-2xl border border-emerald-200 bg-emerald-50/35 p-5 sm:p-7" aria-labelledby="risk-reward-title">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div className="max-w-2xl">
-          <p className="text-xs font-black uppercase tracking-[0.16em] text-emerald-700">Exempel – illustrativt bolag</p>
-          <h3 id="risk-reward-title" className="mt-3 font-serif text-3xl font-bold tracking-[-0.04em] text-slate-950 sm:text-4xl">När blir risk/reward mer attraktiv?</h3>
-          <p className="mt-3 text-sm leading-6 text-slate-600">Se hur våra risk/reward-zoner fungerar. Som gratis medlem får du de faktiska nivåerna för Meta.</p>
-        </div>
-        <span className="inline-flex w-fit items-center gap-2 rounded-full bg-white px-3 py-2 text-xs font-black text-slate-700 ring-1 ring-slate-200"><ShieldCheck size={16} aria-hidden="true" /> EXEMPEL</span>
-      </div>
-      <RiskRewardBand demo currentPriceLabel={DEMO.currentPrice} currentZoneLabel={`Illustrativ dagens kurs ligger i: ${DEMO.currentZone}`} />
-      <DemoPoints />
-      <dl className="mt-7 grid gap-4 border-y border-emerald-100 py-4 sm:grid-cols-3">
-        <Stat icon={<TrendingUp size={19} aria-hidden="true" />} label="Illustrativ annualiserad värdepotential" value={DEMO.annualizedPotential} />
-        <Stat icon={<TrendingDown size={19} aria-hidden="true" />} label="Illustrativ nedsida till Bear" value={DEMO.bearDownside} />
-        <Stat icon={<CalendarDays size={19} aria-hidden="true" />} label="Illustrativt värderingsdatum" value={DEMO.valuationDate} />
-      </dl>
-      <div className="mt-6 flex flex-col gap-4 rounded-xl border border-amber-200 bg-amber-50/60 p-5 sm:flex-row sm:items-center sm:justify-between">
-        <div className="max-w-xl">
-          <p className="font-bold text-slate-950">Skapa gratis konto för att se Metas risk/reward-nivåer</p>
-          <p className="mt-1 text-sm leading-6 text-slate-600">Exakta kursgränser, dagens placering och Meta-specifik tolkning visas först när de är godkända i den redaktionella modellen.</p>
-        </div>
-        <div className="flex shrink-0 flex-col gap-2 sm:items-end">
-          <button type="button" onClick={onSignup} className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-700 px-4 text-sm font-bold text-white transition-colors hover:bg-emerald-800">Skapa gratis konto</button>
-          <button type="button" onClick={onLogin} className="min-h-9 text-sm font-bold text-emerald-700 hover:text-emerald-900">Har du redan konto? Logga in</button>
-        </div>
-      </div>
-    </aside>
-  );
+  return <FullInsight zones={DEMO_ZONES} insight={DEMO_INSIGHT} illustrative><div className="mt-5 flex flex-col gap-4 rounded-xl border border-amber-200 bg-amber-50/60 p-5 sm:flex-row sm:items-center sm:justify-between"><div className="max-w-xl"><p className="font-bold text-slate-950">Skapa gratis konto för att se Metas risk/reward-nivåer</p><p className="mt-1 text-sm leading-6 text-slate-600">Som medlem ser du godkända kursgränser, scenariospann och placeringen vid analystillfället.</p></div><div className="flex shrink-0 flex-col gap-2 sm:items-end"><button type="button" onClick={onSignup} className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-700 px-4 text-sm font-bold text-white transition-colors hover:bg-emerald-800">Skapa gratis konto</button><button type="button" onClick={onLogin} className="min-h-9 text-sm font-bold text-emerald-700 hover:text-emerald-900">Har du redan konto? Logga in</button></div></div></FullInsight>;
 }
 
-function PendingMemberModule() {
-  return (
-    <aside id="risk-reward" className="scroll-mt-36 mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-7" aria-labelledby="risk-reward-title">
-      <div className="flex gap-4">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-slate-700 ring-1 ring-slate-200"><Info size={20} aria-hidden="true" /></span>
-        <div>
-          <h3 id="risk-reward-title" className="font-serif text-3xl font-bold tracking-[-0.04em] text-slate-950">När blir risk/reward mer attraktiv?</h3>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">Meta:s faktiska kursnivåer visas först när zonanalysen är godkänd i den canonical v11.2-modellen. Vi visar inga preliminära eller maskerade nivåer.</p>
-        </div>
-      </div>
-    </aside>
-  );
+function UnavailableModule({ companyLabel, ticker, referenceLabel, analysisDate, isMember = true }: Pick<Props, "companyLabel" | "ticker" | "referenceLabel" | "analysisDate"> & { isMember?: boolean }) {
+  return <Panel><p className="text-xs font-black uppercase tracking-[0.12em] text-slate-500">{companyLabel} · {ticker}</p><h3 id="risk-reward-title" className="mt-3 font-serif text-3xl font-bold tracking-[-0.04em] text-slate-950">Medlemsinsikt: När blir risk/reward mer attraktiv?</h3>{isMember && <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2"><div><dt className="font-semibold text-slate-500">Referenskurs vid analysen</dt><dd className="mt-1 font-black text-slate-950">{referenceLabel} · {analysisDate}</dd></div><div><dt className="font-semibold text-slate-500">Aktuell bedömning</dt><dd className="mt-1 font-black text-slate-950">Inväntar godkänd zonanalys</dd></div></dl>}<p className="mt-4 max-w-2xl text-sm leading-6 text-slate-600">Godkända canonical risk/reward-zoner eller komplett presentationsdata saknas. Därför visas inga kursgränser, markörer eller scenariovärden.</p><p className="mt-4 text-xs leading-5 text-slate-500">{NOTE}</p></Panel>;
 }
 
-function UnavailableModule({ companyLabel, ticker, referenceLabel, analysisDate, isMember }: { companyLabel: string; ticker: string; referenceLabel: string; analysisDate: string; isMember: boolean }) {
-  return (
-    <aside id="risk-reward" className="scroll-mt-36 mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-7" aria-labelledby="risk-reward-title">
-      <div className="flex gap-4">
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-slate-700 ring-1 ring-slate-200"><Info size={20} aria-hidden="true" /></span>
-        <div>
-          <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">{companyLabel} ({ticker}) · {isMember ? `Referenskurs ${referenceLabel}` : "Referenskurs vid analystillfället"} · {analysisDate}</p>
-          <h3 id="risk-reward-title" className="mt-3 font-serif text-3xl font-bold tracking-[-0.04em] text-slate-950">Medlemsinsikt: När blir risk/reward mer attraktiv?</h3>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">Aktuell bedömning: ej tillgänglig utan godkända canonical zoner. Därför visas inga kursgränser, markörer eller spridningsmått.</p>
-          <p className="mt-4 text-xs leading-5 text-slate-500">Kurs vid analystillfället, inte en live-kurs. Zonerna är fasta redaktionella bedömningar och inte personlig rådgivning.</p>
-        </div>
-      </div>
-    </aside>
-  );
-}
-
-function MemberModule({ zones }: { zones: ApprovedRiskRewardZones & { memberPresentation: NonNullable<ApprovedRiskRewardZones["memberPresentation"]> } }) {
-  const presentation = zones.memberPresentation;
-  return (
-    <aside id="risk-reward" className="scroll-mt-36 mt-8 rounded-2xl border border-emerald-200 bg-emerald-50/35 p-5 sm:p-7" aria-labelledby="risk-reward-title">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div className="max-w-2xl"><h3 id="risk-reward-title" className="font-serif text-3xl font-bold tracking-[-0.04em] text-slate-950 sm:text-4xl">När blir risk/reward mer attraktiv?</h3><p className="mt-3 text-sm leading-6 text-slate-600">{zones.introduction}</p></div>
-        <span className="inline-flex w-fit items-center gap-2 rounded-full bg-white px-3 py-2 text-xs font-black text-slate-700 ring-1 ring-slate-200"><ShieldCheck size={16} aria-hidden="true" /> {presentation.riskLabel}</span>
-      </div>
-      <RiskRewardBand currentPriceLabel={presentation.currentPriceLabel} currentZoneLabel={`Dagens kurs ligger i: ${presentation.currentZoneLabel}`} />
-      <div className="mt-6 grid gap-4 sm:grid-cols-3">
-        {[{ label: "Bear", value: presentation.bearLabel }, { label: "Sannolikhetsvägt värde", value: presentation.weightedValueLabel }, { label: "Bull", value: presentation.bullLabel }].map((point) => <div key={point.label} className="text-center"><p className="text-sm font-bold text-slate-950">{point.label}</p><p className="mt-1 text-sm text-slate-600">{point.value}</p></div>)}
-      </div>
-      <dl className="mt-7 grid gap-4 border-y border-emerald-100 py-4 sm:grid-cols-3">
-        <Stat icon={<TrendingUp size={19} aria-hidden="true" />} label="Annualiserad värdepotential" value={presentation.annualizedPotentialLabel} />
-        <Stat icon={<TrendingDown size={19} aria-hidden="true" />} label="Nedsida till Bear" value={presentation.bearDownsideLabel} />
-        <Stat icon={<CalendarDays size={19} aria-hidden="true" />} label="Värderingsdatum" value={zones.valuationDate} />
-      </dl>
-      <div className="mt-6 rounded-xl border border-emerald-200 bg-white/80 p-5"><p className="font-bold text-slate-950">Kort tolkning</p><p className="mt-2 max-w-3xl text-sm leading-6 text-slate-700">{presentation.interpretation}</p></div>
-      <p className="mt-5 text-xs leading-5 text-slate-500">{zones.disclaimer}</p>
-    </aside>
-  );
-}
-
-export default function RiskRewardModule({ user, zones, onSignup, onLogin }: Props) {
-  const hasApprovedMemberData = zones?.status === "APPROVED" && zones.visibility === "MEMBER" && Boolean(zones.memberPresentation);
-  if (hasApprovedMemberData && user) return <MemberModule zones={zones as ApprovedRiskRewardZones & { memberPresentation: NonNullable<ApprovedRiskRewardZones["memberPresentation"]> }} />;
-  if (user) return <PendingMemberModule />;
+export default function RiskRewardModule({ user, zones, companyLabel, ticker, referenceLabel, analysisDate, onSignup, onLogin }: Props) {
+  const insight = zones?.memberInsight;
+  const completeInsight = Boolean(insight?.marker && insight.scenarioSpread && insight.scenarioSpread.points.length === 3 && insight.scenarioSpread.rangeSharesPct.length === 2 && zones?.zones.some((zone) => zone.id === insight.marker?.zoneId));
+  const hasApprovedMemberData = zones?.status === "APPROVED" && zones.visibility === "MEMBER" && completeInsight;
+  if (hasApprovedMemberData && user) return <FullInsight zones={zones!.zones} insight={insight!} />;
+  if (user) return <UnavailableModule companyLabel={companyLabel} ticker={ticker} referenceLabel={referenceLabel} analysisDate={analysisDate} />;
   return <DemoModule onSignup={onSignup} onLogin={onLogin} />;
 }
 

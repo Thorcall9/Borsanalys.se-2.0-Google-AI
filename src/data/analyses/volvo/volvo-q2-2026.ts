@@ -19,7 +19,7 @@ export const volvoQ22026: AnalysisData & { contentType: "analysis" } = {
   published: true,
   v11: {
     analysisId: "volvo-b-2026-08-10-v11-2",
-    versionId: "volvo-q2-2026-v7",
+    versionId: "volvo-q2-2026-v8",
     sourceCutoffDate: "2026-08-10",
     valuationDate: "2028-12-31",
     valuationYearLabel: "2028E",
@@ -48,6 +48,7 @@ export const volvoQ22026: AnalysisData & { contentType: "analysis" } = {
         bearDownsideLabel: zone.presentation.bearDownsideLabel,
         rationale: zone.rationale,
       })),
+      memberInsight: VOLVO_Q2_2026_DOSSIER.riskRewardZones.memberInsight,
       disclaimer: "Zonerna är Börsanalys.se:s fasta redaktionella bedömning, inte personlig investeringsrådgivning.",
     },
     epsBridgeEnabled: true,

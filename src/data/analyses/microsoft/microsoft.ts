@@ -29,6 +29,72 @@ export const microsoft: AnalysisData = {
     upside: "+37 %",
     annualPotential: "Annualiserad värdepotential: +13,9 %/år",
     riskLabel: "Medelrisk med förhöjd capex- och koncentrationsrisk",
+    riskRewardZones: {
+      status: "APPROVED",
+      visibility: "MEMBER",
+      title: "När blir risk/reward mer attraktiv?",
+      introduction: "Tre priszoner visar hur säkerhetsmarginalen förändras. Bedömningen väger annualiserad potential, Bear-nedsida, scenario-spread och de delar av AI-caset som fortfarande måste bevisas.",
+      valuationDate: "2028-12-31",
+      zones: [
+        {
+          id: "ATTRACTIVE",
+          title: "Attraktiv risk/reward",
+          priceLabel: "Under 465 USD",
+          annualPotentialLabel: "Cirka +17,4 %/år eller högre",
+          bearDownsideLabel: "Bear-scenario: cirka +3,0 % eller bättre",
+          rationale: "Vid denna nivå ger potentialen och Bear-skyddet materiell kompensation för osäker avkastning på AI-capex, RPO-koncentration och multipelrisk.",
+        },
+        {
+          id: "BALANCED",
+          title: "Balanserad risk/reward",
+          priceLabel: "465–585 USD",
+          annualPotentialLabel: "Cirka +17,4 till +6,7 %/år",
+          bearDownsideLabel: "Bear-nedsida: från 0 % till cirka −18,1 %",
+          rationale: "Potentialen är fortsatt relevant, men utfallet beror på att cloud-marginal, bred RPO-tillväxt och FCF-konvertering faktiskt bevisas.",
+        },
+        {
+          id: "WEAK",
+          title: "Svag risk/reward",
+          priceLabel: "Från 585 USD",
+          annualPotentialLabel: "Cirka +6,7 %/år eller lägre",
+          bearDownsideLabel: "Bear-nedsida: minst cirka −18,1 %",
+          rationale: "Den återstående potentialen är för liten i relation till AI-capex, OpenAI-koncentration, scenario-spread och multipelrisk.",
+        },
+      ],
+      disclaimer: "Risk/reward-zonerna är en redaktionell bedömning av säkerhetsmarginal och ändrar inte automatiskt rekommendationen KÖP.",
+      memberInsight: {
+        companyLabel: "Microsoft",
+        ticker: "MSFT",
+        identityLabel: "Microsoft · MSFT",
+        referencePriceLabel: "499,99 USD",
+        referenceDateLabel: "7 aug 2026",
+        assessmentLabel: "Balanserad risk/reward",
+        assessmentNote: "Referenspunkten är kursen vid analystillfället, inte en köp- eller säljsignal.",
+        assessmentRationale: "Microsofts efterfrågan är stark, men referenskursen lämnar begränsad säkerhetsmarginal så länge avkastningen på AI-capex, bred RPO-tillväxt och Copilot-monetisering fortsatt måste bevisas.",
+        zoneSharesPct: [21.666666666666668, 40, 38.333333333333336],
+        marker: {
+          zoneId: "BALANCED",
+          positionPct: 33.33,
+          label: "Kurs vid analystillfället",
+          note: "499,99 USD · 7 aug 2026",
+        },
+        markers: [
+          { id: "reference", positionPct: 33.33, label: "▼ Kurs 500 USD", placement: "above", align: "center" },
+          { id: "weighted-fair-value", positionPct: 94.33333333333333, label: "Vårt värde 683 USD", placement: "below", align: "end" },
+        ],
+        scenarioSpread: {
+          label: "Scenariospann till 31 december 2028",
+          points: [
+            { label: "Bear", valueLabel: "479 USD", annualPotentialLabel: "−1,8 %/år" },
+            { label: "Sannolikhetsvägt", valueLabel: "683 USD", annualPotentialLabel: "+13,9 %/år" },
+            { label: "Bull", valueLabel: "897 USD", annualPotentialLabel: "+27,6 %/år" },
+          ],
+          rangeSharesPct: [48.80382775119617, 51.19617224880383],
+          distanceLabel: "Bear → sannolikhetsvägt: 204 USD · sannolikhetsvägt → Bull: 214 USD",
+        },
+        footerNote: "Högre kurs ger mindre säkerhetsmarginal. Bedömningen är inte en köp- eller säljsignal och ändrar inte rekommendationen KÖP.",
+      },
+    },
     positiveReasons: [
       { title: "Azure-efterfrågan är fortsatt stark", body: "Azure and other cloud services växte 43 % i FY2026 Q4; enligt ledningen överstiger efterfrågan fortsatt kapaciteten." },
       { title: "Den kommersiella orderboken bekräftar kontrakterad efterfrågan", body: "Commercial RPO var 678 md USD vid FY2026-slutet. RPO är kontrakterad framtida omsättning, inte bevis på kassaflöde eller marginal." },
@@ -124,9 +190,9 @@ export const microsoft: AnalysisData = {
     ]
   }],
   scenarios: [
-    { label: "Bull", value: "$897", change: "+79%", cagr: "+34,0%", type: "bull", probability: "25%", description: "Azure, bred RPO exklusive OpenAI och Copilot monetiseras med hög vinsttillväxt; 35x P/E är en premievärdering som kräver multipel-expansion från 28,9x.", operatingLadder: { revenueUsdBn: 475, operatingMarginPct: 47, operatingIncomeUsdBn: 223.25, normalizedFinanceAndOtherUsdBn: 1.5, taxRatePct: 17, dilutedSharesBn: 7.28, normalizedEpsUsd: 25.62, revenueGrowthFromLatestAnnualPct: 19.7 } },
-    { label: "Base", value: "$678", change: "+36%", cagr: "+16,5%", type: "base", probability: "50%", description: "KÖP-scenariot förutsätter cloud-bruttomarginal stabil kring 64–65 %, bred RPO-tillväxt exklusive OpenAI och förbättrad FCF-konvertering.", operatingLadder: { revenueUsdBn: 440, operatingMarginPct: 45.5, operatingIncomeUsdBn: 200.2, normalizedFinanceAndOtherUsdBn: 1, taxRatePct: 18, dilutedSharesBn: 7.30, normalizedEpsUsd: 22.60, revenueGrowthFromLatestAnnualPct: 15.1 } },
-    { label: "Bear", value: "$479", change: "−4%", cagr: "−1,1%", type: "bear", probability: "25%", description: "Azure avtar och AI-capex håller nere marginalen.", operatingLadder: { revenueUsdBn: 400, operatingMarginPct: 43, operatingIncomeUsdBn: 172, normalizedFinanceAndOtherUsdBn: 1, taxRatePct: 19, dilutedSharesBn: 7.32, normalizedEpsUsd: 19.14, revenueGrowthFromLatestAnnualPct: 9.8 } }
+    { label: "Bull", value: "$897", change: "+79%", cagr: "+27,6%", type: "bull", probability: "25%", description: "Azure, bred RPO exklusive OpenAI och Copilot monetiseras med hög vinsttillväxt; 35x P/E är en premievärdering som kräver multipel-expansion från 28,9x.", operatingLadder: { revenueUsdBn: 475, operatingMarginPct: 47, operatingIncomeUsdBn: 223.25, normalizedFinanceAndOtherUsdBn: 1.5, taxRatePct: 17, dilutedSharesBn: 7.28, normalizedEpsUsd: 25.62, revenueGrowthFromLatestAnnualPct: 19.7 } },
+    { label: "Base", value: "$678", change: "+36%", cagr: "+13,5%", type: "base", probability: "50%", description: "KÖP-scenariot förutsätter cloud-bruttomarginal stabil kring 64–65 %, bred RPO-tillväxt exklusive OpenAI och förbättrad FCF-konvertering.", operatingLadder: { revenueUsdBn: 440, operatingMarginPct: 45.5, operatingIncomeUsdBn: 200.2, normalizedFinanceAndOtherUsdBn: 1, taxRatePct: 18, dilutedSharesBn: 7.30, normalizedEpsUsd: 22.60, revenueGrowthFromLatestAnnualPct: 15.1 } },
+    { label: "Bear", value: "$479", change: "−4%", cagr: "−1,8%", type: "bear", probability: "25%", description: "Azure avtar och AI-capex håller nere marginalen.", operatingLadder: { revenueUsdBn: 400, operatingMarginPct: 43, operatingIncomeUsdBn: 172, normalizedFinanceAndOtherUsdBn: 1, taxRatePct: 19, dilutedSharesBn: 7.32, normalizedEpsUsd: 19.14, revenueGrowthFromLatestAnnualPct: 9.8 } }
   ],
   scores: { affarsmodell: 5, strategiskMoat: 5, finansiellKvalitet: 4, vardering: 3, tillvaxtutsikter: 4, riskprofil: 3, esgMakro: 3, aiObservationer: 4 }
 };
