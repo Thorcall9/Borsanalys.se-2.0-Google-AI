@@ -734,7 +734,7 @@ export default function V11Analysis({ data }: Props) {
               />
             )}
             {data.slug === "visa" && !riskRewardZones && (
-              <UnavailableModule companyLabel={data.title} ticker={data.ticker} referenceLabel={data.price} analysisDate={formatDate(data.date)} />
+              <UnavailableModule companyLabel={data.title} ticker={data.ticker} referenceLabel={data.price} analysisDate={formatDate(data.date)} isMember={Boolean(user)} />
             )}
             {preview.illustrativeTotalReturn && (
               <aside className="mt-8 border-t border-slate-200 pt-8" aria-labelledby="illustrative-total-return-title">

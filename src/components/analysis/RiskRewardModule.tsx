@@ -161,15 +161,15 @@ function PendingMemberModule() {
   );
 }
 
-function UnavailableModule({ companyLabel, ticker, referenceLabel, analysisDate }: { companyLabel: string; ticker: string; referenceLabel: string; analysisDate: string }) {
+function UnavailableModule({ companyLabel, ticker, referenceLabel, analysisDate, isMember }: { companyLabel: string; ticker: string; referenceLabel: string; analysisDate: string; isMember: boolean }) {
   return (
     <aside id="risk-reward" className="scroll-mt-36 mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-7" aria-labelledby="risk-reward-title">
       <div className="flex gap-4">
         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-slate-700 ring-1 ring-slate-200"><Info size={20} aria-hidden="true" /></span>
         <div>
-          <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">{companyLabel} ({ticker}) · Referenskurs {referenceLabel} · {analysisDate}</p>
+          <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">{companyLabel} ({ticker}) · {isMember ? `Referenskurs ${referenceLabel}` : "Referenskurs vid analystillfället"} · {analysisDate}</p>
           <h3 id="risk-reward-title" className="mt-3 font-serif text-3xl font-bold tracking-[-0.04em] text-slate-950">Medlemsinsikt: När blir risk/reward mer attraktiv?</h3>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">Balanserad risk/reward. Godkända canonical risk/reward-zoner saknas ännu för denna analys, därför visas inga kursgränser, markörer eller spridningsmått.</p>
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600">Aktuell bedömning: ej tillgänglig utan godkända canonical zoner. Därför visas inga kursgränser, markörer eller spridningsmått.</p>
           <p className="mt-4 text-xs leading-5 text-slate-500">Kurs vid analystillfället, inte en live-kurs. Zonerna är fasta redaktionella bedömningar och inte personlig rådgivning.</p>
         </div>
       </div>
