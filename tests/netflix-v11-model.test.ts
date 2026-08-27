@@ -9,6 +9,7 @@ import {
   NETFLIX_VALUATION_DATE,
   netflixFacts,
   netflixCapitalAllocationCheck,
+  netflixRiskRewardZonesDraft,
   netflixScenarios,
   netflixStressTest,
   netflixV112Dossier,
@@ -125,6 +126,24 @@ test("Netflix archive potential uses the canonical weighted valuation", () => {
   assert.equal(netflix2026.published, true);
   assert.equal(netflix2026.upside, Math.round(netflixV112Dossier.valuation.totalPotentialPct * 100));
   assert.equal(netflix2026.upside, 21);
+});
+
+test("Netflix risk/reward draft uses the existing valuation without changing publication", () => {
+  const draft = netflixRiskRewardZonesDraft;
+  assert.equal(draft.status, "DRAFT");
+  assert.equal(draft.visibility, "MEMBER");
+  assert.equal(draft.valuationDate, NETFLIX_VALUATION_DATE);
+  assert.equal(draft.calculation.referencePrice, NETFLIX_REFERENCE_PRICE);
+  assert.equal(draft.calculation.probabilityWeightedValue, netflixV112Dossier.valuation.weightedFairValue);
+  assert.equal(draft.zones.length, 3);
+  assert.deepEqual(draft.zones.map((zone) => zone.zone), ["ATTRACTIVE", "BALANCED", "WEAK"]);
+  assert.equal(draft.zones[0].priceInterval.max, 68);
+  assert.equal(draft.zones[1].priceInterval.min, 68);
+  assert.equal(draft.zones[1].priceInterval.max, 85);
+  assert.equal(draft.zones[2].priceInterval.min, 85);
+  assert.equal(draft.presentation.memberInsight.assessmentLabel, "Balanserad risk/reward");
+  assert.deepEqual(draft.presentation.memberInsight.scenarioSpread.points.map((point) => point.annualPotentialLabel), ["−9,1 %/år", "+8,4 %/år", "+23,4 %/år"]);
+  assert.equal(netflixV112Dossier.version.status, "PUBLISH_READY");
 });
 
 test("company dossiers do not leak company-specific scenario fields or WBD notes", () => {

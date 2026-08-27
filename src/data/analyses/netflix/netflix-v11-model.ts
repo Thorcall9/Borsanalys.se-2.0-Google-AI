@@ -34,6 +34,95 @@ export const netflixScenarios = scenarios.map((input) => {
 
 const weightedFairValue = netflixScenarios.reduce((sum, scenario) => sum + scenario.fairValue * scenario.probability, 0);
 
+/**
+ * Separat v11.2-underlag för MEMBER-modulen. Det är medvetet DRAFT och är
+ * inte kopplat till publicerad frontend eller rekommendation innan redaktionellt
+ * godkännande. Alla tal härleds från samma referenskurs, scenarier och
+ * värderingsdatum som den publicerade värderingen.
+ */
+const NETFLIX_RISK_REWARD_REFERENCE_YEARS = (Date.parse(`${NETFLIX_VALUATION_DATE}T00:00:00Z`) - Date.parse("2026-08-13T00:00:00Z")) / (365.25 * 24 * 60 * 60 * 1000);
+const netflixBearFairValue = netflixScenarios.find((scenario) => scenario.id === "bear")!.fairValue;
+const netflixBullFairValue = netflixScenarios.find((scenario) => scenario.id === "bull")!.fairValue;
+const netflixRiskRewardAt = (price: number) => ({
+  testedPrice: price,
+  totalValuePotentialPct: weightedFairValue / price - 1,
+  annualizedValuePotentialPct: Math.pow(weightedFairValue / price, 1 / NETFLIX_RISK_REWARD_REFERENCE_YEARS) - 1,
+  bearDownsidePct: netflixBearFairValue / price - 1,
+});
+
+export const netflixRiskRewardZonesDraft = {
+  status: "DRAFT" as const,
+  visibility: "MEMBER" as const,
+  title: "När blir risk/reward mer attraktiv?",
+  method: "Zonerna väger annualiserad potential till sannolikhetsvägt värde, Bear-nedsida, scenario-spridning, MEDEL–HÖG risk och tesernas bevisläge. De är inte en separat värderingsmodell och ändrar inte rekommendationen.",
+  valuationDate: NETFLIX_VALUATION_DATE,
+  calculation: {
+    referencePrice: NETFLIX_REFERENCE_PRICE,
+    referenceDate: "2026-08-13",
+    valuationDate: NETFLIX_VALUATION_DATE,
+    yearsToValuation: NETFLIX_RISK_REWARD_REFERENCE_YEARS,
+    probabilityWeightedValue: weightedFairValue,
+    bearValue: netflixBearFairValue,
+    bullValue: netflixBullFairValue,
+    upsideDownsideRatioFormula: "(probability_weighted_value / tested_price - 1) / abs(bear_value / tested_price - 1); kontrollvariabel, aldrig ensam beslutsregel.",
+    testPoints: [60, 65, 68, 70, NETFLIX_REFERENCE_PRICE, 80, 85, 90, weightedFairValue].map(netflixRiskRewardAt),
+  },
+  analysis: {
+    riskRewardClassification: "BALANCED" as const,
+    companySpecificRiskFactors: [
+      { factor: "Reklam", relevance: "Reklam växer från en låg bas och måste bli materiell utan att försämra pris- eller planmix.", claimIds: ["nflx-monetization"] },
+      { factor: "Innehållsekonomi och kassaflöde", relevance: "Högre innehållsbetalningar har redan visat att rapporterad FCF kan svänga; WBD-ersättningen får inte tolkas som återkommande kapacitet.", claimIds: ["nflx-q2-fcf", "nflx-wbd", "nflx-content-obligations"] },
+      { factor: "Multipel och marginal", relevance: "Huvudscenariot kräver fortsatt marginalexpansion och en bibehållen kvalitetsmultipel trots att verksamheten mognar.", claimIds: ["nflx-q2-revenue"] },
+    ],
+    thesisStatusRelevance: "Reklam- och marginaltesen är på väg, men inte tillräckligt bekräftad för att den nuvarande Bear-nedsidan ska ge en tydlig säkerhetsmarginal.",
+    scenarioUncertainty: "Bear, sannolikhetsvägt värde och Bull spänner över olika utfall för medlems-/prisdrivare, reklam, marginal och P/E. Det separata stresstestet ingår inte i zonbedömningen.",
+    requiredRiskCompensation: "Med MEDEL–HÖG risk behöver Netflix vid en attraktiv zon erbjuda ungefär 15 % annualiserad potential eller mer och en Bear-nedsida som är klart mindre än vid referenskursen.",
+    boundaryRationale: "68 USD skiljer en tydligare riskkompensation från ett balanserat läge. 85 USD skiljer ett läge med fortsatt men begränsad potential från ett läge där Bear-nedsidan och multipelrisken dominerar.",
+    counterfactualBoundaryTest: {
+      lowerThanAttractive: "64,60 USD ger cirka +17,5 %/år och Bear cirka −3,4 %; tydligt mer attraktivt än 68 USD.",
+      reference: "78,24 USD ger cirka +8,4 %/år och Bear cirka −20,3 %; balanserat men med begränsad säkerhetsmarginal.",
+      higherThanWeak: "89,25 USD ger cirka +2,7 %/år och Bear cirka −30,1 %; tydligt svagare risk/reward än vid 85 USD.",
+    },
+    canonicalRefs: ["valuation.weightedFairValue", "scenarios.bear.fairValue", "scenarios.bull.fairValue", "identity.marketReference", "identity.valuationDate", "risk.label"],
+  },
+  boundaries: [
+    { boundaryId: "attractive-upper", canonicalPrice: { value: 68, currency: "USD", fullPrecision: true }, annualizedValuePotentialPct: netflixRiskRewardAt(68).annualizedValuePotentialPct, bearDownsidePct: netflixRiskRewardAt(68).bearDownsidePct, rationale: "Vid och under 68 USD ger den sannolikhetsvägda potentialen omkring 15 %/år och Bear-nedsidan är väsentligt mindre än vid referenskursen.", counterfactualBoundaryTest: "70 USD ger cirka +13,6 %/år och Bear cirka −10,9 %; ersättningen är då inte lika tydligt attraktiv.", risk: "MEDEL_HÖG" as const },
+    { boundaryId: "balanced-upper", canonicalPrice: { value: 85, currency: "USD", fullPrecision: true }, annualizedValuePotentialPct: netflixRiskRewardAt(85).annualizedValuePotentialPct, bearDownsidePct: netflixRiskRewardAt(85).bearDownsidePct, rationale: "Vid 85 USD återstår omkring 4,7 %/år samtidigt som Bear-nedsidan är omkring −26,6 %; det är för tunt för att vara balanserat med Netflix riskprofil.", counterfactualBoundaryTest: "80,75 USD ger cirka +7,0 %/år och Bear cirka −22,8 %; begränsat men ännu inte tydligt svagt.", risk: "MEDEL_HÖG" as const },
+  ],
+  zones: [
+    { zone: "ATTRACTIVE" as const, priceInterval: { min: null, max: 68, currency: "USD", minInclusive: false, maxInclusive: true }, presentation: { title: "Attraktiv risk/reward", priceLabel: "68 USD eller lägre" }, rationale: "Under eller vid 68 USD ger potential och Bear-skydd materiell kompensation för reklam-, innehålls- och multipelrisken." },
+    { zone: "BALANCED" as const, priceInterval: { min: 68, max: 85, currency: "USD", minInclusive: false, maxInclusive: false }, presentation: { title: "Balanserad risk/reward", priceLabel: "Över 68 till under 85 USD" }, rationale: "Potentialen är relevant, men beror på att reklam, marginal och kassakonvertering bevisas samtidigt." },
+    { zone: "WEAK" as const, priceInterval: { min: 85, max: null, currency: "USD", minInclusive: true, maxInclusive: false }, presentation: { title: "Svag risk/reward", priceLabel: "85 USD eller högre" }, rationale: "Den återstående potentialen är för liten relativt Bear-nedsida, innehållsekonomi och multipelrisk." },
+  ],
+  presentation: {
+    memberInsight: {
+      identityLabel: "Netflix · NFLX",
+      referencePriceLabel: "78,24 USD",
+      referenceDateLabel: "13 aug 2026",
+      assessmentLabel: "Balanserad risk/reward",
+      assessmentRationale: "Referenskursen lämnar relevant potential, men Bear-nedsidan och kravet på fortsatt marginal- och reklamleverans ger begränsad säkerhetsmarginal. Balanserad risk/reward är en zonbedömning, inte en egen rekommendation; den canonical rekommendationen är fortsatt BEVAKA.",
+      zoneSharesPct: [35, 35, 30],
+      markers: [
+        { id: "reference", positionPct: 56, label: "▼ Kurs 78,24 USD", placement: "above" as const, align: "center" as const },
+        { id: "weighted-fair-value", positionPct: 85, label: "Vårt värde 94,92 USD", placement: "below" as const, align: "end" as const },
+      ],
+      scenarioSpread: {
+        label: "Scenariospann till 31 december 2028",
+        points: [
+          { label: "Bear", valueLabel: "62,38 USD", annualPotentialLabel: "−9,1 %/år" },
+          { label: "Sannolikhetsvägt", valueLabel: "94,92 USD", annualPotentialLabel: "+8,4 %/år" },
+          { label: "Bull", valueLabel: "129,17 USD", annualPotentialLabel: "+23,4 %/år" },
+        ],
+        rangeSharesPct: [48.72, 51.28],
+        distanceLabel: "Bear → sannolikhetsvägt: 32,55 USD · sannolikhetsvägt → Bull: 34,25 USD",
+      },
+      footerNote: "Kurs vid analystillfället, inte en live-kurs. Zonerna är fasta redaktionella bedömningar och inte personlig rådgivning.",
+    },
+  },
+  recalculationDependencies: ["identity.marketReference.price", "identity.marketReference.asOf", "identity.valuationDate", "valuation.weightedFairValue", "scenarios"],
+  supportsUserScenarioRecalculation: false,
+} as const;
+
 export const netflixFacts = {
   q2Revenue: 12.559938, q2Ebit: 4.189303, q2EbitMargin: 0.334, q2NetIncome: 3.401414, q2OperatingCashFlow: 1.743812,
   q2Capex: 0.218644, q2ReportedFcf: 1.525168, h1OperatingCashFlow: 7.034017, h1Capex: 0.438, h1ReportedFcf: 6.596017,
@@ -109,6 +198,7 @@ export const netflixV112Dossier = {
   },
   scenarios: netflixScenarios.map((scenario) => ({ ...scenario, valuationDate: NETFLIX_VALUATION_DATE })),
   valuation: { weightedFairValue, totalPotentialPct: weightedFairValue / NETFLIX_REFERENCE_PRICE - 1, annualizedPotentialPct: Math.pow(weightedFairValue / NETFLIX_REFERENCE_PRICE, 1 / NETFLIX_VALUATION_YEARS) - 1, yearsToValuation: NETFLIX_VALUATION_YEARS },
+  riskRewardZonesDraft: netflixRiskRewardZonesDraft,
   publicationBlockers: [],
 } as const;
 

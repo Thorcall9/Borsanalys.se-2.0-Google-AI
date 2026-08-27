@@ -21,7 +21,7 @@ import SEO from "../components/SEO";
 import CanonicalRiskRewardScale from "../components/analysis/CanonicalRiskRewardScale";
 import { useAuth } from "../contexts/AuthContext";
 import { alphabetV112Dossier } from "../data/analyses/alphabet/alphabet-v11-model";
-import { netflixDerived, netflixFacts, netflixScenarios, netflixStressTest, netflixV112Dossier, netflixWbdNormalization } from "../data/analyses/netflix/netflix-v11-model";
+import { netflixDerived, netflixFacts, netflixRiskRewardZonesDraft, netflixScenarios, netflixStressTest, netflixV112Dossier, netflixWbdNormalization } from "../data/analyses/netflix/netflix-v11-model";
 
 type TabId = "overview" | "theses" | "valuation" | "next";
 
@@ -192,20 +192,37 @@ function AlphabetRiskRewardRail({ showPrices }: { showPrices: boolean }) {
   />;
 }
 
-function NetflixRiskRewardFallback({ isMember }: { isMember: boolean }) {
+function NetflixRiskRewardFallback({ isMember, onLogin, showDraft }: { isMember: boolean; onLogin: () => void; showDraft: boolean }) {
+  const draft = netflixRiskRewardZonesDraft;
+  const insight = draft.presentation.memberInsight;
   return (
     <section className="border-t border-slate-200 py-11 lg:py-16" aria-labelledby="netflix-risk-reward-heading">
       <div className="max-w-3xl">
         <p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">Medlemsinsikt</p>
         <h2 id="netflix-risk-reward-heading" className="mt-3 font-serif text-4xl font-bold tracking-[-0.045em] text-slate-950 sm:text-5xl">När blir risk/reward mer attraktiv?</h2>
-        <p className="mt-4 text-base leading-7 text-slate-600">Risk/reward-zoner kan bara visas när de är godkända i den canonical modellen. Netflix har ännu inget sådant zonunderlag.</p>
+        <p className="mt-4 text-base leading-7 text-slate-600">{showDraft ? "Förhandsvisning av ett redaktionellt DRAFT-underlag. Det använder samma referenskurs, scenarier och värderingsdatum som Netflix publicerade värdering, men ändrar inte rekommendationen." : "Risk/reward-zoner kan bara visas när de är godkända i den canonical modellen. Netflix har ännu inget sådant zonunderlag."}</p>
       </div>
 
+      {showDraft && isMember ? (
+        <div className="mt-7">
+          <CanonicalRiskRewardScale
+            identityLabel={insight.identityLabel}
+            referencePriceLabel={insight.referencePriceLabel}
+            referenceDateLabel={insight.referenceDateLabel}
+            assessmentLabel={insight.assessmentLabel}
+            assessmentRationale={insight.assessmentRationale}
+            zones={draft.zones.map((zone, index) => ({ id: zone.zone, title: zone.presentation.title.replace(" risk/reward", ""), priceLabel: zone.presentation.priceLabel, sharePct: insight.zoneSharesPct[index] }))}
+            markers={insight.markers}
+            scenario={{ label: insight.scenarioSpread.label, points: insight.scenarioSpread.points.map((point) => ({ label: point.label, annualPotentialLabel: point.annualPotentialLabel, priceLabel: point.valueLabel })), rangeSharesPct: insight.scenarioSpread.rangeSharesPct }}
+            footerNote={insight.footerNote}
+          />
+        </div>
+      ) : (
       <div className="mt-7 max-w-3xl rounded-2xl border border-slate-200 bg-slate-50/70 p-5 sm:p-7">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.06em] text-slate-400">Netflix · NFLX</p>
-            {isMember ? (
+            {isMember && !showDraft ? (
               <>
                 <p className="mt-1 text-3xl font-medium tracking-[-0.03em] text-slate-950">{formatUsd(netflixV112Dossier.identity.marketReference.price, 2)}</p>
                 <p className="mt-1 text-xs text-slate-400">Kurs vid analys: {netflixV112Dossier.identity.marketReference.asOf}</p>
@@ -216,16 +233,27 @@ function NetflixRiskRewardFallback({ isMember }: { isMember: boolean }) {
           </div>
           <div className="sm:text-right">
             <p className="text-xs font-medium uppercase tracking-[0.06em] text-slate-400">Aktuell bedömning</p>
-            <p className="mt-1 text-sm font-medium text-slate-600">Ej tillgänglig utan godkända zoner</p>
+            <p className="mt-1 text-sm font-medium text-slate-600">{showDraft ? "Balanserad risk/reward" : "Ej tillgänglig utan godkända zoner"}</p>
           </div>
         </div>
 
-        <div className="mt-7 rounded-xl border border-dashed border-slate-300 bg-white px-4 py-5 text-sm leading-6 text-slate-600">
+        {showDraft ? <>
+          <div className="mt-7 grid gap-3 sm:grid-cols-3">
+            {draft.zones.map((zone) => <div key={zone.zone} className="rounded-xl border border-slate-200 bg-white p-4"><p className="text-sm font-bold text-slate-950">{zone.presentation.title}</p><p className="mt-2 text-sm leading-6 text-slate-600">{zone.rationale}</p></div>)}
+          </div>
+          <p className="mt-5 text-sm leading-6 text-slate-600"><strong className="text-slate-950">Så ska bedömningen läsas:</strong> Risk/reward-zonen beskriver säkerhetsmarginalen vid kursen, inte en separat köp- eller säljrekommendation. Netflix canonical rekommendation är fortsatt <strong className="text-slate-950">BEVAKA</strong>.</p>
+          <div className="mt-6 rounded-xl border border-emerald-200 bg-emerald-50/60 p-5">
+            <p className="text-base font-bold text-slate-950">Logga in gratis för DRAFT-previewen</p>
+            <p className="mt-1 text-sm leading-6 text-slate-600">Med ett kostnadsfritt konto visas referenskurs, zonmarkör och scenariospann. Dessa detaljer är medlemsinnehåll och DRAFT-underlaget är ännu inte publicerat.</p>
+            <button type="button" onClick={onLogin} className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-full bg-emerald-700 px-5 text-sm font-bold text-white transition-colors hover:bg-emerald-800">Se DRAFT-previewen <ArrowRight size={16} aria-hidden="true" /></button>
+          </div>
+        </> : <div className="mt-7 rounded-xl border border-dashed border-slate-300 bg-white px-4 py-5 text-sm leading-6 text-slate-600">
           Ingen risk/reward-skala, kursmarkör eller scenariospann visas här förrän Netflix har godkända canonical presentationsdata för zoner och scenario-spridning. Vi visar inga preliminära eller härledda nivåer i frontend.
-        </div>
+        </div>}
 
         <p className="mt-5 text-xs leading-5 text-slate-500">Kurs vid analystillfället, inte en live-kurs. Zonerna är fasta redaktionella bedömningar och inte personlig rådgivning.</p>
       </div>
+      )}
     </section>
   );
 }
@@ -233,6 +261,7 @@ function NetflixRiskRewardFallback({ isMember }: { isMember: boolean }) {
 export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?: PreviewVariant }) {
   const { user, openLoginModal } = useAuth();
   const isNetflix = variant === "netflix";
+  const showNetflixRiskRewardDraft = isNetflix && import.meta.env.DEV && netflixRiskRewardZonesDraft.status === "DRAFT";
   const dossier = isNetflix ? netflixV112Dossier : alphabetV112Dossier;
   const identity = dossier.identity;
   const valuation = dossier.valuation;
@@ -500,7 +529,7 @@ export default function AlphabetV11Preview({ variant = "alphabet" }: { variant?:
             </div>
           </section>
 
-          {isNetflix && <NetflixRiskRewardFallback isMember={Boolean(user)} />}
+          {isNetflix && <NetflixRiskRewardFallback isMember={Boolean(user)} onLogin={openLoginModal} showDraft={showNetflixRiskRewardDraft} />}
 
           {!isNetflix && alphabetV112Dossier.riskRewardZones.status === "APPROVED" && (
             <section className="border-t border-slate-200 py-11 lg:py-16" aria-labelledby="risk-reward-heading">
