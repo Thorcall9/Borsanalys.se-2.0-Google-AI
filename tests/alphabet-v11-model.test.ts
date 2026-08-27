@@ -34,6 +34,10 @@ test("Alphabet v11.2 risk/reward zones use the canonical valuation without front
   assert.equal(alphabetRiskRewardZones.valuationDate, ALPHABET_VALUATION_DATE);
   assert.equal(alphabetRiskRewardZones.zones.length, 3);
   assert.deepEqual(alphabetRiskRewardZones.zones.map((zone) => zone.zone), ["ATTRACTIVE", "BALANCED", "WEAK"]);
+  assert.deepEqual(alphabetRiskRewardZones.presentation.gauge.breakpointLabels, ["290,22 USD", "332,42 USD"]);
+  assert.equal(alphabetRiskRewardZones.presentation.gauge.referenceMarkerPct, 98);
+  assert.deepEqual(alphabetRiskRewardZones.presentation.gauge.scenarioSpread.points.map((point) => point.annualPotentialLabel), ["−14,6 %/år", "+3,8 %/år", "+20,5 %/år"]);
+  assert.equal(alphabetRiskRewardZones.marketReferenceAssessment.presentationHeadline, "Begränsad säkerhetsmarginal – rekommendationen är fortsatt BEVAKA.");
   assert.equal(result.riskRewardBoundariesMatch, true);
   assert.equal(result.riskRewardZonesAreOrdered, true);
   assert.ok(Math.abs(alphabetV112Dossier.valuation.annualizedPotentialPct - 0.038117630492266574) < 1e-12);

@@ -142,7 +142,27 @@ export const alphabetRiskRewardZones = {
   marketReferenceAssessment: {
     zone: "WEAK" as const,
     label: "Referenskursen vid analystillfället ligger i svag risk/reward",
+    presentationHeadline: "Begränsad säkerhetsmarginal – rekommendationen är fortsatt BEVAKA.",
     rationale: "Vid 353,47 USD den 7 augusti 2026 var den annualiserade värdepotentialen cirka 3,8 % medan Bear-nedsidan var cirka 31,5 %, vilket gav begränsad säkerhetsmarginal för ett MEDEL–HÖG-riskcase.",
+  },
+  presentation: {
+    gauge: {
+      segmentSharesPct: [27.272727, 45.454546, 27.272727],
+      breakpointLabels: ["290,22 USD", "332,42 USD"],
+      referenceMarkerPct: 98,
+      referenceLabel: "353,47 USD",
+      referenceDateLabel: "7 aug 2026",
+      footnote: "Kurs vid analystillfället, inte en live-kurs.",
+      scenarioSpread: {
+        label: "Scenariospann till 2028",
+        points: [
+          { label: "Bear", annualPotentialLabel: "−14,6 %/år", priceLabel: "241,98 USD" },
+          { label: "Sannolikhetsvägt", annualPotentialLabel: "+3,8 %/år", priceLabel: "386,69 USD" },
+          { label: "Bull", annualPotentialLabel: "+20,5 %/år", priceLabel: "552,95 USD" },
+        ],
+        rangeSharesPct: [46.5, 53.5],
+      },
+    },
   },
   recalculationDependencies: ["alphabet-d-weighted-fair-value", "alphabet-d-annualized-value-potential", "alphabet-n-risk", "alphabet-f-market-reference"],
   supportsUserScenarioRecalculation: false,

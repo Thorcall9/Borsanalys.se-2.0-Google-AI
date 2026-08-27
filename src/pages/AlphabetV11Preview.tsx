@@ -174,36 +174,67 @@ function ReasonRows({ rows, tone }: { rows: typeof positiveReasons; tone: "posit
 }
 
 function AlphabetRiskRewardRail({ showPrices }: { showPrices: boolean }) {
-  const zones = [...alphabetV112Dossier.riskRewardZones.zones].reverse();
+  const zones = alphabetV112Dossier.riskRewardZones.zones;
+  const gauge = alphabetV112Dossier.riskRewardZones.presentation.gauge;
+  const activeZone = zones.find((zone) => zone.zone === alphabetV112Dossier.riskRewardZones.marketReferenceAssessment.zone) ?? zones[2];
   const styles = {
-    ATTRACTIVE: "border-emerald-300 bg-emerald-50 text-emerald-950",
-    BALANCED: "border-sky-300 bg-sky-50 text-slate-950",
-    WEAK: "border-amber-300 bg-amber-50 text-amber-950",
+    ATTRACTIVE: { segment: "bg-[#1d9e75]", title: "text-[#27500a]" },
+    BALANCED: { segment: "bg-[#a6c9ae]", title: "text-[#5f5e5a]" },
+    WEAK: { segment: "bg-[#d8d5c9]", title: "text-[#5f5e5a]" },
   } as const;
+  const spread = gauge.scenarioSpread;
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-      <div className="border-b border-slate-200 bg-slate-50 px-5 py-4 sm:px-6">
-        <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">Prisstegen: högre kurs ger mindre säkerhetsmarginal</p>
+    <section className="max-w-3xl rounded-2xl border border-[#e5e3da] bg-white p-5 shadow-sm sm:p-7" aria-label="Risk/reward-skala för GOOG">
+      <div className="flex flex-wrap items-end justify-between gap-5">
+        <div>
+          <p className="text-xs font-medium uppercase tracking-[0.06em] text-slate-400">Alphabet · GOOG</p>
+          <p className="mt-1 text-3xl font-medium tracking-[-0.03em] text-slate-950">{showPrices ? <>353,47 <span className="text-lg font-normal text-slate-400">USD</span></> : "Kurs vid analys"}</p>
+          <p className="mt-1 text-xs text-slate-400">{showPrices ? `Vid analys (${gauge.referenceDateLabel})` : "Referenskurs vid analystillfället"}</p>
+        </div>
+        <div className="text-left sm:text-right">
+          <p className="text-xs font-medium uppercase tracking-[0.06em] text-slate-400">Bedömning</p>
+          <p className="mt-1 text-sm font-medium text-[#854f0b]">{activeZone.presentation.title}</p>
+        </div>
       </div>
-      <ol>
+
+      <div className="relative mt-8">
+        <div className="flex h-2 overflow-hidden rounded-full gap-0.5">
+          {zones.map((zone, index) => (
+            <div key={zone.zone} style={{ flex: `${gauge.segmentSharesPct[index]} 0 0` }} className={styles[zone.zone].segment} />
+          ))}
+        </div>
+        {showPrices && <span className="absolute -bottom-3 top-3 z-10 h-0 w-0 -translate-x-1/2 border-x-[5px] border-t-[6px] border-x-transparent border-t-slate-700" style={{ left: `${gauge.referenceMarkerPct}%` }} aria-label={`Referenskurs vid analys: ${gauge.referenceLabel}`} />}
+      </div>
+      <div className="mt-5 flex gap-2 text-[11px] leading-4 text-slate-400">
         {zones.map((zone, index) => (
-          <li key={zone.zone} className={`grid border-b border-slate-200 last:border-b-0 md:grid-cols-[minmax(220px,0.42fr)_1fr] ${styles[zone.zone]}`}>
-            <div className="border-b border-current/15 px-5 py-5 md:border-b-0 md:border-r md:px-6">
-              <p className="text-xs font-black uppercase tracking-[0.13em] opacity-70">{index === 0 ? "Högre kurs" : index === zones.length - 1 ? "Lägre kurs" : "Mellanliggande nivå"}</p>
-              <p className="mt-2 font-serif text-3xl font-bold tracking-[-0.04em] sm:text-4xl">{showPrices ? zone.presentation.priceLabel : zone.zone === "WEAK" ? "Begränsad marginal" : zone.zone === "BALANCED" ? "Rimlig men inte stark" : "Förbättrad marginal"}</p>
-              {showPrices && zone.zone === alphabetV112Dossier.riskRewardZones.marketReferenceAssessment.zone && <p className="mt-3 inline-flex rounded-full bg-slate-950 px-3 py-1.5 text-xs font-black text-white">Referenskurs vid analys: 353,47 USD · 7 aug 2026</p>}
-            </div>
-            <div className="px-5 py-5 md:px-6">
-              <h3 className="font-serif text-2xl font-bold tracking-[-0.03em]">{zone.presentation.title}</h3>
-              <p className="mt-2 text-sm font-bold leading-6">{showPrices ? zone.presentation.annualPotentialLabel : zone.zone === "WEAK" ? "Potentialen är för låg relativt riskbilden." : zone.zone === "BALANCED" ? "Potential finns, men teserna måste fortsatt bevisas." : "Potential och Bear-skydd väger tydligt till investerarens fördel."}</p>
-              {showPrices && <p className="mt-1 text-sm leading-6 opacity-80">{zone.presentation.bearDownsideLabel}</p>}
-            </div>
-          </li>
+          <div key={zone.zone} style={{ flex: `${gauge.segmentSharesPct[index]} 0 0` }} className={index === zones.length - 1 ? "text-right" : ""}>
+            <p className={`font-medium ${styles[zone.zone].title}`}>{zone.presentation.title.replace(" risk/reward", "")}</p>
+            {showPrices && <p>{zone.presentation.priceLabel}</p>}
+          </div>
         ))}
-      </ol>
-      {showPrices && <div className="border-t border-slate-200 bg-slate-50 px-5 py-4 text-sm leading-6 text-slate-700 sm:px-6"><strong className="text-slate-950">{alphabetV112Dossier.riskRewardZones.marketReferenceAssessment.label}.</strong> {alphabetV112Dossier.riskRewardZones.marketReferenceAssessment.rationale}</div>}
-    </div>
+      </div>
+
+      <div className="mt-8 rounded-lg border border-[#ba7517]/20 bg-[#faeeda]/30 p-4 sm:p-5">
+        <p className="text-xs font-medium text-[#854f0b]">{spread.label}</p>
+        <div className="mt-3 grid grid-cols-3 gap-3">
+          {spread.points.map((point, index) => (
+            <div key={point.label}>
+              <p className="text-[11px] text-slate-400">{point.label}</p>
+              <p className={`mt-1 text-base font-medium ${index === 2 ? "text-[#1d9e75]" : "text-slate-950"}`}>{point.annualPotentialLabel}</p>
+              {showPrices && <p className="mt-0.5 text-[11px] text-slate-400">{point.priceLabel}</p>}
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 flex h-1 overflow-hidden rounded-full bg-[#e5e3da]">
+          <span style={{ width: `${spread.rangeSharesPct[0]}%` }} className="bg-slate-400/60" />
+          <span className="w-px bg-slate-800" />
+          <span style={{ width: `${spread.rangeSharesPct[1]}%` }} className="bg-[#1d9e75]/55" />
+        </div>
+      </div>
+      {showPrices && <p className="mt-4 text-xs leading-5 text-slate-400">{gauge.footnote}</p>}
+      <p className="mt-1 text-xs leading-5 text-slate-400">Zonerna är Börsanalys.se:s fasta redaktionella bedömning, inte personlig rådgivning.</p>
+    </section>
   );
 }
 
