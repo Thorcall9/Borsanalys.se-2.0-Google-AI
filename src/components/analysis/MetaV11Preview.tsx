@@ -21,6 +21,7 @@ import type { LucideIcon } from "lucide-react";
 import SEO from "../SEO";
 import AdUnit from "./AdUnit";
 import HistoricalFundament from "./HistoricalFundament";
+import RiskRewardModule, { UnavailableModule } from "./RiskRewardModule";
 import { AnalysisData } from "../../types/analysis";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -194,6 +195,7 @@ function ValuationChain({
   currency,
   showEpsBridge,
   normalizedEpsBridge,
+  normalizationNote,
 }: {
   ladder: OperatingLadder;
   targetYear: number;
@@ -202,15 +204,13 @@ function ValuationChain({
   currency: string;
   showEpsBridge: boolean;
   normalizedEpsBridge: boolean;
+  normalizationNote?: string;
 }) {
   const revenue = ladder.revenueBn ?? ladder.revenueUsdBn ?? 0;
   const operatingIncome = ladder.operatingIncomeBn ?? ladder.operatingIncomeUsdBn ?? 0;
-  const normalizedFinance = ladder.normalizedFinanceAndOtherBn ?? ladder.normalizedFinanceAndOtherUsdBn ?? 0;
-  const minorityInterest = ladder.minorityInterestBn ?? ladder.minorityInterestUsdBn ?? 0;
-  const profitBeforeTax = operatingIncome + normalizedFinance;
-  const tax = profitBeforeTax * (ladder.taxRatePct / 100);
-  const attributableProfit = profitBeforeTax - tax - minorityInterest;
   const normalizedEps = ladder.normalizedEps ?? ladder.normalizedEpsUsd ?? 0;
+  const normalizedProfit = ladder.normalizedNetIncomeBn ?? ladder.normalizedNetIncomeUsdBn;
+  const taxAndOther = ladder.taxAndOtherBn ?? ladder.taxAndOtherUsdBn;
   const amount = (number: number) => currency === "USD" ? `$${number}` : `${number} md ${currency}`;
   const eps = (number: number) => currency === "USD" ? `$${number.toFixed(2)}` : `${number.toFixed(2).replace(".", ",")} ${currency}`;
   const metric = (label: string, amount: string, accent = false) => (
@@ -225,7 +225,7 @@ function ValuationChain({
   );
   const epsMetric = () => (
     <div>
-      <p className="flex items-center gap-1 text-slate-500">{normalizedEpsBridge ? "Normaliserad EPS" : "EPS"} {normalizedEpsBridge && <span title="Normaliserad EPS är vår uppskattning av Volvos uthålliga vinst per aktie i respektive scenario vid värderingshorisonten. Beräkningen använder normaliserad rörelsemarginal, finansnetto, skatt och minoritet och ska inte tolkas som en prognos för exakt rapporterad EPS 2028."><Info size={13} aria-label="Förklaring av normaliserad EPS" /></span>}</p>
+      <p className="flex items-center gap-1 text-slate-500">{normalizedEpsBridge ? "Normaliserad EPS" : "EPS"} {normalizedEpsBridge && <span title={normalizationNote ?? "Vår uppskattning av uthållig vinst per aktie i scenariot."}><Info size={13} aria-label="Förklaring av normaliserad EPS" /></span>}</p>
       <p className="mt-1 text-xl font-black">{eps(normalizedEps)}</p>
     </div>
   );
@@ -259,13 +259,15 @@ function ValuationChain({
             {metric("Rimligt värde", value, true)}
           </div>
         </div>
-        {showEpsBridge && <div className="mt-4 grid grid-cols-2 gap-x-3 gap-y-2 border-t border-slate-100 pt-3 text-xs text-slate-500">
-          <span>Finansnetto: {amount(normalizedFinance)}</span>
-          <span>Resultat före skatt: {amount(Number(profitBeforeTax.toFixed(2)))}</span>
-          <span>Skatt ({ladder.taxRatePct} %): {amount(-Number(tax.toFixed(2)))}</span>
-          <span>Minoritet: {amount(-Number(minorityInterest.toFixed(2)))}</span>
-          <span>Till aktieägarna: {amount(Number(attributableProfit.toFixed(2)))}</span>
-          <span>Antal aktier: {ladder.dilutedSharesBn.toFixed(3)} md</span>
+        {showEpsBridge && <div className="mt-4 space-y-3 border-t border-slate-100 pt-3 text-sm text-slate-600">
+          <p className="font-bold text-slate-950">Så räknas normaliserad EPS</p>
+          <div className="grid grid-cols-2 gap-x-3 gap-y-2 text-xs">
+            <span>Rörelseresultat <strong className="block text-slate-700">{amount(Number(operatingIncome.toFixed(2)))}</strong></span>
+            <span>Skatt och övrigt <strong className="block text-slate-700">{taxAndOther === undefined ? "—" : amount(-Number(taxAndOther.toFixed(2)))}</strong></span>
+            <span>Vinst till aktieägarna <strong className="block text-slate-700">{normalizedProfit === undefined ? "—" : amount(Number(normalizedProfit.toFixed(2)))}</strong></span>
+            <span>Delat på aktier <strong className="block text-slate-700">{ladder.dilutedSharesBn.toFixed(3)} md</strong></span>
+          </div>
+          <p className="text-xs leading-5">{normalizationNote ?? "Normaliserad EPS är vår uppskattning av uthållig vinst per aktie i scenariot."}</p>
         </div>}
       </div>
       <div className="mt-3 hidden flex-wrap items-center gap-x-3 gap-y-4 text-sm sm:flex">
@@ -284,13 +286,15 @@ function ValuationChain({
         {operator("=")}
         {metric("Rimligt värde", value, true)}
       </div>
-      {showEpsBridge && <div className="mt-4 hidden grid-cols-3 gap-x-3 gap-y-3 border-t border-slate-100 pt-3 text-xs text-slate-500 sm:grid lg:grid-cols-6">
-        <span>Finansnetto<br /><strong className="text-slate-700">{amount(normalizedFinance)}</strong></span>
-        <span>Resultat före skatt<br /><strong className="text-slate-700">{amount(Number(profitBeforeTax.toFixed(2)))}</strong></span>
-        <span>Skatt ({ladder.taxRatePct} %)<br /><strong className="text-slate-700">{amount(-Number(tax.toFixed(2)))}</strong></span>
-        <span>Minoritet<br /><strong className="text-slate-700">{amount(-Number(minorityInterest.toFixed(2)))}</strong></span>
-        <span>Till aktieägarna<br /><strong className="text-slate-700">{amount(Number(attributableProfit.toFixed(2)))}</strong></span>
-        <span>Antal aktier<br /><strong className="text-slate-700">{ladder.dilutedSharesBn.toFixed(3)} md</strong></span>
+      {showEpsBridge && <div className="mt-4 hidden border-t border-slate-100 pt-4 text-sm text-slate-600 sm:block">
+        <p className="font-bold text-slate-950">Så räknas normaliserad EPS</p>
+        <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3 text-xs lg:grid-cols-4">
+          <span>Rörelseresultat<br /><strong className="text-slate-700">{amount(Number(operatingIncome.toFixed(2)))}</strong></span>
+          <span>Skatt och övrigt<br /><strong className="text-slate-700">{taxAndOther === undefined ? "—" : amount(-Number(taxAndOther.toFixed(2)))}</strong></span>
+          <span>Vinst till aktieägarna<br /><strong className="text-slate-700">{normalizedProfit === undefined ? "—" : amount(Number(normalizedProfit.toFixed(2)))}</strong></span>
+          <span>Delat på aktier<br /><strong className="text-slate-700">{ladder.dilutedSharesBn.toFixed(3)} md</strong></span>
+        </div>
+        <p className="mt-3 max-w-3xl text-xs leading-5">{normalizationNote ?? "Normaliserad EPS är vår uppskattning av uthållig vinst per aktie i scenariot."}</p>
       </div>
       }
     </div>
@@ -440,7 +444,7 @@ export default function V11Analysis({ data }: Props) {
                 </div>
                 <div className="border-t border-emerald-200 pt-5 sm:border-l sm:border-t-0 sm:pl-8 sm:pt-0">
                   <p className="text-sm text-slate-600">
-                    Dagens kurs: {preview.currentPrice}
+                    Kurs vid analys: {preview.currentPrice}{preview.marketReferenceDate ? ` · ${formatDate(preview.marketReferenceDate)}` : ""}
                   </p>
                   <p className="mt-2 font-serif text-4xl font-bold leading-none tracking-[-0.045em] text-emerald-700">
                     {preview.upside}
@@ -476,9 +480,9 @@ export default function V11Analysis({ data }: Props) {
                       </span>
                       <h3 className="mt-4 font-serif text-2xl font-bold tracking-[-0.035em] text-slate-950">Se hur vi har räknat</h3>
                       <p className="mt-2 text-sm leading-6 text-slate-600">
-                        Som gratis medlem ser du scenarioantaganden, EPS-bryggan och vägen från betalningsvolym till rimligt värde.
+                        Som gratis medlem ser du scenarioantaganden, EPS-bryggan och vägen från verksamheten till rimligt värde.
                       </p>
-                      <p className="mt-3 text-xs font-bold uppercase tracking-[0.13em] text-emerald-700">{preview.valuationChainLabel ?? "Betalningsvolym → intäkter → normaliserad EPS → P/E"}</p>
+                      <p className="mt-3 text-xs font-bold uppercase tracking-[0.13em] text-emerald-700">{preview.valuationChainLabel ?? "Omsättning → marginal → normaliserad EPS → P/E → värde"}</p>
                     </div>
                     <div className="flex shrink-0 flex-col gap-2 sm:items-end">
                       <button type="button" onClick={openSignupModal} className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-700 px-4 text-sm font-bold text-white transition-colors hover:bg-emerald-800">
@@ -518,6 +522,7 @@ export default function V11Analysis({ data }: Props) {
                         currency={currency}
                         showEpsBridge={showEpsBridge}
                         normalizedEpsBridge={preview.epsBridgeEnabled ?? false}
+                        normalizationNote={preview.normalizationNote}
                       />
                     )}
                     {preview.epsBridgeEnabled && <button type="button" onClick={() => setShowEpsBridge((value) => !value)} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-emerald-700 hover:text-emerald-900" aria-expanded={showEpsBridge}>
@@ -583,16 +588,6 @@ export default function V11Analysis({ data }: Props) {
                     beräkningar är spårbara i den expanderbara historikvyn.
                   </p>
                 </div>
-              )}
-              {riskRewardZones?.status === "APPROVED" && riskRewardZones.visibility === "MEMBER" && (
-                <button
-                  type="button"
-                  onClick={() => document.getElementById("risk-reward")?.scrollIntoView({ behavior: "smooth", block: "start" })}
-                  className="mt-4 inline-flex min-h-10 items-center gap-2 text-sm font-bold text-slate-600 transition-colors hover:text-emerald-800"
-                >
-                  När blir risk/reward mer attraktiv?
-                  <ArrowRight size={16} aria-hidden="true" />
-                </button>
               )}
               <AdUnit variant="top-display" collapseWhenUnfilled className="mt-5 border-t border-emerald-200/80" />
             </section>
@@ -709,9 +704,9 @@ export default function V11Analysis({ data }: Props) {
                   <p className="mt-1 text-sm font-bold text-emerald-700">
                     {scenario.probability} sannolikhet
                   </p>
-                  {scenario.cagr && (
+                  {scenario.change && (
                     <p className="mt-1 text-sm font-black text-slate-700">
-                      {scenario.cagr} CAGR till {targetYear}
+                      {scenario.change} total värdepotential
                     </p>
                   )}
                   <p className="mt-4 text-sm leading-6 text-slate-600">
@@ -730,56 +725,16 @@ export default function V11Analysis({ data }: Props) {
                 {preview.valuationLimitation}
               </p>
             </div>
-            {riskRewardZones?.status === "APPROVED" && riskRewardZones.visibility === "MEMBER" && (
-              <aside id="risk-reward" className="scroll-mt-36 mt-8 rounded-2xl border border-emerald-200 bg-emerald-50/45 p-5 sm:p-7" aria-labelledby="risk-reward-title">
-                <div className="max-w-2xl">
-                  <p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">Medlemsinsikt</p>
-                  <h3 id="risk-reward-title" className="mt-3 font-serif text-3xl font-bold tracking-[-0.04em] text-slate-950 sm:text-4xl">{riskRewardZones.title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-slate-600">{riskRewardZones.introduction}</p>
-                </div>
-                {user ? (
-                  <div className="mt-6 divide-y divide-emerald-200 border-y border-emerald-200">
-                    {riskRewardZones.zones.map((zone) => {
-                      const tone = zone.id === "ATTRACTIVE"
-                        ? "text-emerald-800"
-                        : zone.id === "BALANCED"
-                          ? "text-amber-800"
-                          : "text-rose-800";
-                      return (
-                        <section key={zone.id} className="grid gap-4 py-5 sm:grid-cols-[minmax(0,1fr)_minmax(11rem,.8fr)] sm:gap-8">
-                          <div>
-                            <h4 className={`font-serif text-2xl font-bold tracking-[-0.03em] ${tone}`}>{zone.title}</h4>
-                            <p className="mt-2 text-lg font-black text-slate-950">{zone.priceLabel}</p>
-                            <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600">{zone.rationale}</p>
-                          </div>
-                          <dl className="grid content-start gap-3 text-sm">
-                            <div className="border-l-2 border-emerald-300 pl-3"><dt className="font-semibold text-slate-500">Annualiserad värdepotential</dt><dd className="mt-0.5 font-black text-slate-950">{zone.annualPotentialLabel}</dd></div>
-                            <div className="border-l-2 border-slate-300 pl-3"><dt className="font-semibold text-slate-500">Riskscenario</dt><dd className="mt-0.5 font-black text-slate-950">{zone.bearDownsideLabel}</dd></div>
-                          </dl>
-                        </section>
-                      );
-                    })}
-                  </div>
-                ) : (
-                  <div className="mt-6 flex flex-col gap-5 rounded-xl border border-emerald-200 bg-white p-5 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700"><LockKeyhole size={19} aria-hidden="true" /></span>
-                      <p className="mt-4 text-sm font-bold text-slate-950">Som gratis medlem ser du:</p>
-                      <ul className="mt-2 grid gap-1 text-sm leading-6 text-slate-600 sm:grid-cols-2">
-                        <li>Attraktiv risk/reward</li>
-                        <li>Balanserad risk/reward</li>
-                        <li>Svag risk/reward</li>
-                        <li>Annualiserad värdepotential</li>
-                      </ul>
-                    </div>
-                    <div className="flex shrink-0 flex-col gap-2 sm:items-end">
-                      <button type="button" onClick={openSignupModal} className="inline-flex min-h-11 items-center justify-center rounded-xl bg-emerald-700 px-4 text-sm font-bold text-white transition-colors hover:bg-emerald-800">Skapa gratis konto</button>
-                      <button type="button" onClick={openLoginModal} className="min-h-9 text-sm font-bold text-emerald-700 hover:text-emerald-900">Har du redan konto? Logga in</button>
-                    </div>
-                  </div>
-                )}
-                <p className="mt-5 text-xs leading-5 text-slate-500">{riskRewardZones.disclaimer}</p>
-              </aside>
+            {data.slug === "meta-q2-2026" && (
+              <RiskRewardModule
+                user={user}
+                zones={riskRewardZones}
+                onSignup={openSignupModal}
+                onLogin={openLoginModal}
+              />
+            )}
+            {data.slug === "visa" && !riskRewardZones && (
+              <UnavailableModule companyLabel={data.title} ticker={data.ticker} referenceLabel={data.price} analysisDate={formatDate(data.date)} />
             )}
             {preview.illustrativeTotalReturn && (
               <aside className="mt-8 border-t border-slate-200 pt-8" aria-labelledby="illustrative-total-return-title">
