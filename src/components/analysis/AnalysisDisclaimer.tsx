@@ -14,6 +14,7 @@ const slugToDisclosureKey: Record<string, AnalysisDisclosureKey> = {
   "investor-ab": "investor",
   "sbb": "sbb",
   "nvidia-fy2026": "nvidia",
+  "nvidia-q2-fy2027": "nvidia",
   "apple": "apple",
   "microsoft": "microsoft",
   "novo-nordisk": "novoNordisk",

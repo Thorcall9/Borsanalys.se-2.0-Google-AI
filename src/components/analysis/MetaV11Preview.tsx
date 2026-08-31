@@ -197,6 +197,8 @@ function ValuationChain({
   showEpsBridge,
   normalizedEpsBridge,
   normalizationNote,
+  operatingMarginLabel,
+  operatingIncomeLabel,
 }: {
   ladder: OperatingLadder;
   targetYear: number;
@@ -206,6 +208,8 @@ function ValuationChain({
   showEpsBridge: boolean;
   normalizedEpsBridge: boolean;
   normalizationNote?: string;
+  operatingMarginLabel?: string;
+  operatingIncomeLabel?: string;
 }) {
   const revenue = ladder.revenueBn ?? ladder.revenueUsdBn ?? 0;
   const operatingIncome = ladder.operatingIncomeBn ?? ladder.operatingIncomeUsdBn ?? 0;
@@ -242,12 +246,12 @@ function ValuationChain({
         <div className="grid grid-cols-[1fr_auto_1fr] items-end gap-x-3">
           {metric(`Omsättning ${targetYear}E`, amount(revenue))}
           {operator("×")}
-          {metric(normalizedEpsBridge ? "Justerad rörelsemarginal" : "Rörelsemarginal", `${ladder.operatingMarginPct} %`)}
+          {metric(operatingMarginLabel ?? (normalizedEpsBridge ? "Normaliserad rörelsemarginal" : "Rörelsemarginal"), `${ladder.operatingMarginPct} %`)}
         </div>
         <div className="flex items-end gap-3 border-t border-slate-100 pt-3">
           {operator("=")}
           {metric(
-            normalizedEpsBridge ? "Normaliserad justerad EBIT" : "Rörelseresultat",
+            operatingIncomeLabel ?? (normalizedEpsBridge ? "Normaliserat rörelseresultat" : "Rörelseresultat"),
             amount(Number(operatingIncome.toFixed(2))),
           )}
         </div>
@@ -274,10 +278,10 @@ function ValuationChain({
       <div className="mt-3 hidden flex-wrap items-center gap-x-3 gap-y-4 text-sm sm:flex">
         {metric(`Omsättning ${targetYear}E`, amount(revenue))}
         {operator("×")}
-        {metric(normalizedEpsBridge ? "Justerad rörelsemarginal" : "Rörelsemarginal", `${ladder.operatingMarginPct} %`)}
+        {metric(operatingMarginLabel ?? (normalizedEpsBridge ? "Normaliserad rörelsemarginal" : "Rörelsemarginal"), `${ladder.operatingMarginPct} %`)}
         {operator("=")}
           {metric(
-            normalizedEpsBridge ? "Normaliserad justerad EBIT" : "Rörelseresultat",
+            operatingIncomeLabel ?? (normalizedEpsBridge ? "Normaliserat rörelseresultat" : "Rörelseresultat"),
           amount(Number(operatingIncome.toFixed(2))),
         )}
         {operator("→")}
@@ -392,6 +396,14 @@ export default function V11Analysis({ data }: Props) {
                 {saved ? "Sparad" : "Spara analys"}
               </button>
             </div>
+            {preview.publicationStatus === "NOT_PUBLISH_READY" && (
+              <div
+                role="status"
+                className="mt-6 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-bold text-amber-900"
+              >
+                Redaktionellt utkast · inte publiceringsgodkänd
+              </div>
+            )}
             <h1 className="mt-7 max-w-5xl font-serif text-[2.25rem] font-bold leading-[0.98] tracking-[-0.052em] sm:text-6xl lg:text-7xl">
               {preview.headline}
             </h1>
@@ -401,11 +413,18 @@ export default function V11Analysis({ data }: Props) {
             <div className="mt-7 flex flex-wrap items-center gap-4">
               <span className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-emerald-600 bg-emerald-50 px-4 text-sm font-black tracking-wide text-emerald-700">
                 <Eye size={18} /> {data.recommendation}
+                {preview.recommendationStatus === "DRAFT" ? " · UTKAST" : ""}
               </span>
               <span className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
                 <span className="h-2.5 w-2.5 rounded-full bg-amber-500" /> {preview.riskLabel}
               </span>
             </div>
+            {preview.ownershipDisclosure && (
+              <aside className="mt-5 flex max-w-3xl items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-950">
+                <ShieldAlert className="mt-0.5 shrink-0 text-amber-700" size={18} aria-hidden="true" />
+                <p>{preview.ownershipDisclosure}</p>
+              </aside>
+            )}
             <section className="mt-8 rounded-2xl border border-emerald-100 bg-emerald-50/75 p-5 sm:p-7">
               <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
                 <div>
@@ -524,6 +543,8 @@ export default function V11Analysis({ data }: Props) {
                         showEpsBridge={showEpsBridge}
                         normalizedEpsBridge={preview.epsBridgeEnabled ?? false}
                         normalizationNote={preview.normalizationNote}
+                        operatingMarginLabel={preview.historyMarginLabel}
+                        operatingIncomeLabel={preview.epsBridgeEnabled ? "Normaliserat rörelseresultat" : undefined}
                       />
                     )}
                     {preview.epsBridgeEnabled && <button type="button" onClick={() => setShowEpsBridge((value) => !value)} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-bold text-emerald-700 hover:text-emerald-900" aria-expanded={showEpsBridge}>
@@ -568,9 +589,9 @@ export default function V11Analysis({ data }: Props) {
                           )}
                         </p>
                         <p className="mt-1">
-                          Marginalantagandet{" "}
+                          {preview.historyMarginLabel ?? "Marginalantagandet"}{" "}
                           {activeScenario.operatingLadder?.operatingMarginPct} %
-                          jämförs med det verifierade intervallet {marginRange?.join("–")} % justerad EBIT-marginal och LTM {comparableLtmMargin?.toFixed(1)} % justerad EBIT-marginal.
+                          jämförs med det verifierade intervallet {marginRange?.join("–")} % och {history?.adjustedOperatingMargin?.latest.period ?? "senaste period"} {comparableLtmMargin?.toFixed(1)} %.
                         </p>
                       </div>
                       <div>
@@ -726,7 +747,7 @@ export default function V11Analysis({ data }: Props) {
                 {preview.valuationLimitation}
               </p>
             </div>
-            {data.slug === "meta-q2-2026" && riskRewardZones && riskRewardZones.memberInsight && (
+            {data.slug !== "volvo-q2-2026" && riskRewardZones?.status === "APPROVED" && riskRewardZones.memberInsight && (
               <CanonicalRiskRewardInsight
                 user={user}
                 title={riskRewardZones.title}
@@ -741,26 +762,6 @@ export default function V11Analysis({ data }: Props) {
                 user={user}
                 zones={riskRewardZones}
                 onSignup={openSignupModal}
-                onLogin={openLoginModal}
-              />
-            )}
-            {data.slug === "visa" && riskRewardZones && riskRewardZones.memberInsight && (
-              <CanonicalRiskRewardInsight
-                user={user}
-                title={riskRewardZones.title}
-                introduction={riskRewardZones.introduction}
-                zones={riskRewardZones.zones}
-                insight={riskRewardZones.memberInsight}
-                onLogin={openLoginModal}
-              />
-            )}
-            {data.slug === "microsoft" && riskRewardZones && riskRewardZones.memberInsight && (
-              <CanonicalRiskRewardInsight
-                user={user}
-                title={riskRewardZones.title}
-                introduction={riskRewardZones.introduction}
-                zones={riskRewardZones.zones}
-                insight={riskRewardZones.memberInsight}
                 onLogin={openLoginModal}
               />
             )}

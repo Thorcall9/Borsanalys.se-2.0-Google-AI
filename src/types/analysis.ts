@@ -172,6 +172,8 @@ export interface AnalysisData {
   v11?: {
     analysisId?: string;
     versionId?: string;
+    publicationStatus?: "PUBLISH_READY" | "NOT_PUBLISH_READY";
+    recommendationStatus?: "APPROVED" | "DRAFT";
     sourceCutoffDate?: string;
     valuationDate?: string;
     valuationYearLabel?: string;
@@ -262,6 +264,7 @@ export interface AnalysisData {
       };
     };
     riskLabel: string;
+    ownershipDisclosure?: string;
     positiveReasons: { title: string; body: string }[];
     cautionReasons: { title: string; body: string }[];
     insightHeadline: string;

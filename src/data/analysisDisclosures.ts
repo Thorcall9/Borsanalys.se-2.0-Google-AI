@@ -97,7 +97,9 @@ export const analysisDisclosures = {
     companyName: "NVIDIA Corporation",
     holdingType: "direct",
     holdingText:
-      "Författaren äger aktier direkt i NVIDIA Corporation enligt innehavsredovisning senast uppdaterad 28 maj 2026. Detta utgör ett ekonomiskt intresse i det bolag som analyseras.",
+      "Författaren äger aktier direkt i NVIDIA Corporation enligt innehavsupplysning bekräftad 29 augusti 2026. Detta utgör ett ekonomiskt intresse i det bolag som analyseras.",
+    indirectExposure:
+      "Författaren har även indirekt ekonomisk exponering mot NVIDIA Corporation. Den direkta och indirekta exponeringen kan innebära en intressekonflikt som läsaren bör beakta.",
     commercialRelationship:
       "Börsanalys.se har inte mottagit ersättning från och har ingen kommersiell relation till NVIDIA Corporation i samband med denna analys."
   },

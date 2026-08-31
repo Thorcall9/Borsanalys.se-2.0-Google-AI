@@ -2,6 +2,7 @@ import { AnalysisData } from "../../types/analysis.js";
 import { investorAb } from "./investor/investor-ab.js";
 import { sbb } from "./sbb/sbb.js";
 import { nvidiaFy2026 } from "./nvidia/nvidia-fy2026.js";
+import { nvidiaQ2Fy2027 } from "./nvidia/nvidia-q2-fy2027.js";
 import { apple } from "./apple/apple.js";
 import { microsoft } from "./microsoft/microsoft.js";
 import { novoNordisk } from "./novo-nordisk/novo-nordisk.js";
@@ -31,6 +32,7 @@ export const analyses: Record<string, AnalysisData> = {
   "investor-ab": investorAb,
   "sbb": sbb,
   "nvidia-fy2026": nvidiaFy2026,
+  "nvidia-q2-fy2027": nvidiaQ2Fy2027,
   "apple": apple,
   "microsoft": microsoft,
   "novo-nordisk": novoNordisk,
