@@ -56,11 +56,11 @@ assert.ok(Math.abs(newWaveGroupV112YearsToValuation - 2.288843258) < 0.000000001
 ```
 
 - [ ] **Step 2: Run the validator to verify it fails**
-Run: `npx tsx scripts/validate-new-wave-v11-2.ts`  
+Run: `npx tsx scripts/validate-new-wave-v11-2.ts`
 Expected: module-not-found error for `new-wave-group-v11-2-model.js`.
 
 - [ ] **Step 3: Complete after Task 2**
-Run: `npx tsx scripts/validate-new-wave-v11-2.ts`  
+Run: `npx tsx scripts/validate-new-wave-v11-2.ts`
 Expected: exit code 0.
 
 ### Task 2: Create the canonical v11.2 valuation model
@@ -89,7 +89,7 @@ export const newWaveGroupV112Scenarios = scenarioInputs.map((input) => {
 ```
 
 - [ ] **Step 2: Run the validator**
-Run: `npx tsx scripts/validate-new-wave-v11-2.ts`  
+Run: `npx tsx scripts/validate-new-wave-v11-2.ts`
 Expected: exit code 0.
 
 ### Task 3: Add the standalone v11 analysis record
@@ -111,7 +111,7 @@ Expected: exit code 0.
 - Set `deepDiveComponent` only if the existing v11 renderer requires it; otherwise use the generic v11 display.
 
 - [ ] **Step 2: Type-check**
-Run: `npm run lint`  
+Run: `npm run lint`
 Expected: exit code 0.
 
 ### Task 4: Register the preview-only record
@@ -133,7 +133,7 @@ import { newWaveGroupV112 } from "./new-wave-group/new-wave-group-v11-2.js";
 ```
 
 - [ ] **Step 2: Verify static behavior**
-Run: `npm run lint && npx tsx scripts/validate-new-wave-v11-2.ts`  
+Run: `npm run lint && npx tsx scripts/validate-new-wave-v11-2.ts`
 Expected: exit code 0.
 
 ### Task 5: Build and hand off the preview
@@ -142,16 +142,16 @@ Expected: exit code 0.
 - No source changes beyond Tasks 1–4.
 
 - [ ] **Step 1: Run the production build**
-Run: `npm run build`  
+Run: `npm run build`
 Expected: Vite completes with exit code 0.
 
 - [ ] **Step 2: Create a draft pull request**
-Target: `main`  
-Head: `draft/new-wave-group-v11-2-2026-09`  
+Target: `main`
+Head: `draft/new-wave-group-v11-2-2026-09`
 Expected: a Vercel Preview is attached by the existing Vercel GitHub integration; no merge and no production deployment.
 
 - [ ] **Step 3: Review the direct preview route**
-Check: `/analys/new-wave-group-september-2026`.  
+Check: `/analys/new-wave-group-september-2026`.
 Expected: the v11 case is visible on the preview; the April analysis and production URLs are unchanged.
 
 ## Self-Review
