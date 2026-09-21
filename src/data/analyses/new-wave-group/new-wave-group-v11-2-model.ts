@@ -116,4 +116,3 @@ export const newWaveGroupV112RiskRewardZones = {
     },
   ],
 } as const;
-
