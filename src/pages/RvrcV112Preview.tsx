@@ -10,7 +10,9 @@ type MarkdownBlock =
   | { type: "heading"; level: number; text: string }
   | { type: "paragraph"; lines: string[] }
   | { type: "table"; rows: string[][] }
-  | { type: "list"; items: string[] };
+  | { type: "list"; items: string[] }
+  | { type: "ordered-list"; items: string[] }
+  | { type: "code"; language: string; lines: string[] };
 
 const sections: AnalysisSection[] = [
   { id: "investeringsbeslut", number: "01", title: "Investeringsbeslut" },
@@ -44,10 +46,16 @@ function parseMarkdown(markdown: string): MarkdownBlock[] {
       continue;
     }
 
-    if (trimmed.startsWith("```")) {
+    const fence = /^```(\w+)?/.exec(trimmed);
+    if (fence) {
+      const codeLines: string[] = [];
       index += 1;
-      while (index < lines.length && !lines[index].trim().startsWith("```")) index += 1;
+      while (index < lines.length && !lines[index].trim().startsWith("```")) {
+        codeLines.push(lines[index]);
+        index += 1;
+      }
       index += 1;
+      blocks.push({ type: "code", language: fence[1] ?? "", lines: codeLines });
       continue;
     }
 
@@ -79,10 +87,20 @@ function parseMarkdown(markdown: string): MarkdownBlock[] {
       continue;
     }
 
+    if (/^\d+\.\s+/.test(trimmed)) {
+      const items: string[] = [];
+      while (index < lines.length && /^\d+\.\s+/.test(lines[index].trim())) {
+        items.push(lines[index].trim().replace(/^\d+\.\s+/, ""));
+        index += 1;
+      }
+      blocks.push({ type: "ordered-list", items });
+      continue;
+    }
+
     const paragraphLines: string[] = [];
     while (index < lines.length) {
       const line = lines[index].trim();
-      if (!line || /^```/.test(line) || /^#{1,4}\s+/.test(line) || line.startsWith("|") || /^[-*]\s+/.test(line)) break;
+      if (!line || /^```/.test(line) || /^#{1,4}\s+/.test(line) || line.startsWith("|") || /^[-*]\s+/.test(line) || /^\d+\.\s+/.test(line)) break;
       paragraphLines.push(line);
       index += 1;
     }
@@ -106,14 +124,7 @@ function MarkdownBlockView({ block }: { block: MarkdownBlock }) {
   if (block.type === "heading") {
     if (block.level === 1) return null;
     const id = headingId(block.text);
-    if (block.level === 2) {
-      const section = sections.find((item) => item.id === id);
-      return (
-        <section id={id} className="scroll-mt-28 border-t border-border pt-12 first:border-t-0 first:pt-0">
-          <SectionHeader number={section?.number ?? "—"} title={block.text} />
-        </section>
-      );
-    }
+    if (block.level === 2) return <SectionHeader number={sections.find((item) => item.id === id)?.number ?? "—"} title={block.text} />;
     if (block.level === 3) return <h3 className="mt-9 text-xl font-black tracking-tight text-foreground">{inline(block.text)}</h3>;
     return <h4 className="mt-7 text-base font-extrabold text-foreground">{inline(block.text)}</h4>;
   }
@@ -132,6 +143,29 @@ function MarkdownBlockView({ block }: { block: MarkdownBlock }) {
           </li>
         ))}
       </ul>
+    );
+  }
+
+  if (block.type === "ordered-list") {
+    return (
+      <ol className="my-6 grid max-w-4xl gap-3">
+        {block.items.map((item, index) => (
+          <li key={item} className="flex gap-3 rounded-2xl border border-border bg-card px-4 py-3 text-[15px] leading-7 text-muted-foreground shadow-sm">
+            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-black text-primary">{index + 1}</span>
+            <span>{inline(item)}</span>
+          </li>
+        ))}
+      </ol>
+    );
+  }
+
+  if (block.type === "code") {
+    const title = block.language === "json" ? "Visa strukturerad metadata" : "Visa källunderlag";
+    return (
+      <details className="my-8 max-w-4xl rounded-2xl border border-border bg-muted/20 p-5">
+        <summary className="cursor-pointer text-xs font-black uppercase tracking-[0.14em] text-muted-foreground">{title}</summary>
+        <pre className="mt-4 overflow-x-auto rounded-xl bg-slate-950 p-4 text-xs leading-6 text-slate-100"><code>{block.lines.join("\n")}</code></pre>
+      </details>
     );
   }
 
@@ -154,6 +188,33 @@ function MarkdownBlockView({ block }: { block: MarkdownBlock }) {
       </div>
     </div>
   );
+}
+
+function RenderedAnalysis({ blocks }: { blocks: MarkdownBlock[] }) {
+  const groups: Array<{ heading?: Extract<MarkdownBlock, { type: "heading" }>; blocks: MarkdownBlock[] }> = [];
+
+  for (const block of blocks) {
+    if (block.type === "heading" && block.level === 2) {
+      groups.push({ heading: block, blocks: [] });
+    } else if (groups.length) {
+      groups[groups.length - 1].blocks.push(block);
+    } else {
+      groups.push({ blocks: [block] });
+    }
+  }
+
+  return groups.map((group, index) => {
+    if (!group.heading) {
+      return <React.Fragment key={`intro-${index}`}>{group.blocks.map((block, blockIndex) => <MarkdownBlockView key={blockIndex} block={block} />)}</React.Fragment>;
+    }
+    const id = headingId(group.heading.text);
+    return (
+      <section key={id} id={id} className="scroll-mt-28 border-t border-border pt-12 first:border-t-0 first:pt-0">
+        <MarkdownBlockView block={group.heading} />
+        {group.blocks.map((block, blockIndex) => <MarkdownBlockView key={blockIndex} block={block} />)}
+      </section>
+    );
+  });
 }
 
 export default function RvrcV112Preview() {
@@ -186,7 +247,7 @@ export default function RvrcV112Preview() {
         <article className="mx-auto max-w-5xl">
           <div className="mb-10 overflow-hidden rounded-[2rem] border border-emerald-200 bg-card shadow-xl shadow-emerald-950/5">
             <div className="border-b border-emerald-100 bg-emerald-50/70 px-6 py-3 text-[10px] font-black uppercase tracking-[0.18em] text-emerald-800 md:px-9">
-              Privat Vercel Preview · Ej indexerad och inte listad på Börsanalys.se
+              Onoterad Vercel Preview · Ej indexerad och inte listad på Börsanalys.se
             </div>
             <div className="p-6 md:p-9">
               <div className="flex flex-col justify-between gap-7 md:flex-row md:items-start">
@@ -218,7 +279,7 @@ export default function RvrcV112Preview() {
           <div className="rounded-[2rem] border border-border bg-card p-6 shadow-xl shadow-black/5 md:p-10">
             <p className="mb-10 max-w-4xl border-b border-border pb-8 text-sm italic leading-7 text-muted-foreground">Denna analys är en redaktionell bedömning baserad på offentligt tillgänglig information och utgör inte personlig investeringsrådgivning. Alla investeringsbeslut fattas på läsarens eget ansvar och efter egen bedömning.</p>
             <div className="space-y-1">
-              {blocks.map((block, index) => <MarkdownBlockView key={index} block={block} />)}
+              <RenderedAnalysis blocks={blocks} />
             </div>
           </div>
 

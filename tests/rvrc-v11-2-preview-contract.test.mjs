@@ -23,6 +23,8 @@ test("RVRC v11.2 is an unlisted preview with its own rendered page", async () =>
   assert.match(page, /73,1 kr/);
   assert.match(page, /NOT_DECISION_GRADE/);
   assert.match(page, /Q1-scorecard/);
+  assert.match(page, /Visa strukturerad metadata/);
+  assert.match(page, /type: "ordered-list"/);
   assert.doesNotMatch(analysisIndex, /revolutionrace-v11-2-2026/);
   assert.doesNotMatch(sitemap, /revolutionrace-v11-2-2026/);
   assert.match(vercelConfig, /"source": "\/preview\/:path\*"/);
