@@ -14,6 +14,7 @@ import { swedbank2025 } from "./swedbank/swedbank-2025.js";
 import { handelsbanken2025 } from "./handelsbanken/handelsbanken-2025.js";
 import { ericsson2025 } from "./ericsson/ericsson-2025.js";
 import { newWaveGroup2025 } from "./new-wave-group/new-wave-group.js";
+import { newWaveGroupV112 } from "./new-wave-group/new-wave-group-v11-2.js";
 import { aqGroup } from "./aq-group/aq-group.js";
 import { nibe2026 } from "./nibe/nibe-2026.js";
 import { nordea2026 } from "./nordea/nordea-bank-2026.js";
@@ -44,6 +45,7 @@ export const analyses: Record<string, AnalysisData> = {
   "ericsson-2025": ericsson2025,
   "handelsbanken-2025": handelsbanken2025,
   "new-wave-group-april-2026": newWaveGroup2025,
+  "new-wave-group-september-2026": newWaveGroupV112,
   "aq-group": aqGroup,
   "nibe-industrier-2026": nibe2026,
   "nordea-bank-2026": nordea2026,
