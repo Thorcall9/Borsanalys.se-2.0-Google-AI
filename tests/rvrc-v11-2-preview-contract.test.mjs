@@ -25,7 +25,11 @@ test("RVRC v11.2 is an unlisted preview with the v11.2 analysis-detail structure
   assert.match(page, /Annualiserad värdepotential/);
   assert.match(page, /KÖP.*MEDEL–HÖG RISK/);
   assert.match(page, /73,1 kr/);
-  assert.match(page, /NOT_DECISION_GRADE/);
+  assert.match(page, /EV\/EBIT – sekundär värderingskontroll/);
+  assert.match(page, /Vad händer om balansräkningen avviker\?/);
+  assert.match(page, /Bekräftad – MEDIUM confidence/);
+  assert.match(page, /md:hidden/);
+  assert.match(page, /md:block/);
   assert.match(page, /Varför caset är intressant/);
   assert.match(page, /Börsanalys\.se:s insikt/);
   assert.match(page, /Vad måste bevisas för att caset ska fungera\?/);
@@ -42,6 +46,31 @@ test("RVRC v11.2 is an unlisted preview with the v11.2 analysis-detail structure
   assert.match(page, /isMember &&/);
   assert.match(source, /"totalValuePotential": 0\.485/);
   assert.match(source, /"visibility": "MEMBER"/);
+  const obsolete = /NOT_DECISION_GRADE|EV\/EBIT används inte|EV\/EBIT är inte beslutsgrundande|återaktivera EV\/EBIT|kan EV\/EBIT återaktiveras/i;
+  assert.doesNotMatch(page, obsolete);
+  assert.doesNotMatch(source, obsolete);
+  const canonical = JSON.parse(source.match(/```json\s*([\s\S]*?)```/)[1]);
+  assert.equal(canonical.method, "Normaliserad EPS × P/E");
+  assert.equal(canonical.recommendation, "KÖP");
+  assert.equal(canonical.risk, "MEDEL_HÖG");
+  assert.equal(canonical.marketReference, 49.22);
+  assert.equal(canonical.marketReferenceDate, "2026-09-23");
+  assert.equal(canonical.valuationDate, "2029-06-30");
+  assert.deepEqual([canonical.scenarios.bear.probability, canonical.scenarios.base.probability, canonical.scenarios.bull.probability], [0.30, 0.55, 0.15]);
+  assert.deepEqual([canonical.scenarios.bear.value, canonical.scenarios.base.value, canonical.scenarios.bull.value], [45.5, 80, 102.8]);
+  assert.equal(canonical.evEbitConfidence, "MEDIUM");
+  for (const scenario of ["bear", "base", "bull"]) {
+    const ev = canonical.evEbitCrossCheck[scenario];
+    const pe = canonical.scenarios[scenario];
+    assert.equal(ev.ebitMsek * ev.evEbit, ev.enterpriseValueMsek);
+    assert.equal(ev.enterpriseValueMsek + ev.netCashMsek + ev.nciPutMsek, ev.equityValueMsek);
+    assert.ok(Math.abs(ev.equityValueMsek / ev.dilutedSharesMillion - ev.valuePerShare) < 0.051);
+    assert.ok(Math.abs(pe.eps * pe.pe - pe.value) < 0.051);
+  }
+  const weightedPe = Object.values(canonical.scenarios).reduce((sum, scenario) => sum + scenario.probability * scenario.value, 0);
+  assert.equal(Math.round(weightedPe * 10) / 10, canonical.weightedTerminalValue);
+  assert.deepEqual(canonical.priceZones, { attractiveMax: 53.4, balancedMin: 53.4, balancedMax: 60.6, weakMin: 60.6 });
+  assert.equal(canonical.hurdleRate, 0.12);
   assert.doesNotMatch(analysisIndex, /revolutionrace-v11-2-2026/);
   assert.doesNotMatch(sitemap, /revolutionrace-v11-2-2026/);
   assert.match(vercelConfig, /"source": "\/preview\/:path\*"/);
