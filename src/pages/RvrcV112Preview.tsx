@@ -1,304 +1,89 @@
-import React, { type ReactNode, useMemo } from "react";
-import { AlertTriangle, BarChart3, CalendarDays, ShieldAlert, Target } from "lucide-react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowLeft, ArrowRight, ChevronDown, ChevronUp, LockKeyhole, ShieldAlert, TrendingUp } from "lucide-react";
 import SEO from "../components/SEO";
-import AnalysisLayout, { type AnalysisSection } from "../components/analysis/AnalysisLayout";
-import AlertBox from "../components/analysis/AlertBox";
-import SectionHeader from "../components/analysis/SectionHeader";
-import rvrcV112Markdown from "../../analyses/RVRC/RVRC_aktieanalys_v11_2_september2026.md?raw";
+import { useAuth } from "../contexts/AuthContext";
 
-type MarkdownBlock =
-  | { type: "heading"; level: number; text: string }
-  | { type: "paragraph"; lines: string[] }
-  | { type: "table"; rows: string[][] }
-  | { type: "list"; items: string[] }
-  | { type: "ordered-list"; items: string[] }
-  | { type: "code"; language: string; lines: string[] };
+const navItems = [
+  { id: "overview", label: "Översikt" },
+  { id: "theses", label: "Teser" },
+  { id: "valuation", label: "Värdering" },
+  { id: "next-report", label: "Nästa rapport" },
+] as const;
 
-const sections: AnalysisSection[] = [
-  { id: "investeringsbeslut", number: "01", title: "Investeringsbeslut" },
-  { id: "metod-och-epistemisk-status", number: "02", title: "Metod och status" },
-  { id: "scenarioanalys", number: "03", title: "Scenarioanalys" },
-  { id: "icaniwill-och-kvaliteten-pa-tillvaxten", number: "04", title: "ICANIWILL" },
-  { id: "m-a-earn-out-och-balansrakning", number: "05", title: "M&A och balansräkning" },
-  { id: "risk-reward-och-priszoner", number: "06", title: "Risk/reward och priszoner" },
-  { id: "varfor-marknaden-kan-prisa-aktien-lagt", number: "07", title: "Marknadens syn" },
-  { id: "q1-scorecard-forutbestamda-uppdateringsregler", number: "08", title: "Q1-scorecard" },
-  { id: "centrala-risker", number: "09", title: "Centrala risker" },
-  { id: "slutsats", number: "10", title: "Slutsats" },
+type NavId = (typeof navItems)[number]["id"];
+
+const positives = [
+  { title: "Värdet bygger på en tydlig scenariofördelning", body: "Det sannolikhetsvägda terminalvärdet är 73,1 kr per 30 juni 2029. Base väger 55 %, medan Bear och Bull väger 30 % respektive 15 %." },
+  { title: "Referenskursen ligger under modellens 12-procentiga gräns", body: "Vid 49,22 kr ligger aktien under den nivå som enligt modellen motsvarar cirka 12 % annualiserad värdepotential." },
+  { title: "ICANIWILL kan förbättra koncernens tillväxtprofil", body: "Förvärvet breddar tillväxten, förutsatt att utvecklingen kan skiljas från den organiska kvaliteten i kärn-RVRC." },
 ];
 
-const headingId = (value: string) => value
-  .toLocaleLowerCase("sv-SE")
-  .normalize("NFD")
-  .replace(/[\u0300-\u036f]/g, "")
-  .replace(/[^a-z0-9]+/g, "-")
-  .replace(/(^-|-$)/g, "");
+const cautions = [
+  { title: "Base kräver en snabb återacceleration i kärn-RVRC", body: "Kärnverksamheten behöver gå från ungefär 3–5 % momentum till cirka 7 % redan FY26/27 och därefter cirka 9–10 %." },
+  { title: "Förvärvet ökar analysrisken", body: "Högre rapporterad koncerntillväxt får inte misstolkas som att kärn-RVRC redan har stärkts. Integrations- och kapitalallokeringsrisk finns kvar." },
+  { title: "EV/EBIT är inte beslutsgrundande", body: "Post-ICANIWILL-balansräkningen ger ännu inte tillräckligt underlag för att låsa opening net debt och M&A-relaterade åtaganden med önskad precision." },
+];
 
-function parseMarkdown(markdown: string): MarkdownBlock[] {
-  const lines = markdown.split(/\r?\n/);
-  const blocks: MarkdownBlock[] = [];
-  let index = 0;
+const theses = [
+  { status: "Ej bekräftad", title: "Kärn-RVRC återaccelererar", latest: "Senaste observerade momentum är ungefär 3–5 %. Base kräver cirka 7 % i FY26/27 och därefter cirka 9–10 %.", next: "Organisk/kärn-RVRC-tillväxt visar en tydlig acceleration, utan att koncerntillväxt från ICANIWILL blandas in." },
+  { status: "På väg", title: "ICANIWILL höjer kvaliteten i tillväxten", latest: "ICANIWILL förbättrar koncernens tillväxtprofil, men skapar samtidigt integrations- och kapitalallokeringsrisk.", next: "Separat rapportering av kärn-RVRC, ICANIWILL och koncerntillväxt visar att den förbättrade tillväxten också har kvalitet." },
+  { status: "Ej bekräftad", title: "Balansräkningen gör EV/EBIT användbar igen", latest: "EV/EBIT är NOT_DECISION_GRADE eftersom nettoskuld och M&A-relaterade åtaganden inte kan bryggas med önskad precision.", next: "Kassakonvertering och balansräkning ger tillräckligt underlag för en tydlig EV→equity-brygga." },
+];
 
-  while (index < lines.length) {
-    const trimmed = lines[index].trim();
-    if (!trimmed) {
-      index += 1;
-      continue;
-    }
+const scenarios = [
+  { id: "bear", label: "Bear", probability: "30 %", value: "45,5 kr", eps: "3,50 kr", multiple: "13× P/E", drivers: ["Kärn-RVRC återaccelererar inte", "Svagare operationell hävstång", "Marknaden fortsätter kräva rabatt"] },
+  { id: "base", label: "Base", probability: "55 %", value: "80,0 kr", eps: "5,00 kr", multiple: "16× P/E", drivers: ["Kärn-RVRC återaccelererar", "Tillväxt omkring 7 % redan FY26/27", "Normaliserad EPS värderas till 16× P/E"] },
+  { id: "bull", label: "Bull", probability: "15 %", value: "102,8 kr", eps: "5,71 kr", multiple: "18× P/E", drivers: ["Kärn-RVRC och ICANIWILL utvecklas starkare än Base", "Marginaler och kassakonvertering håller", "Tydlig evidens krävs innan multipeln kan uppgraderas"] },
+];
 
-    const fence = /^```(\w+)?/.exec(trimmed);
-    if (fence) {
-      const codeLines: string[] = [];
-      index += 1;
-      while (index < lines.length && !lines[index].trim().startsWith("```")) {
-        codeLines.push(lines[index]);
-        index += 1;
-      }
-      index += 1;
-      blocks.push({ type: "code", language: fence[1] ?? "", lines: codeLines });
-      continue;
-    }
+const reportFocus = [
+  ["Kärn-RVRC", "Cirka 3–5 % momentum", "Acceleration, oförändrat eller ytterligare inbromsning", "Avgör om Base-antagandet om återacceleration får stöd."],
+  ["ICANIWILL", "Förbättrar koncerntillväxten", "Tillväxt, lönsamhet och integrations-/kapitalallokeringsrisk", "Visar om den rapporterade tillväxten har högre ekonomisk kvalitet."],
+  ["Marginal och kassakonvertering", "EV/EBIT är NOT_DECISION_GRADE", "Stödjer utfallet Bear, Base eller Bull och stärker balansräkningsbilden", "Avgör om den andra värderingslinsen kan återaktiveras."],
+];
 
-    const heading = /^(#{1,4})\s+(.+)$/.exec(trimmed);
-    if (heading) {
-      blocks.push({ type: "heading", level: heading[1].length, text: heading[2] });
-      index += 1;
-      continue;
-    }
-
-    if (trimmed.startsWith("|")) {
-      const rows: string[][] = [];
-      while (index < lines.length && lines[index].trim().startsWith("|")) {
-        const cells = lines[index].trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map((cell) => cell.trim());
-        if (!cells.every((cell) => /^:?-{3,}:?$/.test(cell))) rows.push(cells);
-        index += 1;
-      }
-      blocks.push({ type: "table", rows });
-      continue;
-    }
-
-    if (/^[-*]\s+/.test(trimmed)) {
-      const items: string[] = [];
-      while (index < lines.length && /^[-*]\s+/.test(lines[index].trim())) {
-        items.push(lines[index].trim().replace(/^[-*]\s+/, ""));
-        index += 1;
-      }
-      blocks.push({ type: "list", items });
-      continue;
-    }
-
-    if (/^\d+\.\s+/.test(trimmed)) {
-      const items: string[] = [];
-      while (index < lines.length && /^\d+\.\s+/.test(lines[index].trim())) {
-        items.push(lines[index].trim().replace(/^\d+\.\s+/, ""));
-        index += 1;
-      }
-      blocks.push({ type: "ordered-list", items });
-      continue;
-    }
-
-    const paragraphLines: string[] = [];
-    while (index < lines.length) {
-      const line = lines[index].trim();
-      if (!line || /^```/.test(line) || /^#{1,4}\s+/.test(line) || line.startsWith("|") || /^[-*]\s+/.test(line) || /^\d+\.\s+/.test(line)) break;
-      paragraphLines.push(line);
-      index += 1;
-    }
-    blocks.push({ type: "paragraph", lines: paragraphLines });
-  }
-
-  return blocks;
+function SectionNav({ activeTab, onSelect }: { activeTab: NavId; onSelect: (id: NavId) => void }) {
+  return <nav className="sticky top-[68px] z-20 border-y border-emerald-950/10 bg-white/95 backdrop-blur" aria-label="Avsnitt i RVRC-analysen"><div className="no-scrollbar mx-auto flex max-w-6xl overflow-x-auto px-4 sm:px-6">{navItems.map((item) => <button key={item.id} type="button" onClick={() => { onSelect(item.id); document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth", block: "start" }); }} className={`min-h-12 shrink-0 border-b-2 px-4 text-sm font-bold transition-colors sm:px-6 ${activeTab === item.id ? "border-emerald-600 text-emerald-700" : "border-transparent text-slate-500 hover:border-emerald-200 hover:text-emerald-700"}`}>{item.label}</button>)}</div></nav>;
 }
 
-function inline(value: string): ReactNode[] {
-  const parts = value.split(/(\*\*[^*]+\*\*|\*[^*]+\*|`[^`]+`)/g).filter(Boolean);
-  return parts.map((part, index) => {
-    if (part.startsWith("**")) return <strong key={index} className="font-extrabold text-foreground">{part.slice(2, -2)}</strong>;
-    if (part.startsWith("*")) return <em key={index}>{part.slice(1, -1)}</em>;
-    if (part.startsWith("`")) return <code key={index} className="rounded bg-muted px-1.5 py-0.5 text-[0.88em] font-semibold text-foreground">{part.slice(1, -1)}</code>;
-    return part;
-  });
+function ReasonList({ items, tone }: { items: typeof positives; tone: "positive" | "caution" }) {
+  const accent = tone === "positive" ? "text-emerald-700" : "text-amber-700";
+  return <div className="divide-y divide-slate-200/85">{items.map((item) => <div key={item.title} className="flex items-start gap-4 py-5 first:pt-0 last:pb-0"><span className={`mt-1 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-current/20 ${accent}`} aria-hidden="true">{tone === "positive" ? <TrendingUp size={18} /> : <ShieldAlert size={18} />}</span><div><h3 className="text-base font-extrabold text-slate-950">{item.title}</h3><p className="mt-1 text-sm leading-6 text-slate-600">{item.body}</p></div></div>)}</div>;
 }
 
-function MarkdownBlockView({ block }: { block: MarkdownBlock }) {
-  if (block.type === "heading") {
-    if (block.level === 1) return null;
-    const id = headingId(block.text);
-    if (block.level === 2) return <SectionHeader number={sections.find((item) => item.id === id)?.number ?? "—"} title={block.text} />;
-    if (block.level === 3) return <h3 className="mt-9 text-xl font-black tracking-tight text-foreground">{inline(block.text)}</h3>;
-    return <h4 className="mt-7 text-base font-extrabold text-foreground">{inline(block.text)}</h4>;
-  }
-
-  if (block.type === "paragraph") {
-    return <p className="my-5 max-w-4xl text-[16px] leading-8 text-muted-foreground md:text-[17px]">{inline(block.lines.join(" "))}</p>;
-  }
-
-  if (block.type === "list") {
-    return (
-      <ul className="my-6 grid max-w-4xl gap-3">
-        {block.items.map((item) => (
-          <li key={item} className="flex gap-3 rounded-2xl border border-border bg-card px-4 py-3 text-[15px] leading-7 text-muted-foreground shadow-sm">
-            <span className="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-primary" />
-            <span>{inline(item)}</span>
-          </li>
-        ))}
-      </ul>
-    );
-  }
-
-  if (block.type === "ordered-list") {
-    return (
-      <ol className="my-6 grid max-w-4xl gap-3">
-        {block.items.map((item, index) => (
-          <li key={item} className="flex gap-3 rounded-2xl border border-border bg-card px-4 py-3 text-[15px] leading-7 text-muted-foreground shadow-sm">
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-black text-primary">{index + 1}</span>
-            <span>{inline(item)}</span>
-          </li>
-        ))}
-      </ol>
-    );
-  }
-
-  if (block.type === "code") {
-    const title = block.language === "json" ? "Visa strukturerad metadata" : "Visa källunderlag";
-    return (
-      <details className="my-8 max-w-4xl rounded-2xl border border-border bg-muted/20 p-5">
-        <summary className="cursor-pointer text-xs font-black uppercase tracking-[0.14em] text-muted-foreground">{title}</summary>
-        <pre className="mt-4 overflow-x-auto rounded-xl bg-slate-950 p-4 text-xs leading-6 text-slate-100"><code>{block.lines.join("\n")}</code></pre>
-      </details>
-    );
-  }
-
-  const [head, ...body] = block.rows;
-  return (
-    <div className="my-8 max-w-5xl overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[640px] text-left text-sm">
-          <thead className="bg-muted/50 text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
-            <tr>{head.map((cell) => <th key={cell} className="border-b border-border px-4 py-3 font-black">{inline(cell)}</th>)}</tr>
-          </thead>
-          <tbody>
-            {body.map((row, rowIndex) => (
-              <tr key={rowIndex} className="transition-colors hover:bg-primary/5">
-                {row.map((cell, cellIndex) => <td key={`${rowIndex}-${cellIndex}`} className="border-b border-border/70 px-4 py-3 text-muted-foreground">{inline(cell)}</td>)}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-function RenderedAnalysis({ blocks }: { blocks: MarkdownBlock[] }) {
-  const groups: Array<{ heading?: Extract<MarkdownBlock, { type: "heading" }>; blocks: MarkdownBlock[] }> = [];
-
-  for (const block of blocks) {
-    if (block.type === "heading" && block.level === 2) {
-      groups.push({ heading: block, blocks: [] });
-    } else if (groups.length) {
-      groups[groups.length - 1].blocks.push(block);
-    } else {
-      groups.push({ blocks: [block] });
-    }
-  }
-
-  return groups.map((group, index) => {
-    if (!group.heading) {
-      return <React.Fragment key={`intro-${index}`}>{group.blocks.map((block, blockIndex) => <MarkdownBlockView key={blockIndex} block={block} />)}</React.Fragment>;
-    }
-    const id = headingId(group.heading.text);
-    return (
-      <section key={id} id={id} className="scroll-mt-28 border-t border-border pt-12 first:border-t-0 first:pt-0">
-        <MarkdownBlockView block={group.heading} />
-        {group.blocks.map((block, blockIndex) => <MarkdownBlockView key={blockIndex} block={block} />)}
-      </section>
-    );
-  });
+function MemberLock({ onOpenLogin }: { onOpenLogin: () => void }) {
+  return <section className="mt-8 rounded-2xl border border-slate-200 bg-slate-50/75 p-5 sm:p-7" aria-labelledby="method-lock-heading"><div className="flex items-start gap-4"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-emerald-700 shadow-sm"><LockKeyhole size={20} aria-hidden="true" /></span><div className="max-w-3xl"><p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">Medlemsfördjupning</p><h3 id="method-lock-heading" className="mt-2 font-serif text-3xl font-bold tracking-[-0.04em] text-slate-950">Se hur vi har räknat</h3><p className="mt-3 text-sm leading-6 text-slate-600">Som gratis medlem får du se scenarioantaganden, EPS-/resultatbryggan och vilka värdedrivare som måste infrias för värdet.</p><p className="mt-4 text-sm font-semibold text-slate-700">Normaliserad EPS → P/E → värde</p><button type="button" onClick={onOpenLogin} className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-emerald-700 px-5 text-sm font-bold text-white transition-colors hover:bg-emerald-800">Skapa gratis konto <ArrowRight size={16} aria-hidden="true" /></button></div></div></section>;
 }
 
 export default function RvrcV112Preview() {
-  const blocks = useMemo(() => parseMarkdown(rvrcV112Markdown), []);
+  const { openLoginModal } = useAuth();
+  const [activeTab, setActiveTab] = useState<NavId>("overview");
+  const [risksOpen, setRisksOpen] = useState(false);
 
-  return (
-    <>
-      <SEO
-        title="RevolutionRace – Grundanalys v11.2"
-        description="Onoterad förhandsgranskning av RVRC Holding v11.2."
-        canonical="/preview/revolutionrace-v11-2-2026"
-        noIndex
-      />
-      <AnalysisLayout
-        companyName="RevolutionRace"
-        stockSlug="revolutionrace-2026"
-        ticker="RVRC"
-        subtitle="Grundanalys v11.2 · Förhandsgranskning"
-        livePrice="49,22 kr"
-        liveChange="Referenskurs 23 sep 2026"
-        date="24 september 2026"
-        dataSources="Källa: RVRC v11.2 · Ej publicerad"
-        sections={sections}
-        accentColor="#10B981"
-        theme="light"
-        hideDefaultWatchlist
-        compactSections
-        tightContent
-      >
-        <article className="mx-auto max-w-5xl">
-          <div className="mb-10 overflow-hidden rounded-[2rem] border border-emerald-200 bg-card shadow-xl shadow-emerald-950/5">
-            <div className="border-b border-emerald-100 bg-emerald-50/70 px-6 py-3 text-[10px] font-black uppercase tracking-[0.18em] text-emerald-800 md:px-9">
-              Onoterad Vercel Preview · Ej indexerad och inte listad på Börsanalys.se
-            </div>
-            <div className="p-6 md:p-9">
-              <div className="flex flex-col justify-between gap-7 md:flex-row md:items-start">
-                <div className="max-w-3xl">
-                  <p className="mb-3 text-xs font-black uppercase tracking-[0.18em] text-primary">NASDAQ Stockholm · Outdoor/D2C</p>
-                  <h1 className="text-4xl font-black tracking-tight text-foreground md:text-5xl">RVRC Holding</h1>
-                  <p className="mt-3 text-xl font-bold text-muted-foreground">Grundanalys v11.2 · September 2026</p>
-                  <p className="mt-5 text-sm leading-6 text-muted-foreground">Sannolikhetsvägd EPS × P/E-värdering med analytikerkonsensus som sekundär kontroll.</p>
-                </div>
-                <div className="inline-flex items-center gap-2 self-start rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-emerald-800">
-                  <Target size={15} /> KÖP · MEDEL_HÖG risk
-                </div>
-              </div>
-              <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                <Metric icon={<BarChart3 size={17} />} label="Referenskurs" value="49,22 kr" detail="23 september 2026" />
-                <Metric icon={<Target size={17} />} label="Vägt terminalvärde" value="73,1 kr" detail="30 juni 2029" />
-                <Metric icon={<CalendarDays size={17} />} label="Värdepotential" value="15,3 %" detail="annualiserad" />
-                <Metric icon={<ShieldAlert size={17} />} label="Huvudmetod" value="EPS × P/E" detail="EV/EBIT ej beslutsklar" />
-              </div>
-            </div>
-          </div>
-
-          <AlertBox
-            type="warning"
-            title="Metodavgränsning"
-            message="EV/EBIT är NOT_DECISION_GRADE i denna version. Rekommendationen stöds av den normaliserade EPS × P/E-modellen, inte av en EV→equity-brygga."
-          />
-
-          <div className="rounded-[2rem] border border-border bg-card p-6 shadow-xl shadow-black/5 md:p-10">
-            <p className="mb-10 max-w-4xl border-b border-border pb-8 text-sm italic leading-7 text-muted-foreground">Denna analys är en redaktionell bedömning baserad på offentligt tillgänglig information och utgör inte personlig investeringsrådgivning. Alla investeringsbeslut fattas på läsarens eget ansvar och efter egen bedömning.</p>
-            <div className="space-y-1">
-              <RenderedAnalysis blocks={blocks} />
-            </div>
-          </div>
-
-          <div className="mt-8 flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-900">
-            <AlertTriangle className="mt-0.5 shrink-0" size={18} />
-            <p><strong>Förhandsgranskning:</strong> sidan är medvetet frånkopplad från startsidan, analysarkivet, sök och sitemap. Äldre RVRC-analys är oförändrad.</p>
-          </div>
-        </article>
-      </AnalysisLayout>
-    </>
-  );
-}
-
-function Metric({ icon, label, value, detail }: { icon: ReactNode; label: string; value: string; detail: string }) {
-  return (
-    <div className="rounded-2xl border border-border bg-muted/20 p-4">
-      <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.14em] text-muted-foreground">{icon}{label}</div>
-      <div className="mt-3 text-2xl font-black tracking-tight text-foreground">{value}</div>
-      <div className="mt-1 text-xs font-semibold text-muted-foreground">{detail}</div>
-    </div>
-  );
+  return <><SEO title="RevolutionRace – Grundanalys v11.2" description="Onoterad förhandsgranskning av RVRC Holding enligt Börsanalys.se:s frontendstandard v11.2." canonical="/preview/revolutionrace-v11-2-2026" noIndex />
+    <article className="bg-white text-slate-950">
+      <header id="overview" className="scroll-mt-36 border-b border-emerald-950/10"><div className="mx-auto max-w-6xl px-5 pb-8 pt-7 sm:px-6 sm:pb-12 sm:pt-10 lg:pb-14 lg:pt-12">
+        <div className="mb-6 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-xs font-semibold text-emerald-900">Onoterad förhandsgranskning · Ej indexerad och inte listad på Börsanalys.se</div>
+        <Link to="/analys" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-slate-500 transition-colors hover:text-emerald-700"><ArrowLeft size={17} aria-hidden="true" />Alla analyser</Link>
+        <p className="mt-6 text-sm text-slate-500">RevolutionRace <span className="mx-1 text-slate-300">/</span> RVRC <span className="mx-1 text-slate-300">/</span> Uppdaterad 24 september 2026</p>
+        <h1 className="mt-7 max-w-5xl break-words font-serif text-[2.25rem] font-bold leading-[0.98] tracking-[-0.052em] text-slate-950 sm:text-6xl lg:text-7xl" style={{ overflowWrap: "anywhere" }}>RevolutionRace: värderingen kräver återacceleration i kärn-RVRC</h1>
+        <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600 sm:text-xl">Analysen bygger på normaliserad EPS × P/E. Värdet beror på om kärn-RVRC återaccelererar, samtidigt som ICANIWILL utvecklas utan att dölja den organiska kvaliteten.</p>
+        <div className="mt-7 inline-flex min-h-11 items-center rounded-xl border border-emerald-600 bg-emerald-50 px-4 text-sm font-black tracking-wide text-emerald-700">KÖP <span className="mx-2 text-emerald-300">·</span> MEDEL–HÖG RISK</div>
+        <section aria-labelledby="snapshot-heading" className="mt-8 rounded-2xl border border-emerald-100 bg-emerald-50/75 p-5 sm:p-7"><p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">Investment Snapshot</p><div className="mt-5 grid gap-6 lg:grid-cols-[1.25fr_0.95fr_0.95fr] lg:items-end"><div><h2 id="snapshot-heading" className="sr-only">Investment Snapshot</h2><p className="font-serif text-6xl font-bold leading-none tracking-[-0.055em] text-emerald-700 sm:text-7xl">73,1 <span className="text-2xl sm:text-3xl">kr</span></p><p className="mt-2 text-base text-slate-600">Sannolikhetsvägt värde vid 30 juni 2029</p></div><div className="border-t border-emerald-200 pt-5 lg:border-l lg:border-t-0 lg:pl-7 lg:pt-0"><p className="font-serif text-5xl font-bold leading-none tracking-[-0.045em] text-emerald-700">+48,5 %</p><p className="mt-2 text-base text-slate-600">Total värdepotential till värderingsdatum</p></div><div className="border-t border-emerald-200 pt-5 lg:border-l lg:border-t-0 lg:pl-7 lg:pt-0"><p className="font-serif text-5xl font-bold leading-none tracking-[-0.045em] text-emerald-700">+15,3 %</p><p className="mt-2 text-base text-slate-600">Annualiserad värdepotential per år</p></div></div><p className="mt-6 border-t border-emerald-200 pt-5 text-sm leading-6 text-slate-600">Referenskurs: <strong className="text-slate-950">49,22 kr</strong> per 23 september 2026. Huvudvärdet är ett sannolikhetsvägt terminalvärde, inte ett påstående om vad aktien är värd idag.</p></section>
+      </div></header>
+      <SectionNav activeTab={activeTab} onSelect={setActiveTab} />
+      <div className="mx-auto max-w-6xl px-5 sm:px-6">
+        <section className="grid scroll-mt-36 gap-10 py-11 lg:grid-cols-2 lg:gap-16 lg:py-16" aria-label="Översikt av RVRC-caset"><div><h2 className="font-serif text-3xl font-bold tracking-[-0.035em] text-emerald-700 sm:text-4xl">Varför caset är intressant</h2><div className="mt-7"><ReasonList items={positives} tone="positive" /></div></div><div><h2 className="font-serif text-3xl font-bold tracking-[-0.035em] text-slate-950 sm:text-4xl">Varför vi är försiktiga</h2><div className="mt-7"><ReasonList items={cautions} tone="caution" /></div></div></section>
+        <section className="border-t border-slate-200 py-11 lg:py-16" aria-labelledby="insight-heading"><p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">Börsanalys.se:s insikt</p><h2 id="insight-heading" className="mt-3 max-w-3xl font-serif text-3xl font-bold tracking-[-0.035em] text-slate-950 sm:text-4xl">Låg värdering är inte samma sak som felprissättning</h2><p className="mt-4 max-w-3xl text-base leading-7 text-slate-600">Den låga multipeln kan vara rationell om kärn-RVRC har gått från strukturell tillväxt till låg ensiffrig tillväxt, eller om marknaden kräver rabatt för ICANIWILL och balansräkningen. Caset stärks först när data visar att den mer pessimistiska tolkningen är fel.</p></section>
+        <section className="border-t border-slate-200 py-11 lg:py-16" aria-labelledby="history-heading"><p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">Relevant historik</p><h2 id="history-heading" className="mt-3 max-w-3xl font-serif text-3xl font-bold tracking-[-0.035em] text-slate-950 sm:text-4xl">Det som kalibrerar återaccelerationstesen</h2><div className="mt-7 grid gap-3 sm:grid-cols-2"><div className="rounded-xl border border-slate-200 p-5"><p className="text-xs font-black uppercase tracking-[0.14em] text-slate-500">Kärn-RVRC</p><p className="mt-2 text-2xl font-bold text-slate-950">Cirka 3–5 %</p><p className="mt-2 text-sm leading-6 text-slate-600">Nuvarande momentum som Base-scenariot behöver förbättra redan under FY26/27.</p></div><div className="rounded-xl border border-slate-200 p-5"><p className="text-xs font-black uppercase tracking-[0.14em] text-slate-500">Historisk multipelkontext</p><p className="mt-2 text-2xl font-bold text-slate-950">17–18× P/E</p><p className="mt-2 text-sm leading-6 text-slate-600">Tidigare nivåer ska inte återanvändas mekaniskt; de kan redan ha prisat in en återacceleration.</p></div></div></section>
+        <section id="theses" className="scroll-mt-36 border-t border-slate-200 py-11 lg:py-16" aria-labelledby="theses-heading"><div className="max-w-3xl"><p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">Teser att följa</p><h2 id="theses-heading" className="mt-3 font-serif text-4xl font-bold leading-tight tracking-[-0.045em] text-slate-950 sm:text-5xl">Vad måste bevisas för att caset ska fungera?</h2><p className="mt-4 text-base leading-7 text-slate-600">Teserna följs från rapport till rapport. Status är tydlig text - inte enbart färg - och nästa bevis avgör om bilden stärks eller försvagas.</p></div><div className="mt-8 divide-y divide-slate-200 border-y border-slate-200">{theses.map((thesis) => <article key={thesis.title} className="grid gap-4 py-6 md:grid-cols-[150px_1fr_1fr] md:gap-8"><p className="text-xs font-black uppercase tracking-[0.14em] text-amber-700">Status: {thesis.status}</p><div><h3 className="font-bold text-slate-950">Tes: {thesis.title}</h3><p className="mt-2 text-sm leading-6 text-slate-600"><strong className="text-slate-950">Senaste bevis:</strong> {thesis.latest}</p></div><div className="border-l border-slate-200 pl-4"><p className="text-xs font-black uppercase tracking-[0.14em] text-slate-400">Nästa bevis</p><p className="mt-2 text-sm leading-6 text-slate-600">{thesis.next}</p></div></article>)}</div></section>
+        <section id="valuation" className="scroll-mt-36 border-t border-slate-200 py-11 lg:py-16" aria-labelledby="valuation-heading"><div className="flex flex-col justify-between gap-6 md:flex-row md:items-end"><div className="max-w-2xl"><p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">Värdering</p><h2 id="valuation-heading" className="mt-3 font-serif text-4xl font-bold tracking-[-0.045em] text-slate-950 sm:text-5xl">Tre utfall – inte en falsk exakt riktkurs</h2></div><p className="max-w-sm text-sm leading-6 text-slate-500">Sannolikheterna är redaktionella bedömningar. Base är huvudscenariot, men det sannolikhetsvägda värdet är analysens huvudvärde.</p></div><div className="mt-8 grid gap-px overflow-x-auto rounded-2xl border border-slate-200 bg-slate-200 md:grid-cols-3">{scenarios.map((scenario) => <article key={scenario.id} className="min-w-[275px] bg-white p-6 transition-colors hover:bg-emerald-50/45"><p className="text-sm font-bold text-slate-500">{scenario.label}</p><p className="mt-3 font-serif text-5xl font-bold tracking-[-0.05em] text-slate-950">{scenario.value}</p><p className="mt-1 text-sm font-bold text-emerald-700">{scenario.probability} sannolikhet</p><div className="mt-4 flex gap-5 border-t border-slate-200 pt-4 text-sm"><p><span className="block text-slate-500">EPS FY28/29</span><strong>{scenario.eps}</strong></p><p><span className="block text-slate-500">Multipel</span><strong>{scenario.multiple}</strong></p></div><ul className="mt-5 space-y-2 border-t border-slate-200 pt-4 text-sm leading-6 text-slate-600">{scenario.drivers.map((driver) => <li key={driver} className="flex gap-2"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-600" aria-hidden="true" />{driver}</li>)}</ul></article>)}</div><p className="mt-5 border-l-2 border-emerald-500 pl-5 text-sm leading-6 text-slate-600">Huvudmetod: <strong className="text-slate-950">normaliserad EPS × P/E</strong>. EV/EBIT är <strong className="text-slate-950">NOT_DECISION_GRADE</strong> och används inte som stöd för rekommendationen i denna version.</p><MemberLock onOpenLogin={openLoginModal} /></section>
+        <section className="border-t border-slate-200 py-11 lg:py-16" aria-labelledby="risk-reward-heading"><div className="max-w-3xl"><p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">Medlemsinsikt</p><h2 id="risk-reward-heading" className="mt-3 font-serif text-4xl font-bold tracking-[-0.045em] text-slate-950 sm:text-5xl">När blir risk/reward mer attraktiv?</h2><p className="mt-4 text-base leading-7 text-slate-600">Vi har räknat ut vid vilka kursnivåer säkerhetsmarginalen förbättras eller försämras utifrån vår värdering, Bear-scenario och bolagets risk.</p></div><div className="mt-7 max-w-3xl rounded-2xl border border-emerald-200 bg-emerald-50/60 p-6 sm:p-7"><div className="flex items-start gap-4"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white text-emerald-700 shadow-sm"><LockKeyhole size={20} aria-hidden="true" /></span><div><p className="text-base font-bold text-slate-950">Risk/reward-zoner för medlemmar</p><p className="mt-1 text-sm leading-6 text-slate-600">Som gratis medlem ser du attraktiv, balanserad och svag risk/reward samt vilken annualiserad värdepotential nivåerna motsvarar.</p><button type="button" onClick={openLoginModal} className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-emerald-700 px-5 text-sm font-bold text-white transition-colors hover:bg-emerald-800">Skapa gratis konto <ArrowRight size={16} aria-hidden="true" /></button></div></div><p className="mt-5 text-xs leading-5 text-emerald-900">Zonerna är fasta redaktionella bedömningar, inte personlig investeringsrådgivning. Exakta kursgränser visas inte i PUBLIC-vyn.</p></div></section>
+        <section id="next-report" className="scroll-mt-36 border-t border-slate-200 py-11 lg:py-16" aria-labelledby="next-report-heading"><div className="max-w-3xl"><p className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">Nästa rapport</p><h2 id="next-report-heading" className="mt-3 font-serif text-4xl font-bold tracking-[-0.045em] text-slate-950 sm:text-5xl">Det här följer vi först</h2></div><div className="mt-8 overflow-hidden rounded-2xl border border-slate-200"><div className="hidden grid-cols-[0.9fr_1fr_1.1fr_1.35fr] gap-5 bg-emerald-50 px-5 py-3 text-xs font-black uppercase tracking-[0.14em] text-emerald-800 md:grid"><span>Fokusområde</span><span>Senast</span><span>Nästa bevis</span><span>Varför det spelar roll</span></div><div className="divide-y divide-slate-200">{reportFocus.map(([focus, latest, signal, why]) => <article key={focus} className="grid gap-2 px-5 py-5 md:grid-cols-[0.9fr_1fr_1.1fr_1.35fr] md:gap-5"><h3 className="font-bold text-slate-950">{focus}</h3><p className="text-sm leading-6 text-slate-600">{latest}</p><p className="text-sm leading-6 text-slate-600">{signal}</p><p className="text-sm leading-6 text-slate-600">{why}</p></article>)}</div></div><p className="mt-5 text-sm leading-6 text-slate-600">Blandade signaler ska i huvudsak lämna prioren 30/55/15 oförändrad. Modellen ska inte tvinga fram en sannolikhetsförflyttning bara för att ny kvartalsdata publiceras.</p></section>
+        <section className="border-t border-slate-200 py-10 lg:py-14"><button type="button" onClick={() => setRisksOpen((value) => !value)} className="flex w-full items-center justify-between gap-5 text-left" aria-expanded={risksOpen}><span><span className="text-sm font-black uppercase tracking-[0.18em] text-amber-700">Risker och metod</span><span className="mt-2 block font-serif text-3xl font-bold tracking-[-0.035em] text-slate-950">Läs det viktiga innan du fattar ett beslut</span></span>{risksOpen ? <ChevronUp className="shrink-0 text-amber-600" size={24} /> : <ChevronDown className="shrink-0 text-amber-600" size={24} />}</button>{risksOpen && <div className="mt-6 grid gap-5 border-l-2 border-amber-400 pl-5 text-sm leading-7 text-slate-600 md:grid-cols-2"><p><strong className="text-slate-950">Centrala risker:</strong> Base kräver snabb återacceleration i kärn-RVRC. Därtill kommer integrations- och kapitalallokeringsrisk i ICANIWILL, osäkerhet kring M&A-relaterade åtaganden, möjlig multipelkontraktion och risken att headline-tillväxt förbättras utan att den organiska kvaliteten gör det.</p><p><strong className="text-slate-950">Metodavgränsning:</strong> Värderingen bygger på normaliserad EPS × P/E och analytikerkonsensus som sekundär kontroll. EV/EBIT används inte som beslutstöd förrän balansräkningsunderlaget räcker för en korrekt EV→equity-brygga.</p></div>}</section>
+        <footer className="border-t border-slate-200 py-9 text-sm leading-6 text-slate-500"><p><strong className="text-slate-700">Källor och metod:</strong> RVRC Grundanalys v11.2, september 2026. Analysen skiljer mellan redaktionella scenarier och beslut; scenarierna är inte objektiva prognossannolikheter.</p><p className="mt-3">Informationen är allmän information, inte personlig investeringsrådgivning. Investeringar innebär risk och du kan förlora hela eller delar av ditt kapital. Historisk avkastning är ingen garanti för framtida avkastning. <Link className="font-semibold text-emerald-700 hover:text-emerald-900" to="/villkor">Läs fullständig information och villkor.</Link></p><p className="mt-3">RVRC v11.2 · PUBLISH_READY · Förhandsgranskning. Den äldre RVRC-analysen är oförändrad.</p></footer>
+      </div>
+    </article>
+  </>;
 }

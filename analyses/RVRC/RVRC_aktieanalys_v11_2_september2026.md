@@ -20,6 +20,7 @@
   "marketReferenceDate": "2026-09-23",
   "valuationDate": "2029-06-30",
   "weightedTerminalValue": 73.1,
+  "totalValuePotential": 0.485,
   "annualizedPotential": 0.153,
   "hurdleRate": 0.12,
   "scenarios": {
