@@ -33,6 +33,11 @@
     "balancedMin": 53.4,
     "balancedMax": 60.6,
     "weakMin": 60.6
+  },
+  "riskRewardZones": {
+    "status": "APPROVED",
+    "visibility": "MEMBER",
+    "valuationDate": "2029-06-30"
   }
 }
 ```

@@ -34,9 +34,14 @@ test("RVRC v11.2 is an unlisted preview with the v11.2 analysis-detail structure
   assert.match(page, /När blir risk\/reward mer attraktiv\?/);
   assert.match(page, /Det här följer vi först/);
   assert.match(page, /Skapa gratis konto/);
-  assert.doesNotMatch(page, /53,4 kr/);
-  assert.doesNotMatch(page, /60,6 kr/);
+  assert.match(page, /const isMember = Boolean\(user\)/);
+  assert.match(page, /isMember &&/);
+  assert.match(page, /Fördjupning och spårbarhet/);
+  assert.match(page, /M&A, earn-out och balansräkning/);
+  assert.match(page, /Q1-scorecard/);
+  assert.match(page, /isMember &&/);
   assert.match(source, /"totalValuePotential": 0\.485/);
+  assert.match(source, /"visibility": "MEMBER"/);
   assert.doesNotMatch(analysisIndex, /revolutionrace-v11-2-2026/);
   assert.doesNotMatch(sitemap, /revolutionrace-v11-2-2026/);
   assert.match(vercelConfig, /"source": "\/preview\/:path\*"/);
