@@ -50,6 +50,7 @@ test("RVRC v11.2 is an unlisted preview with the v11.2 analysis-detail structure
   assert.match(source, /kontroll den 25 september 2026/);
   assert.match(page, /MarketScreener, Forecast Balance Sheet/);
   assert.match(page, /kontrollerad 25 september 2026/);
+  assert.match(page, /Uppdaterad 25 september 2026/);
   const obsolete = /NOT_DECISION_GRADE|EV\/EBIT används inte|EV\/EBIT är inte beslutsgrundande|återaktivera EV\/EBIT|kan EV\/EBIT återaktiveras/i;
   assert.doesNotMatch(page, obsolete);
   assert.doesNotMatch(source, obsolete);
@@ -59,6 +60,7 @@ test("RVRC v11.2 is an unlisted preview with the v11.2 analysis-detail structure
   assert.equal(canonical.risk, "MEDEL_HÖG");
   assert.equal(canonical.marketReference, 49.22);
   assert.equal(canonical.marketReferenceDate, "2026-09-23");
+  assert.equal(canonical.date, "2026-09-25");
   assert.equal(canonical.valuationDate, "2029-06-30");
   assert.deepEqual([canonical.scenarios.bear.probability, canonical.scenarios.base.probability, canonical.scenarios.bull.probability], [0.30, 0.55, 0.15]);
   assert.deepEqual([canonical.scenarios.bear.value, canonical.scenarios.base.value, canonical.scenarios.bull.value], [45.5, 80, 102.8]);

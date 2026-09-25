@@ -8,7 +8,7 @@
   "name": "RVRC Holding AB (RevolutionRace)",
   "ticker": "RVRC",
   "isin": "SE0015962485",
-  "date": "2026-09-24",
+  "date": "2026-09-25",
   "author": "Carl Fredrik Thor",
   "status": "PUBLISH_READY",
   "method": "Normaliserad EPS × P/E",
