@@ -8,18 +8,20 @@
   "name": "RVRC Holding AB (RevolutionRace)",
   "ticker": "RVRC",
   "isin": "SE0015962485",
-  "date": "2026-09-24",
+  "date": "2026-09-25",
   "author": "Carl Fredrik Thor",
   "status": "PUBLISH_READY",
   "method": "Normaliserad EPS × P/E",
-  "secondaryCheck": "Analytikerkonsensus",
-  "evEbitStatus": "NOT_DECISION_GRADE",
+  "secondaryCheck": "EV/EBIT med scenarioanpassad EV→equity-brygga",
+  "tertiaryCheck": "Analytikerkonsensus",
+  "evEbitConfidence": "MEDIUM",
   "recommendation": "KÖP",
   "risk": "MEDEL_HÖG",
   "marketReference": 49.22,
   "marketReferenceDate": "2026-09-23",
   "valuationDate": "2029-06-30",
   "weightedTerminalValue": 73.1,
+  "totalValuePotential": 0.485,
   "annualizedPotential": 0.153,
   "hurdleRate": 0.12,
   "scenarios": {
@@ -27,11 +29,23 @@
     "base": {"probability": 0.55, "eps": 5.00, "pe": 16, "value": 80.0},
     "bull": {"probability": 0.15, "eps": 5.71, "pe": 18, "value": 102.8}
   },
+  "evEbitCrossCheck": {
+    "classification": "ASSUMPTION",
+    "purpose": "Sekundär värderingskontroll, ej komponent i sannolikhetsvägt huvudvärde",
+    "bear": {"ebitMsek": 488, "evEbit": 10, "enterpriseValueMsek": 4880, "netCashMsek": 100, "nciPutMsek": -75, "equityValueMsek": 4905, "dilutedSharesMillion": 105.58, "valuePerShare": 46.5},
+    "base": {"ebitMsek": 681, "evEbit": 12, "enterpriseValueMsek": 8172, "netCashMsek": 400, "nciPutMsek": -100, "equityValueMsek": 8472, "dilutedSharesMillion": 106.05, "valuePerShare": 79.9},
+    "bull": {"ebitMsek": 784, "evEbit": 14, "enterpriseValueMsek": 10976, "netCashMsek": 550, "nciPutMsek": -125, "equityValueMsek": 11401, "dilutedSharesMillion": 106.55, "valuePerShare": 107.0}
+  },
   "priceZones": {
     "attractiveMax": 53.4,
     "balancedMin": 53.4,
     "balancedMax": 60.6,
     "weakMin": 60.6
+  },
+  "riskRewardZones": {
+    "status": "APPROVED",
+    "visibility": "MEMBER",
+    "valuationDate": "2029-06-30"
   }
 }
 ```
@@ -48,11 +62,13 @@ Detta är inte ett påstående om att RVRC är ”värt 73 kr idag”. 73,1 kr �
 
 **Huvudmetod:** normaliserad EPS × P/E.
 
-**Sekundär kontroll:** analytikerkonsensus.
+**Sekundär värderingskontroll:** EV/EBIT med explicit scenarioanpassad EV→equity-brygga.
 
-**EV/EBIT:** `NOT_DECISION_GRADE`. En fullständig EV→equity-brygga används inte som stöd för rekommendationen eftersom post-ICANIWILL-balansräkningen ännu inte ger tillräckligt beslutsunderlag för att låsa opening net debt och M&A-relaterade åtaganden med önskad precision. EV/EBIT ska återaktiveras när tillräcklig balansräkningsinformation finns.
+**Tertiär kontroll:** analytikerkonsensus.
 
-Detta innebär att värderingen inte får beskrivas som verifierad av både P/E och EV/EBIT. P/E är den beslutande värderingslinsen i denna version.
+EV/EBIT bedöms ha **MEDIUM confidence** eftersom den fullständiga post-ICANIWILL-balansräkningen ännu inte har rapporterats. Osäkerheten hanteras genom scenarioanpassad nettokassa och separat känslighetsanalys för NCI/put. Rimliga variationer i dessa poster förändrar inte värderingsslutsatsen. Confidence är Börsanalys.se:s egen bedömning, inte ett externt mått.
+
+Extern prognos sammanställd av MarketScreener indikerar cirka 84 MSEK nettoskuld FY26/27 och cirka 222 MSEK nettokassa FY27/28. Prognosraden för *Net Debt* visade 84,1 respektive −222 MSEK vid kontroll den 25 september 2026: [MarketScreener, RVRC Holding – Forecast Balance Sheet](https://in.marketscreener.com/quote/stock/RVRC-HOLDING-AB-124007874/finances/). Detta är en föränderlig extern prognos, inte rapporterade balansräkningsvärden eller bolagsguidning. Nästa rapport används för att ersätta modellerad opening net debt och M&A-relaterade poster med rapporterade värden och pröva om EV/EBIT-confidence kan höjas från MEDIUM mot HIGH.
 
 ## Scenarioanalys
 
@@ -67,6 +83,32 @@ Det sannolikhetsvägda terminalvärdet blir:
 `0,30 × 45,5 + 0,55 × 80,0 + 0,15 × 102,8 = 73,07 kr`
 
 avrundat till **73,1 kr**.
+
+### EV/EBIT – sekundär värderingskontroll
+
+| EV→equity-brygga | Bear | Base | Bull |
+|---|---:|---:|---:|
+| EBIT FY28/29 | 488 MSEK | 681 MSEK | 784 MSEK |
+| EV/EBIT | 10× | 12× | 14× |
+| Enterprise value | 4 880 MSEK | 8 172 MSEK | 10 976 MSEK |
+| Nettokassa | +100 MSEK | +400 MSEK | +550 MSEK |
+| NCI / put-antagande | −75 MSEK | −100 MSEK | −125 MSEK |
+| Equity value | 4 905 MSEK | 8 472 MSEK | 11 401 MSEK |
+| Diluted shares | 105,58 miljoner | 106,05 miljoner | 106,55 miljoner |
+| EV/EBIT-värde/aktie | 46,5 kr | 79,9 kr | 107,0 kr |
+| P/E-värde/aktie | 45,5 kr | 80,0 kr | 102,8 kr |
+
+P/E är huvudmetoden. EV/EBIT är en sekundär kontroll. Metoderna delar samma operationella prognoser och är därför inte helt oberoende. EV/EBIT-multiplarna och EV→equity-bryggan ger däremot en separat kontroll av kapitalstruktur och enterprise-multipel. Framtida EBIT, multiplar, nettokassa och NCI/put är **ASSUMPTION** i Börsanalys.se:s modell, inte bolagsguidning eller analytikerkonsensus. EV och equity value samt värden per aktie är **DERIVED** från dessa inputs. Värdet 73,1 kr härleds enbart ur P/E-scenarierna och blandas inte med EV/EBIT-värdena.
+
+#### Vad händer om balansräkningen avviker? (medlemsfördjupning)
+
+| Base-nettokassa | EV/EBIT-värde/aktie |
+|---|---:|
+| 250 MSEK | cirka 78,5 kr |
+| 400 MSEK | cirka 79,9 kr |
+| 550 MSEK | cirka 81,3 kr |
+
+Ett fel på ±150 MSEK i Base-nettokassan flyttar värdet med endast cirka ±1,4 kr per aktie. Balansräkningsosäkerheten är därför inte längre tillräckligt stor för att göra EV/EBIT oanvändbar. ±1× EV/EBIT i Base motsvarar däremot cirka ±6,4 kr per aktie. Multipelvalet är därför betydligt viktigare för EV/EBIT-värdet än mindre avvikelser i den modellerade nettokassan.
 
 ### Bear
 
@@ -96,9 +138,9 @@ Headline-tillväxt får inte ensam användas som bevis för att kärntesen har s
 
 Finansiell nettoskuld och M&A-relaterade åtaganden behandlas separat. Villkorad köpeskilling, eventuell put/call för återstående ägarandel och finansnetto får inte blandas ihop med den finansiella nettoskulden utan explicit brygga.
 
-Earn-out kan redan vara redovisad som skuld enligt förvärvsredovisningen och får därför inte mekaniskt dras av en andra gång i en framtida EV→equity-brygga. Eventuell diskonteringsupprullning/tidsvärdeseffekt i den villkorade köpeskillingen ska dessutom behandlas som en separat finansnettopost när den kan verifieras.
+Earn-out kan redan vara redovisad som skuld enligt förvärvsredovisningen och får därför inte mekaniskt dras av en andra gång i EV→equity-bryggan. Eventuell diskonteringsupprullning/tidsvärdeseffekt i den villkorade köpeskillingen ska dessutom behandlas som en separat finansnettopost när den kan verifieras.
 
-Dessa poster är en central anledning till att EV/EBIT för närvarande är `NOT_DECISION_GRADE`.
+Den modellerade nettokassan vid värderingsdatum är cirka **100 / 400 / 550 MSEK** i Bear / Base / Bull. Detta är scenarioestimat, inte rapporterad guidance. Ekonomisk effekt från återstående 9,9 % / NCI-put modelleras separat till cirka **75 / 100 / 125 MSEK** i Bear / Base / Bull. NCI/put-siffrorna är **ASSUMPTION med LOW confidence**, inte rapporterade fakta. Exakt redovisning och framtida lösenpris samt slutlig earn-out-redovisning är ännu inte fullt kända. Rimliga variationer i dessa poster är enligt känslighetsanalysen inte tillräckligt stora för att förändra investeringsbeslutet.
 
 ## Risk/reward och priszoner
 
@@ -133,7 +175,7 @@ Nästa rapport ska inte tolkas fritt i efterhand. Följande dimensioner ska bed�
 1. **Kärn-RVRC organisk tillväxt** – acceleration, oförändrat eller ytterligare inbromsning.
 2. **ICANIWILL** – tillväxt, lönsamhet och tecken på integrations-/kapitalallokeringsrisk.
 3. **Marginal** – stödjer utfallet Bear, Base eller Bull-trappan?
-4. **Kassakonvertering/balansräkning** – stärker eller försvagar rapporten möjligheten att återaktivera EV/EBIT?
+4. **Kassakonvertering och balansräkning** – bekräftar eller falsifierar rapporterade värden den modellerade EV→equity-bryggan, och kan EV/EBIT-confidence höjas från MEDIUM mot HIGH?
 5. **Tyskland/DACH** – tydlig återacceleration eller fortsatt svaghet?
 6. **Koncerntillväxtens kvalitet** – hur mycket kommer från kärn-RVRC respektive ICANIWILL?
 
@@ -154,6 +196,6 @@ Vid **49,22 kr** ligger aktien under den här modellens 12-procentiga hurdle-rat
 Det räcker för **KÖP**, men rekommendationen bygger inte på att nedsidan skulle vara begränsad till Bear-terminalvärdet 45,5 kr. Den bygger på kombinationen av scenariofördelning, terminalvärde, tidshorisont och ett explicit avkastningskrav.
 
 **Canonical status:** `PUBLISH_READY`  
-**EV/EBIT:** `NOT_DECISION_GRADE`  
+**EV/EBIT:** sekundär värderingskontroll, MEDIUM confidence
 **Rekommendation:** **KÖP**  
 **Risk:** **MEDEL_HÖG**

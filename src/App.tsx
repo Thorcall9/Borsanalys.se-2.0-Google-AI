@@ -30,6 +30,7 @@ const AdminSubscribers = lazy(() => import("./components/AdminSubscribers").then
 const PreviewHeaderPage = lazy(() => import("./pages/PreviewHeader"));
 const AbbQ12026Preview = lazy(() => import("./pages/AbbQ12026Preview"));
 const RvrcPreview = lazy(() => import("./pages/RvrcPreview"));
+const RvrcV112Preview = lazy(() => import("./pages/RvrcV112Preview"));
 const AlphabetV11Preview = lazy(() => import("./pages/AlphabetV11Preview"));
 const NetflixV11Preview = lazy(() => import("./pages/NetflixV11Preview"));
 
@@ -56,6 +57,7 @@ export default function App() {
                       <Route path="/" element={<Home />} />
                       <Route path="/analys" element={<Analysis />} />
                       <Route path="/analys/revolutionrace-2026" element={<RvrcPreview />} />
+                      <Route path="/analys/revolutionrace-v11-2-2026" element={<RvrcV112Preview />} />
                       <Route path="/analys/rvrc-2026" element={<RvrcPreview />} />
                       <Route path="/analys/alphabet-v11" element={<AlphabetV11Preview />} />
                       <Route path="/analys/netflix-2026" element={<NetflixV11Preview />} />
@@ -84,6 +86,7 @@ export default function App() {
                       <Route path="/preview-header" element={<PreviewHeaderPage />} />
                       <Route path="/preview/abb-q1-2026" element={<AbbQ12026Preview />} />
                       <Route path="/preview/rvrc-2026" element={<RvrcPreview />} />
+                      <Route path="/preview/revolutionrace-v11-2-2026" element={<RvrcV112Preview />} />
                     </Routes>
                   </Suspense>
                 </Layout>

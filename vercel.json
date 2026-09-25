@@ -23,6 +23,7 @@
     { "source": "/analys/", "destination": "/index.html" },
     { "source": "/analys/:path*", "destination": "/index.html" },
     { "source": "/analys/:path*/", "destination": "/index.html" },
+    { "source": "/preview/:path*", "destination": "/index.html" },
     { "source": "/aktiechecklista", "destination": "/index.html" },
     { "source": "/aktiechecklista/", "destination": "/index.html" },
     { "source": "/mina-checklistor", "destination": "/index.html" },

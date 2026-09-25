@@ -23,6 +23,7 @@ import { axfoodQ22026 } from "./axfood/axfood-q2-2026.js";
 import { abb2026 } from "./abb/abb-q1-2026.js";
 import { plejdQ12026 } from "./plejd/plejd-q1-2026.js";
 import { revolutionRace2026 } from "./revolutionrace/revolutionrace-2026.js";
+import { revolutionRaceV1122026 } from "./revolutionrace/revolutionrace-v11-2-2026.js";
 import { inwido2026 } from "./inwido/inwido-2026.js";
 import { meta2026 } from "./meta/meta-2026.js";
 import { visa } from "./visa/visa.js";
@@ -53,6 +54,7 @@ export const analyses: Record<string, AnalysisData> = {
   "abb-q1-2026": abb2026,
   "plejd-q1-2026": plejdQ12026,
   "revolutionrace-2026": revolutionRace2026,
+  "revolutionrace-v11-2-2026": revolutionRaceV1122026,
   "inwido-2026": inwido2026,
   "meta-q2-2026": meta2026,
   "visa": visa,
