@@ -68,7 +68,7 @@ Detta är inte ett påstående om att RVRC är ”värt 73 kr idag”. 73,1 kr �
 
 EV/EBIT bedöms ha **MEDIUM confidence** eftersom den fullständiga post-ICANIWILL-balansräkningen ännu inte har rapporterats. Osäkerheten hanteras genom scenarioanpassad nettokassa och separat känslighetsanalys för NCI/put. Rimliga variationer i dessa poster förändrar inte värderingsslutsatsen. Confidence är Börsanalys.se:s egen bedömning, inte ett externt mått.
 
-Extern konsensus indikerar cirka 84 MSEK nettoskuld FY26/27 och cirka 222 MSEK nettokassa FY27/28. Nästa rapport används för att ersätta modellerad opening net debt och M&A-relaterade poster med rapporterade värden och pröva om EV/EBIT-confidence kan höjas från MEDIUM mot HIGH.
+Extern prognos sammanställd av MarketScreener indikerar cirka 84 MSEK nettoskuld FY26/27 och cirka 222 MSEK nettokassa FY27/28. Prognosraden för *Net Debt* visade 84,1 respektive −222 MSEK vid kontroll den 25 september 2026: [MarketScreener, RVRC Holding – Forecast Balance Sheet](https://in.marketscreener.com/quote/stock/RVRC-HOLDING-AB-124007874/finances/). Detta är en föränderlig extern prognos, inte rapporterade balansräkningsvärden eller bolagsguidning. Nästa rapport används för att ersätta modellerad opening net debt och M&A-relaterade poster med rapporterade värden och pröva om EV/EBIT-confidence kan höjas från MEDIUM mot HIGH.
 
 ## Scenarioanalys
 

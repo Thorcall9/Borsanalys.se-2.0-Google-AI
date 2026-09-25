@@ -46,6 +46,10 @@ test("RVRC v11.2 is an unlisted preview with the v11.2 analysis-detail structure
   assert.match(page, /isMember &&/);
   assert.match(source, /"totalValuePotential": 0\.485/);
   assert.match(source, /"visibility": "MEMBER"/);
+  assert.match(source, /MarketScreener, RVRC Holding – Forecast Balance Sheet/);
+  assert.match(source, /kontroll den 25 september 2026/);
+  assert.match(page, /MarketScreener, Forecast Balance Sheet/);
+  assert.match(page, /kontrollerad 25 september 2026/);
   const obsolete = /NOT_DECISION_GRADE|EV\/EBIT används inte|EV\/EBIT är inte beslutsgrundande|återaktivera EV\/EBIT|kan EV\/EBIT återaktiveras/i;
   assert.doesNotMatch(page, obsolete);
   assert.doesNotMatch(source, obsolete);
