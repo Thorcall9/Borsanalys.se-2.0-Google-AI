@@ -3,22 +3,27 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 const root = new URL("../", import.meta.url);
-const previewRoute = "/preview/revolutionrace-v11-2-2026";
+const publicRoute = "/analys/revolutionrace-v11-2-2026";
 
-test("RVRC v11.2 is an unlisted preview with the v11.2 analysis-detail structure", async () => {
-  const [app, page, analysisIndex, sitemap, vercelConfig, source] = await Promise.all([
+test("RVRC v11.2 is published with the v11.2 analysis-detail structure and the old analysis remains", async () => {
+  const [app, page, analysisIndex, sitemap, vercelConfig, source, metadata, oldPage] = await Promise.all([
     readFile(new URL("src/App.tsx", root), "utf8"),
     readFile(new URL("src/pages/RvrcV112Preview.tsx", root), "utf8"),
     readFile(new URL("src/data/analyses/index.ts", root), "utf8"),
     readFile(new URL("api/sitemap.ts", root), "utf8"),
     readFile(new URL("vercel.json", root), "utf8"),
     readFile(new URL("analyses/RVRC/RVRC_aktieanalys_v11_2_september2026.md", root), "utf8"),
+    readFile(new URL("src/data/analyses/revolutionrace/revolutionrace-v11-2-2026.ts", root), "utf8"),
+    readFile(new URL("src/pages/RvrcPreview.tsx", root), "utf8"),
   ]);
 
   assert.match(app, /RvrcV112Preview/);
-  assert.match(app, new RegExp(`<Route path="${previewRoute}" element={<RvrcV112Preview />} />`));
+  assert.match(app, new RegExp(`<Route path="${publicRoute}" element={<RvrcV112Preview />} />`));
+  assert.match(app, /<Route path="\/analys\/revolutionrace-2026" element={<RvrcPreview \/>} \/>/);
+  assert.match(oldPage, /canonical="\/analys\/revolutionrace-2026"/);
   assert.doesNotMatch(page, /AnalysisLayout/);
-  assert.match(page, /noIndex/);
+  assert.doesNotMatch(page, /noIndex|Onoterad förhandsgranskning|Ej indexerad|PUBLISH_READY/);
+  assert.match(page, /canonical="\/analys\/revolutionrace-v11-2-2026"/);
   assert.match(page, /Investment Snapshot/);
   assert.match(page, /Sannolikhetsvägt värde/);
   assert.match(page, /Total värdepotential/);
@@ -77,7 +82,9 @@ test("RVRC v11.2 is an unlisted preview with the v11.2 analysis-detail structure
   assert.equal(Math.round(weightedPe * 10) / 10, canonical.weightedTerminalValue);
   assert.deepEqual(canonical.priceZones, { attractiveMax: 53.4, balancedMin: 53.4, balancedMax: 60.6, weakMin: 60.6 });
   assert.equal(canonical.hurdleRate, 0.12);
-  assert.doesNotMatch(analysisIndex, /revolutionrace-v11-2-2026/);
-  assert.doesNotMatch(sitemap, /revolutionrace-v11-2-2026/);
+  assert.match(analysisIndex, /"revolutionrace-v11-2-2026": revolutionRaceV1122026/);
+  assert.match(metadata, /published: true/);
+  assert.match(metadata, /recommendation: "KÖP"/);
+  assert.match(sitemap, /Object.values\(analyses\).filter\(isPublishedAnalysis\)/);
   assert.match(vercelConfig, /"source": "\/preview\/:path\*"/);
 });

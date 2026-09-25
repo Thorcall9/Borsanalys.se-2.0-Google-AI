@@ -57,6 +57,7 @@ export default function App() {
                       <Route path="/" element={<Home />} />
                       <Route path="/analys" element={<Analysis />} />
                       <Route path="/analys/revolutionrace-2026" element={<RvrcPreview />} />
+                      <Route path="/analys/revolutionrace-v11-2-2026" element={<RvrcV112Preview />} />
                       <Route path="/analys/rvrc-2026" element={<RvrcPreview />} />
                       <Route path="/analys/alphabet-v11" element={<AlphabetV11Preview />} />
                       <Route path="/analys/netflix-2026" element={<NetflixV11Preview />} />
