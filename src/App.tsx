@@ -22,6 +22,7 @@ const GuideDetail = lazy(() => import("./pages/GuideDetail"));
 const Terminology = lazy(() => import("./pages/Terminology"));
 const MacroDashboard = lazy(() => import("./pages/MacroDashboard"));
 const Profile = lazy(() => import("./pages/Profile"));
+const Huskapital = lazy(() => import("./pages/Huskapital"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Terms = lazy(() => import("./pages/Terms"));
 const Privacy = lazy(() => import("./pages/Privacy"));
@@ -64,6 +65,7 @@ export default function App() {
                       <Route path="/analys/:slug" element={<Analysis />} />
                       <Route path="/analyser/:slug" element={<Analysis />} />
                       <Route path="/profil" element={<Profile />} />
+                      <Route path="/huskapital" element={<Huskapital />} />
                       <Route path="/aktier/:slug" element={<StockHub />} />
                       <Route path="/guider" element={<Guides />} />
                       <Route path="/guider/:slug" element={<GuideDetail />} />

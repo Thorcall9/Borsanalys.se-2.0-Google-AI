@@ -39,6 +39,23 @@ service cloud.firestore {
           allow read, create: if isOwner(userId);
         }
       }
+
+      match /householdMonths/{monthId} {
+        allow read, delete: if isOwner(userId);
+        allow create, update: if isOwner(userId) &&
+          monthId.matches('^[0-9]{4}-(0[1-9]|1[0-2])$') &&
+          request.resource.data.keys().hasOnly(['calleSalary', 'idaSalary', 'benefit', 'childAllowance', 'liquidSavings', 'childrenInvested', 'callePension', 'idaPension', 'otherInvested', 'updatedAt']) &&
+          request.resource.data.keys().hasAll(['calleSalary', 'idaSalary', 'benefit', 'childAllowance', 'liquidSavings', 'childrenInvested', 'callePension', 'idaPension', 'otherInvested', 'updatedAt']) &&
+          request.resource.data.calleSalary is number && request.resource.data.calleSalary >= 0 && request.resource.data.calleSalary <= 100000000 &&
+          request.resource.data.idaSalary is number && request.resource.data.idaSalary >= 0 && request.resource.data.idaSalary <= 100000000 &&
+          request.resource.data.benefit is number && request.resource.data.benefit >= 0 && request.resource.data.benefit <= 100000000 &&
+          request.resource.data.childAllowance is number && request.resource.data.childAllowance >= 0 && request.resource.data.childAllowance <= 100000000 &&
+          (request.resource.data.liquidSavings == null || (request.resource.data.liquidSavings is number && request.resource.data.liquidSavings >= 0 && request.resource.data.liquidSavings <= 100000000)) &&
+          request.resource.data.childrenInvested is number && request.resource.data.childrenInvested >= 0 && request.resource.data.childrenInvested <= 100000000 &&
+          request.resource.data.callePension is number && request.resource.data.callePension >= 0 && request.resource.data.callePension <= 100000000 &&
+          request.resource.data.idaPension is number && request.resource.data.idaPension >= 0 && request.resource.data.idaPension <= 100000000 &&
+          request.resource.data.otherInvested is number && request.resource.data.otherInvested >= 0 && request.resource.data.otherInvested <= 100000000;
+      }
     }
 
     // Watchlists

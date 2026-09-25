@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import Header from "./Header";
 import { LoginModal } from "../LoginModal";
 
@@ -9,13 +10,12 @@ interface LayoutProps {
 }
 
 export default function Layout({ children }: LayoutProps) {
+  const isHuskapital = useLocation().pathname === "/huskapital";
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      {!isHuskapital && <Header />}
       <main className="flex-grow">{children}</main>
-      <React.Suspense fallback={<div className="h-40" />}>
-        <Footer />
-      </React.Suspense>
+      {!isHuskapital && <React.Suspense fallback={<div className="h-40" />}><Footer /></React.Suspense>}
       <LoginModal />
     </div>
   );
