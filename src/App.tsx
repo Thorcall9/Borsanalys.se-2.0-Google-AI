@@ -33,6 +33,7 @@ const RvrcPreview = lazy(() => import("./pages/RvrcPreview"));
 const RvrcV112Preview = lazy(() => import("./pages/RvrcV112Preview"));
 const AlphabetV11Preview = lazy(() => import("./pages/AlphabetV11Preview"));
 const NetflixV11Preview = lazy(() => import("./pages/NetflixV11Preview"));
+const InvestorV112Preview = lazy(() => import("./pages/InvestorV112Preview"));
 
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
@@ -87,6 +88,7 @@ export default function App() {
                       <Route path="/preview/abb-q1-2026" element={<AbbQ12026Preview />} />
                       <Route path="/preview/rvrc-2026" element={<RvrcPreview />} />
                       <Route path="/preview/revolutionrace-v11-2-2026" element={<RvrcV112Preview />} />
+                      <Route path="/preview/investor-v11-2-q3-2026" element={<InvestorV112Preview />} />
                     </Routes>
                   </Suspense>
                 </Layout>
