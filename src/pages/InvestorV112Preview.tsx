@@ -7,15 +7,15 @@ import { investorV112 as d } from "../data/analyses/investor/investor-v11-2-q3-2
 
 const kr = (n: number, decimals = 1) => n.toLocaleString("sv-SE", { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + " kr";
 const pct = (n: number, decimals = 1, signed = false) => (signed && n > 0 ? "+" : "") + n.toLocaleString("sv-SE", { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + " %";
-const percentPoints = (n: number) => (n > 0 ? "+" : "") + n.toLocaleString("sv-SE", { maximumFractionDigits: 1 }) + " p.e.";
+
 
 const deltas = [
-  { label: "Justerat NAV/aktie", q2: "397 kr", q3: "411 kr", delta: "+14 kr", source: "F01 · F02" },
-  { label: "Redovisat NAV/aktie", q2: "354 kr", q3: "359 kr", delta: "+5 kr", source: "F03 · F04" },
-  { label: "Patricia, kvartalsavkastning", q2: "−3 %", q3: "+15 %", delta: "+18 p.e.", source: "F09 · F10" },
-  { label: "Patricia, justerad EBITA-tillväxt (år/år)", q2: "+16 %", q3: "+26 %", delta: "+10 p.e.", source: "F11 · F12" },
-  { label: "EQT, kvartalets värdeförändring", q2: "−2 %", q3: "+7 %", delta: "+9 p.e.", source: "F13 · F14" },
-  { label: "Skuldsättningsgrad", q2: "1,9 %", q3: "1,8 %", delta: "−0,1 p.e.", source: "F15 · F16" },
+  { label: "Justerat NAV/aktie", q2: kr(d.snapshot.navQ2,0), q3: kr(d.snapshot.navQ3,0), delta: "+" + kr(d.snapshot.navDelta,0), source: "F01 · F02" },
+  { label: "Redovisat NAV/aktie", q2: kr(d.snapshot.reportedNavQ2,0), q3: kr(d.snapshot.reportedNavQ3,0), delta: "+" + kr(d.snapshot.reportedNavQ3 - d.snapshot.reportedNavQ2,0), source: "F03 · F04" },
+  { label: "Patricia, kvartalsavkastning", q2: pct(d.snapshot.patrQ2,0,true), q3: pct(d.snapshot.patrQ3,0,true), delta: pct(d.snapshot.patrQ3-d.snapshot.patrQ2,0,true).replace(" %"," p.e."), source: "F09 · F10" },
+  { label: "Patricia, justerad EBITA-tillväxt (år/år)", q2: pct(d.snapshot.patrEbitaQ2,0,true), q3: pct(d.snapshot.patrEbitaQ3,0,true), delta: pct(d.snapshot.patrEbitaQ3-d.snapshot.patrEbitaQ2,0,true).replace(" %"," p.e."), source: "F11 · F12" },
+  { label: "EQT, kvartalets värdeförändring", q2: pct(d.snapshot.eqtQ2,0,true), q3: pct(d.snapshot.eqtQ3,0,true), delta: pct(d.snapshot.eqtQ3-d.snapshot.eqtQ2,0,true).replace(" %"," p.e."), source: "F13 · F14" },
+  { label: "Skuldsättningsgrad", q2: pct(d.snapshot.leverageQ2), q3: pct(d.snapshot.leverageQ3), delta: pct(d.snapshot.leverageQ3-d.snapshot.leverageQ2,1,true).replace(" %"," p.e."), source: "F15 · F16" },
 ];
 
 function SourceIds({ ids }: { ids: string[] }) {
@@ -41,7 +41,7 @@ export default function InvestorV112Preview() {
   const total = pct(val.totalValuePotential * 100, 1, true);
 
   return <div className="min-h-screen bg-[#f8faf9] text-slate-900">
-    <SEO title="Investor AB Q3 2026 – v11.2 förhandsvisning | Börsanalys.se" description="Spårbar kvartalsuppföljning av Investor AB med NAV-värdering, Q2-jämförelse och Bear/Base/Bull. Redaktionellt utkast, ej publicerat." />
+    <SEO title="Investor AB Q3 2026 – v11.2 förhandsvisning | Börsanalys.se" description="Spårbar kvartalsuppföljning av Investor AB med NAV-värdering, Q2-jämförelse och Bear/Base/Bull. Redaktionellt utkast, ej publicerat." noIndex />
     <div className="border-b border-amber-200 bg-amber-50 px-4 py-3 text-center text-sm font-semibold text-amber-950">
       Redaktionell förhandsvisning · NOT_PUBLISH_READY · Ej offentlig köprekommendation
     </div>
@@ -104,7 +104,7 @@ export default function InvestorV112Preview() {
         <div className="grid gap-3 sm:grid-cols-3">
           <div className="rounded-xl border border-slate-200 bg-white p-5"><p className="text-xs font-bold uppercase tracking-wider text-slate-500">Justerat NAV/aktie</p><p className="mt-2 text-3xl font-black tabular-nums">{kr(snap.navQ3,0)}</p><p className="mt-1 text-sm font-bold text-emerald-700">{pct(snap.navDeltaPct,1,true)} sedan Q2</p><SourceIds ids={["F01","F02"]}/></div>
           <div className="rounded-xl border border-slate-200 bg-white p-5"><p className="text-xs font-bold uppercase tracking-wider text-slate-500">Substansrabatt Q3</p><p className="mt-2 text-3xl font-black tabular-nums">{pct(snap.discountQ3)}</p><p className="mt-1 text-sm text-slate-600">− rabatt / + premie beräknas konsekvent som 1 − kurs/NAV.</p><SourceIds ids={["F01","F05"]}/></div>
-          <div className="rounded-xl border border-slate-200 bg-white p-5"><p className="text-xs font-bold uppercase tracking-wider text-slate-500">Totalt justerat NAV</p><p className="mt-2 text-3xl font-black tabular-nums">1 258 mdkr</p><p className="mt-1 text-sm text-slate-600">Upp från 1 215 mdkr, avrundade miljarder.</p><SourceIds ids={["F07","F08"]}/></div>
+          <div className="rounded-xl border border-slate-200 bg-white p-5"><p className="text-xs font-bold uppercase tracking-wider text-slate-500">Totalt justerat NAV</p><p className="mt-2 text-3xl font-black tabular-nums">{Math.round(snap.totalNavMsekQ3/1000).toLocaleString("sv-SE")} mdkr</p><p className="mt-1 text-sm text-slate-600">Upp från {Math.round(snap.totalNavMsekQ2/1000).toLocaleString("sv-SE")} mdkr, avrundade miljarder.</p><SourceIds ids={["F07","F08"]}/></div>
         </div>
         <div className="mt-6 overflow-x-auto rounded-2xl border border-slate-200 bg-white">
           <table className="w-full min-w-[620px] text-left text-sm">
@@ -131,7 +131,7 @@ export default function InvestorV112Preview() {
           <p className="mt-7 text-xs font-black uppercase tracking-wider text-slate-500">Modellerat värde 2028E</p><p className="mt-1 text-4xl font-black tabular-nums text-slate-950">{kr(s.fairValue)}</p>
           <p className="mt-4 text-sm leading-6 text-slate-700">{s.id==="bear"?"Svag värdetillväxt och större marknadsrabatt.":s.id==="base"?"Måttlig substansvärdestillväxt med fortsatt rabatt.":"Starkare substansvärdestillväxt och rabatt som försvinner."}</p>
         </article>)}</div>
-        <p className="mt-3 text-xs leading-5 text-slate-500">Sannolikheter 30/50/20 % är subjektiva analytiska bedömningar, inte objektiva prognossannolikheter. Terminalkursbaserat värde, utan framtida utdelningar.</p>
+        <p className="mt-3 text-xs leading-5 text-slate-500">Sannolikheter {val.scenarios.map(s => Math.round(s.probability*100)).join("/")} % är subjektiva analytiska bedömningar, inte objektiva prognossannolikheter. Terminalkursbaserat värde, utan framtida utdelningar.</p>
         <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-4"><div><p className="text-xs font-black uppercase tracking-wider text-slate-500">Sannolikhetsvägt huvudvärde</p><p className="mt-2 text-4xl font-black tabular-nums">{kr(val.weightedFairValue)}</p></div><p className="text-sm text-slate-600">Jämfört med {kr(d.marketReference.price,2)} per {asOf}<br /><strong>{total} totalt · {annual}/år</strong></p></div>
           <div className="mt-6 border-t border-slate-200 pt-6">
@@ -164,7 +164,7 @@ export default function InvestorV112Preview() {
           <button className="flex min-h-10 w-full items-center justify-between gap-3 text-left font-bold text-slate-950" type="button" onClick={()=>setOpenMethod(!openMethod)} aria-expanded={openMethod}><span className="flex items-center gap-2"><GitCompareArrows size={18} className="text-emerald-700"/> Metod, förändringslogg och publiceringsstatus</span>{openMethod?<ChevronUp/>:<ChevronDown/>}</button>
           {openMethod && <div className="mt-5 space-y-4 text-sm leading-6 text-slate-700">
             <p><strong>Modell:</strong> NAV_DISCOUNT. {val.valuationChain.join(" → ")}. Referenskurs {kr(d.marketReference.price,2)} daterad {d.marketReference.asOf}. Slutdatum {d.valuationDate} ({val.years.toFixed(4)} år med faktisk dagräkning/365,25).</p>
-            <p><strong>FORMEL:</strong> Värde per scenario = 411 × (1 + NAV-CAGR)^år × (1 − slutrabatt). Sannolikhetsvägt värde = Σ sannolikhet × scenariovärde. Annualiserad värdepotential = (vägt värde / 405,80)^(1/år) − 1. Historisk total NAV-utveckling inkluderar utdelningar och ska inte förväxlas med terminalkursmodellen.</p>
+            <p><strong>FORMEL:</strong> Värde per scenario = {kr(val.startingNav,0)} × (1 + NAV-CAGR)^år × (1 − slutrabatt). Sannolikhetsvägt värde = Σ sannolikhet × scenariovärde. Annualiserad värdepotential = (vägt värde / {kr(d.marketReference.price,2)})^(1/år) − 1. Historisk total NAV-utveckling inkluderar utdelningar och ska inte förväxlas med terminalkursmodellen.</p>
             <p><strong>Quality gate:</strong> {d.version.status}. Skäl: historisk substansrabatt inte fullständigt kalibrerad, rapporttabeller ännu inte oberoende avstämda och central disclaimer-version/medlemsåtkomst behöver kontrolleras. Rekommendation och modellvärden är utkast.</p>
             <p><strong>Versions-ID:</strong> {d.version.versionId}. Tidigare publicerad Investor-analys på hemsidan är orörd.</p>
             {d.changeTracking.map(e=><p key={e.eventId}><strong>{e.eventId}:</strong> {e.summary}</p>)}
