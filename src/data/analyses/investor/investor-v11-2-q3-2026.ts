@@ -152,7 +152,9 @@ export const investorV112 = (() => {
     claims,
     snapshot: { navQ2: 397, navQ3: 411, reportedNavQ2: 354, reportedNavQ3: 359, navDelta, navDeltaPct, discountQ2, discountQ3, discountABQ2, discountABQ3, currentBPremiumVsStaleNav:(marketReference.price/411-1)*100, totalNavMsekQ2: 1214733, totalNavMsekQ3: 1258016, patrQ2: -3, patrQ3: 15, patrEbitaQ2: 16, patrEbitaQ3: 26, eqtQ2: -2, eqtQ3: 7, leverageQ2: 1.9, leverageQ3: 1.8, historicNavReturn5y: 15.6 },
     valueLens,
-    valuation: {
+    researchModelArchive: {
+      legacyStatus:"INTERNAL_RESEARCH_ONLY_NOT_FOR_PUBLIC_VIEW" as const,
+      archivedAtVersion:"INVESTOR_2026Q3_V11_2_DRAFT_004",
       ...forecast,
       scenarios,
       years,
@@ -208,10 +210,10 @@ export const investorV112 = (() => {
       { eventId:"MODEL_002",comparedTo:"INVESTOR_2026Q3_V11_2_DRAFT_001",type:"MODEL_REVISION",summary:"Fem AI-granskningar utvärderade. Modell ombyggd med noterade/Patricia/EQT-tillgångsavkastning, NAV-avdrag för framtida kontantutdelning, daterad 16/10-kurs, framtida TSR och historisk rabattkalibrering. Nya antaganden, fortsatt NOT_PUBLISH_READY." },
       { eventId:"MODEL_003_NAV_CALIBRATION",comparedTo:"INVESTOR_2026Q3_V11_2_DRAFT_002",type:"ASSUMPTION_REVISION",summary:"Omprövar svagt underbyggt Base efter Investor NAV-5-årstakt 15,6% samt historik 2024/2025. Base avkastning Noterat/Patricia/EQT 10,5/12,5/11%; central årlig kostnads- och finansieringsdragning härledd 0,07% rapporterad förvaltning + 4% hypotetisk ränta på 1,8% nettobelåning. Slutrabatt 7,5% samt riskprobabiliteter behålls för att inte skönsmässigt höja terminalvärdet." },
     ],
-    publicationBlocks: { public: ["snapshot","drivers","insight","theses","scenarios","next_report","sources","method"], member: ["exact_assumptions","valuation_bridge"], futurePremium: [] },
+    publicationBlocks: { public: ["snapshot","quality","discount_history","reference_levels","q3_update","theses","risks","next_report","sources","method"], member: ["quality_deep_dive","source_register"], futurePremium: [] },
     interactiveValuation: "UNSUPPORTED",
-    interactiveReason: "Inget granskat NAV-rabatt/premie-labb är implementerat i v11.2.",
-    riskRewardZones: { status: "NOT_APPLICABLE", visibility: "MEMBER", reason: "Ingen godkänd historiskt kalibrerad NAV-värdering och ingen försvarbar zonindelning före kvalitetsgranskning." },
+    interactiveReason: "Ingen godkänd dynamisk aktuell NAV-beräkning eller kurs/discount-köpsignal finns. Enbart daterade illustrativa historiska nivåer visas.",
+    riskRewardZones: { status: "NOT_APPLICABLE", visibility: "MEMBER", reason: "Daterade NAV-rabattnivåer är inte köp/säljzoner. Nytt samtida NAV och kvalitetssäkring krävs." },
     disclaimer: { centralVersion: "REQUIRES_SITE_CONFIRMATION", shortText: "Informationen är allmän information, inte personlig investeringsrådgivning. Investeringar innebär risk och du kan förlora hela eller delar av ditt kapital. Historisk avkastning är ingen garanti för framtida avkastning.", url: "/villkor" },
     publishGates: { sources: true, navModelMath: Math.abs(scenarios.reduce((a, s) => a + s.probability, 0) - 1) < 1e-10, discountHistoryCalibrated: false, completePrimaryReportReconciled: false, bottomUpOperatingModelsValidated:false, historicalSeriesFullyReconciled:false, riskDecisionThresholdsApproved:false, fullDividendCoverageValidated:false, centralDisclaimerVerified: false, memberAccessVerified: false },
   } as const;
