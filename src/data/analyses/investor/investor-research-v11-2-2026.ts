@@ -122,9 +122,16 @@ export function buildInvestorForecast(args:{ navStart:number,navDate:string,pric
       navCagr:navTotalReturnCagr,
       bridge:"Justerat NAV × (1 + viktad tillgångsavkastning justerad för nettobelåning och central drag)^tid − framtida utdelningar (uppräknat till slutdatum) → slut-NAV × (1 − rabatt/premie)"};
   });
+  // Terminal NAV sensitivity is a pure DERIVED bridge; not a trading recommendation.
+  const base=scenarios.find(s=>s.id==="base")!;
+  const discountSensitivity=[-0.03,0,0.05,0.075,0.10,0.15].map(terminalDiscount=>{
+    const terminalPrice=base.projectedNav*(1-terminalDiscount);
+    const cashTsr=(terminalPrice+dividends)/args.price-1;
+    return {terminalDiscount,terminalPrice,cashTsr,annualizedCashTsr:Math.pow(1+cashTsr,1/priceYears)-1};
+  });
   const weightedFairValue=scenarios.reduce((a,b)=>a+b.fairValue*b.probability,0);
   const weightedCashReturn=(weightedFairValue+dividends)/args.price-1;
-  return {scenarios,weightedFairValue,years:priceYears,navYears,dividends,
+  return {scenarios,discountSensitivity,weightedFairValue,years:priceYears,navYears,dividends,
     totalValuePotential:weightedFairValue/args.price-1,
     annualizedValuePotential:Math.pow(weightedFairValue/args.price,1/priceYears)-1,
     illustrativeCashTotalReturn:weightedCashReturn,
