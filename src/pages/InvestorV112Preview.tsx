@@ -12,7 +12,7 @@ const pct = (n: number, decimals = 1, signed = false) => (signed && n > 0 ? "+" 
 const deltas = [
   { label: "Justerat NAV/aktie", q2: kr(d.snapshot.navQ2,0), q3: kr(d.snapshot.navQ3,0), delta: "+" + kr(d.snapshot.navDelta,0), source: "F01 · F02" },
   { label: "Redovisat NAV/aktie", q2: kr(d.snapshot.reportedNavQ2,0), q3: kr(d.snapshot.reportedNavQ3,0), delta: "+" + kr(d.snapshot.reportedNavQ3 - d.snapshot.reportedNavQ2,0), source: "F03 · F04" },
-  { label: "Substansrabatt A+B, Investor-definition", q2: pct(d.snapshot.discountABQ2), q3: pct(d.snapshot.discountABQ3), delta: pct(d.snapshot.discountABQ3-d.snapshot.discountABQ2,1,true).replace(" %"," p.e."), source: "F07 · F08 · börsvärde" },
+  { label: "Substansrabatt A+B, Investor-definition", q2: pct(d.snapshot.discountABQ2), q3: pct(d.snapshot.discountABQ3), delta: pct(d.snapshot.discountABQ3-d.snapshot.discountABQ2,1,true).replace(" %"," p.e."), source: "F31 · F32" },
   { label: "Patricia, kvartalsavkastning", q2: pct(d.snapshot.patrQ2,0,true), q3: pct(d.snapshot.patrQ3,0,true), delta: pct(d.snapshot.patrQ3-d.snapshot.patrQ2,0,true).replace(" %"," p.e."), source: "F09 · F10" },
   { label: "Patricia, justerad EBITA-tillväxt (år/år)", q2: pct(d.snapshot.patrEbitaQ2,0,true), q3: pct(d.snapshot.patrEbitaQ3,0,true), delta: pct(d.snapshot.patrEbitaQ3-d.snapshot.patrEbitaQ2,0,true).replace(" %"," p.e."), source: "F11 · F12" },
   { label: "EQT, kvartalets värdeförändring", q2: pct(d.snapshot.eqtQ2,0,true), q3: pct(d.snapshot.eqtQ3,0,true), delta: pct(d.snapshot.eqtQ3-d.snapshot.eqtQ2,0,true).replace(" %"," p.e."), source: "F13 · F14" },
@@ -166,9 +166,9 @@ export default function InvestorV112Preview() {
           <h3 className="font-serif text-xl font-bold text-slate-950">Varifrån kom NAV-ökningen Q3?</h3>
           <p className="mt-2 text-sm leading-6 text-slate-600">Förändringen i justerat NAV var +43,3 mdkr. Följande avrundade affärsområdesbidrag är en härledd avstämning av rapportens uppställning och behöver slutkontrolleras mot originaltabellerna.</p>
           <div className="mt-5 grid gap-3 sm:grid-cols-4">
-            {[["Noterade bolag","+5,0 mdkr"],["Patricia Industries","+33,8 mdkr"],["Investeringar i EQT","+5,9 mdkr"],["Koncern/övrigt","−1,4 mdkr"]].map(([label,value])=><div key={label} className="rounded-xl bg-slate-50 p-4"><p className="text-xs text-slate-600">{label}</p><p className="mt-2 text-xl font-extrabold text-slate-950">{value}</p></div>)}
+            {d.q3NavBridge.segments.map(segment=><div key={segment.key} className="rounded-xl bg-slate-50 p-4"><p className="text-xs text-slate-600">{segment.label}</p><p className="mt-2 text-xl font-extrabold text-slate-950">{(segment.valueMsek>0?"+":"")+ (segment.valueMsek/1000).toLocaleString("sv-SE",{minimumFractionDigits:1,maximumFractionDigits:1})} mdkr</p><SourceIds ids={[...segment.claimIds]}/></div>)}
           </div>
-          <p className="mt-4 text-xs leading-6 text-slate-500">Bidragen avser förändring i absoluta NAV-kronor, inte procentuell totalavkastning. Patricia var största Q3-bidraget, men Noterade Bolag är den största tillgångsgruppen.</p>
+          <p className="mt-4 text-xs leading-6 text-slate-500">Bidragen avser förändring i absoluta NAV-kronor, inte procentuell totalavkastning. Patricia var största Q3-bidraget, men Noterade Bolag är den största tillgångsgruppen. {d.q3NavBridge.verification}</p>
         </div>
         <div className="mt-4 rounded-xl border border-border bg-section-alt p-5">
           <p className="font-bold text-slate-950">Justerat NAV är inte redovisat NAV</p>
@@ -198,9 +198,9 @@ export default function InvestorV112Preview() {
         <SectionTitle eyebrow="Framtida substansvärde" title="Varifrån kan värdeskapandet komma?" description="Vi bygger scenarierna från portföljens tillgångsgrupper, inte från ett fristående antagande om NAV-tillväxt. Exakta avkastningsantaganden återfinns i medlemsvyn." />
         <div className="grid gap-4 md:grid-cols-3">
           {[
-            ["74 %","Noterade Bolag","Atlas Copco, ABB, AstraZeneca, SEB och övriga noterade innehav; kurs- och vinstutvecklingen dominerar tillgångsbasen."],
-            ["19 %","Patricia Industries","Mölnlycke, Permobil, Laborie och andra onoterade bolag; operativt kassaflöde och värderingsmultiplar måste särskiljas."],
-            ["7 %","Investeringar i EQT","Börsnoterade EQT AB och investeringar i EQT-fonder; olika kassaflödes- och värderingsdrivare."]
+            [${pct(val.weights.listed*100,0)},"Noterade Bolag","Atlas Copco, ABB, AstraZeneca, SEB och övriga noterade innehav; kurs- och vinstutvecklingen dominerar tillgångsbasen."],
+            [${pct(val.weights.patricia*100,0)},"Patricia Industries","Mölnlycke, Permobil, Laborie och andra onoterade bolag; operativt kassaflöde och värderingsmultiplar måste särskiljas."],
+            [${pct(val.weights.eqt*100,0)},"Investeringar i EQT","Börsnoterade EQT AB och investeringar i EQT-fonder; olika kassaflödes- och värderingsdrivare."]
           ].map(([share,title,description])=><article key={title} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
             <p className="text-2xl font-extrabold tabular-nums text-[#087f55]">{share}</p>
             <h3 className="mt-3 text-lg font-extrabold text-slate-950">{title}</h3>
@@ -287,7 +287,7 @@ export default function InvestorV112Preview() {
         <SectionTitle eyebrow="Alternativkostnad" title="Varför Investor framför ett index?" description="Vi utvärderar om diversifiering och aktiv kapitalallokering kan kompensera för rabattrisk och värderingsosäkerhet. Historisk överavkastning är ingen framtida prognos." />
         <div className="rounded-2xl border border-border bg-white p-5 shadow-sm">
           <table className="w-full text-left text-sm"><thead className="text-slate-600"><tr><th className="py-3">Totalavkastning</th><th className="py-3 text-right">Q3 2026</th><th className="py-3 text-right">Jan–sep 2026</th></tr></thead>
-          <tbody className="border-t border-slate-100"><tr><th className="py-3">Investor B</th><td className="py-3 text-right">+1 %</td><td className="py-3 text-right">+24 %</td></tr><tr className="border-t border-slate-100"><th className="py-3">SIXRX</th><td className="py-3 text-right">+2 %</td><td className="py-3 text-right">+11 %</td></tr></tbody></table>
+          <tbody className="border-t border-slate-100"><tr><th className="py-3">Investor B</th>{d.marketBenchmark.periods.map(x=><td key={x.key} className="py-3 text-right">{pct(x.investorTsrPct,0,true)}</td>)}</tr><tr className="border-t border-slate-100"><th className="py-3">SIXRX</th>{d.marketBenchmark.periods.map(x=><td key={x.key} className="py-3 text-right">{pct(x.sixrxTsrPct,0,true)}</td>)}</tr></tbody></table>
           <p className="mt-4 text-xs leading-6 text-slate-500">Källa: Investors Q3-rapport. Industrivärden, Latour, Lundbergs och globala index är relevanta alternativ, men en jämförbar, daterad rabatt-, risk- och TSR-tabell behöver verifieras före publicering.</p>
         </div>
       </section>
