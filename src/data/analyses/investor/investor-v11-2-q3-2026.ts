@@ -84,12 +84,64 @@ export const investorV112 = (() => {
   const discountQ3 = (1 - 405.8 / 411) * 100; // B-share diagnostic; NOT official A+B discount.
   const discountABQ2 = (1-1225307/1214733)*100;
   const discountABQ3 = (1-1234030/1258016)*100;
+  // A NAV anchor is a dated balance-sheet snapshot, not a live calculated NAV.
+  // The reference levels below are a NAV-discount lookup, NOT exact valuation,
+  // future target prices or unconditional trading zones.
+  const valueLens = {
+    method: "NAV_QUALITY_BUY_LEVELS",
+    anchor: {adjustedNavPerShare:411,reportedNavPerShare:359,navDate:"2026-09-30",claimIds:["F01","F03"]},
+    comparison: {
+      reportDateBSharePrice:405.80,
+      reportDateBShareDiscountPct:discountQ3,
+      reportDateABDiscountPct:discountABQ3,
+      reportDate:"2026-09-30",
+      laterBSharePrice:marketReference.price,
+      laterPriceDate:marketReference.asOf,
+      laterPriceVsOldNavPct:(marketReference.price/411-1)*100,
+      temporalWarning:"Aktiekurs 16 oktober kan inte jämföras med NAV 30 september som en samtida substansrabatt/premie. Innehavens värde kan ha förändrats däremellan.",
+      claimIds:["F01","F05","F23","F31"],
+    },
+    historical: {
+      threeYears:investorDiscountStats.threeYears,
+      fiveYears:investorDiscountStats.fiveYears,
+      tenYearEnds:investorDiscountStats.tenYearEnds,
+      methodologyWarning:"3 och 5 år bygger på kvartalsslut; 10 år bygger på årsslut 2016–2025. Äldre datapunkter är preliminärt avstämda. Historiska medianer är inte automatiskt motiverad rabatt idag.",
+    },
+    levels:[0,0.05,0.075,0.10,0.15].map(discount=>({
+      discount,price:411*(1-discount),
+      label:discount===0?"Paritet med NAV":discount===0.05?"5 % rabatt":discount===0.075?"7,5 % rabatt":discount===0.10?"10 % rabatt":"15 % rabatt",
+      kind:"ILLUSTRATIVE_HISTORIC_NAV_ANCHOR" as const
+    })),
+    assessment: {
+      status:"BEVAKA" as const,
+      risk:"MEDEL_HÖG" as const,
+      summary:"Investor har dokumenterat mycket god historisk långsiktig avkastning, men en mycket låg rabatt ger begränsad rabattbaserad säkerhetsmarginal. Dagens premie eller rabatt är inte fastställd utan ett uppdaterat och samtida NAV.",
+      whatCouldImprove:"Stark operativ NAV-tillväxt även utan multipelexpansion, mer verifierbar Patricia-värdering och en attraktiv köpkurs mot uppdaterat NAV.",
+      whatCouldWorsen:"Samordnat kursfall i noterade bolag, Patricias nedvärderingsrisk, EQT/cykel, valuta och utvidgad holdingbolagsrabatt.",
+      sourceIds:["F20","F19","F09","F01","F31","F23"],
+    },
+    qualityChecklist:[
+      {title:"Dokumenterat värdeskapande",signal:"STYRKA",detail:"Justerat NAV inklusive återlagd utdelning +15,6 % annualiserat på 5 år till Q3 2026; historik är inte en prognos.",claimIds:["F20"]},
+      {title:"Portfölj och diversifiering",signal:"STYRKA_MED_RISK",detail:"Noterade Bolag dominerar tillgångsbasen (74 %), med Patricia 19 % och EQT 7 %. Börsrisken finns därför kvar.",claimIds:["F19"]},
+      {title:"Balansräkning",signal:"STYRKA",detail:"Belåningsgrad 1,8 % per Q3 (nettoskuld/justerade tillgångar); låg belåning eliminerar inte marknadsrisken.",claimIds:["F15"]},
+      {title:"Insyn i onoterade värden",signal:"OSÄKERHET",detail:"Patricias marknadsvärderingar påverkas av EBITDA, jämförelsemultiplar och valuta. En större NAV-rabatt kan vara motiverad som kompensation.",claimIds:["F09","F03"]},
+      {title:"Pris och säkerhetsmarginal",signal:"UTMANAD",detail:"B-aktiens rabatt mot avrundat NAV 30 september cirka 1,3 %; Investors egen A+B-definition cirka 1,9 %. Det är inte en aktuell rabatt per 16 oktober.",claimIds:["F01","F05","F31"]},
+    ],
+    decisionRequirements:[
+      "Uppdatera både justerat NAV och aktiekurs till jämförbara datum före ett verkligt köplägesbeslut.",
+      "Pröva värderingsosäkerhet för Patricia och större noterade innehav; rabatt är inte en garanti för skydd.",
+      "Kräv attraktiv, riskjusterad långsiktig totalavkastning relativt index. Fast procentsats för KÖP är ännu inte godkänd.",
+      "Utvärdera om en strukturellt lägre rabatt motiveras av förbättrad transparens och NAV-kvalitet – inte enbart historisk aktiekurs.",
+    ],
+    status:"RESEARCH_DRAFT" as const,
+    publicationReady:false,
+  } as const;
 
   return {
     analysisId: "investor-ab-v11-2-q3-2026",
     companyId: "INVESTOR_AB",
     ticker: "INVE-B.ST",
-    version: { versionId: "INVESTOR_2026Q3_V11_2_DRAFT_003", parentVersionId: "INVESTOR_2026Q3_V11_2_DRAFT_002", immutable: true, createdAt: "2026-10-17", status: "NOT_PUBLISH_READY" },
+    version: { versionId: "INVESTOR_2026Q3_V11_2_DRAFT_004", parentVersionId: "INVESTOR_2026Q3_V11_2_DRAFT_003", immutable: true, createdAt: "2026-10-17", status: "NOT_PUBLISH_READY" },
     templateVersion: "11.2",
     analysisDate: "2026-10-17",
     sourceCutoffDate: "2026-10-17",
@@ -99,6 +151,7 @@ export const investorV112 = (() => {
     sourceRefs: sources,
     claims,
     snapshot: { navQ2: 397, navQ3: 411, reportedNavQ2: 354, reportedNavQ3: 359, navDelta, navDeltaPct, discountQ2, discountQ3, discountABQ2, discountABQ3, currentBPremiumVsStaleNav:(marketReference.price/411-1)*100, totalNavMsekQ2: 1214733, totalNavMsekQ3: 1258016, patrQ2: -3, patrQ3: 15, patrEbitaQ2: 16, patrEbitaQ3: 26, eqtQ2: -2, eqtQ3: 7, leverageQ2: 1.9, leverageQ3: 1.8, historicNavReturn5y: 15.6 },
+    valueLens,
     valuation: {
       ...forecast,
       scenarios,
@@ -136,7 +189,7 @@ export const investorV112 = (() => {
     editorial: {
       recommendation: "BEVAKA",
       risk: "MEDEL_HÖG",
-      recommendationRationale:"Bevaka preliminärt: sannolikhetsvägt terminalvärde och kontantutdelningar måste väga upp en negativ bear-svans, värderingsrisk och skillnader mellan dagens kurs och balansdagens NAV. Varken köp-/säljzon eller regelbaserad rekommendation är godkänd.",
+      recommendationRationale:"BEVAKA preliminärt: långsiktig historisk kvalitet men svag rabattbaserad säkerhetsmarginal på rapportens balansdag; aktuell rabatt/premie okänd innan nytt samtida NAV. Prisnivåerna är inte automatiska köp-/säljzoner.",
       riskRationale:"Brett noterade innehav men aktiemarknadsrisk, modellosäkerhet i Patricia, EQT- och valutaexponering samt substansrabattens samvariation. Bear-nedsida ska visas öppet.",
       approval: "DRAFT",
       investmentQuestion: "Kan Investor fortsätta skapa substansvärdestillväxt utan att värderingen av onoterade tillgångar och minskande rabatt urholkar säkerhetsmarginalen?",
@@ -149,6 +202,7 @@ export const investorV112 = (() => {
       nextCheckpoint: { date: "2027-01-22", label: "Bokslut 2026", sourceId: "INVESTOR_Q2_2026", detail: "Datum enligt tidigare rapportens kalender; kontrollera på Investor innan publicering." },
     },
     changeTracking: [
+      {eventId:"MODEL_004_NAV_QUALITY",comparedTo:"INVESTOR_2026Q3_V11_2_DRAFT_003",type:"EDITORIAL_MODEL_CHANGE",summary:"Förenklad investmentbolagsanalys: inga terminalriktkurser eller 30/50/20-sannolikheter som huvudpresentation. Huvudfokus rapporterat NAV, Investors officiella och B-specifika substansrabatt, dokumenterat NAV-värdeskapande, kvalitativ risk och illustrativa nivåer baserade på rapportdagens NAV. Värderingskalkyl DRAFT_003 bevaras endast som icke-publik forskningshistorik." },
       { eventId: "EV2026Q3", comparedTo: "2026-Q2", type: "FACT_DELTA", claimIds: ["F01","F02","F09","F10","F11","F12","F13","F14","F15","F16"], summary: "Q2→Q3: NAV 397→411, Patricia −3→+15, justerad EBITA-tillväxt 16→26, EQT −2→+7, skuld 1,9→1,8." },
       { eventId: "MODEL_INITIAL", comparedTo: null, type: "ASSUMPTION", summary: "Ny separat NAV_DISCOUNT-modell; gamla Investor-analysens P/E och scenarier återanvänds inte." },
       { eventId:"MODEL_002",comparedTo:"INVESTOR_2026Q3_V11_2_DRAFT_001",type:"MODEL_REVISION",summary:"Fem AI-granskningar utvärderade. Modell ombyggd med noterade/Patricia/EQT-tillgångsavkastning, NAV-avdrag för framtida kontantutdelning, daterad 16/10-kurs, framtida TSR och historisk rabattkalibrering. Nya antaganden, fortsatt NOT_PUBLISH_READY." },
