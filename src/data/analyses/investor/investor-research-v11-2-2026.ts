@@ -1,5 +1,5 @@
 /**
- * Investor AB / v11.2 – RESEARCH CALIBRATION v2 (2026-10-17)
+ * Investor AB / v11.2 – RESEARCH CALIBRATION v3 (2026-10-17)
  * RESEARCH DRAFT. Historical quarterly aggregates imported from internally compiled
  * Investor original reports. Not all older report tables independently re-reconciled.
  * No Montrose/ibindex data or third-party historical database is reproduced.
@@ -78,7 +78,28 @@ const dayYears = (a:string,b:string) =>
   (Date.parse(b+"T00:00:00Z")-Date.parse(a+"T00:00:00Z"))/86400000/365.25;
 const discountWeights = { listed:0.74,patricia:0.19,eqt:0.07 } as const;
 const leverageReference = 0.018;
-const centralAnnualDrag = 0.003; // ASSUMPTION: combined operating/financing drag as share of NAV.
+// MANAGEMENT: ~0.07% reported LTM at Q1 2026. Projecting same ratio is an assumption.
+// FINANCING: illustrative 4.0% on 1.8% net leverage, NOT a company-reported rate.
+export const investorForecastCostInputs = {
+  managementCostRatio:0.0007,
+  assumedNetBorrowingRate:0.04,
+  reportingReference:"Q1 2026: rullande förvaltningskostnad 0,07 % av justerat NAV",
+  sourceUrl:"https://financialfilings.com/filings/investor/interim-quarterly-report/2026/34696703/",
+  methodNote:"0,07 % management cost is historical; continuing ratio and 4 % net debt rate are explicit assumptions.",
+} as const;
+const centralAnnualDrag=investorForecastCostInputs.managementCostRatio+
+  leverageReference*investorForecastCostInputs.assumedNetBorrowingRate;
+export const investorForecastCalibration = {
+  sourceQuality:"RESEARCH_DRAFT",
+  historicalNavTotalReturn5y:0.156,
+  historicalNavGrowth2025:0.14,
+  historicalNavGrowth2024:0.20,
+  investorReturnRequirementLow:0.08,
+  investorReturnRequirementHigh:0.09,
+  calibrationLogic:"Base normaliserar observerad NAV-totalavkastning från cirka 15,6%/år till cirka 11%/år. Rabatten hålls oförändrad på 7,5% tills strukturell omvärdering är belagd.",
+  note:"Historical NAV returns include dividends added back; model annual segment returns combine value change and cash returns, with external shareholder distributions deducted separately.",
+  researchPath:"research/investor/2026-10-17-nav-base-calibration-v11-2.md",
+} as const;
 export const investorDividendSchedule = [
   { date:"2026-11-12", amount:1.60, status:"FACT" as const, sourceId:"INVESTOR_AGM_2026" },
   { date:"2027-05-15", amount:4.00, status:"ASSUMPTION" as const, sourceId:"ANALYST_DIVIDEND_ASSUMPTION" },
@@ -90,9 +111,9 @@ export const investorScenarioInputs = [
   { id:"bear",label:"Bear",probability:0.30, listedReturn:-0.05,patriciaReturn:-0.08,eqtReturn:-0.10,terminalDiscount:0.16,
     rationale:"Pressade börsmultiplar och onoterade värderingar samtidigt som marknadsrabatten normaliseras upp.",
     drivers:["Fallande noterade innehav","Operativ press och omvärdering i Patricia","Rabatten vidgas till 16 %"] },
-  { id:"base",label:"Base",probability:0.50, listedReturn:0.08,patriciaReturn:0.10,eqtReturn:0.08,terminalDiscount:0.075,
-    rationale:"Måttlig portföljavkastning efter normalisering, plus återgång mot närliggande treårsmedian för rabatten.",
-    drivers:["Noterade innehav utvecklas stabilt","Patricia skapar operativt värde utan kraftig multipeluppgång","Slutrabatt 7,5 %"] },
+  { id:"base",label:"Base",probability:0.50, listedReturn:0.105,patriciaReturn:0.125,eqtReturn:0.11,terminalDiscount:0.075,
+    rationale:"Normaliserad NAV-totalavkastning omkring 11 % mot Investors historiska femårstakt omkring 15,6 %. 7,5 % slutrabatt bibehålls nära treårsmedianen tills en strukturell premie är belagd.",
+    drivers:["Noterade Bolag antas ge 10,5 % tillgångstotalavkastning/år","Patricia antas ge 12,5 %, med operativ tillväxt men utan permanent ny multipel-expansion","EQT antas ge 11 %; fortfarande 7,5 % rabatt, inte ogrundad premie"] },
   { id:"bull",label:"Bull",probability:0.20, listedReturn:0.13,patriciaReturn:0.16,eqtReturn:0.15,terminalDiscount:-0.03,
     rationale:"Bred lönsam tillväxt och hög marknadstilltro; en premie på 3 % är ett positivt stressutfall, inte ett historiskt normalutfall.",
     drivers:["Stark noterad portfölj","Uthållig vinst- och kassaflödesökning i Patricia","3 % premie mot justerat NAV"] },
@@ -138,6 +159,6 @@ export function buildInvestorForecast(args:{ navStart:number,navDate:string,pric
     illustrativeCashAnnualizedReturn:Math.pow(1+weightedCashReturn,1/priceYears)-1,
     probabilitySum:scenarios.reduce((a,b)=>a+b.probability,0),
     startingNav:args.navStart,terminalMethod:"NAV_DISCOUNT" as const,
-    weights:discountWeights,leverageReference,centralAnnualDrag,
+    weights:discountWeights,leverageReference,centralAnnualDrag,forecastCostInputs:investorForecastCostInputs,calibration:investorForecastCalibration,
     distributionTreatment:"Cash distributions deducted from NAV on each forecast payment date, without reinvestment; timing dates in 2027–2028 are assumptions."};
 }
