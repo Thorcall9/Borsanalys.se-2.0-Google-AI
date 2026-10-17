@@ -112,7 +112,7 @@ export default function InvestorV112Preview() {
     </header>
 
     <nav aria-label="Innehåll" className="sticky top-[68px] z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-3 sm:px-5">{[["tes","Analys"],["jmf","Q2 → Q3"],["historik","Rabatt"],["motorer","NAV-drivare"],["teser","Teser"],["scenarier","Värdering"],["underlag","Källor"]].map(([id,label])=><a key={id} href={`#${id}`} className="shrink-0 border-b-2 border-transparent px-3 py-4 text-sm font-bold text-slate-600 hover:border-emerald-600 hover:text-emerald-800">{label}</a>)}</div>
+      <div className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-3 sm:px-5">{[["tes","Analys"],["jmf","Q2 → Q3"],["historik","Rabatt"],["motorer","NAV-drivare"],["teser","Teser"],["scenarier","Värdering"],["risk","Risk"],["alternativ","Index"],["underlag","Källor"]].map(([id,label])=><a key={id} href={`#${id}`} className="shrink-0 border-b-2 border-transparent px-3 py-4 text-sm font-bold text-slate-600 hover:border-emerald-600 hover:text-emerald-800">{label}</a>)}</div>
     </nav>
 
     <main className="mx-auto max-w-6xl space-y-16 px-4 py-12 sm:px-6 sm:py-16">
@@ -245,12 +245,51 @@ export default function InvestorV112Preview() {
             <p className="text-sm font-bold text-slate-950">Värderingskedja</p><div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-bold">{val.valuationChain.map((step,i)=><span key={step} className="inline-flex items-center gap-2"><span className="rounded-lg bg-emerald-50 px-3 py-2 text-emerald-900">{step}</span>{i<val.valuationChain.length-1 && <ArrowRight className="text-slate-400" size={15}/>}</span>)}</div>
           </div>
         </div>
+        <div className="mt-5 rounded-2xl border border-border bg-white p-5 shadow-sm">
+          <h3 className="font-serif text-xl font-bold text-slate-950">Känslighet: vilken rabatt eller premie får Base?</h3>
+          <p className="mt-2 text-sm leading-6 text-slate-600">Håll Base-scenariots framtida NAV oförändrat och ändra endast marknadens slutvärdering. Alla kursvärden beräknas i dossiern.</p>
+          <div className="mt-4 overflow-x-auto">
+            <table className="w-full min-w-[460px] text-left text-sm"><thead className="bg-slate-50"><tr><th className="px-3 py-3">Slutvärdering</th><th className="px-3 py-3 text-right">Aktievärde 2028</th><th className="px-3 py-3 text-right">Kontant-TSR /år</th></tr></thead>
+            <tbody className="divide-y divide-slate-100">{val.discountSensitivity.map(s=><tr key={s.terminalDiscount}><td className="px-3 py-3 font-semibold">{s.terminalDiscount<0?`Premie ${pct(-s.terminalDiscount*100)}`: `Rabatt ${pct(s.terminalDiscount*100)}`}</td><td className="px-3 py-3 text-right tabular-nums">{kr(s.terminalPrice)}</td><td className="px-3 py-3 text-right font-bold tabular-nums">{pct(s.annualizedCashTsr*100,1,true)}</td></tr>)}</tbody></table>
+          </div>
+          <p className="mt-3 text-xs leading-5 text-slate-500">Beroende endast av Base-NAV, utdelningsantaganden och slutrabatt/premie. Ingen köp- eller säljzon.</p>
+        </div>
         <div className="mt-6 rounded-2xl border border-border bg-section-alt p-6">
           <h3 className="flex items-center gap-2 font-serif text-2xl font-bold"><LockKeyhole className="text-emerald-700" /> Se hur vi har räknat</h3>
           <p className="mt-3 text-sm leading-6 text-slate-600">Som gratis medlem får du se scenarioantaganden och hela tillgångsavkastning → NAV efter utdelningar → rabatt/premie → aktievärde-bryggan. All information är hämtad från den versionsstyrda dossiern.</p>
           {user ? <div className="mt-5 grid gap-3 sm:grid-cols-3">{val.scenarios.map(s=><div key={s.id} className="rounded-xl bg-white p-4 text-sm"><h4 className="font-bold">{s.label}</h4><p className="mt-2">Noterat: <strong>{pct(s.listedReturn*100)}</strong>/år</p><p>Patricia: <strong>{pct(s.patriciaReturn*100)}</strong>/år</p><p>EQT: <strong>{pct(s.eqtReturn*100)}</strong>/år</p><p>Viktad NAV-totalavkastning före utdelning: <strong>{pct(s.navTotalReturnCagr*100)}</strong>/år</p><p>Utdelningsavdrag i slut-NAV: <strong>{kr(s.projectedDistributionDrag)}</strong></p><p>Slutrabatt (+)/premie (−): <strong>{pct(s.terminalDiscount*100)}</strong></p><p>Beräknat NAV efter utdelning: <strong>{kr(s.projectedNav)}</strong></p><p>Slutvärde: <strong>{kr(s.fairValue)}</strong></p><p className="mt-2 text-xs leading-5 text-slate-500">{s.rationale}</p></div>)}</div> : <button className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-emerald-800 px-5 text-sm font-bold text-white hover:bg-emerald-900" onClick={() => openLoginModal()} type="button">Skapa gratis konto <ArrowRight size={16}/></button>}
         </div>
         <div className="mt-5 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm leading-6 text-amber-950"><strong>Värderingens begränsning:</strong> Historiken är en första kalibrering men inte helt källavstämd. Scenarioavkastningar, centrala kostnader och 2027–2028 års utdelningar är antaganden. Modellen saknar fullständig bolagsvis kassaflödes- och multipelkänslighetsanalys. Inga handlingszoner ges innan metodgranskning.</div>
+      </section>
+
+      <section id="risk" className="scroll-mt-36">
+        <SectionTitle eyebrow="Risk och beslut" title="Vilka antaganden kan bryta investeringscaset?" description="En riskfaktor kan samtidigt sänka NAV och öka substansrabatten. Därför räcker det inte att bedöma dem var för sig." />
+        <div className="grid gap-3 md:grid-cols-2">
+          {[
+            ["Global börsnedgång","Noterade Bolag och EQT tappar värde. Börsens riskaptit kan samtidigt sänka Investors värdering relativt NAV.","NAV + rabatt"],
+            ["Lägre multiplar i Patricia","Jämförelsebolagens EV/EBITDA kan falla utan motsvarande operativ resultatförsämring.","NAV"],
+            ["Förändrad valuta och räntor","SEK-rörelser påverkar internationella innehav; avkastningskrav påverkar noterade och onoterade multiplar.","NAV + rabatt"],
+            ["Svag kapitalallokering","Nya förvärv, även efter balansdagen, måste skapa mer värde än kapitalet kostar.","Framtida NAV"],
+            ["Rabatten återgår","Även om NAV ökar kan aktiekursen ge dålig avkastning om marknaden kräver större rabatt.","Aktiekurs"]
+          ].map(([name,description,impact])=><article key={name} className="rounded-xl border border-border bg-white p-5">
+            <div className="flex justify-between gap-3"><h3 className="font-bold text-slate-950">{name}</h3><span className="shrink-0 text-xs text-amber-800">{impact}</span></div>
+            <p className="mt-2 text-sm leading-6 text-slate-600">{description}</p>
+          </article>)}
+        </div>
+        <div className="mt-5 rounded-2xl border border-border bg-section-alt p-5">
+          <h3 className="font-bold text-slate-950">Varför BEVAKA?</h3>
+          <p className="mt-2 text-sm leading-7 text-slate-700">{d.editorial.recommendationRationale}</p>
+          <p className="mt-2 text-xs leading-6 text-slate-500">{d.editorial.riskRationale}</p>
+        </div>
+      </section>
+
+      <section id="alternativ" className="scroll-mt-36">
+        <SectionTitle eyebrow="Alternativkostnad" title="Varför Investor framför ett index?" description="Vi utvärderar om diversifiering och aktiv kapitalallokering kan kompensera för rabattrisk och värderingsosäkerhet. Historisk överavkastning är ingen framtida prognos." />
+        <div className="rounded-2xl border border-border bg-white p-5 shadow-sm">
+          <table className="w-full text-left text-sm"><thead className="text-slate-600"><tr><th className="py-3">Totalavkastning</th><th className="py-3 text-right">Q3 2026</th><th className="py-3 text-right">Jan–sep 2026</th></tr></thead>
+          <tbody className="border-t border-slate-100"><tr><th className="py-3">Investor B</th><td className="py-3 text-right">+1 %</td><td className="py-3 text-right">+24 %</td></tr><tr className="border-t border-slate-100"><th className="py-3">SIXRX</th><td className="py-3 text-right">+2 %</td><td className="py-3 text-right">+11 %</td></tr></tbody></table>
+          <p className="mt-4 text-xs leading-6 text-slate-500">Källa: Investors Q3-rapport. Industrivärden, Latour, Lundbergs och globala index är relevanta alternativ, men en jämförbar, daterad rabatt-, risk- och TSR-tabell behöver verifieras före publicering.</p>
+        </div>
       </section>
 
       <section className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-9">
