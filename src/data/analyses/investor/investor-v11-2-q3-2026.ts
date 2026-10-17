@@ -102,7 +102,7 @@ export const investorV112 = (() => {
       priceReturnExcludesFutureDividends: true,
       portfolioNavPathAssumesFutureNavGrowthAfterDistribution: true,
       isAnalystAssumption: true,
-      dividends:investorDividendSchedule,
+      dividendSchedule:investorDividendSchedule,
       dividendCashNote:"Antagna framtida utdelningar 2027–2028 behandlas som kontantutdelning utan återinvestering; den faktiskt beslutade novemberutdelningen 2026 inkluderas.",
       methodWarning:"Tillgångsgruppernas avkastning, central drag och framtida utdelningar är preliminära redaktionella antaganden. Ingen full bolagsvis kassaflödesprognos.",
     },
