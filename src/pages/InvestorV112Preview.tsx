@@ -28,7 +28,7 @@ function SectionTitle({ eyebrow, title, description }: { eyebrow: string; title:
 }
 
 function SourceFootnote() {
-  return <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-xs leading-5 text-slate-600">Spårbarhet: varje FACT har ett claim-ID som återfinns i källregistret. Värden beräknas i den versionsstyrda analysdossiern, inte i denna frontend.</div>;
+  return <div className="mt-5 rounded-xl border border-border bg-section-alt px-4 py-3 text-xs leading-5 text-slate-600">Spårbarhet: varje FACT har ett claim-ID som återfinns i källregistret. Värden beräknas i den versionsstyrda analysdossiern, inte i denna frontend.</div>;
 }
 
 export default function InvestorV112Preview() {
@@ -41,7 +41,7 @@ export default function InvestorV112Preview() {
   const annual = pct(val.annualizedValuePotential * 100, 1, true);
   const total = pct(val.totalValuePotential * 100, 1, true);
 
-  return <div className="min-h-screen bg-[#f8faf9] text-slate-900">
+  return <div className="min-h-screen bg-background text-foreground">
     <SEO title="Investor AB Q3 2026 – v11.2 förhandsvisning | Börsanalys.se" description="Spårbar kvartalsuppföljning av Investor AB med NAV-värdering, Q2-jämförelse och Bear/Base/Bull. Redaktionellt utkast, ej publicerat." noIndex />
     <div className="border-b border-amber-200 bg-amber-50 px-4 py-3 text-center text-sm font-semibold text-amber-950">
       Redaktionell förhandsvisning · NOT_PUBLISH_READY · Ej offentlig köprekommendation
@@ -50,28 +50,55 @@ export default function InvestorV112Preview() {
       <Link to="/analys/investor-ab" className="inline-flex items-center gap-2 text-sm font-bold text-emerald-800 hover:underline"><ArrowLeft size={16} /> Till äldre Investor-analys</Link>
     </div>
 
-    <header className="relative overflow-hidden bg-[#062c27] text-white">
-      <div aria-hidden="true" className="pointer-events-none absolute -right-28 -top-44 h-[34rem] w-[34rem] rounded-full border-[6rem] border-emerald-500/10" />
-      <div className="relative mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-[1.3fr_.7fr] lg:items-center">
-        <div>
-          <div className="flex flex-wrap items-center gap-2 text-xs font-bold uppercase tracking-[.15em] text-emerald-200">
-            <span>Investmentbolag</span><span aria-hidden="true">·</span><span>INVE B</span><span aria-hidden="true">·</span><span>Q3 2026</span>
-          </div>
-          <h1 className="mt-5 font-serif text-5xl font-bold tracking-[-.05em] sm:text-6xl">Investor AB</h1>
-          <p className="mt-3 font-serif text-2xl text-emerald-50">Patricia driver åter värdeskapandet – men säkerhetsmarginalen är begränsad.</p>
-          <p className="mt-5 max-w-2xl text-sm leading-7 text-emerald-50/80">Ny, fristående v11.2-dossier. Baserad på publicerade Q2- och Q3-rapporter, daterad aktiekurs och separat substansvärdesmodell. All scenarioinformation är redaktionella antaganden – inte Investors prognoser.</p>
-          <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-emerald-200">Analysdatum 16 oktober 2026 · Prognoshorisont 31 december 2028</p>
+    <header className="border-b border-border bg-background">
+      <div className="mx-auto max-w-6xl px-4 pb-14 pt-6 sm:px-6 sm:pb-16 sm:pt-10">
+        <div className="mb-7 inline-flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase tracking-[.13em] text-[#087f55]">
+          <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5">Investmentbolag</span>
+          <span className="text-slate-400">/</span><span>INVE B</span>
+          <span className="text-slate-400">/</span><span>Rapportuppföljning</span>
         </div>
-        <div className="rounded-2xl border border-white/15 bg-white/10 p-6 backdrop-blur">
-          <p className="text-xs font-black uppercase tracking-widest text-emerald-200">Investment Snapshot · Utkast</p>
-          <div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-extrabold"><span className="rounded-full bg-amber-100 px-3 py-1 text-amber-950">BEVAKA · preliminärt</span><span className="rounded-full border border-white/25 px-3 py-1">MEDEL RISK · preliminärt</span></div>
-          <p className="mt-7 text-xs font-semibold uppercase tracking-wider text-emerald-100">Sannolikhetsvägt värde 2028E</p>
-          <p className="mt-1 text-5xl font-extrabold tabular-nums tracking-tight">{kr(val.weightedFairValue)}</p>
-          <div className="mt-6 grid grid-cols-2 gap-4 border-t border-white/20 pt-5">
-            <div><p className="text-xs text-emerald-100">Total värdepotential</p><p className="mt-1 text-2xl font-extrabold tabular-nums">{total}</p></div>
-            <div><p className="text-xs text-emerald-100">Annualiserad värdepotential</p><p className="mt-1 text-2xl font-extrabold tabular-nums">{annual}<span className="ml-1 text-sm">/år</span></p></div>
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(330px,.85fr)] lg:items-center lg:gap-12">
+          <div className="max-w-2xl">
+            <p className="text-xs font-extrabold uppercase tracking-[.18em] text-[#087f55]">Börsanalys.se · Fundamental analys</p>
+            <h1 className="mt-4 font-serif text-5xl font-bold leading-[1.02] tracking-[-.055em] text-slate-950 sm:text-6xl">
+              Investor AB<span className="mt-2 block text-[#087f55]">Q3 2026</span>
+            </h1>
+            <p className="mt-6 max-w-xl font-serif text-2xl font-semibold leading-[1.28] tracking-tight text-slate-900 sm:text-[1.85rem]">
+              Patricia driver åter värdeskapandet – men säkerhetsmarginalen är begränsad.
+            </p>
+            <p className="mt-5 max-w-xl text-sm leading-7 text-slate-600">
+              En spårbar uppföljning av Q2 och Q3, med separat substansvärdesmodell för investmentbolag.
+              Framtidsscenarierna är redaktionella antaganden, inte Investors prognoser.
+            </p>
+            <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-slate-200 pt-5 text-xs font-medium text-slate-500">
+              <span>Analysdatum: {d.analysisDate}</span>
+              <span>Värdehorisont: {d.valuationDate}</span>
+              <span className="font-semibold text-[#087f55]">Metod: NAV_DISCOUNT</span>
+            </div>
           </div>
-          <p className="mt-5 text-xs leading-5 text-emerald-50/80">Referenskurs: {kr(d.marketReference.price, 2)} ({asOf}). Modellvärde avser enbart terminalkursen och <strong>exkluderar framtida utdelningar</strong>. Modellen är ej godkänd för publicering.</p>
+          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_12px_40px_rgba(15,23,42,.055)]">
+            <div className="h-1 bg-[#10B981]" aria-hidden="true" />
+            <div className="p-6 sm:p-7">
+              <p className="text-xs font-extrabold uppercase tracking-[.14em] text-slate-500">Investment Snapshot <span className="text-[#087f55]">· Utkast</span></p>
+              <div className="mt-4 flex flex-wrap items-center gap-2 text-[11px] font-bold">
+                <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-amber-900">BEVAKA · preliminärt</span>
+                <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-slate-700">MEDEL RISK · preliminärt</span>
+              </div>
+              <p className="mt-7 text-sm font-medium text-slate-600">Sannolikhetsvägt värde · 2028E</p>
+              <p className="mt-1 font-serif text-[clamp(2.7rem,5vw,3.4rem)] font-bold tracking-tight text-slate-950 tabular-nums">{kr(val.weightedFairValue)}</p>
+              <div className="mt-6 grid grid-cols-2 gap-4 border-t border-slate-200 pt-5">
+                <div><p className="text-xs leading-5 text-slate-500">Total värdepotential</p><p className="mt-1 text-2xl font-extrabold tabular-nums text-slate-950">{total}</p></div>
+                <div><p className="text-xs leading-5 text-slate-500">Annualiserad värdepotential</p><p className="mt-1 text-2xl font-extrabold tabular-nums text-slate-950">{annual}<span className="ml-1 text-sm font-semibold">/år</span></p></div>
+              </div>
+              <p className="mt-5 text-xs leading-6 text-slate-500">
+                Referenskurs {kr(d.marketReference.price, 2)} · {asOf}. Avser terminalkursen,
+                <strong className="text-slate-700"> exklusive framtida utdelningar</strong>.
+              </p>
+              <p className="mt-3 border-t border-dashed border-slate-200 pt-3 text-xs font-semibold text-amber-800">
+                Ej kvalitetsgodkänd för publicering.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </header>
@@ -80,20 +107,20 @@ export default function InvestorV112Preview() {
       <div className="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-3 sm:px-5">{[["tes","Analys"],["jmf","Q2 → Q3"],["teser","Teser"],["scenarier","Värdering"],["underlag","Källor"]].map(([id,label])=><a key={id} href={`#${id}`} className="shrink-0 border-b-2 border-transparent px-3 py-4 text-sm font-bold text-slate-600 hover:border-emerald-600 hover:text-emerald-800">{label}</a>)}</div>
     </nav>
 
-    <main className="mx-auto max-w-6xl space-y-14 px-4 py-12 sm:px-6 sm:py-16">
+    <main className="mx-auto max-w-6xl space-y-16 px-4 py-12 sm:px-6 sm:py-16">
       <section id="tes" className="scroll-mt-36">
         <SectionTitle eyebrow="Värdedrivare" title="Vad är intressant – och vad kan gå fel?" />
         <div className="grid gap-4 lg:grid-cols-2">
-          <div className="rounded-2xl border border-emerald-100 bg-white p-6 sm:p-8">
+          <div className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-8">
             <h3 className="flex items-center gap-2 font-serif text-2xl font-bold text-slate-950"><TrendingUp className="text-emerald-700" /> Varför intressant</h3>
             <ul className="mt-5 space-y-4 text-sm leading-7 text-slate-700"><li><strong>Patricia accelererar:</strong> justerad EBITA-tillväxt ökar från 16 % till 26 % (respektive kvartals tillväxt mot föregående år). <SourceIds ids={["F11","F12"]}/></li><li><strong>Flera ben bidrar:</strong> Patricia +15 % och EQT +7 % under Q3; deras respektive värdeförändring var negativ i Q2. <SourceIds ids={["F09","F10","F13","F14"]}/></li><li><strong>Finansiell flexibilitet:</strong> skuldsättningsgrad 1,8 % i Q3, ned från 1,9 %. <SourceIds ids={["F15","F16"]}/></li></ul>
           </div>
-          <div className="rounded-2xl border border-amber-100 bg-white p-6 sm:p-8">
+          <div className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-8">
             <h3 className="flex items-center gap-2 font-serif text-2xl font-bold text-slate-950"><ShieldAlert className="text-amber-700" /> Varför försiktiga</h3>
             <ul className="mt-5 space-y-4 text-sm leading-7 text-slate-700"><li><strong>Begränsad substansrabatt:</strong> Q3-slutkursen låg nära justerat NAV. Rabatten var cirka {pct(snap.discountQ3)}, beräknat på rapportens balansdag. <SourceIds ids={["F01","F05"]}/></li><li><strong>Värderingsrisk i Patricia:</strong> Q3-avkastningen gynnades även av högre multiplar och valuta; inte enbart underliggande operativ tillväxt. <SourceIds ids={["F09"]}/></li><li><strong>Justerat är inte redovisat NAV:</strong> 411 kr respektive 359 kr per aktie, bland annat på grund av värderingsprinciperna för dotter- och intressebolag. <SourceIds ids={["F01","F03"]}/></li></ul>
           </div>
         </div>
-        <div className="mt-6 rounded-2xl bg-emerald-50 p-6 sm:p-8">
+        <div className="mt-6 rounded-2xl border border-border bg-section-alt p-6 sm:p-8">
           <p className="text-xs font-black uppercase tracking-[.15em] text-emerald-800">Börsanalys.se:s insikt · ANALYSIS</p>
           <p className="mt-3 font-serif text-xl font-semibold leading-8 text-slate-950">{d.editorial.insight}</p>
           <p className="mt-3 text-sm leading-6 text-slate-700">Analysens avgörande fråga: {d.editorial.investmentQuestion}</p>
@@ -107,7 +134,20 @@ export default function InvestorV112Preview() {
           <div className="rounded-xl border border-slate-200 bg-white p-5"><p className="text-xs font-bold uppercase tracking-wider text-slate-500">Substansrabatt Q3</p><p className="mt-2 text-3xl font-black tabular-nums">{pct(snap.discountQ3)}</p><p className="mt-1 text-sm text-slate-600">+ rabatt / − premie beräknas konsekvent som 1 − kurs/NAV.</p><SourceIds ids={["F01","F05"]}/></div>
           <div className="rounded-xl border border-slate-200 bg-white p-5"><p className="text-xs font-bold uppercase tracking-wider text-slate-500">Totalt justerat NAV</p><p className="mt-2 text-3xl font-black tabular-nums">{Math.round(snap.totalNavMsekQ3/1000).toLocaleString("sv-SE")} mdkr</p><p className="mt-1 text-sm text-slate-600">Upp från {Math.round(snap.totalNavMsekQ2/1000).toLocaleString("sv-SE")} mdkr, avrundade miljarder.</p><SourceIds ids={["F07","F08"]}/></div>
         </div>
-        <div className="mt-6 overflow-x-auto rounded-2xl border border-slate-200 bg-white">
+        <div className="mt-6 grid gap-3 md:hidden" aria-label="Kvartalsjämförelse för mobil">
+          {deltas.map(row => <article key={row.label} className="rounded-xl border border-border bg-white p-4 shadow-sm">
+            <div className="flex items-start justify-between gap-3">
+              <h3 className="text-sm font-bold leading-5 text-slate-900">{row.label}</h3>
+              <span className="shrink-0 rounded-full bg-slate-50 px-2 py-1 text-xs font-semibold text-slate-700">{row.delta}</span>
+            </div>
+            <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-slate-100 pt-3">
+              <div><dt className="text-[11px] text-slate-500">Q2 2026</dt><dd className="mt-1 font-semibold tabular-nums text-slate-700">{row.q2}</dd></div>
+              <div><dt className="text-[11px] text-slate-500">Q3 2026</dt><dd className="mt-1 font-bold tabular-nums text-slate-950">{row.q3}</dd></div>
+            </dl>
+            <p className="mt-3 text-[11px] text-[#087f55]">Källspår: {row.source}</p>
+          </article>)}
+        </div>
+        <div className="mt-6 hidden overflow-x-auto rounded-2xl border border-border bg-white shadow-sm md:block">
           <table className="w-full min-w-[620px] text-left text-sm">
             <thead className="bg-slate-50 text-slate-700"><tr><th className="px-5 py-4">Nyckeltal</th><th className="px-3 py-4 text-right">Q2 2026</th><th className="px-3 py-4 text-right">Q3 2026</th><th className="px-5 py-4 text-right">Förändring</th></tr></thead>
             <tbody className="divide-y divide-slate-100">{deltas.map(row=><tr key={row.label}><th scope="row" className="px-5 py-4 font-semibold text-slate-900">{row.label}<span className="ml-2 text-[10px] font-normal text-emerald-700">{row.source}</span></th><td className="px-3 py-4 text-right tabular-nums text-slate-600">{row.q2}</td><td className="px-3 py-4 text-right font-extrabold tabular-nums">{row.q3}</td><td className="px-5 py-4 text-right font-semibold tabular-nums text-emerald-700">{row.delta}</td></tr>)}</tbody>
@@ -133,13 +173,13 @@ export default function InvestorV112Preview() {
           <p className="mt-4 text-sm leading-6 text-slate-700">{s.id==="bear"?"Svag värdetillväxt och större marknadsrabatt.":s.id==="base"?"Måttlig substansvärdestillväxt med fortsatt rabatt.":"Starkare substansvärdestillväxt och rabatt som försvinner."}</p>
         </article>)}</div>
         <p className="mt-3 text-xs leading-5 text-slate-500">Sannolikheter {val.scenarios.map(s => Math.round(s.probability*100)).join("/")} % är subjektiva analytiska bedömningar, inte objektiva prognossannolikheter. Terminalkursbaserat värde, utan framtida utdelningar.</p>
-        <div className="mt-6 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8">
+        <div className="mt-6 rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-4"><div><p className="text-xs font-black uppercase tracking-wider text-slate-500">Sannolikhetsvägt huvudvärde</p><p className="mt-2 text-4xl font-black tabular-nums">{kr(val.weightedFairValue)}</p></div><p className="text-sm text-slate-600">Jämfört med {kr(d.marketReference.price,2)} per {asOf}<br /><strong>{total} totalt · {annual}/år</strong></p></div>
           <div className="mt-6 border-t border-slate-200 pt-6">
             <p className="text-sm font-bold text-slate-950">Värderingskedja</p><div className="mt-3 flex flex-wrap items-center gap-2 text-xs font-bold">{val.valuationChain.map((step,i)=><span key={step} className="inline-flex items-center gap-2"><span className="rounded-lg bg-emerald-50 px-3 py-2 text-emerald-900">{step}</span>{i<val.valuationChain.length-1 && <ArrowRight className="text-slate-400" size={15}/>}</span>)}</div>
           </div>
         </div>
-        <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+        <div className="mt-6 rounded-2xl border border-border bg-section-alt p-6">
           <h3 className="flex items-center gap-2 font-serif text-2xl font-bold"><LockKeyhole className="text-emerald-700" /> Se hur vi har räknat</h3>
           <p className="mt-3 text-sm leading-6 text-slate-600">Som gratis medlem får du se scenarioantaganden och hela NAV → tillväxt → rabatt/premie → aktievärde-bryggan. All information är hämtad från den versionsstyrda dossiern.</p>
           {user ? <div className="mt-5 grid gap-3 sm:grid-cols-3">{val.scenarios.map(s=><div key={s.id} className="rounded-xl bg-white p-4 text-sm"><h4 className="font-bold">{s.label}</h4><p className="mt-2">NAV-tillväxt: <strong>{pct(s.navCagr*100)}</strong> per år</p><p>Slutrabatt: <strong>{pct(s.terminalDiscount*100)}</strong></p><p>Beräknat NAV: <strong>{kr(s.projectedNav)}</strong></p><p>Slutvärde: <strong>{kr(s.fairValue)}</strong></p><p className="mt-2 text-xs leading-5 text-slate-500">{s.rationale}</p></div>)}</div> : <button className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-emerald-800 px-5 text-sm font-bold text-white hover:bg-emerald-900" onClick={() => openLoginModal()} type="button">Skapa gratis konto <ArrowRight size={16}/></button>}
@@ -147,12 +187,17 @@ export default function InvestorV112Preview() {
         <div className="mt-5 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm leading-6 text-amber-950"><strong>Värderingens begränsning:</strong> Historisk substansrabatt har ännu inte kalibrerats fullständigt. Scenarierna är preliminära och går inte genom publiceringsgrinden. Inga risk/reward-kurszoner eller P/E-labb visas.</div>
       </section>
 
-      <section className="rounded-2xl bg-[#062c27] p-6 text-white sm:p-9">
-        <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-emerald-200"><CalendarDays size={16}/> Nästa kontrollstation</div>
-        <h2 className="mt-3 font-serif text-3xl font-bold">Bokslutskommuniké 2026</h2>
-        <p className="mt-3 text-sm text-emerald-50">Planerat datum: 22 januari 2027, enligt Investors finansiella kalender. Vi prövar då om Patricias lönsamhetslyft är operativt hållbart och om säkerhetsmarginalen förbättras.</p>
-        <p className="mt-4 text-xs text-emerald-200">Följ nästa bevis i teserna T01–T03 – inte bara rörelsen i aktiekursen.</p>
-      </section>
+      <section className="rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-9">
+        <div className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-[#087f55]"><CalendarDays size={16}/> Nästa kontrollstation</div>
+        <h2 className="mt-3 font-serif text-3xl font-bold tracking-tight text-slate-950">{d.editorial.nextCheckpoint.label}</h2>
+        <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-600">
+          Planerat datum: {d.editorial.nextCheckpoint.date}. Vi prövar då om Patricias lönsamhetslyft
+          är operativt hållbart och om säkerhetsmarginalen förbättras.
+        </p>
+        <p className="mt-4 border-l-2 border-[#10B981] pl-3 text-sm font-medium text-slate-700">
+          Följ nästa bevis i teserna T01–T03 – inte bara rörelsen i aktiekursen.
+        </p>
+            </section>
 
       <section id="underlag" className="scroll-mt-36">
         <SectionTitle eyebrow="Källor och metod" title="Granska analysens underlag" description="Source of truth är versionsstyrd. FACT avser rapporterade värden, DERIVED är deterministiska uträkningar, ASSUMPTION är framtidsscenarier och ANALYSIS är redaktionell tolkning." />
