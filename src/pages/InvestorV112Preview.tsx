@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft, ArrowRight, BookOpen, CalendarDays, ChevronDown, ChevronUp,
@@ -24,7 +24,7 @@ function SectionTitle({ eyebrow, title, description }: {eyebrow:string;title:str
 function SourceIds({ids}:{ids:readonly string[]}) {
   return <span className="ml-1 inline-flex text-[11px] font-semibold text-emerald-700" title={"Faktaposter: " + ids.join(", ")}>[{ids.join(" · ")}]</span>;
 }
-function SubtleWarning({children}:{children:React.ReactNode}) {
+function SubtleWarning({children}:{children:ReactNode}) {
   return <div className="rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm leading-6 text-amber-950">{children}</div>;
 }
 const comparisons = [
