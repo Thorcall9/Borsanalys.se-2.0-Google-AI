@@ -198,9 +198,9 @@ export default function InvestorV112Preview() {
         <SectionTitle eyebrow="Framtida substansvärde" title="Varifrån kan värdeskapandet komma?" description="Vi bygger scenarierna från portföljens tillgångsgrupper, inte från ett fristående antagande om NAV-tillväxt. Exakta avkastningsantaganden återfinns i medlemsvyn." />
         <div className="grid gap-4 md:grid-cols-3">
           {[
-            [${pct(val.weights.listed*100,0)},"Noterade Bolag","Atlas Copco, ABB, AstraZeneca, SEB och övriga noterade innehav; kurs- och vinstutvecklingen dominerar tillgångsbasen."],
-            [${pct(val.weights.patricia*100,0)},"Patricia Industries","Mölnlycke, Permobil, Laborie och andra onoterade bolag; operativt kassaflöde och värderingsmultiplar måste särskiljas."],
-            [${pct(val.weights.eqt*100,0)},"Investeringar i EQT","Börsnoterade EQT AB och investeringar i EQT-fonder; olika kassaflödes- och värderingsdrivare."]
+            [pct(val.weights.listed*100,0),"Noterade Bolag","Atlas Copco, ABB, AstraZeneca, SEB och övriga noterade innehav; kurs- och vinstutvecklingen dominerar tillgångsbasen."],
+            [pct(val.weights.patricia*100,0),"Patricia Industries","Mölnlycke, Permobil, Laborie och andra onoterade bolag; operativt kassaflöde och värderingsmultiplar måste särskiljas."],
+            [pct(val.weights.eqt*100,0),"Investeringar i EQT","Börsnoterade EQT AB och investeringar i EQT-fonder; olika kassaflödes- och värderingsdrivare."]
           ].map(([share,title,description])=><article key={title} className="rounded-2xl border border-border bg-white p-6 shadow-sm">
             <p className="text-2xl font-extrabold tabular-nums text-[#087f55]">{share}</p>
             <h3 className="mt-3 text-lg font-extrabold text-slate-950">{title}</h3>
