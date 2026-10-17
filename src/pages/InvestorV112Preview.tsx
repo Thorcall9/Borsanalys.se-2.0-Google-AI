@@ -208,6 +208,16 @@ export default function InvestorV112Preview() {
           </article>)}
         </div>
         <p className="mt-4 text-xs leading-6 text-slate-500">Vikter ur Q3-rapportens justerade tillgångar [F19]. Värderingsmodellen justerar även för finansiering och en separat redaktionell kostnadsbelastning. Vikterna hålls konstanta som ett förenklande antagande.</p>
+        <div className="mt-5 rounded-2xl border border-emerald-200 bg-white p-5 shadow-sm">
+          <h3 className="font-serif text-xl font-bold text-slate-950">Varför Base inte längre antar 8,2 % NAV-tillväxt</h3>
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <div className="rounded-xl bg-slate-50 p-3"><p className="text-xs text-slate-500">Historisk NAV-totalavkastning · 5 år</p><p className="mt-1 text-2xl font-bold tabular-nums">{pct(val.calibration.historicalNavTotalReturn5y*100,1)}/år</p><SourceIds ids={["F20"]}/></div>
+            <div className="rounded-xl bg-slate-50 p-3"><p className="text-xs text-slate-500">Investors avkastningskrav</p><p className="mt-1 text-2xl font-bold tabular-nums">{pct(val.calibration.investorReturnRequirementLow*100,0)}–{pct(val.calibration.investorReturnRequirementHigh*100,0)}/år</p></div>
+            <div className="col-span-2 rounded-xl bg-slate-50 p-3 sm:col-span-1"><p className="text-xs text-slate-500">Normaliserad Base · före utdelningar</p><p className="mt-1 text-2xl font-bold tabular-nums">{pct(val.scenarios.find(s=>s.id==="base")!.navTotalReturnCagr*100,1)}/år</p></div>
+          </div>
+          <p className="mt-4 text-sm leading-7 text-slate-600">{val.calibration.calibrationLogic} Det är en försiktigare hypotes än historiken, men ingen garanti. Tillväxtantaganden för respektive portföljdel är fortfarande analytikerantaganden, inte prognoser lämnade av Investor.</p>
+          <p className="mt-3 text-xs leading-6 text-slate-500">Kostnadsbrygga: Investors rapporterade förvaltningskostnad motsvarade 0,07 % av NAV i Q1 2026, medan modellens 4 % finansieringsränta är ett eget antagande. <SourceIds ids={["F34","F35"]}/></p>
+        </div>
         <div className="mt-5 rounded-2xl border border-border bg-section-alt p-5">
           <p className="font-bold text-slate-950">Patricias värdeökning – vad vet vi?</p>
           <p className="mt-2 text-sm leading-7 text-slate-600">De större dotterbolagens omsättning ökade 12 % i Q3, varav 7 % organiskt i konstant valuta, och justerad EBITA steg 26 %. Investors rapport anger att Patricias värdeavkastning också påverkades av högre multiplar och valuta. Exakt kronfördelning mellan operativa effekter, multiplar och valuta kan inte redovisas med tillräcklig säkerhet ännu.</p>
@@ -239,6 +249,7 @@ export default function InvestorV112Preview() {
           </div>
         </article>)}</div>
         <p className="mt-3 text-xs leading-5 text-slate-500">Sannolikheter {val.scenarios.map(s => Math.round(s.probability*100)).join("/")} % är subjektiva analytiska bedömningar, inte objektiva prognossannolikheter. Kursvärden är utan utdelningar; kontant-TSR inkluderar modellerad utdelning utan återinvestering.</p>
+        <p className="mt-3 text-sm leading-6 text-slate-700"><strong>Viktigt om huvudvärdet:</strong> Base är det mest sannolika enskilda scenariot i vår subjektiva indelning. Det sannolikhetsvägda värdet kan ligga betydligt lägre eftersom Bear ges 30 % vikt. Dessa sannolikheter saknar ännu statistisk kalibrering; därför bör läsaren inte tolka huvudvärdet som ett exakt pris.</p>
         <div className="mt-6 rounded-2xl border border-border bg-white p-6 shadow-sm sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-4"><div><p className="text-xs font-black uppercase tracking-wider text-slate-500">Sannolikhetsvägt huvudvärde</p><p className="mt-2 text-4xl font-black tabular-nums">{kr(val.weightedFairValue)}</p></div><p className="text-sm text-slate-600">Jämfört med {kr(d.marketReference.price,2)} per {asOf}<br /><strong>{total} kurspotential · {annual}/år</strong><br /><strong>Kontant-TSR: {cashTsr} · {cashAnnual}/år</strong></p></div>
           <div className="mt-6 border-t border-slate-200 pt-6">
