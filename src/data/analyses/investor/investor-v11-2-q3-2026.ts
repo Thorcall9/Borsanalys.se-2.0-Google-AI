@@ -61,6 +61,11 @@ export const investorV112 = (() => {
     { id:"F26",kind:"FACT",statement:"Investor äger efter affären 14,98 % av EQT AB",value:14.98,unit:"%",sourceId:"INVESTOR_EQT_POSTBALANCE_2026",locator:"Press release 2026-10-16",period:"2026-10-16" },
     { id:"F27",kind:"FACT",statement:"Investor noterade innehav totalavkastning Q3 2026 +1 %",value:1,unit:"%",sourceId:"INVESTOR_Q3_2026",locator:"Highlights",period:"2026-Q3" },
     { id:"F28",kind:"FACT",statement:"Investor Q3 bruttokassa 29 460 MSEK, skuldportföljens genomsnittliga löptid 8,4 år",value:[29460,8.4],unit:"MSEK,years",sourceId:"INVESTOR_Q3_2026",locator:"Highlights",period:"2026-09-30" },
+    { id:"F29",kind:"FACT",statement:"Noterade Bolags bidrag till NAV under Q3: 4 973 MSEK",value:4973,unit:"MSEK",sourceId:"INVESTOR_Q3_2026",locator:"Listed Companies, contribution to NAV",period:"2026-Q3" },
+    { id:"F30",kind:"FACT",statement:"Patricia Industries bidrag till justerat NAV Q3: 33 819 MSEK",value:33819,unit:"MSEK",sourceId:"INVESTOR_Q3_2026",locator:"Patricia Industries, value development",period:"2026-Q3" },
+    { id:"F31",kind:"FACT",statement:"Justerat NAV och börsvärde A+B för Q3: 1 258 016 / 1 234 030 MSEK",value:[1258016,1234030],unit:"MSEK",sourceId:"INVESTOR_Q3_2026",locator:"Financial Information Q3",period:"2026-09-30" },
+    { id:"F32",kind:"FACT",statement:"Justerat NAV och börsvärde A+B för Q2: 1 214 733 / 1 225 307 MSEK",value:[1214733,1225307],unit:"MSEK",sourceId:"INVESTOR_Q2_2026",locator:"Financial Information Q2",period:"2026-06-30" },
+    { id:"F33",kind:"FACT",statement:"Investor B TSR Q3 +1%, Jan–Sep +24%; SIXRX Q3 +2%, Jan–Sep +11%",value:[1,24,2,11],unit:"%",sourceId:"INVESTOR_Q3_2026",locator:"Highlights",period:"2026-Q3" },
   ] as const;
 
   const marketReference = { price:422.60,currency:"SEK",asOf:"2026-10-16",sourceId:sources.market.id,claimId:"F23" } as const;
@@ -107,6 +112,17 @@ export const investorV112 = (() => {
       methodWarning:"Tillgångsgruppernas avkastning, central drag och framtida utdelningar är preliminära redaktionella antaganden. Ingen full bolagsvis kassaflödesprognos.",
     },
     discountHistory:{...investorDiscountStats,definition:investorHistoricalDiscounts.definition,verification:investorHistoricalDiscounts.verification,periodStatsNotDaily:true},
+    q3NavBridge:{totalMsek:43300,units:"MSEK",rounding:"Härledd översikt avrundad till en decimal mdkr",segments:[
+      {key:"listed",label:"Noterade Bolag",valueMsek:4973,claimIds:["F29"]},
+      {key:"patricia",label:"Patricia Industries",valueMsek:33819,claimIds:["F30"]},
+      {key:"eqt",label:"Investeringar i EQT",valueMsek:5900,claimIds:["F13"]},
+      {key:"other",label:"Koncern/övrigt",valueMsek:43300-4973-33819-5900,claimIds:["F07","F08"]}
+    ], verification:"PARTIALLY_RECONCILED: EQT approximated and residual derived; reconcile exact source appendix before publishing"},
+    marketBenchmark:{periods:[
+      {key:"q3",label:"Q3 2026",investorTsrPct:1,sixrxTsrPct:2},
+      {key:"ytd",label:"Jan–sep 2026",investorTsrPct:24,sixrxTsrPct:11}
+    ],sourceId:sources.q3.id,claimIds:["F33"]},
+
     disclosure:{postBalanceEqt:{shares:12500000,price:282.7,considerationSek:12500000*282.7,ownershipPercent:14.98,sourceId:sources.eqtTransaction.id,claimIds:["F25","F26"]},
       navDefinition:"Justerat NAV inkluderar estimerade marknadsvärden för större Patricia-innehav; redovisat NAV följer redovisningsprinciper för dessa och får inte tolkas som samma värdebegrepp.",
       officialDiscountDefinition:"1 - börsvärde för A+B / justerat NAV vid samma balansdag",
