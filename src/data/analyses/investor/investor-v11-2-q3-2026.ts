@@ -8,6 +8,8 @@ import { buildInvestorForecast, investorDiscountStats, investorDividendSchedule,
 
 export const investorV112 = (() => {
   const sources = {
+    annual2025: { id:"INVESTOR_AR_2025",label:"Investor – årsredovisning 2025",issued:"2026-03-30",periodEnd:"2025-12-31",url:"https://www.investorab.com/investors-media/reports-presentations/2025",locations:"Mål och utfall: 2025 NAV +14 %, 2024 +20 %, 5-årsgenomsnitt +17 %",classification:"PRIMARY" },
+    q1Cost: { id:"INVESTOR_Q1_2026_MANAGEMENT",label:"Investor – Q1 2026 förvaltningskostnad",issued:"2026-04-21",periodEnd:"2026-03-31",url:"https://www.investorab.com/sv/investerare-media/rapporter-presentationer/2026",locations:"Q1 Rapport: Management cost 0,07 % av justerat NAV (LTM)",classification:"PRIMARY" },
     market: { id:"INVE_B_2026_10_16",label:"Investor B – stängningskurs 16 oktober 2026",issued:"2026-10-16",periodEnd:"2026-10-16",url:investorResearchSources.price,locations:"Historical stock price, 16 October",classification:"SECONDARY" },
     dividend: { id:"INVESTOR_AGM_2026",label:"Investor – årsstämman 7 maj 2026, beslutad utdelning",issued:"2026-05-07",periodEnd:"2026-11-12",url:investorResearchSources.dividend,locations:"Utdelning 5,60 kr; 1,60 kr i november 2026",classification:"PRIMARY" },
     eqtTransaction: { id:"INVESTOR_EQT_POSTBALANCE_2026",label:"Investor köper EQT-aktier från Wallenberg Investments",issued:"2026-10-16",periodEnd:"2026-10-16",url:investorResearchSources.postBalance,locations:"Pressmeddelande 16 oktober 2026",classification:"PRIMARY" },
@@ -66,6 +68,9 @@ export const investorV112 = (() => {
     { id:"F31",kind:"FACT",statement:"Justerat NAV och börsvärde A+B för Q3: 1 258 016 / 1 234 030 MSEK",value:[1258016,1234030],unit:"MSEK",sourceId:"INVESTOR_Q3_2026",locator:"Financial Information Q3",period:"2026-09-30" },
     { id:"F32",kind:"FACT",statement:"Justerat NAV och börsvärde A+B för Q2: 1 214 733 / 1 225 307 MSEK",value:[1214733,1225307],unit:"MSEK",sourceId:"INVESTOR_Q2_2026",locator:"Financial Information Q2",period:"2026-06-30" },
     { id:"F33",kind:"FACT",statement:"Investor B TSR Q3 +1%, Jan–Sep +24%; SIXRX Q3 +2%, Jan–Sep +11%",value:[1,24,2,11],unit:"%",sourceId:"INVESTOR_Q3_2026",locator:"Highlights",period:"2026-Q3" },
+    { id:"F34",kind:"FACT",statement:"Investors förvaltningskostnad LTM Q1 2026 motsvarade 0,07 % av justerat NAV",value:0.07,unit:"%",sourceId:"INVESTOR_Q1_2026_MANAGEMENT",locator:"Management cost, Q1 2026",period:"2026-03-31" },
+    { id:"F35",kind:"FACT",statement:"Investors justerade NAV-tillväxt inklusive återlagd utdelning: 14 % 2025 och 20 % 2024",value:[14,20],unit:"%",sourceId:"INVESTOR_AR_2025",locator:"Mål och utfall",period:"2025-12-31" },
+    { id:"F36",kind:"FACT",statement:"Investor NAV-totalavkastning Q3 2026 5 år 15,6 % annualiserat",value:15.6,unit:"%/year",sourceId:"INVESTOR_Q3_2026",locator:"Overview annual average performance",period:"2026-09-30" },
   ] as const;
 
   const marketReference = { price:422.60,currency:"SEK",asOf:"2026-10-16",sourceId:sources.market.id,claimId:"F23" } as const;
@@ -84,7 +89,7 @@ export const investorV112 = (() => {
     analysisId: "investor-ab-v11-2-q3-2026",
     companyId: "INVESTOR_AB",
     ticker: "INVE-B.ST",
-    version: { versionId: "INVESTOR_2026Q3_V11_2_DRAFT_002", parentVersionId: "INVESTOR_2026Q3_V11_2_DRAFT_001", immutable: true, createdAt: "2026-10-16", status: "NOT_PUBLISH_READY" },
+    version: { versionId: "INVESTOR_2026Q3_V11_2_DRAFT_003", parentVersionId: "INVESTOR_2026Q3_V11_2_DRAFT_002", immutable: true, createdAt: "2026-10-17", status: "NOT_PUBLISH_READY" },
     templateVersion: "11.2",
     analysisDate: "2026-10-17",
     sourceCutoffDate: "2026-10-17",
@@ -109,7 +114,7 @@ export const investorV112 = (() => {
       isAnalystAssumption: true,
       dividendSchedule:investorDividendSchedule,
       dividendCashNote:"Antagna framtida utdelningar 2027–2028 behandlas som kontantutdelning utan återinvestering; den faktiskt beslutade novemberutdelningen 2026 inkluderas.",
-      methodWarning:"Tillgångsgruppernas avkastning, central drag och framtida utdelningar är preliminära redaktionella antaganden. Ingen full bolagsvis kassaflödesprognos.",
+      methodWarning:"Segmentens avkastningsantaganden är normaliserade men ännu inte fullständigt förankrade bolag för bolag. Förvaltningskostnad 0,07 % hämtas från Q1 2026; låneränta 4 % är ett eget antagande. Framtida utdelningar och sannolikheter är ej beslutade eller statistiskt kalibrerade.",
     },
     discountHistory:{...investorDiscountStats,definition:investorHistoricalDiscounts.definition,verification:investorHistoricalDiscounts.verification,periodStatsNotDaily:true},
     q3NavBridge:{totalMsek:43300,units:"MSEK",rounding:"Härledd översikt avrundad till en decimal mdkr",segments:[
@@ -147,6 +152,7 @@ export const investorV112 = (() => {
       { eventId: "EV2026Q3", comparedTo: "2026-Q2", type: "FACT_DELTA", claimIds: ["F01","F02","F09","F10","F11","F12","F13","F14","F15","F16"], summary: "Q2→Q3: NAV 397→411, Patricia −3→+15, justerad EBITA-tillväxt 16→26, EQT −2→+7, skuld 1,9→1,8." },
       { eventId: "MODEL_INITIAL", comparedTo: null, type: "ASSUMPTION", summary: "Ny separat NAV_DISCOUNT-modell; gamla Investor-analysens P/E och scenarier återanvänds inte." },
       { eventId:"MODEL_002",comparedTo:"INVESTOR_2026Q3_V11_2_DRAFT_001",type:"MODEL_REVISION",summary:"Fem AI-granskningar utvärderade. Modell ombyggd med noterade/Patricia/EQT-tillgångsavkastning, NAV-avdrag för framtida kontantutdelning, daterad 16/10-kurs, framtida TSR och historisk rabattkalibrering. Nya antaganden, fortsatt NOT_PUBLISH_READY." },
+      { eventId:"MODEL_003_NAV_CALIBRATION",comparedTo:"INVESTOR_2026Q3_V11_2_DRAFT_002",type:"ASSUMPTION_REVISION",summary:"Omprövar svagt underbyggt Base efter Investor NAV-5-årstakt 15,6% samt historik 2024/2025. Base avkastning Noterat/Patricia/EQT 10,5/12,5/11%; central årlig kostnads- och finansieringsdragning härledd 0,07% rapporterad förvaltning + 4% hypotetisk ränta på 1,8% nettobelåning. Slutrabatt 7,5% samt riskprobabiliteter behålls för att inte skönsmässigt höja terminalvärdet." },
     ],
     publicationBlocks: { public: ["snapshot","drivers","insight","theses","scenarios","next_report","sources","method"], member: ["exact_assumptions","valuation_bridge"], futurePremium: [] },
     interactiveValuation: "UNSUPPORTED",
