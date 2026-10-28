@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowLeft,
@@ -26,7 +26,7 @@ import VolvoRiskRewardInsight from "./VolvoRiskRewardInsight";
 import { AnalysisData } from "../../types/analysis";
 import { useAuth } from "../../contexts/AuthContext";
 
-type Props = { data: AnalysisData };
+type Props = { data: AnalysisData; indexable?: boolean; canonicalUrl?: string; memberDetails?: ReactNode; sourceLinks?: ReactNode; mobileSnapshot?: ReactNode };
 type TabId = "overview" | "theses" | "valuation" | "next";
 
 const tabs: { id: TabId; label: string; target: string }[] = [
@@ -308,7 +308,7 @@ function ValuationChain({
 
 // This renderer is intentionally data-led: no company copy belongs in the
 // presentation layer. A v11.1 analysis must supply its canonical projection.
-export default function V11Analysis({ data }: Props) {
+export default function V11Analysis({ data, indexable = false, canonicalUrl, memberDetails, sourceLinks, mobileSnapshot }: Props) {
   const { user, openLoginModal, openSignupModal } = useAuth();
   const [activeTab, setActiveTab] = useState<TabId>("overview");
   const [showMethod, setShowMethod] = useState(false);
@@ -365,9 +365,11 @@ export default function V11Analysis({ data }: Props) {
         title={`${data.title} (${data.ticker}) — analys`}
         description={data.summary}
         ogType="article"
-        noIndex
+        canonical={canonicalUrl}
+        noIndex={!indexable}
       />
       <article className="bg-white text-slate-950">
+        {mobileSnapshot}
         <header
           id="overview"
           className="scroll-mt-36 border-b border-emerald-950/10"
@@ -410,7 +412,7 @@ export default function V11Analysis({ data }: Props) {
             <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600 sm:text-xl">
               {preview.dek}
             </p>
-            <div className="mt-7 flex flex-wrap items-center gap-4">
+            <div className={mobileSnapshot ? "mt-7 hidden flex-wrap items-center gap-4 sm:flex" : "mt-7 flex flex-wrap items-center gap-4"}>
               <span className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-emerald-600 bg-emerald-50 px-4 text-sm font-black tracking-wide text-emerald-700">
                 <Eye size={18} /> {data.recommendation}
                 {preview.recommendationStatus === "DRAFT" ? " · UTKAST" : ""}
@@ -426,7 +428,7 @@ export default function V11Analysis({ data }: Props) {
               </aside>
             )}
             <section className="mt-8 rounded-2xl border border-emerald-100 bg-emerald-50/75 p-5 sm:p-7">
-              <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+              <div className={mobileSnapshot ? "hidden gap-6 sm:flex sm:flex-row sm:items-end sm:justify-between" : "flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between"}>
                 <div>
                   <h2 className="text-sm font-black uppercase tracking-[0.18em] text-emerald-700">
                     Vår syn
@@ -515,7 +517,8 @@ export default function V11Analysis({ data }: Props) {
                   </div>
                 </section>
               )}
-              {user && showMethod && activeScenario && (
+              {user && showMethod && memberDetails}
+              {user && showMethod && activeScenario && !memberDetails && (
                 <div className="mt-4 border-t border-emerald-200 pt-5">
                   <div className="flex flex-wrap gap-2">
                     {scenarioPresentation.map((scenario) => (
@@ -880,6 +883,7 @@ export default function V11Analysis({ data }: Props) {
             )}
           </section>
           <footer className="border-t border-slate-200 py-9 text-sm leading-6 text-slate-500">
+            {sourceLinks}
             <p>
               <strong className="text-slate-700">Källor:</strong>{" "}
               {preview.sourceSummary}

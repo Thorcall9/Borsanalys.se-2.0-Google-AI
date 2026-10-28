@@ -147,6 +147,7 @@ export interface AIDrivenAnalysis {
 }
 
 export interface AnalysisData {
+  archiveComparison?: { annualPotential: string; riskLabel: string };
   slug: string;
   templateVersion?: "legacy" | "v10" | "v11";
   title: string;
