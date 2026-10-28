@@ -12,3 +12,13 @@
 - Full TypeScript check remains blocked only by the pre-existing `server.ts:27` import of missing `src/lib/corsConfig.ts`; HEAD contains that import and lacks the file. No change made outside scope to fix it.
 - Local archive market quote API requests fail because the production backend is not started in the UI-only harness; new AQ reference data are fixed canonical values and do not use this API.
 - Eight-page updated PDF visually reviewed; no clipping or spill pages. Full dossier and original r1/report PDFs retained in the updated analysis package.
+
+## R3 model review, 28 October 2026
+
+R3 supersedes r2's publication-ready assessment. Current status is AWAITING_AUTHOR_DISCLOSURE; the author has not reconfirmed ownership or other conflicts since 28 May. The route remains a protected preview and now defaults to noindex.
+
+Base Q4 total growth is 15% (12% organic + 3% acquired + 0% FX); 2026 revenue 10,171.45 MSEK grows 11% per year to 12,532.243545 MSEK in 2028. The lower starting level propagates through earnings and FCF. Bear and Bull Q4 bridges are explicit too. No unannounced M&A or acquired earnings enters the forward model. Closing net cash is residual after FCF, dividends and 9 MSEK deferred Norlake consideration. No cash is added to P/E values.
+
+Explicit hurdle: nominal 10% before tax; hypothetical dividends paid 30 April 2027/2028. IRR is computed on weighted dated cash flows, not the weighted average scenario IRR. Weighted terminal value 257.4127423639104 SEK, total return IRR 5.415184646719451%, conditional 10% entry price 214.07925973289133 SEK from dated quote 234.60 SEK at 15:21 CET. Scenario dispersion and isolated margin/multiple sensitivity are displayed.
+
+Validation: five financial consistency tests pass; production bundle build passes. PDF ten-page render reviewed. This turn's browser smoke run could not start: the existing temporary Chromium binary exited with SIGSEGV before page creation. Prior r2 UI checks do not constitute a fresh r3 browser pass. Existing unrelated full TypeScript check limitation (missing src/lib/corsConfig.ts in server.ts) remains documented above. No production deployment or merge is authorized by this model revision.
