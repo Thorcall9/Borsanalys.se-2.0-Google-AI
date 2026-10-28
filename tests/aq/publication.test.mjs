@@ -4,7 +4,7 @@ import test from 'node:test';
 const read=p=>JSON.parse(readFileSync(new URL(p,import.meta.url)));
 const d=read('../../src/data/analyses/aq-group/aq-q3-2026-dossier.json');
 const old=read('../../analyses/AQ/AQ-20261028-v11.2-r2.json');
-const previous=read('../../analyses/AQ/AQ-20261028-v11.2-r3.json');
+const previous=read('../../analyses/AQ/AQ-20261028-v11.2-r4.json');
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-8,`${a} != ${b}`);
 test('Q4 growth bridge reconciles to full year and lower Base flows to 2028',()=>{
  for(const q of d.q4_bridge.scenarios){near(q.total_growth,q.organic_growth+q.acquired_growth+q.fx_growth);near(q.q4_revenue,2323*(1+q.total_growth));near(q.annual_revenue_path[0],7500+q.q4_revenue);}
@@ -33,18 +33,36 @@ test('version, author disclosure and provenance prevent false publication readin
  const q=d.claims.find(c=>c.claim_id==='F54');near(q.value,d.market_reference.price);
 });
 
-test('r4 preserves primary scenarios and isolates Base-light sensitivity',()=>{
- assert.deepEqual(d.scenarios,previous.scenarios);assert.deepEqual(d.valuation_summary,previous.valuation_summary);
- const b=d.sensitivity_analysis.base_light;near(b.inputs.revenue,d.q4_bridge.scenarios[1].annual_revenue_path[0]*1.08**2);near(b.outputs.eps,b.inputs.revenue*.095*.79/92);near(b.outputs.fair_value,b.outputs.eps*22);assert.equal(b.role,'SENSITIVITY_ONLY_NOT_WEIGHTED_SCENARIO');
- assert.ok(b.outputs.fair_value<d.market_reference.price);assert.ok(b.outputs.total_return_irr<0);
+test('r5 preserves operating forecasts and revises premium using component FCF',()=>{
+ for(const [i,s] of d.scenarios.entries()){for(const key of ['revenue','ebit_margin','net_finance','tax_rate','diluted_shares'])near(s.inputs[key],previous.scenarios[i].inputs[key]);near(s.probability,previous.scenarios[i].probability);near(s.inputs.ev_ebit,s.inputs.pe*(1-s.inputs.tax_rate));}
+ assert.equal(d.scenarios[1].inputs.pe,22);assert.equal(d.scenarios[2].inputs.pe,26);
+ const b=d.sensitivity_analysis.base_light;near(b.outputs.fair_value,previous.sensitivity_analysis.base_light.outputs.fair_value);assert.equal(b.role,'SENSITIVITY_ONLY_NOT_WEIGHTED_SCENARIO');
 });
 test('weight sensitivity reallocates Base to Bear and recomputes dated cashflow IRR',()=>{
  const times=d.return_framework.dividend_dates.map(date=>(Date.parse(date)-Date.parse('2026-10-28'))/86400000/365.25);
  for(const s of d.sensitivity_analysis.scenario_weight_sensitivity){
- near(s.weights.reduce((a,b)=>a+b,0),1);near(s.weights[2],.2);
+ near(s.weights.reduce((a,b)=>a+b,0),1);assert.ok([.15,.2].includes(s.weights[2]));
  const w=d.scenarios.reduce((t,b,i)=>t+s.weights[i]*b.fair_value.value,0);near(w,s.weighted_fair_value);
  const div=d.scenarios.reduce((t,b,i)=>t+s.weights[i]*b.outputs.cumulative_dividend_per_share,0);
  near(div/2*times.reduce((a,t)=>a+(1+s.weighted_cashflow_irr)**(-t),0)+w/(1+s.weighted_cashflow_irr)**(795/365.25),d.market_reference.price);
  assert.ok(s.weighted_cashflow_irr<d.return_framework.hurdle_rate);
  }
+});
+
+test('reported R12 bridge reconciles including explicit rounding',()=>{
+ const h=d.cashflow_bridge.historical_r12;near(h.ebt+h.depreciation_amortization+h.other_noncash-h.tax_paid-h.working_capital_absorption+h.rounding_adjustment,h.cfo);near(h.cfo-h.gross_capex-h.lease_principal,345);
+ const w=d.cashflow_bridge.working_capital_proxy;near(w.inventory+w.trade_receivables+w.other_current_assets_ex_tax-w.trade_payables-w.contract_liabilities-w.other_current_liabilities,w.net_operating_working_capital);near(w.ratio,w.net_operating_working_capital/9823);
+});
+test('each forward cashflow period derives from components and funds terminal cash',()=>{
+ const b=d.cashflow_bridge;for(const [i,s] of b.scenarios.entries()){
+ for(const row of s.periods){
+ near(row.ebt,row.period_revenue*row.ebit_margin+row.net_finance);near(row.depreciation_amortization,row.period_revenue*.035);near(row.tax_paid,row.ebt*d.scenarios[i].inputs.tax_rate);
+ near(row.working_capital_absorption,row.closing_working_capital_proxy-row.opening_working_capital_proxy);near(row.cfo,row.ebt+row.depreciation_amortization-row.tax_paid-row.working_capital_absorption);near(row.fcf_after_leases,row.cfo-row.gross_capex-row.lease_principal);
+ }
+ near(s.periods[2].net_income,d.scenarios[i].outputs.net_income);near(s.periods.reduce((a,r)=>a+r.fcf_after_leases,0),d.cashflow_control.funding_budgets[i].cumulative_fcf_after_leases);
+ }
+ assert.ok(b.scenarios[1].periods[2].fcf_conversion<.54);
+});
+test('four scenario is isolated and reweighted from revised values',()=>{
+ const f=d.sensitivity_analysis.four_scenario;const vals=[d.scenarios[0].fair_value.value,d.sensitivity_analysis.base_light.outputs.fair_value,d.scenarios[1].fair_value.value,d.scenarios[2].fair_value.value];near(f.weights.reduce((a,p)=>a+p,0),1);near(vals.reduce((a,v,i)=>a+f.weights[i]*v,0),f.weighted_fair_value);
 });
