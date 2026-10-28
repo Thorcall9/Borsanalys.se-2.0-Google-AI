@@ -28,6 +28,7 @@ function CompanyMark({ analysis }: { analysis: AnalysisData }) {
 }
 
 function Potential({ analysis }: { analysis: AnalysisData }) {
+  if (analysis.archiveComparison) return <div className="shrink-0 text-right"><p className="text-[9px] font-bold uppercase text-slate-500">Annualiserad värdepotential</p><p className="text-xl font-bold text-emerald-700">{analysis.archiveComparison.annualPotential}</p><p className="text-xs font-semibold text-slate-600">{analysis.archiveComparison.riskLabel}</p></div>;
   // Potential belongs to the v11.1 preview's canonical valuation data. Legacy
   // analyses intentionally stay neutral, while future v11.1 analyses work
   // without adding company-specific archive logic.

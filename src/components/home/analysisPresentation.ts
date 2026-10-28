@@ -25,8 +25,9 @@ export function getFeaturedAnalysis(): AnalysisData {
 
 export function getAnalysisPresentation(analysis: AnalysisData): AnalysisPresentation {
   const potential = analysis.templateVersion === "v11"
-    ? analysis.v11Preview?.upside
-      ?? (analysis.upside != null ? `${analysis.upside > 0 ? "+" : ""}${analysis.upside.toLocaleString("sv-SE")}%` : null)
+    ? analysis.v11?.upside
+      ?? analysis.v11Preview?.upside
+      ?? (analysis.upside != null ? `${analysis.upside > 0 ? "+" : ""}${analysis.upside.toLocaleString("sv-SE", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %` : null)
     : null;
 
   return {
