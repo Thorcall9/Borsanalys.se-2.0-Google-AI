@@ -19,7 +19,7 @@ function Sources() {
     <ul className="mt-3 grid gap-2 sm:grid-cols-2">{aqDossier.sources.filter(s => "url" in s && s.url && !s.source_id.startsWith("T") && s.source_id !== "S11" && s.source_id !== "S14").map(s => <li key={s.source_id}><a className="underline underline-offset-2 hover:text-emerald-700" href={"url" in s ? s.url! : undefined} target="_blank" rel="noopener noreferrer">{s.source_id} · {s.title}</a></li>)}</ul>
     <p className="mt-4">Källkontroll 28 oktober 2026. Värderingen använder den fördröjda kursnoteringen 234,60 kr kl.15.21 CET, inte dagens slutkurs. Scenarioandelarna är redaktionella bedömningar. Beloppen i tabellerna avrundas först vid presentation.</p>
     <p className="mt-3">Källkonflikter: Q3-texten anger felaktigt minskad försäljning i Systems; tabellen visar ökning från 994 till 1 008 MSEK. Engelska översiktens felbenämnda debt/equity 68 % avser soliditet. Norlakes proformabidrag relativt historisk försäljning är inte avstämt och annualiseras inte.</p>
-    <p className="mt-3">{aqDossier.presentation.v11.ownershipDisclosure} Även tidigare uppgift om ingen ersättning eller kommersiell relation behöver bekräftas av författaren inför publicering. <Link to="/aktieinnehav-och-intressekonflikter" className="underline">Innehav och intressekonflikter</Link>.</p>
+    <p className="mt-3">{aqDossier.presentation.v11.ownershipDisclosure} Enligt webbplatsens tidigare redovisning finns ingen ersättning eller kommersiell relation till AQ i samband med analysen. <Link to="/aktieinnehav-och-intressekonflikter" className="underline">Innehav och intressekonflikter</Link>.</p>
     <p className="mt-3">Ny version {aqDossier.version.version_id}. Tidigare analys från april finns kvar: <Link className="underline" to="/analys/aq-group">AQ Group – tidigare analys</Link>. Avkastningskrav 10 % per år. Modellvillkorade ingångspriser och utdelningsantaganden redovisas i fördjupningen.</p>
   </div>;
 }
@@ -38,3 +38,4 @@ export default function AqQ32026() {
   </section>;
   return <V11Analysis data={aqQ32026} canonicalUrl="https://www.borsanalys.se/analys/aq-group-q3-2026" mobileSnapshot={snapshot} memberDetails={<MemberDetails />} sourceLinks={<Sources />} />;
 }
+

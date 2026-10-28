@@ -1,0 +1,5 @@
+# AQ r6 disclosure finalization — 28 October 2026
+
+Author confirms ownership of AQ shares and states that the analysis is otherwise ready for publication. Disclosure added to first and final PDF pages and canonical v11 ownershipDisclosure. Self-declared confirmation recorded as U01/F56. No holdings quantity, purchase price or independent account verification is claimed. Earlier website statement about no compensation/commercial relationship remains labeled as an earlier disclosure; no new relationship is fabricated.
+
+Status changes from AWAITING_AUTHOR_DISCLOSURE to PUBLISH_READY. R5 dossier is immutable archive. Operating assumptions, scenarios, cash-flow bridge, return framework, price reference and sensitivity analysis are unchanged. Eleven model/metadata tests pass. Nine-page PDF visually inspected on both edited pages; internal pages retain their financial content. Only disclosure and publication metadata changed. Protected preview branch updated; this step does not merge to main or publish to production.

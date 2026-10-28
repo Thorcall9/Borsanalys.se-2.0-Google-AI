@@ -653,6 +653,13 @@
       "url": "https://github.com/Thorcall9/Borsanalys.se-2.0-Google-AI/blob/a1d16103ba4d7045b65b353cf6b223d043603992/src/data/analyses/netflix/netflix-v11-model.ts",
       "type": "INTERNAL_PRIMARY",
       "evidence": "disclaimer: centralDisclaimerVersion v11.2-2026-08, shortDisclaimerId standard-short-v11.2, fullDisclaimerUrl /villkor. Standardtext även i MetaV11Preview.tsx."
+    },
+    {
+      "source_id": "U01",
+      "title": "Författarens bekräftelse av aktieinnehav inför publicering",
+      "date": "2026-10-28",
+      "type": "USER_CONFIRMATION",
+      "evidence": "Jag äger aktier i AQ Group, så det måste framgå. I övrigt är den redo för publicering."
     }
   ],
   "claims": [
@@ -4377,6 +4384,19 @@
         "hurdle_price_10pct": 203.9163614775989,
         "note": "Illustrativ omfördelning, inte nya huvudvikter eller skattade sannolikheter. Med r4-värden gav samma vikter 259,6 kr; efter sänkta multiplar räknas alla känsligheter om."
       }
+    },
+    {
+      "claim_id": "F56",
+      "class": "FACT",
+      "text": "Författaren äger aktier i AQ Group. Innehavet bekräftades den 28 oktober 2026 och innebär ett ekonomiskt intresse i bolaget.",
+      "status": "CONFIRMED_BY_AUTHOR",
+      "source_refs": [
+        "U01"
+      ],
+      "effective_date": "2026-10-28",
+      "created_in_version": "AQ-20261028-v11.2-r6",
+      "value": true,
+      "notes": "Självdeklarerat innehav. Ingen uppgift om antal aktier eller anskaffningsvärde."
     }
   ],
   "history": {
@@ -4974,17 +4994,15 @@
     "verification_source_ref": "S14"
   },
   "version": {
-    "version_id": "AQ-20261028-v11.2-r5",
-    "parent_version_id": "AQ-20261028-v11.2-r4",
-    "created_at": "2026-10-28T17:05:11.617864+00:00",
+    "version_id": "AQ-20261028-v11.2-r6",
+    "parent_version_id": "AQ-20261028-v11.2-r5",
+    "created_at": "2026-10-28T18:09:02.870398+00:00",
     "author": "Börsanalys.se",
-    "status": "AWAITING_AUTHOR_DISCLOSURE",
+    "status": "PUBLISH_READY",
     "immutable": true
   },
-  "publication_status": "AWAITING_AUTHOR_DISCLOSURE",
-  "publication_blockers": [
-    "Aktuellt eget innehav och övriga intressekonflikter behöver bekräftas av författaren inför publicering. Senaste uppgift är 28 maj 2026."
-  ],
+  "publication_status": "PUBLISH_READY",
+  "publication_blockers": [],
   "change_tracking": [
     {
       "field_path": "analysis",
@@ -5137,22 +5155,28 @@
       ],
       "changed_by": "Börsanalys.se",
       "changed_at": "2026-10-28"
+    },
+    {
+      "field_path": "author_disclosure_and_publication_status",
+      "old_value_ref": "AQ-20261028-v11.2-r5",
+      "new_value_ref": "AQ-20261028-v11.2-r6",
+      "reason": "Författaren bekräftar aktuellt aktieinnehav och anger att analysen i övrigt är redo för publicering. Prognoser och värderingar är oförändrade.",
+      "claim_ids": [
+        "F56"
+      ],
+      "changed_by": "Börsanalys.se",
+      "changed_at": "2026-10-28"
     }
   ],
   "event_delta": {
-    "event_id": "AQ-CASHFLOW-20261028",
-    "compared_to_version": "AQ-20261028-v11.2-r4",
+    "event_id": "AQ-AUTHOR-DISCLOSURE-20261028",
+    "compared_to_version": "AQ-20261028-v11.2-r5",
     "fact_changes": [
-      "Rapporterade kassaflödes-/balanskomponenter avstämda"
+      "Självdeklarerat aktuellt aktieinnehav bekräftat"
     ],
-    "assumption_changes": [
-      "D&A 3,5 %, capex 3 %, leasing 1,6 %, kapitalbindningsproxy 27,4 %, normaliserad kontantskatt",
-      "P/E Base 24→22, Bull 28→26"
-    ],
+    "assumption_changes": [],
     "thesis_changes": [],
-    "valuation_changes": [
-      "Viktat värde 239,3 kr"
-    ],
+    "valuation_changes": [],
     "decision_change": null
   },
   "unavailable_data": [
@@ -5170,8 +5194,8 @@
     "public_content": "PASS",
     "versioning": "PASS",
     "disclaimer": "PASS",
-    "final_status": "AWAITING_AUTHOR_DISCLOSURE",
-    "author_disclosure": "PENDING_AUTHOR_CONFIRMATION"
+    "final_status": "PUBLISH_READY",
+    "author_disclosure": "CONFIRMED_BY_AUTHOR_2026_10_28"
   },
   "presentation": {
     "contentType": "analysis",
@@ -5261,8 +5285,8 @@
     ],
     "v11": {
       "analysisId": "AQ-GROUP-2026-10-19",
-      "versionId": "AQ-20261028-v11.2-r5",
-      "publicationStatus": "AWAITING_AUTHOR_DISCLOSURE",
+      "versionId": "AQ-20261028-v11.2-r6",
+      "publicationStatus": "PUBLISH_READY",
       "recommendationStatus": "APPROVED",
       "sourceCutoffDate": "2026-10-28",
       "valuationDate": "2028-12-31",
@@ -5279,7 +5303,7 @@
       "annualPotential": "Annualiserad värdepotential: +0,9 %/år",
       "valuationChainLabel": "Industrikunders efterfrågan → omsättning → EBIT → skatt och finansnetto → utspädd EPS → P/E → värde",
       "riskLabel": "MEDEL–HÖG RISK",
-      "ownershipDisclosure": "Aktuellt innehav är ännu inte bekräftat inför denna version. Senaste uppgift på webbplatsen, 28 maj 2026, anger direkt ägande i AQ Group. Aktuellt innehav och övriga intressekonflikter ska bekräftas av författaren före publicering.",
+      "ownershipDisclosure": "Författaren äger aktier i AQ Group. Innehavet bekräftades den 28 oktober 2026 och innebär ett ekonomiskt intresse i bolaget.",
       "positiveReasons": [
         {
           "title": "Organisk tillväxt accelererar",
@@ -6487,5 +6511,12 @@
       "noncash": "Övriga ej kassapåverkande poster antas noll, mot R12 +36 MSEK. Historiska reserv-/valutaeffekter antas inte återkomma.",
       "rounding": "R12 EBT 948 + D&A 350 + övrigt 36 − skatt 130 − WC 450 = 754. Rapporterat CFO är 753; −1 MSEK visas uttryckligen som avrundningsdifferens. D&A 350 är rapporterad R12-siffra; års-/niomånaderskomponenter kan ge 351 genom avrundning."
     }
+  },
+  "author_disclosure": {
+    "owns_shares": true,
+    "confirmed_at": "2026-10-28",
+    "source_ref": "U01",
+    "text": "Författaren äger aktier i AQ Group. Innehavet bekräftades den 28 oktober 2026 och innebär ett ekonomiskt intresse i bolaget.",
+    "other_disclosures": "Tidigare webbuppgift anger ingen ersättning eller kommersiell relation till AQ. Ingen ny sådan relation har redovisats i denna uppdatering."
   }
 }

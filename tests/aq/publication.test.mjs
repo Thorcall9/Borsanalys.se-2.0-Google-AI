@@ -4,7 +4,7 @@ import test from 'node:test';
 const read=p=>JSON.parse(readFileSync(new URL(p,import.meta.url)));
 const d=read('../../src/data/analyses/aq-group/aq-q3-2026-dossier.json');
 const old=read('../../analyses/AQ/AQ-20261028-v11.2-r2.json');
-const previous=read('../../analyses/AQ/AQ-20261028-v11.2-r4.json');
+const previous=read('../../analyses/AQ/AQ-20261028-v11.2-r5.json');
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-8,`${a} != ${b}`);
 test('Q4 growth bridge reconciles to full year and lower Base flows to 2028',()=>{
  for(const q of d.q4_bridge.scenarios){near(q.total_growth,q.organic_growth+q.acquired_growth+q.fx_growth);near(q.q4_revenue,2323*(1+q.total_growth));near(q.annual_revenue_path[0],7500+q.q4_revenue);}
@@ -28,7 +28,7 @@ test('dividend timing, IRR and hurdle prices are discounted consistently',()=>{
  near(pv(r.weighted_cashflow_irr),d.market_reference.price);for(const h of r.hurdle_prices)near(pv(h.annual_return),h.price);assert.equal(r.hurdle_rate,.10);
 });
 test('version, author disclosure and provenance prevent false publication readiness',()=>{
- assert.equal(d.version.parent_version_id,previous.version.version_id);assert.equal(d.publication_status,'AWAITING_AUTHOR_DISCLOSURE');assert.ok(d.publication_blockers.length);assert.equal(d.presentation.v11.publicationStatus,d.publication_status);
+ assert.equal(d.version.parent_version_id,previous.version.version_id);assert.equal(d.publication_status,'PUBLISH_READY');assert.equal(d.publication_blockers.length,0);assert.equal(d.author_disclosure.owns_shares,true);assert.equal(d.presentation.v11.publicationStatus,d.publication_status);
  const ids=new Set(d.claims.map(c=>c.claim_id));const sources=new Set(d.sources.map(s=>s.source_id));for(const c of d.claims){for(const id of c.source_refs)assert.ok(sources.has(id));for(const id of c.input_claim_ids??[])assert.ok(ids.has(id));}
  const q=d.claims.find(c=>c.claim_id==='F54');near(q.value,d.market_reference.price);
 });
@@ -65,4 +65,10 @@ test('each forward cashflow period derives from components and funds terminal ca
 });
 test('four scenario is isolated and reweighted from revised values',()=>{
  const f=d.sensitivity_analysis.four_scenario;const vals=[d.scenarios[0].fair_value.value,d.sensitivity_analysis.base_light.outputs.fair_value,d.scenarios[1].fair_value.value,d.scenarios[2].fair_value.value];near(f.weights.reduce((a,p)=>a+p,0),1);near(vals.reduce((a,v,i)=>a+f.weights[i]*v,0),f.weighted_fair_value);
+});
+
+
+test('r6 only changes disclosure and publication metadata, not the financial model',()=>{
+ for(const k of ['scenarios','valuation_summary','cashflow_bridge','cashflow_control','sensitivity_analysis','return_framework','market_reference'])assert.deepEqual(d[k],previous[k]);
+ assert.match(d.presentation.v11.ownershipDisclosure,/Författaren äger aktier i AQ Group/);assert.match(d.presentation.v11.ownershipDisclosure,/28 oktober 2026/);
 });
