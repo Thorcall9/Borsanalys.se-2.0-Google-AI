@@ -3069,7 +3069,7 @@
       "relevant_period": "2028-12-31",
       "created_in_version": "AQ-20261019-v11.2-r1",
       "confidence": "ANALYTICAL",
-      "notes": null,
+      "notes": "Bear/Base/Bull är samvarierande verksamhets- och värderingsutfall. Base är ett gynnsamt huvudscenario. 25/55/20 % är subjektiva redaktionella vikter, inte skattade frekvenser. Base ges störst vikt eftersom den senaste tillväxten och lönsamheten stöder fortsatt expansion; vikten är osäker. Bear kombinerar nära oförändrad omsättning, 7,5 % marginal och P/E 18. Sannolikheten för någon besvikelse är högre än för hela detta stressutfall. Base-light visar en mildare besvikelse separat. Vikter 30/50/20 och 35/45/20 prövas utan att ändra huvudvikterna.",
       "value": 0.25,
       "unit": "ratio"
     },
@@ -3173,12 +3173,12 @@
     {
       "claim_id": "A_base_pe",
       "class": "ASSUMPTION",
-      "text": "Redaktionellt P/E-antagande 18/24/28; Base och Bull innehåller kvalitetspremie. Ingen verifierad historisk median eller peer-median. Aktuell R12 P/E cirka 28,5.",
+      "text": "P/E 24 är ett villkorat redaktionellt antagande: fortsatt tillväxt/lönsamhet och underbyggd kassaflödesnormalisering krävs. Vid utebliven normalisering omprövas både kassa och premie; P/E 22/20 visas som känslighet.",
       "status": "VERIFIED",
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r3",
+      "created_in_version": "AQ-20261028-v11.2-r4",
       "confidence": "ANALYTICAL",
       "notes": null,
       "value": 24,
@@ -3275,7 +3275,7 @@
       "relevant_period": "2028-12-31",
       "created_in_version": "AQ-20261019-v11.2-r1",
       "confidence": "ANALYTICAL",
-      "notes": null,
+      "notes": "Bear/Base/Bull är samvarierande verksamhets- och värderingsutfall. Base är ett gynnsamt huvudscenario. 25/55/20 % är subjektiva redaktionella vikter, inte skattade frekvenser. Base ges störst vikt eftersom den senaste tillväxten och lönsamheten stöder fortsatt expansion; vikten är osäker. Bear kombinerar nära oförändrad omsättning, 7,5 % marginal och P/E 18. Sannolikheten för någon besvikelse är högre än för hela detta stressutfall. Base-light visar en mildare besvikelse separat. Vikter 30/50/20 och 35/45/20 prövas utan att ändra huvudvikterna.",
       "value": 0.55,
       "unit": "ratio"
     },
@@ -3481,7 +3481,7 @@
       "relevant_period": "2028-12-31",
       "created_in_version": "AQ-20261019-v11.2-r1",
       "confidence": "ANALYTICAL",
-      "notes": null,
+      "notes": "Bear/Base/Bull är samvarierande verksamhets- och värderingsutfall. Base är ett gynnsamt huvudscenario. 25/55/20 % är subjektiva redaktionella vikter, inte skattade frekvenser. Base ges störst vikt eftersom den senaste tillväxten och lönsamheten stöder fortsatt expansion; vikten är osäker. Bear kombinerar nära oförändrad omsättning, 7,5 % marginal och P/E 18. Sannolikheten för någon besvikelse är högre än för hela detta stressutfall. Base-light visar en mildare besvikelse separat. Vikter 30/50/20 och 35/45/20 prövas utan att ändra huvudvikterna.",
       "value": 0.2,
       "unit": "ratio"
     },
@@ -3912,6 +3912,120 @@
         "dispersion_note": "Spridning i tre redaktionellt viktade terminalvärden, inte empirisk volatilitet eller statistiskt konfidensintervall."
       },
       "notes": "Rapporterade jämförelsetal från S01; framtida tillväxt, utdelningar, tidpunkter och avkastningskrav är egna antaganden."
+    },
+    {
+      "claim_id": "A_base_light",
+      "class": "ASSUMPTION",
+      "text": "R4 redaktionell känslighet eller villkor för premievärdering. Inga nya bolagsprognoser.",
+      "status": "ASSUMED",
+      "source_refs": [],
+      "effective_date": "2026-10-28",
+      "created_in_version": "AQ-20261028-v11.2-r4",
+      "value": {
+        "label": "Base-light",
+        "role": "SENSITIVITY_ONLY_NOT_WEIGHTED_SCENARIO",
+        "q4_total_growth": 0.15,
+        "annual_revenue_growth_2027_2028": 0.08,
+        "inputs": {
+          "revenue": 11863.979280000001,
+          "ebit_margin": 0.095,
+          "net_finance": 0,
+          "tax_rate": 0.21,
+          "diluted_shares": 92,
+          "pe": 22,
+          "ev_ebit": 19,
+          "net_cash_including_leases": 1330.9908545814733,
+          "minority_interest": 22
+        },
+        "outputs": {
+          "ebit": 1127.0780316,
+          "net_income": 890.3916449640001,
+          "eps": 9.678170053956523,
+          "fair_value": 212.91974118704348,
+          "total_return_irr": -0.032855674094812326,
+          "hurdle_price_10pct": 177.97391234978926,
+          "total_value_potential": -0.09241372043033469
+        },
+        "dividend_assumption": "Samma hypotetiska utdelning 5,43 kr/aktie som Base för att isolera verksamhet och multipel. Inget nytt FCF- eller nettokassescenario beräknas. Lägre utdelning skulle sänka avkastningen ytterligare.",
+        "interpretation": "Mildare besvikelse än Bear: fortsatt tillväxt men lägre marginal och kvalitetspremie. Känsligheten får ingen fjärde sannolikhetsvikt och ingår inte i 257,4 kr."
+      }
+    },
+    {
+      "claim_id": "A_weight_sensitivity",
+      "class": "ASSUMPTION",
+      "text": "R4 redaktionell känslighet eller villkor för premievärdering. Inga nya bolagsprognoser.",
+      "status": "ASSUMED",
+      "source_refs": [],
+      "effective_date": "2026-10-28",
+      "created_in_version": "AQ-20261028-v11.2-r4",
+      "value": [
+        {
+          "weights": [
+            0.25,
+            0.55,
+            0.2
+          ],
+          "weighted_fair_value": 257.4127423639104,
+          "weighted_cashflow_irr": 0.05415184646719451,
+          "hurdle_price_10pct": 214.07925973289133,
+          "recommendation": "BEVAKA"
+        },
+        {
+          "weights": [
+            0.3,
+            0.5,
+            0.2
+          ],
+          "weighted_fair_value": 249.6818903127367,
+          "weighted_cashflow_irr": 0.039526162752558824,
+          "hurdle_price_10pct": 207.7473202569299,
+          "recommendation": "BEVAKA"
+        },
+        {
+          "weights": [
+            0.35,
+            0.45,
+            0.2
+          ],
+          "weighted_fair_value": 241.951038261563,
+          "weighted_cashflow_irr": 0.024655934252166722,
+          "hurdle_price_10pct": 201.41538078096846,
+          "recommendation": "BEVAKA"
+        }
+      ]
+    },
+    {
+      "claim_id": "A_premium_policy",
+      "class": "ASSUMPTION",
+      "text": "R4 redaktionell känslighet eller villkor för premievärdering. Inga nya bolagsprognoser.",
+      "status": "ASSUMED",
+      "source_refs": [],
+      "effective_date": "2026-10-28",
+      "created_in_version": "AQ-20261028-v11.2-r4",
+      "value": {
+        "status": "CONDITIONAL_ANALYST_ASSUMPTION",
+        "pe_base": 24,
+        "fcf_assessment": "Base FCF 685,4 MSEK 2028 och cirka 67 % konvertering är fortfarande ett provisoriskt scenarioantagande, skalat från föregående budget. Det är ingen underbyggd prognos för rörelsekapital, capex och leasing.",
+        "required_evidence": "P/E 24 förutsätter bibehållen tillväxt och lönsamhet samt kassaflödesnormalisering som kan förklaras med investeringar och kapitalbindning. Vid bokslut och H1 2027 följs lager-/fordringsbindning relativt omsättning och FCF efter leasing över rullande perioder.",
+        "revision_rule": "Om kassaflödesnormalisering inte kan underbyggas eller om uthållig svaghet framträder omprövas både FCF/slutkassa och P/E-premien. Ett sänkt kassaflöde får inte rutinmässigt lämna P/E 24 orört. Ingen mekanisk konverteringsgräns bestämmer multipeln.",
+        "downrating_sensitivity": [
+          {
+            "pe": 24,
+            "fair_value": 266.02138884956094,
+            "total_return_irr": 0.07015747221205182
+          },
+          {
+            "pe": 22,
+            "fair_value": 243.85293977876418,
+            "total_return_irr": 0.028639829649337867
+          },
+          {
+            "pe": 20,
+            "fair_value": 221.68449070796743,
+            "total_return_irr": -0.014967863062827436
+          }
+        ]
+      }
     }
   ],
   "history": {
@@ -4509,9 +4623,9 @@
     "verification_source_ref": "S14"
   },
   "version": {
-    "version_id": "AQ-20261028-v11.2-r3",
-    "parent_version_id": "AQ-20261028-v11.2-r2",
-    "created_at": "2026-10-28T15:00:48.124817+00:00",
+    "version_id": "AQ-20261028-v11.2-r4",
+    "parent_version_id": "AQ-20261028-v11.2-r3",
+    "created_at": "2026-10-28T16:53:08.834740+00:00",
     "author": "Börsanalys.se",
     "status": "AWAITING_AUTHOR_DISCLOSURE",
     "immutable": true
@@ -4648,24 +4762,31 @@
       ],
       "changed_by": "Börsanalys.se",
       "changed_at": "2026-10-28"
+    },
+    {
+      "field_path": "r4_sensitivity_and_method",
+      "old_value_ref": "AQ-20261028-v11.2-r3",
+      "new_value_ref": "AQ-20261028-v11.2-r4",
+      "reason": "Lägger till Base-light, högre Bear-vikter och premiekänslighet; döper om EV/EBIT, visar 271,2 kr och förtydligar gynnsamt Base samt EBIT/EBT.",
+      "claim_ids": [
+        "A_base_light",
+        "A_weight_sensitivity",
+        "A_premium_policy"
+      ],
+      "changed_by": "Börsanalys.se",
+      "changed_at": "2026-10-28"
     }
   ],
   "event_delta": {
-    "event_id": "AQ-MODEL-REVIEW-20261028",
-    "compared_to_version": "AQ-20261028-v11.2-r2",
-    "fact_changes": [
-      "Daterad kurs 234,60 kl.15.21 CET"
-    ],
+    "event_id": "AQ-SENSITIVITY-20261028",
+    "compared_to_version": "AQ-20261028-v11.2-r3",
+    "fact_changes": [],
     "assumption_changes": [
-      "Q4 explicit tillväxtbrygga och lägre Base 2026–2028",
-      "Noll ej annonserade förvärv och slutkassa som residual",
-      "10 % avkastningskrav och daterade utdelningsantaganden"
+      "Nya känsligheter; huvudscenarier, vikter och kursreferens oförändrade"
     ],
-    "thesis_changes": [
-      "Q4 prognos skild från tidig varningsgräns"
-    ],
+    "thesis_changes": [],
     "valuation_changes": [
-      "Viktat terminalvärde 257.4127423639104"
+      "Viktat huvudvärde oförändrat 257,4 kr"
     ],
     "decision_change": null
   },
@@ -4775,7 +4896,7 @@
     ],
     "v11": {
       "analysisId": "AQ-GROUP-2026-10-19",
-      "versionId": "AQ-20261028-v11.2-r3",
+      "versionId": "AQ-20261028-v11.2-r4",
       "publicationStatus": "AWAITING_AUTHOR_DISCLOSURE",
       "recommendationStatus": "APPROVED",
       "sourceCutoffDate": "2026-10-28",
@@ -4801,7 +4922,7 @@
         },
         {
           "title": "Balansräkningen ger handlingsutrymme",
-          "body": "Nettokassa inklusive leasing 467 MSEK och soliditet 68 % vid 30 september. Kassa och skulder hålls isär i värderingskontrollen. [S01]"
+          "body": "Nettokassa inklusive leasing 467 MSEK och soliditet 68 % vid 30 september. Kassa och skulder hålls isär i den alternativa värderingsbryggan. [S01]"
         },
         {
           "title": "Högre teknikinnehåll kan stärka intjäningen",
@@ -4870,13 +4991,13 @@
           "why": "Prövar kapacitetens kvalitet."
         }
       ],
-      "valuationCheck": "Primär metod: EPS × P/E. Sekundär EV/EBIT-kontroll 271,2 kr. Samma verksamhetsprognoser och egna multiplar innebär att kontrollen inte är oberoende. Viktad totalavkastnings-IRR cirka 5,4 % per år mot avkastningskrav 10 %. Modellvillkorat ingångspris cirka 214 kr vid detta krav.",
+      "valuationCheck": "Alternativ EV/EBIT-brygga: viktat värde 271,2 kr. Multiplarna ligger nära P/E efter skatt och ger nästan samma rörelsevärde; nettokassan förklarar huvuddelen av skillnaden. Bryggan är ingen oberoende bekräftelse. Base ger 7,0 % totalavkastning mot kravet 10 %. Modellvillkorat pris: cirka 221 kr i Base och 214 kr viktat.",
       "valuationLimitation": "Terminalvärden vid 31 december 2028. Kursvärdepotential exkluderar utdelningar; separat totalavkastnings-IRR inkluderar hypotetiska utdelningar före skatt. Bear är inget kursgolv.",
-      "valuationSummary": "Bear och Bull är sammanhängande stress-/framgångsutfall: efterfrågan, beläggning och marknadens betalningsvilja kan samvariera. 25/55/20 % behålls som subjektiv viktning, inte kalibrerade frekvenser. Separat marginal-/multipelkänslighet visar effekten utan att hela scenariot ändras.",
-      "valuationGrowthContext": "Base 2026–2028: 10171 / 11290 / 12532 MSEK. Q4 +15 % totalt; därefter 11 % årligen utan ej annonserade förvärv.",
+      "valuationSummary": "Bear/Base/Bull är samvarierande verksamhets- och värderingsutfall. Base är ett gynnsamt huvudscenario. 25/55/20 % är subjektiva redaktionella vikter, inte skattade frekvenser. Base ges störst vikt eftersom den senaste tillväxten och lönsamheten stöder fortsatt expansion; vikten är osäker. Bear kombinerar nära oförändrad omsättning, 7,5 % marginal och P/E 18. Sannolikheten för någon besvikelse är högre än för hela detta stressutfall. Base-light visar en mildare besvikelse separat. Vikter 30/50/20 och 35/45/20 prövas utan att ändra huvudvikterna.",
+      "valuationGrowthContext": "Base är ett gynnsamt huvudscenario: 11 % årlig tillväxt 2027–2028 och 10,3 % EBIT-marginal. Marginalen är 0,2 procentenheter över Q3 2026 (10,1 %) och 0,6 över R12 (9,7 %). Förbättring krävs, inte enbart bibehållen marginal.",
       "historyMarginLabel": "Rapporterad EBIT-marginal",
       "nextReportWindow": "Bokslut 2026 · 11 februari 2027 kl.08.00 CET",
-      "riskAndMethod": "Kundcykel, kapitalbindning och integration kan samtidigt pressa vinst och multipel. Avkastningskrav 10 % nominellt före skatt. Villkorade ingångspriser visas med utdelningar; inga automatiska köpgränser.",
+      "riskAndMethod": "Kundcykel, kapitalbindning och integration kan samtidigt pressa vinst och multipel. Avkastningskrav 10 % nominellt före skatt. Villkorade ingångspriser visas med utdelningar; inga automatiska köpgränser. Base-light visar mildare besvikelse. Högre Bear-vikter ger fortsatt BEVAKA. P/E 24 är villkorat av underbyggd kassaflödesnormalisering; vid utebliven förbättring omprövas även premien.",
       "sourceSummary": "Årsredovisningar 2024–2025, Q1–Q3 2026, Norlake-förvärvet och bolagets mål/kalender. Marknadsreferens: Stock Analysis/S&P Global 28 oktober 2026 kl. 15.21 CET. Rapportfakta, egna härledningar och framtidsantaganden hålls isär.",
       "classificationSummary": "Rapporterat=FACT, beräkningar=DERIVED, prognoser och multiplar=ASSUMPTION, slutsats=ANALYSIS."
     },
@@ -5015,7 +5136,7 @@
       ]
     },
     {
-      "title": "Sekundär EV/EBIT-kontroll · antaganden",
+      "title": "Alternativ värderingsbrygga med EV/EBIT · egna antaganden",
       "headers": [
         "Mått",
         "Bear",
@@ -5261,16 +5382,123 @@
           "346,5"
         ]
       ]
+    },
+    {
+      "title": "Base-light · mildare besvikelse, separat känslighet",
+      "headers": [
+        "Mått",
+        "Base",
+        "Base-light"
+      ],
+      "rows": [
+        [
+          "Tillväxt 2027–2028",
+          "11 % per år",
+          "8 % per år"
+        ],
+        [
+          "Omsättning 2028 MSEK",
+          "12532,2",
+          "11864,0"
+        ],
+        [
+          "EBIT-marginal",
+          "10,3 %",
+          "9,5 %"
+        ],
+        [
+          "EPS kr",
+          "11,08",
+          "9,68"
+        ],
+        [
+          "P/E",
+          "24",
+          "22"
+        ],
+        [
+          "Terminalvärde kr",
+          "266,0",
+          "212,9"
+        ],
+        [
+          "Årlig totalavkastning",
+          "+7,0 %",
+          "-3,3 %"
+        ],
+        [
+          "Pris vid 10 % krav",
+          "221,1",
+          "178,0"
+        ]
+      ]
+    },
+    {
+      "title": "Högre Bear-vikt · oförändrade scenarier",
+      "headers": [
+        "Bear / Base / Bull",
+        "Viktat värde kr",
+        "Årlig IRR",
+        "Pris vid 10 % krav"
+      ],
+      "rows": [
+        [
+          "25 / 55 / 20",
+          "257,4",
+          "+5,4 %",
+          "214,1"
+        ],
+        [
+          "30 / 50 / 20",
+          "249,7",
+          "+4,0 %",
+          "207,7"
+        ],
+        [
+          "35 / 45 / 20",
+          "242,0",
+          "+2,5 %",
+          "201,4"
+        ]
+      ]
+    },
+    {
+      "title": "Kvalitetspremiens känslighet · oförändrad Base-vinst",
+      "headers": [
+        "P/E",
+        "Terminalvärde kr",
+        "Årlig totalavkastning"
+      ],
+      "rows": [
+        [
+          "24",
+          "266,0",
+          "+7,0 %"
+        ],
+        [
+          "22",
+          "243,9",
+          "+2,9 %"
+        ],
+        [
+          "20",
+          "221,7",
+          "-1,5 %"
+        ]
+      ]
     }
   ],
   "member_notes": [
     "EPS = (omsättning × EBIT-marginal + finansnetto) × (1 − skatt) / utspädda aktier. Värde = EPS × P/E. Nettokassan läggs inte ovanpå P/E-värdet. Prognoser och multiplar är våra antaganden, inte bolagsguidning.",
-    "EV/EBIT använder samma verksamhetsprognos och egna multiplar, ingen oberoende värdebekräftelse. Slutkassan beräknas utan ej annonserade förvärv. Leasingskuld antas oförändrad och 9 MSEK uppskjuten Norlakebetalning reserveras; övrig finansiering och valuta antas neutrala.",
-    "Base 2026–2028: 10171 / 11290 / 12532 MSEK. Q4 +15 % totalt; därefter 11 % årligen utan ej annonserade förvärv. Base FCF 2027/2028 skalas proportionellt med försäljningen till 537,6 / 685,4 MSEK. Konverteringen cirka 67 % 2028 är fortsatt ett antagande, inte bevisad normalnivå.",
+    "Alternativ EV/EBIT-brygga ger viktat 271,2 kr. Base rörelsevärde är 266,6 kr och nettokassa efter minoritet tillför 14,2 kr/aktie, totalt 280,8 kr. Multiplarna ligger nära P/E efter skatt. Ingen oberoende värdebekräftelse.",
+    "Base 2026–2028: 10171 / 11290 / 12532 MSEK. Q4 +15 % totalt; därefter 11 % årligen utan ej annonserade förvärv. Base FCF 2027/2028 skalas proportionellt med försäljningen till 537,6 / 685,4 MSEK. Konverteringen cirka 67 % 2028 är fortsatt ett antagande, inte bevisad normalnivå. Base är gynnsamt: marginalen 10,3 % kräver förbättring från Q3 10,1 % och R12 9,7 %. P/E-premien är villkorad av kassaflödesnormalisering.",
     "Norlake: köpeskilling 133 MSEK, historisk försäljning 69 MSEK. Kapacitet över 300 MSEK vid fullt utnyttjande är ingen order- eller försäljningsprognos. Största kunden stod för cirka 11,2 % och de två största för 18 % av 2025 års försäljning. Q3-geografin avser dotterbolagens säte, inte slutkundsmarknader.",
     "Ej annonserade förvärv sätts till noll i samtliga scenarier. Ingen extra förvärvsvinst eller återköp antas. Detta isolerar befintlig verksamhet och ger beräknad slutkassa. Ett illustrativt nytt förvärv på 500 MSEK utan vinstbidrag minskar EV/EBIT-värdet cirka 5,4 kr/aktie; P/E-värdet får inget automatiskt kassapåslag. 9 MSEK uppskjuten Norlakebetalning reserveras i övrig finansiering. Framtida affärer kräver en ny modelluppdatering.",
     "Viktad totalavkastnings-IRR +5,4 %/år, jämfört med avkastningskrav 10 %. Viktad utdelning 5,38 kr/aktie, hälften hypotetiskt 30 april 2027 och hälften 30 april 2028. Beloppen är inte styrelseförslag; inga utdelningar efter terminaldatum räknas separat.",
-    "Scenariospridning: standardavvikelse 102,1 kr, 43,5 % av referenskursen. Detta är spridning i de tre bedömda terminalvärdena, inte historisk volatilitet. Varje P/E-enhet ändrar Base med 11,08 kr. Base vid P/E 20 ger 221,7 kr."
+    "Scenariospridning: standardavvikelse 102,1 kr, 43,5 % av referenskursen. Detta är spridning i de tre bedömda terminalvärdena, inte historisk volatilitet. Varje P/E-enhet ändrar Base med 11,08 kr. Base vid P/E 20 ger 221,7 kr.",
+    "Samma hypotetiska utdelning 5,43 kr/aktie som Base för att isolera verksamhet och multipel. Inget nytt FCF- eller nettokassescenario beräknas. Lägre utdelning skulle sänka avkastningen ytterligare.",
+    "Bear-vikten höjs på bekostnad av Base; Bull ligger kvar på 20 %. Scenariernas värden och utdelningar är oförändrade. Det är en robusthetsprövning, inte nya sannolikhetsprognoser.",
+    "Base FCF 685,4 MSEK 2028 och cirka 67 % konvertering är fortfarande ett provisoriskt scenarioantagande, skalat från föregående budget. Det är ingen underbyggd prognos för rörelsekapital, capex och leasing. Om kassaflödesnormalisering inte kan underbyggas eller om uthållig svaghet framträder omprövas både FCF/slutkassa och P/E-premien. Ett sänkt kassaflöde får inte rutinmässigt lämna P/E 24 orört. Ingen mekanisk konverteringsgräns bestämmer multipeln."
   ],
   "q4_bridge": {
     "prior_q4_sales": 2323,
@@ -5350,5 +5578,103 @@
     "dispersion_sd": 102.05975251559407,
     "dispersion_note": "Spridning i tre redaktionellt viktade terminalvärden, inte empirisk volatilitet eller statistiskt konfidensintervall."
   },
-  "scenario_method": "Bear och Bull är sammanhängande stress-/framgångsutfall: efterfrågan, beläggning och marknadens betalningsvilja kan samvariera. 25/55/20 % behålls som subjektiv viktning, inte kalibrerade frekvenser. Separat marginal-/multipelkänslighet visar effekten utan att hela scenariot ändras."
+  "scenario_method": "Bear/Base/Bull är samvarierande verksamhets- och värderingsutfall. Base är ett gynnsamt huvudscenario. 25/55/20 % är subjektiva redaktionella vikter, inte skattade frekvenser. Base ges störst vikt eftersom den senaste tillväxten och lönsamheten stöder fortsatt expansion; vikten är osäker. Bear kombinerar nära oförändrad omsättning, 7,5 % marginal och P/E 18. Sannolikheten för någon besvikelse är högre än för hela detta stressutfall. Base-light visar en mildare besvikelse separat. Vikter 30/50/20 och 35/45/20 prövas utan att ändra huvudvikterna.",
+  "sensitivity_analysis": {
+    "base_light": {
+      "label": "Base-light",
+      "role": "SENSITIVITY_ONLY_NOT_WEIGHTED_SCENARIO",
+      "q4_total_growth": 0.15,
+      "annual_revenue_growth_2027_2028": 0.08,
+      "inputs": {
+        "revenue": 11863.979280000001,
+        "ebit_margin": 0.095,
+        "net_finance": 0,
+        "tax_rate": 0.21,
+        "diluted_shares": 92,
+        "pe": 22,
+        "ev_ebit": 19,
+        "net_cash_including_leases": 1330.9908545814733,
+        "minority_interest": 22
+      },
+      "outputs": {
+        "ebit": 1127.0780316,
+        "net_income": 890.3916449640001,
+        "eps": 9.678170053956523,
+        "fair_value": 212.91974118704348,
+        "total_return_irr": -0.032855674094812326,
+        "hurdle_price_10pct": 177.97391234978926,
+        "total_value_potential": -0.09241372043033469
+      },
+      "dividend_assumption": "Samma hypotetiska utdelning 5,43 kr/aktie som Base för att isolera verksamhet och multipel. Inget nytt FCF- eller nettokassescenario beräknas. Lägre utdelning skulle sänka avkastningen ytterligare.",
+      "interpretation": "Mildare besvikelse än Bear: fortsatt tillväxt men lägre marginal och kvalitetspremie. Känsligheten får ingen fjärde sannolikhetsvikt och ingår inte i 257,4 kr."
+    },
+    "scenario_weight_sensitivity": [
+      {
+        "weights": [
+          0.25,
+          0.55,
+          0.2
+        ],
+        "weighted_fair_value": 257.4127423639104,
+        "weighted_cashflow_irr": 0.05415184646719451,
+        "hurdle_price_10pct": 214.07925973289133,
+        "recommendation": "BEVAKA"
+      },
+      {
+        "weights": [
+          0.3,
+          0.5,
+          0.2
+        ],
+        "weighted_fair_value": 249.6818903127367,
+        "weighted_cashflow_irr": 0.039526162752558824,
+        "hurdle_price_10pct": 207.7473202569299,
+        "recommendation": "BEVAKA"
+      },
+      {
+        "weights": [
+          0.35,
+          0.45,
+          0.2
+        ],
+        "weighted_fair_value": 241.951038261563,
+        "weighted_cashflow_irr": 0.024655934252166722,
+        "hurdle_price_10pct": 201.41538078096846,
+        "recommendation": "BEVAKA"
+      }
+    ],
+    "weight_method": "Bear-vikten höjs på bekostnad av Base; Bull ligger kvar på 20 %. Scenariernas värden och utdelningar är oförändrade. Det är en robusthetsprövning, inte nya sannolikhetsprognoser."
+  },
+  "premium_policy": {
+    "status": "CONDITIONAL_ANALYST_ASSUMPTION",
+    "pe_base": 24,
+    "fcf_assessment": "Base FCF 685,4 MSEK 2028 och cirka 67 % konvertering är fortfarande ett provisoriskt scenarioantagande, skalat från föregående budget. Det är ingen underbyggd prognos för rörelsekapital, capex och leasing.",
+    "required_evidence": "P/E 24 förutsätter bibehållen tillväxt och lönsamhet samt kassaflödesnormalisering som kan förklaras med investeringar och kapitalbindning. Vid bokslut och H1 2027 följs lager-/fordringsbindning relativt omsättning och FCF efter leasing över rullande perioder.",
+    "revision_rule": "Om kassaflödesnormalisering inte kan underbyggas eller om uthållig svaghet framträder omprövas både FCF/slutkassa och P/E-premien. Ett sänkt kassaflöde får inte rutinmässigt lämna P/E 24 orört. Ingen mekanisk konverteringsgräns bestämmer multipeln.",
+    "downrating_sensitivity": [
+      {
+        "pe": 24,
+        "fair_value": 266.02138884956094,
+        "total_return_irr": 0.07015747221205182
+      },
+      {
+        "pe": 22,
+        "fair_value": 243.85293977876418,
+        "total_return_irr": 0.028639829649337867
+      },
+      {
+        "pe": 20,
+        "fair_value": 221.68449070796743,
+        "total_return_irr": -0.014967863062827436
+      }
+    ]
+  },
+  "secondary_valuation_interpretation": {
+    "label": "Alternativ värderingsbrygga med EV/EBIT",
+    "independent_validation": false,
+    "weighted_fair_value": 271.15778948794537,
+    "explanation": "EV/EBIT 14/19/22 ligger nära P/E × (1−skatt), varför rörelsevärdena nästan återger P/E-modellen. Bryggan visar hur kassa och minoritet påverkar ett alternativt aktievärde; den bekräftar inte multiplarna.",
+    "base_operating_value": 266.58261540831523,
+    "base_cash_less_minority_per_share": 14.2281614628421
+  }
 }

@@ -22,3 +22,13 @@ Base Q4 total growth is 15% (12% organic + 3% acquired + 0% FX); 2026 revenue 10
 Explicit hurdle: nominal 10% before tax; hypothetical dividends paid 30 April 2027/2028. IRR is computed on weighted dated cash flows, not the weighted average scenario IRR. Weighted terminal value 257.4127423639104 SEK, total return IRR 5.415184646719451%, conditional 10% entry price 214.07925973289133 SEK from dated quote 234.60 SEK at 15:21 CET. Scenario dispersion and isolated margin/multiple sensitivity are displayed.
 
 Validation: five financial consistency tests pass; production bundle build passes. PDF ten-page render reviewed. This turn's browser smoke run could not start: the existing temporary Chromium binary exited with SIGSEGV before page creation. Prior r2 UI checks do not constitute a fresh r3 browser pass. Existing unrelated full TypeScript check limitation (missing src/lib/corsConfig.ts in server.ts) remains documented above. No production deployment or merge is authorized by this model revision.
+
+## R4 transparency update, 28 October 2026
+
+Primary assumptions, scenario weights, dated reference quote and primary values remain unchanged from r3. Base-light is an unweighted sensitivity: Q4 +15%, then annual growth 8%, terminal EBIT margin 9.5%, P/E 22. EPS 9.678170053956523 and terminal value 212.91974118704348 SEK; total-return IRR -3.2855674094812326% assuming unchanged Base dividends to isolate the sensitivity. This is not a fourth weighted outcome or a recalculated cash forecast.
+
+Weight sensitivity 30/50/20 gives 249.6818903127367 SEK and 3.9526162752558824% IRR; 35/45/20 gives 241.951038261563 SEK and 2.465593425216672% IRR. Main BEVAKA conclusion remains below the 10% hurdle in each alternative.
+
+EV/EBIT is renamed an alternative valuation bridge; 271.2 SEK is explicitly shown and not used as independent confirmation. P/E 24 is conditional on underpinned FCF normalization; both cash and premium must be reviewed if normalization is not supported. No mechanical conversion-to-multiple rule is invented. Existing terminal FCF remains explicitly provisional. Base is labeled a favorable outcome, with terminal EBIT margin above Q3 10.1% and R12 9.7%; Q3 EBT 10.0% is kept separate. Source: Q3 report, printed page 1.
+
+Seven financial consistency tests pass, including preserved main scenarios, isolated Base-light, reweighted values and dated IRRs. Build passes. Twelve-page PDF inspected; no layout overflow. No fresh browser smoke claim is made; prior Chromium launch limitation remains. Author disclosure remains pending; no production merge or publication.
