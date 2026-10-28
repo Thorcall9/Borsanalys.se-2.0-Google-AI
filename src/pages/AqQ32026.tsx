@@ -1,17 +1,8 @@
 import { Link } from "react-router-dom";
+import AqBusinessDetails from "../components/analysis/aq/AqBusinessDetails";
+import AqMemberDetails from "../components/analysis/aq/AqMemberDetails";
 import V11Analysis from "../components/analysis/V11Analysis";
 import { aqQ32026, aqDossier } from "../data/analyses/aq-group/aq-q3-2026";
-
-function MemberDetails() {
-  return <div className="mt-5 space-y-7 border-t border-emerald-200 pt-5">
-    <p className="text-sm leading-6 text-slate-600">{aqDossier.member_notes[0]}</p>
-    {aqDossier.member_presentation.map(table => <section key={table.title}>
-      <h3 className="font-bold text-slate-950">{table.title}</h3>
-      <div className="mt-3 overflow-x-auto rounded-xl border border-slate-200 bg-white"><table className="w-full min-w-[430px] text-left text-sm"><thead className="bg-emerald-50"><tr>{table.headers.map(h => <th scope="col" className="px-4 py-3" key={h}>{h}</th>)}</tr></thead><tbody>{table.rows.map((row, i) => <tr key={i} className="border-t border-slate-100">{row.map((cell, j) => j === 0 ? <th scope="row" key={j} className="px-4 py-3 font-medium text-slate-600">{cell}</th> : <td key={j} className="px-4 py-3 tabular-nums text-slate-950">{cell}</td>)}</tr>)}</tbody></table></div>
-    </section>)}
-    {aqDossier.member_notes.slice(1).map(note => <p key={note} className="text-sm leading-6 text-slate-600">{note}</p>)}
-  </div>;
-}
 
 function Sources() {
   return <div className="mb-6">
@@ -36,6 +27,6 @@ export default function AqQ32026() {
     <p className="mt-3 text-xs leading-5 text-slate-600">Referenskurs: {view.currentPrice}<br />28 oktober 2026 · Analysdatum: 28 oktober 2026</p>
     <p className="mt-2 text-xs leading-5 text-slate-600">Terminalvärde, inte värde idag. Potential exklusive utdelningar.</p>
   </section>;
-  return <V11Analysis data={aqQ32026} canonicalUrl="https://www.borsanalys.se/analys/aq-group-q3-2026" mobileSnapshot={snapshot} memberDetails={<MemberDetails />} sourceLinks={<Sources />} />;
+  return <V11Analysis data={aqQ32026} valuationCheckLabel="Värderingsbrygga" canonicalUrl="https://www.borsanalys.se/analys/aq-group-q3-2026" mobileSnapshot={snapshot} businessDetails={<AqBusinessDetails />} memberDetails={<AqMemberDetails />} sourceLinks={<Sources />} />;
 }
 

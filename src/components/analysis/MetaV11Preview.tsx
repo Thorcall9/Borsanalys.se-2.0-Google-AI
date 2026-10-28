@@ -26,7 +26,7 @@ import VolvoRiskRewardInsight from "./VolvoRiskRewardInsight";
 import { AnalysisData } from "../../types/analysis";
 import { useAuth } from "../../contexts/AuthContext";
 
-type Props = { data: AnalysisData; indexable?: boolean; canonicalUrl?: string; memberDetails?: ReactNode; sourceLinks?: ReactNode; mobileSnapshot?: ReactNode };
+type Props = { data: AnalysisData; indexable?: boolean; canonicalUrl?: string; memberDetails?: ReactNode; sourceLinks?: ReactNode; mobileSnapshot?: ReactNode; valuationCheckLabel?: string; businessDetails?: ReactNode };
 type TabId = "overview" | "theses" | "valuation" | "next";
 
 const tabs: { id: TabId; label: string; target: string }[] = [
@@ -308,7 +308,7 @@ function ValuationChain({
 
 // This renderer is intentionally data-led: no company copy belongs in the
 // presentation layer. A v11.1 analysis must supply its canonical projection.
-export default function V11Analysis({ data, indexable = false, canonicalUrl, memberDetails, sourceLinks, mobileSnapshot }: Props) {
+export default function V11Analysis({ data, indexable = false, canonicalUrl, memberDetails, sourceLinks, mobileSnapshot, valuationCheckLabel = "Kontroll", businessDetails }: Props) {
   const { user, openLoginModal, openSignupModal } = useAuth();
   const [activeTab, setActiveTab] = useState<TabId>("overview");
   const [showMethod, setShowMethod] = useState(false);
@@ -649,6 +649,7 @@ export default function V11Analysis({ data, indexable = false, canonicalUrl, mem
               {preview.insightBody}
             </p>
           </section>
+          {businessDetails}
           {history && <HistoricalFundament data={history} />}
           <section
             id="theses"
@@ -742,7 +743,7 @@ export default function V11Analysis({ data, indexable = false, canonicalUrl, mem
             </div>
             <div className="mt-5 grid gap-4 border-l-2 border-emerald-500 pl-5 text-sm leading-6 text-slate-600 md:grid-cols-2">
               <p>
-                <strong className="text-slate-950">Kontroll:</strong>{" "}
+                <strong className="text-slate-950">{valuationCheckLabel}:</strong>{" "}
                 {preview.valuationCheck}
               </p>
               <p>

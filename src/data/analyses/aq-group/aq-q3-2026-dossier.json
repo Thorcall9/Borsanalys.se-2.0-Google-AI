@@ -67,33 +67,33 @@
       "probability_claim_id": "A_bear_probability",
       "valuation_date": "2028-12-31",
       "inputs": {
-        "revenue": 10000,
+        "revenue": 10030.415079999999,
         "ebit_margin": 0.075,
         "net_finance": -20,
         "tax_rate": 0.22,
         "diluted_shares": 92,
         "pe": 18,
         "ev_ebit": 14.040000000000001,
-        "net_cash_including_leases": 1159.1967865702943,
+        "net_cash_including_leases": 1136.2463151865522,
         "minority_interest": 22
       },
       "outputs": {
-        "ebit": 750.0,
-        "ebt": 730.0,
-        "tax": 160.6,
-        "net_income": 569.4,
-        "eps": 6.189130434782609,
-        "fair_value": 111.40434782608696,
-        "secondary_fair_value": 126.81735637576406,
-        "total_value_potential": -0.5251306571778049,
-        "annualized_value_potential": -0.2897566562003614,
+        "ebit": 752.2811309999998,
+        "ebt": 732.2811309999998,
+        "tax": 161.10184881999996,
+        "net_income": 571.1792821799999,
+        "eps": 6.208470458478259,
+        "fair_value": 111.75246825260867,
+        "secondary_fair_value": 126.91601515681033,
+        "total_value_potential": -0.5236467678916936,
+        "annualized_value_potential": -0.2887378507335847,
         "cumulative_dividend_per_share": 4.3478260869565215,
-        "total_return_irr": -0.281049730393543
+        "total_return_irr": -0.28003208914361066
       },
       "key_assumptions": [
         {
           "metric": "revenue",
-          "value": 10000,
+          "value": 10030.415079999999,
           "unit": "MSEK",
           "rationale_claim_ids": [
             "A_bear_revenue"
@@ -190,14 +190,14 @@
         }
       ],
       "fair_value": {
-        "value": 111.40434782608696,
+        "value": 111.75246825260867,
         "currency": "SEK",
         "derived_claim_id": "D_bear_fair_value"
       },
       "secondary_valuation": {
         "method": "EV_EBIT",
         "formula": "(EBIT*EV_EBIT+net_cash_including_leases-minority_interest)/diluted_shares",
-        "fair_value": 126.81735637576406
+        "fair_value": 126.91601515681033
       }
     },
     {
@@ -206,33 +206,33 @@
       "probability_claim_id": "A_base_probability",
       "valuation_date": "2028-12-31",
       "inputs": {
-        "revenue": 12532.243545000003,
+        "revenue": 12350.876370000002,
         "ebit_margin": 0.103,
         "net_finance": 0,
         "tax_rate": 0.21,
         "diluted_shares": 92,
         "pe": 22,
         "ev_ebit": 17.380000000000003,
-        "net_cash_including_leases": 1057.8533314874578,
+        "net_cash_including_leases": 1094.8311061795828,
         "minority_interest": 22
       },
       "outputs": {
-        "ebit": 1290.8210851350002,
-        "ebt": 1290.8210851350002,
-        "tax": 271.07242787835,
-        "net_income": 1019.7486572566502,
-        "eps": 11.084224535398372,
-        "fair_value": 243.85293977876418,
-        "secondary_fair_value": 255.11221512101918,
-        "total_value_potential": 0.03944134603053784,
-        "annualized_value_potential": 0.017931338540513098,
+        "ebit": 1272.14026611,
+        "ebt": 1272.14026611,
+        "tax": 267.1494558831,
+        "net_income": 1004.9908102269001,
+        "eps": 10.923813154640218,
+        "fair_value": 240.3238894020848,
+        "secondary_fair_value": 251.98509707794986,
+        "total_value_potential": 0.024398505550233596,
+        "annualized_value_potential": 0.011136493058198305,
         "cumulative_dividend_per_share": 5.434782608695652,
-        "total_return_irr": 0.028639829649337867
+        "total_return_irr": 0.021845320518337208
       },
       "key_assumptions": [
         {
           "metric": "revenue",
-          "value": 12532.243545000003,
+          "value": 12350.876370000002,
           "unit": "MSEK",
           "rationale_claim_ids": [
             "A_base_revenue"
@@ -329,14 +329,14 @@
         }
       ],
       "fair_value": {
-        "value": 243.85293977876418,
+        "value": 240.3238894020848,
         "currency": "SEK",
         "derived_claim_id": "D_base_fair_value"
       },
       "secondary_valuation": {
         "method": "EV_EBIT",
         "formula": "(EBIT*EV_EBIT+net_cash_including_leases-minority_interest)/diluted_shares",
-        "fair_value": 255.11221512101918
+        "fair_value": 251.98509707794986
       }
     },
     {
@@ -345,33 +345,33 @@
       "probability_claim_id": "A_bull_probability",
       "valuation_date": "2028-12-31",
       "inputs": {
-        "revenue": 15000,
+        "revenue": 14636.390624,
         "ebit_margin": 0.115,
         "net_finance": 10,
         "tax_rate": 0.21,
         "diluted_shares": 92.2,
         "pe": 26,
         "ev_ebit": 20.54,
-        "net_cash_including_leases": 812.567547855441,
+        "net_cash_including_leases": 866.2793200110837,
         "minority_interest": 22
       },
       "outputs": {
-        "ebit": 1725.0,
-        "ebt": 1735.0,
-        "tax": 364.34999999999997,
-        "net_income": 1370.65,
-        "eps": 14.866052060737527,
-        "fair_value": 386.5173535791757,
-        "secondary_fair_value": 392.86407318715226,
-        "total_value_potential": 0.6475590519146448,
-        "annualized_value_potential": 0.25783627422144173,
+        "ebit": 1683.18492176,
+        "ebt": 1693.18492176,
+        "tax": 355.5688335696,
+        "net_income": 1337.6160881904,
+        "eps": 14.507766683193058,
+        "fair_value": 377.2019337630195,
+        "secondary_fair_value": 384.13121055272757,
+        "total_value_potential": 0.6078513800640217,
+        "annualized_value_potential": 0.24381666782031752,
         "cumulative_dividend_per_share": 6.507592190889371,
-        "total_return_irr": 0.2707347427246921
+        "total_return_irr": 0.25670827335911095
       },
       "key_assumptions": [
         {
           "metric": "revenue",
-          "value": 15000,
+          "value": 14636.390624,
           "unit": "MSEK",
           "rationale_claim_ids": [
             "A_bull_revenue"
@@ -468,27 +468,27 @@
         }
       ],
       "fair_value": {
-        "value": 386.5173535791757,
+        "value": 377.2019337630195,
         "currency": "SEK",
         "derived_claim_id": "D_bull_fair_value"
       },
       "secondary_valuation": {
         "method": "EV_EBIT",
         "formula": "(EBIT*EV_EBIT+net_cash_including_leases-minority_interest)/diluted_shares",
-        "fair_value": 392.86407318715226
+        "fair_value": 384.13121055272757
       }
     }
   ],
   "valuation_summary": {
-    "weighted_fair_value": 239.27367455067719,
+    "weighted_fair_value": 235.55664298690272,
     "currency": "SEK",
-    "total_value_potential": 0.019921886405273703,
-    "annualized_value_potential": 0.009104005463858034,
+    "total_value_potential": 0.004077762092509429,
+    "annualized_value_potential": 0.0018714018716803338,
     "years_to_valuation": 2.1765913757700206,
     "day_count": 795,
     "annualization_basis": 365.25,
     "probability_label": "Analytiska/redaktionella bedömningar, inte objektiva prognossannolikheter",
-    "secondary_weighted_fair_value": 250.58887204793203,
+    "secondary_weighted_fair_value": 247.14704929262055,
     "dividend_treatment": "Kursvärdepotential exkluderar utdelningar. Separat totalavkastning använder två hypotetiska betalningar, 30 april 2027 och 2028, före skatt och utan återinvestering. Ingen separat nettokassa ovanpå P/E."
   },
   "recommendation": "BEVAKA",
@@ -2877,7 +2877,7 @@
     {
       "claim_id": "A_bear_revenue",
       "class": "ASSUMPTION",
-      "text": "Kalibrerad mot R12 9 823 MSEK, historisk organisk cykel och tillväxtväg 2026-2028. Ej bolagsguidning.",
+      "text": "Prognos härledd från externa segmentintäkter och respektive kassaflödesbrygga. Egna antaganden, inte bolagsguidning.",
       "status": "VERIFIED",
       "source_refs": [
         "S01",
@@ -2885,10 +2885,10 @@
       ],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r3",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
-      "value": 10000,
+      "value": 10030.415079999999,
       "unit": "MSEK",
       "owner": "Börsanalys.se analysutkast",
       "uncertainty": "HIGH",
@@ -3013,15 +3013,15 @@
     {
       "claim_id": "A_bear_net_cash_including_leases",
       "class": "ASSUMPTION",
-      "text": "Framtida nettokassa efter leasing: kräver kassaflöde, utdelningar och finansierade förvärv. Ej dagens kassa oförändrad.",
+      "text": "Prognos härledd från externa segmentintäkter och respektive kassaflödesbrygga. Egna antaganden, inte bolagsguidning.",
       "status": "VERIFIED",
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
-      "value": 1159.1967865702943,
+      "value": 1136.2463151865522,
       "unit": "MSEK",
       "owner": "Börsanalys.se analysutkast",
       "uncertainty": "HIGH",
@@ -3052,10 +3052,10 @@
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
-      "value": 111.40434782608696,
+      "value": 111.75246825260867,
       "unit": "SEK",
       "input_claim_ids": [
         "A_bear_revenue",
@@ -3081,14 +3081,14 @@
       "relevant_period": "2028-12-31",
       "created_in_version": "AQ-20261019-v11.2-r1",
       "confidence": "ANALYTICAL",
-      "notes": "Bear/Base/Bull är samvarierande verksamhets- och värderingsutfall. Base är ett gynnsamt huvudscenario. 25/55/20 % är subjektiva redaktionella vikter, inte skattade frekvenser. Base ges störst vikt eftersom den senaste tillväxten och lönsamheten stöder fortsatt expansion; vikten är osäker. Bear kombinerar nära oförändrad omsättning, 7,5 % marginal och P/E 18. Sannolikheten för någon besvikelse är högre än för hela detta stressutfall. Base-light visar en mildare besvikelse separat. Vikter 30/50/20 och 35/45/20 prövas utan att ändra huvudvikterna.",
+      "notes": "Tre möjliga vägar för verksamheten. Huvudscenariot antar fortsatt god utveckling, men inte att dagens starkaste tillväxt håller i hela koncernen. Vikterna 25/55/20 % är våra bedömningar, inte statistiska prognossannolikheter.",
       "value": 0.25,
       "unit": "ratio"
     },
     {
       "claim_id": "A_base_revenue",
       "class": "ASSUMPTION",
-      "text": "Base: Q4 2026 +15 % totalt (12 % organiskt, 3 % förvärvat, 0 % valuta). Årsomsättning 10 171,45 MSEK; därefter 11 % årligen från befintlig verksamhet. Lägre ingångsnivå förs vidare till 2028.",
+      "text": "Prognos härledd från externa segmentintäkter och respektive kassaflödesbrygga. Egna antaganden, inte bolagsguidning.",
       "status": "VERIFIED",
       "source_refs": [
         "S01",
@@ -3096,10 +3096,10 @@
       ],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r3",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
-      "value": 12532.243545000003,
+      "value": 12350.876370000002,
       "unit": "MSEK",
       "owner": "Börsanalys.se analysutkast",
       "uncertainty": "HIGH",
@@ -3185,12 +3185,12 @@
     {
       "claim_id": "A_base_pe",
       "class": "ASSUMPTION",
-      "text": "P/E sänks från 24 till 22 efter komponentbaserad kassaflödesmodell: terminal konvertering cirka 53 %, inte tidigare 67 %. En kvarvarande kvalitetspremie motiveras av tillväxt, lönsamhet och nettokassa men är osäker. Ingen mekanisk konverteringsregel.",
+      "text": "P/E 22 är en redaktionell kvalitetspremie för fortsatt tillväxt och lönsamhet, med hänsyn till investeringar och kapitalbindning. Aktuell segmentmodell ger cirka 58 % FCF-konvertering 2028. Ingen mekanisk regel kopplar konvertering till multipeln.",
       "status": "VERIFIED",
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
       "value": 22,
@@ -3224,15 +3224,15 @@
     {
       "claim_id": "A_base_net_cash_including_leases",
       "class": "ASSUMPTION",
-      "text": "Framtida nettokassa efter leasing: kräver kassaflöde, utdelningar och finansierade förvärv. Ej dagens kassa oförändrad.",
+      "text": "Prognos härledd från externa segmentintäkter och respektive kassaflödesbrygga. Egna antaganden, inte bolagsguidning.",
       "status": "VERIFIED",
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
-      "value": 1057.8533314874578,
+      "value": 1094.8311061795828,
       "unit": "MSEK",
       "owner": "Börsanalys.se analysutkast",
       "uncertainty": "HIGH",
@@ -3263,10 +3263,10 @@
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
-      "value": 243.85293977876418,
+      "value": 240.3238894020848,
       "unit": "SEK",
       "input_claim_ids": [
         "A_base_revenue",
@@ -3292,14 +3292,14 @@
       "relevant_period": "2028-12-31",
       "created_in_version": "AQ-20261019-v11.2-r1",
       "confidence": "ANALYTICAL",
-      "notes": "Bear/Base/Bull är samvarierande verksamhets- och värderingsutfall. Base är ett gynnsamt huvudscenario. 25/55/20 % är subjektiva redaktionella vikter, inte skattade frekvenser. Base ges störst vikt eftersom den senaste tillväxten och lönsamheten stöder fortsatt expansion; vikten är osäker. Bear kombinerar nära oförändrad omsättning, 7,5 % marginal och P/E 18. Sannolikheten för någon besvikelse är högre än för hela detta stressutfall. Base-light visar en mildare besvikelse separat. Vikter 30/50/20 och 35/45/20 prövas utan att ändra huvudvikterna.",
+      "notes": "Tre möjliga vägar för verksamheten. Huvudscenariot antar fortsatt god utveckling, men inte att dagens starkaste tillväxt håller i hela koncernen. Vikterna 25/55/20 % är våra bedömningar, inte statistiska prognossannolikheter.",
       "value": 0.55,
       "unit": "ratio"
     },
     {
       "claim_id": "A_bull_revenue",
       "class": "ASSUMPTION",
-      "text": "Kalibrerad mot R12 9 823 MSEK, historisk organisk cykel och tillväxtväg 2026-2028. Ej bolagsguidning.",
+      "text": "Prognos härledd från externa segmentintäkter och respektive kassaflödesbrygga. Egna antaganden, inte bolagsguidning.",
       "status": "VERIFIED",
       "source_refs": [
         "S01",
@@ -3307,10 +3307,10 @@
       ],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r3",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
-      "value": 15000,
+      "value": 14636.390624,
       "unit": "MSEK",
       "owner": "Börsanalys.se analysutkast",
       "uncertainty": "HIGH",
@@ -3435,15 +3435,15 @@
     {
       "claim_id": "A_bull_net_cash_including_leases",
       "class": "ASSUMPTION",
-      "text": "Framtida nettokassa efter leasing: kräver kassaflöde, utdelningar och finansierade förvärv. Ej dagens kassa oförändrad.",
+      "text": "Prognos härledd från externa segmentintäkter och respektive kassaflödesbrygga. Egna antaganden, inte bolagsguidning.",
       "status": "VERIFIED",
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
-      "value": 812.567547855441,
+      "value": 866.2793200110837,
       "unit": "MSEK",
       "owner": "Börsanalys.se analysutkast",
       "uncertainty": "HIGH",
@@ -3474,10 +3474,10 @@
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
-      "value": 386.5173535791757,
+      "value": 377.2019337630195,
       "unit": "SEK",
       "input_claim_ids": [
         "A_bull_revenue",
@@ -3503,7 +3503,7 @@
       "relevant_period": "2028-12-31",
       "created_in_version": "AQ-20261019-v11.2-r1",
       "confidence": "ANALYTICAL",
-      "notes": "Bear/Base/Bull är samvarierande verksamhets- och värderingsutfall. Base är ett gynnsamt huvudscenario. 25/55/20 % är subjektiva redaktionella vikter, inte skattade frekvenser. Base ges störst vikt eftersom den senaste tillväxten och lönsamheten stöder fortsatt expansion; vikten är osäker. Bear kombinerar nära oförändrad omsättning, 7,5 % marginal och P/E 18. Sannolikheten för någon besvikelse är högre än för hela detta stressutfall. Base-light visar en mildare besvikelse separat. Vikter 30/50/20 och 35/45/20 prövas utan att ändra huvudvikterna.",
+      "notes": "Tre möjliga vägar för verksamheten. Huvudscenariot antar fortsatt god utveckling, men inte att dagens starkaste tillväxt håller i hela koncernen. Vikterna 25/55/20 % är våra bedömningar, inte statistiska prognossannolikheter.",
       "value": 0.2,
       "unit": "ratio"
     },
@@ -3515,10 +3515,10 @@
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
-      "value": 239.27367455067719,
+      "value": 235.55664298690272,
       "unit": "SEK",
       "input_claim_ids": [
         "D_bear_fair_value",
@@ -3539,10 +3539,10 @@
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
-      "value": 0.019921886405273703,
+      "value": 0.004077762092509429,
       "unit": "ratio",
       "input_claim_ids": [
         "D14",
@@ -3559,10 +3559,10 @@
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
-      "value": 0.009104005463858034,
+      "value": 0.0018714018716803338,
       "unit": "ratio",
       "input_claim_ids": [
         "D14",
@@ -3637,22 +3637,22 @@
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
       "value": {
         "scenario_id": "bear",
         "opening_date": "2026-09-30",
         "opening_net_cash_including_leases": 467,
-        "q4_2026_fcf_after_leases": 83.71178300722806,
-        "fy2027_fcf_after_leases": 530.6799338287692,
-        "fy2028_fcf_after_leases": 486.80506973429704,
-        "cumulative_fcf_after_leases": 1101.1967865702943,
+        "q4_2026_fcf_after_leases": 91.23155741423204,
+        "fy2027_fcf_after_leases": 576.4202733118807,
+        "fy2028_fcf_after_leases": 410.5944844604396,
+        "cumulative_fcf_after_leases": 1078.2463151865522,
         "cumulative_dividends": 400,
         "cumulative_net_acquisition_cash_budget": 0,
         "lease_liability_change": 0,
         "other_financing_fx": -9,
-        "closing_net_cash_including_leases": 1159.1967865702943
+        "closing_net_cash_including_leases": 1136.2463151865522
       },
       "unit": "MSEK"
     },
@@ -3664,22 +3664,22 @@
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
       "value": {
         "scenario_id": "base",
         "opening_date": "2026-09-30",
         "opening_net_cash_including_leases": 467,
-        "q4_2026_fcf_after_leases": 88.27608001084174,
-        "fy2027_fcf_after_leases": 470.03616430119257,
-        "fy2028_fcf_after_leases": 541.5410871754234,
-        "cumulative_fcf_after_leases": 1099.8533314874578,
+        "q4_2026_fcf_after_leases": 88.7974421820931,
+        "fy2027_fcf_after_leases": 468.708960463821,
+        "fy2028_fcf_after_leases": 579.3247035336686,
+        "cumulative_fcf_after_leases": 1136.8311061795828,
         "cumulative_dividends": 500,
         "cumulative_net_acquisition_cash_budget": 0,
         "lease_liability_change": 0,
         "other_financing_fx": -9,
-        "closing_net_cash_including_leases": 1057.8533314874578
+        "closing_net_cash_including_leases": 1094.8311061795828
       },
       "unit": "MSEK"
     },
@@ -3691,76 +3691,76 @@
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
       "value": {
         "scenario_id": "bull",
         "opening_date": "2026-09-30",
         "opening_net_cash_including_leases": 467,
-        "q4_2026_fcf_after_leases": 37.660472420238044,
-        "fy2027_fcf_after_leases": 341.5736793240354,
-        "fy2028_fcf_after_leases": 575.3333961111675,
-        "cumulative_fcf_after_leases": 954.567547855441,
+        "q4_2026_fcf_after_leases": 50.3928163528453,
+        "fy2027_fcf_after_leases": 357.54830718147707,
+        "fy2028_fcf_after_leases": 600.3381964767611,
+        "cumulative_fcf_after_leases": 1008.2793200110835,
         "cumulative_dividends": 600,
         "cumulative_net_acquisition_cash_budget": 0,
         "lease_liability_change": 0,
         "other_financing_fx": -9,
-        "closing_net_cash_including_leases": 812.567547855441
+        "closing_net_cash_including_leases": 866.2793200110837
       },
       "unit": "MSEK"
     },
     {
       "claim_id": "A_bear_sales_path",
       "class": "ASSUMPTION",
-      "text": "Omsättningsväg 2026–2028. Q4 bygger på separat organisk/förvärvs-/valutabrygga. Ingen försäljning från ej annonserade förvärv ingår.",
+      "text": "Årlig omsättningsväg = Komponenter + System, extern försäljning. Segmentantaganden och motiveringar finns i segment_revenue_model.",
       "status": "VERIFIED",
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r3",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
       "value": [
-        10055.3,
-        10100,
-        10000
+        10020.3,
+        9847.053999999998,
+        10030.415079999999
       ],
       "unit": "MSEK"
     },
     {
       "claim_id": "A_base_sales_path",
       "class": "ASSUMPTION",
-      "text": "Omsättningsväg 2026–2028. Q4 bygger på separat organisk/förvärvs-/valutabrygga. Ingen försäljning från ej annonserade förvärv ingår.",
+      "text": "Årlig omsättningsväg = Komponenter + System, extern försäljning. Segmentantaganden och motiveringar finns i segment_revenue_model.",
       "status": "VERIFIED",
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r3",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
       "value": [
-        10171.45,
-        11290.309500000001,
-        12532.243545000003
+        10168.91,
+        11293.3842,
+        12350.876370000002
       ],
       "unit": "MSEK"
     },
     {
       "claim_id": "A_bull_sales_path",
       "class": "ASSUMPTION",
-      "text": "Omsättningsväg 2026–2028. Q4 bygger på separat organisk/förvärvs-/valutabrygga. Ingen försäljning från ej annonserade förvärv ingår.",
+      "text": "Årlig omsättningsväg = Komponenter + System, extern försäljning. Segmentantaganden och motiveringar finns i segment_revenue_model.",
       "status": "VERIFIED",
       "source_refs": [],
       "effective_date": "2026-10-28",
       "relevant_period": "2028-12-31",
-      "created_in_version": "AQ-20261028-v11.2-r3",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "confidence": "ANALYTICAL",
       "notes": null,
       "value": [
-        10473.44,
-        12700,
-        15000
+        10410.44,
+        12533.576799999999,
+        14636.390624
       ],
       "unit": "MSEK"
     },
@@ -3785,13 +3785,13 @@
       "status": "CALCULATED",
       "source_refs": [],
       "effective_date": "2026-10-28",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "notes": "R2 kurs- och publiceringsuppdatering.",
       "input_claim_ids": [
         "D14",
         "F54"
       ],
-      "value": 0.019921886405273703,
+      "value": 0.004077762092509429,
       "unit": "ratio",
       "formula": "D14/F54-1",
       "calculated_at": "2026-10-28T13:50:16.513230+00:00"
@@ -3803,13 +3803,13 @@
       "status": "CALCULATED",
       "source_refs": [],
       "effective_date": "2026-10-28",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "notes": "R2 kurs- och publiceringsuppdatering.",
       "input_claim_ids": [
         "D14",
         "F54"
       ],
-      "value": 0.009104005463858034,
+      "value": 0.0018714018716803338,
       "unit": "ratio",
       "formula": "(D14/F54)**(1/years_to_valuation)-1",
       "calculated_at": "2026-10-28T13:50:16.513258+00:00"
@@ -3817,14 +3817,14 @@
     {
       "claim_id": "AN04",
       "class": "ANALYSIS",
-      "text": "BEVAKA kvarstår. Komponentbaserad FCF ger lägre kassakonvertering än tidigare antaget; P/E Base/Bull sänks till 22/26. Även Base når inte kravet 10 %.",
+      "text": "BEVAKA kvarstår efter segmentbaserade omsättningsbanor. Bolagsförståelse och scenarioorsaker prioriteras i läsvyn; matematik och känsligheter finns i teknisk fördjupning.",
       "status": "CALCULATED",
       "source_refs": [
         "S12",
         "S13"
       ],
       "effective_date": "2026-10-28",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "notes": "R2 kurs- och publiceringsuppdatering.",
       "input_claim_ids": [
         "AN01",
@@ -3842,52 +3842,52 @@
         "S01"
       ],
       "effective_date": "2026-10-28",
-      "created_in_version": "AQ-20261028-v11.2-r3",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "value": {
         "prior_q4_sales": 2323,
         "nine_month_sales": 7500,
         "source_refs": [
           "S01"
         ],
-        "method": "Tillväxtbidrag adderas mot jämförelsekvartalets försäljning, i linje med rapportens brygga. Alla framtida bidrag är egna antaganden.",
+        "method": "Q4 total försäljning följer segmentmodellen. Förvärv/valuta är scenarioantaganden; organiskt bidrag är därefter härledd rest, inte en oberoende andra prognos.",
         "scenarios": [
           {
             "id": "bear",
-            "organic_growth": 0.08,
+            "organic_growth": 0.06493327593628907,
             "acquired_growth": 0.02,
             "fx_growth": 0,
-            "total_growth": 0.1,
-            "q4_revenue": 2555.2999999999993,
+            "total_growth": 0.08493327593628908,
+            "q4_revenue": 2520.2999999999993,
             "annual_revenue_path": [
-              10055.3,
-              10100,
-              10000
+              10020.3,
+              9847.053999999998,
+              10030.415079999999
             ]
           },
           {
             "id": "base",
-            "organic_growth": 0.12,
+            "organic_growth": 0.118906586310805,
             "acquired_growth": 0.03,
             "fx_growth": 0,
-            "total_growth": 0.15,
-            "q4_revenue": 2671.4500000000007,
+            "total_growth": 0.148906586310805,
+            "q4_revenue": 2668.91,
             "annual_revenue_path": [
-              10171.45,
-              11290.309500000001,
-              12532.243545000003
+              10168.91,
+              11293.3842,
+              12350.876370000002
             ]
           },
           {
             "id": "bull",
-            "organic_growth": 0.22,
+            "organic_growth": 0.19287989668532096,
             "acquired_growth": 0.04,
             "fx_growth": 0.02,
-            "total_growth": 0.28,
-            "q4_revenue": 2973.4400000000005,
+            "total_growth": 0.25287989668532096,
+            "q4_revenue": 2910.4400000000005,
             "annual_revenue_path": [
-              10473.44,
-              12700,
-              15000
+              10410.44,
+              12533.576799999999,
+              14636.390624
             ]
           }
         ]
@@ -3903,7 +3903,7 @@
         "S01"
       ],
       "effective_date": "2026-10-28",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "value": {
         "hurdle_rate": 0.1,
         "rationale": "Redaktionellt nominellt avkastningskrav före skatt 10 % per år, valt för cyklisk industriverksamhet, hög multipelkänslighet och osäker FCF-normalisering. Inte ett personligt avkastningskrav eller CAPM-estimat.",
@@ -3913,24 +3913,24 @@
         ],
         "dividend_timing_status": "HYPOTHETICAL_NOT_COMPANY_GUIDANCE",
         "weighted_dividend_per_share": 5.377605394699613,
-        "weighted_cashflow_irr": 0.019699603874142713,
-        "weighted_total_return": 0.04284433054295311,
+        "weighted_cashflow_irr": 0.01246752789293104,
+        "weighted_total_return": 0.02700020623018884,
         "hurdle_prices": [
           {
             "annual_return": 0.09,
-            "price": 203.28638216179655
+            "price": 200.20508164804178
           },
           {
             "annual_return": 0.1,
-            "price": 199.3384954034733
+            "price": 196.31783927876137
           },
           {
             "annual_return": 0.12,
-            "price": 191.7746135681554
+            "price": 188.87013132767848
           }
         ],
         "interpretation": "IRR beräknas på viktade kassaflöden, inte genomsnittet av scenario-IRR. Hurdlepriset är modellvillkorat; det ger inget kursgolv och kräver att tes och kvalitetspremie håller.",
-        "dispersion_sd": 91.8439693204488,
+        "dispersion_sd": 88.63997829044592,
         "dispersion_note": "Spridning i tre redaktionellt viktade terminalvärden, inte empirisk volatilitet eller statistiskt konfidensintervall."
       },
       "notes": "Rapporterade jämförelsetal från S01; framtida tillväxt, utdelningar, tidpunkter och avkastningskrav är egna antaganden."
@@ -3942,14 +3942,14 @@
       "status": "ASSUMED",
       "source_refs": [],
       "effective_date": "2026-10-28",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "value": {
-        "label": "Base-light",
+        "label": "Om tillväxten mattas av",
         "role": "SENSITIVITY_ONLY_NOT_WEIGHTED_SCENARIO",
         "q4_total_growth": 0.15,
         "annual_revenue_growth_2027_2028": 0.08,
         "inputs": {
-          "revenue": 11863.979280000001,
+          "revenue": 11861.016624000002,
           "ebit_margin": 0.095,
           "net_finance": 0,
           "tax_rate": 0.21,
@@ -3960,13 +3960,13 @@
           "minority_interest": 22
         },
         "outputs": {
-          "ebit": 1127.0780316,
-          "net_income": 890.3916449640001,
-          "eps": 9.678170053956523,
-          "fair_value": 212.91974118704348,
-          "total_return_irr": -0.032855674094812326,
-          "hurdle_price_10pct": 177.97391234978926,
-          "total_value_potential": -0.09241372043033469
+          "ebit": 1126.79657928,
+          "net_income": 890.1692976312,
+          "eps": 9.67575323512174,
+          "fair_value": 212.86657117267828,
+          "total_return_irr": -0.03296538755385309,
+          "hurdle_price_10pct": 177.93070358850014,
+          "total_value_potential": -0.09264036158278655
         },
         "dividend_assumption": "Samma hypotetiska utdelning 5,43 kr/aktie som Base för att isolera verksamhet och multipel. Inget nytt FCF- eller nettokassescenario beräknas. Lägre utdelning skulle sänka avkastningen ytterligare.",
         "interpretation": "Mildare besvikelse än Bear: fortsatt tillväxt men lägre tillväxt och marginal än Base, med samma P/E 22. Ingen fjärde huvudvikt; ingår inte i huvudmodellens viktade värde."
@@ -3979,7 +3979,7 @@
       "status": "ASSUMED",
       "source_refs": [],
       "effective_date": "2026-10-28",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "value": [
         {
           "weights": [
@@ -3987,9 +3987,9 @@
             0.55,
             0.2
           ],
-          "weighted_fair_value": 239.27367455067719,
-          "weighted_cashflow_irr": 0.019699603874142713,
-          "hurdle_price_10pct": 199.3384954034733,
+          "weighted_fair_value": 235.55664298690272,
+          "weighted_cashflow_irr": 0.01246752789293104,
+          "hurdle_price_10pct": 196.31783927876137,
           "recommendation": "BEVAKA"
         },
         {
@@ -3998,9 +3998,9 @@
             0.5,
             0.2
           ],
-          "weighted_fair_value": 232.65124495304332,
-          "weighted_cashflow_irr": 0.006663905038341356,
-          "hurdle_price_10pct": 193.90731854295043,
+          "weighted_fair_value": 229.1280719294289,
+          "weighted_cashflow_irr": -0.0002948043072276696,
+          "hurdle_price_10pct": 191.04420210457565,
           "recommendation": "BEVAKA"
         },
         {
@@ -4009,9 +4009,9 @@
             0.45,
             0.2
           ],
-          "weighted_fair_value": 226.02881535540945,
-          "weighted_cashflow_irr": -0.00657183989574478,
-          "hurdle_price_10pct": 188.4761416824276,
+          "weighted_fair_value": 222.69950087195508,
+          "weighted_cashflow_irr": -0.013250119604484245,
+          "hurdle_price_10pct": 185.7705649303899,
           "recommendation": "BEVAKA"
         },
         {
@@ -4020,9 +4020,9 @@
             0.6,
             0.15
           ],
-          "weighted_fair_value": 232.14045386065658,
-          "weighted_cashflow_irr": 0.005659970170439732,
-          "hurdle_price_10pct": 193.4928662113188,
+          "weighted_fair_value": 228.71274076885595,
+          "weighted_cashflow_irr": -0.0011175246639116287,
+          "hurdle_price_10pct": 190.70732555424976,
           "recommendation": "BEVAKA"
         },
         {
@@ -4031,9 +4031,9 @@
             0.55,
             0.15
           ],
-          "weighted_fair_value": 225.51802426302274,
-          "weighted_cashflow_irr": -0.007591573135817209,
-          "hurdle_price_10pct": 188.06168935079597,
+          "weighted_fair_value": 222.28416971138216,
+          "weighted_cashflow_irr": -0.014085597938990169,
+          "hurdle_price_10pct": 185.433688380064,
           "recommendation": "BEVAKA"
         }
       ]
@@ -4045,28 +4045,28 @@
       "status": "ASSUMED",
       "source_refs": [],
       "effective_date": "2026-10-28",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "value": {
         "status": "CONDITIONAL_ANALYST_ASSUMPTION",
         "pe_base": 22,
-        "fcf_assessment": "Base FCF beräknas nu från resultat, avskrivningar, skatt, kapitalbindning, investeringar och leasing. Utfallet cirka 541,5 MSEK och 53,1 % konvertering understiger tidigare 67 %. Därför sänks Base P/E 24→22 och Bull 28→26; operativa terminalprognoser behålls.",
+        "fcf_assessment": "Kassaflödet följer resultat, avskrivningar, betald skatt, kapitalbindning, investeringar och leasing. I Base blir det cirka 579 MSEK 2028, 58 % av vinsten. Tillväxt ger inte samma sak som fritt kassaflöde.",
         "required_evidence": "Oförändrad kapitalbindning per omsättningskrona är modellens utgångspunkt. Bokslut och H1 2027 ska visa hur lager, fordringar, investeringar och leasing utvecklas. Inga antagna effektivitetsvinster får behandlas som bevisade.",
         "revision_rule": "Multipeländringen är en redaktionell helhetsbedömning, ingen automatisk funktion av FCF-konvertering. Tillväxt, lönsamhet, kapitalbehov och investeringarnas avkastning vägs ihop. Om kapitalbindning eller investeringar kräver mer än modellen antar omprövas både kassa och premie.",
         "downrating_sensitivity": [
           {
             "pe": 24,
-            "fair_value": 266.02138884956094,
-            "total_return_irr": 0.07015747221205182
+            "fair_value": 262.17151571136526,
+            "total_return_irr": 0.06308510385383348
           },
           {
             "pe": 22,
-            "fair_value": 243.85293977876418,
-            "total_return_irr": 0.028639829649337867
+            "fair_value": 240.3238894020848,
+            "total_return_irr": 0.021845320518337208
           },
           {
             "pe": 20,
-            "fair_value": 221.68449070796743,
-            "total_return_irr": -0.014967863062827436
+            "fair_value": 218.47626309280434,
+            "total_return_irr": -0.02147045843283818
           }
         ]
       }
@@ -4081,7 +4081,7 @@
         "S04"
       ],
       "effective_date": "2026-10-28",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "value": {
         "source_refs": [
           "S01",
@@ -4131,63 +4131,63 @@
             "periods": [
               {
                 "period": "Q4 2026",
-                "period_revenue": 2555.2999999999993,
-                "annual_revenue": 10055.3,
+                "period_revenue": 2520.2999999999993,
+                "annual_revenue": 10020.3,
                 "ebit_margin": 0.09,
                 "net_finance": -5.0,
-                "ebt": 224.97699999999992,
-                "depreciation_amortization": 89.43549999999998,
+                "ebt": 221.8269999999999,
+                "depreciation_amortization": 88.21049999999998,
                 "other_noncash": 0,
-                "tax_paid": 49.494939999999986,
+                "tax_paid": 48.80193999999998,
                 "opening_working_capital_proxy": 2692.0000000000005,
-                "closing_working_capital_proxy": 2755.661976992772,
-                "working_capital_absorption": 63.66197699277187,
-                "cfo": 201.25558300722804,
-                "gross_capex": 76.65899999999998,
-                "lease_principal": 40.88479999999999,
-                "fcf_after_leases": 83.71178300722806,
-                "net_income": 175.48205999999993,
-                "fcf_conversion": 0.4770389805500807
+                "closing_working_capital_proxy": 2746.070202585768,
+                "working_capital_absorption": 54.0702025857679,
+                "cfo": 207.165357414232,
+                "gross_capex": 75.60899999999998,
+                "lease_principal": 40.32479999999999,
+                "fcf_after_leases": 91.23155741423204,
+                "net_income": 173.02505999999994,
+                "fcf_conversion": 0.5272736643711152
               },
               {
                 "period": "2027",
-                "period_revenue": 10100,
-                "annual_revenue": 10100,
+                "period_revenue": 9847.053999999998,
+                "annual_revenue": 9847.053999999998,
                 "ebit_margin": 0.085,
                 "net_finance": -20,
-                "ebt": 838.5000000000001,
-                "depreciation_amortization": 353.50000000000006,
+                "ebt": 816.9995899999999,
+                "depreciation_amortization": 344.64689,
                 "other_noncash": 0,
-                "tax_paid": 184.47000000000003,
-                "opening_working_capital_proxy": 2755.661976992772,
-                "closing_working_capital_proxy": 2767.912043164003,
-                "working_capital_absorption": 12.250066171230985,
-                "cfo": 995.2799338287692,
-                "gross_capex": 303.0,
-                "lease_principal": 161.6,
-                "fcf_after_leases": 530.6799338287692,
-                "net_income": 654.0300000000001,
-                "fcf_conversion": 0.8113999875063364
+                "tax_paid": 179.7399098,
+                "opening_working_capital_proxy": 2746.070202585768,
+                "closing_working_capital_proxy": 2698.5920154738874,
+                "working_capital_absorption": -47.47818711188056,
+                "cfo": 1029.3847573118805,
+                "gross_capex": 295.4116199999999,
+                "lease_principal": 157.55286399999997,
+                "fcf_after_leases": 576.4202733118807,
+                "net_income": 637.2596801999999,
+                "fcf_conversion": 0.904529646581398
               },
               {
                 "period": "2028",
-                "period_revenue": 10000,
-                "annual_revenue": 10000,
+                "period_revenue": 10030.415079999999,
+                "annual_revenue": 10030.415079999999,
                 "ebit_margin": 0.075,
                 "net_finance": -20,
-                "ebt": 730.0,
-                "depreciation_amortization": 350.00000000000006,
+                "ebt": 732.2811309999998,
+                "depreciation_amortization": 351.0645278,
                 "other_noncash": 0,
-                "tax_paid": 160.6,
-                "opening_working_capital_proxy": 2767.912043164003,
-                "closing_working_capital_proxy": 2740.5069734297062,
-                "working_capital_absorption": -27.40506973429706,
-                "cfo": 946.805069734297,
-                "gross_capex": 300.0,
-                "lease_principal": 160.0,
-                "fcf_after_leases": 486.80506973429704,
-                "net_income": 569.4,
-                "fcf_conversion": 0.8549439229615333
+                "tax_paid": 161.10184881999996,
+                "opening_working_capital_proxy": 2698.5920154738874,
+                "closing_working_capital_proxy": 2748.842247313448,
+                "working_capital_absorption": 50.25023183956038,
+                "cfo": 871.9935781404396,
+                "gross_capex": 300.91245239999995,
+                "lease_principal": 160.48664128,
+                "fcf_after_leases": 410.5944844604396,
+                "net_income": 571.1792821799999,
+                "fcf_conversion": 0.7188539522885671
               }
             ]
           },
@@ -4196,63 +4196,63 @@
             "periods": [
               {
                 "period": "Q4 2026",
-                "period_revenue": 2671.4500000000007,
-                "annual_revenue": 10171.45,
+                "period_revenue": 2668.91,
+                "annual_revenue": 10168.91,
                 "ebit_margin": 0.101,
                 "net_finance": 0.0,
-                "ebt": 269.8164500000001,
-                "depreciation_amortization": 93.50075000000004,
+                "ebt": 269.55991,
+                "depreciation_amortization": 93.41185,
                 "other_noncash": 0,
-                "tax_paid": 56.66145450000002,
+                "tax_paid": 56.6075811,
                 "opening_working_capital_proxy": 2692.0000000000005,
-                "closing_working_capital_proxy": 2787.4929654891585,
-                "working_capital_absorption": 95.49296548915831,
-                "cfo": 211.16278001084177,
-                "gross_capex": 80.14350000000002,
-                "lease_principal": 42.743200000000016,
-                "fcf_after_leases": 88.27608001084174,
-                "net_income": 213.15499550000007,
-                "fcf_conversion": 0.4141403292180488
+                "closing_working_capital_proxy": 2786.7968767179073,
+                "working_capital_absorption": 94.79687671790693,
+                "cfo": 211.5673021820931,
+                "gross_capex": 80.06729999999999,
+                "lease_principal": 42.70256,
+                "fcf_after_leases": 88.7974421820931,
+                "net_income": 212.9523289,
+                "fcf_conversion": 0.4169827239775874
               },
               {
                 "period": "2027",
-                "period_revenue": 11290.309500000001,
-                "annual_revenue": 11290.309500000001,
+                "period_revenue": 11293.3842,
+                "annual_revenue": 11293.3842,
                 "ebit_margin": 0.101,
                 "net_finance": 0,
-                "ebt": 1140.3212595000002,
-                "depreciation_amortization": 395.1608325000001,
+                "ebt": 1140.6318042,
+                "depreciation_amortization": 395.26844700000004,
                 "other_noncash": 0,
-                "tax_paid": 239.46746449500003,
-                "opening_working_capital_proxy": 2787.4929654891585,
-                "closing_working_capital_proxy": 3094.117191692966,
-                "working_capital_absorption": 306.62422620380755,
-                "cfo": 989.3904013011926,
-                "gross_capex": 338.709285,
-                "lease_principal": 180.64495200000002,
-                "fcf_after_leases": 470.03616430119257,
-                "net_income": 900.8537950050002,
-                "fcf_conversion": 0.521767424311715
+                "tax_paid": 239.532678882,
+                "opening_working_capital_proxy": 2786.7968767179073,
+                "closing_working_capital_proxy": 3094.9598153720863,
+                "working_capital_absorption": 308.16293865417913,
+                "cfo": 988.204633663821,
+                "gross_capex": 338.801526,
+                "lease_principal": 180.6941472,
+                "fcf_after_leases": 468.708960463821,
+                "net_income": 901.099125318,
+                "fcf_conversion": 0.5201524974274195
               },
               {
                 "period": "2028",
-                "period_revenue": 12532.243545000003,
-                "annual_revenue": 12532.243545000003,
+                "period_revenue": 12350.876370000002,
+                "annual_revenue": 12350.876370000002,
                 "ebit_margin": 0.103,
                 "net_finance": 0,
-                "ebt": 1290.8210851350002,
-                "depreciation_amortization": 438.62852407500014,
+                "ebt": 1272.14026611,
+                "depreciation_amortization": 432.2806729500001,
                 "other_noncash": 0,
-                "tax_paid": 271.07242787835,
-                "opening_working_capital_proxy": 3094.117191692966,
-                "closing_working_capital_proxy": 3434.470082779193,
-                "working_capital_absorption": 340.35289108622675,
-                "cfo": 1118.0242902454236,
-                "gross_capex": 375.96730635000006,
-                "lease_principal": 200.51589672000006,
-                "fcf_after_leases": 541.5410871754234,
-                "net_income": 1019.7486572566502,
-                "fcf_conversion": 0.5310534937425551
+                "tax_paid": 267.1494558831,
+                "opening_working_capital_proxy": 3094.9598153720863,
+                "closing_working_capital_proxy": 3384.766281995318,
+                "working_capital_absorption": 289.8064666232316,
+                "cfo": 1147.4650165536686,
+                "gross_capex": 370.52629110000004,
+                "lease_principal": 197.61402192000003,
+                "fcf_after_leases": 579.3247035336686,
+                "net_income": 1004.9908102269001,
+                "fcf_conversion": 0.5764477621470714
               }
             ]
           },
@@ -4261,63 +4261,63 @@
             "periods": [
               {
                 "period": "Q4 2026",
-                "period_revenue": 2973.4400000000005,
-                "annual_revenue": 10473.44,
+                "period_revenue": 2910.4400000000005,
+                "annual_revenue": 10410.44,
                 "ebit_margin": 0.105,
                 "net_finance": 2.5,
-                "ebt": 314.7112,
-                "depreciation_amortization": 104.07040000000002,
+                "ebt": 308.09620000000007,
+                "depreciation_amortization": 101.86540000000002,
                 "other_noncash": 0,
-                "tax_paid": 66.089352,
+                "tax_paid": 64.70020200000002,
                 "opening_working_capital_proxy": 2692.0000000000005,
-                "closing_working_capital_proxy": 2870.2535355797622,
-                "working_capital_absorption": 178.25353557976194,
-                "cfo": 174.43871242023806,
-                "gross_capex": 89.20320000000001,
-                "lease_principal": 47.57504000000001,
-                "fcf_after_leases": 37.660472420238044,
-                "net_income": 248.621848,
-                "fcf_conversion": 0.1514769225761609
+                "closing_working_capital_proxy": 2852.9883416471553,
+                "working_capital_absorption": 160.98834164715478,
+                "cfo": 184.27305635284532,
+                "gross_capex": 87.31320000000001,
+                "lease_principal": 46.567040000000006,
+                "fcf_after_leases": 50.3928163528453,
+                "net_income": 243.39599800000005,
+                "fcf_conversion": 0.20704044752964793
               },
               {
                 "period": "2027",
-                "period_revenue": 12700,
-                "annual_revenue": 12700,
+                "period_revenue": 12533.576799999999,
+                "annual_revenue": 12533.576799999999,
                 "ebit_margin": 0.108,
                 "net_finance": 10,
-                "ebt": 1381.6,
-                "depreciation_amortization": 444.50000000000006,
+                "ebt": 1363.6262943999998,
+                "depreciation_amortization": 438.675188,
                 "other_noncash": 0,
-                "tax_paid": 290.13599999999997,
-                "opening_working_capital_proxy": 2870.2535355797622,
-                "closing_working_capital_proxy": 3480.4438562557266,
-                "working_capital_absorption": 610.1903206759645,
-                "cfo": 925.7736793240355,
-                "gross_capex": 381.0,
-                "lease_principal": 203.20000000000002,
-                "fcf_after_leases": 341.5736793240354,
-                "net_income": 1091.464,
-                "fcf_conversion": 0.31295001880413414
+                "tax_paid": 286.36152182399996,
+                "opening_working_capital_proxy": 2852.9883416471553,
+                "closing_working_capital_proxy": 3434.8354622416778,
+                "working_capital_absorption": 581.8471205945227,
+                "cfo": 934.092839981477,
+                "gross_capex": 376.007304,
+                "lease_principal": 200.53722879999998,
+                "fcf_after_leases": 357.54830718147707,
+                "net_income": 1077.2647725759998,
+                "fcf_conversion": 0.33190383300708226
               },
               {
                 "period": "2028",
-                "period_revenue": 15000,
-                "annual_revenue": 15000,
+                "period_revenue": 14636.390624,
+                "annual_revenue": 14636.390624,
                 "ebit_margin": 0.115,
                 "net_finance": 10,
-                "ebt": 1735.0,
-                "depreciation_amortization": 525.0,
+                "ebt": 1693.18492176,
+                "depreciation_amortization": 512.27367184,
                 "other_noncash": 0,
-                "tax_paid": 364.34999999999997,
-                "opening_working_capital_proxy": 3480.4438562557266,
-                "closing_working_capital_proxy": 4110.760460144559,
-                "working_capital_absorption": 630.3166038888324,
-                "cfo": 1265.3333961111675,
-                "gross_capex": 450.0,
-                "lease_principal": 240.0,
-                "fcf_after_leases": 575.3333961111675,
-                "net_income": 1370.65,
-                "fcf_conversion": 0.41975223150415314
+                "tax_paid": 355.5688335696,
+                "opening_working_capital_proxy": 3434.8354622416778,
+                "closing_working_capital_proxy": 4011.1130570913165,
+                "working_capital_absorption": 576.2775948496388,
+                "cfo": 1273.6121651807612,
+                "gross_capex": 439.09171871999996,
+                "lease_principal": 234.182249984,
+                "fcf_after_leases": 600.3381964767611,
+                "net_income": 1337.6160881904,
+                "fcf_conversion": 0.44881203342053955
               }
             ]
           }
@@ -4325,23 +4325,23 @@
         "terminal_fcf_sensitivity": [
           {
             "label": "Huvudantaganden",
-            "fcf_after_leases": 541.5410871754234,
-            "conversion": 0.5310534937425551
+            "fcf_after_leases": 579.3247035336686,
+            "conversion": 0.5764477621470714
           },
           {
             "label": "Kapitalbindning +2 procentenheter",
-            "fcf_after_leases": 516.7024062754233,
-            "conversion": 0.5066958437243421
+            "fcf_after_leases": 558.1748601336684,
+            "conversion": 0.5554029494136842
           },
           {
             "label": "Capex 4 % av försäljningen",
-            "fcf_after_leases": 416.2186517254234,
-            "conversion": 0.4081580777415719
+            "fcf_after_leases": 455.8159398336685,
+            "conversion": 0.4535523461460881
           },
           {
             "label": "Båda förändringarna",
-            "fcf_after_leases": 391.3799708254233,
-            "conversion": 0.38380042772335893
+            "fcf_after_leases": 434.66609643366826,
+            "conversion": 0.4325075334127008
           }
         ],
         "assumption_rationales": {
@@ -4365,7 +4365,7 @@
         "S04"
       ],
       "effective_date": "2026-10-28",
-      "created_in_version": "AQ-20261028-v11.2-r5",
+      "created_in_version": "AQ-20261028-v11.2-r7",
       "value": {
         "order": [
           "Bear",
@@ -4379,10 +4379,10 @@
           0.4,
           0.2
         ],
-        "weighted_fair_value": 244.78523409801474,
-        "weighted_cashflow_irr": 0.030528053185967186,
-        "hurdle_price_10pct": 203.9163614775989,
-        "note": "Illustrativ omfördelning, inte nya huvudvikter eller skattade sannolikheter. Med r4-värden gav samma vikter 259,6 kr; efter sänkta multiplar räknas alla känsligheter om."
+        "weighted_fair_value": 241.5494555444987,
+        "weighted_cashflow_irr": 0.02431311805184222,
+        "hurdle_price_10pct": 201.286796961347,
+        "note": "Illustrativ viktkänslighet, inte ett fjärde huvudscenario. Samtliga värden följer aktuell segmentmodell."
       }
     },
     {
@@ -4397,6 +4397,165 @@
       "created_in_version": "AQ-20261028-v11.2-r6",
       "value": true,
       "notes": "Självdeklarerat innehav. Ingen uppgift om antal aktier eller anskaffningsvärde."
+    },
+    {
+      "claim_id": "A_segment_revenue_model",
+      "class": "ASSUMPTION",
+      "text": "Rapporterade externa segmentintäkter och separata framåtblickande tillväxtantaganden. Egna antaganden, inte bolagsguidning.",
+      "status": "ASSUMED",
+      "source_refs": [
+        "S01",
+        "S04"
+      ],
+      "effective_date": "2026-10-28",
+      "created_in_version": "AQ-20261028-v11.2-r7",
+      "value": {
+        "method": "Summan av extern omsättning i rapporterade segment Komponenter och System. Internförsäljning räknas inte med. Tillväxtantaganden avser befintlig verksamhet inklusive genomförda förvärv, inte nya ej annonserade affärer. Valuta antas neutral 2027–2028. Ingen obekräftad omsättning per slutmarknad konstrueras.",
+        "actuals": {
+          "2025": {
+            "components": 7727,
+            "systems": 1344
+          },
+          "9m2025": {
+            "components": 5754,
+            "systems": 994
+          },
+          "9m2026": {
+            "components": 6492,
+            "systems": 1008
+          },
+          "q32025": {
+            "components": 1811,
+            "systems": 302
+          },
+          "q32026": {
+            "components": 2240,
+            "systems": 326
+          }
+        },
+        "source_refs": [
+          "S01",
+          "S04"
+        ],
+        "source_pages": "S01 tryckt s.16–17, S04 s.75",
+        "limitations": "AQ redovisar inte separata intäkter och orderböcker för datacenter, försvar och elnät i underlaget. Dessa är förklaringar till valda antaganden, inte separata kvantifierade försäljningsprognoser. Tillväxt är total segmenttillväxt; en exakt organisk/förvärvad uppdelning 2027–2028 kan inte verifieras.",
+        "scenarios": [
+          {
+            "id": "bear",
+            "periods": [
+              {
+                "year": 2026,
+                "components": 8662.3,
+                "systems": 1358,
+                "revenue": 10020.3,
+                "component_growth_assumption": 0.1,
+                "system_growth_assumption": 0
+              },
+              {
+                "year": 2027,
+                "components": 8489.053999999998,
+                "systems": 1358,
+                "revenue": 9847.053999999998,
+                "component_growth_assumption": -0.02,
+                "system_growth_assumption": 0
+              },
+              {
+                "year": 2028,
+                "components": 8658.835079999999,
+                "systems": 1371.58,
+                "revenue": 10030.415079999999,
+                "component_growth_assumption": 0.02,
+                "system_growth_assumption": 0.01
+              }
+            ],
+            "rationale": [
+              "Efter ett fortfarande positivt Q4 viker komponentefterfrågan 2027. Industrikunder skjuter upp leveranser och utbyggd kapacitet blir inte fullt utnyttjad. System ligger stilla. En liten återhämtning 2028 räcker inte för att återställa tillväxtbanan.",
+              "7,5 % koncernmarginal kräver ett faktiskt bakslag: lägre beläggning och kvalitets-/integrationskostnader. Det är under 2023–2025, men inte under 2022 års 7,0 %. P/E 18 avspeglar osäkerheten och en svagare vinstprofil."
+            ]
+          },
+          {
+            "id": "base",
+            "periods": [
+              {
+                "year": 2026,
+                "components": 8800.41,
+                "systems": 1368.5,
+                "revenue": 10168.91,
+                "component_growth_assumption": 0.17,
+                "system_growth_assumption": 0.03
+              },
+              {
+                "year": 2027,
+                "components": 9856.459200000001,
+                "systems": 1436.925,
+                "revenue": 11293.3842,
+                "component_growth_assumption": 0.12,
+                "system_growth_assumption": 0.05
+              },
+              {
+                "year": 2028,
+                "components": 10842.105120000002,
+                "systems": 1508.77125,
+                "revenue": 12350.876370000002,
+                "component_growth_assumption": 0.1,
+                "system_growth_assumption": 0.05
+              }
+            ],
+            "rationale": [
+              "Komponenter växer 17 % i Q4, lägre än segmentets rapporterade 23,7 % i Q3. Därefter antar vi 12 % 2027 och 10 % 2028: fortsatt god efterfrågan på induktiva komponenter och mer volym i befintliga fabriker, men en gradvis avmattning när jämförelsetalen blir högre.",
+              "System växer 3 % i Q4 och därefter 5 % per år. Det är en försiktigare bana än för Komponenter: nio månader 2026 ökade System bara cirka 1,4 % och Time 24 gav negativt resultatbidrag. Vi räknar med stabilisering och bättre integration, inte ett brett genombrott i hela koncernen.",
+              "10,3 % koncernmarginal 2028 kräver något bättre mix och produktivitet än Q3:s 10,1 %. P/E 22 innehåller en kvalitetspremie för fortsatt tillväxt och lönsamhet. Den måste också tåla att tillväxten binder kapital; marginalförbättringen är inget skäl att bortse från kassaflödet."
+            ]
+          },
+          {
+            "id": "bull",
+            "periods": [
+              {
+                "year": 2026,
+                "components": 9017.44,
+                "systems": 1393.0,
+                "revenue": 10410.44,
+                "component_growth_assumption": 0.28,
+                "system_growth_assumption": 0.1
+              },
+              {
+                "year": 2027,
+                "components": 11001.2768,
+                "systems": 1532.3000000000002,
+                "revenue": 12533.576799999999,
+                "component_growth_assumption": 0.22,
+                "system_growth_assumption": 0.1
+              },
+              {
+                "year": 2028,
+                "components": 12981.506624,
+                "systems": 1654.8840000000002,
+                "revenue": 14636.390624,
+                "component_growth_assumption": 0.18,
+                "system_growth_assumption": 0.08
+              }
+            ],
+            "rationale": [
+              "Komponenter växer 28 % i Q4, 22 % 2027 och 18 % 2028. Då måste den starka utvecklingen i datacenter, elektrifiering och försvar bestå över flera rapporter. Befintlig amerikansk kapacitet måste fyllas med lönsamma leveranser och fler verksamheter måste bidra än bara de senaste vinnarna.",
+              "System växer 10 % 2027 och 8 % 2028 efter ett starkare Q4. Här krävs att Time 24 och andra systemverksamheter bidrar tydligt till tillväxten. 11,5 % koncernmarginal kräver samtidigt god beläggning, förbättrad kvalitet och lyckad integration.",
+              "P/E 26 är därför villkorat av ett starkare operativt utfall än Base. Varken hela AQ eller hela segmentet Komponenter antas fördubbla sin försäljning. Norlakes möjliga kapacitet används inte som garanterad omsättning."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "claim_id": "AN_READER_BUSINESS",
+      "class": "ANALYSIS",
+      "text": "Bolagsförståelse och separata segmentdrivare kompletterar den kvantitativa värderingen. Konkurrensfördelar och framtida utfall är bedömningar, inte garantier.",
+      "status": "ANALYST_JUDGEMENT",
+      "source_refs": [
+        "S01",
+        "S04",
+        "S07"
+      ],
+      "effective_date": "2026-10-28",
+      "created_in_version": "AQ-20261028-v11.2-r7"
     }
   ],
   "history": {
@@ -4682,7 +4841,7 @@
         "F35",
         "F36"
       ],
-      "next_evidence": "Q4 Base: cirka 2 671 MSEK försäljning, +15 % totalt varav 12 % organiskt, 3 % förvärvat och 0 % valuta. 8 % organiskt är en tidig varningsgräns; det bekräftar inte Base om övriga bidrag är oförändrade.",
+      "next_evidence": "Q4 Base: cirka 2 669 MSEK försäljning och cirka 15 % total tillväxt. Komponenter +17 %, System +3 % enligt våra antaganden. Organiskt cirka 12 % är härledd rest efter förvärv/valuta; 8 % är varningsgräns, inte bekräftelse av Base.",
       "threshold_note": "Prognos och varningsgräns är skilda redaktionella antaganden. Q3 rapporterade 17,9 % organiskt, 2,2 % förvärvat och 1,3 % valuta; Q4 Base antar lägre organisk takt och fullare bidrag från redan genomförda affärer. Ingen kapacitetsannualisering.",
       "next_report_checkpoint": {
         "event_type": "FY2026",
@@ -4724,8 +4883,8 @@
         "F27",
         "F28"
       ],
-      "next_evidence": "Vid bokslut och H1 2027: FCF efter leasing/nettoresultat tillbaka mot minst 60% R12 utan att tillväxten bryts.",
-      "threshold_note": "60% redaktionell tidig återhämtningströskel; inte terminalt normalvärde.",
+      "next_evidence": "Vid bokslut och under 2027: följ lager och kundfordringar relativt försäljningen. Mer av vinsten behöver bli kvar efter investeringar och leasing, utan att leveransförmågan försämras.",
+      "threshold_note": "Bedöm kassaflöde över flera rapporter och förklara investeringar, säsong och kapitalbindning. Ingen enskild procentsats avgör tesen.",
       "next_report_checkpoint": {
         "event_type": "FY2026/H12027",
         "expected_window": "2027-02-11/2027-07-14",
@@ -4806,7 +4965,7 @@
       "id": "revenue",
       "display_name": "Omsättning2028",
       "canonical_ref": "scenarios.base.inputs.revenue",
-      "default": 12532.243545000003,
+      "default": 12350.876370000002,
       "min": 8000,
       "max": 16000,
       "step": 100,
@@ -4926,58 +5085,58 @@
     "r12_net_income": 755,
     "fcf_conversion": 0.45695364238410596,
     "model_2028_after_lease_fcf": {
-      "bear": 486.80506973429704,
-      "base": 541.5410871754234,
-      "bull": 575.3333961111675
+      "bear": 410.5944844604396,
+      "base": 579.3247035336686,
+      "bull": 600.3381964767611
     },
     "model_2028_conversion": {
-      "bear": 0.8549439229615333,
-      "base": 0.5310534937425551,
-      "bull": 0.41975223150415314
+      "bear": 0.7188539522885671,
+      "base": 0.5764477621470714,
+      "bull": 0.44881203342053955
     },
-    "model_2028_note": "Komponentbaserad FCF-prognos ersätter proportionell skalning. Base ger cirka 541,5 MSEK och 53,1 % konvertering. P/E-premien sänks efter helhetsbedömning.",
+    "model_2028_note": "Kassaflödet följer resultat, avskrivningar, betald skatt, kapitalbindning, investeringar och leasing. I Base blir det cirka 579 MSEK 2028, 58 % av vinsten. Tillväxt ger inte samma sak som fritt kassaflöde.",
     "funding_budgets": [
       {
         "scenario_id": "bear",
         "opening_date": "2026-09-30",
         "opening_net_cash_including_leases": 467,
-        "q4_2026_fcf_after_leases": 83.71178300722806,
-        "fy2027_fcf_after_leases": 530.6799338287692,
-        "fy2028_fcf_after_leases": 486.80506973429704,
-        "cumulative_fcf_after_leases": 1101.1967865702943,
+        "q4_2026_fcf_after_leases": 91.23155741423204,
+        "fy2027_fcf_after_leases": 576.4202733118807,
+        "fy2028_fcf_after_leases": 410.5944844604396,
+        "cumulative_fcf_after_leases": 1078.2463151865522,
         "cumulative_dividends": 400,
         "cumulative_net_acquisition_cash_budget": 0,
         "lease_liability_change": 0,
         "other_financing_fx": -9,
-        "closing_net_cash_including_leases": 1159.1967865702943
+        "closing_net_cash_including_leases": 1136.2463151865522
       },
       {
         "scenario_id": "base",
         "opening_date": "2026-09-30",
         "opening_net_cash_including_leases": 467,
-        "q4_2026_fcf_after_leases": 88.27608001084174,
-        "fy2027_fcf_after_leases": 470.03616430119257,
-        "fy2028_fcf_after_leases": 541.5410871754234,
-        "cumulative_fcf_after_leases": 1099.8533314874578,
+        "q4_2026_fcf_after_leases": 88.7974421820931,
+        "fy2027_fcf_after_leases": 468.708960463821,
+        "fy2028_fcf_after_leases": 579.3247035336686,
+        "cumulative_fcf_after_leases": 1136.8311061795828,
         "cumulative_dividends": 500,
         "cumulative_net_acquisition_cash_budget": 0,
         "lease_liability_change": 0,
         "other_financing_fx": -9,
-        "closing_net_cash_including_leases": 1057.8533314874578
+        "closing_net_cash_including_leases": 1094.8311061795828
       },
       {
         "scenario_id": "bull",
         "opening_date": "2026-09-30",
         "opening_net_cash_including_leases": 467,
-        "q4_2026_fcf_after_leases": 37.660472420238044,
-        "fy2027_fcf_after_leases": 341.5736793240354,
-        "fy2028_fcf_after_leases": 575.3333961111675,
-        "cumulative_fcf_after_leases": 954.567547855441,
+        "q4_2026_fcf_after_leases": 50.3928163528453,
+        "fy2027_fcf_after_leases": 357.54830718147707,
+        "fy2028_fcf_after_leases": 600.3381964767611,
+        "cumulative_fcf_after_leases": 1008.2793200110835,
         "cumulative_dividends": 600,
         "cumulative_net_acquisition_cash_budget": 0,
         "lease_liability_change": 0,
         "other_financing_fx": -9,
-        "closing_net_cash_including_leases": 812.567547855441
+        "closing_net_cash_including_leases": 866.2793200110837
       }
     ],
     "funding_budget_formula": "opening_net_cash+Q42026_FCF+FY2027_FCF+FY2028_FCF-dividends-acquisition_cash_budget-lease_liability_change+other_financing_fx",
@@ -4994,9 +5153,9 @@
     "verification_source_ref": "S14"
   },
   "version": {
-    "version_id": "AQ-20261028-v11.2-r6",
-    "parent_version_id": "AQ-20261028-v11.2-r5",
-    "created_at": "2026-10-28T18:09:02.870398+00:00",
+    "version_id": "AQ-20261028-v11.2-r7",
+    "parent_version_id": "AQ-20261028-v11.2-r6",
+    "created_at": "2026-10-28T20:01:11.402009+00:00",
     "author": "Börsanalys.se",
     "status": "PUBLISH_READY",
     "immutable": true
@@ -5166,17 +5325,32 @@
       ],
       "changed_by": "Börsanalys.se",
       "changed_at": "2026-10-28"
+    },
+    {
+      "field_path": "segment_revenue_and_reader_presentation",
+      "old_value_ref": "AQ-20261028-v11.2-r6",
+      "new_value_ref": "AQ-20261028-v11.2-r7",
+      "reason": "Mer bolagsförståelse och tydliga operativa scenarier; komponent- och systemförsäljning modelleras separat. Tekniska tabeller blir hopfälld bilaga.",
+      "claim_ids": [
+        "A_segment_revenue_model"
+      ],
+      "changed_by": "Börsanalys.se",
+      "changed_at": "2026-10-28"
     }
   ],
   "event_delta": {
-    "event_id": "AQ-AUTHOR-DISCLOSURE-20261028",
-    "compared_to_version": "AQ-20261028-v11.2-r5",
+    "event_id": "AQ-READER-AND-SEGMENT-MODEL-20261028",
+    "compared_to_version": "AQ-20261028-v11.2-r6",
     "fact_changes": [
-      "Självdeklarerat aktuellt aktieinnehav bekräftat"
+      "Rapporterade externa segmentintäkter lagda som prognosankare"
     ],
-    "assumption_changes": [],
+    "assumption_changes": [
+      "Separata tillväxtbanor för Komponenter och System ersätter avrundade terminalmål"
+    ],
     "thesis_changes": [],
-    "valuation_changes": [],
+    "valuation_changes": [
+      "Alla följdberäkningar uppdaterade"
+    ],
     "decision_change": null
   },
   "unavailable_data": [
@@ -5216,36 +5390,36 @@
     "pe": "28,5x",
     "yield": "0,8 %",
     "marketCap": "21,5 mdkr",
-    "upside": 1.9921886405273703,
-    "summary": "BEVAKA · viktat terminalvärde 239,3 kr. Viktad totalavkastning +2,0 %/år mot krav 10 %. Kassaflödesbryggan ger lägre premie än r4.",
+    "upside": 0.40777620925094293,
+    "summary": "BEVAKA. AQ gynnas av datacenter, elektrifiering och försvar, men expansionen binder kapital. Vårt viktade värde är 235,6 kr vid slutet av 2028; beräknad totalavkastning +1,2 % per år från referenskursen 234,60 kr.",
     "valuationTargetYear": 2028,
     "scenarios": [
       {
         "type": "bear",
         "label": "Bear",
-        "value": "111,4 kr",
-        "change": "-52,5 %",
-        "cagr": "-29,0 %/år",
+        "value": "111,8 kr",
+        "change": "-52,4 %",
+        "cagr": "-28,9 %/år",
         "probability": "25 %",
-        "description": "Svag industriefterfrågan, underutnyttjad kapacitet och lägre multipel. P/E18 speglar cykel- och genomföranderisk."
+        "description": "Efter ett fortfarande positivt Q4 viker komponentefterfrågan 2027. Industrikunder skjuter upp leveranser och utbyggd kapacitet blir inte fullt utnyttjad. System ligger stilla. En liten återhämtning 2028 räcker inte för att återställa tillväxtbanan."
       },
       {
         "type": "base",
         "label": "Base",
-        "value": "243,9 kr",
-        "change": "+3,9 %",
-        "cagr": "+1,8 %/år",
+        "value": "240,3 kr",
+        "change": "+2,4 %",
+        "cagr": "+1,1 %/år",
         "probability": "55 %",
-        "description": "Gynnsamt huvudscenario: Q4 +15 %, därefter 11 % årlig tillväxt och 10,3 % terminal EBIT-marginal. P/E sänks till 22 efter kassaflödesbryggan."
+        "description": "Komponenter växer 17 % i Q4, lägre än segmentets rapporterade 23,7 % i Q3. Därefter antar vi 12 % 2027 och 10 % 2028: fortsatt god efterfrågan på induktiva komponenter och mer volym i befintliga fabriker, men en gradvis avmattning när jämförelsetalen blir högre."
       },
       {
         "type": "bull",
         "label": "Bull",
-        "value": "386,5 kr",
-        "change": "+64,8 %",
-        "cagr": "+25,8 %/år",
+        "value": "377,2 kr",
+        "change": "+60,8 %",
+        "cagr": "+24,4 %/år",
         "probability": "20 %",
-        "description": "Stark efterfrågan och kapacitetsutnyttjande. Cirka 19,7 % årlig tillväxt 2027–2028 krävs. P/E 26 inkluderar fortsatt premie men kapitalbindningen begränsar FCF."
+        "description": "Komponenter växer 28 % i Q4, 22 % 2027 och 18 % 2028. Då måste den starka utvecklingen i datacenter, elektrifiering och försvar bestå över flera rapporter. Befintlig amerikansk kapacitet måste fyllas med lönsamma leveranser och fler verksamheter måste bidra än bara de senaste vinnarna."
       }
     ],
     "valuationTables": [
@@ -5261,23 +5435,23 @@
         "rows": [
           [
             "Bear",
-            "6,19 kr",
+            "6,21 kr",
             "18x",
-            "111,4 kr",
+            "111,8 kr",
             "25 %"
           ],
           [
             "Base",
-            "11,08 kr",
+            "10,92 kr",
             "22x",
-            "243,9 kr",
+            "240,3 kr",
             "55 %"
           ],
           [
             "Bull",
-            "14,87 kr",
+            "14,51 kr",
             "26x",
-            "386,5 kr",
+            "377,2 kr",
             "20 %"
           ]
         ]
@@ -5285,7 +5459,7 @@
     ],
     "v11": {
       "analysisId": "AQ-GROUP-2026-10-19",
-      "versionId": "AQ-20261028-v11.2-r6",
+      "versionId": "AQ-20261028-v11.2-r7",
       "publicationStatus": "PUBLISH_READY",
       "recommendationStatus": "APPROVED",
       "sourceCutoffDate": "2026-10-28",
@@ -5294,13 +5468,13 @@
       "currency": "SEK",
       "valueSuffix": "kr",
       "headline": "AQ Group: tillväxten stärker bolaget, men kursen kräver mer",
-      "dek": "Organisk tillväxt och marginal förbättras. Nästa bevis är att expansionen ger fritt kassaflöde och bättre leveransprecision. Värderingen innehåller redan en kvalitetspremie.",
-      "weightedFairValue": "239,3",
+      "dek": "AQ tillverkar komponenter och system åt industrikunder. Datacenter och elektrifiering driver efterfrågan, men tillväxten kräver både fungerande fabriker och mer kapital.",
+      "weightedFairValue": "235,6",
       "weightedValueLabel": "Sannolikhetsvägt värde 2028E",
       "currentPrice": "234,60 kr · fördröjd notering kl. 15.21 CET",
       "marketReferenceDate": "2026-10-28",
-      "upside": "+2,0 %",
-      "annualPotential": "Annualiserad värdepotential: +0,9 %/år",
+      "upside": "+0,4 %",
+      "annualPotential": "Årlig värdepotential före utdelning: +0,2 %/år",
       "valuationChainLabel": "Industrikunders efterfrågan → omsättning → EBIT → skatt och finansnetto → utspädd EPS → P/E → värde",
       "riskLabel": "MEDEL–HÖG RISK",
       "ownershipDisclosure": "Författaren äger aktier i AQ Group. Innehavet bekräftades den 28 oktober 2026 och innebär ett ekonomiskt intresse i bolaget.",
@@ -5320,8 +5494,8 @@
       ],
       "cautionReasons": [
         {
-          "title": "God drift räcker inte om premien faller",
-          "body": "Base-light: 8 % årlig tillväxt, 9,5 % EBIT-marginal och P/E 22 ger 212,9 kr och −3,3 % årlig totalavkastning från 234,60 kr. Känsligheten ingår inte i huvudviktningen. [Egen modell]"
+          "title": "God utveckling kan redan vara inprisad",
+          "body": "Även om försäljning och lönsamhet fortsätter växa kan aktien ge svag avkastning om marknaden betalar mindre för varje vinstkrona. Vår värdering kräver fortsatt god drift och ger ändå begränsat utrymme från referenskursen."
         },
         {
           "title": "Expansionen binder kapital",
@@ -5339,7 +5513,7 @@
           "status": "På väg",
           "title": "Organisk tillväxt inom elektrifiering och datacenter håller i sig efter kapacitetsuppbyggnaden.",
           "signal": "Organisk tillväxt 17,9 % i Q3 efter 6,3 % i Q1 och 9,1 % i Q2. [S01–S03]",
-          "next": "Q4 Base: cirka 2 671 MSEK försäljning, +15 % totalt varav 12 % organiskt, 3 % förvärvat och 0 % valuta. 8 % organiskt är en tidig varningsgräns; det bekräftar inte Base om övriga bidrag är oförändrade."
+          "next": "Fortsatt efterfrågan på komponenter, utan att tillväxten bara drivs av några få kunder. System behöver också visa stabilare utveckling."
         },
         {
           "status": "På väg",
@@ -5364,7 +5538,7 @@
         {
           "focus": "Efterfrågan och kundmix",
           "latest": "17,9 % organisk Q3-tillväxt",
-          "next": "Q4: cirka 12 % organiskt och 15 % totalt i Base.",
+          "next": "Håller komponentefterfrågan och breddas tillväxten till System?",
           "why": "Prövar Base-tillväxten."
         },
         {
@@ -5380,13 +5554,13 @@
           "why": "Prövar kapacitetens kvalitet."
         }
       ],
-      "valuationCheck": "Viktat P/E-terminalvärde 239,3 kr; alternativ algebraisk EV/EBIT-brygga 250,6 kr. Kassa/minoritet ger skillnaden; ingen oberoende bekräftelse. Base IRR +2,9 % mot krav 10 %. Villkorat ingångspris 203 kr i Base och 199 kr viktat.",
+      "valuationCheck": "Huvudvärdet bygger på vinst per aktie × P/E. I medlemsfördjupningen förklarar vi vad som krävs för försäljning, marginal och kassaflöde. Den alternativa EV/EBIT-bryggan är algebraisk och ger ingen oberoende bekräftelse.",
       "valuationLimitation": "Terminalvärden vid 31 december 2028. Kursvärdepotential exkluderar utdelningar; separat totalavkastnings-IRR inkluderar hypotetiska utdelningar före skatt. Bear är inget kursgolv.",
-      "valuationSummary": "Bear/Base/Bull är samvarierande verksamhets- och värderingsutfall. Base är ett gynnsamt huvudscenario. 25/55/20 % är subjektiva redaktionella vikter, inte skattade frekvenser. Base ges störst vikt eftersom den senaste tillväxten och lönsamheten stöder fortsatt expansion; vikten är osäker. Bear kombinerar nära oförändrad omsättning, 7,5 % marginal och P/E 18. Sannolikheten för någon besvikelse är högre än för hela detta stressutfall. Base-light visar en mildare besvikelse separat. Vikter 30/50/20 och 35/45/20 prövas utan att ändra huvudvikterna. Bull kräver cirka 19,7 % årlig tillväxt 2027–2028 från Bulls eget prognosår 2026. Bull bidrar med 77,3 kr till viktat värde; lägre Bull-vikt visas separat.",
-      "valuationGrowthContext": "Base är ett gynnsamt huvudscenario: 11 % årlig tillväxt 2027–2028 och 10,3 % EBIT-marginal. Marginalen är 0,2 procentenheter över Q3 2026 (10,1 %) och 0,6 över R12 (9,7 %). Förbättring krävs, inte enbart bibehållen marginal.",
+      "valuationSummary": "Tre möjliga vägar för verksamheten. Huvudscenariot antar fortsatt god utveckling, men inte att dagens starkaste tillväxt håller i hela koncernen. Vikterna 25/55/20 % är våra bedömningar, inte statistiska prognossannolikheter.",
+      "valuationGrowthContext": "Omsättningen beräknas separat för Komponenter och System. Segmentens externa försäljning summeras; framtida nya förvärv och enskilda slutmarknadsandelar antas inte.",
       "historyMarginLabel": "Rapporterad EBIT-marginal",
       "nextReportWindow": "Bokslut 2026 · 11 februari 2027 kl.08.00 CET",
-      "riskAndMethod": "Kundcykel, kapitalbindning, integration och multipelrisk. Base är gynnsamt. Ny kassaflödesbrygga ger lägre konvertering än r4 och motiverar P/E 22/26 i Base/Bull. Högre kapitalbehov kan pressa både kassavärde och premie. Avkastningskrav 10 % före skatt; känsligheter är inga automatiska köpgränser.",
+      "riskAndMethod": "Efterfrågan, kundkoncentration, kvalitet, kapitalbindning och integration kan påverka både vinst och värdering. Scenarier är egna bedömningar. Kassaflödet prövas separat och framtida ej annonserade förvärv ingår inte. Ett lägre pris ersätter inte en hållbar verksamhet.",
       "sourceSummary": "Årsredovisningar 2024–2025, Q1–Q3 2026, Norlake-förvärvet och bolagets mål/kalender. Marknadsreferens: Stock Analysis/S&P Global 28 oktober 2026 kl. 15.21 CET. Rapportfakta, egna härledningar och framtidsantaganden hålls isär.",
       "classificationSummary": "Rapporterat=FACT, beräkningar=DERIVED, prognoser och multiplar=ASSUMPTION, slutsats=ANALYSIS."
     },
@@ -5448,7 +5622,7 @@
       }
     },
     "archiveComparison": {
-      "annualPotential": "+0,9 %/år",
+      "annualPotential": "+0,2 %/år",
       "riskLabel": "MEDEL–HÖG RISK"
     }
   },
@@ -5463,52 +5637,52 @@
       ],
       "rows": [
         [
-          "Omsättning MSEK",
-          "10000,0",
-          "12532,2",
-          "15000,0"
+          "Omsättning, MSEK",
+          "10 030",
+          "12 351",
+          "14 636"
         ],
         [
-          "EBIT-marginal, andel",
-          "0,075",
-          "0,103",
-          "0,115"
+          "EBIT-marginal",
+          "7,5 %",
+          "10,3 %",
+          "11,5 %"
         ],
         [
-          "EBIT MSEK",
-          "750,0",
-          "1290,8",
-          "1725,0"
+          "EBIT, MSEK",
+          "752",
+          "1 272",
+          "1 683"
         ],
         [
-          "Finansnetto MSEK",
-          "-20,0",
-          "0,0",
-          "10,0"
+          "Finansnetto, MSEK",
+          "-20",
+          "0",
+          "10"
         ],
         [
-          "Skatt, andel",
-          "0,22",
-          "0,21",
-          "0,21"
+          "Skatt på vinst",
+          "22 %",
+          "21 %",
+          "21 %"
         ],
         [
-          "Resultat MSEK",
-          "569,4",
-          "1019,7",
-          "1370,7"
+          "Vinst, MSEK",
+          "571",
+          "1 005",
+          "1 338"
         ],
         [
-          "Utspädda aktier, miljoner",
+          "Aktier, miljoner",
           "92,0",
           "92,0",
           "92,2"
         ],
         [
-          "EPS kr",
-          "6,19",
-          "11,08",
-          "14,87"
+          "Vinst per aktie, kr",
+          "6,21",
+          "10,92",
+          "14,51"
         ],
         [
           "P/E",
@@ -5517,10 +5691,10 @@
           "26"
         ],
         [
-          "Värde kr",
-          "111,4",
-          "243,9",
-          "386,5"
+          "Värde per aktie, kr",
+          "111,8",
+          "240,3",
+          "377,2"
         ]
       ]
     },
@@ -5540,22 +5714,22 @@
           "20,54"
         ],
         [
-          "Nettokassa inkl. leasing MSEK",
-          "1159,2",
-          "1057,9",
-          "812,6"
+          "Nettokassa inklusive leasing, MSEK",
+          "1 136",
+          "1 095",
+          "866"
         ],
         [
-          "Minoritet MSEK",
-          "22,0",
-          "22,0",
-          "22,0"
+          "Minoritet, MSEK",
+          "22",
+          "22",
+          "22"
         ],
         [
-          "Värde kr",
-          "126,8",
-          "255,1",
-          "392,9"
+          "Värde per aktie, kr",
+          "126,9",
+          "252,0",
+          "384,1"
         ]
       ]
     },
@@ -5570,56 +5744,56 @@
       "rows": [
         [
           "Nettokassa vid start",
-          "467,0",
-          "467,0",
-          "467,0"
+          "467",
+          "467",
+          "467"
         ],
         [
-          "FCF efter leasing Q4 2026",
-          "83,7",
-          "88,3",
-          "37,7"
+          "FCF Q4 2026",
+          "91",
+          "89",
+          "50"
         ],
         [
-          "FCF efter leasing 2027",
-          "530,7",
-          "470,0",
-          "341,6"
+          "FCF 2027",
+          "576",
+          "469",
+          "358"
         ],
         [
-          "FCF efter leasing 2028",
-          "486,8",
-          "541,5",
-          "575,3"
+          "FCF 2028",
+          "411",
+          "579",
+          "600"
         ],
         [
           "Utdelningar (avdrag)",
-          "400,0",
-          "500,0",
-          "600,0"
+          "400",
+          "500",
+          "600"
         ],
         [
           "Ej annonserade förvärv (avdrag)",
-          "0,0",
-          "0,0",
-          "0,0"
+          "0",
+          "0",
+          "0"
         ],
         [
           "Uppskjuten Norlakebetalning",
-          "-9,0",
-          "-9,0",
-          "-9,0"
+          "-9",
+          "-9",
+          "-9"
         ],
         [
           "Nettokassa vid slut",
-          "1159,2",
-          "1057,9",
-          "812,6"
+          "1 136",
+          "1 095",
+          "866"
         ]
       ]
     },
     {
-      "title": "Exakta kontrolltrösklar · redaktionella bedömningar",
+      "title": "Vad vi följer i nästa rapport",
       "headers": [
         "Tes",
         "Nästa bevis"
@@ -5627,7 +5801,7 @@
       "rows": [
         [
           "Organisk tillväxt inom elektrifiering och datacenter håller i sig efter kapacitetsuppbyggnaden.",
-          "Q4 Base: cirka 2 671 MSEK försäljning, +15 % totalt varav 12 % organiskt, 3 % förvärvat och 0 % valuta. 8 % organiskt är en tidig varningsgräns; det bekräftar inte Base om övriga bidrag är oförändrade."
+          "Q4 Base: cirka 2 669 MSEK försäljning och cirka 15 % total tillväxt. Komponenter +17 %, System +3 % enligt våra antaganden. Organiskt cirka 12 % är härledd rest efter förvärv/valuta; 8 % är varningsgräns, inte bekräftelse av Base."
         ],
         [
           "Högre teknikinnehåll kan lyfta lönsamheten utan försämrad leveranskvalitet.",
@@ -5635,7 +5809,7 @@
         ],
         [
           "Tillväxten kan omvandlas till fritt kassaflöde efter investeringar och leasing.",
-          "Vid bokslut och H1 2027: FCF efter leasing/nettoresultat tillbaka mot minst 60% R12 utan att tillväxten bryts."
+          "Vid bokslut och under 2027: följ lager och kundfordringar relativt försäljningen. Mer av vinsten behöver bli kvar efter investeringar och leasing, utan att leveransförmågan försämras."
         ],
         [
           "Förvärvad kapacitet skapar vinst och kassaflöde efter integrationskostnader.",
@@ -5653,18 +5827,18 @@
       "rows": [
         [
           "9 %",
-          "203,3",
-          "-45,2 %"
+          "200,2",
+          "-44,2 %"
         ],
         [
           "10 %",
-          "199,3",
-          "-44,1 %"
+          "196,3",
+          "-43,1 %"
         ],
         [
           "12 %",
-          "191,8",
-          "-41,9 %"
+          "188,9",
+          "-40,8 %"
         ]
       ]
     },
@@ -5679,9 +5853,9 @@
       "rows": [
         [
           "Organiskt, %",
-          "8,0",
-          "12,0",
-          "22,0"
+          "6,5",
+          "11,9",
+          "19,3"
         ],
         [
           "Förvärvat, %",
@@ -5697,15 +5871,15 @@
         ],
         [
           "Totalt, %",
-          "10,0",
-          "15,0",
-          "28,0"
+          "8,5",
+          "14,9",
+          "25,3"
         ],
         [
-          "Q4 omsättning MSEK",
-          "2555,3",
-          "2671,5",
-          "2973,4"
+          "Q4 omsättning, MSEK",
+          "2 520,3",
+          "2 668,9",
+          "2 910,4"
         ]
       ]
     },
@@ -5719,16 +5893,16 @@
       ],
       "rows": [
         [
-          "Utdelning 2027–2028 kr/aktie",
+          "Utdelning 2027–2028, kr/aktie",
           "4,35",
           "5,43",
           "6,51"
         ],
         [
-          "Totalavkastnings-IRR per år",
-          "-28,1 %",
-          "+2,9 %",
-          "+27,1 %"
+          "Totalavkastning per år",
+          "-28,0 %",
+          "+2,2 %",
+          "+25,7 %"
         ]
       ]
     },
@@ -5744,51 +5918,46 @@
       "rows": [
         [
           "7,5 %",
-          "145,3",
-          "161,4",
-          "193,7",
-          "226,0"
+          "143,2",
+          "159,1",
+          "190,9",
+          "222,7"
         ],
         [
           "9,0 %",
-          "174,3",
-          "193,7",
-          "232,4",
-          "271,2"
+          "171,8",
+          "190,9",
+          "229,1",
+          "267,3"
         ],
         [
           "10,3 %",
-          "199,5",
-          "221,7",
-          "266,0",
-          "310,4"
+          "196,6",
+          "218,5",
+          "262,2",
+          "305,9"
         ],
         [
           "11,5 %",
-          "222,8",
-          "247,5",
-          "297,0",
-          "346,5"
+          "219,5",
+          "243,9",
+          "292,7",
+          "341,5"
         ]
       ]
     },
     {
-      "title": "Base-light · mildare besvikelse, separat känslighet",
+      "title": "Om tillväxten mattas av · separat känslighet",
       "headers": [
         "Mått",
-        "Base",
-        "Base-light"
+        "Huvudscenario",
+        "Lägre tillväxt"
       ],
       "rows": [
         [
-          "Tillväxt 2027–2028",
-          "11 % per år",
-          "8 % per år"
-        ],
-        [
-          "Omsättning 2028 MSEK",
-          "12532,2",
-          "11864,0"
+          "Omsättning 2028, MSEK",
+          "12 351",
+          "11 861"
         ],
         [
           "EBIT-marginal",
@@ -5796,8 +5965,8 @@
           "9,5 %"
         ],
         [
-          "EPS kr",
-          "11,08",
+          "Vinst per aktie, kr",
+          "10,92",
           "9,68"
         ],
         [
@@ -5806,19 +5975,19 @@
           "22"
         ],
         [
-          "Terminalvärde kr",
-          "243,9",
+          "Värde per aktie, kr",
+          "240,3",
           "212,9"
         ],
         [
-          "Årlig totalavkastning",
-          "+2,9 %",
+          "Totalavkastning per år",
+          "+2,2 %",
           "-3,3 %"
         ],
         [
-          "Pris vid 10 % krav",
-          "203,1",
-          "178,0"
+          "Pris vid krav på 10 %",
+          "200,2",
+          "177,9"
         ]
       ]
     },
@@ -5833,39 +6002,39 @@
       "rows": [
         [
           "25 / 55 / 20",
-          "239,3",
-          "+2,0 %",
-          "199,3"
+          "235,6",
+          "+1,2 %",
+          "196,3"
         ],
         [
           "30 / 50 / 20",
-          "232,7",
-          "+0,7 %",
-          "193,9"
+          "229,1",
+          "-0,0 %",
+          "191,0"
         ],
         [
           "35 / 45 / 20",
-          "226,0",
-          "-0,7 %",
-          "188,5"
+          "222,7",
+          "-1,3 %",
+          "185,8"
         ],
         [
           "25 / 60 / 15",
-          "232,1",
-          "+0,6 %",
-          "193,5"
+          "228,7",
+          "-0,1 %",
+          "190,7"
         ],
         [
           "30 / 55 / 15",
-          "225,5",
-          "-0,8 %",
-          "188,1"
+          "222,3",
+          "-1,4 %",
+          "185,4"
         ],
         [
           "15 / 25 / 40 / 20*",
-          "244,8",
-          "+3,1 %",
-          "203,9"
+          "241,5",
+          "+2,4 %",
+          "201,3"
         ]
       ]
     },
@@ -5879,18 +6048,18 @@
       "rows": [
         [
           "24",
-          "266,0",
-          "+7,0 %"
+          "262,2",
+          "+6,3 %"
         ],
         [
           "22",
-          "243,9",
-          "+2,9 %"
+          "240,3",
+          "+2,2 %"
         ],
         [
           "20",
-          "221,7",
-          "-1,5 %"
+          "218,5",
+          "-2,1 %"
         ]
       ]
     },
@@ -5904,52 +6073,52 @@
       ],
       "rows": [
         [
-          "Resultat före skatt",
-          "269,8",
-          "1140,3",
-          "1290,8"
+          "Vinst före skatt",
+          "270",
+          "1 141",
+          "1 272"
         ],
         [
           "Avskrivningar",
-          "93,5",
-          "395,2",
-          "438,6"
+          "93",
+          "395",
+          "432"
         ],
         [
           "Betald skatt (avdrag)",
-          "56,7",
-          "239,5",
-          "271,1"
+          "57",
+          "240",
+          "267"
         ],
         [
           "Ökad kapitalbindning (avdrag)",
-          "95,5",
-          "306,6",
-          "340,4"
+          "95",
+          "308",
+          "290"
         ],
         [
-          "CFO",
-          "211,2",
-          "989,4",
-          "1118,0"
+          "Operativt kassaflöde",
+          "212",
+          "988",
+          "1 147"
         ],
         [
           "Bruttoinvesteringar (avdrag)",
-          "80,1",
-          "338,7",
-          "376,0"
+          "80",
+          "339",
+          "371"
         ],
         [
           "Leasingamortering (avdrag)",
-          "42,7",
-          "180,6",
-          "200,5"
+          "43",
+          "181",
+          "198"
         ],
         [
-          "FCF efter leasing",
-          "88,3",
-          "470,0",
-          "541,5"
+          "Fritt kassaflöde efter leasing",
+          "89",
+          "469",
+          "579"
         ]
       ]
     },
@@ -5963,16 +6132,16 @@
       ],
       "rows": [
         [
-          "FCF MSEK",
-          "486,8",
-          "541,5",
-          "575,3"
+          "Fritt kassaflöde, MSEK",
+          "411",
+          "579",
+          "600"
         ],
         [
-          "FCF / resultat",
-          "85,5 %",
-          "53,1 %",
-          "42,0 %"
+          "Andel av vinsten",
+          "71,9 %",
+          "57,6 %",
+          "44,9 %"
         ]
       ]
     },
@@ -5986,42 +6155,37 @@
       "rows": [
         [
           "Huvudantaganden",
-          "541,5",
-          "53,1 %"
+          "579",
+          "57,6 %"
         ],
         [
           "Kapitalbindning +2 procentenheter",
-          "516,7",
-          "50,7 %"
+          "558",
+          "55,5 %"
         ],
         [
           "Capex 4 % av försäljningen",
-          "416,2",
-          "40,8 %"
+          "456",
+          "45,4 %"
         ],
         [
           "Båda förändringarna",
-          "391,4",
-          "38,4 %"
+          "435",
+          "43,3 %"
         ]
       ]
     }
   ],
   "member_notes": [
     "EPS = (omsättning × EBIT-marginal + finansnetto) × (1 − skatt) / utspädda aktier. Värde = EPS × P/E. Nettokassan läggs inte ovanpå P/E-värdet. Prognoser och multiplar är våra antaganden, inte bolagsguidning.",
-    "EV/EBIT härleds nu uttryckligen som P/E × (1−skatt). Bryggan är algebraisk och visar kassans/minoritetens bidrag. Ingen oberoende multipel eller bekräftelse. Viktat alternativt värde 250,6 kr.",
-    "Omsättningsvägen visas en gång i prognosbryggan. Operativ Base är oförändrad, men P/E sänks till 22 efter kassaflödesanalys.",
-    "Norlake: köpeskilling 133 MSEK, historisk försäljning 69 MSEK. Kapacitet över 300 MSEK vid fullt utnyttjande är ingen order- eller försäljningsprognos. Största kunden stod för cirka 11,2 % och de två största för 18 % av 2025 års försäljning. Q3-geografin avser dotterbolagens säte, inte slutkundsmarknader.",
-    "Noll ej annonserade förvärv och inga nya förvärvsvinster antas. Slutkassan räknas från komponentbaserad FCF minus utdelningar och 9 MSEK uppskjuten Norlakebetalning. Leasingskuld antas oförändrad, med nya avtal i nivå med amortering. Övrig finansiering och valuta neutrala. Faktiska affärer kräver ny modelluppdatering. Svagare tillväxt binder mindre rörelsekapital, varför Bear kan ha bättre FCF-konvertering än Bull.",
-    "Utdelningar: två hypotetiska betalningar 30 april 2027/2028. Viktad summa 5,38 kr/aktie. Totalavkastnings-IRR +2,0 %/år före skatt; kontoform avgör faktisk beskattning.",
-    "Scenariospridning 91,8 kr är ingen empirisk volatilitet. P/E-antagandena är fortsatt redaktionella. Base-light är oviktad; fyrscenariot är endast en känslighet.",
-    "Samma hypotetiska utdelning 5,43 kr/aktie som Base för att isolera verksamhet och multipel. Inget nytt FCF- eller nettokassescenario beräknas. Lägre utdelning skulle sänka avkastningen ytterligare.",
-    "Bear/Bull-vikter prövas genom uttrycklig omfördelning till/från Base eller Bear. Värden och utdelningar hålls fasta inom varje viktningsprövning. Dessa känsligheter är inga nya huvudprognoser.",
-    "Base FCF beräknas nu från resultat, avskrivningar, skatt, kapitalbindning, investeringar och leasing. Utfallet cirka 541,5 MSEK och 53,1 % konvertering understiger tidigare 67 %. Därför sänks Base P/E 24→22 och Bull 28→26; operativa terminalprognoser behålls. Multipeländringen är en redaktionell helhetsbedömning, ingen automatisk funktion av FCF-konvertering. Tillväxt, lönsamhet, kapitalbehov och investeringarnas avkastning vägs ihop. Om kapitalbindning eller investeringar kräver mer än modellen antar omprövas både kassa och premie.",
+    "Summan av extern omsättning i rapporterade segment Komponenter och System. Internförsäljning räknas inte med. Tillväxtantaganden avser befintlig verksamhet inklusive genomförda förvärv, inte nya ej annonserade affärer. Valuta antas neutral 2027–2028. Ingen obekräftad omsättning per slutmarknad konstrueras.",
+    "AQ redovisar inte separata intäkter och orderböcker för datacenter, försvar och elnät i underlaget. Dessa är förklaringar till valda antaganden, inte separata kvantifierade försäljningsprognoser. Tillväxt är total segmenttillväxt; en exakt organisk/förvärvad uppdelning 2027–2028 kan inte verifieras.",
+    "Kassaflödet följer resultat, avskrivningar, betald skatt, kapitalbindning, investeringar och leasing. I Base blir det cirka 579 MSEK 2028, 58 % av vinsten. Tillväxt ger inte samma sak som fritt kassaflöde.",
     "Kapitalbindningen är en operativ proxy, inte en komplett prognosbalansräkning. Skatt, avsättningar, säsong, valuta och historiska förvärv kan skapa skillnader. Prognosen innehåller egna antaganden, inte bolagsguidning. Oförändrad proxyandel betyder ingen antagen effektiviseringsvinst; ingen engångsfrigörelse av kapital läggs in.",
-    "FCF = EBT + avskrivningar + övrigt ej kassapåverkande − betald skatt − ökad operativ kapitalbindning − bruttoinvesteringar − leasingamortering. Q4 använder kvartalsresultat/kostnader och förändring från proxybalans 30 september till modellens årsslut. 2027–2028 använder årsflöden. Ingen förvärvad tillväxt efter källstopp ingår. Proxy 2 692 MSEK / R12 omsättning 9 823 = 27,4 %, mot 24,5 % vid utgången 2025. Den högre aktuella andelen behålls, inte en återgång till lägre historisk nivå. Differenser mot rapportens kassaflöde kan uppstå från valuta, förvärv, avsättningar och andra poster.",
-    "3,5 % av omsättningen, nära rapporterade R12 350 / 9 823 = 3,6 %. Inkluderar nyttjanderättsavskrivningar; leasingamortering dras därför av separat. Bruttoinvesteringar 3,0 %, över R12 254 / 9 823 = 2,6 %. Ingen tillgångsförsäljning antas. Underhåll/tillväxt kan inte delas säkert; modellen undviker att endast räkna underhåll. Amortering 1,6 %, nära R12 154 / 9 823 = 1,6 %. Oförändrad leasingskuld kräver nya avtal ungefär i nivå med amorteringar. Kontantskatt 21–22 % av modellens EBT, lika med prognosskatten. R12 betald skatt 130 / EBT 948 = 13,7 % extrapoleras inte. Övriga ej kassapåverkande poster antas noll, mot R12 +36 MSEK. Historiska reserv-/valutaeffekter antas inte återkomma.",
-    "* Fyrscenariot avser Bear / Base-light / Base / Bull. Övriga rader avser Bear / Base / Bull."
+    "Noll ej annonserade förvärv och inga nya förvärvsvinster antas. Slutkassan räknas från komponentbaserad FCF minus utdelningar och 9 MSEK uppskjuten Norlakebetalning. Leasingskuld antas oförändrad, med nya avtal i nivå med amortering. Övrig finansiering och valuta neutrala. Faktiska affärer kräver ny modelluppdatering. Svagare tillväxt binder mindre rörelsekapital, varför Bear kan ha bättre FCF-konvertering än Bull.",
+    "Utdelningar antas hypotetiskt 30 april 2027 och 2028. Totalavkastning beräknas före skatt.",
+    "Den alternativa EV/EBIT-bryggan översätter P/E till EV/EBIT efter skatt. Den är ingen andra värderingsbekräftelse.",
+    "Vikterna är redaktionella. Extra känsligheter ingår inte i huvudvikterna. Fyrscenariot använder ordningen Bear / lägre tillväxt / Base / Bull."
   ],
   "q4_bridge": {
     "prior_q4_sales": 2323,
@@ -6029,45 +6193,45 @@
     "source_refs": [
       "S01"
     ],
-    "method": "Tillväxtbidrag adderas mot jämförelsekvartalets försäljning, i linje med rapportens brygga. Alla framtida bidrag är egna antaganden.",
+    "method": "Q4 total försäljning följer segmentmodellen. Förvärv/valuta är scenarioantaganden; organiskt bidrag är därefter härledd rest, inte en oberoende andra prognos.",
     "scenarios": [
       {
         "id": "bear",
-        "organic_growth": 0.08,
+        "organic_growth": 0.06493327593628907,
         "acquired_growth": 0.02,
         "fx_growth": 0,
-        "total_growth": 0.1,
-        "q4_revenue": 2555.2999999999993,
+        "total_growth": 0.08493327593628908,
+        "q4_revenue": 2520.2999999999993,
         "annual_revenue_path": [
-          10055.3,
-          10100,
-          10000
+          10020.3,
+          9847.053999999998,
+          10030.415079999999
         ]
       },
       {
         "id": "base",
-        "organic_growth": 0.12,
+        "organic_growth": 0.118906586310805,
         "acquired_growth": 0.03,
         "fx_growth": 0,
-        "total_growth": 0.15,
-        "q4_revenue": 2671.4500000000007,
+        "total_growth": 0.148906586310805,
+        "q4_revenue": 2668.91,
         "annual_revenue_path": [
-          10171.45,
-          11290.309500000001,
-          12532.243545000003
+          10168.91,
+          11293.3842,
+          12350.876370000002
         ]
       },
       {
         "id": "bull",
-        "organic_growth": 0.22,
+        "organic_growth": 0.19287989668532096,
         "acquired_growth": 0.04,
         "fx_growth": 0.02,
-        "total_growth": 0.28,
-        "q4_revenue": 2973.4400000000005,
+        "total_growth": 0.25287989668532096,
+        "q4_revenue": 2910.4400000000005,
         "annual_revenue_path": [
-          10473.44,
-          12700,
-          15000
+          10410.44,
+          12533.576799999999,
+          14636.390624
         ]
       }
     ]
@@ -6081,35 +6245,35 @@
     ],
     "dividend_timing_status": "HYPOTHETICAL_NOT_COMPANY_GUIDANCE",
     "weighted_dividend_per_share": 5.377605394699613,
-    "weighted_cashflow_irr": 0.019699603874142713,
-    "weighted_total_return": 0.04284433054295311,
+    "weighted_cashflow_irr": 0.01246752789293104,
+    "weighted_total_return": 0.02700020623018884,
     "hurdle_prices": [
       {
         "annual_return": 0.09,
-        "price": 203.28638216179655
+        "price": 200.20508164804178
       },
       {
         "annual_return": 0.1,
-        "price": 199.3384954034733
+        "price": 196.31783927876137
       },
       {
         "annual_return": 0.12,
-        "price": 191.7746135681554
+        "price": 188.87013132767848
       }
     ],
     "interpretation": "IRR beräknas på viktade kassaflöden, inte genomsnittet av scenario-IRR. Hurdlepriset är modellvillkorat; det ger inget kursgolv och kräver att tes och kvalitetspremie håller.",
-    "dispersion_sd": 91.8439693204488,
+    "dispersion_sd": 88.63997829044592,
     "dispersion_note": "Spridning i tre redaktionellt viktade terminalvärden, inte empirisk volatilitet eller statistiskt konfidensintervall."
   },
-  "scenario_method": "Bear/Base/Bull är samvarierande verksamhets- och värderingsutfall. Base är ett gynnsamt huvudscenario. 25/55/20 % är subjektiva redaktionella vikter, inte skattade frekvenser. Base ges störst vikt eftersom den senaste tillväxten och lönsamheten stöder fortsatt expansion; vikten är osäker. Bear kombinerar nära oförändrad omsättning, 7,5 % marginal och P/E 18. Sannolikheten för någon besvikelse är högre än för hela detta stressutfall. Base-light visar en mildare besvikelse separat. Vikter 30/50/20 och 35/45/20 prövas utan att ändra huvudvikterna. Bull kräver cirka 19,7 % årlig tillväxt 2027–2028 från Bulls eget prognosår 2026. Bull bidrar med 77,3 kr till viktat värde; lägre Bull-vikt visas separat.",
+  "scenario_method": "Tre möjliga vägar för verksamheten. Huvudscenariot antar fortsatt god utveckling, men inte att dagens starkaste tillväxt håller i hela koncernen. Vikterna 25/55/20 % är våra bedömningar, inte statistiska prognossannolikheter.",
   "sensitivity_analysis": {
     "base_light": {
-      "label": "Base-light",
+      "label": "Om tillväxten mattas av",
       "role": "SENSITIVITY_ONLY_NOT_WEIGHTED_SCENARIO",
       "q4_total_growth": 0.15,
       "annual_revenue_growth_2027_2028": 0.08,
       "inputs": {
-        "revenue": 11863.979280000001,
+        "revenue": 11861.016624000002,
         "ebit_margin": 0.095,
         "net_finance": 0,
         "tax_rate": 0.21,
@@ -6120,13 +6284,13 @@
         "minority_interest": 22
       },
       "outputs": {
-        "ebit": 1127.0780316,
-        "net_income": 890.3916449640001,
-        "eps": 9.678170053956523,
-        "fair_value": 212.91974118704348,
-        "total_return_irr": -0.032855674094812326,
-        "hurdle_price_10pct": 177.97391234978926,
-        "total_value_potential": -0.09241372043033469
+        "ebit": 1126.79657928,
+        "net_income": 890.1692976312,
+        "eps": 9.67575323512174,
+        "fair_value": 212.86657117267828,
+        "total_return_irr": -0.03296538755385309,
+        "hurdle_price_10pct": 177.93070358850014,
+        "total_value_potential": -0.09264036158278655
       },
       "dividend_assumption": "Samma hypotetiska utdelning 5,43 kr/aktie som Base för att isolera verksamhet och multipel. Inget nytt FCF- eller nettokassescenario beräknas. Lägre utdelning skulle sänka avkastningen ytterligare.",
       "interpretation": "Mildare besvikelse än Bear: fortsatt tillväxt men lägre tillväxt och marginal än Base, med samma P/E 22. Ingen fjärde huvudvikt; ingår inte i huvudmodellens viktade värde."
@@ -6138,9 +6302,9 @@
           0.55,
           0.2
         ],
-        "weighted_fair_value": 239.27367455067719,
-        "weighted_cashflow_irr": 0.019699603874142713,
-        "hurdle_price_10pct": 199.3384954034733,
+        "weighted_fair_value": 235.55664298690272,
+        "weighted_cashflow_irr": 0.01246752789293104,
+        "hurdle_price_10pct": 196.31783927876137,
         "recommendation": "BEVAKA"
       },
       {
@@ -6149,9 +6313,9 @@
           0.5,
           0.2
         ],
-        "weighted_fair_value": 232.65124495304332,
-        "weighted_cashflow_irr": 0.006663905038341356,
-        "hurdle_price_10pct": 193.90731854295043,
+        "weighted_fair_value": 229.1280719294289,
+        "weighted_cashflow_irr": -0.0002948043072276696,
+        "hurdle_price_10pct": 191.04420210457565,
         "recommendation": "BEVAKA"
       },
       {
@@ -6160,9 +6324,9 @@
           0.45,
           0.2
         ],
-        "weighted_fair_value": 226.02881535540945,
-        "weighted_cashflow_irr": -0.00657183989574478,
-        "hurdle_price_10pct": 188.4761416824276,
+        "weighted_fair_value": 222.69950087195508,
+        "weighted_cashflow_irr": -0.013250119604484245,
+        "hurdle_price_10pct": 185.7705649303899,
         "recommendation": "BEVAKA"
       },
       {
@@ -6171,9 +6335,9 @@
           0.6,
           0.15
         ],
-        "weighted_fair_value": 232.14045386065658,
-        "weighted_cashflow_irr": 0.005659970170439732,
-        "hurdle_price_10pct": 193.4928662113188,
+        "weighted_fair_value": 228.71274076885595,
+        "weighted_cashflow_irr": -0.0011175246639116287,
+        "hurdle_price_10pct": 190.70732555424976,
         "recommendation": "BEVAKA"
       },
       {
@@ -6182,9 +6346,9 @@
           0.55,
           0.15
         ],
-        "weighted_fair_value": 225.51802426302274,
-        "weighted_cashflow_irr": -0.007591573135817209,
-        "hurdle_price_10pct": 188.06168935079597,
+        "weighted_fair_value": 222.28416971138216,
+        "weighted_cashflow_irr": -0.014085597938990169,
+        "hurdle_price_10pct": 185.433688380064,
         "recommendation": "BEVAKA"
       }
     ],
@@ -6202,43 +6366,43 @@
         0.4,
         0.2
       ],
-      "weighted_fair_value": 244.78523409801474,
-      "weighted_cashflow_irr": 0.030528053185967186,
-      "hurdle_price_10pct": 203.9163614775989,
-      "note": "Illustrativ omfördelning, inte nya huvudvikter eller skattade sannolikheter. Med r4-värden gav samma vikter 259,6 kr; efter sänkta multiplar räknas alla känsligheter om."
+      "weighted_fair_value": 241.5494555444987,
+      "weighted_cashflow_irr": 0.02431311805184222,
+      "hurdle_price_10pct": 201.286796961347,
+      "note": "Illustrativ viktkänslighet, inte ett fjärde huvudscenario. Samtliga värden följer aktuell segmentmodell."
     }
   },
   "premium_policy": {
     "status": "CONDITIONAL_ANALYST_ASSUMPTION",
     "pe_base": 22,
-    "fcf_assessment": "Base FCF beräknas nu från resultat, avskrivningar, skatt, kapitalbindning, investeringar och leasing. Utfallet cirka 541,5 MSEK och 53,1 % konvertering understiger tidigare 67 %. Därför sänks Base P/E 24→22 och Bull 28→26; operativa terminalprognoser behålls.",
+    "fcf_assessment": "Kassaflödet följer resultat, avskrivningar, betald skatt, kapitalbindning, investeringar och leasing. I Base blir det cirka 579 MSEK 2028, 58 % av vinsten. Tillväxt ger inte samma sak som fritt kassaflöde.",
     "required_evidence": "Oförändrad kapitalbindning per omsättningskrona är modellens utgångspunkt. Bokslut och H1 2027 ska visa hur lager, fordringar, investeringar och leasing utvecklas. Inga antagna effektivitetsvinster får behandlas som bevisade.",
     "revision_rule": "Multipeländringen är en redaktionell helhetsbedömning, ingen automatisk funktion av FCF-konvertering. Tillväxt, lönsamhet, kapitalbehov och investeringarnas avkastning vägs ihop. Om kapitalbindning eller investeringar kräver mer än modellen antar omprövas både kassa och premie.",
     "downrating_sensitivity": [
       {
         "pe": 24,
-        "fair_value": 266.02138884956094,
-        "total_return_irr": 0.07015747221205182
+        "fair_value": 262.17151571136526,
+        "total_return_irr": 0.06308510385383348
       },
       {
         "pe": 22,
-        "fair_value": 243.85293977876418,
-        "total_return_irr": 0.028639829649337867
+        "fair_value": 240.3238894020848,
+        "total_return_irr": 0.021845320518337208
       },
       {
         "pe": 20,
-        "fair_value": 221.68449070796743,
-        "total_return_irr": -0.014967863062827436
+        "fair_value": 218.47626309280434,
+        "total_return_irr": -0.02147045843283818
       }
     ]
   },
   "secondary_valuation_interpretation": {
     "label": "Alternativ värderingsbrygga med EV/EBIT",
     "independent_validation": false,
-    "weighted_fair_value": 250.58887204793203,
+    "weighted_fair_value": 247.14704929262055,
     "explanation": "EV/EBIT härleds nu uttryckligen som P/E × (1−skatt). Bryggan är algebraisk och visar kassans/minoritetens bidrag. Ingen oberoende multipel eller bekräftelse.",
-    "base_operating_value": 243.85293977876418,
-    "base_cash_less_minority_per_share": 11.259275342254977
+    "base_operating_value": 240.32388940208483,
+    "base_cash_less_minority_per_share": 11.66120767586503
   },
   "cashflow_bridge": {
     "source_refs": [
@@ -6289,63 +6453,63 @@
         "periods": [
           {
             "period": "Q4 2026",
-            "period_revenue": 2555.2999999999993,
-            "annual_revenue": 10055.3,
+            "period_revenue": 2520.2999999999993,
+            "annual_revenue": 10020.3,
             "ebit_margin": 0.09,
             "net_finance": -5.0,
-            "ebt": 224.97699999999992,
-            "depreciation_amortization": 89.43549999999998,
+            "ebt": 221.8269999999999,
+            "depreciation_amortization": 88.21049999999998,
             "other_noncash": 0,
-            "tax_paid": 49.494939999999986,
+            "tax_paid": 48.80193999999998,
             "opening_working_capital_proxy": 2692.0000000000005,
-            "closing_working_capital_proxy": 2755.661976992772,
-            "working_capital_absorption": 63.66197699277187,
-            "cfo": 201.25558300722804,
-            "gross_capex": 76.65899999999998,
-            "lease_principal": 40.88479999999999,
-            "fcf_after_leases": 83.71178300722806,
-            "net_income": 175.48205999999993,
-            "fcf_conversion": 0.4770389805500807
+            "closing_working_capital_proxy": 2746.070202585768,
+            "working_capital_absorption": 54.0702025857679,
+            "cfo": 207.165357414232,
+            "gross_capex": 75.60899999999998,
+            "lease_principal": 40.32479999999999,
+            "fcf_after_leases": 91.23155741423204,
+            "net_income": 173.02505999999994,
+            "fcf_conversion": 0.5272736643711152
           },
           {
             "period": "2027",
-            "period_revenue": 10100,
-            "annual_revenue": 10100,
+            "period_revenue": 9847.053999999998,
+            "annual_revenue": 9847.053999999998,
             "ebit_margin": 0.085,
             "net_finance": -20,
-            "ebt": 838.5000000000001,
-            "depreciation_amortization": 353.50000000000006,
+            "ebt": 816.9995899999999,
+            "depreciation_amortization": 344.64689,
             "other_noncash": 0,
-            "tax_paid": 184.47000000000003,
-            "opening_working_capital_proxy": 2755.661976992772,
-            "closing_working_capital_proxy": 2767.912043164003,
-            "working_capital_absorption": 12.250066171230985,
-            "cfo": 995.2799338287692,
-            "gross_capex": 303.0,
-            "lease_principal": 161.6,
-            "fcf_after_leases": 530.6799338287692,
-            "net_income": 654.0300000000001,
-            "fcf_conversion": 0.8113999875063364
+            "tax_paid": 179.7399098,
+            "opening_working_capital_proxy": 2746.070202585768,
+            "closing_working_capital_proxy": 2698.5920154738874,
+            "working_capital_absorption": -47.47818711188056,
+            "cfo": 1029.3847573118805,
+            "gross_capex": 295.4116199999999,
+            "lease_principal": 157.55286399999997,
+            "fcf_after_leases": 576.4202733118807,
+            "net_income": 637.2596801999999,
+            "fcf_conversion": 0.904529646581398
           },
           {
             "period": "2028",
-            "period_revenue": 10000,
-            "annual_revenue": 10000,
+            "period_revenue": 10030.415079999999,
+            "annual_revenue": 10030.415079999999,
             "ebit_margin": 0.075,
             "net_finance": -20,
-            "ebt": 730.0,
-            "depreciation_amortization": 350.00000000000006,
+            "ebt": 732.2811309999998,
+            "depreciation_amortization": 351.0645278,
             "other_noncash": 0,
-            "tax_paid": 160.6,
-            "opening_working_capital_proxy": 2767.912043164003,
-            "closing_working_capital_proxy": 2740.5069734297062,
-            "working_capital_absorption": -27.40506973429706,
-            "cfo": 946.805069734297,
-            "gross_capex": 300.0,
-            "lease_principal": 160.0,
-            "fcf_after_leases": 486.80506973429704,
-            "net_income": 569.4,
-            "fcf_conversion": 0.8549439229615333
+            "tax_paid": 161.10184881999996,
+            "opening_working_capital_proxy": 2698.5920154738874,
+            "closing_working_capital_proxy": 2748.842247313448,
+            "working_capital_absorption": 50.25023183956038,
+            "cfo": 871.9935781404396,
+            "gross_capex": 300.91245239999995,
+            "lease_principal": 160.48664128,
+            "fcf_after_leases": 410.5944844604396,
+            "net_income": 571.1792821799999,
+            "fcf_conversion": 0.7188539522885671
           }
         ]
       },
@@ -6354,63 +6518,63 @@
         "periods": [
           {
             "period": "Q4 2026",
-            "period_revenue": 2671.4500000000007,
-            "annual_revenue": 10171.45,
+            "period_revenue": 2668.91,
+            "annual_revenue": 10168.91,
             "ebit_margin": 0.101,
             "net_finance": 0.0,
-            "ebt": 269.8164500000001,
-            "depreciation_amortization": 93.50075000000004,
+            "ebt": 269.55991,
+            "depreciation_amortization": 93.41185,
             "other_noncash": 0,
-            "tax_paid": 56.66145450000002,
+            "tax_paid": 56.6075811,
             "opening_working_capital_proxy": 2692.0000000000005,
-            "closing_working_capital_proxy": 2787.4929654891585,
-            "working_capital_absorption": 95.49296548915831,
-            "cfo": 211.16278001084177,
-            "gross_capex": 80.14350000000002,
-            "lease_principal": 42.743200000000016,
-            "fcf_after_leases": 88.27608001084174,
-            "net_income": 213.15499550000007,
-            "fcf_conversion": 0.4141403292180488
+            "closing_working_capital_proxy": 2786.7968767179073,
+            "working_capital_absorption": 94.79687671790693,
+            "cfo": 211.5673021820931,
+            "gross_capex": 80.06729999999999,
+            "lease_principal": 42.70256,
+            "fcf_after_leases": 88.7974421820931,
+            "net_income": 212.9523289,
+            "fcf_conversion": 0.4169827239775874
           },
           {
             "period": "2027",
-            "period_revenue": 11290.309500000001,
-            "annual_revenue": 11290.309500000001,
+            "period_revenue": 11293.3842,
+            "annual_revenue": 11293.3842,
             "ebit_margin": 0.101,
             "net_finance": 0,
-            "ebt": 1140.3212595000002,
-            "depreciation_amortization": 395.1608325000001,
+            "ebt": 1140.6318042,
+            "depreciation_amortization": 395.26844700000004,
             "other_noncash": 0,
-            "tax_paid": 239.46746449500003,
-            "opening_working_capital_proxy": 2787.4929654891585,
-            "closing_working_capital_proxy": 3094.117191692966,
-            "working_capital_absorption": 306.62422620380755,
-            "cfo": 989.3904013011926,
-            "gross_capex": 338.709285,
-            "lease_principal": 180.64495200000002,
-            "fcf_after_leases": 470.03616430119257,
-            "net_income": 900.8537950050002,
-            "fcf_conversion": 0.521767424311715
+            "tax_paid": 239.532678882,
+            "opening_working_capital_proxy": 2786.7968767179073,
+            "closing_working_capital_proxy": 3094.9598153720863,
+            "working_capital_absorption": 308.16293865417913,
+            "cfo": 988.204633663821,
+            "gross_capex": 338.801526,
+            "lease_principal": 180.6941472,
+            "fcf_after_leases": 468.708960463821,
+            "net_income": 901.099125318,
+            "fcf_conversion": 0.5201524974274195
           },
           {
             "period": "2028",
-            "period_revenue": 12532.243545000003,
-            "annual_revenue": 12532.243545000003,
+            "period_revenue": 12350.876370000002,
+            "annual_revenue": 12350.876370000002,
             "ebit_margin": 0.103,
             "net_finance": 0,
-            "ebt": 1290.8210851350002,
-            "depreciation_amortization": 438.62852407500014,
+            "ebt": 1272.14026611,
+            "depreciation_amortization": 432.2806729500001,
             "other_noncash": 0,
-            "tax_paid": 271.07242787835,
-            "opening_working_capital_proxy": 3094.117191692966,
-            "closing_working_capital_proxy": 3434.470082779193,
-            "working_capital_absorption": 340.35289108622675,
-            "cfo": 1118.0242902454236,
-            "gross_capex": 375.96730635000006,
-            "lease_principal": 200.51589672000006,
-            "fcf_after_leases": 541.5410871754234,
-            "net_income": 1019.7486572566502,
-            "fcf_conversion": 0.5310534937425551
+            "tax_paid": 267.1494558831,
+            "opening_working_capital_proxy": 3094.9598153720863,
+            "closing_working_capital_proxy": 3384.766281995318,
+            "working_capital_absorption": 289.8064666232316,
+            "cfo": 1147.4650165536686,
+            "gross_capex": 370.52629110000004,
+            "lease_principal": 197.61402192000003,
+            "fcf_after_leases": 579.3247035336686,
+            "net_income": 1004.9908102269001,
+            "fcf_conversion": 0.5764477621470714
           }
         ]
       },
@@ -6419,63 +6583,63 @@
         "periods": [
           {
             "period": "Q4 2026",
-            "period_revenue": 2973.4400000000005,
-            "annual_revenue": 10473.44,
+            "period_revenue": 2910.4400000000005,
+            "annual_revenue": 10410.44,
             "ebit_margin": 0.105,
             "net_finance": 2.5,
-            "ebt": 314.7112,
-            "depreciation_amortization": 104.07040000000002,
+            "ebt": 308.09620000000007,
+            "depreciation_amortization": 101.86540000000002,
             "other_noncash": 0,
-            "tax_paid": 66.089352,
+            "tax_paid": 64.70020200000002,
             "opening_working_capital_proxy": 2692.0000000000005,
-            "closing_working_capital_proxy": 2870.2535355797622,
-            "working_capital_absorption": 178.25353557976194,
-            "cfo": 174.43871242023806,
-            "gross_capex": 89.20320000000001,
-            "lease_principal": 47.57504000000001,
-            "fcf_after_leases": 37.660472420238044,
-            "net_income": 248.621848,
-            "fcf_conversion": 0.1514769225761609
+            "closing_working_capital_proxy": 2852.9883416471553,
+            "working_capital_absorption": 160.98834164715478,
+            "cfo": 184.27305635284532,
+            "gross_capex": 87.31320000000001,
+            "lease_principal": 46.567040000000006,
+            "fcf_after_leases": 50.3928163528453,
+            "net_income": 243.39599800000005,
+            "fcf_conversion": 0.20704044752964793
           },
           {
             "period": "2027",
-            "period_revenue": 12700,
-            "annual_revenue": 12700,
+            "period_revenue": 12533.576799999999,
+            "annual_revenue": 12533.576799999999,
             "ebit_margin": 0.108,
             "net_finance": 10,
-            "ebt": 1381.6,
-            "depreciation_amortization": 444.50000000000006,
+            "ebt": 1363.6262943999998,
+            "depreciation_amortization": 438.675188,
             "other_noncash": 0,
-            "tax_paid": 290.13599999999997,
-            "opening_working_capital_proxy": 2870.2535355797622,
-            "closing_working_capital_proxy": 3480.4438562557266,
-            "working_capital_absorption": 610.1903206759645,
-            "cfo": 925.7736793240355,
-            "gross_capex": 381.0,
-            "lease_principal": 203.20000000000002,
-            "fcf_after_leases": 341.5736793240354,
-            "net_income": 1091.464,
-            "fcf_conversion": 0.31295001880413414
+            "tax_paid": 286.36152182399996,
+            "opening_working_capital_proxy": 2852.9883416471553,
+            "closing_working_capital_proxy": 3434.8354622416778,
+            "working_capital_absorption": 581.8471205945227,
+            "cfo": 934.092839981477,
+            "gross_capex": 376.007304,
+            "lease_principal": 200.53722879999998,
+            "fcf_after_leases": 357.54830718147707,
+            "net_income": 1077.2647725759998,
+            "fcf_conversion": 0.33190383300708226
           },
           {
             "period": "2028",
-            "period_revenue": 15000,
-            "annual_revenue": 15000,
+            "period_revenue": 14636.390624,
+            "annual_revenue": 14636.390624,
             "ebit_margin": 0.115,
             "net_finance": 10,
-            "ebt": 1735.0,
-            "depreciation_amortization": 525.0,
+            "ebt": 1693.18492176,
+            "depreciation_amortization": 512.27367184,
             "other_noncash": 0,
-            "tax_paid": 364.34999999999997,
-            "opening_working_capital_proxy": 3480.4438562557266,
-            "closing_working_capital_proxy": 4110.760460144559,
-            "working_capital_absorption": 630.3166038888324,
-            "cfo": 1265.3333961111675,
-            "gross_capex": 450.0,
-            "lease_principal": 240.0,
-            "fcf_after_leases": 575.3333961111675,
-            "net_income": 1370.65,
-            "fcf_conversion": 0.41975223150415314
+            "tax_paid": 355.5688335696,
+            "opening_working_capital_proxy": 3434.8354622416778,
+            "closing_working_capital_proxy": 4011.1130570913165,
+            "working_capital_absorption": 576.2775948496388,
+            "cfo": 1273.6121651807612,
+            "gross_capex": 439.09171871999996,
+            "lease_principal": 234.182249984,
+            "fcf_after_leases": 600.3381964767611,
+            "net_income": 1337.6160881904,
+            "fcf_conversion": 0.44881203342053955
           }
         ]
       }
@@ -6483,23 +6647,23 @@
     "terminal_fcf_sensitivity": [
       {
         "label": "Huvudantaganden",
-        "fcf_after_leases": 541.5410871754234,
-        "conversion": 0.5310534937425551
+        "fcf_after_leases": 579.3247035336686,
+        "conversion": 0.5764477621470714
       },
       {
         "label": "Kapitalbindning +2 procentenheter",
-        "fcf_after_leases": 516.7024062754233,
-        "conversion": 0.5066958437243421
+        "fcf_after_leases": 558.1748601336684,
+        "conversion": 0.5554029494136842
       },
       {
         "label": "Capex 4 % av försäljningen",
-        "fcf_after_leases": 416.2186517254234,
-        "conversion": 0.4081580777415719
+        "fcf_after_leases": 455.8159398336685,
+        "conversion": 0.4535523461460881
       },
       {
         "label": "Båda förändringarna",
-        "fcf_after_leases": 391.3799708254233,
-        "conversion": 0.38380042772335893
+        "fcf_after_leases": 434.66609643366826,
+        "conversion": 0.4325075334127008
       }
     ],
     "assumption_rationales": {
@@ -6518,5 +6682,244 @@
     "source_ref": "U01",
     "text": "Författaren äger aktier i AQ Group. Innehavet bekräftades den 28 oktober 2026 och innebär ett ekonomiskt intresse i bolaget.",
     "other_disclosures": "Tidigare webbuppgift anger ingen ersättning eller kommersiell relation till AQ. Ingen ny sådan relation har redovisats i denna uppdatering."
+  },
+  "segment_revenue_model": {
+    "method": "Summan av extern omsättning i rapporterade segment Komponenter och System. Internförsäljning räknas inte med. Tillväxtantaganden avser befintlig verksamhet inklusive genomförda förvärv, inte nya ej annonserade affärer. Valuta antas neutral 2027–2028. Ingen obekräftad omsättning per slutmarknad konstrueras.",
+    "actuals": {
+      "2025": {
+        "components": 7727,
+        "systems": 1344
+      },
+      "9m2025": {
+        "components": 5754,
+        "systems": 994
+      },
+      "9m2026": {
+        "components": 6492,
+        "systems": 1008
+      },
+      "q32025": {
+        "components": 1811,
+        "systems": 302
+      },
+      "q32026": {
+        "components": 2240,
+        "systems": 326
+      }
+    },
+    "source_refs": [
+      "S01",
+      "S04"
+    ],
+    "source_pages": "S01 tryckt s.16–17, S04 s.75",
+    "limitations": "AQ redovisar inte separata intäkter och orderböcker för datacenter, försvar och elnät i underlaget. Dessa är förklaringar till valda antaganden, inte separata kvantifierade försäljningsprognoser. Tillväxt är total segmenttillväxt; en exakt organisk/förvärvad uppdelning 2027–2028 kan inte verifieras.",
+    "scenarios": [
+      {
+        "id": "bear",
+        "periods": [
+          {
+            "year": 2026,
+            "components": 8662.3,
+            "systems": 1358,
+            "revenue": 10020.3,
+            "component_growth_assumption": 0.1,
+            "system_growth_assumption": 0
+          },
+          {
+            "year": 2027,
+            "components": 8489.053999999998,
+            "systems": 1358,
+            "revenue": 9847.053999999998,
+            "component_growth_assumption": -0.02,
+            "system_growth_assumption": 0
+          },
+          {
+            "year": 2028,
+            "components": 8658.835079999999,
+            "systems": 1371.58,
+            "revenue": 10030.415079999999,
+            "component_growth_assumption": 0.02,
+            "system_growth_assumption": 0.01
+          }
+        ],
+        "rationale": [
+          "Efter ett fortfarande positivt Q4 viker komponentefterfrågan 2027. Industrikunder skjuter upp leveranser och utbyggd kapacitet blir inte fullt utnyttjad. System ligger stilla. En liten återhämtning 2028 räcker inte för att återställa tillväxtbanan.",
+          "7,5 % koncernmarginal kräver ett faktiskt bakslag: lägre beläggning och kvalitets-/integrationskostnader. Det är under 2023–2025, men inte under 2022 års 7,0 %. P/E 18 avspeglar osäkerheten och en svagare vinstprofil."
+        ]
+      },
+      {
+        "id": "base",
+        "periods": [
+          {
+            "year": 2026,
+            "components": 8800.41,
+            "systems": 1368.5,
+            "revenue": 10168.91,
+            "component_growth_assumption": 0.17,
+            "system_growth_assumption": 0.03
+          },
+          {
+            "year": 2027,
+            "components": 9856.459200000001,
+            "systems": 1436.925,
+            "revenue": 11293.3842,
+            "component_growth_assumption": 0.12,
+            "system_growth_assumption": 0.05
+          },
+          {
+            "year": 2028,
+            "components": 10842.105120000002,
+            "systems": 1508.77125,
+            "revenue": 12350.876370000002,
+            "component_growth_assumption": 0.1,
+            "system_growth_assumption": 0.05
+          }
+        ],
+        "rationale": [
+          "Komponenter växer 17 % i Q4, lägre än segmentets rapporterade 23,7 % i Q3. Därefter antar vi 12 % 2027 och 10 % 2028: fortsatt god efterfrågan på induktiva komponenter och mer volym i befintliga fabriker, men en gradvis avmattning när jämförelsetalen blir högre.",
+          "System växer 3 % i Q4 och därefter 5 % per år. Det är en försiktigare bana än för Komponenter: nio månader 2026 ökade System bara cirka 1,4 % och Time 24 gav negativt resultatbidrag. Vi räknar med stabilisering och bättre integration, inte ett brett genombrott i hela koncernen.",
+          "10,3 % koncernmarginal 2028 kräver något bättre mix och produktivitet än Q3:s 10,1 %. P/E 22 innehåller en kvalitetspremie för fortsatt tillväxt och lönsamhet. Den måste också tåla att tillväxten binder kapital; marginalförbättringen är inget skäl att bortse från kassaflödet."
+        ]
+      },
+      {
+        "id": "bull",
+        "periods": [
+          {
+            "year": 2026,
+            "components": 9017.44,
+            "systems": 1393.0,
+            "revenue": 10410.44,
+            "component_growth_assumption": 0.28,
+            "system_growth_assumption": 0.1
+          },
+          {
+            "year": 2027,
+            "components": 11001.2768,
+            "systems": 1532.3000000000002,
+            "revenue": 12533.576799999999,
+            "component_growth_assumption": 0.22,
+            "system_growth_assumption": 0.1
+          },
+          {
+            "year": 2028,
+            "components": 12981.506624,
+            "systems": 1654.8840000000002,
+            "revenue": 14636.390624,
+            "component_growth_assumption": 0.18,
+            "system_growth_assumption": 0.08
+          }
+        ],
+        "rationale": [
+          "Komponenter växer 28 % i Q4, 22 % 2027 och 18 % 2028. Då måste den starka utvecklingen i datacenter, elektrifiering och försvar bestå över flera rapporter. Befintlig amerikansk kapacitet måste fyllas med lönsamma leveranser och fler verksamheter måste bidra än bara de senaste vinnarna.",
+          "System växer 10 % 2027 och 8 % 2028 efter ett starkare Q4. Här krävs att Time 24 och andra systemverksamheter bidrar tydligt till tillväxten. 11,5 % koncernmarginal kräver samtidigt god beläggning, förbättrad kvalitet och lyckad integration.",
+          "P/E 26 är därför villkorat av ett starkare operativt utfall än Base. Varken hela AQ eller hela segmentet Komponenter antas fördubbla sin försäljning. Norlakes möjliga kapacitet används inte som garanterad omsättning."
+        ]
+      }
+    ]
+  },
+  "reader_content": {
+    "business_sections": [
+      {
+        "title": "Vad AQ säljer – och varför kunden behöver det",
+        "paragraphs": [
+          "AQ är en tillverkningspartner åt industribolag. Kunden säljer den färdiga produkten under sitt eget namn; AQ tillverkar komponenterna eller bygger ihop delar av systemet. Det kan handla om transformatorer som anpassar elektrisk kraft, kablage som förbinder utrustning, bearbetade metalldelar eller kompletta elskåp och maskiner. AQ hjälper också kunderna med industrialisering: att gå från konstruktion till en produkt som går att tillverka i rätt volym, kvalitet och kostnad. [S01,S04]",
+          "En växande marknad räcker därför inte på egen hand. AQ måste finnas i rätt kunders produkter, vinna deras förtroende och kunna leverera när kunden vill öka produktionen. Det är kundens order och AQ:s leveransförmåga som till sist blir försäljning – inte antalet rubriker om datacenter."
+        ]
+      },
+      {
+        "title": "Två delar av bolaget med olika utveckling",
+        "paragraphs": [
+          "Komponenter är den större delen. Här finns bland annat induktiva komponenter, kablage, mekanik, plåtbearbetning och plastdetaljer. Segmentet stod för ungefär 87 % av extern försäljning januari–september 2026. I Q3 växte dess externa försäljning cirka 24 %. System bygger bland annat elskåp och kompletta maskin- och automationslösningar. Den delen är mindre och ökade bara cirka 1 % under årets första nio månader. [S01 s.16–17]",
+          "Det är därför missvisande att ge hela AQ samma tillväxttakt utan förklaring. I våra scenarier får Komponenter driva mer av expansionen. System måste visa en egen förbättring, bland annat genom att integrationen av Time 24 ger resultat. Intern försäljning mellan AQ-bolag räknas inte en gång till."
+        ]
+      },
+      {
+        "title": "Vad som kan göra AQ till en bra långsiktig verksamhet",
+        "paragraphs": [
+          "För en industrikund kan en felaktig komponent eller sen leverans störa en större produktion. Värdet ligger därför inte bara i styckepriset, utan i att AQ kan uppfylla tekniska krav och leverera återkommande. Vår bedömning är att produktionskunnande och etablerade kundrelationer kan göra det besvärligt att byta leverantör. Det är däremot ingen garanti mot prispress.",
+          "Den decentraliserade organisationen ger lokala bolag ansvar nära kunden. Fördelen är snabbhet och industriellt entreprenörskap; motvikten är att många fabriker och förvärv måste hålla tillräcklig kvalitet. AQ beskriver självt att koncernen saknar egna produkter och patent. Vi ser därför konkurrensfördelen som genomförande och kundförtroende, snarare än ett skyddat produktmonopol. [S01,S04]"
+        ]
+      },
+      {
+        "title": "Varifrån tillväxten kan komma",
+        "paragraphs": [
+          "Datacenter behöver strömförsörjning och kylning, medan elektrifiering och elnät kräver mer utrustning som hanterar elektrisk kraft. AQ uppger att leveranser av induktiva komponenter till datacenter ökar och att försvar också bidrar. I USA har bolaget köpt tillgångar från Norlake för att utöka kapaciteten. Det ger möjlighet till fler leveranser, men kräver både kundorder och fungerande produktion. [S01,S07]",
+          "Ledningens ambition att fördubbla amerikanska leveranser av induktiva komponenter avser en del av verksamheten under kommande år. Vi räknar inte med att hela koncernen fördubblas. Underlaget visar inte heller hur stor andel av AQ:s försäljning som kommer från varje slutmarknad. Scenarierna utgår därför från de två redovisade segmenten, inte påhittade försäljningsandelar för AI, elnät eller försvar."
+        ]
+      },
+      {
+        "title": "Varför tillväxten inte automatiskt blir pengar på kontot",
+        "paragraphs": [
+          "Fler order kräver ofta material i lager, fler produkter under tillverkning och större kundfordringar. Nya maskiner och lokaler ska dessutom betalas innan hela intjäningen syns. AQ kan därför redovisa högre vinst samtidigt som en stor del av pengarna används i expansionen.",
+          "R12 var det operativa kassaflödet 753 MSEK. Efter bruttoinvesteringar och leasingamortering återstod 345 MSEK, ungefär 46 % av vinsten. Det betyder att vinsten har operativt kassastöd, men att mindre återstår till utdelningar, förvärv och ökad kassa. Det är en huvudfråga bakom vår försiktiga värdering. [S01,S04; härlett]"
+        ]
+      },
+      {
+        "title": "Vad som kan gå fel – och vad vi vill se härnäst",
+        "paragraphs": [
+          "Efterfrågan kan mattas av efter att AQ redan byggt kapacitet. Då blir lägre beläggning ett problem för marginalen. Tillväxt som koncentreras till ett fåtal kunder eller fabriker kan också göra utfallet mer ojämnt än koncernsiffrorna antyder. Den största kunden stod för cirka 11 % av 2025 års försäljning och de två största för 18 %. [S04]",
+          "Vi vill se att efterfrågan består, att System stabiliseras och att leveransprecisionen förbättras. Lager och kundfordringar behöver följas i relation till försäljningen, inte bara som absoluta belopp. Ett lägre aktiepris hjälper avkastningskalkylen, men det ersätter inte bevis på att bolaget växer lönsamt."
+        ]
+      }
+    ],
+    "member_intro": "Här förklarar vi först vilken utveckling varje scenario kräver. Omsättningen byggs från Komponenter och System. Därefter bedömer vi koncernens lönsamhet och vad marknaden kan betala för vinsten. Exakta beräkningar och extra stresstester finns längre ned för den som vill granska modellen.",
+    "scenario_heading": "Vad måste hända för att varje scenario ska bli verklighet?",
+    "member_sections": [
+      {
+        "title": "Varför marginalen inte höjs i takt med försäljningen",
+        "paragraphs": [
+          "När samma fabrik tillverkar fler enheter kan fasta kostnader fördelas på större volymer. Men det gäller bara om material, bemanning, kvalitet och leveranser fungerar. En ny fabrik eller ett förvärv kan i stället dra resurser innan produktionen fungerar fullt ut. Högre försäljning är därför inte i sig ett bevis på högre marginal.",
+          "Base på 10,3 % EBIT-marginal 2028 ligger bara något över Q3:s 10,1 %, men kräver ändå fortsatt förbättring. Bull på 11,5 % kräver mer: god beläggning, bättre produktmix och lyckad integration samtidigt. Bear på 7,5 % är ett stressutfall med svagare kapacitetsutnyttjande, inte vår bild av ett normalt år."
+        ]
+      },
+      {
+        "title": "Varför vi ändå ger AQ en viss kvalitetspremie",
+        "paragraphs": [
+          "Vi använder P/E 22 i huvudscenariot. Det innebär att varje krona av vår prognostiserade årsvinst 2028 värderas till 22 kronor. Det är ett antagande om framtida betalningsvilja, inte ett observerat historiskt normalvärde eller ett löfte om aktiekursen.",
+          "Premien bygger på fortsatt tillväxt, kundernas förtroende och god lönsamhet. Men den får inte bli ett frikort för svagt kassaflöde. Om expansionen kräver mer kapital än vi räknar med kan både den framtida kassan och den rimliga vinstmultipeln behöva sänkas. Bull använder P/E 26 och Bear P/E 18 av samma skäl: verksamhetens kvalitet och marknadens betalningsvilja kan förändras tillsammans."
+        ]
+      },
+      {
+        "title": "Hur mycket av vinsten blir kvar?",
+        "paragraphs": [
+          "I huvudscenariot beräknas fritt kassaflöde efter investeringar och leasing till omkring 579 MSEK 2028. Det är ungefär 58 % av vinsten. Vi antar ingen engångsvinst från att sälja av lager eller pressa ned kapitalbindningen. Dagens högre kapitalbindning i relation till försäljningen behålls i beräkningen.",
+          "Bear kan visa högre kassaflödesandel än Bull trots sämre vinst. Förklaringen är att stillastående försäljning inte kräver lika mycket nya lager och kundfordringar. I Bull måste en stor del av pengarna finansiera fortsatt expansion. Det gör inte Bear till ett bättre bolagsscenario; det visar att tillväxt har en finansieringskostnad."
+        ]
+      },
+      {
+        "title": "Vad betyder det för aktien?",
+        "paragraphs": [
+          "Vi kräver 10 % årlig avkastning före skatt i analysen. Med våra utdelningsantaganden motsvarar det ungefär 196 kr i ingångspris i den viktade modellen. Det är ett villkorat räkneexempel, inte en automatisk köpgräns. Om efterfrågan eller kvaliteten försämras måste även värderingen ändras.",
+          "En enklare besvikelse räcker för att avkastningen ska bli svag: om försäljningen växer 8 % per år, marginalen blir 9,5 % och P/E stannar på 22 får vi ett värde som ligger under referenskursen. I huvudläsningen behöver man inte följa ett extra scenario med ett eget namn för att förstå poängen. Beräkningen finns bland stresstesterna."
+        ]
+      }
+    ],
+    "technical_intro": "Här finns underlaget för granskning. Antaganden är våra egna och ska inte förväxlas med bolagets guidning. Mer decimaler betyder inte att prognosen är mer säker.",
+    "plain_summary_rows": [
+      [
+        "Omsättning 2028",
+        "10,0 mdkr",
+        "12,4 mdkr",
+        "14,6 mdkr"
+      ],
+      [
+        "EBIT-marginal",
+        "7,5 %",
+        "10,3 %",
+        "11,5 %"
+      ],
+      [
+        "P/E",
+        "18",
+        "22",
+        "26"
+      ],
+      [
+        "Värde per aktie",
+        "111,8 kr",
+        "240,3 kr",
+        "377,2 kr"
+      ]
+    ]
   }
 }

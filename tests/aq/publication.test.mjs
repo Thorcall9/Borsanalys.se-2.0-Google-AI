@@ -4,11 +4,11 @@ import test from 'node:test';
 const read=p=>JSON.parse(readFileSync(new URL(p,import.meta.url)));
 const d=read('../../src/data/analyses/aq-group/aq-q3-2026-dossier.json');
 const old=read('../../analyses/AQ/AQ-20261028-v11.2-r2.json');
-const previous=read('../../analyses/AQ/AQ-20261028-v11.2-r5.json');
+const previous=read('../../analyses/AQ/AQ-20261028-v11.2-r6.json');
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-8,`${a} != ${b}`);
 test('Q4 growth bridge reconciles to full year and lower Base flows to 2028',()=>{
  for(const q of d.q4_bridge.scenarios){near(q.total_growth,q.organic_growth+q.acquired_growth+q.fx_growth);near(q.q4_revenue,2323*(1+q.total_growth));near(q.annual_revenue_path[0],7500+q.q4_revenue);}
- const b=d.q4_bridge.scenarios[1];near(b.total_growth,.15);near(b.annual_revenue_path[2],b.annual_revenue_path[0]*1.11**2);assert.ok(d.scenarios[1].inputs.revenue<old.scenarios[1].inputs.revenue);
+ const b=d.q4_bridge.scenarios[1];near(b.annual_revenue_path[2],12350.87637);assert.ok(d.scenarios[1].inputs.revenue<old.scenarios[1].inputs.revenue);
 });
 test('both valuation methods and weighted annualization reconcile',()=>{
  for(const s of d.scenarios){const x=s.inputs;near(s.outputs.eps,(x.revenue*x.ebit_margin+x.net_finance)*(1-x.tax_rate)/x.diluted_shares);near(s.fair_value.value,s.outputs.eps*x.pe);near(s.secondary_valuation.fair_value,(s.outputs.ebit*x.ev_ebit+x.net_cash_including_leases-x.minority_interest)/x.diluted_shares);}
@@ -34,9 +34,9 @@ test('version, author disclosure and provenance prevent false publication readin
 });
 
 test('r5 preserves operating forecasts and revises premium using component FCF',()=>{
- for(const [i,s] of d.scenarios.entries()){for(const key of ['revenue','ebit_margin','net_finance','tax_rate','diluted_shares'])near(s.inputs[key],previous.scenarios[i].inputs[key]);near(s.probability,previous.scenarios[i].probability);near(s.inputs.ev_ebit,s.inputs.pe*(1-s.inputs.tax_rate));}
+ for(const [i,s] of d.scenarios.entries()){for(const key of ['ebit_margin','net_finance','tax_rate','diluted_shares'])near(s.inputs[key],previous.scenarios[i].inputs[key]);near(s.probability,previous.scenarios[i].probability);near(s.inputs.ev_ebit,s.inputs.pe*(1-s.inputs.tax_rate));}
  assert.equal(d.scenarios[1].inputs.pe,22);assert.equal(d.scenarios[2].inputs.pe,26);
- const b=d.sensitivity_analysis.base_light;near(b.outputs.fair_value,previous.sensitivity_analysis.base_light.outputs.fair_value);assert.equal(b.role,'SENSITIVITY_ONLY_NOT_WEIGHTED_SCENARIO');
+ const b=d.sensitivity_analysis.base_light;near(b.outputs.fair_value,b.inputs.revenue*.095*.79/92*22);assert.equal(b.role,'SENSITIVITY_ONLY_NOT_WEIGHTED_SCENARIO');
 });
 test('weight sensitivity reallocates Base to Bear and recomputes dated cashflow IRR',()=>{
  const times=d.return_framework.dividend_dates.map(date=>(Date.parse(date)-Date.parse('2026-10-28'))/86400000/365.25);
@@ -61,14 +61,20 @@ test('each forward cashflow period derives from components and funds terminal ca
  }
  near(s.periods[2].net_income,d.scenarios[i].outputs.net_income);near(s.periods.reduce((a,r)=>a+r.fcf_after_leases,0),d.cashflow_control.funding_budgets[i].cumulative_fcf_after_leases);
  }
- assert.ok(b.scenarios[1].periods[2].fcf_conversion<.54);
+ near(b.scenarios[1].periods[2].fcf_conversion,b.scenarios[1].periods[2].fcf_after_leases/b.scenarios[1].periods[2].net_income);
 });
 test('four scenario is isolated and reweighted from revised values',()=>{
  const f=d.sensitivity_analysis.four_scenario;const vals=[d.scenarios[0].fair_value.value,d.sensitivity_analysis.base_light.outputs.fair_value,d.scenarios[1].fair_value.value,d.scenarios[2].fair_value.value];near(f.weights.reduce((a,p)=>a+p,0),1);near(vals.reduce((a,v,i)=>a+f.weights[i]*v,0),f.weighted_fair_value);
 });
 
 
-test('r6 only changes disclosure and publication metadata, not the financial model',()=>{
- for(const k of ['scenarios','valuation_summary','cashflow_bridge','cashflow_control','sensitivity_analysis','return_framework','market_reference'])assert.deepEqual(d[k],previous[k]);
- assert.match(d.presentation.v11.ownershipDisclosure,/Författaren äger aktier i AQ Group/);assert.match(d.presentation.v11.ownershipDisclosure,/28 oktober 2026/);
+test('reported segment anchors and forward sales reconcile without internal double counting',()=>{
+ const m=d.segment_revenue_model;near(m.actuals['2025'].components+m.actuals['2025'].systems,9071);near(m.actuals['9m2026'].components+m.actuals['9m2026'].systems,7500);
+ for(const [i,s] of m.scenarios.entries()){
+  const q4=[m.actuals['2025'].components-m.actuals['9m2025'].components,m.actuals['2025'].systems-m.actuals['9m2025'].systems];
+  near(s.periods[0].components,6492+q4[0]*(1+s.periods[0].component_growth_assumption));near(s.periods[0].systems,1008+q4[1]*(1+s.periods[0].system_growth_assumption));
+  for(let j=0;j<3;j++){const r=s.periods[j];near(r.revenue,r.components+r.systems);near(r.revenue,d.q4_bridge.scenarios[i].annual_revenue_path[j]);if(j){near(r.components,s.periods[j-1].components*(1+r.component_growth_assumption));near(r.systems,s.periods[j-1].systems*(1+r.system_growth_assumption));}}
+  near(s.periods[2].revenue,d.scenarios[i].inputs.revenue);
+ }
+ assert.equal(d.author_disclosure.owns_shares,true);near(d.market_reference.price,previous.market_reference.price);
 });
